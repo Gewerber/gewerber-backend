@@ -1,0 +1,19 @@
+name: gewerber_backend_client
+description: Generated Serverpod client SDK for the Gewerber open-source backend.
+version: 0.0.1
+publish_to: none
+repository: https://github.com/Gewerber/gewerber-backend-core
+issue_tracker: https://github.com/Gewerber/gewerber-backend-core/issues
+topics:
+  - serverpod
+  - client
+  - sdk
+
+environment:
+  sdk: '^3.10.3'
+
+resolution: workspace
+
+dependencies:
+  serverpod_auth_idp_client: 4.0.0-beta.0
+  serverpod_client: 4.0.0-beta.0

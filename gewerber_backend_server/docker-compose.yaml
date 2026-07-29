@@ -1,0 +1,30 @@
+services:
+  # Development services
+  postgres:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "8090:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: gewerber_backend
+      POSTGRES_PASSWORD: "QssopZPIRV4EXk6QFAARoezDsmcyjM7Z"
+    volumes:
+      - gewerber_backend_data:/var/lib/postgresql/data
+
+
+  # Test services
+  postgres_test:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "9090:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: gewerber_backend_test
+      POSTGRES_PASSWORD: "-090vJlpK146u7T0YCGz9xnT6JOxJg4x"
+    volumes:
+      - gewerber_backend_test_data:/var/lib/postgresql/data
+
+
+volumes:
+  gewerber_backend_data:
+  gewerber_backend_test_data:
