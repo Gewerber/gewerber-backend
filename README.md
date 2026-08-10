@@ -54,6 +54,53 @@ See [`AGENTS.md`](AGENTS.md) for the MCP-driven development workflow used in thi
 
 ---
 
+## 🚢 Deployment
+
+Continuous deployment mirrors the [website pipeline](https://github.com/Gewerber/gewerber-website):
+
+| Branch | Environment | URL |
+|---|---|---|
+| `main` | production | `https://api.gewerber.de` |
+| `develop` | staging | `https://api.test.gewerber.de` |
+
+On every push, [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
+builds the server image (`gewerber_backend_server/Dockerfile`), pushes it to
+GHCR, then copies [`deploy/`](deploy/) to the VPS and runs `deploy/deploy.sh`,
+which starts the per-environment stack via Docker Compose behind the existing
+Traefik reverse proxy:
+
+- **server** — the Serverpod API (port 8080 only; the Insights server stays internal)
+- **postgres** — PostgreSQL (migrations are applied automatically on startup)
+- **redis** — cache + cross-server messaging
+
+Secrets (database/Redis passwords, JWT keys, service secret) are generated
+once per environment by `deploy.sh` and persisted on the VPS
+(`~/gewerber/backend/<env>/.secrets`), so they survive redeploys.
+
+### Required GitHub configuration
+
+- **Secrets**: `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY`, `GHCR_TOKEN`
+- **Environments**: `production`, `staging`
+- **Variables** (optional, defaults match the standard Traefik setup):
+  `TRAEFIK_NETWORK`, `WEB_ENTRYPOINT`, `WEBSECURE_ENTRYPOINT`, `CERT_RESOLVER`
+
+### Self-hosting (OSS single-tenant)
+
+Build and run the stack yourself with [`deploy/docker-compose.yml`](deploy/docker-compose.yml):
+
+```bash
+cd deploy
+cp .env.example .env            # set IMAGE (or build locally), DB_PASSWORD, REDIS_PASSWORD
+# provide config/passwords.yaml next to the compose file (see deploy/.env.example)
+docker compose up -d --build
+```
+
+The container expects a Serverpod `config/passwords.yaml` mounted at
+`/app/config/passwords.yaml` (keys: `database`, `serviceSecret`, `redis`,
+`emailSecretHashPepper`, `jwtHmacSha512PrivateKey`, `jwtRefreshTokenHashPepper`).
+
+---
+
 ## 🧭 Related
 
 - [App](https://github.com/Gewerber/gewerber-app)

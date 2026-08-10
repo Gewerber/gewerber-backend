@@ -26,8 +26,7 @@ void main() {
       );
     });
 
-    test('when creating a business then owner membership is created',
-        () async {
+    test('when creating a business then owner membership is created', () async {
       final request = CreateBusinessRequest(
         name: 'Mein Gewerbe',
         legalForm: LegalForm.einzelunternehmen,
@@ -36,8 +35,10 @@ void main() {
         address: Address(street: 'Hauptstr. 1', zip: '10115', city: 'Berlin'),
       );
 
-      final business =
-          await endpoints.business.create(authenticatedSession, request);
+      final business = await endpoints.business.create(
+        authenticatedSession,
+        request,
+      );
 
       expect(business.name, 'Mein Gewerbe');
       expect(business.isKleinunternehmer, true);
@@ -65,43 +66,45 @@ void main() {
     });
 
     test(
-        'when updating as owner then fields are changed and updatedAt is set',
-        () async {
-      final created = await endpoints.business.create(
-        authenticatedSession,
-        CreateBusinessRequest(name: 'Initial Name'),
-      );
+      'when updating as owner then fields are changed and updatedAt is set',
+      () async {
+        final created = await endpoints.business.create(
+          authenticatedSession,
+          CreateBusinessRequest(name: 'Initial Name'),
+        );
 
-      final updateRequest = UpdateBusinessRequest(
-        businessId: created.id!,
-        name: 'Updated Name',
-        legalForm: created.legalForm,
-        isKleinunternehmer: false,
-        locale: created.locale,
-        currency: created.currency,
-      );
+        final updateRequest = UpdateBusinessRequest(
+          businessId: created.id!,
+          name: 'Updated Name',
+          legalForm: created.legalForm,
+          isKleinunternehmer: false,
+          locale: created.locale,
+          currency: created.currency,
+        );
 
-      final updated = await endpoints.business.update(
-        authenticatedSession,
-        updateRequest,
-      );
+        final updated = await endpoints.business.update(
+          authenticatedSession,
+          updateRequest,
+        );
 
-      expect(updated.name, 'Updated Name');
-      expect(updated.isKleinunternehmer, false);
-      expect(updated.updatedAt.isAfter(created.updatedAt), true);
-    });
+        expect(updated.name, 'Updated Name');
+        expect(updated.isKleinunternehmer, false);
+        expect(updated.updatedAt.isAfter(created.updatedAt), true);
+      },
+    );
 
     test(
-        'when unauthenticated user tries to list businesses then ForbiddenException is thrown',
-        () async {
-      final unauthenticatedSession = sessionBuilder.copyWith(
-        authentication: AuthenticationOverride.unauthenticated(),
-      );
+      'when unauthenticated user tries to list businesses then ForbiddenException is thrown',
+      () async {
+        final unauthenticatedSession = sessionBuilder.copyWith(
+          authentication: AuthenticationOverride.unauthenticated(),
+        );
 
-      expect(
-        () => endpoints.business.listMine(unauthenticatedSession),
-        throwsA(isA<ServerpodUnauthenticatedException>()),
-      );
-    });
+        expect(
+          () => endpoints.business.listMine(unauthenticatedSession),
+          throwsA(isA<ServerpodUnauthenticatedException>()),
+        );
+      },
+    );
   });
 }

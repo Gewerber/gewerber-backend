@@ -66,6 +66,17 @@ dart format .               # required before PR
 dart test                   # integration tests (needs postgres_test)
 ```
 
+## Deployment
+
+Same pipeline as `gewerber-website`: GitHub Actions → GHCR → VPS → docker compose behind Traefik.
+
+- Push `main` → production (`api.gewerber.de`), push `develop` → staging (`api.test.gewerber.de`).
+- `.github/workflows/deploy.yml` builds `gewerber_backend_server/Dockerfile`, pushes the image to GHCR, copies `deploy/` to the VPS and runs `deploy/deploy.sh`.
+- Per-environment stack: server + PostgreSQL + Redis (`deploy/docker-compose.yml`); only the API port 8080 is exposed via Traefik (router prefix `gwb` / `gwb-test`), Insights (8081) stays internal.
+- Secrets (DB/Redis passwords, JWT keys, service secret) are generated once per environment by `deploy.sh` into `~/gewerber/backend/<env>/.secrets` and written to `config/passwords.yaml` mounted into the container. Deleting `.secrets` rotates all secrets (and invalidates JWT sessions).
+- Migrations are applied automatically on container startup (`SERVERPOD_APPLY_MIGRATIONS=true`).
+- Self-hosting: `deploy/docker-compose.yml` + `deploy/.env.example` describe the standalone (OSS single-tenant) setup; the container needs a `config/passwords.yaml` mounted at `/app/config/passwords.yaml`.
+
 ## Checklist after doing changes
 
 1. `dart analyze` (CLI)

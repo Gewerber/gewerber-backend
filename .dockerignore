@@ -1,0 +1,31 @@
+# VCS
+.git
+.github
+
+# Build outputs (regenerated inside the image)
+**/build/
+**/.dart_tool/
+**/.packages
+**/pubspec_overrides.yaml
+
+# Serverpod runtime artifacts (local DB data, sockets)
+**/.serverpod/
+
+# Secrets must never leak into the build context
+**/config/passwords.yaml
+
+# Docker / deploy files not needed in the build context
+**/Dockerfile
+**/docker-compose*.y*ml
+**/.env
+**/.env.*
+**/.dockerignore
+
+# IDE / OS
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# Logs
+*.log
