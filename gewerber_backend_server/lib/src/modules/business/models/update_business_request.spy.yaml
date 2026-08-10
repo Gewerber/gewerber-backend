@@ -1,0 +1,13 @@
+class: UpdateBusinessRequest
+fields:
+  businessId: int
+  name: String
+  legalForm: LegalForm
+  isKleinunternehmer: bool
+  vatId: String?
+  taxNumber: String?
+  email: String?
+  phone: String?
+  address: Address?
+  locale: String
+  currency: String

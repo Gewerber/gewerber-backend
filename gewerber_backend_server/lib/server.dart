@@ -2,6 +2,7 @@ import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_idp_server/core.dart';
 import 'package:serverpod_auth_idp_server/providers/email.dart';
 
+import 'src/core/di/injection.dart';
 import 'src/generated/endpoints.dart';
 import 'src/generated/protocol.dart';
 
@@ -9,6 +10,8 @@ import 'src/generated/protocol.dart';
 void run(List<String> args) async {
   // Initialize Serverpod and connect it with your generated code.
   final pod = Serverpod(args, Protocol(), Endpoints());
+
+  await configureDependencies();
 
   // Initialize authentication services for the server.
   // Token managers will be used to validate and issue authentication keys,

@@ -1,0 +1,7 @@
+enum: MembershipRole
+serialized: byName
+default: member
+values:
+  - owner
+  - admin
+  - member

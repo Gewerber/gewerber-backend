@@ -1,5 +1,10 @@
 # 🧩 Gewerber Backend Core
 
+![Serverpod](https://img.shields.io/badge/Serverpod-4.x-blue.svg?style=flat-square)
+![Dart](https://img.shields.io/badge/Dart-%5E3.10.3-0175C2.svg?logo=dart&logoColor=white&style=flat-square)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791.svg?logo=postgresql&logoColor=white&style=flat-square)
+![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)
+
 The [Serverpod](https://serverpod.dev) backend for the **Gewerber** open-source core: auth, invoicing (without payments), time tracking, basic accounting, and the guidance system.
 
 Part of the [Gewerber GitHub organization](https://github.com/Gewerber). This is the open-source core — commercial modules (banking, tax/ELSTER, employees, subscriptions, AI assistant) live in private repositories.

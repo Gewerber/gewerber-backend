@@ -1,0 +1,4 @@
+exception: NotFoundException
+fields:
+  entityType: String
+  entityId: String?

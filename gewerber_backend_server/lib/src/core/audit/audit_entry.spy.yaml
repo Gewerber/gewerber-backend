@@ -1,0 +1,14 @@
+class: AuditEntry
+serverOnly: true
+table: audit_entry
+fields:
+  businessId: int?
+  userId: UuidValue?
+  action: String
+  entityType: String
+  entityId: String?
+  changes: Map<String, String>?
+  createdAt: DateTime, default=now
+indexes:
+  audit_entry_business_idx:
+    fields: businessId, createdAt

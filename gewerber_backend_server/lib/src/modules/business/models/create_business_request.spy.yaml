@@ -1,0 +1,12 @@
+class: CreateBusinessRequest
+fields:
+  name: String
+  legalForm: LegalForm, default=einzelunternehmen
+  isKleinunternehmer: bool, default=false
+  vatId: String?
+  taxNumber: String?
+  email: String?
+  phone: String?
+  address: Address?
+  locale: String, default='de'
+  currency: String, default='EUR'

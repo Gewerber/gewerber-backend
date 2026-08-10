@@ -1,0 +1,15 @@
+class: Business
+table: business
+fields:
+  name: String
+  legalForm: LegalForm, default=einzelunternehmen
+  isKleinunternehmer: bool, default=false
+  vatId: String?
+  taxNumber: String?, scope=serverOnly
+  email: String?
+  phone: String?
+  address: Address?
+  locale: String, default='de'
+  currency: String, default='EUR'
+  createdAt: DateTime, default=now
+  updatedAt: DateTime, default=now

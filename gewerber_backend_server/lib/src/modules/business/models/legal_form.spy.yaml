@@ -1,0 +1,9 @@
+enum: LegalForm
+serialized: byName
+default: einzelunternehmen
+values:
+  - einzelunternehmen
+  - kleingewerbe
+  - freiberufler
+  - gbr
+  - other

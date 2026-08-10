@@ -1,0 +1,6 @@
+class: Address
+fields:
+  street: String
+  zip: String
+  city: String
+  country: String, default='DE'

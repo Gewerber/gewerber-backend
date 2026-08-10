@@ -16,10 +16,14 @@ import 'package:serverpod_client/serverpod_client.dart' as _i2;
 import 'dart:async' as _i3;
 import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
     as _i4;
-import 'package:gewerber_backend_client/src/protocol/greetings/greeting.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/business.dart'
     as _i5;
-import 'package:http/http.dart' as _i6;
-import 'protocol.dart' as _i7;
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/create_business_request.dart'
+    as _i6;
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/update_business_request.dart'
+    as _i7;
+import 'package:http/http.dart' as _i8;
+import 'protocol.dart' as _i9;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
 /// are made available on the server and enable the corresponding sign-in widget
@@ -242,21 +246,44 @@ class EndpointJwtRefresh extends _i4.EndpointRefreshJwtTokens {
   );
 }
 
-/// This is an example endpoint that returns a greeting message through
-/// its [hello] method.
 /// {@category Endpoint}
-class EndpointGreeting extends _i2.EndpointRef {
-  EndpointGreeting(_i2.EndpointCaller caller) : super(caller);
+abstract class EndpointBusinessScoped extends _i2.EndpointRef {
+  EndpointBusinessScoped(_i2.EndpointCaller caller) : super(caller);
+}
+
+/// {@category Endpoint}
+class EndpointBusiness extends EndpointBusinessScoped {
+  EndpointBusiness(_i2.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'greeting';
+  String get name => 'business';
 
-  /// Returns a personalized greeting message: "Hello {name}".
-  _i3.Future<_i5.Greeting> hello(String name) =>
-      caller.callServerEndpoint<_i5.Greeting>(
-        'greeting',
-        'hello',
-        {'name': name},
+  _i3.Future<_i5.Business> create(_i6.CreateBusinessRequest request) =>
+      caller.callServerEndpoint<_i5.Business>(
+        'business',
+        'create',
+        {'request': request},
+      );
+
+  _i3.Future<_i5.Business> get({int? businessId}) =>
+      caller.callServerEndpoint<_i5.Business>(
+        'business',
+        'get',
+        {'businessId': businessId},
+      );
+
+  _i3.Future<_i5.Business> update(_i7.UpdateBusinessRequest request) =>
+      caller.callServerEndpoint<_i5.Business>(
+        'business',
+        'update',
+        {'request': request},
+      );
+
+  _i3.Future<List<_i5.Business>> listMine() =>
+      caller.callServerEndpoint<List<_i5.Business>>(
+        'business',
+        'listMine',
+        {},
       );
 }
 
@@ -289,10 +316,10 @@ class Client extends _i2.ServerpodClientShared {
     onFailedCall,
     Function(_i2.MethodCallContext)? onSucceededCall,
     bool? disconnectStreamsOnLostInternetConnection,
-    _i6.Client? httpClientOverride,
+    _i8.Client? httpClientOverride,
   }) : super(
          host,
-         _i7.Protocol(),
+         _i9.Protocol(),
          securityContext: securityContext,
          streamingConnectionTimeout: streamingConnectionTimeout,
          connectionTimeout: connectionTimeout,
@@ -304,7 +331,7 @@ class Client extends _i2.ServerpodClientShared {
        ) {
     emailIdp = EndpointEmailIdp(this);
     jwtRefresh = EndpointJwtRefresh(this);
-    greeting = EndpointGreeting(this);
+    business = EndpointBusiness(this);
     modules = Modules(this);
   }
 
@@ -312,7 +339,7 @@ class Client extends _i2.ServerpodClientShared {
 
   late final EndpointJwtRefresh jwtRefresh;
 
-  late final EndpointGreeting greeting;
+  late final EndpointBusiness business;
 
   late final Modules modules;
 
@@ -320,7 +347,7 @@ class Client extends _i2.ServerpodClientShared {
   Map<String, _i2.EndpointRef> get endpointRefLookup => {
     'emailIdp': emailIdp,
     'jwtRefresh': jwtRefresh,
-    'greeting': greeting,
+    'business': business,
   };
 
   @override

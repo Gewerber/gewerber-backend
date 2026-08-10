@@ -1,0 +1,13 @@
+class: Membership
+table: membership
+fields:
+  userId: UuidValue
+  businessId: int, relation(parent=business, onDelete=Cascade)
+  role: MembershipRole, default=member
+  createdAt: DateTime, default=now
+indexes:
+  membership_user_business_unique_idx:
+    fields: userId, businessId
+    unique: true
+  membership_business_idx:
+    fields: businessId
