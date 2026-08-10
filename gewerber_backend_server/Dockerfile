@@ -4,9 +4,8 @@
 # Build stage
 FROM dart:3.12.2 AS build
 
-# Create a minimal workspace that preserves locked server dependency versions.
+# Create a minimal workspace for the server package.
 WORKDIR /app
-COPY pubspec.lock .
 COPY gewerber_backend_server gewerber_backend_server
 RUN printf '%s\n' \
   'name: _' \
