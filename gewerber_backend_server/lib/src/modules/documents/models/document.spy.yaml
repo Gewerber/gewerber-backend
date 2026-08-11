@@ -1,0 +1,17 @@
+class: Document
+table: document
+fields:
+  businessId: int, relation(parent=business, onDelete=Cascade)
+  kind: DocumentKind, default=attachment
+  fileName: String
+  mimeType: String?
+  sizeBytes: int?
+  storageLocation: StorageLocation, default=private
+  storagePath: String
+  relatedEntityType: String?
+  relatedEntityId: String?
+  uploadedById: UuidValue?
+  createdAt: DateTime, default=now
+indexes:
+  document_business_idx:
+    fields: businessId, createdAt

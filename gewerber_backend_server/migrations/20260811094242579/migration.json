@@ -1,0 +1,58 @@
+{
+  "__className__": "serverpod.DatabaseMigration",
+  "actions": [
+    {
+      "__className__": "serverpod.DatabaseMigrationAction",
+      "type": "alterTable",
+      "alterTable": {
+        "__className__": "serverpod.TableMigration",
+        "name": "business",
+        "schema": "public",
+        "addColumns": [
+          {
+            "__className__": "serverpod.ColumnDefinition",
+            "name": "currency",
+            "fieldName": "currency",
+            "columnType": 0,
+            "isNullable": false,
+            "columnDefault": "'eur'",
+            "dartType": "protocol:Currency"
+          }
+        ],
+        "deleteColumns": [
+          "currency"
+        ],
+        "modifyColumns": [],
+        "addIndexes": [],
+        "deleteIndexes": [],
+        "addForeignKeys": [],
+        "deleteForeignKeys": [],
+        "warnings": [
+          {
+            "__className__": "serverpod.DatabaseMigrationWarning",
+            "type": "columnDropped",
+            "message": "Column \"currency\" of table \"business\" is modified in a way that it must be deleted and recreated.",
+            "table": "business",
+            "columns": [
+              "currency"
+            ],
+            "destrucive": true
+          }
+        ]
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "__className__": "serverpod.DatabaseMigrationWarning",
+      "type": "columnDropped",
+      "message": "Column \"currency\" of table \"business\" is modified in a way that it must be deleted and recreated.",
+      "table": "business",
+      "columns": [
+        "currency"
+      ],
+      "destrucive": true
+    }
+  ],
+  "migrationApiVersion": 1
+}

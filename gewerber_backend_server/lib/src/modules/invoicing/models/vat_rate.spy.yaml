@@ -1,0 +1,9 @@
+enum: VatRate
+serialized: byName
+default: standard
+values:
+  - none
+  - zero
+  - reduced
+  - standard
+  - reverseCharge

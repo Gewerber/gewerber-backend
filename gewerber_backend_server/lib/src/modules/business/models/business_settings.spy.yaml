@@ -1,0 +1,15 @@
+class: BusinessSettings
+table: business_settings
+fields:
+  businessId: int, relation(parent=business, onDelete=Cascade)
+  paymentTermsDays: int, default=14
+  invoiceNumberPrefix: String?
+  invoiceNumberIncludeYear: bool, default=true
+  invoiceNumberMinDigits: int, default=4
+  roundingMode: RoundingMode, default=none
+  roundingGranularityMinutes: int, default=1
+  updatedAt: DateTime, default=now
+indexes:
+  business_settings_business_unique_idx:
+    fields: businessId
+    unique: true

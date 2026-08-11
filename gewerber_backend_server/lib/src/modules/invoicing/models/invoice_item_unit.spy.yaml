@@ -1,0 +1,10 @@
+enum: InvoiceItemUnit
+serialized: byName
+default: hour
+values:
+  - piece
+  - hour
+  - day
+  - month
+  - project
+  - other

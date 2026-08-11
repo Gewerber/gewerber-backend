@@ -9,5 +9,5 @@ fields:
   email: String?
   phone: String?
   address: Address?
-  locale: String
-  currency: String
+  locale: Locale
+  currency: Currency

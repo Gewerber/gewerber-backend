@@ -1,0 +1,13 @@
+class: UserProfile
+table: user_profile
+fields:
+  userId: UuidValue
+  displayName: String?
+  locale: Locale, default=de
+  timeZone: String?
+  createdAt: DateTime, default=now
+  updatedAt: DateTime, default=now
+indexes:
+  user_profile_user_unique_idx:
+    fields: userId
+    unique: true

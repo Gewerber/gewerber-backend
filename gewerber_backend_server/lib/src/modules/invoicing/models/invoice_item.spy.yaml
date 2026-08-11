@@ -1,0 +1,14 @@
+class: InvoiceItem
+table: invoice_item
+fields:
+  invoiceId: int, relation(parent=invoice, onDelete=Cascade)
+  position: int
+  description: String
+  quantity: double, default=1
+  unit: InvoiceItemUnit, default=hour
+  unitPriceCents: int, default=0
+  vatRate: VatRate, default=standard
+  lineTotalCents: int, default=0
+indexes:
+  invoice_item_invoice_idx:
+    fields: invoiceId, position

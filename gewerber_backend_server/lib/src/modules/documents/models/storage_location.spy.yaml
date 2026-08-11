@@ -1,0 +1,6 @@
+enum: StorageLocation
+serialized: byName
+default: private
+values:
+  - private
+  - public

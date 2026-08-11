@@ -1,0 +1,17 @@
+class: Customer
+table: customer
+fields:
+  businessId: int, relation(parent=business, onDelete=Cascade)
+  status: CustomerStatus, default=active
+  name: String
+  companyName: String?
+  vatId: String?
+  email: String?
+  phone: String?
+  address: Address?
+  notes: String?
+  createdAt: DateTime, default=now
+  updatedAt: DateTime, default=now
+indexes:
+  customer_business_idx:
+    fields: businessId, status

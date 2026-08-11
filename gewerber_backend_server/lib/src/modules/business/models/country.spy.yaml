@@ -1,0 +1,55 @@
+enum: Country
+serialized: byName
+default: deu
+values:
+  # DE + EU member states (ISO 3166-1 alpha-3)
+  - deu
+  - aut
+  - bel
+  - bgr
+  - hrv
+  - cyp
+  - cze
+  - dnk
+  - est
+  - fin
+  - fra
+  - grc
+  - hun
+  - irl
+  - ita
+  - lva
+  - ltu
+  - lux
+  - mlt
+  - nld
+  - pol
+  - prt
+  - rou
+  - svk
+  - svn
+  - esp
+  - swe
+  # EEA / EFTA and key trade partners
+  - che
+  - gbr
+  - nor
+  - isl
+  - lie
+  - usa
+  - can
+  - aus
+  - nzl
+  - jpn
+  - chn
+  - ind
+  - tur
+  - ukr
+  - are
+  - sau
+  - bra
+  - mex
+  - zaf
+  - kor
+  - sgp
+  - isr

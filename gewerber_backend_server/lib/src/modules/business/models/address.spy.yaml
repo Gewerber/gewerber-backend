@@ -3,4 +3,4 @@ fields:
   street: String
   zip: String
   city: String
-  country: String, default='DE'
+  country: Country, default=deu

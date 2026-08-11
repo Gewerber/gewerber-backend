@@ -1,0 +1,9 @@
+class: Reminder
+table: reminder
+fields:
+  invoiceId: int, relation(parent=invoice, onDelete=Cascade)
+  level: int
+  sentAt: DateTime, default=now
+indexes:
+  reminder_invoice_idx:
+    fields: invoiceId

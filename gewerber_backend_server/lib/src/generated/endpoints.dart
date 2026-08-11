@@ -13,15 +13,27 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../auth/email_idp_endpoint.dart' as _i2;
 import '../auth/jwt_refresh_endpoint.dart' as _i3;
-import '../modules/business/endpoints/business_endpoint.dart' as _i4;
+import '../core/entitlement/endpoints/entitlement_endpoint.dart' as _i4;
+import '../modules/business/endpoints/business_endpoint.dart' as _i5;
+import '../modules/business/endpoints/business_settings_endpoint.dart' as _i6;
+import '../modules/documents/endpoints/document_endpoint.dart' as _i7;
+import '../modules/user/endpoints/user_profile_endpoint.dart' as _i8;
 import 'package:gewerber_backend_server/src/generated/modules/business/models/create_business_request.dart'
-    as _i5;
+    as _i9;
 import 'package:gewerber_backend_server/src/generated/modules/business/models/update_business_request.dart'
-    as _i6;
+    as _i10;
+import 'package:gewerber_backend_server/src/generated/modules/business/models/update_business_settings_request.dart'
+    as _i11;
+import 'package:gewerber_backend_server/src/generated/modules/documents/models/upload_document_request.dart'
+    as _i12;
+import 'package:gewerber_backend_server/src/generated/modules/documents/models/document_kind.dart'
+    as _i13;
+import 'package:gewerber_backend_server/src/generated/modules/user/models/update_user_profile_request.dart'
+    as _i14;
 import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
-    as _i7;
+    as _i15;
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
-    as _i8;
+    as _i16;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -39,10 +51,34 @@ class Endpoints extends _i1.EndpointDispatch {
           'jwtRefresh',
           null,
         ),
-      'business': _i4.BusinessEndpoint()
+      'entitlement': _i4.EntitlementEndpoint()
+        ..initialize(
+          server,
+          'entitlement',
+          null,
+        ),
+      'business': _i5.BusinessEndpoint()
         ..initialize(
           server,
           'business',
+          null,
+        ),
+      'businessSettings': _i6.BusinessSettingsEndpoint()
+        ..initialize(
+          server,
+          'businessSettings',
+          null,
+        ),
+      'document': _i7.DocumentEndpoint()
+        ..initialize(
+          server,
+          'document',
+          null,
+        ),
+      'userProfile': _i8.UserProfileEndpoint()
+        ..initialize(
+          server,
+          'userProfile',
           null,
         ),
     };
@@ -250,6 +286,31 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
+    connectors['entitlement'] = _i1.EndpointConnector(
+      name: 'entitlement',
+      endpoint: endpoints['entitlement']!,
+      methodConnectors: {
+        'list': _i1.MethodConnector(
+          name: 'list',
+          params: {
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['entitlement'] as _i4.EntitlementEndpoint).list(
+                    session,
+                    businessId: params['businessId'],
+                  ),
+        ),
+      },
+    );
     connectors['business'] = _i1.EndpointConnector(
       name: 'business',
       endpoint: endpoints['business']!,
@@ -259,7 +320,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'request': _i1.ParameterDescription(
               name: 'request',
-              type: _i1.getType<_i5.CreateBusinessRequest>(),
+              type: _i1.getType<_i9.CreateBusinessRequest>(),
               nullable: false,
             ),
           },
@@ -267,7 +328,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['business'] as _i4.BusinessEndpoint).create(
+              ) async => (endpoints['business'] as _i5.BusinessEndpoint).create(
                 session,
                 params['request'],
               ),
@@ -285,7 +346,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['business'] as _i4.BusinessEndpoint).get(
+              ) async => (endpoints['business'] as _i5.BusinessEndpoint).get(
                 session,
                 businessId: params['businessId'],
               ),
@@ -295,7 +356,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'request': _i1.ParameterDescription(
               name: 'request',
-              type: _i1.getType<_i6.UpdateBusinessRequest>(),
+              type: _i1.getType<_i10.UpdateBusinessRequest>(),
               nullable: false,
             ),
           },
@@ -303,7 +364,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['business'] as _i4.BusinessEndpoint).update(
+              ) async => (endpoints['business'] as _i5.BusinessEndpoint).update(
                 session,
                 params['request'],
               ),
@@ -315,14 +376,212 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['business'] as _i4.BusinessEndpoint)
+              ) async => (endpoints['business'] as _i5.BusinessEndpoint)
                   .listMine(session),
         ),
       },
     );
-    modules['serverpod_auth_idp'] = _i7.Endpoints()
+    connectors['businessSettings'] = _i1.EndpointConnector(
+      name: 'businessSettings',
+      endpoint: endpoints['businessSettings']!,
+      methodConnectors: {
+        'get': _i1.MethodConnector(
+          name: 'get',
+          params: {
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['businessSettings']
+                          as _i6.BusinessSettingsEndpoint)
+                      .get(
+                        session,
+                        businessId: params['businessId'],
+                      ),
+        ),
+        'update': _i1.MethodConnector(
+          name: 'update',
+          params: {
+            'request': _i1.ParameterDescription(
+              name: 'request',
+              type: _i1.getType<_i11.UpdateBusinessSettingsRequest>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['businessSettings']
+                          as _i6.BusinessSettingsEndpoint)
+                      .update(
+                        session,
+                        params['request'],
+                      ),
+        ),
+      },
+    );
+    connectors['document'] = _i1.EndpointConnector(
+      name: 'document',
+      endpoint: endpoints['document']!,
+      methodConnectors: {
+        'upload': _i1.MethodConnector(
+          name: 'upload',
+          params: {
+            'request': _i1.ParameterDescription(
+              name: 'request',
+              type: _i1.getType<_i12.UploadDocumentRequest>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['document'] as _i7.DocumentEndpoint).upload(
+                session,
+                params['request'],
+              ),
+        ),
+        'list': _i1.MethodConnector(
+          name: 'list',
+          params: {
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'kind': _i1.ParameterDescription(
+              name: 'kind',
+              type: _i1.getType<_i13.DocumentKind?>(),
+              nullable: true,
+            ),
+            'relatedEntityType': _i1.ParameterDescription(
+              name: 'relatedEntityType',
+              type: _i1.getType<String?>(),
+              nullable: true,
+            ),
+            'relatedEntityId': _i1.ParameterDescription(
+              name: 'relatedEntityId',
+              type: _i1.getType<String?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['document'] as _i7.DocumentEndpoint).list(
+                session,
+                businessId: params['businessId'],
+                kind: params['kind'],
+                relatedEntityType: params['relatedEntityType'],
+                relatedEntityId: params['relatedEntityId'],
+              ),
+        ),
+        'get': _i1.MethodConnector(
+          name: 'get',
+          params: {
+            'documentId': _i1.ParameterDescription(
+              name: 'documentId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['document'] as _i7.DocumentEndpoint).get(
+                session,
+                params['documentId'],
+              ),
+        ),
+        'download': _i1.MethodConnector(
+          name: 'download',
+          params: {
+            'documentId': _i1.ParameterDescription(
+              name: 'documentId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['document'] as _i7.DocumentEndpoint).download(
+                    session,
+                    params['documentId'],
+                  ),
+        ),
+        'delete': _i1.MethodConnector(
+          name: 'delete',
+          params: {
+            'documentId': _i1.ParameterDescription(
+              name: 'documentId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['document'] as _i7.DocumentEndpoint).delete(
+                session,
+                params['documentId'],
+              ),
+        ),
+      },
+    );
+    connectors['userProfile'] = _i1.EndpointConnector(
+      name: 'userProfile',
+      endpoint: endpoints['userProfile']!,
+      methodConnectors: {
+        'getMyProfile': _i1.MethodConnector(
+          name: 'getMyProfile',
+          params: {},
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['userProfile'] as _i8.UserProfileEndpoint)
+                  .getMyProfile(session),
+        ),
+        'update': _i1.MethodConnector(
+          name: 'update',
+          params: {
+            'request': _i1.ParameterDescription(
+              name: 'request',
+              type: _i1.getType<_i14.UpdateUserProfileRequest>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['userProfile'] as _i8.UserProfileEndpoint).update(
+                    session,
+                    params['request'],
+                  ),
+        ),
+      },
+    );
+    modules['serverpod_auth_idp'] = _i15.Endpoints()
       ..initializeEndpoints(server);
-    modules['serverpod_auth_core'] = _i8.Endpoints()
+    modules['serverpod_auth_core'] = _i16.Endpoints()
       ..initializeEndpoints(server);
   }
 }

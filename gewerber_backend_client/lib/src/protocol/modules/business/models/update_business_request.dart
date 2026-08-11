@@ -13,7 +13,9 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../../../modules/business/models/legal_form.dart' as _i2;
 import '../../../modules/business/models/address.dart' as _i3;
-import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i4;
+import '../../../modules/business/models/locale.dart' as _i4;
+import '../../../modules/business/models/currency.dart' as _i5;
+import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i6;
 
 abstract class UpdateBusinessRequest implements _i1.SerializableModel {
   UpdateBusinessRequest._({
@@ -40,8 +42,8 @@ abstract class UpdateBusinessRequest implements _i1.SerializableModel {
     String? email,
     String? phone,
     _i3.Address? address,
-    required String locale,
-    required String currency,
+    required _i4.Locale locale,
+    required _i5.Currency currency,
   }) = _UpdateBusinessRequestImpl;
 
   factory UpdateBusinessRequest.fromJson(
@@ -62,11 +64,13 @@ abstract class UpdateBusinessRequest implements _i1.SerializableModel {
       phone: jsonSerialization['phone'] as String?,
       address: jsonSerialization['address'] == null
           ? null
-          : _i4.Protocol().deserialize<_i3.Address>(
+          : _i6.Protocol().deserialize<_i3.Address>(
               jsonSerialization['address'],
             ),
-      locale: jsonSerialization['locale'] as String,
-      currency: jsonSerialization['currency'] as String,
+      locale: _i4.Locale.fromJson((jsonSerialization['locale'] as String)),
+      currency: _i5.Currency.fromJson(
+        (jsonSerialization['currency'] as String),
+      ),
     );
   }
 
@@ -88,9 +92,9 @@ abstract class UpdateBusinessRequest implements _i1.SerializableModel {
 
   _i3.Address? address;
 
-  String locale;
+  _i4.Locale locale;
 
-  String currency;
+  _i5.Currency currency;
 
   /// Returns a shallow copy of this [UpdateBusinessRequest]
   /// with some or all fields replaced by the given arguments.
@@ -105,8 +109,8 @@ abstract class UpdateBusinessRequest implements _i1.SerializableModel {
     String? email,
     String? phone,
     _i3.Address? address,
-    String? locale,
-    String? currency,
+    _i4.Locale? locale,
+    _i5.Currency? currency,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -121,8 +125,8 @@ abstract class UpdateBusinessRequest implements _i1.SerializableModel {
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address?.toJson(),
-      'locale': locale,
-      'currency': currency,
+      'locale': locale.toJson(),
+      'currency': currency.toJson(),
     };
   }
 
@@ -145,8 +149,8 @@ class _UpdateBusinessRequestImpl extends UpdateBusinessRequest {
     String? email,
     String? phone,
     _i3.Address? address,
-    required String locale,
-    required String currency,
+    required _i4.Locale locale,
+    required _i5.Currency currency,
   }) : super._(
          businessId: businessId,
          name: name,
@@ -175,8 +179,8 @@ class _UpdateBusinessRequestImpl extends UpdateBusinessRequest {
     Object? email = _Undefined,
     Object? phone = _Undefined,
     Object? address = _Undefined,
-    String? locale,
-    String? currency,
+    _i4.Locale? locale,
+    _i5.Currency? currency,
   }) {
     return UpdateBusinessRequest(
       businessId: businessId ?? this.businessId,

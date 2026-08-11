@@ -12,8 +12,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../../../modules/business/models/legal_form.dart' as _i2;
-import '../../../modules/business/models/address.dart' as _i3;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i4;
+import '../../../modules/business/models/locale.dart' as _i3;
+import '../../../modules/business/models/currency.dart' as _i4;
+import '../../../modules/business/models/address.dart' as _i5;
+import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i6;
 
 abstract class CreateBusinessRequest
     implements _i1.SerializableModel, _i1.ProtocolSerialization {
@@ -26,12 +28,12 @@ abstract class CreateBusinessRequest
     this.email,
     this.phone,
     this.address,
-    String? locale,
-    String? currency,
+    _i3.Locale? locale,
+    _i4.Currency? currency,
   }) : legalForm = legalForm ?? _i2.LegalForm.einzelunternehmen,
        isKleinunternehmer = isKleinunternehmer ?? false,
-       locale = locale ?? 'de',
-       currency = currency ?? 'EUR';
+       locale = locale ?? _i3.Locale.de,
+       currency = currency ?? _i4.Currency.eur;
 
   factory CreateBusinessRequest({
     required String name,
@@ -41,9 +43,9 @@ abstract class CreateBusinessRequest
     String? taxNumber,
     String? email,
     String? phone,
-    _i3.Address? address,
-    String? locale,
-    String? currency,
+    _i5.Address? address,
+    _i3.Locale? locale,
+    _i4.Currency? currency,
   }) = _CreateBusinessRequestImpl;
 
   factory CreateBusinessRequest.fromJson(
@@ -65,11 +67,15 @@ abstract class CreateBusinessRequest
       phone: jsonSerialization['phone'] as String?,
       address: jsonSerialization['address'] == null
           ? null
-          : _i4.Protocol().deserialize<_i3.Address>(
+          : _i6.Protocol().deserialize<_i5.Address>(
               jsonSerialization['address'],
             ),
-      locale: jsonSerialization['locale'] as String?,
-      currency: jsonSerialization['currency'] as String?,
+      locale: jsonSerialization['locale'] == null
+          ? null
+          : _i3.Locale.fromJson((jsonSerialization['locale'] as String)),
+      currency: jsonSerialization['currency'] == null
+          ? null
+          : _i4.Currency.fromJson((jsonSerialization['currency'] as String)),
     );
   }
 
@@ -87,11 +93,11 @@ abstract class CreateBusinessRequest
 
   String? phone;
 
-  _i3.Address? address;
+  _i5.Address? address;
 
-  String locale;
+  _i3.Locale locale;
 
-  String currency;
+  _i4.Currency currency;
 
   /// Returns a shallow copy of this [CreateBusinessRequest]
   /// with some or all fields replaced by the given arguments.
@@ -104,9 +110,9 @@ abstract class CreateBusinessRequest
     String? taxNumber,
     String? email,
     String? phone,
-    _i3.Address? address,
-    String? locale,
-    String? currency,
+    _i5.Address? address,
+    _i3.Locale? locale,
+    _i4.Currency? currency,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -120,8 +126,8 @@ abstract class CreateBusinessRequest
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address?.toJson(),
-      'locale': locale,
-      'currency': currency,
+      'locale': locale.toJson(),
+      'currency': currency.toJson(),
     };
   }
 
@@ -137,8 +143,8 @@ abstract class CreateBusinessRequest
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address?.toJsonForProtocol(),
-      'locale': locale,
-      'currency': currency,
+      'locale': locale.toJson(),
+      'currency': currency.toJson(),
     };
   }
 
@@ -159,9 +165,9 @@ class _CreateBusinessRequestImpl extends CreateBusinessRequest {
     String? taxNumber,
     String? email,
     String? phone,
-    _i3.Address? address,
-    String? locale,
-    String? currency,
+    _i5.Address? address,
+    _i3.Locale? locale,
+    _i4.Currency? currency,
   }) : super._(
          name: name,
          legalForm: legalForm,
@@ -188,8 +194,8 @@ class _CreateBusinessRequestImpl extends CreateBusinessRequest {
     Object? email = _Undefined,
     Object? phone = _Undefined,
     Object? address = _Undefined,
-    String? locale,
-    String? currency,
+    _i3.Locale? locale,
+    _i4.Currency? currency,
   }) {
     return CreateBusinessRequest(
       name: name ?? this.name,
@@ -199,7 +205,7 @@ class _CreateBusinessRequestImpl extends CreateBusinessRequest {
       taxNumber: taxNumber is String? ? taxNumber : this.taxNumber,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
-      address: address is _i3.Address? ? address : this.address?.copyWith(),
+      address: address is _i5.Address? ? address : this.address?.copyWith(),
       locale: locale ?? this.locale,
       currency: currency ?? this.currency,
     );

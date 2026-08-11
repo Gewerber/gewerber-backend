@@ -1,0 +1,8 @@
+enum: RoundingMode
+serialized: byName
+default: none
+values:
+  - none
+  - up
+  - down
+  - nearest

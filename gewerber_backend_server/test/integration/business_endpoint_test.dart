@@ -43,8 +43,8 @@ void main() {
       expect(business.name, 'Mein Gewerbe');
       expect(business.isKleinunternehmer, true);
       expect(business.legalForm, LegalForm.einzelunternehmen);
-      expect(business.currency, 'EUR');
-      expect(business.locale, 'de');
+      expect(business.currency, Currency.eur);
+      expect(business.locale, Locale.de);
       expect(business.id, isNotNull);
 
       final fetched = await endpoints.business.get(authenticatedSession);

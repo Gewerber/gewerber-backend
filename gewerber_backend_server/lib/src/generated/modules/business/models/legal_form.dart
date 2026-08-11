@@ -17,7 +17,8 @@ enum LegalForm implements _i1.SerializableModel {
   kleingewerbe,
   freiberufler,
   gbr,
-  other;
+  other
+  ;
 
   static LegalForm fromJson(String name) {
     switch (name) {

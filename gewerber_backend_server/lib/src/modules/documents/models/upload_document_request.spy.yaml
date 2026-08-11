@@ -1,0 +1,9 @@
+class: UploadDocumentRequest
+fields:
+  businessId: int
+  kind: DocumentKind, default=attachment
+  fileName: String
+  mimeType: String?
+  data: ByteData
+  relatedEntityType: String?
+  relatedEntityId: String?

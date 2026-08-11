@@ -9,8 +9,22 @@ emailIdp:
   - hasAccount:
 jwtRefresh:
   - refreshAccessToken:
+entitlement:
+  - list:
 business:
   - create:
   - get:
   - update:
   - listMine:
+businessSettings:
+  - get:
+  - update:
+document:
+  - upload:
+  - list:
+  - get:
+  - download:
+  - delete:
+userProfile:
+  - getMyProfile:
+  - update:

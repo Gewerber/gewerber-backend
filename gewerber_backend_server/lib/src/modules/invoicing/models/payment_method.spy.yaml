@@ -1,0 +1,10 @@
+enum: PaymentMethod
+serialized: byName
+default: bankTransfer
+values:
+  - bankTransfer
+  - cash
+  - card
+  - paypal
+  - directDebit
+  - other

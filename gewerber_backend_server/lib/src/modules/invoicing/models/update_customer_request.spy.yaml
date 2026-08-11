@@ -1,0 +1,11 @@
+class: UpdateCustomerRequest
+fields:
+  customerId: int
+  status: CustomerStatus
+  name: String
+  companyName: String?
+  vatId: String?
+  email: String?
+  phone: String?
+  address: Address?
+  notes: String?

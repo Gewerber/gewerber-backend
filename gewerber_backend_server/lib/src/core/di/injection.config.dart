@@ -14,19 +14,47 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../modules/business/application/create_business_use_case.dart'
     as _i1059;
+import '../../modules/business/application/get_business_settings_use_case.dart'
+    as _i529;
 import '../../modules/business/application/get_business_use_case.dart' as _i910;
 import '../../modules/business/application/list_my_businesses_use_case.dart'
     as _i28;
+import '../../modules/business/application/update_business_settings_use_case.dart'
+    as _i130;
 import '../../modules/business/application/update_business_use_case.dart'
     as _i748;
 import '../../modules/business/data/serverpod_business_gateway.dart' as _i8;
+import '../../modules/business/data/serverpod_business_settings_gateway.dart'
+    as _i823;
 import '../../modules/business/data/serverpod_membership_gateway.dart' as _i257;
 import '../../modules/business/data/serverpod_tenant_resolver.dart' as _i707;
 import '../../modules/business/domain/business_gateway.dart' as _i647;
+import '../../modules/business/domain/business_settings_gateway.dart' as _i141;
 import '../../modules/business/domain/membership_gateway.dart' as _i688;
+import '../../modules/documents/application/delete_document_use_case.dart'
+    as _i877;
+import '../../modules/documents/application/download_document_use_case.dart'
+    as _i1004;
+import '../../modules/documents/application/get_document_use_case.dart'
+    as _i166;
+import '../../modules/documents/application/list_documents_use_case.dart'
+    as _i259;
+import '../../modules/documents/application/upload_document_use_case.dart'
+    as _i131;
+import '../../modules/documents/data/serverpod_document_gateway.dart' as _i249;
+import '../../modules/documents/domain/document_gateway.dart' as _i643;
+import '../../modules/user/application/get_my_profile_use_case.dart' as _i325;
+import '../../modules/user/application/update_user_profile_use_case.dart'
+    as _i282;
+import '../../modules/user/data/serverpod_user_profile_gateway.dart' as _i693;
+import '../../modules/user/domain/user_profile_gateway.dart' as _i467;
 import '../audit/audit_service.dart' as _i473;
+import '../entitlement/all_features_entitlement_provider.dart' as _i398;
+import '../entitlement/entitlement_provider.dart' as _i664;
 import '../events/event_bus.dart' as _i557;
 import '../events/message_central_event_bus.dart' as _i991;
+import '../sequence/data/serverpod_sequence_gateway.dart' as _i445;
+import '../sequence/domain/sequence_gateway.dart' as _i559;
 import '../tenant/tenant_resolver.dart' as _i343;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -37,15 +65,32 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.singleton<_i473.AuditService>(() => _i473.AuditService());
+    gh.singleton<_i559.SequenceGateway>(() => _i445.ServerpodSequenceGateway());
     gh.singleton<_i647.BusinessGateway>(() => _i8.ServerpodBusinessGateway());
     gh.singleton<_i688.MembershipGateway>(
       () => _i257.ServerpodMembershipGateway(),
     );
+    gh.singleton<_i664.EntitlementProvider>(
+      () => _i398.AllFeaturesEntitlementProvider(),
+    );
+    gh.singleton<_i467.UserProfileGateway>(
+      () => _i693.ServerpodUserProfileGateway(),
+    );
     gh.singleton<_i557.EventBus>(() => _i991.MessageCentralEventBus());
+    gh.singleton<_i643.DocumentGateway>(() => _i249.ServerpodDocumentGateway());
+    gh.singleton<_i141.BusinessSettingsGateway>(
+      () => _i823.ServerpodBusinessSettingsGateway(),
+    );
     gh.singleton<_i1059.CreateBusinessUseCase>(
       () => _i1059.CreateBusinessUseCase(
         gh<_i647.BusinessGateway>(),
         gh<_i688.MembershipGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i282.UpdateUserProfileUseCase>(
+      () => _i282.UpdateUserProfileUseCase(
+        gh<_i467.UserProfileGateway>(),
         gh<_i473.AuditService>(),
       ),
     );
@@ -56,6 +101,27 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i28.ListMyBusinessesUseCase(
         gh<_i647.BusinessGateway>(),
         gh<_i688.MembershipGateway>(),
+      ),
+    );
+    gh.singleton<_i325.GetMyProfileUseCase>(
+      () => _i325.GetMyProfileUseCase(gh<_i467.UserProfileGateway>()),
+    );
+    gh.singleton<_i529.GetBusinessSettingsUseCase>(
+      () => _i529.GetBusinessSettingsUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i141.BusinessSettingsGateway>(),
+      ),
+    );
+    gh.singleton<_i166.GetDocumentUseCase>(
+      () => _i166.GetDocumentUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i643.DocumentGateway>(),
+      ),
+    );
+    gh.singleton<_i259.ListDocumentsUseCase>(
+      () => _i259.ListDocumentsUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i643.DocumentGateway>(),
       ),
     );
     gh.singleton<_i748.UpdateBusinessUseCase>(
@@ -69,6 +135,31 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i910.GetBusinessUseCase(
         gh<_i343.TenantResolver>(),
         gh<_i647.BusinessGateway>(),
+      ),
+    );
+    gh.singleton<_i130.UpdateBusinessSettingsUseCase>(
+      () => _i130.UpdateBusinessSettingsUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i141.BusinessSettingsGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i131.UploadDocumentUseCase>(
+      () => _i131.UploadDocumentUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i643.DocumentGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i1004.DownloadDocumentUseCase>(
+      () => _i1004.DownloadDocumentUseCase(gh<_i166.GetDocumentUseCase>()),
+    );
+    gh.singleton<_i877.DeleteDocumentUseCase>(
+      () => _i877.DeleteDocumentUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i166.GetDocumentUseCase>(),
+        gh<_i643.DocumentGateway>(),
+        gh<_i473.AuditService>(),
       ),
     );
     return this;

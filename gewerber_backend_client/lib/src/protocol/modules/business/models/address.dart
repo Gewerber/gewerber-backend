@@ -11,20 +11,21 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import '../../../modules/business/models/country.dart' as _i2;
 
 abstract class Address implements _i1.SerializableModel {
   Address._({
     required this.street,
     required this.zip,
     required this.city,
-    String? country,
-  }) : country = country ?? 'DE';
+    _i2.Country? country,
+  }) : country = country ?? _i2.Country.deu;
 
   factory Address({
     required String street,
     required String zip,
     required String city,
-    String? country,
+    _i2.Country? country,
   }) = _AddressImpl;
 
   factory Address.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -32,7 +33,9 @@ abstract class Address implements _i1.SerializableModel {
       street: jsonSerialization['street'] as String,
       zip: jsonSerialization['zip'] as String,
       city: jsonSerialization['city'] as String,
-      country: jsonSerialization['country'] as String?,
+      country: jsonSerialization['country'] == null
+          ? null
+          : _i2.Country.fromJson((jsonSerialization['country'] as String)),
     );
   }
 
@@ -42,7 +45,7 @@ abstract class Address implements _i1.SerializableModel {
 
   String city;
 
-  String country;
+  _i2.Country country;
 
   /// Returns a shallow copy of this [Address]
   /// with some or all fields replaced by the given arguments.
@@ -51,7 +54,7 @@ abstract class Address implements _i1.SerializableModel {
     String? street,
     String? zip,
     String? city,
-    String? country,
+    _i2.Country? country,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -60,7 +63,7 @@ abstract class Address implements _i1.SerializableModel {
       'street': street,
       'zip': zip,
       'city': city,
-      'country': country,
+      'country': country.toJson(),
     };
   }
 
@@ -75,7 +78,7 @@ class _AddressImpl extends Address {
     required String street,
     required String zip,
     required String city,
-    String? country,
+    _i2.Country? country,
   }) : super._(
          street: street,
          zip: zip,
@@ -91,7 +94,7 @@ class _AddressImpl extends Address {
     String? street,
     String? zip,
     String? city,
-    String? country,
+    _i2.Country? country,
   }) {
     return Address(
       street: street ?? this.street,

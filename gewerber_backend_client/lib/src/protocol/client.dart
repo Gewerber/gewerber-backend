@@ -16,14 +16,31 @@ import 'package:serverpod_client/serverpod_client.dart' as _i2;
 import 'dart:async' as _i3;
 import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
     as _i4;
-import 'package:gewerber_backend_client/src/protocol/modules/business/models/business.dart'
+import 'package:gewerber_backend_client/src/protocol/core/entitlement/feature.dart'
     as _i5;
-import 'package:gewerber_backend_client/src/protocol/modules/business/models/create_business_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/business.dart'
     as _i6;
-import 'package:gewerber_backend_client/src/protocol/modules/business/models/update_business_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/create_business_request.dart'
     as _i7;
-import 'package:http/http.dart' as _i8;
-import 'protocol.dart' as _i9;
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/update_business_request.dart'
+    as _i8;
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/business_settings.dart'
+    as _i9;
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/update_business_settings_request.dart'
+    as _i10;
+import 'package:gewerber_backend_client/src/protocol/modules/documents/models/document.dart'
+    as _i11;
+import 'package:gewerber_backend_client/src/protocol/modules/documents/models/upload_document_request.dart'
+    as _i12;
+import 'package:gewerber_backend_client/src/protocol/modules/documents/models/document_kind.dart'
+    as _i13;
+import 'dart:typed_data' as _i14;
+import 'package:gewerber_backend_client/src/protocol/modules/user/models/user_profile.dart'
+    as _i15;
+import 'package:gewerber_backend_client/src/protocol/modules/user/models/update_user_profile_request.dart'
+    as _i16;
+import 'package:http/http.dart' as _i17;
+import 'protocol.dart' as _i18;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
 /// are made available on the server and enable the corresponding sign-in widget
@@ -252,38 +269,149 @@ abstract class EndpointBusinessScoped extends _i2.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointEntitlement extends EndpointBusinessScoped {
+  EndpointEntitlement(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'entitlement';
+
+  _i3.Future<List<_i5.Feature>> list({int? businessId}) =>
+      caller.callServerEndpoint<List<_i5.Feature>>(
+        'entitlement',
+        'list',
+        {'businessId': businessId},
+      );
+}
+
+/// {@category Endpoint}
 class EndpointBusiness extends EndpointBusinessScoped {
   EndpointBusiness(_i2.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'business';
 
-  _i3.Future<_i5.Business> create(_i6.CreateBusinessRequest request) =>
-      caller.callServerEndpoint<_i5.Business>(
+  _i3.Future<_i6.Business> create(_i7.CreateBusinessRequest request) =>
+      caller.callServerEndpoint<_i6.Business>(
         'business',
         'create',
         {'request': request},
       );
 
-  _i3.Future<_i5.Business> get({int? businessId}) =>
-      caller.callServerEndpoint<_i5.Business>(
+  _i3.Future<_i6.Business> get({int? businessId}) =>
+      caller.callServerEndpoint<_i6.Business>(
         'business',
         'get',
         {'businessId': businessId},
       );
 
-  _i3.Future<_i5.Business> update(_i7.UpdateBusinessRequest request) =>
-      caller.callServerEndpoint<_i5.Business>(
+  _i3.Future<_i6.Business> update(_i8.UpdateBusinessRequest request) =>
+      caller.callServerEndpoint<_i6.Business>(
         'business',
         'update',
         {'request': request},
       );
 
-  _i3.Future<List<_i5.Business>> listMine() =>
-      caller.callServerEndpoint<List<_i5.Business>>(
+  _i3.Future<List<_i6.Business>> listMine() =>
+      caller.callServerEndpoint<List<_i6.Business>>(
         'business',
         'listMine',
         {},
+      );
+}
+
+/// {@category Endpoint}
+class EndpointBusinessSettings extends EndpointBusinessScoped {
+  EndpointBusinessSettings(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'businessSettings';
+
+  _i3.Future<_i9.BusinessSettings> get({int? businessId}) =>
+      caller.callServerEndpoint<_i9.BusinessSettings>(
+        'businessSettings',
+        'get',
+        {'businessId': businessId},
+      );
+
+  _i3.Future<_i9.BusinessSettings> update(
+    _i10.UpdateBusinessSettingsRequest request,
+  ) => caller.callServerEndpoint<_i9.BusinessSettings>(
+    'businessSettings',
+    'update',
+    {'request': request},
+  );
+}
+
+/// {@category Endpoint}
+class EndpointDocument extends EndpointBusinessScoped {
+  EndpointDocument(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'document';
+
+  _i3.Future<_i11.Document> upload(_i12.UploadDocumentRequest request) =>
+      caller.callServerEndpoint<_i11.Document>(
+        'document',
+        'upload',
+        {'request': request},
+      );
+
+  _i3.Future<List<_i11.Document>> list({
+    int? businessId,
+    _i13.DocumentKind? kind,
+    String? relatedEntityType,
+    String? relatedEntityId,
+  }) => caller.callServerEndpoint<List<_i11.Document>>(
+    'document',
+    'list',
+    {
+      'businessId': businessId,
+      'kind': kind,
+      'relatedEntityType': relatedEntityType,
+      'relatedEntityId': relatedEntityId,
+    },
+  );
+
+  _i3.Future<_i11.Document> get(int documentId) =>
+      caller.callServerEndpoint<_i11.Document>(
+        'document',
+        'get',
+        {'documentId': documentId},
+      );
+
+  _i3.Future<_i14.ByteData> download(int documentId) =>
+      caller.callServerEndpoint<_i14.ByteData>(
+        'document',
+        'download',
+        {'documentId': documentId},
+      );
+
+  _i3.Future<void> delete(int documentId) => caller.callServerEndpoint<void>(
+    'document',
+    'delete',
+    {'documentId': documentId},
+  );
+}
+
+/// {@category Endpoint}
+class EndpointUserProfile extends _i2.EndpointRef {
+  EndpointUserProfile(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'userProfile';
+
+  _i3.Future<_i15.UserProfile> getMyProfile() =>
+      caller.callServerEndpoint<_i15.UserProfile>(
+        'userProfile',
+        'getMyProfile',
+        {},
+      );
+
+  _i3.Future<_i15.UserProfile> update(_i16.UpdateUserProfileRequest request) =>
+      caller.callServerEndpoint<_i15.UserProfile>(
+        'userProfile',
+        'update',
+        {'request': request},
       );
 }
 
@@ -316,10 +444,10 @@ class Client extends _i2.ServerpodClientShared {
     onFailedCall,
     Function(_i2.MethodCallContext)? onSucceededCall,
     bool? disconnectStreamsOnLostInternetConnection,
-    _i8.Client? httpClientOverride,
+    _i17.Client? httpClientOverride,
   }) : super(
          host,
-         _i9.Protocol(),
+         _i18.Protocol(),
          securityContext: securityContext,
          streamingConnectionTimeout: streamingConnectionTimeout,
          connectionTimeout: connectionTimeout,
@@ -331,7 +459,11 @@ class Client extends _i2.ServerpodClientShared {
        ) {
     emailIdp = EndpointEmailIdp(this);
     jwtRefresh = EndpointJwtRefresh(this);
+    entitlement = EndpointEntitlement(this);
     business = EndpointBusiness(this);
+    businessSettings = EndpointBusinessSettings(this);
+    document = EndpointDocument(this);
+    userProfile = EndpointUserProfile(this);
     modules = Modules(this);
   }
 
@@ -339,7 +471,15 @@ class Client extends _i2.ServerpodClientShared {
 
   late final EndpointJwtRefresh jwtRefresh;
 
+  late final EndpointEntitlement entitlement;
+
   late final EndpointBusiness business;
+
+  late final EndpointBusinessSettings businessSettings;
+
+  late final EndpointDocument document;
+
+  late final EndpointUserProfile userProfile;
 
   late final Modules modules;
 
@@ -347,7 +487,11 @@ class Client extends _i2.ServerpodClientShared {
   Map<String, _i2.EndpointRef> get endpointRefLookup => {
     'emailIdp': emailIdp,
     'jwtRefresh': jwtRefresh,
+    'entitlement': entitlement,
     'business': business,
+    'businessSettings': businessSettings,
+    'document': document,
+    'userProfile': userProfile,
   };
 
   @override

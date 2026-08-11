@@ -1,0 +1,13 @@
+class: Sequence
+table: number_sequence
+serverOnly: true
+fields:
+  businessId: int, relation(parent=business, onDelete=Cascade)
+  key: String
+  year: int
+  lastValue: int, default=0
+  updatedAt: DateTime, default=now
+indexes:
+  number_sequence_business_key_year_unique_idx:
+    fields: businessId, key, year
+    unique: true

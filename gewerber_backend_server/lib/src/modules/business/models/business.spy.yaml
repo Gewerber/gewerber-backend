@@ -9,7 +9,7 @@ fields:
   email: String?
   phone: String?
   address: Address?
-  locale: String, default='de'
-  currency: String, default='EUR'
+  locale: Locale, default=de
+  currency: Currency, default=eur
   createdAt: DateTime, default=now
   updatedAt: DateTime, default=now

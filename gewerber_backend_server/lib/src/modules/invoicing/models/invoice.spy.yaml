@@ -1,0 +1,39 @@
+class: Invoice
+table: invoice
+fields:
+  businessId: int, relation(parent=business, onDelete=Cascade)
+  number: String
+  type: InvoiceType, default=invoice
+  status: InvoiceStatus, default=draft
+  customerId: int?, relation(parent=customer, onDelete=SetNull)
+  issueDate: DateTime
+  dueDate: DateTime?
+  serviceDateFrom: DateTime?
+  serviceDateTo: DateTime?
+  locale: Locale, default=de
+  currency: Currency, default=eur
+  subtotalCents: int, default=0
+  vatTotalCents: int, default=0
+  totalCents: int, default=0
+  paymentTermsDays: int, default=14
+  dunningLevel: int, default=0
+  notes: String?
+  templateId: int?, relation(parent=invoice_template, onDelete=SetNull)
+  pdfDocumentId: int?, relation(parent=document, onDelete=SetNull)
+  recurrenceInterval: RecurrenceInterval?
+  nextRecurrenceDate: DateTime?
+  recurrenceEndDate: DateTime?
+  recurrenceMaxOccurrences: int?
+  recurrenceOccurrencesCreated: int, default=0
+  createdAt: DateTime, default=now
+  updatedAt: DateTime, default=now
+indexes:
+  invoice_business_number_unique_idx:
+    fields: businessId, number
+    unique: true
+  invoice_business_issue_idx:
+    fields: businessId, issueDate
+  invoice_customer_idx:
+    fields: customerId
+  invoice_recurrence_idx:
+    fields: businessId, nextRecurrenceDate

@@ -1,0 +1,12 @@
+class: PaymentRecord
+table: payment_record
+fields:
+  invoiceId: int, relation(parent=invoice, onDelete=Cascade)
+  paidAt: DateTime, default=now
+  amountCents: int
+  method: PaymentMethod, default=bankTransfer
+  reference: String?
+  createdAt: DateTime, default=now
+indexes:
+  payment_record_invoice_idx:
+    fields: invoiceId

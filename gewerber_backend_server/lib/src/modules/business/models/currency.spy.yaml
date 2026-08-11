@@ -1,0 +1,5 @@
+enum: Currency
+serialized: byName
+default: eur
+values:
+  - eur

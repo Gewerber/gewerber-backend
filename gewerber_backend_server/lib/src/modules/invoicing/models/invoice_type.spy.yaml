@@ -1,0 +1,6 @@
+enum: InvoiceType
+serialized: byName
+default: invoice
+values:
+  - invoice
+  - creditNote

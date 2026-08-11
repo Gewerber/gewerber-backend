@@ -1,0 +1,16 @@
+class: UpdateInvoiceRequest
+fields:
+  invoiceId: int
+  customerId: int?
+  issueDate: DateTime
+  dueDate: DateTime?
+  serviceDateFrom: DateTime?
+  serviceDateTo: DateTime?
+  paymentTermsDays: int
+  templateId: int?
+  notes: String?
+  recurrenceInterval: RecurrenceInterval?
+  nextRecurrenceDate: DateTime?
+  recurrenceEndDate: DateTime?
+  recurrenceMaxOccurrences: int?
+  items: List<InvoiceItemRequest>
