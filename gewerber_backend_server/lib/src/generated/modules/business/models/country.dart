@@ -61,7 +61,7 @@ enum Country implements _i1.SerializableModel {
   zaf,
   kor,
   sgp,
-  isr
+  isr,
   ;
 
   static Country fromJson(String name) {

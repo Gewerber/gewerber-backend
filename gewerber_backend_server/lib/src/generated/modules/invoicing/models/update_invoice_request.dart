@@ -11,7 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/invoicing/models/recurrence_rule.dart' as _i2;
+import '../../../modules/invoicing/models/recurrence_interval.dart' as _i2;
 import '../../../modules/invoicing/models/invoice_item_request.dart' as _i3;
 import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i4;
 
@@ -27,7 +27,10 @@ abstract class UpdateInvoiceRequest
     required this.paymentTermsDays,
     this.templateId,
     this.notes,
-    this.recurrence,
+    this.recurrenceInterval,
+    this.nextRecurrenceDate,
+    this.recurrenceEndDate,
+    this.recurrenceMaxOccurrences,
     required this.items,
   });
 
@@ -41,7 +44,10 @@ abstract class UpdateInvoiceRequest
     required int paymentTermsDays,
     int? templateId,
     String? notes,
-    _i2.RecurrenceRule? recurrence,
+    _i2.RecurrenceInterval? recurrenceInterval,
+    DateTime? nextRecurrenceDate,
+    DateTime? recurrenceEndDate,
+    int? recurrenceMaxOccurrences,
     required List<_i3.InvoiceItemRequest> items,
   }) = _UpdateInvoiceRequestImpl;
 
@@ -70,11 +76,23 @@ abstract class UpdateInvoiceRequest
       paymentTermsDays: jsonSerialization['paymentTermsDays'] as int,
       templateId: jsonSerialization['templateId'] as int?,
       notes: jsonSerialization['notes'] as String?,
-      recurrence: jsonSerialization['recurrence'] == null
+      recurrenceInterval: jsonSerialization['recurrenceInterval'] == null
           ? null
-          : _i4.Protocol().deserialize<_i2.RecurrenceRule>(
-              jsonSerialization['recurrence'],
+          : _i2.RecurrenceInterval.fromJson(
+              (jsonSerialization['recurrenceInterval'] as String),
             ),
+      nextRecurrenceDate: jsonSerialization['nextRecurrenceDate'] == null
+          ? null
+          : _i1.DateTimeJsonExtension.fromJson(
+              jsonSerialization['nextRecurrenceDate'],
+            ),
+      recurrenceEndDate: jsonSerialization['recurrenceEndDate'] == null
+          ? null
+          : _i1.DateTimeJsonExtension.fromJson(
+              jsonSerialization['recurrenceEndDate'],
+            ),
+      recurrenceMaxOccurrences:
+          jsonSerialization['recurrenceMaxOccurrences'] as int?,
       items: _i4.Protocol().deserialize<List<_i3.InvoiceItemRequest>>(
         jsonSerialization['items'],
       ),
@@ -99,7 +117,13 @@ abstract class UpdateInvoiceRequest
 
   String? notes;
 
-  _i2.RecurrenceRule? recurrence;
+  _i2.RecurrenceInterval? recurrenceInterval;
+
+  DateTime? nextRecurrenceDate;
+
+  DateTime? recurrenceEndDate;
+
+  int? recurrenceMaxOccurrences;
 
   List<_i3.InvoiceItemRequest> items;
 
@@ -116,7 +140,10 @@ abstract class UpdateInvoiceRequest
     int? paymentTermsDays,
     int? templateId,
     String? notes,
-    _i2.RecurrenceRule? recurrence,
+    _i2.RecurrenceInterval? recurrenceInterval,
+    DateTime? nextRecurrenceDate,
+    DateTime? recurrenceEndDate,
+    int? recurrenceMaxOccurrences,
     List<_i3.InvoiceItemRequest>? items,
   });
   @override
@@ -132,7 +159,14 @@ abstract class UpdateInvoiceRequest
       'paymentTermsDays': paymentTermsDays,
       if (templateId != null) 'templateId': templateId,
       if (notes != null) 'notes': notes,
-      if (recurrence != null) 'recurrence': recurrence?.toJson(),
+      if (recurrenceInterval != null)
+        'recurrenceInterval': recurrenceInterval?.toJson(),
+      if (nextRecurrenceDate != null)
+        'nextRecurrenceDate': nextRecurrenceDate?.toJson(),
+      if (recurrenceEndDate != null)
+        'recurrenceEndDate': recurrenceEndDate?.toJson(),
+      if (recurrenceMaxOccurrences != null)
+        'recurrenceMaxOccurrences': recurrenceMaxOccurrences,
       'items': items.toJson(valueToJson: (v) => v.toJson()),
     };
   }
@@ -150,7 +184,14 @@ abstract class UpdateInvoiceRequest
       'paymentTermsDays': paymentTermsDays,
       if (templateId != null) 'templateId': templateId,
       if (notes != null) 'notes': notes,
-      if (recurrence != null) 'recurrence': recurrence?.toJsonForProtocol(),
+      if (recurrenceInterval != null)
+        'recurrenceInterval': recurrenceInterval?.toJson(),
+      if (nextRecurrenceDate != null)
+        'nextRecurrenceDate': nextRecurrenceDate?.toJson(),
+      if (recurrenceEndDate != null)
+        'recurrenceEndDate': recurrenceEndDate?.toJson(),
+      if (recurrenceMaxOccurrences != null)
+        'recurrenceMaxOccurrences': recurrenceMaxOccurrences,
       'items': items.toJson(valueToJson: (v) => v.toJsonForProtocol()),
     };
   }
@@ -174,7 +215,10 @@ class _UpdateInvoiceRequestImpl extends UpdateInvoiceRequest {
     required int paymentTermsDays,
     int? templateId,
     String? notes,
-    _i2.RecurrenceRule? recurrence,
+    _i2.RecurrenceInterval? recurrenceInterval,
+    DateTime? nextRecurrenceDate,
+    DateTime? recurrenceEndDate,
+    int? recurrenceMaxOccurrences,
     required List<_i3.InvoiceItemRequest> items,
   }) : super._(
          invoiceId: invoiceId,
@@ -186,7 +230,10 @@ class _UpdateInvoiceRequestImpl extends UpdateInvoiceRequest {
          paymentTermsDays: paymentTermsDays,
          templateId: templateId,
          notes: notes,
-         recurrence: recurrence,
+         recurrenceInterval: recurrenceInterval,
+         nextRecurrenceDate: nextRecurrenceDate,
+         recurrenceEndDate: recurrenceEndDate,
+         recurrenceMaxOccurrences: recurrenceMaxOccurrences,
          items: items,
        );
 
@@ -204,7 +251,10 @@ class _UpdateInvoiceRequestImpl extends UpdateInvoiceRequest {
     int? paymentTermsDays,
     Object? templateId = _Undefined,
     Object? notes = _Undefined,
-    Object? recurrence = _Undefined,
+    Object? recurrenceInterval = _Undefined,
+    Object? nextRecurrenceDate = _Undefined,
+    Object? recurrenceEndDate = _Undefined,
+    Object? recurrenceMaxOccurrences = _Undefined,
     List<_i3.InvoiceItemRequest>? items,
   }) {
     return UpdateInvoiceRequest(
@@ -221,9 +271,18 @@ class _UpdateInvoiceRequestImpl extends UpdateInvoiceRequest {
       paymentTermsDays: paymentTermsDays ?? this.paymentTermsDays,
       templateId: templateId is int? ? templateId : this.templateId,
       notes: notes is String? ? notes : this.notes,
-      recurrence: recurrence is _i2.RecurrenceRule?
-          ? recurrence
-          : this.recurrence?.copyWith(),
+      recurrenceInterval: recurrenceInterval is _i2.RecurrenceInterval?
+          ? recurrenceInterval
+          : this.recurrenceInterval,
+      nextRecurrenceDate: nextRecurrenceDate is DateTime?
+          ? nextRecurrenceDate
+          : this.nextRecurrenceDate,
+      recurrenceEndDate: recurrenceEndDate is DateTime?
+          ? recurrenceEndDate
+          : this.recurrenceEndDate,
+      recurrenceMaxOccurrences: recurrenceMaxOccurrences is int?
+          ? recurrenceMaxOccurrences
+          : this.recurrenceMaxOccurrences,
       items: items ?? this.items.map((e0) => e0.copyWith()).toList(),
     );
   }

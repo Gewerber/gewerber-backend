@@ -12,7 +12,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class InvoiceTemplate implements _i1.SerializableModel {
+abstract class InvoiceTemplate
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
   InvoiceTemplate._({
     this.id,
     required this.businessId,
@@ -96,6 +97,22 @@ abstract class InvoiceTemplate implements _i1.SerializableModel {
   });
   @override
   Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'InvoiceTemplate',
+      if (id != null) 'id': id,
+      'businessId': businessId,
+      'name': name,
+      'isDefault': isDefault,
+      if (headerText != null) 'headerText': headerText,
+      if (footerText != null) 'footerText': footerText,
+      if (logoDocumentId != null) 'logoDocumentId': logoDocumentId,
+      'createdAt': createdAt.toJson(),
+      'updatedAt': updatedAt.toJson(),
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       '__className__': 'InvoiceTemplate',
       if (id != null) 'id': id,

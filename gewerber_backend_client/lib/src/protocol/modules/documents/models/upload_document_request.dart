@@ -14,7 +14,8 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../../../modules/documents/models/document_kind.dart' as _i2;
 import 'dart:typed_data' as _i3;
 
-abstract class UploadDocumentRequest implements _i1.SerializableModel {
+abstract class UploadDocumentRequest
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
   UploadDocumentRequest._({
     required this.businessId,
     _i2.DocumentKind? kind,
@@ -79,6 +80,20 @@ abstract class UploadDocumentRequest implements _i1.SerializableModel {
   });
   @override
   Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'UploadDocumentRequest',
+      'businessId': businessId,
+      'kind': kind.toJson(),
+      'fileName': fileName,
+      if (mimeType != null) 'mimeType': mimeType,
+      'data': data.toJson(),
+      if (relatedEntityType != null) 'relatedEntityType': relatedEntityType,
+      if (relatedEntityId != null) 'relatedEntityId': relatedEntityId,
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       '__className__': 'UploadDocumentRequest',
       'businessId': businessId,

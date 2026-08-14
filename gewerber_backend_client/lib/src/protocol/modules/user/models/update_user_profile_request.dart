@@ -13,7 +13,8 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../../../modules/business/models/locale.dart' as _i2;
 
-abstract class UpdateUserProfileRequest implements _i1.SerializableModel {
+abstract class UpdateUserProfileRequest
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
   UpdateUserProfileRequest._({
     this.displayName,
     required this.locale,
@@ -52,6 +53,16 @@ abstract class UpdateUserProfileRequest implements _i1.SerializableModel {
   });
   @override
   Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'UpdateUserProfileRequest',
+      if (displayName != null) 'displayName': displayName,
+      'locale': locale.toJson(),
+      if (timeZone != null) 'timeZone': timeZone,
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       '__className__': 'UpdateUserProfileRequest',
       if (displayName != null) 'displayName': displayName,

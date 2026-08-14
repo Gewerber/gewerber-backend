@@ -8,68 +8,79 @@
 // ignore_for_file: type_literal_in_constant_pattern
 // ignore_for_file: use_super_parameters
 // ignore_for_file: invalid_use_of_internal_member
+// ignore_for_file: dead_code, unnecessary_type_check
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod/protocol.dart' as _i2;
-import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
+import 'package:gewerber_commercial_server/gewerber_commercial_server.dart'
     as _i3;
-import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
+import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
     as _i4;
-import 'core/audit/audit_entry.dart' as _i5;
-import 'core/entitlement/feature.dart' as _i6;
-import 'core/errors/conflict_exception.dart' as _i7;
-import 'core/errors/forbidden_exception.dart' as _i8;
-import 'core/errors/not_found_exception.dart' as _i9;
-import 'core/errors/validation_exception.dart' as _i10;
-import 'core/sequence/sequence.dart' as _i11;
-import 'modules/business/models/address.dart' as _i12;
-import 'modules/business/models/business.dart' as _i13;
-import 'modules/business/models/business_settings.dart' as _i14;
-import 'modules/business/models/country.dart' as _i15;
-import 'modules/business/models/create_business_request.dart' as _i16;
-import 'modules/business/models/currency.dart' as _i17;
-import 'modules/business/models/legal_form.dart' as _i18;
-import 'modules/business/models/locale.dart' as _i19;
-import 'modules/business/models/membership.dart' as _i20;
-import 'modules/business/models/membership_role.dart' as _i21;
-import 'modules/business/models/rounding_mode.dart' as _i22;
-import 'modules/business/models/update_business_request.dart' as _i23;
-import 'modules/business/models/update_business_settings_request.dart' as _i24;
-import 'modules/documents/models/document.dart' as _i25;
-import 'modules/documents/models/document_kind.dart' as _i26;
-import 'modules/documents/models/storage_location.dart' as _i27;
-import 'modules/documents/models/upload_document_request.dart' as _i28;
-import 'modules/invoicing/models/create_customer_request.dart' as _i29;
-import 'modules/invoicing/models/create_invoice_request.dart' as _i30;
-import 'modules/invoicing/models/create_invoice_template_request.dart' as _i31;
-import 'modules/invoicing/models/customer.dart' as _i32;
-import 'modules/invoicing/models/customer_status.dart' as _i33;
-import 'modules/invoicing/models/invoice.dart' as _i34;
-import 'modules/invoicing/models/invoice_item.dart' as _i35;
-import 'modules/invoicing/models/invoice_item_request.dart' as _i36;
-import 'modules/invoicing/models/invoice_item_unit.dart' as _i37;
-import 'modules/invoicing/models/invoice_status.dart' as _i38;
-import 'modules/invoicing/models/invoice_template.dart' as _i39;
-import 'modules/invoicing/models/invoice_type.dart' as _i40;
-import 'modules/invoicing/models/payment_method.dart' as _i41;
-import 'modules/invoicing/models/payment_record.dart' as _i42;
-import 'modules/invoicing/models/record_payment_request.dart' as _i43;
-import 'modules/invoicing/models/recurrence_interval.dart' as _i44;
-import 'modules/invoicing/models/recurrence_rule.dart' as _i45;
-import 'modules/invoicing/models/reminder.dart' as _i46;
-import 'modules/invoicing/models/update_customer_request.dart' as _i47;
-import 'modules/invoicing/models/update_invoice_request.dart' as _i48;
-import 'modules/invoicing/models/update_invoice_template_request.dart' as _i49;
-import 'modules/invoicing/models/vat_rate.dart' as _i50;
-import 'modules/user/models/update_user_profile_request.dart' as _i51;
-import 'modules/user/models/user_profile.dart' as _i52;
+import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
+    as _i5;
+import 'core/audit/audit_entry.dart' as _i6;
+import 'core/entitlement/feature.dart' as _i7;
+import 'core/errors/conflict_exception.dart' as _i8;
+import 'core/errors/forbidden_exception.dart' as _i9;
+import 'core/errors/not_found_exception.dart' as _i10;
+import 'core/errors/validation_exception.dart' as _i11;
+import 'core/sequence/sequence.dart' as _i12;
+import 'modules/business/models/address.dart' as _i13;
+import 'modules/business/models/business.dart' as _i14;
+import 'modules/business/models/business_settings.dart' as _i15;
+import 'modules/business/models/country.dart' as _i16;
+import 'modules/business/models/create_business_request.dart' as _i17;
+import 'modules/business/models/currency.dart' as _i18;
+import 'modules/business/models/legal_form.dart' as _i19;
+import 'modules/business/models/locale.dart' as _i20;
+import 'modules/business/models/membership.dart' as _i21;
+import 'modules/business/models/membership_role.dart' as _i22;
+import 'modules/business/models/rounding_mode.dart' as _i23;
+import 'modules/business/models/update_business_request.dart' as _i24;
+import 'modules/business/models/update_business_settings_request.dart' as _i25;
+import 'modules/documents/models/document.dart' as _i26;
+import 'modules/documents/models/document_kind.dart' as _i27;
+import 'modules/documents/models/storage_location.dart' as _i28;
+import 'modules/documents/models/upload_document_request.dart' as _i29;
+import 'modules/invoicing/models/create_customer_request.dart' as _i30;
+import 'modules/invoicing/models/create_invoice_request.dart' as _i31;
+import 'modules/invoicing/models/create_invoice_template_request.dart' as _i32;
+import 'modules/invoicing/models/customer.dart' as _i33;
+import 'modules/invoicing/models/customer_status.dart' as _i34;
+import 'modules/invoicing/models/invoice.dart' as _i35;
+import 'modules/invoicing/models/invoice_item.dart' as _i36;
+import 'modules/invoicing/models/invoice_item_request.dart' as _i37;
+import 'modules/invoicing/models/invoice_item_unit.dart' as _i38;
+import 'modules/invoicing/models/invoice_payment_status.dart' as _i39;
+import 'modules/invoicing/models/invoice_status.dart' as _i40;
+import 'modules/invoicing/models/invoice_template.dart' as _i41;
+import 'modules/invoicing/models/invoice_type.dart' as _i42;
+import 'modules/invoicing/models/payment_method.dart' as _i43;
+import 'modules/invoicing/models/payment_record.dart' as _i44;
+import 'modules/invoicing/models/record_payment_request.dart' as _i45;
+import 'modules/invoicing/models/recurrence_interval.dart' as _i46;
+import 'modules/invoicing/models/reminder.dart' as _i47;
+import 'modules/invoicing/models/update_customer_request.dart' as _i48;
+import 'modules/invoicing/models/update_invoice_request.dart' as _i49;
+import 'modules/invoicing/models/update_invoice_template_request.dart' as _i50;
+import 'modules/invoicing/models/vat_rate.dart' as _i51;
+import 'modules/user/models/update_user_profile_request.dart' as _i52;
+import 'modules/user/models/user_profile.dart' as _i53;
 import 'package:gewerber_backend_server/src/generated/core/entitlement/feature.dart'
-    as _i53;
-import 'package:gewerber_backend_server/src/generated/modules/business/models/business.dart'
     as _i54;
-import 'package:gewerber_backend_server/src/generated/modules/documents/models/document.dart'
+import 'package:gewerber_backend_server/src/generated/modules/business/models/business.dart'
     as _i55;
+import 'package:gewerber_backend_server/src/generated/modules/documents/models/document.dart'
+    as _i56;
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer.dart'
+    as _i57;
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_item.dart'
+    as _i58;
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice.dart'
+    as _i59;
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_template.dart'
+    as _i60;
 export 'core/audit/audit_entry.dart';
 export 'core/entitlement/feature.dart';
 export 'core/errors/conflict_exception.dart';
@@ -103,6 +114,7 @@ export 'modules/invoicing/models/invoice.dart';
 export 'modules/invoicing/models/invoice_item.dart';
 export 'modules/invoicing/models/invoice_item_request.dart';
 export 'modules/invoicing/models/invoice_item_unit.dart';
+export 'modules/invoicing/models/invoice_payment_status.dart';
 export 'modules/invoicing/models/invoice_status.dart';
 export 'modules/invoicing/models/invoice_template.dart';
 export 'modules/invoicing/models/invoice_type.dart';
@@ -110,7 +122,6 @@ export 'modules/invoicing/models/payment_method.dart';
 export 'modules/invoicing/models/payment_record.dart';
 export 'modules/invoicing/models/record_payment_request.dart';
 export 'modules/invoicing/models/recurrence_interval.dart';
-export 'modules/invoicing/models/recurrence_rule.dart';
 export 'modules/invoicing/models/reminder.dart';
 export 'modules/invoicing/models/update_customer_request.dart';
 export 'modules/invoicing/models/update_invoice_request.dart';
@@ -126,7 +137,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
 
   static final Protocol _instance = Protocol._().._registerHostProtocols();
 
-  static final List<_i2.TableDefinition> targetTableDefinitions = [
+  static List<_i2.TableDefinition> get targetTableDefinitions => [
     _i2.TableDefinition(
       name: 'audit_entry',
       dartName: 'AuditEntry',
@@ -768,10 +779,35 @@ class Protocol extends _i1.DatabaseSerializationManager {
           dartType: 'int?',
         ),
         _i2.ColumnDefinition(
-          name: 'recurrence',
-          columnType: _i2.ColumnType.json,
+          name: 'recurrenceInterval',
+          columnType: _i2.ColumnType.text,
           isNullable: true,
-          dartType: 'protocol:RecurrenceRule?',
+          dartType: 'protocol:RecurrenceInterval?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'nextRecurrenceDate',
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          isNullable: true,
+          dartType: 'DateTime?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'recurrenceEndDate',
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          isNullable: true,
+          dartType: 'DateTime?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'recurrenceMaxOccurrences',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: true,
+          dartType: 'int?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'recurrenceOccurrencesCreated',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+          columnDefault: '0',
         ),
         _i2.ColumnDefinition(
           name: 'createdAt',
@@ -872,6 +908,23 @@ class Protocol extends _i1.DatabaseSerializationManager {
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
               definition: 'customerId',
+            ),
+          ],
+          type: 'btree',
+          isUnique: false,
+          isPrimary: false,
+        ),
+        _i2.IndexDefinition(
+          indexName: 'invoice_recurrence_idx',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'businessId',
+            ),
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'nextRecurrenceDate',
             ),
           ],
           type: 'btree',
@@ -1471,6 +1524,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
     ),
     ..._i3.Protocol.targetTableDefinitions,
     ..._i4.Protocol.targetTableDefinitions,
+    ..._i5.Protocol.targetTableDefinitions,
     ..._i2.Protocol.targetTableDefinitions,
   ];
 
@@ -1501,316 +1555,317 @@ class Protocol extends _i1.DatabaseSerializationManager {
       }
     }
 
-    if (t == _i5.AuditEntry) {
-      return _i5.AuditEntry.fromJson(data) as T;
+    if (t == _i6.AuditEntry) {
+      return _i6.AuditEntry.fromJson(data) as T;
     }
-    if (t == _i6.Feature) {
-      return _i6.Feature.fromJson(data) as T;
+    if (t == _i7.Feature) {
+      return _i7.Feature.fromJson(data) as T;
     }
-    if (t == _i7.ConflictException) {
-      return _i7.ConflictException.fromJson(data) as T;
+    if (t == _i8.ConflictException) {
+      return _i8.ConflictException.fromJson(data) as T;
     }
-    if (t == _i8.ForbiddenException) {
-      return _i8.ForbiddenException.fromJson(data) as T;
+    if (t == _i9.ForbiddenException) {
+      return _i9.ForbiddenException.fromJson(data) as T;
     }
-    if (t == _i9.NotFoundException) {
-      return _i9.NotFoundException.fromJson(data) as T;
+    if (t == _i10.NotFoundException) {
+      return _i10.NotFoundException.fromJson(data) as T;
     }
-    if (t == _i10.ValidationException) {
-      return _i10.ValidationException.fromJson(data) as T;
+    if (t == _i11.ValidationException) {
+      return _i11.ValidationException.fromJson(data) as T;
     }
-    if (t == _i11.Sequence) {
-      return _i11.Sequence.fromJson(data) as T;
+    if (t == _i12.Sequence) {
+      return _i12.Sequence.fromJson(data) as T;
     }
-    if (t == _i12.Address) {
-      return _i12.Address.fromJson(data) as T;
+    if (t == _i13.Address) {
+      return _i13.Address.fromJson(data) as T;
     }
-    if (t == _i13.Business) {
-      return _i13.Business.fromJson(data) as T;
+    if (t == _i14.Business) {
+      return _i14.Business.fromJson(data) as T;
     }
-    if (t == _i14.BusinessSettings) {
-      return _i14.BusinessSettings.fromJson(data) as T;
+    if (t == _i15.BusinessSettings) {
+      return _i15.BusinessSettings.fromJson(data) as T;
     }
-    if (t == _i15.Country) {
-      return _i15.Country.fromJson(data) as T;
+    if (t == _i16.Country) {
+      return _i16.Country.fromJson(data) as T;
     }
-    if (t == _i16.CreateBusinessRequest) {
-      return _i16.CreateBusinessRequest.fromJson(data) as T;
+    if (t == _i17.CreateBusinessRequest) {
+      return _i17.CreateBusinessRequest.fromJson(data) as T;
     }
-    if (t == _i17.Currency) {
-      return _i17.Currency.fromJson(data) as T;
+    if (t == _i18.Currency) {
+      return _i18.Currency.fromJson(data) as T;
     }
-    if (t == _i18.LegalForm) {
-      return _i18.LegalForm.fromJson(data) as T;
+    if (t == _i19.LegalForm) {
+      return _i19.LegalForm.fromJson(data) as T;
     }
-    if (t == _i19.Locale) {
-      return _i19.Locale.fromJson(data) as T;
+    if (t == _i20.Locale) {
+      return _i20.Locale.fromJson(data) as T;
     }
-    if (t == _i20.Membership) {
-      return _i20.Membership.fromJson(data) as T;
+    if (t == _i21.Membership) {
+      return _i21.Membership.fromJson(data) as T;
     }
-    if (t == _i21.MembershipRole) {
-      return _i21.MembershipRole.fromJson(data) as T;
+    if (t == _i22.MembershipRole) {
+      return _i22.MembershipRole.fromJson(data) as T;
     }
-    if (t == _i22.RoundingMode) {
-      return _i22.RoundingMode.fromJson(data) as T;
+    if (t == _i23.RoundingMode) {
+      return _i23.RoundingMode.fromJson(data) as T;
     }
-    if (t == _i23.UpdateBusinessRequest) {
-      return _i23.UpdateBusinessRequest.fromJson(data) as T;
+    if (t == _i24.UpdateBusinessRequest) {
+      return _i24.UpdateBusinessRequest.fromJson(data) as T;
     }
-    if (t == _i24.UpdateBusinessSettingsRequest) {
-      return _i24.UpdateBusinessSettingsRequest.fromJson(data) as T;
+    if (t == _i25.UpdateBusinessSettingsRequest) {
+      return _i25.UpdateBusinessSettingsRequest.fromJson(data) as T;
     }
-    if (t == _i25.Document) {
-      return _i25.Document.fromJson(data) as T;
+    if (t == _i26.Document) {
+      return _i26.Document.fromJson(data) as T;
     }
-    if (t == _i26.DocumentKind) {
-      return _i26.DocumentKind.fromJson(data) as T;
+    if (t == _i27.DocumentKind) {
+      return _i27.DocumentKind.fromJson(data) as T;
     }
-    if (t == _i27.StorageLocation) {
-      return _i27.StorageLocation.fromJson(data) as T;
+    if (t == _i28.StorageLocation) {
+      return _i28.StorageLocation.fromJson(data) as T;
     }
-    if (t == _i28.UploadDocumentRequest) {
-      return _i28.UploadDocumentRequest.fromJson(data) as T;
+    if (t == _i29.UploadDocumentRequest) {
+      return _i29.UploadDocumentRequest.fromJson(data) as T;
     }
-    if (t == _i29.CreateCustomerRequest) {
-      return _i29.CreateCustomerRequest.fromJson(data) as T;
+    if (t == _i30.CreateCustomerRequest) {
+      return _i30.CreateCustomerRequest.fromJson(data) as T;
     }
-    if (t == _i30.CreateInvoiceRequest) {
-      return _i30.CreateInvoiceRequest.fromJson(data) as T;
+    if (t == _i31.CreateInvoiceRequest) {
+      return _i31.CreateInvoiceRequest.fromJson(data) as T;
     }
-    if (t == _i31.CreateInvoiceTemplateRequest) {
-      return _i31.CreateInvoiceTemplateRequest.fromJson(data) as T;
+    if (t == _i32.CreateInvoiceTemplateRequest) {
+      return _i32.CreateInvoiceTemplateRequest.fromJson(data) as T;
     }
-    if (t == _i32.Customer) {
-      return _i32.Customer.fromJson(data) as T;
+    if (t == _i33.Customer) {
+      return _i33.Customer.fromJson(data) as T;
     }
-    if (t == _i33.CustomerStatus) {
-      return _i33.CustomerStatus.fromJson(data) as T;
+    if (t == _i34.CustomerStatus) {
+      return _i34.CustomerStatus.fromJson(data) as T;
     }
-    if (t == _i34.Invoice) {
-      return _i34.Invoice.fromJson(data) as T;
+    if (t == _i35.Invoice) {
+      return _i35.Invoice.fromJson(data) as T;
     }
-    if (t == _i35.InvoiceItem) {
-      return _i35.InvoiceItem.fromJson(data) as T;
+    if (t == _i36.InvoiceItem) {
+      return _i36.InvoiceItem.fromJson(data) as T;
     }
-    if (t == _i36.InvoiceItemRequest) {
-      return _i36.InvoiceItemRequest.fromJson(data) as T;
+    if (t == _i37.InvoiceItemRequest) {
+      return _i37.InvoiceItemRequest.fromJson(data) as T;
     }
-    if (t == _i37.InvoiceItemUnit) {
-      return _i37.InvoiceItemUnit.fromJson(data) as T;
+    if (t == _i38.InvoiceItemUnit) {
+      return _i38.InvoiceItemUnit.fromJson(data) as T;
     }
-    if (t == _i38.InvoiceStatus) {
-      return _i38.InvoiceStatus.fromJson(data) as T;
+    if (t == _i39.InvoicePaymentStatus) {
+      return _i39.InvoicePaymentStatus.fromJson(data) as T;
     }
-    if (t == _i39.InvoiceTemplate) {
-      return _i39.InvoiceTemplate.fromJson(data) as T;
+    if (t == _i40.InvoiceStatus) {
+      return _i40.InvoiceStatus.fromJson(data) as T;
     }
-    if (t == _i40.InvoiceType) {
-      return _i40.InvoiceType.fromJson(data) as T;
+    if (t == _i41.InvoiceTemplate) {
+      return _i41.InvoiceTemplate.fromJson(data) as T;
     }
-    if (t == _i41.PaymentMethod) {
-      return _i41.PaymentMethod.fromJson(data) as T;
+    if (t == _i42.InvoiceType) {
+      return _i42.InvoiceType.fromJson(data) as T;
     }
-    if (t == _i42.PaymentRecord) {
-      return _i42.PaymentRecord.fromJson(data) as T;
+    if (t == _i43.PaymentMethod) {
+      return _i43.PaymentMethod.fromJson(data) as T;
     }
-    if (t == _i43.RecordPaymentRequest) {
-      return _i43.RecordPaymentRequest.fromJson(data) as T;
+    if (t == _i44.PaymentRecord) {
+      return _i44.PaymentRecord.fromJson(data) as T;
     }
-    if (t == _i44.RecurrenceInterval) {
-      return _i44.RecurrenceInterval.fromJson(data) as T;
+    if (t == _i45.RecordPaymentRequest) {
+      return _i45.RecordPaymentRequest.fromJson(data) as T;
     }
-    if (t == _i45.RecurrenceRule) {
-      return _i45.RecurrenceRule.fromJson(data) as T;
+    if (t == _i46.RecurrenceInterval) {
+      return _i46.RecurrenceInterval.fromJson(data) as T;
     }
-    if (t == _i46.Reminder) {
-      return _i46.Reminder.fromJson(data) as T;
+    if (t == _i47.Reminder) {
+      return _i47.Reminder.fromJson(data) as T;
     }
-    if (t == _i47.UpdateCustomerRequest) {
-      return _i47.UpdateCustomerRequest.fromJson(data) as T;
+    if (t == _i48.UpdateCustomerRequest) {
+      return _i48.UpdateCustomerRequest.fromJson(data) as T;
     }
-    if (t == _i48.UpdateInvoiceRequest) {
-      return _i48.UpdateInvoiceRequest.fromJson(data) as T;
+    if (t == _i49.UpdateInvoiceRequest) {
+      return _i49.UpdateInvoiceRequest.fromJson(data) as T;
     }
-    if (t == _i49.UpdateInvoiceTemplateRequest) {
-      return _i49.UpdateInvoiceTemplateRequest.fromJson(data) as T;
+    if (t == _i50.UpdateInvoiceTemplateRequest) {
+      return _i50.UpdateInvoiceTemplateRequest.fromJson(data) as T;
     }
-    if (t == _i50.VatRate) {
-      return _i50.VatRate.fromJson(data) as T;
+    if (t == _i51.VatRate) {
+      return _i51.VatRate.fromJson(data) as T;
     }
-    if (t == _i51.UpdateUserProfileRequest) {
-      return _i51.UpdateUserProfileRequest.fromJson(data) as T;
+    if (t == _i52.UpdateUserProfileRequest) {
+      return _i52.UpdateUserProfileRequest.fromJson(data) as T;
     }
-    if (t == _i52.UserProfile) {
-      return _i52.UserProfile.fromJson(data) as T;
+    if (t == _i53.UserProfile) {
+      return _i53.UserProfile.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i5.AuditEntry?>()) {
-      return (data != null ? _i5.AuditEntry.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i6.AuditEntry?>()) {
+      return (data != null ? _i6.AuditEntry.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i6.Feature?>()) {
-      return (data != null ? _i6.Feature.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i7.Feature?>()) {
+      return (data != null ? _i7.Feature.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i7.ConflictException?>()) {
-      return (data != null ? _i7.ConflictException.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i8.ConflictException?>()) {
+      return (data != null ? _i8.ConflictException.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i8.ForbiddenException?>()) {
-      return (data != null ? _i8.ForbiddenException.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i9.ForbiddenException?>()) {
+      return (data != null ? _i9.ForbiddenException.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.NotFoundException?>()) {
-      return (data != null ? _i9.NotFoundException.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i10.NotFoundException?>()) {
+      return (data != null ? _i10.NotFoundException.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i10.ValidationException?>()) {
-      return (data != null ? _i10.ValidationException.fromJson(data) : null)
+    if (t == _i1.getType<_i11.ValidationException?>()) {
+      return (data != null ? _i11.ValidationException.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i11.Sequence?>()) {
-      return (data != null ? _i11.Sequence.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i12.Sequence?>()) {
+      return (data != null ? _i12.Sequence.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i12.Address?>()) {
-      return (data != null ? _i12.Address.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i13.Address?>()) {
+      return (data != null ? _i13.Address.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i13.Business?>()) {
-      return (data != null ? _i13.Business.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i14.Business?>()) {
+      return (data != null ? _i14.Business.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i14.BusinessSettings?>()) {
-      return (data != null ? _i14.BusinessSettings.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i15.BusinessSettings?>()) {
+      return (data != null ? _i15.BusinessSettings.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i15.Country?>()) {
-      return (data != null ? _i15.Country.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i16.Country?>()) {
+      return (data != null ? _i16.Country.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i16.CreateBusinessRequest?>()) {
-      return (data != null ? _i16.CreateBusinessRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i17.CreateBusinessRequest?>()) {
+      return (data != null ? _i17.CreateBusinessRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i17.Currency?>()) {
-      return (data != null ? _i17.Currency.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i18.Currency?>()) {
+      return (data != null ? _i18.Currency.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i18.LegalForm?>()) {
-      return (data != null ? _i18.LegalForm.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i19.LegalForm?>()) {
+      return (data != null ? _i19.LegalForm.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i19.Locale?>()) {
-      return (data != null ? _i19.Locale.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i20.Locale?>()) {
+      return (data != null ? _i20.Locale.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i20.Membership?>()) {
-      return (data != null ? _i20.Membership.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i21.Membership?>()) {
+      return (data != null ? _i21.Membership.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i21.MembershipRole?>()) {
-      return (data != null ? _i21.MembershipRole.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i22.MembershipRole?>()) {
+      return (data != null ? _i22.MembershipRole.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i22.RoundingMode?>()) {
-      return (data != null ? _i22.RoundingMode.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i23.RoundingMode?>()) {
+      return (data != null ? _i23.RoundingMode.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i23.UpdateBusinessRequest?>()) {
-      return (data != null ? _i23.UpdateBusinessRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i24.UpdateBusinessRequest?>()) {
+      return (data != null ? _i24.UpdateBusinessRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i24.UpdateBusinessSettingsRequest?>()) {
+    if (t == _i1.getType<_i25.UpdateBusinessSettingsRequest?>()) {
       return (data != null
-              ? _i24.UpdateBusinessSettingsRequest.fromJson(data)
+              ? _i25.UpdateBusinessSettingsRequest.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i25.Document?>()) {
-      return (data != null ? _i25.Document.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i26.Document?>()) {
+      return (data != null ? _i26.Document.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i26.DocumentKind?>()) {
-      return (data != null ? _i26.DocumentKind.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i27.DocumentKind?>()) {
+      return (data != null ? _i27.DocumentKind.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i27.StorageLocation?>()) {
-      return (data != null ? _i27.StorageLocation.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i28.StorageLocation?>()) {
+      return (data != null ? _i28.StorageLocation.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i28.UploadDocumentRequest?>()) {
-      return (data != null ? _i28.UploadDocumentRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i29.UploadDocumentRequest?>()) {
+      return (data != null ? _i29.UploadDocumentRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i29.CreateCustomerRequest?>()) {
-      return (data != null ? _i29.CreateCustomerRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i30.CreateCustomerRequest?>()) {
+      return (data != null ? _i30.CreateCustomerRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i30.CreateInvoiceRequest?>()) {
-      return (data != null ? _i30.CreateInvoiceRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i31.CreateInvoiceRequest?>()) {
+      return (data != null ? _i31.CreateInvoiceRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i31.CreateInvoiceTemplateRequest?>()) {
+    if (t == _i1.getType<_i32.CreateInvoiceTemplateRequest?>()) {
       return (data != null
-              ? _i31.CreateInvoiceTemplateRequest.fromJson(data)
+              ? _i32.CreateInvoiceTemplateRequest.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i32.Customer?>()) {
-      return (data != null ? _i32.Customer.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i33.Customer?>()) {
+      return (data != null ? _i33.Customer.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i33.CustomerStatus?>()) {
-      return (data != null ? _i33.CustomerStatus.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i34.CustomerStatus?>()) {
+      return (data != null ? _i34.CustomerStatus.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i34.Invoice?>()) {
-      return (data != null ? _i34.Invoice.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i35.Invoice?>()) {
+      return (data != null ? _i35.Invoice.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i35.InvoiceItem?>()) {
-      return (data != null ? _i35.InvoiceItem.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i36.InvoiceItem?>()) {
+      return (data != null ? _i36.InvoiceItem.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i36.InvoiceItemRequest?>()) {
-      return (data != null ? _i36.InvoiceItemRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i37.InvoiceItemRequest?>()) {
+      return (data != null ? _i37.InvoiceItemRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i37.InvoiceItemUnit?>()) {
-      return (data != null ? _i37.InvoiceItemUnit.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i38.InvoiceItemUnit?>()) {
+      return (data != null ? _i38.InvoiceItemUnit.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i38.InvoiceStatus?>()) {
-      return (data != null ? _i38.InvoiceStatus.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i39.InvoiceTemplate?>()) {
-      return (data != null ? _i39.InvoiceTemplate.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i40.InvoiceType?>()) {
-      return (data != null ? _i40.InvoiceType.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i41.PaymentMethod?>()) {
-      return (data != null ? _i41.PaymentMethod.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i42.PaymentRecord?>()) {
-      return (data != null ? _i42.PaymentRecord.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i43.RecordPaymentRequest?>()) {
-      return (data != null ? _i43.RecordPaymentRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i39.InvoicePaymentStatus?>()) {
+      return (data != null ? _i39.InvoicePaymentStatus.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i44.RecurrenceInterval?>()) {
-      return (data != null ? _i44.RecurrenceInterval.fromJson(data) : null)
+    if (t == _i1.getType<_i40.InvoiceStatus?>()) {
+      return (data != null ? _i40.InvoiceStatus.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i41.InvoiceTemplate?>()) {
+      return (data != null ? _i41.InvoiceTemplate.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i42.InvoiceType?>()) {
+      return (data != null ? _i42.InvoiceType.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i43.PaymentMethod?>()) {
+      return (data != null ? _i43.PaymentMethod.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i44.PaymentRecord?>()) {
+      return (data != null ? _i44.PaymentRecord.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i45.RecordPaymentRequest?>()) {
+      return (data != null ? _i45.RecordPaymentRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i45.RecurrenceRule?>()) {
-      return (data != null ? _i45.RecurrenceRule.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i46.Reminder?>()) {
-      return (data != null ? _i46.Reminder.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i47.UpdateCustomerRequest?>()) {
-      return (data != null ? _i47.UpdateCustomerRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i46.RecurrenceInterval?>()) {
+      return (data != null ? _i46.RecurrenceInterval.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i48.UpdateInvoiceRequest?>()) {
-      return (data != null ? _i48.UpdateInvoiceRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i47.Reminder?>()) {
+      return (data != null ? _i47.Reminder.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i48.UpdateCustomerRequest?>()) {
+      return (data != null ? _i48.UpdateCustomerRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i49.UpdateInvoiceTemplateRequest?>()) {
+    if (t == _i1.getType<_i49.UpdateInvoiceRequest?>()) {
+      return (data != null ? _i49.UpdateInvoiceRequest.fromJson(data) : null)
+          as T;
+    }
+    if (t == _i1.getType<_i50.UpdateInvoiceTemplateRequest?>()) {
       return (data != null
-              ? _i49.UpdateInvoiceTemplateRequest.fromJson(data)
+              ? _i50.UpdateInvoiceTemplateRequest.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i50.VatRate?>()) {
-      return (data != null ? _i50.VatRate.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i51.VatRate?>()) {
+      return (data != null ? _i51.VatRate.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i51.UpdateUserProfileRequest?>()) {
+    if (t == _i1.getType<_i52.UpdateUserProfileRequest?>()) {
       return (data != null
-              ? _i51.UpdateUserProfileRequest.fromJson(data)
+              ? _i52.UpdateUserProfileRequest.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i52.UserProfile?>()) {
-      return (data != null ? _i52.UserProfile.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i53.UserProfile?>()) {
+      return (data != null ? _i53.UserProfile.fromJson(data) : null) as T;
     }
     if (t == Map<String, String>) {
       return (data as Map).map(
@@ -1827,22 +1882,48 @@ class Protocol extends _i1.DatabaseSerializationManager {
               : null)
           as T;
     }
-    if (t == List<_i36.InvoiceItemRequest>) {
+    if (t == List<_i37.InvoiceItemRequest>) {
       return (data as List)
-              .map((e) => deserialize<_i36.InvoiceItemRequest>(e))
+              .map((e) => deserialize<_i37.InvoiceItemRequest>(e))
               .toList()
           as T;
     }
-    if (t == List<_i53.Feature>) {
-      return (data as List).map((e) => deserialize<_i53.Feature>(e)).toList()
+    if (t == List<_i44.PaymentRecord>) {
+      return (data as List)
+              .map((e) => deserialize<_i44.PaymentRecord>(e))
+              .toList()
           as T;
     }
-    if (t == List<_i54.Business>) {
-      return (data as List).map((e) => deserialize<_i54.Business>(e)).toList()
+    if (t == List<_i54.Feature>) {
+      return (data as List).map((e) => deserialize<_i54.Feature>(e)).toList()
           as T;
     }
-    if (t == List<_i55.Document>) {
-      return (data as List).map((e) => deserialize<_i55.Document>(e)).toList()
+    if (t == List<_i55.Business>) {
+      return (data as List).map((e) => deserialize<_i55.Business>(e)).toList()
+          as T;
+    }
+    if (t == List<_i56.Document>) {
+      return (data as List).map((e) => deserialize<_i56.Document>(e)).toList()
+          as T;
+    }
+    if (t == List<_i57.Customer>) {
+      return (data as List).map((e) => deserialize<_i57.Customer>(e)).toList()
+          as T;
+    }
+    if (t == List<_i58.InvoiceItem>) {
+      return (data as List)
+              .map((e) => deserialize<_i58.InvoiceItem>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_i59.Invoice>) {
+      return (data as List).map((e) => deserialize<_i59.Invoice>(e)).toList()
+          as T;
+    }
+    if (t == List<_i60.InvoiceTemplate>) {
+      return (data as List)
+              .map((e) => deserialize<_i60.InvoiceTemplate>(e))
+              .toList()
           as T;
     }
     try {
@@ -1852,6 +1933,9 @@ class Protocol extends _i1.DatabaseSerializationManager {
       return _i4.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     try {
+      return _i5.Protocol().deserialize<T>(data, t);
+    } on _i1.DeserializationTypeNotFoundException catch (_) {}
+    try {
       return _i2.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
@@ -1859,54 +1943,54 @@ class Protocol extends _i1.DatabaseSerializationManager {
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
-      _i5.AuditEntry => 'AuditEntry',
-      _i6.Feature => 'Feature',
-      _i7.ConflictException => 'ConflictException',
-      _i8.ForbiddenException => 'ForbiddenException',
-      _i9.NotFoundException => 'NotFoundException',
-      _i10.ValidationException => 'ValidationException',
-      _i11.Sequence => 'Sequence',
-      _i12.Address => 'Address',
-      _i13.Business => 'Business',
-      _i14.BusinessSettings => 'BusinessSettings',
-      _i15.Country => 'Country',
-      _i16.CreateBusinessRequest => 'CreateBusinessRequest',
-      _i17.Currency => 'Currency',
-      _i18.LegalForm => 'LegalForm',
-      _i19.Locale => 'Locale',
-      _i20.Membership => 'Membership',
-      _i21.MembershipRole => 'MembershipRole',
-      _i22.RoundingMode => 'RoundingMode',
-      _i23.UpdateBusinessRequest => 'UpdateBusinessRequest',
-      _i24.UpdateBusinessSettingsRequest => 'UpdateBusinessSettingsRequest',
-      _i25.Document => 'Document',
-      _i26.DocumentKind => 'DocumentKind',
-      _i27.StorageLocation => 'StorageLocation',
-      _i28.UploadDocumentRequest => 'UploadDocumentRequest',
-      _i29.CreateCustomerRequest => 'CreateCustomerRequest',
-      _i30.CreateInvoiceRequest => 'CreateInvoiceRequest',
-      _i31.CreateInvoiceTemplateRequest => 'CreateInvoiceTemplateRequest',
-      _i32.Customer => 'Customer',
-      _i33.CustomerStatus => 'CustomerStatus',
-      _i34.Invoice => 'Invoice',
-      _i35.InvoiceItem => 'InvoiceItem',
-      _i36.InvoiceItemRequest => 'InvoiceItemRequest',
-      _i37.InvoiceItemUnit => 'InvoiceItemUnit',
-      _i38.InvoiceStatus => 'InvoiceStatus',
-      _i39.InvoiceTemplate => 'InvoiceTemplate',
-      _i40.InvoiceType => 'InvoiceType',
-      _i41.PaymentMethod => 'PaymentMethod',
-      _i42.PaymentRecord => 'PaymentRecord',
-      _i43.RecordPaymentRequest => 'RecordPaymentRequest',
-      _i44.RecurrenceInterval => 'RecurrenceInterval',
-      _i45.RecurrenceRule => 'RecurrenceRule',
-      _i46.Reminder => 'Reminder',
-      _i47.UpdateCustomerRequest => 'UpdateCustomerRequest',
-      _i48.UpdateInvoiceRequest => 'UpdateInvoiceRequest',
-      _i49.UpdateInvoiceTemplateRequest => 'UpdateInvoiceTemplateRequest',
-      _i50.VatRate => 'VatRate',
-      _i51.UpdateUserProfileRequest => 'UpdateUserProfileRequest',
-      _i52.UserProfile => 'UserProfile',
+      _i6.AuditEntry => 'AuditEntry',
+      _i7.Feature => 'Feature',
+      _i8.ConflictException => 'ConflictException',
+      _i9.ForbiddenException => 'ForbiddenException',
+      _i10.NotFoundException => 'NotFoundException',
+      _i11.ValidationException => 'ValidationException',
+      _i12.Sequence => 'Sequence',
+      _i13.Address => 'Address',
+      _i14.Business => 'Business',
+      _i15.BusinessSettings => 'BusinessSettings',
+      _i16.Country => 'Country',
+      _i17.CreateBusinessRequest => 'CreateBusinessRequest',
+      _i18.Currency => 'Currency',
+      _i19.LegalForm => 'LegalForm',
+      _i20.Locale => 'Locale',
+      _i21.Membership => 'Membership',
+      _i22.MembershipRole => 'MembershipRole',
+      _i23.RoundingMode => 'RoundingMode',
+      _i24.UpdateBusinessRequest => 'UpdateBusinessRequest',
+      _i25.UpdateBusinessSettingsRequest => 'UpdateBusinessSettingsRequest',
+      _i26.Document => 'Document',
+      _i27.DocumentKind => 'DocumentKind',
+      _i28.StorageLocation => 'StorageLocation',
+      _i29.UploadDocumentRequest => 'UploadDocumentRequest',
+      _i30.CreateCustomerRequest => 'CreateCustomerRequest',
+      _i31.CreateInvoiceRequest => 'CreateInvoiceRequest',
+      _i32.CreateInvoiceTemplateRequest => 'CreateInvoiceTemplateRequest',
+      _i33.Customer => 'Customer',
+      _i34.CustomerStatus => 'CustomerStatus',
+      _i35.Invoice => 'Invoice',
+      _i36.InvoiceItem => 'InvoiceItem',
+      _i37.InvoiceItemRequest => 'InvoiceItemRequest',
+      _i38.InvoiceItemUnit => 'InvoiceItemUnit',
+      _i39.InvoicePaymentStatus => 'InvoicePaymentStatus',
+      _i40.InvoiceStatus => 'InvoiceStatus',
+      _i41.InvoiceTemplate => 'InvoiceTemplate',
+      _i42.InvoiceType => 'InvoiceType',
+      _i43.PaymentMethod => 'PaymentMethod',
+      _i44.PaymentRecord => 'PaymentRecord',
+      _i45.RecordPaymentRequest => 'RecordPaymentRequest',
+      _i46.RecurrenceInterval => 'RecurrenceInterval',
+      _i47.Reminder => 'Reminder',
+      _i48.UpdateCustomerRequest => 'UpdateCustomerRequest',
+      _i49.UpdateInvoiceRequest => 'UpdateInvoiceRequest',
+      _i50.UpdateInvoiceTemplateRequest => 'UpdateInvoiceTemplateRequest',
+      _i51.VatRate => 'VatRate',
+      _i52.UpdateUserProfileRequest => 'UpdateUserProfileRequest',
+      _i53.UserProfile => 'UserProfile',
       _ => null,
     };
   }
@@ -1924,110 +2008,116 @@ class Protocol extends _i1.DatabaseSerializationManager {
     }
 
     switch (data) {
-      case _i5.AuditEntry():
+      case _i6.AuditEntry():
         return 'AuditEntry';
-      case _i6.Feature():
+      case _i7.Feature():
         return 'Feature';
-      case _i7.ConflictException():
+      case _i8.ConflictException():
         return 'ConflictException';
-      case _i8.ForbiddenException():
+      case _i9.ForbiddenException():
         return 'ForbiddenException';
-      case _i9.NotFoundException():
+      case _i10.NotFoundException():
         return 'NotFoundException';
-      case _i10.ValidationException():
+      case _i11.ValidationException():
         return 'ValidationException';
-      case _i11.Sequence():
+      case _i12.Sequence():
         return 'Sequence';
-      case _i12.Address():
+      case _i13.Address():
         return 'Address';
-      case _i13.Business():
+      case _i14.Business():
         return 'Business';
-      case _i14.BusinessSettings():
+      case _i15.BusinessSettings():
         return 'BusinessSettings';
-      case _i15.Country():
+      case _i16.Country():
         return 'Country';
-      case _i16.CreateBusinessRequest():
+      case _i17.CreateBusinessRequest():
         return 'CreateBusinessRequest';
-      case _i17.Currency():
+      case _i18.Currency():
         return 'Currency';
-      case _i18.LegalForm():
+      case _i19.LegalForm():
         return 'LegalForm';
-      case _i19.Locale():
+      case _i20.Locale():
         return 'Locale';
-      case _i20.Membership():
+      case _i21.Membership():
         return 'Membership';
-      case _i21.MembershipRole():
+      case _i22.MembershipRole():
         return 'MembershipRole';
-      case _i22.RoundingMode():
+      case _i23.RoundingMode():
         return 'RoundingMode';
-      case _i23.UpdateBusinessRequest():
+      case _i24.UpdateBusinessRequest():
         return 'UpdateBusinessRequest';
-      case _i24.UpdateBusinessSettingsRequest():
+      case _i25.UpdateBusinessSettingsRequest():
         return 'UpdateBusinessSettingsRequest';
-      case _i25.Document():
+      case _i26.Document():
         return 'Document';
-      case _i26.DocumentKind():
+      case _i27.DocumentKind():
         return 'DocumentKind';
-      case _i27.StorageLocation():
+      case _i28.StorageLocation():
         return 'StorageLocation';
-      case _i28.UploadDocumentRequest():
+      case _i29.UploadDocumentRequest():
         return 'UploadDocumentRequest';
-      case _i29.CreateCustomerRequest():
+      case _i30.CreateCustomerRequest():
         return 'CreateCustomerRequest';
-      case _i30.CreateInvoiceRequest():
+      case _i31.CreateInvoiceRequest():
         return 'CreateInvoiceRequest';
-      case _i31.CreateInvoiceTemplateRequest():
+      case _i32.CreateInvoiceTemplateRequest():
         return 'CreateInvoiceTemplateRequest';
-      case _i32.Customer():
+      case _i33.Customer():
         return 'Customer';
-      case _i33.CustomerStatus():
+      case _i34.CustomerStatus():
         return 'CustomerStatus';
-      case _i34.Invoice():
+      case _i35.Invoice():
         return 'Invoice';
-      case _i35.InvoiceItem():
+      case _i36.InvoiceItem():
         return 'InvoiceItem';
-      case _i36.InvoiceItemRequest():
+      case _i37.InvoiceItemRequest():
         return 'InvoiceItemRequest';
-      case _i37.InvoiceItemUnit():
+      case _i38.InvoiceItemUnit():
         return 'InvoiceItemUnit';
-      case _i38.InvoiceStatus():
+      case _i39.InvoicePaymentStatus():
+        return 'InvoicePaymentStatus';
+      case _i40.InvoiceStatus():
         return 'InvoiceStatus';
-      case _i39.InvoiceTemplate():
+      case _i41.InvoiceTemplate():
         return 'InvoiceTemplate';
-      case _i40.InvoiceType():
+      case _i42.InvoiceType():
         return 'InvoiceType';
-      case _i41.PaymentMethod():
+      case _i43.PaymentMethod():
         return 'PaymentMethod';
-      case _i42.PaymentRecord():
+      case _i44.PaymentRecord():
         return 'PaymentRecord';
-      case _i43.RecordPaymentRequest():
+      case _i45.RecordPaymentRequest():
         return 'RecordPaymentRequest';
-      case _i44.RecurrenceInterval():
+      case _i46.RecurrenceInterval():
         return 'RecurrenceInterval';
-      case _i45.RecurrenceRule():
-        return 'RecurrenceRule';
-      case _i46.Reminder():
+      case _i47.Reminder():
         return 'Reminder';
-      case _i47.UpdateCustomerRequest():
+      case _i48.UpdateCustomerRequest():
         return 'UpdateCustomerRequest';
-      case _i48.UpdateInvoiceRequest():
+      case _i49.UpdateInvoiceRequest():
         return 'UpdateInvoiceRequest';
-      case _i49.UpdateInvoiceTemplateRequest():
+      case _i50.UpdateInvoiceTemplateRequest():
         return 'UpdateInvoiceTemplateRequest';
-      case _i50.VatRate():
+      case _i51.VatRate():
         return 'VatRate';
-      case _i51.UpdateUserProfileRequest():
+      case _i52.UpdateUserProfileRequest():
         return 'UpdateUserProfileRequest';
-      case _i52.UserProfile():
+      case _i53.UserProfile():
         return 'UserProfile';
     }
     className = _i3.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
-          : 'serverpod_auth_idp.$className';
+          : 'gewerber_commercial.$className';
     }
     className = _i4.Protocol().getClassNameForObject(data);
+    if (className != null) {
+      return className.contains('.')
+          ? className
+          : 'serverpod_auth_idp.$className';
+    }
+    className = _i5.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
@@ -2047,156 +2137,160 @@ class Protocol extends _i1.DatabaseSerializationManager {
       return super.deserializeByClassName(data);
     }
     if (dataClassName == 'AuditEntry') {
-      return deserialize<_i5.AuditEntry>(data['data']);
+      return deserialize<_i6.AuditEntry>(data['data']);
     }
     if (dataClassName == 'Feature') {
-      return deserialize<_i6.Feature>(data['data']);
+      return deserialize<_i7.Feature>(data['data']);
     }
     if (dataClassName == 'ConflictException') {
-      return deserialize<_i7.ConflictException>(data['data']);
+      return deserialize<_i8.ConflictException>(data['data']);
     }
     if (dataClassName == 'ForbiddenException') {
-      return deserialize<_i8.ForbiddenException>(data['data']);
+      return deserialize<_i9.ForbiddenException>(data['data']);
     }
     if (dataClassName == 'NotFoundException') {
-      return deserialize<_i9.NotFoundException>(data['data']);
+      return deserialize<_i10.NotFoundException>(data['data']);
     }
     if (dataClassName == 'ValidationException') {
-      return deserialize<_i10.ValidationException>(data['data']);
+      return deserialize<_i11.ValidationException>(data['data']);
     }
     if (dataClassName == 'Sequence') {
-      return deserialize<_i11.Sequence>(data['data']);
+      return deserialize<_i12.Sequence>(data['data']);
     }
     if (dataClassName == 'Address') {
-      return deserialize<_i12.Address>(data['data']);
+      return deserialize<_i13.Address>(data['data']);
     }
     if (dataClassName == 'Business') {
-      return deserialize<_i13.Business>(data['data']);
+      return deserialize<_i14.Business>(data['data']);
     }
     if (dataClassName == 'BusinessSettings') {
-      return deserialize<_i14.BusinessSettings>(data['data']);
+      return deserialize<_i15.BusinessSettings>(data['data']);
     }
     if (dataClassName == 'Country') {
-      return deserialize<_i15.Country>(data['data']);
+      return deserialize<_i16.Country>(data['data']);
     }
     if (dataClassName == 'CreateBusinessRequest') {
-      return deserialize<_i16.CreateBusinessRequest>(data['data']);
+      return deserialize<_i17.CreateBusinessRequest>(data['data']);
     }
     if (dataClassName == 'Currency') {
-      return deserialize<_i17.Currency>(data['data']);
+      return deserialize<_i18.Currency>(data['data']);
     }
     if (dataClassName == 'LegalForm') {
-      return deserialize<_i18.LegalForm>(data['data']);
+      return deserialize<_i19.LegalForm>(data['data']);
     }
     if (dataClassName == 'Locale') {
-      return deserialize<_i19.Locale>(data['data']);
+      return deserialize<_i20.Locale>(data['data']);
     }
     if (dataClassName == 'Membership') {
-      return deserialize<_i20.Membership>(data['data']);
+      return deserialize<_i21.Membership>(data['data']);
     }
     if (dataClassName == 'MembershipRole') {
-      return deserialize<_i21.MembershipRole>(data['data']);
+      return deserialize<_i22.MembershipRole>(data['data']);
     }
     if (dataClassName == 'RoundingMode') {
-      return deserialize<_i22.RoundingMode>(data['data']);
+      return deserialize<_i23.RoundingMode>(data['data']);
     }
     if (dataClassName == 'UpdateBusinessRequest') {
-      return deserialize<_i23.UpdateBusinessRequest>(data['data']);
+      return deserialize<_i24.UpdateBusinessRequest>(data['data']);
     }
     if (dataClassName == 'UpdateBusinessSettingsRequest') {
-      return deserialize<_i24.UpdateBusinessSettingsRequest>(data['data']);
+      return deserialize<_i25.UpdateBusinessSettingsRequest>(data['data']);
     }
     if (dataClassName == 'Document') {
-      return deserialize<_i25.Document>(data['data']);
+      return deserialize<_i26.Document>(data['data']);
     }
     if (dataClassName == 'DocumentKind') {
-      return deserialize<_i26.DocumentKind>(data['data']);
+      return deserialize<_i27.DocumentKind>(data['data']);
     }
     if (dataClassName == 'StorageLocation') {
-      return deserialize<_i27.StorageLocation>(data['data']);
+      return deserialize<_i28.StorageLocation>(data['data']);
     }
     if (dataClassName == 'UploadDocumentRequest') {
-      return deserialize<_i28.UploadDocumentRequest>(data['data']);
+      return deserialize<_i29.UploadDocumentRequest>(data['data']);
     }
     if (dataClassName == 'CreateCustomerRequest') {
-      return deserialize<_i29.CreateCustomerRequest>(data['data']);
+      return deserialize<_i30.CreateCustomerRequest>(data['data']);
     }
     if (dataClassName == 'CreateInvoiceRequest') {
-      return deserialize<_i30.CreateInvoiceRequest>(data['data']);
+      return deserialize<_i31.CreateInvoiceRequest>(data['data']);
     }
     if (dataClassName == 'CreateInvoiceTemplateRequest') {
-      return deserialize<_i31.CreateInvoiceTemplateRequest>(data['data']);
+      return deserialize<_i32.CreateInvoiceTemplateRequest>(data['data']);
     }
     if (dataClassName == 'Customer') {
-      return deserialize<_i32.Customer>(data['data']);
+      return deserialize<_i33.Customer>(data['data']);
     }
     if (dataClassName == 'CustomerStatus') {
-      return deserialize<_i33.CustomerStatus>(data['data']);
+      return deserialize<_i34.CustomerStatus>(data['data']);
     }
     if (dataClassName == 'Invoice') {
-      return deserialize<_i34.Invoice>(data['data']);
+      return deserialize<_i35.Invoice>(data['data']);
     }
     if (dataClassName == 'InvoiceItem') {
-      return deserialize<_i35.InvoiceItem>(data['data']);
+      return deserialize<_i36.InvoiceItem>(data['data']);
     }
     if (dataClassName == 'InvoiceItemRequest') {
-      return deserialize<_i36.InvoiceItemRequest>(data['data']);
+      return deserialize<_i37.InvoiceItemRequest>(data['data']);
     }
     if (dataClassName == 'InvoiceItemUnit') {
-      return deserialize<_i37.InvoiceItemUnit>(data['data']);
+      return deserialize<_i38.InvoiceItemUnit>(data['data']);
+    }
+    if (dataClassName == 'InvoicePaymentStatus') {
+      return deserialize<_i39.InvoicePaymentStatus>(data['data']);
     }
     if (dataClassName == 'InvoiceStatus') {
-      return deserialize<_i38.InvoiceStatus>(data['data']);
+      return deserialize<_i40.InvoiceStatus>(data['data']);
     }
     if (dataClassName == 'InvoiceTemplate') {
-      return deserialize<_i39.InvoiceTemplate>(data['data']);
+      return deserialize<_i41.InvoiceTemplate>(data['data']);
     }
     if (dataClassName == 'InvoiceType') {
-      return deserialize<_i40.InvoiceType>(data['data']);
+      return deserialize<_i42.InvoiceType>(data['data']);
     }
     if (dataClassName == 'PaymentMethod') {
-      return deserialize<_i41.PaymentMethod>(data['data']);
+      return deserialize<_i43.PaymentMethod>(data['data']);
     }
     if (dataClassName == 'PaymentRecord') {
-      return deserialize<_i42.PaymentRecord>(data['data']);
+      return deserialize<_i44.PaymentRecord>(data['data']);
     }
     if (dataClassName == 'RecordPaymentRequest') {
-      return deserialize<_i43.RecordPaymentRequest>(data['data']);
+      return deserialize<_i45.RecordPaymentRequest>(data['data']);
     }
     if (dataClassName == 'RecurrenceInterval') {
-      return deserialize<_i44.RecurrenceInterval>(data['data']);
-    }
-    if (dataClassName == 'RecurrenceRule') {
-      return deserialize<_i45.RecurrenceRule>(data['data']);
+      return deserialize<_i46.RecurrenceInterval>(data['data']);
     }
     if (dataClassName == 'Reminder') {
-      return deserialize<_i46.Reminder>(data['data']);
+      return deserialize<_i47.Reminder>(data['data']);
     }
     if (dataClassName == 'UpdateCustomerRequest') {
-      return deserialize<_i47.UpdateCustomerRequest>(data['data']);
+      return deserialize<_i48.UpdateCustomerRequest>(data['data']);
     }
     if (dataClassName == 'UpdateInvoiceRequest') {
-      return deserialize<_i48.UpdateInvoiceRequest>(data['data']);
+      return deserialize<_i49.UpdateInvoiceRequest>(data['data']);
     }
     if (dataClassName == 'UpdateInvoiceTemplateRequest') {
-      return deserialize<_i49.UpdateInvoiceTemplateRequest>(data['data']);
+      return deserialize<_i50.UpdateInvoiceTemplateRequest>(data['data']);
     }
     if (dataClassName == 'VatRate') {
-      return deserialize<_i50.VatRate>(data['data']);
+      return deserialize<_i51.VatRate>(data['data']);
     }
     if (dataClassName == 'UpdateUserProfileRequest') {
-      return deserialize<_i51.UpdateUserProfileRequest>(data['data']);
+      return deserialize<_i52.UpdateUserProfileRequest>(data['data']);
     }
     if (dataClassName == 'UserProfile') {
-      return deserialize<_i52.UserProfile>(data['data']);
+      return deserialize<_i53.UserProfile>(data['data']);
+    }
+    if (dataClassName.startsWith('gewerber_commercial.')) {
+      data['className'] = dataClassName.substring(20);
+      return _i3.Protocol().deserializeByClassName(data);
     }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);
-      return _i3.Protocol().deserializeByClassName(data);
+      return _i4.Protocol().deserializeByClassName(data);
     }
     if (dataClassName.startsWith('serverpod_auth_core.')) {
       data['className'] = dataClassName.substring(20);
-      return _i4.Protocol().deserializeByClassName(data);
+      return _i5.Protocol().deserializeByClassName(data);
     }
     if (dataClassName.startsWith('serverpod.')) {
       data['className'] = dataClassName.substring(10);
@@ -2208,6 +2302,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
   void _registerHostProtocols() {
     _i3.Protocol().registerHostProtocol('gewerber_backend', this);
     _i4.Protocol().registerHostProtocol('gewerber_backend', this);
+    _i5.Protocol().registerHostProtocol('gewerber_backend', this);
   }
 
   @override
@@ -2225,38 +2320,44 @@ class Protocol extends _i1.DatabaseSerializationManager {
       }
     }
     {
+      var table = _i5.Protocol().getTableForType(t);
+      if (table != null) {
+        return table;
+      }
+    }
+    {
       var table = _i2.Protocol().getTableForType(t);
       if (table != null) {
         return table;
       }
     }
     switch (t) {
-      case _i5.AuditEntry:
-        return _i5.AuditEntry.t;
-      case _i11.Sequence:
-        return _i11.Sequence.t;
-      case _i13.Business:
-        return _i13.Business.t;
-      case _i14.BusinessSettings:
-        return _i14.BusinessSettings.t;
-      case _i20.Membership:
-        return _i20.Membership.t;
-      case _i25.Document:
-        return _i25.Document.t;
-      case _i32.Customer:
-        return _i32.Customer.t;
-      case _i34.Invoice:
-        return _i34.Invoice.t;
-      case _i35.InvoiceItem:
-        return _i35.InvoiceItem.t;
-      case _i39.InvoiceTemplate:
-        return _i39.InvoiceTemplate.t;
-      case _i42.PaymentRecord:
-        return _i42.PaymentRecord.t;
-      case _i46.Reminder:
-        return _i46.Reminder.t;
-      case _i52.UserProfile:
-        return _i52.UserProfile.t;
+      case _i6.AuditEntry:
+        return _i6.AuditEntry.t;
+      case _i12.Sequence:
+        return _i12.Sequence.t;
+      case _i14.Business:
+        return _i14.Business.t;
+      case _i15.BusinessSettings:
+        return _i15.BusinessSettings.t;
+      case _i21.Membership:
+        return _i21.Membership.t;
+      case _i26.Document:
+        return _i26.Document.t;
+      case _i33.Customer:
+        return _i33.Customer.t;
+      case _i35.Invoice:
+        return _i35.Invoice.t;
+      case _i36.InvoiceItem:
+        return _i36.InvoiceItem.t;
+      case _i41.InvoiceTemplate:
+        return _i41.InvoiceTemplate.t;
+      case _i44.PaymentRecord:
+        return _i44.PaymentRecord.t;
+      case _i47.Reminder:
+        return _i47.Reminder.t;
+      case _i53.UserProfile:
+        return _i53.UserProfile.t;
     }
     return null;
   }
@@ -2282,6 +2383,9 @@ class Protocol extends _i1.DatabaseSerializationManager {
     } catch (_) {}
     try {
       return _i4.Protocol().mapRecordToJson(record);
+    } catch (_) {}
+    try {
+      return _i5.Protocol().mapRecordToJson(record);
     } catch (_) {}
     throw Exception('Unsupported record type ${record.runtimeType}');
   }

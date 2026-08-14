@@ -154,8 +154,6 @@ abstract class BusinessSettings
     int? limit,
     int? offset,
     _i1.OrderByBuilder<BusinessSettingsTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<BusinessSettingsTable>? orderByList,
     BusinessSettingsInclude? include,
   }) {
@@ -164,8 +162,6 @@ abstract class BusinessSettings
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(BusinessSettings.t),
-      orderDescending: // ignore: deprecated_member_use_from_same_package
-          orderDescending,
       orderByList: orderByList?.call(BusinessSettings.t),
       include: include,
     );
@@ -381,8 +377,6 @@ class BusinessSettingsIncludeList extends _i1.IncludeList {
     super.limit,
     super.offset,
     super.orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -427,8 +421,6 @@ class BusinessSettingsRepository {
     int? limit,
     int? offset,
     _i1.OrderByBuilder<BusinessSettingsTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<BusinessSettingsTable>? orderByList,
     _i1.Transaction? transaction,
     _i1.LockMode? lockMode,
@@ -438,8 +430,6 @@ class BusinessSettingsRepository {
       where: where?.call(BusinessSettings.t),
       orderBy: orderBy?.call(BusinessSettings.t),
       orderByList: orderByList?.call(BusinessSettings.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -470,8 +460,6 @@ class BusinessSettingsRepository {
     _i1.WhereExpressionBuilder<BusinessSettingsTable>? where,
     int? offset,
     _i1.OrderByBuilder<BusinessSettingsTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<BusinessSettingsTable>? orderByList,
     _i1.Transaction? transaction,
     _i1.LockMode? lockMode,
@@ -481,8 +469,6 @@ class BusinessSettingsRepository {
       where: where?.call(BusinessSettings.t),
       orderBy: orderBy?.call(BusinessSettings.t),
       orderByList: orderByList?.call(BusinessSettings.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -689,8 +675,6 @@ class BusinessSettingsRepository {
     int? offset,
     _i1.OrderByBuilder<BusinessSettingsTable>? orderBy,
     _i1.OrderByListBuilder<BusinessSettingsTable>? orderByList,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
@@ -701,8 +685,6 @@ class BusinessSettingsRepository {
       offset: offset,
       orderBy: orderBy?.call(BusinessSettings.t),
       orderByList: orderByList?.call(BusinessSettings.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -723,8 +705,6 @@ class BusinessSettingsRepository {
     _i1.DatabaseSession session,
     List<BusinessSettings> rows, {
     _i1.OrderByBuilder<BusinessSettingsTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<BusinessSettingsTable>? orderByList,
     _i1.Transaction? transaction,
     bool noReturn = false,
@@ -733,8 +713,6 @@ class BusinessSettingsRepository {
       rows,
       orderBy: orderBy?.call(BusinessSettings.t),
       orderByList: orderByList?.call(BusinessSettings.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -764,8 +742,6 @@ class BusinessSettingsRepository {
     _i1.DatabaseSession session, {
     required _i1.WhereExpressionBuilder<BusinessSettingsTable> where,
     _i1.OrderByBuilder<BusinessSettingsTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<BusinessSettingsTable>? orderByList,
     _i1.Transaction? transaction,
     bool noReturn = false,
@@ -774,8 +750,6 @@ class BusinessSettingsRepository {
       where: where(BusinessSettings.t),
       orderBy: orderBy?.call(BusinessSettings.t),
       orderByList: orderByList?.call(BusinessSettings.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );

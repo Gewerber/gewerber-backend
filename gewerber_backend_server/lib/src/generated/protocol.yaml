@@ -25,6 +25,26 @@ document:
   - get:
   - download:
   - delete:
+customer:
+  - create:
+  - get:
+  - update:
+  - list:
+invoice:
+  - create:
+  - get:
+  - getItems:
+  - update:
+  - list:
+  - delete:
+invoiceTemplate:
+  - create:
+  - get:
+  - update:
+  - list:
+payment:
+  - record:
+  - status:
 userProfile:
   - getMyProfile:
   - update:

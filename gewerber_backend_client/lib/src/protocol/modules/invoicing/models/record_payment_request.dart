@@ -13,7 +13,8 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../../../modules/invoicing/models/payment_method.dart' as _i2;
 
-abstract class RecordPaymentRequest implements _i1.SerializableModel {
+abstract class RecordPaymentRequest
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
   RecordPaymentRequest._({
     required this.invoiceId,
     this.paidAt,
@@ -68,6 +69,18 @@ abstract class RecordPaymentRequest implements _i1.SerializableModel {
   });
   @override
   Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'RecordPaymentRequest',
+      'invoiceId': invoiceId,
+      if (paidAt != null) 'paidAt': paidAt?.toJson(),
+      'amountCents': amountCents,
+      'method': method.toJson(),
+      if (reference != null) 'reference': reference,
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       '__className__': 'RecordPaymentRequest',
       'invoiceId': invoiceId,

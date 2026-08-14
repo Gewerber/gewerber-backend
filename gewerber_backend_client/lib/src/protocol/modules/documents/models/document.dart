@@ -14,7 +14,8 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../../../modules/documents/models/document_kind.dart' as _i2;
 import '../../../modules/documents/models/storage_location.dart' as _i3;
 
-abstract class Document implements _i1.SerializableModel {
+abstract class Document
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
   Document._({
     this.id,
     required this.businessId,
@@ -122,6 +123,25 @@ abstract class Document implements _i1.SerializableModel {
   });
   @override
   Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'Document',
+      if (id != null) 'id': id,
+      'businessId': businessId,
+      'kind': kind.toJson(),
+      'fileName': fileName,
+      if (mimeType != null) 'mimeType': mimeType,
+      if (sizeBytes != null) 'sizeBytes': sizeBytes,
+      'storageLocation': storageLocation.toJson(),
+      'storagePath': storagePath,
+      if (relatedEntityType != null) 'relatedEntityType': relatedEntityType,
+      if (relatedEntityId != null) 'relatedEntityId': relatedEntityId,
+      if (uploadedById != null) 'uploadedById': uploadedById?.toJson(),
+      'createdAt': createdAt.toJson(),
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       '__className__': 'Document',
       if (id != null) 'id': id,

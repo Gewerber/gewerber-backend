@@ -12,8 +12,7 @@ class EntitlementEndpoint extends BusinessScopedEndpoint {
       session,
       tenant,
     );
-    final result = features.toList()
-      ..sort((a, b) => a.name.compareTo(b.name));
+    final result = features.toList()..sort((a, b) => a.name.compareTo(b.name));
     return result;
   }
 }

@@ -17,7 +17,7 @@ enum DocumentKind implements _i1.SerializableModel {
   receipt,
   logo,
   attachment,
-  other
+  other,
   ;
 
   static DocumentKind fromJson(String name) {

@@ -38,15 +38,15 @@ class ServerpodDocumentGateway implements DocumentGateway {
           expression = expression & t.kind.equals(kind);
         }
         if (relatedEntityType != null) {
-          expression = expression & t.relatedEntityType.equals(relatedEntityType);
+          expression =
+              expression & t.relatedEntityType.equals(relatedEntityType);
         }
         if (relatedEntityId != null) {
           expression = expression & t.relatedEntityId.equals(relatedEntityId);
         }
         return expression;
       },
-      orderBy: (t) => t.createdAt,
-      orderDescending: true,
+      orderByList: (t) => [t.createdAt.desc()],
       limit: limit,
       offset: offset,
     );

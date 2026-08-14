@@ -15,10 +15,10 @@ import '../../../modules/invoicing/models/invoice_type.dart' as _i2;
 import '../../../modules/invoicing/models/invoice_status.dart' as _i3;
 import '../../../modules/business/models/locale.dart' as _i4;
 import '../../../modules/business/models/currency.dart' as _i5;
-import '../../../modules/invoicing/models/recurrence_rule.dart' as _i6;
-import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i7;
+import '../../../modules/invoicing/models/recurrence_interval.dart' as _i6;
 
-abstract class Invoice implements _i1.SerializableModel {
+abstract class Invoice
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
   Invoice._({
     this.id,
     required this.businessId,
@@ -40,7 +40,11 @@ abstract class Invoice implements _i1.SerializableModel {
     this.notes,
     this.templateId,
     this.pdfDocumentId,
-    this.recurrence,
+    this.recurrenceInterval,
+    this.nextRecurrenceDate,
+    this.recurrenceEndDate,
+    this.recurrenceMaxOccurrences,
+    int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) : type = type ?? _i2.InvoiceType.invoice,
@@ -52,6 +56,7 @@ abstract class Invoice implements _i1.SerializableModel {
        totalCents = totalCents ?? 0,
        paymentTermsDays = paymentTermsDays ?? 14,
        dunningLevel = dunningLevel ?? 0,
+       recurrenceOccurrencesCreated = recurrenceOccurrencesCreated ?? 0,
        createdAt = createdAt ?? DateTime.now(),
        updatedAt = updatedAt ?? DateTime.now();
 
@@ -76,7 +81,11 @@ abstract class Invoice implements _i1.SerializableModel {
     String? notes,
     int? templateId,
     int? pdfDocumentId,
-    _i6.RecurrenceRule? recurrence,
+    _i6.RecurrenceInterval? recurrenceInterval,
+    DateTime? nextRecurrenceDate,
+    DateTime? recurrenceEndDate,
+    int? recurrenceMaxOccurrences,
+    int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _InvoiceImpl;
@@ -123,11 +132,25 @@ abstract class Invoice implements _i1.SerializableModel {
       notes: jsonSerialization['notes'] as String?,
       templateId: jsonSerialization['templateId'] as int?,
       pdfDocumentId: jsonSerialization['pdfDocumentId'] as int?,
-      recurrence: jsonSerialization['recurrence'] == null
+      recurrenceInterval: jsonSerialization['recurrenceInterval'] == null
           ? null
-          : _i7.Protocol().deserialize<_i6.RecurrenceRule>(
-              jsonSerialization['recurrence'],
+          : _i6.RecurrenceInterval.fromJson(
+              (jsonSerialization['recurrenceInterval'] as String),
             ),
+      nextRecurrenceDate: jsonSerialization['nextRecurrenceDate'] == null
+          ? null
+          : _i1.DateTimeJsonExtension.fromJson(
+              jsonSerialization['nextRecurrenceDate'],
+            ),
+      recurrenceEndDate: jsonSerialization['recurrenceEndDate'] == null
+          ? null
+          : _i1.DateTimeJsonExtension.fromJson(
+              jsonSerialization['recurrenceEndDate'],
+            ),
+      recurrenceMaxOccurrences:
+          jsonSerialization['recurrenceMaxOccurrences'] as int?,
+      recurrenceOccurrencesCreated:
+          jsonSerialization['recurrenceOccurrencesCreated'] as int?,
       createdAt: jsonSerialization['createdAt'] == null
           ? null
           : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
@@ -180,7 +203,15 @@ abstract class Invoice implements _i1.SerializableModel {
 
   int? pdfDocumentId;
 
-  _i6.RecurrenceRule? recurrence;
+  _i6.RecurrenceInterval? recurrenceInterval;
+
+  DateTime? nextRecurrenceDate;
+
+  DateTime? recurrenceEndDate;
+
+  int? recurrenceMaxOccurrences;
+
+  int recurrenceOccurrencesCreated;
 
   DateTime createdAt;
 
@@ -210,7 +241,11 @@ abstract class Invoice implements _i1.SerializableModel {
     String? notes,
     int? templateId,
     int? pdfDocumentId,
-    _i6.RecurrenceRule? recurrence,
+    _i6.RecurrenceInterval? recurrenceInterval,
+    DateTime? nextRecurrenceDate,
+    DateTime? recurrenceEndDate,
+    int? recurrenceMaxOccurrences,
+    int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
     DateTime? updatedAt,
   });
@@ -238,7 +273,53 @@ abstract class Invoice implements _i1.SerializableModel {
       if (notes != null) 'notes': notes,
       if (templateId != null) 'templateId': templateId,
       if (pdfDocumentId != null) 'pdfDocumentId': pdfDocumentId,
-      if (recurrence != null) 'recurrence': recurrence?.toJson(),
+      if (recurrenceInterval != null)
+        'recurrenceInterval': recurrenceInterval?.toJson(),
+      if (nextRecurrenceDate != null)
+        'nextRecurrenceDate': nextRecurrenceDate?.toJson(),
+      if (recurrenceEndDate != null)
+        'recurrenceEndDate': recurrenceEndDate?.toJson(),
+      if (recurrenceMaxOccurrences != null)
+        'recurrenceMaxOccurrences': recurrenceMaxOccurrences,
+      'recurrenceOccurrencesCreated': recurrenceOccurrencesCreated,
+      'createdAt': createdAt.toJson(),
+      'updatedAt': updatedAt.toJson(),
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'Invoice',
+      if (id != null) 'id': id,
+      'businessId': businessId,
+      'number': number,
+      'type': type.toJson(),
+      'status': status.toJson(),
+      if (customerId != null) 'customerId': customerId,
+      'issueDate': issueDate.toJson(),
+      if (dueDate != null) 'dueDate': dueDate?.toJson(),
+      if (serviceDateFrom != null) 'serviceDateFrom': serviceDateFrom?.toJson(),
+      if (serviceDateTo != null) 'serviceDateTo': serviceDateTo?.toJson(),
+      'locale': locale.toJson(),
+      'currency': currency.toJson(),
+      'subtotalCents': subtotalCents,
+      'vatTotalCents': vatTotalCents,
+      'totalCents': totalCents,
+      'paymentTermsDays': paymentTermsDays,
+      'dunningLevel': dunningLevel,
+      if (notes != null) 'notes': notes,
+      if (templateId != null) 'templateId': templateId,
+      if (pdfDocumentId != null) 'pdfDocumentId': pdfDocumentId,
+      if (recurrenceInterval != null)
+        'recurrenceInterval': recurrenceInterval?.toJson(),
+      if (nextRecurrenceDate != null)
+        'nextRecurrenceDate': nextRecurrenceDate?.toJson(),
+      if (recurrenceEndDate != null)
+        'recurrenceEndDate': recurrenceEndDate?.toJson(),
+      if (recurrenceMaxOccurrences != null)
+        'recurrenceMaxOccurrences': recurrenceMaxOccurrences,
+      'recurrenceOccurrencesCreated': recurrenceOccurrencesCreated,
       'createdAt': createdAt.toJson(),
       'updatedAt': updatedAt.toJson(),
     };
@@ -274,7 +355,11 @@ class _InvoiceImpl extends Invoice {
     String? notes,
     int? templateId,
     int? pdfDocumentId,
-    _i6.RecurrenceRule? recurrence,
+    _i6.RecurrenceInterval? recurrenceInterval,
+    DateTime? nextRecurrenceDate,
+    DateTime? recurrenceEndDate,
+    int? recurrenceMaxOccurrences,
+    int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) : super._(
@@ -298,7 +383,11 @@ class _InvoiceImpl extends Invoice {
          notes: notes,
          templateId: templateId,
          pdfDocumentId: pdfDocumentId,
-         recurrence: recurrence,
+         recurrenceInterval: recurrenceInterval,
+         nextRecurrenceDate: nextRecurrenceDate,
+         recurrenceEndDate: recurrenceEndDate,
+         recurrenceMaxOccurrences: recurrenceMaxOccurrences,
+         recurrenceOccurrencesCreated: recurrenceOccurrencesCreated,
          createdAt: createdAt,
          updatedAt: updatedAt,
        );
@@ -328,7 +417,11 @@ class _InvoiceImpl extends Invoice {
     Object? notes = _Undefined,
     Object? templateId = _Undefined,
     Object? pdfDocumentId = _Undefined,
-    Object? recurrence = _Undefined,
+    Object? recurrenceInterval = _Undefined,
+    Object? nextRecurrenceDate = _Undefined,
+    Object? recurrenceEndDate = _Undefined,
+    Object? recurrenceMaxOccurrences = _Undefined,
+    int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -357,9 +450,20 @@ class _InvoiceImpl extends Invoice {
       notes: notes is String? ? notes : this.notes,
       templateId: templateId is int? ? templateId : this.templateId,
       pdfDocumentId: pdfDocumentId is int? ? pdfDocumentId : this.pdfDocumentId,
-      recurrence: recurrence is _i6.RecurrenceRule?
-          ? recurrence
-          : this.recurrence?.copyWith(),
+      recurrenceInterval: recurrenceInterval is _i6.RecurrenceInterval?
+          ? recurrenceInterval
+          : this.recurrenceInterval,
+      nextRecurrenceDate: nextRecurrenceDate is DateTime?
+          ? nextRecurrenceDate
+          : this.nextRecurrenceDate,
+      recurrenceEndDate: recurrenceEndDate is DateTime?
+          ? recurrenceEndDate
+          : this.recurrenceEndDate,
+      recurrenceMaxOccurrences: recurrenceMaxOccurrences is int?
+          ? recurrenceMaxOccurrences
+          : this.recurrenceMaxOccurrences,
+      recurrenceOccurrencesCreated:
+          recurrenceOccurrencesCreated ?? this.recurrenceOccurrencesCreated,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

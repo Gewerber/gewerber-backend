@@ -15,8 +15,7 @@ import '../../../modules/invoicing/models/invoice_type.dart' as _i2;
 import '../../../modules/invoicing/models/invoice_status.dart' as _i3;
 import '../../../modules/business/models/locale.dart' as _i4;
 import '../../../modules/business/models/currency.dart' as _i5;
-import '../../../modules/invoicing/models/recurrence_rule.dart' as _i6;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i7;
+import '../../../modules/invoicing/models/recurrence_interval.dart' as _i6;
 
 abstract class Invoice
     implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
@@ -41,7 +40,11 @@ abstract class Invoice
     this.notes,
     this.templateId,
     this.pdfDocumentId,
-    this.recurrence,
+    this.recurrenceInterval,
+    this.nextRecurrenceDate,
+    this.recurrenceEndDate,
+    this.recurrenceMaxOccurrences,
+    int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) : type = type ?? _i2.InvoiceType.invoice,
@@ -53,6 +56,7 @@ abstract class Invoice
        totalCents = totalCents ?? 0,
        paymentTermsDays = paymentTermsDays ?? 14,
        dunningLevel = dunningLevel ?? 0,
+       recurrenceOccurrencesCreated = recurrenceOccurrencesCreated ?? 0,
        createdAt = createdAt ?? DateTime.now(),
        updatedAt = updatedAt ?? DateTime.now();
 
@@ -77,7 +81,11 @@ abstract class Invoice
     String? notes,
     int? templateId,
     int? pdfDocumentId,
-    _i6.RecurrenceRule? recurrence,
+    _i6.RecurrenceInterval? recurrenceInterval,
+    DateTime? nextRecurrenceDate,
+    DateTime? recurrenceEndDate,
+    int? recurrenceMaxOccurrences,
+    int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _InvoiceImpl;
@@ -124,11 +132,25 @@ abstract class Invoice
       notes: jsonSerialization['notes'] as String?,
       templateId: jsonSerialization['templateId'] as int?,
       pdfDocumentId: jsonSerialization['pdfDocumentId'] as int?,
-      recurrence: jsonSerialization['recurrence'] == null
+      recurrenceInterval: jsonSerialization['recurrenceInterval'] == null
           ? null
-          : _i7.Protocol().deserialize<_i6.RecurrenceRule>(
-              jsonSerialization['recurrence'],
+          : _i6.RecurrenceInterval.fromJson(
+              (jsonSerialization['recurrenceInterval'] as String),
             ),
+      nextRecurrenceDate: jsonSerialization['nextRecurrenceDate'] == null
+          ? null
+          : _i1.DateTimeJsonExtension.fromJson(
+              jsonSerialization['nextRecurrenceDate'],
+            ),
+      recurrenceEndDate: jsonSerialization['recurrenceEndDate'] == null
+          ? null
+          : _i1.DateTimeJsonExtension.fromJson(
+              jsonSerialization['recurrenceEndDate'],
+            ),
+      recurrenceMaxOccurrences:
+          jsonSerialization['recurrenceMaxOccurrences'] as int?,
+      recurrenceOccurrencesCreated:
+          jsonSerialization['recurrenceOccurrencesCreated'] as int?,
       createdAt: jsonSerialization['createdAt'] == null
           ? null
           : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
@@ -183,7 +205,15 @@ abstract class Invoice
 
   int? pdfDocumentId;
 
-  _i6.RecurrenceRule? recurrence;
+  _i6.RecurrenceInterval? recurrenceInterval;
+
+  DateTime? nextRecurrenceDate;
+
+  DateTime? recurrenceEndDate;
+
+  int? recurrenceMaxOccurrences;
+
+  int recurrenceOccurrencesCreated;
 
   DateTime createdAt;
 
@@ -216,7 +246,11 @@ abstract class Invoice
     String? notes,
     int? templateId,
     int? pdfDocumentId,
-    _i6.RecurrenceRule? recurrence,
+    _i6.RecurrenceInterval? recurrenceInterval,
+    DateTime? nextRecurrenceDate,
+    DateTime? recurrenceEndDate,
+    int? recurrenceMaxOccurrences,
+    int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
     DateTime? updatedAt,
   });
@@ -244,7 +278,15 @@ abstract class Invoice
       if (notes != null) 'notes': notes,
       if (templateId != null) 'templateId': templateId,
       if (pdfDocumentId != null) 'pdfDocumentId': pdfDocumentId,
-      if (recurrence != null) 'recurrence': recurrence?.toJson(),
+      if (recurrenceInterval != null)
+        'recurrenceInterval': recurrenceInterval?.toJson(),
+      if (nextRecurrenceDate != null)
+        'nextRecurrenceDate': nextRecurrenceDate?.toJson(),
+      if (recurrenceEndDate != null)
+        'recurrenceEndDate': recurrenceEndDate?.toJson(),
+      if (recurrenceMaxOccurrences != null)
+        'recurrenceMaxOccurrences': recurrenceMaxOccurrences,
+      'recurrenceOccurrencesCreated': recurrenceOccurrencesCreated,
       'createdAt': createdAt.toJson(),
       'updatedAt': updatedAt.toJson(),
     };
@@ -274,7 +316,15 @@ abstract class Invoice
       if (notes != null) 'notes': notes,
       if (templateId != null) 'templateId': templateId,
       if (pdfDocumentId != null) 'pdfDocumentId': pdfDocumentId,
-      if (recurrence != null) 'recurrence': recurrence?.toJsonForProtocol(),
+      if (recurrenceInterval != null)
+        'recurrenceInterval': recurrenceInterval?.toJson(),
+      if (nextRecurrenceDate != null)
+        'nextRecurrenceDate': nextRecurrenceDate?.toJson(),
+      if (recurrenceEndDate != null)
+        'recurrenceEndDate': recurrenceEndDate?.toJson(),
+      if (recurrenceMaxOccurrences != null)
+        'recurrenceMaxOccurrences': recurrenceMaxOccurrences,
+      'recurrenceOccurrencesCreated': recurrenceOccurrencesCreated,
       'createdAt': createdAt.toJson(),
       'updatedAt': updatedAt.toJson(),
     };
@@ -289,8 +339,6 @@ abstract class Invoice
     int? limit,
     int? offset,
     _i1.OrderByBuilder<InvoiceTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<InvoiceTable>? orderByList,
     InvoiceInclude? include,
   }) {
@@ -299,8 +347,6 @@ abstract class Invoice
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(Invoice.t),
-      orderDescending: // ignore: deprecated_member_use_from_same_package
-          orderDescending,
       orderByList: orderByList?.call(Invoice.t),
       include: include,
     );
@@ -336,7 +382,11 @@ class _InvoiceImpl extends Invoice {
     String? notes,
     int? templateId,
     int? pdfDocumentId,
-    _i6.RecurrenceRule? recurrence,
+    _i6.RecurrenceInterval? recurrenceInterval,
+    DateTime? nextRecurrenceDate,
+    DateTime? recurrenceEndDate,
+    int? recurrenceMaxOccurrences,
+    int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) : super._(
@@ -360,7 +410,11 @@ class _InvoiceImpl extends Invoice {
          notes: notes,
          templateId: templateId,
          pdfDocumentId: pdfDocumentId,
-         recurrence: recurrence,
+         recurrenceInterval: recurrenceInterval,
+         nextRecurrenceDate: nextRecurrenceDate,
+         recurrenceEndDate: recurrenceEndDate,
+         recurrenceMaxOccurrences: recurrenceMaxOccurrences,
+         recurrenceOccurrencesCreated: recurrenceOccurrencesCreated,
          createdAt: createdAt,
          updatedAt: updatedAt,
        );
@@ -390,7 +444,11 @@ class _InvoiceImpl extends Invoice {
     Object? notes = _Undefined,
     Object? templateId = _Undefined,
     Object? pdfDocumentId = _Undefined,
-    Object? recurrence = _Undefined,
+    Object? recurrenceInterval = _Undefined,
+    Object? nextRecurrenceDate = _Undefined,
+    Object? recurrenceEndDate = _Undefined,
+    Object? recurrenceMaxOccurrences = _Undefined,
+    int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -419,9 +477,20 @@ class _InvoiceImpl extends Invoice {
       notes: notes is String? ? notes : this.notes,
       templateId: templateId is int? ? templateId : this.templateId,
       pdfDocumentId: pdfDocumentId is int? ? pdfDocumentId : this.pdfDocumentId,
-      recurrence: recurrence is _i6.RecurrenceRule?
-          ? recurrence
-          : this.recurrence?.copyWith(),
+      recurrenceInterval: recurrenceInterval is _i6.RecurrenceInterval?
+          ? recurrenceInterval
+          : this.recurrenceInterval,
+      nextRecurrenceDate: nextRecurrenceDate is DateTime?
+          ? nextRecurrenceDate
+          : this.nextRecurrenceDate,
+      recurrenceEndDate: recurrenceEndDate is DateTime?
+          ? recurrenceEndDate
+          : this.recurrenceEndDate,
+      recurrenceMaxOccurrences: recurrenceMaxOccurrences is int?
+          ? recurrenceMaxOccurrences
+          : this.recurrenceMaxOccurrences,
+      recurrenceOccurrencesCreated:
+          recurrenceOccurrencesCreated ?? this.recurrenceOccurrencesCreated,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -536,12 +605,35 @@ class InvoiceUpdateTable extends _i1.UpdateTable<InvoiceTable> {
     value,
   );
 
-  _i1.ColumnValue<_i6.RecurrenceRule, _i6.RecurrenceRule> recurrence(
-    _i6.RecurrenceRule? value,
-  ) => _i1.ColumnValue(
-    table.recurrence,
+  _i1.ColumnValue<_i6.RecurrenceInterval, _i6.RecurrenceInterval>
+  recurrenceInterval(_i6.RecurrenceInterval? value) => _i1.ColumnValue(
+    table.recurrenceInterval,
     value,
   );
+
+  _i1.ColumnValue<DateTime, DateTime> nextRecurrenceDate(DateTime? value) =>
+      _i1.ColumnValue(
+        table.nextRecurrenceDate,
+        value,
+      );
+
+  _i1.ColumnValue<DateTime, DateTime> recurrenceEndDate(DateTime? value) =>
+      _i1.ColumnValue(
+        table.recurrenceEndDate,
+        value,
+      );
+
+  _i1.ColumnValue<int, int> recurrenceMaxOccurrences(int? value) =>
+      _i1.ColumnValue(
+        table.recurrenceMaxOccurrences,
+        value,
+      );
+
+  _i1.ColumnValue<int, int> recurrenceOccurrencesCreated(int value) =>
+      _i1.ColumnValue(
+        table.recurrenceOccurrencesCreated,
+        value,
+      );
 
   _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
       _i1.ColumnValue(
@@ -648,9 +740,27 @@ class InvoiceTable extends _i1.Table<int?> {
       'pdfDocumentId',
       this,
     );
-    recurrence = _i1.ColumnSerializable<_i6.RecurrenceRule>(
-      'recurrence',
+    recurrenceInterval = _i1.ColumnEnum(
+      'recurrenceInterval',
       this,
+      _i1.EnumSerialization.byName,
+    );
+    nextRecurrenceDate = _i1.ColumnDateTime(
+      'nextRecurrenceDate',
+      this,
+    );
+    recurrenceEndDate = _i1.ColumnDateTime(
+      'recurrenceEndDate',
+      this,
+    );
+    recurrenceMaxOccurrences = _i1.ColumnInt(
+      'recurrenceMaxOccurrences',
+      this,
+    );
+    recurrenceOccurrencesCreated = _i1.ColumnInt(
+      'recurrenceOccurrencesCreated',
+      this,
+      hasDefault: true,
     );
     createdAt = _i1.ColumnDateTime(
       'createdAt',
@@ -704,7 +814,15 @@ class InvoiceTable extends _i1.Table<int?> {
 
   late final _i1.ColumnInt pdfDocumentId;
 
-  late final _i1.ColumnSerializable<_i6.RecurrenceRule> recurrence;
+  late final _i1.ColumnEnum<_i6.RecurrenceInterval> recurrenceInterval;
+
+  late final _i1.ColumnDateTime nextRecurrenceDate;
+
+  late final _i1.ColumnDateTime recurrenceEndDate;
+
+  late final _i1.ColumnInt recurrenceMaxOccurrences;
+
+  late final _i1.ColumnInt recurrenceOccurrencesCreated;
 
   late final _i1.ColumnDateTime createdAt;
 
@@ -732,7 +850,11 @@ class InvoiceTable extends _i1.Table<int?> {
     notes,
     templateId,
     pdfDocumentId,
-    recurrence,
+    recurrenceInterval,
+    nextRecurrenceDate,
+    recurrenceEndDate,
+    recurrenceMaxOccurrences,
+    recurrenceOccurrencesCreated,
     createdAt,
     updatedAt,
   ];
@@ -754,8 +876,6 @@ class InvoiceIncludeList extends _i1.IncludeList {
     super.limit,
     super.offset,
     super.orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -800,8 +920,6 @@ class InvoiceRepository {
     int? limit,
     int? offset,
     _i1.OrderByBuilder<InvoiceTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<InvoiceTable>? orderByList,
     _i1.Transaction? transaction,
     _i1.LockMode? lockMode,
@@ -811,8 +929,6 @@ class InvoiceRepository {
       where: where?.call(Invoice.t),
       orderBy: orderBy?.call(Invoice.t),
       orderByList: orderByList?.call(Invoice.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -843,8 +959,6 @@ class InvoiceRepository {
     _i1.WhereExpressionBuilder<InvoiceTable>? where,
     int? offset,
     _i1.OrderByBuilder<InvoiceTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<InvoiceTable>? orderByList,
     _i1.Transaction? transaction,
     _i1.LockMode? lockMode,
@@ -854,8 +968,6 @@ class InvoiceRepository {
       where: where?.call(Invoice.t),
       orderBy: orderBy?.call(Invoice.t),
       orderByList: orderByList?.call(Invoice.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -1060,8 +1172,6 @@ class InvoiceRepository {
     int? offset,
     _i1.OrderByBuilder<InvoiceTable>? orderBy,
     _i1.OrderByListBuilder<InvoiceTable>? orderByList,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
@@ -1072,8 +1182,6 @@ class InvoiceRepository {
       offset: offset,
       orderBy: orderBy?.call(Invoice.t),
       orderByList: orderByList?.call(Invoice.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -1094,8 +1202,6 @@ class InvoiceRepository {
     _i1.DatabaseSession session,
     List<Invoice> rows, {
     _i1.OrderByBuilder<InvoiceTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<InvoiceTable>? orderByList,
     _i1.Transaction? transaction,
     bool noReturn = false,
@@ -1104,8 +1210,6 @@ class InvoiceRepository {
       rows,
       orderBy: orderBy?.call(Invoice.t),
       orderByList: orderByList?.call(Invoice.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -1135,8 +1239,6 @@ class InvoiceRepository {
     _i1.DatabaseSession session, {
     required _i1.WhereExpressionBuilder<InvoiceTable> where,
     _i1.OrderByBuilder<InvoiceTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<InvoiceTable>? orderByList,
     _i1.Transaction? transaction,
     bool noReturn = false,
@@ -1145,8 +1247,6 @@ class InvoiceRepository {
       where: where(Invoice.t),
       orderBy: orderBy?.call(Invoice.t),
       orderByList: orderByList?.call(Invoice.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );

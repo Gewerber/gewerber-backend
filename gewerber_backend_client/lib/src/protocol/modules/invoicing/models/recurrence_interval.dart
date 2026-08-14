@@ -13,14 +13,17 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
 enum RecurrenceInterval implements _i1.SerializableModel {
+  daily,
   weekly,
   monthly,
   quarterly,
-  yearly
+  yearly,
   ;
 
   static RecurrenceInterval fromJson(String name) {
     switch (name) {
+      case 'daily':
+        return RecurrenceInterval.daily;
       case 'weekly':
         return RecurrenceInterval.weekly;
       case 'monthly':

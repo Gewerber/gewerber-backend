@@ -8,6 +8,7 @@
 // ignore_for_file: type_literal_in_constant_pattern
 // ignore_for_file: use_super_parameters
 // ignore_for_file: invalid_use_of_internal_member
+// ignore_for_file: dead_code, unnecessary_type_check
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
@@ -42,14 +43,14 @@ import 'modules/invoicing/models/invoice.dart' as _i29;
 import 'modules/invoicing/models/invoice_item.dart' as _i30;
 import 'modules/invoicing/models/invoice_item_request.dart' as _i31;
 import 'modules/invoicing/models/invoice_item_unit.dart' as _i32;
-import 'modules/invoicing/models/invoice_status.dart' as _i33;
-import 'modules/invoicing/models/invoice_template.dart' as _i34;
-import 'modules/invoicing/models/invoice_type.dart' as _i35;
-import 'modules/invoicing/models/payment_method.dart' as _i36;
-import 'modules/invoicing/models/payment_record.dart' as _i37;
-import 'modules/invoicing/models/record_payment_request.dart' as _i38;
-import 'modules/invoicing/models/recurrence_interval.dart' as _i39;
-import 'modules/invoicing/models/recurrence_rule.dart' as _i40;
+import 'modules/invoicing/models/invoice_payment_status.dart' as _i33;
+import 'modules/invoicing/models/invoice_status.dart' as _i34;
+import 'modules/invoicing/models/invoice_template.dart' as _i35;
+import 'modules/invoicing/models/invoice_type.dart' as _i36;
+import 'modules/invoicing/models/payment_method.dart' as _i37;
+import 'modules/invoicing/models/payment_record.dart' as _i38;
+import 'modules/invoicing/models/record_payment_request.dart' as _i39;
+import 'modules/invoicing/models/recurrence_interval.dart' as _i40;
 import 'modules/invoicing/models/reminder.dart' as _i41;
 import 'modules/invoicing/models/update_customer_request.dart' as _i42;
 import 'modules/invoicing/models/update_invoice_request.dart' as _i43;
@@ -63,10 +64,20 @@ import 'package:gewerber_backend_client/src/protocol/modules/business/models/bus
     as _i49;
 import 'package:gewerber_backend_client/src/protocol/modules/documents/models/document.dart'
     as _i50;
-import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer.dart'
     as _i51;
-import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_item.dart'
     as _i52;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice.dart'
+    as _i53;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_template.dart'
+    as _i54;
+import 'package:gewerber_commercial_client/gewerber_commercial_client.dart'
+    as _i55;
+import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
+    as _i56;
+import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
+    as _i57;
 export 'core/entitlement/feature.dart';
 export 'core/errors/conflict_exception.dart';
 export 'core/errors/forbidden_exception.dart';
@@ -98,6 +109,7 @@ export 'modules/invoicing/models/invoice.dart';
 export 'modules/invoicing/models/invoice_item.dart';
 export 'modules/invoicing/models/invoice_item_request.dart';
 export 'modules/invoicing/models/invoice_item_unit.dart';
+export 'modules/invoicing/models/invoice_payment_status.dart';
 export 'modules/invoicing/models/invoice_status.dart';
 export 'modules/invoicing/models/invoice_template.dart';
 export 'modules/invoicing/models/invoice_type.dart';
@@ -105,7 +117,6 @@ export 'modules/invoicing/models/payment_method.dart';
 export 'modules/invoicing/models/payment_record.dart';
 export 'modules/invoicing/models/record_payment_request.dart';
 export 'modules/invoicing/models/recurrence_interval.dart';
-export 'modules/invoicing/models/recurrence_rule.dart';
 export 'modules/invoicing/models/reminder.dart';
 export 'modules/invoicing/models/update_customer_request.dart';
 export 'modules/invoicing/models/update_invoice_request.dart';
@@ -242,29 +253,29 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i32.InvoiceItemUnit) {
       return _i32.InvoiceItemUnit.fromJson(data) as T;
     }
-    if (t == _i33.InvoiceStatus) {
-      return _i33.InvoiceStatus.fromJson(data) as T;
+    if (t == _i33.InvoicePaymentStatus) {
+      return _i33.InvoicePaymentStatus.fromJson(data) as T;
     }
-    if (t == _i34.InvoiceTemplate) {
-      return _i34.InvoiceTemplate.fromJson(data) as T;
+    if (t == _i34.InvoiceStatus) {
+      return _i34.InvoiceStatus.fromJson(data) as T;
     }
-    if (t == _i35.InvoiceType) {
-      return _i35.InvoiceType.fromJson(data) as T;
+    if (t == _i35.InvoiceTemplate) {
+      return _i35.InvoiceTemplate.fromJson(data) as T;
     }
-    if (t == _i36.PaymentMethod) {
-      return _i36.PaymentMethod.fromJson(data) as T;
+    if (t == _i36.InvoiceType) {
+      return _i36.InvoiceType.fromJson(data) as T;
     }
-    if (t == _i37.PaymentRecord) {
-      return _i37.PaymentRecord.fromJson(data) as T;
+    if (t == _i37.PaymentMethod) {
+      return _i37.PaymentMethod.fromJson(data) as T;
     }
-    if (t == _i38.RecordPaymentRequest) {
-      return _i38.RecordPaymentRequest.fromJson(data) as T;
+    if (t == _i38.PaymentRecord) {
+      return _i38.PaymentRecord.fromJson(data) as T;
     }
-    if (t == _i39.RecurrenceInterval) {
-      return _i39.RecurrenceInterval.fromJson(data) as T;
+    if (t == _i39.RecordPaymentRequest) {
+      return _i39.RecordPaymentRequest.fromJson(data) as T;
     }
-    if (t == _i40.RecurrenceRule) {
-      return _i40.RecurrenceRule.fromJson(data) as T;
+    if (t == _i40.RecurrenceInterval) {
+      return _i40.RecurrenceInterval.fromJson(data) as T;
     }
     if (t == _i41.Reminder) {
       return _i41.Reminder.fromJson(data) as T;
@@ -393,31 +404,32 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i32.InvoiceItemUnit?>()) {
       return (data != null ? _i32.InvoiceItemUnit.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i33.InvoiceStatus?>()) {
-      return (data != null ? _i33.InvoiceStatus.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i34.InvoiceTemplate?>()) {
-      return (data != null ? _i34.InvoiceTemplate.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i35.InvoiceType?>()) {
-      return (data != null ? _i35.InvoiceType.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i36.PaymentMethod?>()) {
-      return (data != null ? _i36.PaymentMethod.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i37.PaymentRecord?>()) {
-      return (data != null ? _i37.PaymentRecord.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i38.RecordPaymentRequest?>()) {
-      return (data != null ? _i38.RecordPaymentRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i33.InvoicePaymentStatus?>()) {
+      return (data != null ? _i33.InvoicePaymentStatus.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i39.RecurrenceInterval?>()) {
-      return (data != null ? _i39.RecurrenceInterval.fromJson(data) : null)
+    if (t == _i1.getType<_i34.InvoiceStatus?>()) {
+      return (data != null ? _i34.InvoiceStatus.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i35.InvoiceTemplate?>()) {
+      return (data != null ? _i35.InvoiceTemplate.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i36.InvoiceType?>()) {
+      return (data != null ? _i36.InvoiceType.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i37.PaymentMethod?>()) {
+      return (data != null ? _i37.PaymentMethod.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i38.PaymentRecord?>()) {
+      return (data != null ? _i38.PaymentRecord.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i39.RecordPaymentRequest?>()) {
+      return (data != null ? _i39.RecordPaymentRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i40.RecurrenceRule?>()) {
-      return (data != null ? _i40.RecurrenceRule.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i40.RecurrenceInterval?>()) {
+      return (data != null ? _i40.RecurrenceInterval.fromJson(data) : null)
+          as T;
     }
     if (t == _i1.getType<_i41.Reminder?>()) {
       return (data != null ? _i41.Reminder.fromJson(data) : null) as T;
@@ -454,6 +466,12 @@ class Protocol extends _i1.SerializationManager {
               .toList()
           as T;
     }
+    if (t == List<_i38.PaymentRecord>) {
+      return (data as List)
+              .map((e) => deserialize<_i38.PaymentRecord>(e))
+              .toList()
+          as T;
+    }
     if (t == List<_i48.Feature>) {
       return (data as List).map((e) => deserialize<_i48.Feature>(e)).toList()
           as T;
@@ -466,11 +484,34 @@ class Protocol extends _i1.SerializationManager {
       return (data as List).map((e) => deserialize<_i50.Document>(e)).toList()
           as T;
     }
+    if (t == List<_i51.Customer>) {
+      return (data as List).map((e) => deserialize<_i51.Customer>(e)).toList()
+          as T;
+    }
+    if (t == List<_i52.InvoiceItem>) {
+      return (data as List)
+              .map((e) => deserialize<_i52.InvoiceItem>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_i53.Invoice>) {
+      return (data as List).map((e) => deserialize<_i53.Invoice>(e)).toList()
+          as T;
+    }
+    if (t == List<_i54.InvoiceTemplate>) {
+      return (data as List)
+              .map((e) => deserialize<_i54.InvoiceTemplate>(e))
+              .toList()
+          as T;
+    }
     try {
-      return _i51.Protocol().deserialize<T>(data, t);
+      return _i55.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     try {
-      return _i52.Protocol().deserialize<T>(data, t);
+      return _i56.Protocol().deserialize<T>(data, t);
+    } on _i1.DeserializationTypeNotFoundException catch (_) {}
+    try {
+      return _i57.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -508,14 +549,14 @@ class Protocol extends _i1.SerializationManager {
       _i30.InvoiceItem => 'InvoiceItem',
       _i31.InvoiceItemRequest => 'InvoiceItemRequest',
       _i32.InvoiceItemUnit => 'InvoiceItemUnit',
-      _i33.InvoiceStatus => 'InvoiceStatus',
-      _i34.InvoiceTemplate => 'InvoiceTemplate',
-      _i35.InvoiceType => 'InvoiceType',
-      _i36.PaymentMethod => 'PaymentMethod',
-      _i37.PaymentRecord => 'PaymentRecord',
-      _i38.RecordPaymentRequest => 'RecordPaymentRequest',
-      _i39.RecurrenceInterval => 'RecurrenceInterval',
-      _i40.RecurrenceRule => 'RecurrenceRule',
+      _i33.InvoicePaymentStatus => 'InvoicePaymentStatus',
+      _i34.InvoiceStatus => 'InvoiceStatus',
+      _i35.InvoiceTemplate => 'InvoiceTemplate',
+      _i36.InvoiceType => 'InvoiceType',
+      _i37.PaymentMethod => 'PaymentMethod',
+      _i38.PaymentRecord => 'PaymentRecord',
+      _i39.RecordPaymentRequest => 'RecordPaymentRequest',
+      _i40.RecurrenceInterval => 'RecurrenceInterval',
       _i41.Reminder => 'Reminder',
       _i42.UpdateCustomerRequest => 'UpdateCustomerRequest',
       _i43.UpdateInvoiceRequest => 'UpdateInvoiceRequest',
@@ -602,22 +643,22 @@ class Protocol extends _i1.SerializationManager {
         return 'InvoiceItemRequest';
       case _i32.InvoiceItemUnit():
         return 'InvoiceItemUnit';
-      case _i33.InvoiceStatus():
+      case _i33.InvoicePaymentStatus():
+        return 'InvoicePaymentStatus';
+      case _i34.InvoiceStatus():
         return 'InvoiceStatus';
-      case _i34.InvoiceTemplate():
+      case _i35.InvoiceTemplate():
         return 'InvoiceTemplate';
-      case _i35.InvoiceType():
+      case _i36.InvoiceType():
         return 'InvoiceType';
-      case _i36.PaymentMethod():
+      case _i37.PaymentMethod():
         return 'PaymentMethod';
-      case _i37.PaymentRecord():
+      case _i38.PaymentRecord():
         return 'PaymentRecord';
-      case _i38.RecordPaymentRequest():
+      case _i39.RecordPaymentRequest():
         return 'RecordPaymentRequest';
-      case _i39.RecurrenceInterval():
+      case _i40.RecurrenceInterval():
         return 'RecurrenceInterval';
-      case _i40.RecurrenceRule():
-        return 'RecurrenceRule';
       case _i41.Reminder():
         return 'Reminder';
       case _i42.UpdateCustomerRequest():
@@ -633,13 +674,19 @@ class Protocol extends _i1.SerializationManager {
       case _i47.UserProfile():
         return 'UserProfile';
     }
-    className = _i51.Protocol().getClassNameForObject(data);
+    className = _i55.Protocol().getClassNameForObject(data);
+    if (className != null) {
+      return className.contains('.')
+          ? className
+          : 'gewerber_commercial.$className';
+    }
+    className = _i56.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
           : 'serverpod_auth_idp.$className';
     }
-    className = _i52.Protocol().getClassNameForObject(data);
+    className = _i57.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
@@ -747,29 +794,29 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'InvoiceItemUnit') {
       return deserialize<_i32.InvoiceItemUnit>(data['data']);
     }
+    if (dataClassName == 'InvoicePaymentStatus') {
+      return deserialize<_i33.InvoicePaymentStatus>(data['data']);
+    }
     if (dataClassName == 'InvoiceStatus') {
-      return deserialize<_i33.InvoiceStatus>(data['data']);
+      return deserialize<_i34.InvoiceStatus>(data['data']);
     }
     if (dataClassName == 'InvoiceTemplate') {
-      return deserialize<_i34.InvoiceTemplate>(data['data']);
+      return deserialize<_i35.InvoiceTemplate>(data['data']);
     }
     if (dataClassName == 'InvoiceType') {
-      return deserialize<_i35.InvoiceType>(data['data']);
+      return deserialize<_i36.InvoiceType>(data['data']);
     }
     if (dataClassName == 'PaymentMethod') {
-      return deserialize<_i36.PaymentMethod>(data['data']);
+      return deserialize<_i37.PaymentMethod>(data['data']);
     }
     if (dataClassName == 'PaymentRecord') {
-      return deserialize<_i37.PaymentRecord>(data['data']);
+      return deserialize<_i38.PaymentRecord>(data['data']);
     }
     if (dataClassName == 'RecordPaymentRequest') {
-      return deserialize<_i38.RecordPaymentRequest>(data['data']);
+      return deserialize<_i39.RecordPaymentRequest>(data['data']);
     }
     if (dataClassName == 'RecurrenceInterval') {
-      return deserialize<_i39.RecurrenceInterval>(data['data']);
-    }
-    if (dataClassName == 'RecurrenceRule') {
-      return deserialize<_i40.RecurrenceRule>(data['data']);
+      return deserialize<_i40.RecurrenceInterval>(data['data']);
     }
     if (dataClassName == 'Reminder') {
       return deserialize<_i41.Reminder>(data['data']);
@@ -792,20 +839,25 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'UserProfile') {
       return deserialize<_i47.UserProfile>(data['data']);
     }
+    if (dataClassName.startsWith('gewerber_commercial.')) {
+      data['className'] = dataClassName.substring(20);
+      return _i55.Protocol().deserializeByClassName(data);
+    }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);
-      return _i51.Protocol().deserializeByClassName(data);
+      return _i56.Protocol().deserializeByClassName(data);
     }
     if (dataClassName.startsWith('serverpod_auth_core.')) {
       data['className'] = dataClassName.substring(20);
-      return _i52.Protocol().deserializeByClassName(data);
+      return _i57.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }
 
   void _registerHostProtocols() {
-    _i51.Protocol().registerHostProtocol('gewerber_backend', this);
-    _i52.Protocol().registerHostProtocol('gewerber_backend', this);
+    _i55.Protocol().registerHostProtocol('gewerber_backend', this);
+    _i56.Protocol().registerHostProtocol('gewerber_backend', this);
+    _i57.Protocol().registerHostProtocol('gewerber_backend', this);
   }
 
   @override
@@ -821,10 +873,13 @@ class Protocol extends _i1.SerializationManager {
       return null;
     }
     try {
-      return _i51.Protocol().mapRecordToJson(record);
+      return _i55.Protocol().mapRecordToJson(record);
     } catch (_) {}
     try {
-      return _i52.Protocol().mapRecordToJson(record);
+      return _i56.Protocol().mapRecordToJson(record);
+    } catch (_) {}
+    try {
+      return _i57.Protocol().mapRecordToJson(record);
     } catch (_) {}
     throw Exception('Unsupported record type ${record.runtimeType}');
   }

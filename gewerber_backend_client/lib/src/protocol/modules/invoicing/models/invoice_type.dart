@@ -14,7 +14,7 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
 enum InvoiceType implements _i1.SerializableModel {
   invoice,
-  creditNote
+  creditNote,
   ;
 
   static InvoiceType fromJson(String name) {

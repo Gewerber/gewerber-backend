@@ -18,7 +18,7 @@ enum PaymentMethod implements _i1.SerializableModel {
   card,
   paypal,
   directDebit,
-  other
+  other,
   ;
 
   static PaymentMethod fromJson(String name) {

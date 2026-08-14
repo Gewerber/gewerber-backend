@@ -14,7 +14,7 @@ import 'package:serverpod/serverpod.dart' as _i1;
 
 enum CustomerStatus implements _i1.SerializableModel {
   active,
-  archived
+  archived,
   ;
 
   static CustomerStatus fromJson(String name) {

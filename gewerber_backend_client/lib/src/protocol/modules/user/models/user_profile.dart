@@ -13,7 +13,8 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../../../modules/business/models/locale.dart' as _i2;
 
-abstract class UserProfile implements _i1.SerializableModel {
+abstract class UserProfile
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
   UserProfile._({
     this.id,
     required this.userId,
@@ -85,6 +86,20 @@ abstract class UserProfile implements _i1.SerializableModel {
   });
   @override
   Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'UserProfile',
+      if (id != null) 'id': id,
+      'userId': userId.toJson(),
+      if (displayName != null) 'displayName': displayName,
+      'locale': locale.toJson(),
+      if (timeZone != null) 'timeZone': timeZone,
+      'createdAt': createdAt.toJson(),
+      'updatedAt': updatedAt.toJson(),
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       '__className__': 'UserProfile',
       if (id != null) 'id': id,

@@ -14,7 +14,7 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import '../../../modules/invoicing/models/invoice_type.dart' as _i2;
 import '../../../modules/business/models/locale.dart' as _i3;
 import '../../../modules/business/models/currency.dart' as _i4;
-import '../../../modules/invoicing/models/recurrence_rule.dart' as _i5;
+import '../../../modules/invoicing/models/recurrence_interval.dart' as _i5;
 import '../../../modules/invoicing/models/invoice_item_request.dart' as _i6;
 import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i7;
 
@@ -32,7 +32,10 @@ abstract class CreateInvoiceRequest
     this.locale,
     this.currency,
     this.notes,
-    this.recurrence,
+    this.recurrenceInterval,
+    this.nextRecurrenceDate,
+    this.recurrenceEndDate,
+    this.recurrenceMaxOccurrences,
     required this.items,
   }) : type = type ?? _i2.InvoiceType.invoice;
 
@@ -48,7 +51,10 @@ abstract class CreateInvoiceRequest
     _i3.Locale? locale,
     _i4.Currency? currency,
     String? notes,
-    _i5.RecurrenceRule? recurrence,
+    _i5.RecurrenceInterval? recurrenceInterval,
+    DateTime? nextRecurrenceDate,
+    DateTime? recurrenceEndDate,
+    int? recurrenceMaxOccurrences,
     required List<_i6.InvoiceItemRequest> items,
   }) = _CreateInvoiceRequestImpl;
 
@@ -85,11 +91,23 @@ abstract class CreateInvoiceRequest
           ? null
           : _i4.Currency.fromJson((jsonSerialization['currency'] as String)),
       notes: jsonSerialization['notes'] as String?,
-      recurrence: jsonSerialization['recurrence'] == null
+      recurrenceInterval: jsonSerialization['recurrenceInterval'] == null
           ? null
-          : _i7.Protocol().deserialize<_i5.RecurrenceRule>(
-              jsonSerialization['recurrence'],
+          : _i5.RecurrenceInterval.fromJson(
+              (jsonSerialization['recurrenceInterval'] as String),
             ),
+      nextRecurrenceDate: jsonSerialization['nextRecurrenceDate'] == null
+          ? null
+          : _i1.DateTimeJsonExtension.fromJson(
+              jsonSerialization['nextRecurrenceDate'],
+            ),
+      recurrenceEndDate: jsonSerialization['recurrenceEndDate'] == null
+          ? null
+          : _i1.DateTimeJsonExtension.fromJson(
+              jsonSerialization['recurrenceEndDate'],
+            ),
+      recurrenceMaxOccurrences:
+          jsonSerialization['recurrenceMaxOccurrences'] as int?,
       items: _i7.Protocol().deserialize<List<_i6.InvoiceItemRequest>>(
         jsonSerialization['items'],
       ),
@@ -118,7 +136,13 @@ abstract class CreateInvoiceRequest
 
   String? notes;
 
-  _i5.RecurrenceRule? recurrence;
+  _i5.RecurrenceInterval? recurrenceInterval;
+
+  DateTime? nextRecurrenceDate;
+
+  DateTime? recurrenceEndDate;
+
+  int? recurrenceMaxOccurrences;
 
   List<_i6.InvoiceItemRequest> items;
 
@@ -137,7 +161,10 @@ abstract class CreateInvoiceRequest
     _i3.Locale? locale,
     _i4.Currency? currency,
     String? notes,
-    _i5.RecurrenceRule? recurrence,
+    _i5.RecurrenceInterval? recurrenceInterval,
+    DateTime? nextRecurrenceDate,
+    DateTime? recurrenceEndDate,
+    int? recurrenceMaxOccurrences,
     List<_i6.InvoiceItemRequest>? items,
   });
   @override
@@ -155,7 +182,14 @@ abstract class CreateInvoiceRequest
       if (locale != null) 'locale': locale?.toJson(),
       if (currency != null) 'currency': currency?.toJson(),
       if (notes != null) 'notes': notes,
-      if (recurrence != null) 'recurrence': recurrence?.toJson(),
+      if (recurrenceInterval != null)
+        'recurrenceInterval': recurrenceInterval?.toJson(),
+      if (nextRecurrenceDate != null)
+        'nextRecurrenceDate': nextRecurrenceDate?.toJson(),
+      if (recurrenceEndDate != null)
+        'recurrenceEndDate': recurrenceEndDate?.toJson(),
+      if (recurrenceMaxOccurrences != null)
+        'recurrenceMaxOccurrences': recurrenceMaxOccurrences,
       'items': items.toJson(valueToJson: (v) => v.toJson()),
     };
   }
@@ -175,7 +209,14 @@ abstract class CreateInvoiceRequest
       if (locale != null) 'locale': locale?.toJson(),
       if (currency != null) 'currency': currency?.toJson(),
       if (notes != null) 'notes': notes,
-      if (recurrence != null) 'recurrence': recurrence?.toJsonForProtocol(),
+      if (recurrenceInterval != null)
+        'recurrenceInterval': recurrenceInterval?.toJson(),
+      if (nextRecurrenceDate != null)
+        'nextRecurrenceDate': nextRecurrenceDate?.toJson(),
+      if (recurrenceEndDate != null)
+        'recurrenceEndDate': recurrenceEndDate?.toJson(),
+      if (recurrenceMaxOccurrences != null)
+        'recurrenceMaxOccurrences': recurrenceMaxOccurrences,
       'items': items.toJson(valueToJson: (v) => v.toJsonForProtocol()),
     };
   }
@@ -201,7 +242,10 @@ class _CreateInvoiceRequestImpl extends CreateInvoiceRequest {
     _i3.Locale? locale,
     _i4.Currency? currency,
     String? notes,
-    _i5.RecurrenceRule? recurrence,
+    _i5.RecurrenceInterval? recurrenceInterval,
+    DateTime? nextRecurrenceDate,
+    DateTime? recurrenceEndDate,
+    int? recurrenceMaxOccurrences,
     required List<_i6.InvoiceItemRequest> items,
   }) : super._(
          type: type,
@@ -215,7 +259,10 @@ class _CreateInvoiceRequestImpl extends CreateInvoiceRequest {
          locale: locale,
          currency: currency,
          notes: notes,
-         recurrence: recurrence,
+         recurrenceInterval: recurrenceInterval,
+         nextRecurrenceDate: nextRecurrenceDate,
+         recurrenceEndDate: recurrenceEndDate,
+         recurrenceMaxOccurrences: recurrenceMaxOccurrences,
          items: items,
        );
 
@@ -235,7 +282,10 @@ class _CreateInvoiceRequestImpl extends CreateInvoiceRequest {
     Object? locale = _Undefined,
     Object? currency = _Undefined,
     Object? notes = _Undefined,
-    Object? recurrence = _Undefined,
+    Object? recurrenceInterval = _Undefined,
+    Object? nextRecurrenceDate = _Undefined,
+    Object? recurrenceEndDate = _Undefined,
+    Object? recurrenceMaxOccurrences = _Undefined,
     List<_i6.InvoiceItemRequest>? items,
   }) {
     return CreateInvoiceRequest(
@@ -256,9 +306,18 @@ class _CreateInvoiceRequestImpl extends CreateInvoiceRequest {
       locale: locale is _i3.Locale? ? locale : this.locale,
       currency: currency is _i4.Currency? ? currency : this.currency,
       notes: notes is String? ? notes : this.notes,
-      recurrence: recurrence is _i5.RecurrenceRule?
-          ? recurrence
-          : this.recurrence?.copyWith(),
+      recurrenceInterval: recurrenceInterval is _i5.RecurrenceInterval?
+          ? recurrenceInterval
+          : this.recurrenceInterval,
+      nextRecurrenceDate: nextRecurrenceDate is DateTime?
+          ? nextRecurrenceDate
+          : this.nextRecurrenceDate,
+      recurrenceEndDate: recurrenceEndDate is DateTime?
+          ? recurrenceEndDate
+          : this.recurrenceEndDate,
+      recurrenceMaxOccurrences: recurrenceMaxOccurrences is int?
+          ? recurrenceMaxOccurrences
+          : this.recurrenceMaxOccurrences,
       items: items ?? this.items.map((e0) => e0.copyWith()).toList(),
     );
   }

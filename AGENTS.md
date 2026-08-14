@@ -43,6 +43,19 @@ gewerber_backend_server/lib/src/
 |---|---|---|
 | `business` | create, get, update, listMine | requireLogin |
 | auth (module) | email login/register, JWT refresh | per serverpod_auth |
+| `waitlist` (commercial module) | join | public |
+
+## Commercial module
+
+The closed-source `gewerber-backend-commercial` Serverpod module (nickname
+`commercial`) is wired in via `config/generator.yaml` (`modules:` section) and
+a git dependency in `gewerber_backend_server/pubspec.yaml`. For local
+development `pubspec_overrides.yaml` (gitignored) resolves it from the sibling
+`../gewerber-backend-commercial` checkout. Building the Docker image needs a
+GitHub token for the private repo (BuildKit secret `git_token`, see
+`Dockerfile`); CI needs the `COMMERCIAL_REPO_TOKEN` secret. Its tables are
+prefixed `commercial_*` and migrate together with the server
+(`SERVERPOD_APPLY_MIGRATIONS=true`).
 
 ## Phases
 

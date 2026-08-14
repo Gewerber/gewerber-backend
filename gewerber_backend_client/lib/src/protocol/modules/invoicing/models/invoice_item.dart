@@ -14,7 +14,8 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../../../modules/invoicing/models/invoice_item_unit.dart' as _i2;
 import '../../../modules/invoicing/models/vat_rate.dart' as _i3;
 
-abstract class InvoiceItem implements _i1.SerializableModel {
+abstract class InvoiceItem
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
   InvoiceItem._({
     this.id,
     required this.invoiceId,
@@ -98,6 +99,22 @@ abstract class InvoiceItem implements _i1.SerializableModel {
   });
   @override
   Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'InvoiceItem',
+      if (id != null) 'id': id,
+      'invoiceId': invoiceId,
+      'position': position,
+      'description': description,
+      'quantity': quantity,
+      'unit': unit.toJson(),
+      'unitPriceCents': unitPriceCents,
+      'vatRate': vatRate.toJson(),
+      'lineTotalCents': lineTotalCents,
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       '__className__': 'InvoiceItem',
       if (id != null) 'id': id,

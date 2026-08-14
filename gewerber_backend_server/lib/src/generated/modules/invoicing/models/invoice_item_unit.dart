@@ -18,7 +18,7 @@ enum InvoiceItemUnit implements _i1.SerializableModel {
   day,
   month,
   project,
-  other
+  other,
   ;
 
   static InvoiceItemUnit fromJson(String name) {

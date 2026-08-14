@@ -9,6 +9,9 @@
 #   VPS_SSH_KEY – SSH private key (deploy key) for the VPS
 #   GHCR_TOKEN  – PAT with read:packages, used by the VPS to pull the image
 #                 (omit only if the GHCR package is public)
+#   COMMERCIAL_REPO_TOKEN – PAT (or deploy token) with read access to the
+#                 private gewerber-backend-commercial repository, used by
+#                 `dart pub get` during the image build
 #
 # Create two GitHub environments: "production" (protect it as desired) and
 # "staging". Secrets can be set per environment or at repository level.
@@ -77,6 +80,10 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          # Grants `dart pub get` access to the private
+          # gewerber-backend-commercial git dependency.
+          secrets: |
+            git_token=${{ secrets.COMMERCIAL_REPO_TOKEN }}
 
       - name: Copy compose + deploy script to VPS
         uses: appleboy/scp-action@v0.1.7

@@ -4,6 +4,12 @@
 # Build stage
 FROM dart:3.12.2 AS build
 
+# git is needed to fetch the private gewerber-backend-commercial module
+# during `dart pub get`.
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends git \
+  && rm -rf /var/lib/apt/lists/*
+
 # Create a minimal workspace for the server package.
 WORKDIR /app
 COPY gewerber_backend_server gewerber_backend_server
@@ -14,7 +20,16 @@ RUN printf '%s\n' \
   'workspace:' \
   '  - gewerber_backend_server' \
   > pubspec.yaml
-RUN dart pub get
+# The GitHub token for the private commercial repository is supplied as a
+# BuildKit secret (id=git_token); it is only used for this step and the
+# git config is removed afterwards:
+#   docker build --secret id=git_token,env=GIT_TOKEN ...
+RUN --mount=type=secret,id=git_token \
+  if [ -f /run/secrets/git_token ]; then \
+    git config --global url."https://x-access-token:$(cat /run/secrets/git_token)@github.com/".insteadOf "https://github.com/"; \
+  fi \
+  && dart pub get \
+  && rm -f ~/.gitconfig
 
 # Compile the server executable.
 WORKDIR /app/gewerber_backend_server

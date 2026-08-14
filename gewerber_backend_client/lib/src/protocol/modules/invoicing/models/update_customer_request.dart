@@ -15,7 +15,8 @@ import '../../../modules/invoicing/models/customer_status.dart' as _i2;
 import '../../../modules/business/models/address.dart' as _i3;
 import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i4;
 
-abstract class UpdateCustomerRequest implements _i1.SerializableModel {
+abstract class UpdateCustomerRequest
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
   UpdateCustomerRequest._({
     required this.customerId,
     required this.status,
@@ -106,6 +107,22 @@ abstract class UpdateCustomerRequest implements _i1.SerializableModel {
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address?.toJson(),
+      if (notes != null) 'notes': notes,
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'UpdateCustomerRequest',
+      'customerId': customerId,
+      'status': status.toJson(),
+      'name': name,
+      if (companyName != null) 'companyName': companyName,
+      if (vatId != null) 'vatId': vatId,
+      if (email != null) 'email': email,
+      if (phone != null) 'phone': phone,
+      if (address != null) 'address': address?.toJsonForProtocol(),
       if (notes != null) 'notes': notes,
     };
   }

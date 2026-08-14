@@ -16,7 +16,7 @@ enum Locale implements _i1.SerializableModel {
   de,
   en,
   ru,
-  tr
+  tr,
   ;
 
   static Locale fromJson(String name) {

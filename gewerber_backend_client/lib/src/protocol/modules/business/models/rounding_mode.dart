@@ -16,7 +16,7 @@ enum RoundingMode implements _i1.SerializableModel {
   none,
   up,
   down,
-  nearest
+  nearest,
   ;
 
   static RoundingMode fromJson(String name) {

@@ -1,0 +1,7 @@
+class: InvoicePaymentStatus
+fields:
+  invoiceId: int
+  paidTotalCents: int
+  remainingCents: int
+  isPaid: bool
+  payments: List<PaymentRecord>

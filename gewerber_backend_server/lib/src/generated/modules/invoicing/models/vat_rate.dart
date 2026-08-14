@@ -17,7 +17,7 @@ enum VatRate implements _i1.SerializableModel {
   zero,
   reduced,
   standard,
-  reverseCharge
+  reverseCharge,
   ;
 
   static VatRate fromJson(String name) {

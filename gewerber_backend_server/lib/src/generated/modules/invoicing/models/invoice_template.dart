@@ -141,8 +141,6 @@ abstract class InvoiceTemplate
     int? limit,
     int? offset,
     _i1.OrderByBuilder<InvoiceTemplateTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
     InvoiceTemplateInclude? include,
   }) {
@@ -151,8 +149,6 @@ abstract class InvoiceTemplate
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(InvoiceTemplate.t),
-      orderDescending: // ignore: deprecated_member_use_from_same_package
-          orderDescending,
       orderByList: orderByList?.call(InvoiceTemplate.t),
       include: include,
     );
@@ -355,8 +351,6 @@ class InvoiceTemplateIncludeList extends _i1.IncludeList {
     super.limit,
     super.offset,
     super.orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -401,8 +395,6 @@ class InvoiceTemplateRepository {
     int? limit,
     int? offset,
     _i1.OrderByBuilder<InvoiceTemplateTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
     _i1.Transaction? transaction,
     _i1.LockMode? lockMode,
@@ -412,8 +404,6 @@ class InvoiceTemplateRepository {
       where: where?.call(InvoiceTemplate.t),
       orderBy: orderBy?.call(InvoiceTemplate.t),
       orderByList: orderByList?.call(InvoiceTemplate.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -444,8 +434,6 @@ class InvoiceTemplateRepository {
     _i1.WhereExpressionBuilder<InvoiceTemplateTable>? where,
     int? offset,
     _i1.OrderByBuilder<InvoiceTemplateTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
     _i1.Transaction? transaction,
     _i1.LockMode? lockMode,
@@ -455,8 +443,6 @@ class InvoiceTemplateRepository {
       where: where?.call(InvoiceTemplate.t),
       orderBy: orderBy?.call(InvoiceTemplate.t),
       orderByList: orderByList?.call(InvoiceTemplate.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -663,8 +649,6 @@ class InvoiceTemplateRepository {
     int? offset,
     _i1.OrderByBuilder<InvoiceTemplateTable>? orderBy,
     _i1.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
@@ -675,8 +659,6 @@ class InvoiceTemplateRepository {
       offset: offset,
       orderBy: orderBy?.call(InvoiceTemplate.t),
       orderByList: orderByList?.call(InvoiceTemplate.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -697,8 +679,6 @@ class InvoiceTemplateRepository {
     _i1.DatabaseSession session,
     List<InvoiceTemplate> rows, {
     _i1.OrderByBuilder<InvoiceTemplateTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
     _i1.Transaction? transaction,
     bool noReturn = false,
@@ -707,8 +687,6 @@ class InvoiceTemplateRepository {
       rows,
       orderBy: orderBy?.call(InvoiceTemplate.t),
       orderByList: orderByList?.call(InvoiceTemplate.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -738,8 +716,6 @@ class InvoiceTemplateRepository {
     _i1.DatabaseSession session, {
     required _i1.WhereExpressionBuilder<InvoiceTemplateTable> where,
     _i1.OrderByBuilder<InvoiceTemplateTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
     _i1.Transaction? transaction,
     bool noReturn = false,
@@ -748,8 +724,6 @@ class InvoiceTemplateRepository {
       where: where(InvoiceTemplate.t),
       orderBy: orderBy?.call(InvoiceTemplate.t),
       orderByList: orderByList?.call(InvoiceTemplate.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );

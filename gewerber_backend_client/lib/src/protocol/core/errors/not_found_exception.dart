@@ -13,7 +13,10 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
 abstract class NotFoundException
-    implements _i1.SerializableException, _i1.SerializableModel {
+    implements
+        _i1.SerializableException,
+        _i1.SerializableModel,
+        _i1.ProtocolSerialization {
   NotFoundException._({
     required this.entityType,
     this.entityId,
@@ -44,6 +47,15 @@ abstract class NotFoundException
   });
   @override
   Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'NotFoundException',
+      'entityType': entityType,
+      if (entityId != null) 'entityId': entityId,
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       '__className__': 'NotFoundException',
       'entityType': entityType,

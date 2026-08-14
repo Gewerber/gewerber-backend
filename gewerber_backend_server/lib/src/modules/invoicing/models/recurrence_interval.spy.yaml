@@ -1,6 +1,7 @@
 enum: RecurrenceInterval
 serialized: byName
 values:
+  - daily
   - weekly
   - monthly
   - quarterly

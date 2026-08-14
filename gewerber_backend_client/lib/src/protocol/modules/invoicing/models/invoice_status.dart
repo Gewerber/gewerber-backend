@@ -16,8 +16,9 @@ enum InvoiceStatus implements _i1.SerializableModel {
   draft,
   sent,
   paid,
+  partiallyPaid,
   overdue,
-  cancelled
+  cancelled,
   ;
 
   static InvoiceStatus fromJson(String name) {
@@ -28,6 +29,8 @@ enum InvoiceStatus implements _i1.SerializableModel {
         return InvoiceStatus.sent;
       case 'paid':
         return InvoiceStatus.paid;
+      case 'partiallyPaid':
+        return InvoiceStatus.partiallyPaid;
       case 'overdue':
         return InvoiceStatus.overdue;
       case 'cancelled':

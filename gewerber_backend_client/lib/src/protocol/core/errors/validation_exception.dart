@@ -13,7 +13,10 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
 abstract class ValidationException
-    implements _i1.SerializableException, _i1.SerializableModel {
+    implements
+        _i1.SerializableException,
+        _i1.SerializableModel,
+        _i1.ProtocolSerialization {
   ValidationException._({
     required this.message,
     this.field,
@@ -44,6 +47,15 @@ abstract class ValidationException
   });
   @override
   Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'ValidationException',
+      'message': message,
+      if (field != null) 'field': field,
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       '__className__': 'ValidationException',
       'message': message,

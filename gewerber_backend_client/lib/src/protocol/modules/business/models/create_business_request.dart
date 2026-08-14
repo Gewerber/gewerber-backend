@@ -17,7 +17,8 @@ import '../../../modules/business/models/currency.dart' as _i4;
 import '../../../modules/business/models/address.dart' as _i5;
 import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i6;
 
-abstract class CreateBusinessRequest implements _i1.SerializableModel {
+abstract class CreateBusinessRequest
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
   CreateBusinessRequest._({
     required this.name,
     _i2.LegalForm? legalForm,
@@ -125,6 +126,23 @@ abstract class CreateBusinessRequest implements _i1.SerializableModel {
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address?.toJson(),
+      'locale': locale.toJson(),
+      'currency': currency.toJson(),
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'CreateBusinessRequest',
+      'name': name,
+      'legalForm': legalForm.toJson(),
+      'isKleinunternehmer': isKleinunternehmer,
+      if (vatId != null) 'vatId': vatId,
+      if (taxNumber != null) 'taxNumber': taxNumber,
+      if (email != null) 'email': email,
+      if (phone != null) 'phone': phone,
+      if (address != null) 'address': address?.toJsonForProtocol(),
       'locale': locale.toJson(),
       'currency': currency.toJson(),
     };

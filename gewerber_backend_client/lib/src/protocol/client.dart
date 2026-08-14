@@ -35,12 +35,44 @@ import 'package:gewerber_backend_client/src/protocol/modules/documents/models/up
 import 'package:gewerber_backend_client/src/protocol/modules/documents/models/document_kind.dart'
     as _i13;
 import 'dart:typed_data' as _i14;
-import 'package:gewerber_backend_client/src/protocol/modules/user/models/user_profile.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer.dart'
     as _i15;
-import 'package:gewerber_backend_client/src/protocol/modules/user/models/update_user_profile_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_customer_request.dart'
     as _i16;
-import 'package:http/http.dart' as _i17;
-import 'protocol.dart' as _i18;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_customer_request.dart'
+    as _i17;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer_status.dart'
+    as _i18;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice.dart'
+    as _i19;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_invoice_request.dart'
+    as _i20;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_item.dart'
+    as _i21;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_invoice_request.dart'
+    as _i22;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_status.dart'
+    as _i23;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_template.dart'
+    as _i24;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_invoice_template_request.dart'
+    as _i25;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_invoice_template_request.dart'
+    as _i26;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/payment_record.dart'
+    as _i27;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/record_payment_request.dart'
+    as _i28;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_payment_status.dart'
+    as _i29;
+import 'package:gewerber_backend_client/src/protocol/modules/user/models/user_profile.dart'
+    as _i30;
+import 'package:gewerber_backend_client/src/protocol/modules/user/models/update_user_profile_request.dart'
+    as _i31;
+import 'package:gewerber_commercial_client/gewerber_commercial_client.dart'
+    as _i32;
+import 'package:http/http.dart' as _i33;
+import 'protocol.dart' as _i34;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
 /// are made available on the server and enable the corresponding sign-in widget
@@ -394,21 +426,248 @@ class EndpointDocument extends EndpointBusinessScoped {
 }
 
 /// {@category Endpoint}
+class EndpointCustomer extends EndpointBusinessScoped {
+  EndpointCustomer(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'customer';
+
+  _i3.Future<_i15.Customer> create(
+    _i16.CreateCustomerRequest request, {
+    int? businessId,
+  }) => caller.callServerEndpoint<_i15.Customer>(
+    'customer',
+    'create',
+    {
+      'request': request,
+      'businessId': businessId,
+    },
+  );
+
+  _i3.Future<_i15.Customer> get(
+    int customerId, {
+    int? businessId,
+  }) => caller.callServerEndpoint<_i15.Customer>(
+    'customer',
+    'get',
+    {
+      'customerId': customerId,
+      'businessId': businessId,
+    },
+  );
+
+  _i3.Future<_i15.Customer> update(
+    _i17.UpdateCustomerRequest request, {
+    int? businessId,
+  }) => caller.callServerEndpoint<_i15.Customer>(
+    'customer',
+    'update',
+    {
+      'request': request,
+      'businessId': businessId,
+    },
+  );
+
+  _i3.Future<List<_i15.Customer>> list({
+    _i18.CustomerStatus? status,
+    int? limit,
+    int? offset,
+    int? businessId,
+  }) => caller.callServerEndpoint<List<_i15.Customer>>(
+    'customer',
+    'list',
+    {
+      'status': status,
+      'limit': limit,
+      'offset': offset,
+      'businessId': businessId,
+    },
+  );
+}
+
+/// {@category Endpoint}
+class EndpointInvoice extends EndpointBusinessScoped {
+  EndpointInvoice(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'invoice';
+
+  _i3.Future<_i19.Invoice> create(
+    _i20.CreateInvoiceRequest request, {
+    int? businessId,
+  }) => caller.callServerEndpoint<_i19.Invoice>(
+    'invoice',
+    'create',
+    {
+      'request': request,
+      'businessId': businessId,
+    },
+  );
+
+  _i3.Future<_i19.Invoice> get(
+    int invoiceId, {
+    int? businessId,
+  }) => caller.callServerEndpoint<_i19.Invoice>(
+    'invoice',
+    'get',
+    {
+      'invoiceId': invoiceId,
+      'businessId': businessId,
+    },
+  );
+
+  _i3.Future<List<_i21.InvoiceItem>> getItems(
+    int invoiceId, {
+    int? businessId,
+  }) => caller.callServerEndpoint<List<_i21.InvoiceItem>>(
+    'invoice',
+    'getItems',
+    {
+      'invoiceId': invoiceId,
+      'businessId': businessId,
+    },
+  );
+
+  _i3.Future<_i19.Invoice> update(
+    _i22.UpdateInvoiceRequest request, {
+    int? businessId,
+  }) => caller.callServerEndpoint<_i19.Invoice>(
+    'invoice',
+    'update',
+    {
+      'request': request,
+      'businessId': businessId,
+    },
+  );
+
+  _i3.Future<List<_i19.Invoice>> list({
+    _i23.InvoiceStatus? status,
+    int? limit,
+    int? offset,
+    int? businessId,
+  }) => caller.callServerEndpoint<List<_i19.Invoice>>(
+    'invoice',
+    'list',
+    {
+      'status': status,
+      'limit': limit,
+      'offset': offset,
+      'businessId': businessId,
+    },
+  );
+
+  _i3.Future<void> delete(
+    int invoiceId, {
+    int? businessId,
+  }) => caller.callServerEndpoint<void>(
+    'invoice',
+    'delete',
+    {
+      'invoiceId': invoiceId,
+      'businessId': businessId,
+    },
+  );
+}
+
+/// {@category Endpoint}
+class EndpointInvoiceTemplate extends EndpointBusinessScoped {
+  EndpointInvoiceTemplate(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'invoiceTemplate';
+
+  _i3.Future<_i24.InvoiceTemplate> create(
+    _i25.CreateInvoiceTemplateRequest request, {
+    int? businessId,
+  }) => caller.callServerEndpoint<_i24.InvoiceTemplate>(
+    'invoiceTemplate',
+    'create',
+    {
+      'request': request,
+      'businessId': businessId,
+    },
+  );
+
+  _i3.Future<_i24.InvoiceTemplate> get(
+    int templateId, {
+    int? businessId,
+  }) => caller.callServerEndpoint<_i24.InvoiceTemplate>(
+    'invoiceTemplate',
+    'get',
+    {
+      'templateId': templateId,
+      'businessId': businessId,
+    },
+  );
+
+  _i3.Future<_i24.InvoiceTemplate> update(
+    _i26.UpdateInvoiceTemplateRequest request, {
+    int? businessId,
+  }) => caller.callServerEndpoint<_i24.InvoiceTemplate>(
+    'invoiceTemplate',
+    'update',
+    {
+      'request': request,
+      'businessId': businessId,
+    },
+  );
+
+  _i3.Future<List<_i24.InvoiceTemplate>> list({int? businessId}) =>
+      caller.callServerEndpoint<List<_i24.InvoiceTemplate>>(
+        'invoiceTemplate',
+        'list',
+        {'businessId': businessId},
+      );
+}
+
+/// {@category Endpoint}
+class EndpointPayment extends EndpointBusinessScoped {
+  EndpointPayment(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'payment';
+
+  _i3.Future<_i27.PaymentRecord> record(
+    _i28.RecordPaymentRequest request, {
+    int? businessId,
+  }) => caller.callServerEndpoint<_i27.PaymentRecord>(
+    'payment',
+    'record',
+    {
+      'request': request,
+      'businessId': businessId,
+    },
+  );
+
+  _i3.Future<_i29.InvoicePaymentStatus> status(
+    int invoiceId, {
+    int? businessId,
+  }) => caller.callServerEndpoint<_i29.InvoicePaymentStatus>(
+    'payment',
+    'status',
+    {
+      'invoiceId': invoiceId,
+      'businessId': businessId,
+    },
+  );
+}
+
+/// {@category Endpoint}
 class EndpointUserProfile extends _i2.EndpointRef {
   EndpointUserProfile(_i2.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'userProfile';
 
-  _i3.Future<_i15.UserProfile> getMyProfile() =>
-      caller.callServerEndpoint<_i15.UserProfile>(
+  _i3.Future<_i30.UserProfile> getMyProfile() =>
+      caller.callServerEndpoint<_i30.UserProfile>(
         'userProfile',
         'getMyProfile',
         {},
       );
 
-  _i3.Future<_i15.UserProfile> update(_i16.UpdateUserProfileRequest request) =>
-      caller.callServerEndpoint<_i15.UserProfile>(
+  _i3.Future<_i30.UserProfile> update(_i31.UpdateUserProfileRequest request) =>
+      caller.callServerEndpoint<_i30.UserProfile>(
         'userProfile',
         'update',
         {'request': request},
@@ -417,9 +676,12 @@ class EndpointUserProfile extends _i2.EndpointRef {
 
 class Modules {
   Modules(Client client) {
+    commercial = _i32.Caller(client);
     serverpod_auth_idp = _i1.Caller(client);
     serverpod_auth_core = _i4.Caller(client);
   }
+
+  late final _i32.Caller commercial;
 
   late final _i1.Caller serverpod_auth_idp;
 
@@ -430,10 +692,6 @@ class Client extends _i2.ServerpodClientShared {
   Client(
     String host, {
     dynamic securityContext,
-    @Deprecated(
-      'Use authKeyProvider instead. This will be removed in future releases.',
-    )
-    super.authenticationKeyManager,
     Duration? streamingConnectionTimeout,
     Duration? connectionTimeout,
     Function(
@@ -444,10 +702,10 @@ class Client extends _i2.ServerpodClientShared {
     onFailedCall,
     Function(_i2.MethodCallContext)? onSucceededCall,
     bool? disconnectStreamsOnLostInternetConnection,
-    _i17.Client? httpClientOverride,
+    _i33.Client? httpClientOverride,
   }) : super(
          host,
-         _i18.Protocol(),
+         _i34.Protocol(),
          securityContext: securityContext,
          streamingConnectionTimeout: streamingConnectionTimeout,
          connectionTimeout: connectionTimeout,
@@ -463,6 +721,10 @@ class Client extends _i2.ServerpodClientShared {
     business = EndpointBusiness(this);
     businessSettings = EndpointBusinessSettings(this);
     document = EndpointDocument(this);
+    customer = EndpointCustomer(this);
+    invoice = EndpointInvoice(this);
+    invoiceTemplate = EndpointInvoiceTemplate(this);
+    payment = EndpointPayment(this);
     userProfile = EndpointUserProfile(this);
     modules = Modules(this);
   }
@@ -479,6 +741,14 @@ class Client extends _i2.ServerpodClientShared {
 
   late final EndpointDocument document;
 
+  late final EndpointCustomer customer;
+
+  late final EndpointInvoice invoice;
+
+  late final EndpointInvoiceTemplate invoiceTemplate;
+
+  late final EndpointPayment payment;
+
   late final EndpointUserProfile userProfile;
 
   late final Modules modules;
@@ -491,11 +761,16 @@ class Client extends _i2.ServerpodClientShared {
     'business': business,
     'businessSettings': businessSettings,
     'document': document,
+    'customer': customer,
+    'invoice': invoice,
+    'invoiceTemplate': invoiceTemplate,
+    'payment': payment,
     'userProfile': userProfile,
   };
 
   @override
   Map<String, _i2.ModuleEndpointCaller> get moduleLookup => {
+    'commercial': modules.commercial,
     'serverpod_auth_idp': modules.serverpod_auth_idp,
     'serverpod_auth_core': modules.serverpod_auth_core,
   };

@@ -13,7 +13,7 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
 enum Currency implements _i1.SerializableModel {
-  eur
+  eur,
   ;
 
   static Currency fromJson(String name) {

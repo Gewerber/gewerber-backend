@@ -15,7 +15,7 @@ import 'package:serverpod/serverpod.dart' as _i1;
 enum MembershipRole implements _i1.SerializableModel {
   owner,
   admin,
-  member
+  member,
   ;
 
   static MembershipRole fromJson(String name) {

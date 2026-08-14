@@ -14,7 +14,8 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../../../modules/business/models/address.dart' as _i2;
 import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i3;
 
-abstract class CreateCustomerRequest implements _i1.SerializableModel {
+abstract class CreateCustomerRequest
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
   CreateCustomerRequest._({
     required this.name,
     this.companyName,
@@ -89,6 +90,20 @@ abstract class CreateCustomerRequest implements _i1.SerializableModel {
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address?.toJson(),
+      if (notes != null) 'notes': notes,
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'CreateCustomerRequest',
+      'name': name,
+      if (companyName != null) 'companyName': companyName,
+      if (vatId != null) 'vatId': vatId,
+      if (email != null) 'email': email,
+      if (phone != null) 'phone': phone,
+      if (address != null) 'address': address?.toJsonForProtocol(),
       if (notes != null) 'notes': notes,
     };
   }

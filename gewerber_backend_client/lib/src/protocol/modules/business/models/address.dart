@@ -13,7 +13,8 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../../../modules/business/models/country.dart' as _i2;
 
-abstract class Address implements _i1.SerializableModel {
+abstract class Address
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
   Address._({
     required this.street,
     required this.zip,
@@ -58,6 +59,17 @@ abstract class Address implements _i1.SerializableModel {
   });
   @override
   Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'Address',
+      'street': street,
+      'zip': zip,
+      'city': city,
+      'country': country.toJson(),
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       '__className__': 'Address',
       'street': street,

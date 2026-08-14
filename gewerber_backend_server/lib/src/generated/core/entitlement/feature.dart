@@ -23,7 +23,7 @@ enum Feature implements _i1.SerializableModel {
   employees,
   subscriptions,
   ai_assistant,
-  multi_currency
+  multi_currency,
   ;
 
   static Feature fromJson(String name) {

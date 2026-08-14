@@ -13,7 +13,8 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../../../modules/business/models/rounding_mode.dart' as _i2;
 
-abstract class BusinessSettings implements _i1.SerializableModel {
+abstract class BusinessSettings
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
   BusinessSettings._({
     this.id,
     required this.businessId,
@@ -107,6 +108,23 @@ abstract class BusinessSettings implements _i1.SerializableModel {
   });
   @override
   Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'BusinessSettings',
+      if (id != null) 'id': id,
+      'businessId': businessId,
+      'paymentTermsDays': paymentTermsDays,
+      if (invoiceNumberPrefix != null)
+        'invoiceNumberPrefix': invoiceNumberPrefix,
+      'invoiceNumberIncludeYear': invoiceNumberIncludeYear,
+      'invoiceNumberMinDigits': invoiceNumberMinDigits,
+      'roundingMode': roundingMode.toJson(),
+      'roundingGranularityMinutes': roundingGranularityMinutes,
+      'updatedAt': updatedAt.toJson(),
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       '__className__': 'BusinessSettings',
       if (id != null) 'id': id,

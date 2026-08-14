@@ -14,7 +14,7 @@ import 'package:serverpod/serverpod.dart' as _i1;
 
 enum StorageLocation implements _i1.SerializableModel {
   private,
-  public
+  public,
   ;
 
   static StorageLocation fromJson(String name) {

@@ -30,8 +30,7 @@ class UpdateBusinessSettingsUseCase {
       session,
       tenant.businessId,
     );
-    final base =
-        existing ?? BusinessSettings(businessId: tenant.businessId);
+    final base = existing ?? BusinessSettings(businessId: tenant.businessId);
     _validate(request);
 
     final updated = base.copyWith(
