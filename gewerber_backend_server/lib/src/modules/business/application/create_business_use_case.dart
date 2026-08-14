@@ -73,11 +73,5 @@ class CreateBusinessUseCase {
         field: 'name',
       );
     }
-    if (request.currency.length != 3) {
-      throw ValidationException(
-        message: 'Currency must be a 3-letter code.',
-        field: 'currency',
-      );
-    }
   }
 }

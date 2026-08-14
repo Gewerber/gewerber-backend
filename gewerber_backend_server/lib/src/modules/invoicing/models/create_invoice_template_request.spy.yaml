@@ -1,0 +1,7 @@
+class: CreateInvoiceTemplateRequest
+fields:
+  name: String
+  isDefault: bool, default=false
+  headerText: String?
+  footerText: String?
+  logoDocumentId: int?

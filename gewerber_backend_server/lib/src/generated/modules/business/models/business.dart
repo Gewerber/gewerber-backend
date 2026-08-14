@@ -12,8 +12,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../../../modules/business/models/legal_form.dart' as _i2;
-import '../../../modules/business/models/address.dart' as _i3;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i4;
+import '../../../modules/business/models/locale.dart' as _i3;
+import '../../../modules/business/models/currency.dart' as _i4;
+import '../../../modules/business/models/address.dart' as _i5;
+import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i6;
 
 abstract class Business
     implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
@@ -27,14 +29,14 @@ abstract class Business
     this.email,
     this.phone,
     this.address,
-    String? locale,
-    String? currency,
+    _i3.Locale? locale,
+    _i4.Currency? currency,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) : legalForm = legalForm ?? _i2.LegalForm.einzelunternehmen,
        isKleinunternehmer = isKleinunternehmer ?? false,
-       locale = locale ?? 'de',
-       currency = currency ?? 'EUR',
+       locale = locale ?? _i3.Locale.de,
+       currency = currency ?? _i4.Currency.eur,
        createdAt = createdAt ?? DateTime.now(),
        updatedAt = updatedAt ?? DateTime.now();
 
@@ -47,9 +49,9 @@ abstract class Business
     String? taxNumber,
     String? email,
     String? phone,
-    _i3.Address? address,
-    String? locale,
-    String? currency,
+    _i5.Address? address,
+    _i3.Locale? locale,
+    _i4.Currency? currency,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _BusinessImpl;
@@ -72,11 +74,15 @@ abstract class Business
       phone: jsonSerialization['phone'] as String?,
       address: jsonSerialization['address'] == null
           ? null
-          : _i4.Protocol().deserialize<_i3.Address>(
+          : _i6.Protocol().deserialize<_i5.Address>(
               jsonSerialization['address'],
             ),
-      locale: jsonSerialization['locale'] as String?,
-      currency: jsonSerialization['currency'] as String?,
+      locale: jsonSerialization['locale'] == null
+          ? null
+          : _i3.Locale.fromJson((jsonSerialization['locale'] as String)),
+      currency: jsonSerialization['currency'] == null
+          ? null
+          : _i4.Currency.fromJson((jsonSerialization['currency'] as String)),
       createdAt: jsonSerialization['createdAt'] == null
           ? null
           : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
@@ -107,11 +113,11 @@ abstract class Business
 
   String? phone;
 
-  _i3.Address? address;
+  _i5.Address? address;
 
-  String locale;
+  _i3.Locale locale;
 
-  String currency;
+  _i4.Currency currency;
 
   DateTime createdAt;
 
@@ -132,9 +138,9 @@ abstract class Business
     String? taxNumber,
     String? email,
     String? phone,
-    _i3.Address? address,
-    String? locale,
-    String? currency,
+    _i5.Address? address,
+    _i3.Locale? locale,
+    _i4.Currency? currency,
     DateTime? createdAt,
     DateTime? updatedAt,
   });
@@ -151,8 +157,8 @@ abstract class Business
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address?.toJson(),
-      'locale': locale,
-      'currency': currency,
+      'locale': locale.toJson(),
+      'currency': currency.toJson(),
       'createdAt': createdAt.toJson(),
       'updatedAt': updatedAt.toJson(),
     };
@@ -170,8 +176,8 @@ abstract class Business
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address?.toJsonForProtocol(),
-      'locale': locale,
-      'currency': currency,
+      'locale': locale.toJson(),
+      'currency': currency.toJson(),
       'createdAt': createdAt.toJson(),
       'updatedAt': updatedAt.toJson(),
     };
@@ -186,8 +192,6 @@ abstract class Business
     int? limit,
     int? offset,
     _i1.OrderByBuilder<BusinessTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<BusinessTable>? orderByList,
     BusinessInclude? include,
   }) {
@@ -196,8 +200,6 @@ abstract class Business
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(Business.t),
-      orderDescending: // ignore: deprecated_member_use_from_same_package
-          orderDescending,
       orderByList: orderByList?.call(Business.t),
       include: include,
     );
@@ -221,9 +223,9 @@ class _BusinessImpl extends Business {
     String? taxNumber,
     String? email,
     String? phone,
-    _i3.Address? address,
-    String? locale,
-    String? currency,
+    _i5.Address? address,
+    _i3.Locale? locale,
+    _i4.Currency? currency,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) : super._(
@@ -256,8 +258,8 @@ class _BusinessImpl extends Business {
     Object? email = _Undefined,
     Object? phone = _Undefined,
     Object? address = _Undefined,
-    String? locale,
-    String? currency,
+    _i3.Locale? locale,
+    _i4.Currency? currency,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -270,7 +272,7 @@ class _BusinessImpl extends Business {
       taxNumber: taxNumber is String? ? taxNumber : this.taxNumber,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
-      address: address is _i3.Address? ? address : this.address?.copyWith(),
+      address: address is _i5.Address? ? address : this.address?.copyWith(),
       locale: locale ?? this.locale,
       currency: currency ?? this.currency,
       createdAt: createdAt ?? this.createdAt,
@@ -319,21 +321,23 @@ class BusinessUpdateTable extends _i1.UpdateTable<BusinessTable> {
     value,
   );
 
-  _i1.ColumnValue<_i3.Address, _i3.Address> address(_i3.Address? value) =>
+  _i1.ColumnValue<_i5.Address, _i5.Address> address(_i5.Address? value) =>
       _i1.ColumnValue(
         table.address,
         value,
       );
 
-  _i1.ColumnValue<String, String> locale(String value) => _i1.ColumnValue(
-    table.locale,
-    value,
-  );
+  _i1.ColumnValue<_i3.Locale, _i3.Locale> locale(_i3.Locale value) =>
+      _i1.ColumnValue(
+        table.locale,
+        value,
+      );
 
-  _i1.ColumnValue<String, String> currency(String value) => _i1.ColumnValue(
-    table.currency,
-    value,
-  );
+  _i1.ColumnValue<_i4.Currency, _i4.Currency> currency(_i4.Currency value) =>
+      _i1.ColumnValue(
+        table.currency,
+        value,
+      );
 
   _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
       _i1.ColumnValue(
@@ -382,18 +386,20 @@ class BusinessTable extends _i1.Table<int?> {
       'phone',
       this,
     );
-    address = _i1.ColumnSerializable<_i3.Address>(
+    address = _i1.ColumnSerializable<_i5.Address>(
       'address',
       this,
     );
-    locale = _i1.ColumnString(
+    locale = _i1.ColumnEnum(
       'locale',
       this,
+      _i1.EnumSerialization.byName,
       hasDefault: true,
     );
-    currency = _i1.ColumnString(
+    currency = _i1.ColumnEnum(
       'currency',
       this,
+      _i1.EnumSerialization.byName,
       hasDefault: true,
     );
     createdAt = _i1.ColumnDateTime(
@@ -424,11 +430,11 @@ class BusinessTable extends _i1.Table<int?> {
 
   late final _i1.ColumnString phone;
 
-  late final _i1.ColumnSerializable<_i3.Address> address;
+  late final _i1.ColumnSerializable<_i5.Address> address;
 
-  late final _i1.ColumnString locale;
+  late final _i1.ColumnEnum<_i3.Locale> locale;
 
-  late final _i1.ColumnString currency;
+  late final _i1.ColumnEnum<_i4.Currency> currency;
 
   late final _i1.ColumnDateTime createdAt;
 
@@ -468,8 +474,6 @@ class BusinessIncludeList extends _i1.IncludeList {
     super.limit,
     super.offset,
     super.orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -514,8 +518,6 @@ class BusinessRepository {
     int? limit,
     int? offset,
     _i1.OrderByBuilder<BusinessTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<BusinessTable>? orderByList,
     _i1.Transaction? transaction,
     _i1.LockMode? lockMode,
@@ -525,8 +527,6 @@ class BusinessRepository {
       where: where?.call(Business.t),
       orderBy: orderBy?.call(Business.t),
       orderByList: orderByList?.call(Business.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -557,8 +557,6 @@ class BusinessRepository {
     _i1.WhereExpressionBuilder<BusinessTable>? where,
     int? offset,
     _i1.OrderByBuilder<BusinessTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<BusinessTable>? orderByList,
     _i1.Transaction? transaction,
     _i1.LockMode? lockMode,
@@ -568,8 +566,6 @@ class BusinessRepository {
       where: where?.call(Business.t),
       orderBy: orderBy?.call(Business.t),
       orderByList: orderByList?.call(Business.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -774,8 +770,6 @@ class BusinessRepository {
     int? offset,
     _i1.OrderByBuilder<BusinessTable>? orderBy,
     _i1.OrderByListBuilder<BusinessTable>? orderByList,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
@@ -786,8 +780,6 @@ class BusinessRepository {
       offset: offset,
       orderBy: orderBy?.call(Business.t),
       orderByList: orderByList?.call(Business.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -808,8 +800,6 @@ class BusinessRepository {
     _i1.DatabaseSession session,
     List<Business> rows, {
     _i1.OrderByBuilder<BusinessTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<BusinessTable>? orderByList,
     _i1.Transaction? transaction,
     bool noReturn = false,
@@ -818,8 +808,6 @@ class BusinessRepository {
       rows,
       orderBy: orderBy?.call(Business.t),
       orderByList: orderByList?.call(Business.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -849,8 +837,6 @@ class BusinessRepository {
     _i1.DatabaseSession session, {
     required _i1.WhereExpressionBuilder<BusinessTable> where,
     _i1.OrderByBuilder<BusinessTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<BusinessTable>? orderByList,
     _i1.Transaction? transaction,
     bool noReturn = false,
@@ -859,8 +845,6 @@ class BusinessRepository {
       where: where(Business.t),
       orderBy: orderBy?.call(Business.t),
       orderByList: orderByList?.call(Business.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );

@@ -1,0 +1,8 @@
+class: UpdateInvoiceTemplateRequest
+fields:
+  templateId: int
+  name: String
+  isDefault: bool
+  headerText: String?
+  footerText: String?
+  logoDocumentId: int?

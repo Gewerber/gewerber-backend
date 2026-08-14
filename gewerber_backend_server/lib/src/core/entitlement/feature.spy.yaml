@@ -1,0 +1,14 @@
+enum: Feature
+serialized: byName
+values:
+  - invoicing
+  - time_tracking
+  - accounting
+  - documents
+  - guidance
+  - banking
+  - tax
+  - employees
+  - subscriptions
+  - ai_assistant
+  - multi_currency

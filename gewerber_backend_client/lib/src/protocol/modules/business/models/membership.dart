@@ -13,7 +13,8 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../../../modules/business/models/membership_role.dart' as _i2;
 
-abstract class Membership implements _i1.SerializableModel {
+abstract class Membership
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
   Membership._({
     this.id,
     required this.userId,
@@ -70,6 +71,18 @@ abstract class Membership implements _i1.SerializableModel {
   });
   @override
   Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'Membership',
+      if (id != null) 'id': id,
+      'userId': userId.toJson(),
+      'businessId': businessId,
+      'role': role.toJson(),
+      'createdAt': createdAt.toJson(),
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       '__className__': 'Membership',
       if (id != null) 'id': id,

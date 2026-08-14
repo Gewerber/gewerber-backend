@@ -1,0 +1,6 @@
+enum: CustomerStatus
+serialized: byName
+default: active
+values:
+  - active
+  - archived

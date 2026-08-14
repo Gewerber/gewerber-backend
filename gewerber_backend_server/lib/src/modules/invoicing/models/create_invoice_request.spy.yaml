@@ -1,0 +1,18 @@
+class: CreateInvoiceRequest
+fields:
+  type: InvoiceType, default=invoice
+  customerId: int?
+  issueDate: DateTime?
+  dueDate: DateTime?
+  serviceDateFrom: DateTime?
+  serviceDateTo: DateTime?
+  paymentTermsDays: int?
+  templateId: int?
+  locale: Locale?
+  currency: Currency?
+  notes: String?
+  recurrenceInterval: RecurrenceInterval?
+  nextRecurrenceDate: DateTime?
+  recurrenceEndDate: DateTime?
+  recurrenceMaxOccurrences: int?
+  items: List<InvoiceItemRequest>

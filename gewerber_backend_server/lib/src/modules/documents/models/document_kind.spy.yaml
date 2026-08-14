@@ -1,0 +1,9 @@
+enum: DocumentKind
+serialized: byName
+default: attachment
+values:
+  - invoicePdf
+  - receipt
+  - logo
+  - attachment
+  - other

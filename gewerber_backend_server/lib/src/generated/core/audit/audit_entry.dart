@@ -124,8 +124,6 @@ abstract class AuditEntry
     int? limit,
     int? offset,
     _i1.OrderByBuilder<AuditEntryTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<AuditEntryTable>? orderByList,
     AuditEntryInclude? include,
   }) {
@@ -134,8 +132,6 @@ abstract class AuditEntry
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(AuditEntry.t),
-      orderDescending: // ignore: deprecated_member_use_from_same_package
-          orderDescending,
       orderByList: orderByList?.call(AuditEntry.t),
       include: include,
     );
@@ -329,8 +325,6 @@ class AuditEntryIncludeList extends _i1.IncludeList {
     super.limit,
     super.offset,
     super.orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -375,8 +369,6 @@ class AuditEntryRepository {
     int? limit,
     int? offset,
     _i1.OrderByBuilder<AuditEntryTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<AuditEntryTable>? orderByList,
     _i1.Transaction? transaction,
     _i1.LockMode? lockMode,
@@ -386,8 +378,6 @@ class AuditEntryRepository {
       where: where?.call(AuditEntry.t),
       orderBy: orderBy?.call(AuditEntry.t),
       orderByList: orderByList?.call(AuditEntry.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -418,8 +408,6 @@ class AuditEntryRepository {
     _i1.WhereExpressionBuilder<AuditEntryTable>? where,
     int? offset,
     _i1.OrderByBuilder<AuditEntryTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<AuditEntryTable>? orderByList,
     _i1.Transaction? transaction,
     _i1.LockMode? lockMode,
@@ -429,8 +417,6 @@ class AuditEntryRepository {
       where: where?.call(AuditEntry.t),
       orderBy: orderBy?.call(AuditEntry.t),
       orderByList: orderByList?.call(AuditEntry.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -635,8 +621,6 @@ class AuditEntryRepository {
     int? offset,
     _i1.OrderByBuilder<AuditEntryTable>? orderBy,
     _i1.OrderByListBuilder<AuditEntryTable>? orderByList,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
@@ -647,8 +631,6 @@ class AuditEntryRepository {
       offset: offset,
       orderBy: orderBy?.call(AuditEntry.t),
       orderByList: orderByList?.call(AuditEntry.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -669,8 +651,6 @@ class AuditEntryRepository {
     _i1.DatabaseSession session,
     List<AuditEntry> rows, {
     _i1.OrderByBuilder<AuditEntryTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<AuditEntryTable>? orderByList,
     _i1.Transaction? transaction,
     bool noReturn = false,
@@ -679,8 +659,6 @@ class AuditEntryRepository {
       rows,
       orderBy: orderBy?.call(AuditEntry.t),
       orderByList: orderByList?.call(AuditEntry.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -710,8 +688,6 @@ class AuditEntryRepository {
     _i1.DatabaseSession session, {
     required _i1.WhereExpressionBuilder<AuditEntryTable> where,
     _i1.OrderByBuilder<AuditEntryTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
     _i1.OrderByListBuilder<AuditEntryTable>? orderByList,
     _i1.Transaction? transaction,
     bool noReturn = false,
@@ -720,8 +696,6 @@ class AuditEntryRepository {
       where: where(AuditEntry.t),
       orderBy: orderBy?.call(AuditEntry.t),
       orderByList: orderByList?.call(AuditEntry.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );

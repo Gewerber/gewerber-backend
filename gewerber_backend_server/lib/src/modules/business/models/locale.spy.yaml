@@ -1,0 +1,8 @@
+enum: Locale
+serialized: byName
+default: de
+values:
+  - de
+  - en
+  - ru
+  - tr

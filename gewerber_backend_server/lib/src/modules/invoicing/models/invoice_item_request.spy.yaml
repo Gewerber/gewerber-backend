@@ -1,0 +1,7 @@
+class: InvoiceItemRequest
+fields:
+  description: String
+  quantity: double, default=1
+  unit: InvoiceItemUnit, default=hour
+  unitPriceCents: int, default=0
+  vatRate: VatRate, default=standard

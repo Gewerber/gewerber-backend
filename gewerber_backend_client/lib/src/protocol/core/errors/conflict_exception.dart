@@ -13,7 +13,10 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
 abstract class ConflictException
-    implements _i1.SerializableException, _i1.SerializableModel {
+    implements
+        _i1.SerializableException,
+        _i1.SerializableModel,
+        _i1.ProtocolSerialization {
   ConflictException._({required this.message});
 
   factory ConflictException({required String message}) = _ConflictExceptionImpl;
@@ -30,6 +33,14 @@ abstract class ConflictException
   ConflictException copyWith({String? message});
   @override
   Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'ConflictException',
+      'message': message,
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       '__className__': 'ConflictException',
       'message': message,

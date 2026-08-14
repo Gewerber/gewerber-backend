@@ -1,0 +1,7 @@
+class: RecordPaymentRequest
+fields:
+  invoiceId: int
+  paidAt: DateTime?
+  amountCents: int
+  method: PaymentMethod, default=bankTransfer
+  reference: String?

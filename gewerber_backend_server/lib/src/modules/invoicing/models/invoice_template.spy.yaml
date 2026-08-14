@@ -1,0 +1,14 @@
+class: InvoiceTemplate
+table: invoice_template
+fields:
+  businessId: int, relation(parent=business, onDelete=Cascade)
+  name: String
+  isDefault: bool, default=false
+  headerText: String?
+  footerText: String?
+  logoDocumentId: int?, relation(parent=document, onDelete=SetNull)
+  createdAt: DateTime, default=now
+  updatedAt: DateTime, default=now
+indexes:
+  invoice_template_business_idx:
+    fields: businessId

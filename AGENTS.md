@@ -32,7 +32,7 @@ gewerber_backend_server/lib/src/
 - **Multi-tenancy**: every business-scoped table has `businessId`; `TenantResolver` resolves the current tenant from JWT `userIdentifier` + `Membership`.
 - **DI**: endpoints are constructed by Serverpod codegen without arguments — they resolve services via `getIt<T>()`.
 - **Naming**: domain interfaces use `*Gateway` suffix (e.g. `BusinessGateway`) to avoid collision with Serverpod's generated `*Repository` classes.
-- **Enums**: always use `serialized: byName` in `.spy.yaml`.
+- **Enums first**: for any closed value set (country, locale/language, currency, statuses, types, units) prefer an enum over a free-form `String`. In `.spy.yaml` always use `serialized: byName`; values are lowercase (e.g. `de`, `eur`, `paid`). Adding values is safe, renaming is breaking.
 - **String defaults**: must be quoted (`default='de'`).
 - **Exceptions**: use generated `.spy.yaml` exceptions — they're thrown on the server and caught on the client by type.
 - **Tests**: integration tests via `withServerpod` with test postgres (docker compose `postgres_test`). Call `configureDependencies()` in `setUpAll`.
@@ -43,6 +43,19 @@ gewerber_backend_server/lib/src/
 |---|---|---|
 | `business` | create, get, update, listMine | requireLogin |
 | auth (module) | email login/register, JWT refresh | per serverpod_auth |
+| `waitlist` (commercial module) | join | public |
+
+## Commercial module
+
+The closed-source `gewerber-backend-commercial` Serverpod module (nickname
+`commercial`) is wired in via `config/generator.yaml` (`modules:` section) and
+a git dependency in `gewerber_backend_server/pubspec.yaml`. For local
+development `pubspec_overrides.yaml` (gitignored) resolves it from the sibling
+`../gewerber-backend-commercial` checkout. Building the Docker image needs a
+GitHub token for the private repo (BuildKit secret `git_token`, see
+`Dockerfile`); CI needs the `COMMERCIAL_REPO_TOKEN` secret. Its tables are
+prefixed `commercial_*` and migrate together with the server
+(`SERVERPOD_APPLY_MIGRATIONS=true`).
 
 ## Phases
 

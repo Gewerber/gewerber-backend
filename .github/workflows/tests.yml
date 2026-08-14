@@ -10,7 +10,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      VERSION: '4.0.0-beta.0'
+      VERSION: '4.0.0-beta.2'
       SERVERPOD_PASSWORD_database: '-090vJlpK146u7T0YCGz9xnT6JOxJg4x'
       SERVERPOD_PASSWORD_redis: 'xldSfuP1X68IFOoQDDW07mNCeE5MZHQ0'
 
@@ -25,11 +25,17 @@ jobs:
         working-directory: gewerber_backend_server
         run: docker compose up --quiet-pull --build -d
 
+      - name: Configure git for private dependencies
+        run: |
+          git config --global url."https://x-access-token:${{ secrets.COMMERCIAL_REPO_TOKEN }}@github.com/".insteadOf "https://github.com/"
+
       - name: Install dependencies
         run: flutter pub get
 
       - name: Install Serverpod CLI
-        run: dart install serverpod_cli $VERSION
+        run: |
+          dart pub global activate serverpod_cli $VERSION
+          echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
 
       - name: Run Serverpod generator
         working-directory: gewerber_backend_server

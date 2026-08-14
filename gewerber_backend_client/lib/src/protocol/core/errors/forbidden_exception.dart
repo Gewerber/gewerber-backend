@@ -13,7 +13,10 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
 abstract class ForbiddenException
-    implements _i1.SerializableException, _i1.SerializableModel {
+    implements
+        _i1.SerializableException,
+        _i1.SerializableModel,
+        _i1.ProtocolSerialization {
   ForbiddenException._({this.message});
 
   factory ForbiddenException({String? message}) = _ForbiddenExceptionImpl;
@@ -30,6 +33,14 @@ abstract class ForbiddenException
   ForbiddenException copyWith({String? message});
   @override
   Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'ForbiddenException',
+      if (message != null) 'message': message,
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       '__className__': 'ForbiddenException',
       if (message != null) 'message': message,

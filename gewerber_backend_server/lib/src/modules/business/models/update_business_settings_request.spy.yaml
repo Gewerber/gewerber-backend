@@ -1,0 +1,9 @@
+class: UpdateBusinessSettingsRequest
+fields:
+  businessId: int
+  paymentTermsDays: int
+  invoiceNumberPrefix: String?
+  invoiceNumberIncludeYear: bool
+  invoiceNumberMinDigits: int
+  roundingMode: RoundingMode
+  roundingGranularityMinutes: int

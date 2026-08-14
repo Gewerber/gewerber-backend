@@ -1,0 +1,10 @@
+enum: InvoiceStatus
+serialized: byName
+default: draft
+values:
+  - draft
+  - sent
+  - paid
+  - partiallyPaid
+  - overdue
+  - cancelled

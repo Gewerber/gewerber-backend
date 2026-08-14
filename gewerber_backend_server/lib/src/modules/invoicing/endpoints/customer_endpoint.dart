@@ -1,0 +1,59 @@
+import 'package:serverpod/serverpod.dart';
+
+import '../../../core/di/service_locator.dart';
+import '../../../core/endpoints/business_scoped_endpoint.dart';
+import '../../../generated/protocol.dart';
+import '../application/create_customer_use_case.dart';
+import '../application/get_customer_use_case.dart';
+import '../application/list_customers_use_case.dart';
+import '../application/update_customer_use_case.dart';
+
+class CustomerEndpoint extends BusinessScopedEndpoint {
+  Future<Customer> create(
+    Session session,
+    CreateCustomerRequest request, {
+    int? businessId,
+  }) {
+    return getIt<CreateCustomerUseCase>().call(
+      session,
+      request,
+      businessId: businessId,
+    );
+  }
+
+  Future<Customer> get(Session session, int customerId, {int? businessId}) {
+    return getIt<GetCustomerUseCase>().call(
+      session,
+      customerId,
+      businessId: businessId,
+    );
+  }
+
+  Future<Customer> update(
+    Session session,
+    UpdateCustomerRequest request, {
+    int? businessId,
+  }) {
+    return getIt<UpdateCustomerUseCase>().call(
+      session,
+      request,
+      businessId: businessId,
+    );
+  }
+
+  Future<List<Customer>> list(
+    Session session, {
+    CustomerStatus? status,
+    int? limit,
+    int? offset,
+    int? businessId,
+  }) {
+    return getIt<ListCustomersUseCase>().call(
+      session,
+      status: status,
+      limit: limit,
+      offset: offset,
+      businessId: businessId,
+    );
+  }
+}
