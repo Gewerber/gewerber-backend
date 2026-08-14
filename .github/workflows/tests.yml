@@ -26,8 +26,14 @@ jobs:
         run: docker compose up --quiet-pull --build -d
 
       - name: Configure git for private dependencies
+        env:
+          COMMERCIAL_REPO_TOKEN: ${{ secrets.COMMERCIAL_REPO_TOKEN }}
         run: |
-          git config --global url."https://x-access-token:${{ secrets.COMMERCIAL_REPO_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          if [ -z "$COMMERCIAL_REPO_TOKEN" ]; then
+            echo "::error::Secret COMMERCIAL_REPO_TOKEN is not set. Create a token with read access to the private gewerber-backend-commercial repository (Settings → Secrets and variables → Actions)."
+            exit 1
+          fi
+          git config --global url."https://x-access-token:${COMMERCIAL_REPO_TOKEN}@github.com/".insteadOf "https://github.com/"
 
       - name: Install dependencies
         run: flutter pub get

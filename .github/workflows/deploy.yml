@@ -70,6 +70,15 @@ jobs:
             org.opencontainers.image.title=Gewerber Backend
             org.opencontainers.image.description=Gewerber Serverpod backend (api.gewerber.de)
 
+      - name: Verify private dependency token
+        env:
+          COMMERCIAL_REPO_TOKEN: ${{ secrets.COMMERCIAL_REPO_TOKEN }}
+        run: |
+          if [ -z "$COMMERCIAL_REPO_TOKEN" ]; then
+            echo "::error::Secret COMMERCIAL_REPO_TOKEN is not set. Create a token with read access to the private gewerber-backend-commercial repository (Settings → Secrets and variables → Actions)."
+            exit 1
+          fi
+
       - name: Build and push image
         uses: docker/build-push-action@v6
         with:
