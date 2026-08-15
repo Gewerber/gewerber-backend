@@ -1,0 +1,7 @@
+enum: AppTheme
+serialized: byName
+default: system
+values:
+  - system
+  - light
+  - dark

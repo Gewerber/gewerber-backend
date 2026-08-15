@@ -12,6 +12,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../../../modules/business/models/locale.dart' as _i2;
+import '../../../modules/user/models/app_theme.dart' as _i3;
 
 abstract class UserProfile
     implements _i1.SerializableModel, _i1.ProtocolSerialization {
@@ -21,9 +22,11 @@ abstract class UserProfile
     this.displayName,
     _i2.Locale? locale,
     this.timeZone,
+    _i3.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) : locale = locale ?? _i2.Locale.de,
+       themeMode = themeMode ?? _i3.AppTheme.system,
        createdAt = createdAt ?? DateTime.now(),
        updatedAt = updatedAt ?? DateTime.now();
 
@@ -33,6 +36,7 @@ abstract class UserProfile
     String? displayName,
     _i2.Locale? locale,
     String? timeZone,
+    _i3.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _UserProfileImpl;
@@ -46,6 +50,9 @@ abstract class UserProfile
           ? null
           : _i2.Locale.fromJson((jsonSerialization['locale'] as String)),
       timeZone: jsonSerialization['timeZone'] as String?,
+      themeMode: jsonSerialization['themeMode'] == null
+          ? null
+          : _i3.AppTheme.fromJson((jsonSerialization['themeMode'] as String)),
       createdAt: jsonSerialization['createdAt'] == null
           ? null
           : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
@@ -68,6 +75,8 @@ abstract class UserProfile
 
   String? timeZone;
 
+  _i3.AppTheme themeMode;
+
   DateTime createdAt;
 
   DateTime updatedAt;
@@ -81,6 +90,7 @@ abstract class UserProfile
     String? displayName,
     _i2.Locale? locale,
     String? timeZone,
+    _i3.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
   });
@@ -93,6 +103,7 @@ abstract class UserProfile
       if (displayName != null) 'displayName': displayName,
       'locale': locale.toJson(),
       if (timeZone != null) 'timeZone': timeZone,
+      'themeMode': themeMode.toJson(),
       'createdAt': createdAt.toJson(),
       'updatedAt': updatedAt.toJson(),
     };
@@ -107,6 +118,7 @@ abstract class UserProfile
       if (displayName != null) 'displayName': displayName,
       'locale': locale.toJson(),
       if (timeZone != null) 'timeZone': timeZone,
+      'themeMode': themeMode.toJson(),
       'createdAt': createdAt.toJson(),
       'updatedAt': updatedAt.toJson(),
     };
@@ -127,6 +139,7 @@ class _UserProfileImpl extends UserProfile {
     String? displayName,
     _i2.Locale? locale,
     String? timeZone,
+    _i3.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) : super._(
@@ -135,6 +148,7 @@ class _UserProfileImpl extends UserProfile {
          displayName: displayName,
          locale: locale,
          timeZone: timeZone,
+         themeMode: themeMode,
          createdAt: createdAt,
          updatedAt: updatedAt,
        );
@@ -149,6 +163,7 @@ class _UserProfileImpl extends UserProfile {
     Object? displayName = _Undefined,
     _i2.Locale? locale,
     Object? timeZone = _Undefined,
+    _i3.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -158,6 +173,7 @@ class _UserProfileImpl extends UserProfile {
       displayName: displayName is String? ? displayName : this.displayName,
       locale: locale ?? this.locale,
       timeZone: timeZone is String? ? timeZone : this.timeZone,
+      themeMode: themeMode ?? this.themeMode,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

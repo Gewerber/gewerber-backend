@@ -77,17 +77,38 @@ fi
 . "$SECRETS"
 
 # Serverpod passwords file (config/passwords.yaml), mounted into the container.
-# The section name must match the server run mode.
+# The section name must match the server run mode. Values are single-quoted so
+# that arbitrary secret characters (`$`, backticks, quotes, `:`, ...) cannot
+# break the YAML or be interpreted by the shell.
+yaml_q() {
+  local s=${1//\'/\'\'}
+  printf "'%s'\n" "$s"
+}
 PASSWORDS="$DEPLOY_DIR/config/passwords.yaml"
-cat > "$PASSWORDS" <<EOF
-$RUNMODE:
-  database: $DB_PASSWORD
-  serviceSecret: $SERVICE_SECRET
-  redis: $REDIS_PASSWORD
-  emailSecretHashPepper: $EMAIL_SECRET_HASH_PEPPER
-  jwtHmacSha512PrivateKey: $JWT_HMAC_SHA512_PRIVATE_KEY
-  jwtRefreshTokenHashPepper: $JWT_REFRESH_TOKEN_HASH_PEPPER
-EOF
+# Optional SMTP settings for transactional emails (verification codes). When
+# SMTP_HOST is set, the values are written to the passwords file so MailService
+# can deliver emails; otherwise the server only logs the codes.
+SMTP_SETTINGS=""
+if [ -n "${SMTP_HOST:-}" ]; then
+  SMTP_SETTINGS="
+  smtpHost: $(yaml_q "$SMTP_HOST")
+  smtpPort: $(yaml_q "${SMTP_PORT:-587}")
+  smtpUsername: $(yaml_q "${SMTP_USERNAME:-}")
+  smtpPassword: $(yaml_q "${SMTP_PASSWORD:-}")
+  smtpFromAddress: $(yaml_q "${SMTP_FROM_ADDRESS:-}")
+  smtpFromName: $(yaml_q "${SMTP_FROM_NAME:-Gewerber}")
+  smtpSsl: $(yaml_q "${SMTP_SSL:-false}")"
+fi
+{
+  printf '%s:\n' "$RUNMODE"
+  printf '  database: %s\n' "$(yaml_q "$DB_PASSWORD")"
+  printf '  serviceSecret: %s\n' "$(yaml_q "$SERVICE_SECRET")"
+  printf '  redis: %s\n' "$(yaml_q "$REDIS_PASSWORD")"
+  printf '  emailSecretHashPepper: %s\n' "$(yaml_q "$EMAIL_SECRET_HASH_PEPPER")"
+  printf '  jwtHmacSha512PrivateKey: %s\n' "$(yaml_q "$JWT_HMAC_SHA512_PRIVATE_KEY")"
+  printf '  jwtRefreshTokenHashPepper: %s\n' "$(yaml_q "$JWT_REFRESH_TOKEN_HASH_PEPPER")"
+  printf '%s\n' "$SMTP_SETTINGS"
+} > "$PASSWORDS"
 chmod 600 "$PASSWORDS"
 
 # Per-environment .env consumed by docker-compose.yml. `HOST_RULE` contains

@@ -12,6 +12,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../../../modules/business/models/locale.dart' as _i2;
+import '../../../modules/user/models/app_theme.dart' as _i3;
 
 abstract class UpdateUserProfileRequest
     implements _i1.SerializableModel, _i1.ProtocolSerialization {
@@ -19,12 +20,14 @@ abstract class UpdateUserProfileRequest
     this.displayName,
     required this.locale,
     this.timeZone,
+    required this.themeMode,
   });
 
   factory UpdateUserProfileRequest({
     String? displayName,
     required _i2.Locale locale,
     String? timeZone,
+    required _i3.AppTheme themeMode,
   }) = _UpdateUserProfileRequestImpl;
 
   factory UpdateUserProfileRequest.fromJson(
@@ -34,6 +37,9 @@ abstract class UpdateUserProfileRequest
       displayName: jsonSerialization['displayName'] as String?,
       locale: _i2.Locale.fromJson((jsonSerialization['locale'] as String)),
       timeZone: jsonSerialization['timeZone'] as String?,
+      themeMode: _i3.AppTheme.fromJson(
+        (jsonSerialization['themeMode'] as String),
+      ),
     );
   }
 
@@ -43,6 +49,8 @@ abstract class UpdateUserProfileRequest
 
   String? timeZone;
 
+  _i3.AppTheme themeMode;
+
   /// Returns a shallow copy of this [UpdateUserProfileRequest]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
@@ -50,6 +58,7 @@ abstract class UpdateUserProfileRequest
     String? displayName,
     _i2.Locale? locale,
     String? timeZone,
+    _i3.AppTheme? themeMode,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -58,6 +67,7 @@ abstract class UpdateUserProfileRequest
       if (displayName != null) 'displayName': displayName,
       'locale': locale.toJson(),
       if (timeZone != null) 'timeZone': timeZone,
+      'themeMode': themeMode.toJson(),
     };
   }
 
@@ -68,6 +78,7 @@ abstract class UpdateUserProfileRequest
       if (displayName != null) 'displayName': displayName,
       'locale': locale.toJson(),
       if (timeZone != null) 'timeZone': timeZone,
+      'themeMode': themeMode.toJson(),
     };
   }
 
@@ -84,10 +95,12 @@ class _UpdateUserProfileRequestImpl extends UpdateUserProfileRequest {
     String? displayName,
     required _i2.Locale locale,
     String? timeZone,
+    required _i3.AppTheme themeMode,
   }) : super._(
          displayName: displayName,
          locale: locale,
          timeZone: timeZone,
+         themeMode: themeMode,
        );
 
   /// Returns a shallow copy of this [UpdateUserProfileRequest]
@@ -98,11 +111,13 @@ class _UpdateUserProfileRequestImpl extends UpdateUserProfileRequest {
     Object? displayName = _Undefined,
     _i2.Locale? locale,
     Object? timeZone = _Undefined,
+    _i3.AppTheme? themeMode,
   }) {
     return UpdateUserProfileRequest(
       displayName: displayName is String? ? displayName : this.displayName,
       locale: locale ?? this.locale,
       timeZone: timeZone is String? ? timeZone : this.timeZone,
+      themeMode: themeMode ?? this.themeMode,
     );
   }
 }
