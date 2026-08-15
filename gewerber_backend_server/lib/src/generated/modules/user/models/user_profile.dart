@@ -12,6 +12,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../../../modules/business/models/locale.dart' as _i2;
+import '../../../modules/user/models/app_theme.dart' as _i3;
 
 abstract class UserProfile
     implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
@@ -21,9 +22,11 @@ abstract class UserProfile
     this.displayName,
     _i2.Locale? locale,
     this.timeZone,
+    _i3.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) : locale = locale ?? _i2.Locale.de,
+       themeMode = themeMode ?? _i3.AppTheme.system,
        createdAt = createdAt ?? DateTime.now(),
        updatedAt = updatedAt ?? DateTime.now();
 
@@ -33,6 +36,7 @@ abstract class UserProfile
     String? displayName,
     _i2.Locale? locale,
     String? timeZone,
+    _i3.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _UserProfileImpl;
@@ -46,6 +50,9 @@ abstract class UserProfile
           ? null
           : _i2.Locale.fromJson((jsonSerialization['locale'] as String)),
       timeZone: jsonSerialization['timeZone'] as String?,
+      themeMode: jsonSerialization['themeMode'] == null
+          ? null
+          : _i3.AppTheme.fromJson((jsonSerialization['themeMode'] as String)),
       createdAt: jsonSerialization['createdAt'] == null
           ? null
           : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
@@ -70,6 +77,8 @@ abstract class UserProfile
 
   String? timeZone;
 
+  _i3.AppTheme themeMode;
+
   DateTime createdAt;
 
   DateTime updatedAt;
@@ -86,6 +95,7 @@ abstract class UserProfile
     String? displayName,
     _i2.Locale? locale,
     String? timeZone,
+    _i3.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
   });
@@ -98,6 +108,7 @@ abstract class UserProfile
       if (displayName != null) 'displayName': displayName,
       'locale': locale.toJson(),
       if (timeZone != null) 'timeZone': timeZone,
+      'themeMode': themeMode.toJson(),
       'createdAt': createdAt.toJson(),
       'updatedAt': updatedAt.toJson(),
     };
@@ -112,6 +123,7 @@ abstract class UserProfile
       if (displayName != null) 'displayName': displayName,
       'locale': locale.toJson(),
       if (timeZone != null) 'timeZone': timeZone,
+      'themeMode': themeMode.toJson(),
       'createdAt': createdAt.toJson(),
       'updatedAt': updatedAt.toJson(),
     };
@@ -154,6 +166,7 @@ class _UserProfileImpl extends UserProfile {
     String? displayName,
     _i2.Locale? locale,
     String? timeZone,
+    _i3.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) : super._(
@@ -162,6 +175,7 @@ class _UserProfileImpl extends UserProfile {
          displayName: displayName,
          locale: locale,
          timeZone: timeZone,
+         themeMode: themeMode,
          createdAt: createdAt,
          updatedAt: updatedAt,
        );
@@ -176,6 +190,7 @@ class _UserProfileImpl extends UserProfile {
     Object? displayName = _Undefined,
     _i2.Locale? locale,
     Object? timeZone = _Undefined,
+    _i3.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -185,6 +200,7 @@ class _UserProfileImpl extends UserProfile {
       displayName: displayName is String? ? displayName : this.displayName,
       locale: locale ?? this.locale,
       timeZone: timeZone is String? ? timeZone : this.timeZone,
+      themeMode: themeMode ?? this.themeMode,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -215,6 +231,12 @@ class UserProfileUpdateTable extends _i1.UpdateTable<UserProfileTable> {
     table.timeZone,
     value,
   );
+
+  _i1.ColumnValue<_i3.AppTheme, _i3.AppTheme> themeMode(_i3.AppTheme value) =>
+      _i1.ColumnValue(
+        table.themeMode,
+        value,
+      );
 
   _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
       _i1.ColumnValue(
@@ -250,6 +272,12 @@ class UserProfileTable extends _i1.Table<int?> {
       'timeZone',
       this,
     );
+    themeMode = _i1.ColumnEnum(
+      'themeMode',
+      this,
+      _i1.EnumSerialization.byName,
+      hasDefault: true,
+    );
     createdAt = _i1.ColumnDateTime(
       'createdAt',
       this,
@@ -272,6 +300,8 @@ class UserProfileTable extends _i1.Table<int?> {
 
   late final _i1.ColumnString timeZone;
 
+  late final _i1.ColumnEnum<_i3.AppTheme> themeMode;
+
   late final _i1.ColumnDateTime createdAt;
 
   late final _i1.ColumnDateTime updatedAt;
@@ -283,6 +313,7 @@ class UserProfileTable extends _i1.Table<int?> {
     displayName,
     locale,
     timeZone,
+    themeMode,
     createdAt,
     updatedAt,
   ];

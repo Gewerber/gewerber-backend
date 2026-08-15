@@ -3,10 +3,12 @@ import 'package:serverpod/serverpod.dart';
 import '../../../core/di/service_locator.dart';
 import '../../../core/endpoints/business_scoped_endpoint.dart';
 import '../../../generated/protocol.dart';
+import '../application/cancel_invoice_use_case.dart';
 import '../application/create_invoice_use_case.dart';
 import '../application/delete_invoice_use_case.dart';
 import '../application/get_invoice_use_case.dart';
 import '../application/list_invoices_use_case.dart';
+import '../application/mark_invoice_sent_use_case.dart';
 import '../application/update_invoice_use_case.dart';
 
 class InvoiceEndpoint extends BusinessScopedEndpoint {

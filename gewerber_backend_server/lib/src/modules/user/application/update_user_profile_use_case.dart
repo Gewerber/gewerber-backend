@@ -29,6 +29,7 @@ class UpdateUserProfileUseCase {
       displayName: request.displayName?.trim(),
       locale: request.locale,
       timeZone: request.timeZone,
+      themeMode: request.themeMode,
       updatedAt: DateTime.now().toUtc(),
     );
     final saved = existing == null

@@ -3,3 +3,4 @@ fields:
   displayName: String?
   locale: Locale
   timeZone: String?
+  themeMode: AppTheme

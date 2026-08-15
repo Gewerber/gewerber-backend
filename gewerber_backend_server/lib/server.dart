@@ -3,6 +3,9 @@ import 'package:serverpod_auth_idp_server/core.dart';
 import 'package:serverpod_auth_idp_server/providers/email.dart';
 
 import 'src/core/di/injection.dart';
+import 'src/core/di/service_locator.dart';
+import 'src/core/mail/email_template.dart';
+import 'src/core/mail/mail_service.dart';
 import 'src/generated/endpoints.dart';
 import 'src/generated/protocol.dart';
 
@@ -23,13 +26,40 @@ void run(List<String> args) async {
     ],
     identityProviderBuilders: [
       // Configure the email identity provider for email/password authentication.
-      // The default setup works with Serverpod Cloud without configuration. In
-      // development the verification codes are logged to the console, and in
-      // staging and production they are sent through the Serverpod Cloud email
-      // service. If you want to use a custom provider for sending emails, use
-      // `EmailIdpConfigFromPasswords`.
-      ServerpodCloudEmailIdpConfig(
-        appDisplayName: 'gewerber_backend',
+      // Verification codes are sent by MailService via SMTP (settings read from
+      // `config/passwords.yaml`). If no SMTP host is configured, the codes are
+      // only logged, which keeps the flow usable in local development.
+      EmailIdpConfigFromPasswords(
+        sendRegistrationVerificationCode:
+            (
+              session, {
+              required email,
+              required accountRequestId,
+              required verificationCode,
+              required transaction,
+            }) {
+              return getIt<MailService>().sendVerificationCode(
+                session,
+                email: email,
+                verificationCode: verificationCode,
+                template: EmailTemplate.registrationVerification,
+              );
+            },
+        sendPasswordResetVerificationCode:
+            (
+              session, {
+              required email,
+              required passwordResetRequestId,
+              required verificationCode,
+              required transaction,
+            }) {
+              return getIt<MailService>().sendVerificationCode(
+                session,
+                email: email,
+                verificationCode: verificationCode,
+                template: EmailTemplate.passwordResetVerification,
+              );
+            },
       ),
     ],
   );

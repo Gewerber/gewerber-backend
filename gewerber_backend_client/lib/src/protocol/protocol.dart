@@ -56,28 +56,29 @@ import 'modules/invoicing/models/update_customer_request.dart' as _i42;
 import 'modules/invoicing/models/update_invoice_request.dart' as _i43;
 import 'modules/invoicing/models/update_invoice_template_request.dart' as _i44;
 import 'modules/invoicing/models/vat_rate.dart' as _i45;
-import 'modules/user/models/update_user_profile_request.dart' as _i46;
-import 'modules/user/models/user_profile.dart' as _i47;
+import 'modules/user/models/app_theme.dart' as _i46;
+import 'modules/user/models/update_user_profile_request.dart' as _i47;
+import 'modules/user/models/user_profile.dart' as _i48;
 import 'package:gewerber_backend_client/src/protocol/core/entitlement/feature.dart'
-    as _i48;
-import 'package:gewerber_backend_client/src/protocol/modules/business/models/business.dart'
     as _i49;
-import 'package:gewerber_backend_client/src/protocol/modules/documents/models/document.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/business.dart'
     as _i50;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/documents/models/document.dart'
     as _i51;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_item.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer.dart'
     as _i52;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_item.dart'
     as _i53;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_template.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice.dart'
     as _i54;
-import 'package:gewerber_commercial_client/gewerber_commercial_client.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_template.dart'
     as _i55;
-import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
+import 'package:gewerber_commercial_client/gewerber_commercial_client.dart'
     as _i56;
-import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
+import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
     as _i57;
+import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
+    as _i58;
 export 'core/entitlement/feature.dart';
 export 'core/errors/conflict_exception.dart';
 export 'core/errors/forbidden_exception.dart';
@@ -122,6 +123,7 @@ export 'modules/invoicing/models/update_customer_request.dart';
 export 'modules/invoicing/models/update_invoice_request.dart';
 export 'modules/invoicing/models/update_invoice_template_request.dart';
 export 'modules/invoicing/models/vat_rate.dart';
+export 'modules/user/models/app_theme.dart';
 export 'modules/user/models/update_user_profile_request.dart';
 export 'modules/user/models/user_profile.dart';
 export 'client.dart';
@@ -292,11 +294,14 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i45.VatRate) {
       return _i45.VatRate.fromJson(data) as T;
     }
-    if (t == _i46.UpdateUserProfileRequest) {
-      return _i46.UpdateUserProfileRequest.fromJson(data) as T;
+    if (t == _i46.AppTheme) {
+      return _i46.AppTheme.fromJson(data) as T;
     }
-    if (t == _i47.UserProfile) {
-      return _i47.UserProfile.fromJson(data) as T;
+    if (t == _i47.UpdateUserProfileRequest) {
+      return _i47.UpdateUserProfileRequest.fromJson(data) as T;
+    }
+    if (t == _i48.UserProfile) {
+      return _i48.UserProfile.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.Feature?>()) {
       return (data != null ? _i2.Feature.fromJson(data) : null) as T;
@@ -451,14 +456,17 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i45.VatRate?>()) {
       return (data != null ? _i45.VatRate.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i46.UpdateUserProfileRequest?>()) {
+    if (t == _i1.getType<_i46.AppTheme?>()) {
+      return (data != null ? _i46.AppTheme.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i47.UpdateUserProfileRequest?>()) {
       return (data != null
-              ? _i46.UpdateUserProfileRequest.fromJson(data)
+              ? _i47.UpdateUserProfileRequest.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i47.UserProfile?>()) {
-      return (data != null ? _i47.UserProfile.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i48.UserProfile?>()) {
+      return (data != null ? _i48.UserProfile.fromJson(data) : null) as T;
     }
     if (t == List<_i31.InvoiceItemRequest>) {
       return (data as List)
@@ -472,46 +480,46 @@ class Protocol extends _i1.SerializationManager {
               .toList()
           as T;
     }
-    if (t == List<_i48.Feature>) {
-      return (data as List).map((e) => deserialize<_i48.Feature>(e)).toList()
+    if (t == List<_i49.Feature>) {
+      return (data as List).map((e) => deserialize<_i49.Feature>(e)).toList()
           as T;
     }
-    if (t == List<_i49.Business>) {
-      return (data as List).map((e) => deserialize<_i49.Business>(e)).toList()
+    if (t == List<_i50.Business>) {
+      return (data as List).map((e) => deserialize<_i50.Business>(e)).toList()
           as T;
     }
-    if (t == List<_i50.Document>) {
-      return (data as List).map((e) => deserialize<_i50.Document>(e)).toList()
+    if (t == List<_i51.Document>) {
+      return (data as List).map((e) => deserialize<_i51.Document>(e)).toList()
           as T;
     }
-    if (t == List<_i51.Customer>) {
-      return (data as List).map((e) => deserialize<_i51.Customer>(e)).toList()
+    if (t == List<_i52.Customer>) {
+      return (data as List).map((e) => deserialize<_i52.Customer>(e)).toList()
           as T;
     }
-    if (t == List<_i52.InvoiceItem>) {
+    if (t == List<_i53.InvoiceItem>) {
       return (data as List)
-              .map((e) => deserialize<_i52.InvoiceItem>(e))
+              .map((e) => deserialize<_i53.InvoiceItem>(e))
               .toList()
           as T;
     }
-    if (t == List<_i53.Invoice>) {
-      return (data as List).map((e) => deserialize<_i53.Invoice>(e)).toList()
+    if (t == List<_i54.Invoice>) {
+      return (data as List).map((e) => deserialize<_i54.Invoice>(e)).toList()
           as T;
     }
-    if (t == List<_i54.InvoiceTemplate>) {
+    if (t == List<_i55.InvoiceTemplate>) {
       return (data as List)
-              .map((e) => deserialize<_i54.InvoiceTemplate>(e))
+              .map((e) => deserialize<_i55.InvoiceTemplate>(e))
               .toList()
           as T;
     }
-    try {
-      return _i55.Protocol().deserialize<T>(data, t);
-    } on _i1.DeserializationTypeNotFoundException catch (_) {}
     try {
       return _i56.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     try {
       return _i57.Protocol().deserialize<T>(data, t);
+    } on _i1.DeserializationTypeNotFoundException catch (_) {}
+    try {
+      return _i58.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -562,8 +570,9 @@ class Protocol extends _i1.SerializationManager {
       _i43.UpdateInvoiceRequest => 'UpdateInvoiceRequest',
       _i44.UpdateInvoiceTemplateRequest => 'UpdateInvoiceTemplateRequest',
       _i45.VatRate => 'VatRate',
-      _i46.UpdateUserProfileRequest => 'UpdateUserProfileRequest',
-      _i47.UserProfile => 'UserProfile',
+      _i46.AppTheme => 'AppTheme',
+      _i47.UpdateUserProfileRequest => 'UpdateUserProfileRequest',
+      _i48.UserProfile => 'UserProfile',
       _ => null,
     };
   }
@@ -669,24 +678,26 @@ class Protocol extends _i1.SerializationManager {
         return 'UpdateInvoiceTemplateRequest';
       case _i45.VatRate():
         return 'VatRate';
-      case _i46.UpdateUserProfileRequest():
+      case _i46.AppTheme():
+        return 'AppTheme';
+      case _i47.UpdateUserProfileRequest():
         return 'UpdateUserProfileRequest';
-      case _i47.UserProfile():
+      case _i48.UserProfile():
         return 'UserProfile';
-    }
-    className = _i55.Protocol().getClassNameForObject(data);
-    if (className != null) {
-      return className.contains('.')
-          ? className
-          : 'gewerber_commercial.$className';
     }
     className = _i56.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
-          : 'serverpod_auth_idp.$className';
+          : 'gewerber_commercial.$className';
     }
     className = _i57.Protocol().getClassNameForObject(data);
+    if (className != null) {
+      return className.contains('.')
+          ? className
+          : 'serverpod_auth_idp.$className';
+    }
+    className = _i58.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
@@ -833,31 +844,34 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'VatRate') {
       return deserialize<_i45.VatRate>(data['data']);
     }
+    if (dataClassName == 'AppTheme') {
+      return deserialize<_i46.AppTheme>(data['data']);
+    }
     if (dataClassName == 'UpdateUserProfileRequest') {
-      return deserialize<_i46.UpdateUserProfileRequest>(data['data']);
+      return deserialize<_i47.UpdateUserProfileRequest>(data['data']);
     }
     if (dataClassName == 'UserProfile') {
-      return deserialize<_i47.UserProfile>(data['data']);
+      return deserialize<_i48.UserProfile>(data['data']);
     }
     if (dataClassName.startsWith('gewerber_commercial.')) {
       data['className'] = dataClassName.substring(20);
-      return _i55.Protocol().deserializeByClassName(data);
+      return _i56.Protocol().deserializeByClassName(data);
     }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);
-      return _i56.Protocol().deserializeByClassName(data);
+      return _i57.Protocol().deserializeByClassName(data);
     }
     if (dataClassName.startsWith('serverpod_auth_core.')) {
       data['className'] = dataClassName.substring(20);
-      return _i57.Protocol().deserializeByClassName(data);
+      return _i58.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }
 
   void _registerHostProtocols() {
-    _i55.Protocol().registerHostProtocol('gewerber_backend', this);
     _i56.Protocol().registerHostProtocol('gewerber_backend', this);
     _i57.Protocol().registerHostProtocol('gewerber_backend', this);
+    _i58.Protocol().registerHostProtocol('gewerber_backend', this);
   }
 
   @override
@@ -873,13 +887,13 @@ class Protocol extends _i1.SerializationManager {
       return null;
     }
     try {
-      return _i55.Protocol().mapRecordToJson(record);
-    } catch (_) {}
-    try {
       return _i56.Protocol().mapRecordToJson(record);
     } catch (_) {}
     try {
       return _i57.Protocol().mapRecordToJson(record);
+    } catch (_) {}
+    try {
+      return _i58.Protocol().mapRecordToJson(record);
     } catch (_) {}
     throw Exception('Unsupported record type ${record.runtimeType}');
   }

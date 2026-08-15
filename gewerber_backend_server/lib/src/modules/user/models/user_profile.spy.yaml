@@ -5,6 +5,7 @@ fields:
   displayName: String?
   locale: Locale, default=de
   timeZone: String?
+  themeMode: AppTheme, default=system
   createdAt: DateTime, default=now
   updatedAt: DateTime, default=now
 indexes:
