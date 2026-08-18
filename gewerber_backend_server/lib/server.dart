@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_idp_server/core.dart';
 import 'package:serverpod_auth_idp_server/providers/email.dart';
@@ -30,6 +32,8 @@ void run(List<String> args) async {
       // `config/passwords.yaml`). If no SMTP host is configured, the codes are
       // only logged, which keeps the flow usable in local development.
       EmailIdpConfigFromPasswords(
+        registrationVerificationCodeGenerator: _generateSixDigitCode,
+        passwordResetVerificationCodeGenerator: _generateSixDigitCode,
         sendRegistrationVerificationCode:
             (
               session, {
@@ -66,4 +70,17 @@ void run(List<String> args) async {
 
   // Start the server.
   await pod.start();
+}
+
+/// Generates a 6-digit numeric verification code, matching the format the
+/// client app validates against (the IdP default is 8 digits).
+String _generateSixDigitCode() {
+  const digits = '0123456789';
+  final random = Random.secure();
+  return String.fromCharCodes(
+    Iterable.generate(
+      6,
+      (_) => digits.codeUnitAt(random.nextInt(digits.length)),
+    ),
+  );
 }
