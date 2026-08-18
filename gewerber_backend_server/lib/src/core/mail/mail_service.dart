@@ -64,7 +64,7 @@ class MailService {
     try {
       await send(message, smtpServer);
       session.log('[MailService] ${template.name} sent to $email');
-    } on MailerException catch (e) {
+    } on Exception catch (e) {
       session.log(
         '[MailService] Failed to send ${template.name} to $email: $e',
         level: LogLevel.error,

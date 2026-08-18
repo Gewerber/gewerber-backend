@@ -92,12 +92,12 @@ SMTP_SETTINGS=""
 if [ -n "${SMTP_HOST:-}" ]; then
   SMTP_SETTINGS="
   smtpHost: $(yaml_q "$SMTP_HOST")
-  smtpPort: $(yaml_q "${SMTP_PORT:-587}")
+  smtpPort: $(yaml_q "${SMTP_PORT:-465}")
   smtpUsername: $(yaml_q "${SMTP_USERNAME:-}")
   smtpPassword: $(yaml_q "${SMTP_PASSWORD:-}")
   smtpFromAddress: $(yaml_q "${SMTP_FROM_ADDRESS:-}")
   smtpFromName: $(yaml_q "${SMTP_FROM_NAME:-Gewerber}")
-  smtpSsl: $(yaml_q "${SMTP_SSL:-false}")"
+  smtpSsl: $(yaml_q "${SMTP_SSL:-true}")"
 fi
 {
   printf '%s:\n' "$RUNMODE"
