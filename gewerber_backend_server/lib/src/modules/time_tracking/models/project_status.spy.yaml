@@ -1,0 +1,6 @@
+enum: ProjectStatus
+serialized: byName
+default: active
+values:
+  - active
+  - archived

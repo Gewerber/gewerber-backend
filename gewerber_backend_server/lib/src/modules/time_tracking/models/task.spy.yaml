@@ -1,0 +1,15 @@
+class: Task
+table: task
+fields:
+  businessId: int, relation(parent=business, onDelete=Cascade)
+  projectId: int, relation(parent=project, onDelete=Cascade)
+  name: String
+  status: TaskStatus, default=open
+  hourlyRateCents: int?
+  createdAt: DateTime, default=now
+  updatedAt: DateTime, default=now
+indexes:
+  task_business_idx:
+    fields: businessId, status
+  task_project_idx:
+    fields: projectId

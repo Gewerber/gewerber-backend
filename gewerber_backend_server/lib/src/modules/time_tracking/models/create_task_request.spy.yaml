@@ -1,0 +1,5 @@
+class: CreateTaskRequest
+fields:
+  projectId: int
+  name: String
+  hourlyRateCents: int?

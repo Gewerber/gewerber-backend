@@ -1,0 +1,6 @@
+class: CreateProjectRequest
+fields:
+  name: String
+  customerId: int?
+  hourlyRateCents: int?
+  notes: String?

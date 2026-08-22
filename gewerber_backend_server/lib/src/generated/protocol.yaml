@@ -11,6 +11,14 @@ jwtRefresh:
   - refreshAccessToken:
 entitlement:
   - list:
+accounting:
+  - create:
+  - get:
+  - update:
+  - list:
+  - delete:
+  - profitLoss:
+  - exportCsv:
 business:
   - create:
   - get:
@@ -25,6 +33,12 @@ document:
   - get:
   - download:
   - delete:
+guidance:
+  - tips:
+  - checklists:
+  - myProgress:
+  - markCompleted:
+  - dismissTip:
 customer:
   - create:
   - get:
@@ -37,6 +51,11 @@ invoice:
   - update:
   - list:
   - delete:
+  - markSent:
+  - cancel:
+  - exportCsv:
+  - exportJson:
+  - generatePdf:
 invoiceTemplate:
   - create:
   - get:
@@ -45,6 +64,30 @@ invoiceTemplate:
 payment:
   - record:
   - status:
+reminder:
+  - list:
+  - send:
+project:
+  - create:
+  - get:
+  - getTasks:
+  - update:
+  - list:
+  - delete:
+task:
+  - create:
+  - update:
+  - list:
+timeEntry:
+  - startTimer:
+  - stopTimer:
+  - create:
+  - get:
+  - update:
+  - list:
+  - delete:
+  - report:
+  - createInvoice:
 userProfile:
   - getMyProfile:
   - update:

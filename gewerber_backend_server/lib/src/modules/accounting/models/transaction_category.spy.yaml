@@ -1,0 +1,21 @@
+enum: TransactionCategory
+serialized: byName
+values:
+  # Income
+  - salesRevenue
+  - serviceRevenue
+  - otherIncome
+  # Expense
+  - goodsPurchase
+  - rent
+  - office
+  - travel
+  - vehicle
+  - advertising
+  - insurance
+  - telecommunication
+  - training
+  - consulting
+  - feesAndDuties
+  - tools
+  - otherExpense

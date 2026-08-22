@@ -106,7 +106,7 @@ void main() {
     });
 
     test('when name is empty then ValidationException is thrown', () async {
-      expect(
+      await expectLater(
         () => endpoints.customer.create(
           authenticatedSession,
           CreateCustomerRequest(name: '   '),
@@ -358,7 +358,7 @@ void main() {
         businessId: businessId,
       );
 
-      expect(
+      await expectLater(
         () => endpoints.invoice.get(
           authenticatedSession,
           invoice.id!,

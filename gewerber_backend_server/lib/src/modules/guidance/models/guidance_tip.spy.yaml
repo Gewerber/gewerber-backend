@@ -1,0 +1,5 @@
+class: GuidanceTip
+fields:
+  topic: String
+  title: String
+  body: String

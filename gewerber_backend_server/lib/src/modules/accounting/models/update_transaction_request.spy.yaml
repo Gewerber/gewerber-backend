@@ -1,0 +1,10 @@
+class: UpdateTransactionRequest
+fields:
+  transactionId: int
+  type: TransactionType
+  category: TransactionCategory
+  description: String?
+  occurredAt: DateTime
+  amountCents: int
+  receiptDocumentId: int?
+  relatedInvoiceId: int?

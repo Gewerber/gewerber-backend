@@ -1,0 +1,10 @@
+class: TimeReportLine
+fields:
+  projectId: int?
+  projectName: String?
+  taskId: int?
+  taskName: String?
+  entryCount: int
+  totalMinutes: int
+  billableMinutes: int
+  roundedMinutes: int

@@ -1,0 +1,7 @@
+class: CreateTimeEntriesInvoiceRequest
+fields:
+  projectId: int
+  from: DateTime?
+  to: DateTime?
+  customerId: int?
+  issueDate: DateTime?

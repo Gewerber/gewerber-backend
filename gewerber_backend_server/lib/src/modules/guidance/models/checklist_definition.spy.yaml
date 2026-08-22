@@ -1,0 +1,5 @@
+class: ChecklistDefinition
+fields:
+  key: String
+  title: String
+  items: List<ChecklistItemDefinition>

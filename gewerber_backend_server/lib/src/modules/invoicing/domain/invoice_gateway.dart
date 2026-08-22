@@ -28,6 +28,10 @@ abstract interface class InvoiceGateway {
   /// Recurring source invoices that are due for materialization.
   Future<List<Invoice>> findDueRecurring(Session session, DateTime now);
 
+  /// Marks sent/partially paid invoices whose due date has passed as overdue.
+  /// Returns the number of updated invoices.
+  Future<int> markOverdue(Session session, DateTime now);
+
   Future<Invoice> delete(
     Session session,
     Invoice invoice, {

@@ -48,10 +48,14 @@ class InvoiceTemplateEndpoint extends BusinessScopedEndpoint {
   Future<List<InvoiceTemplate>> list(
     Session session, {
     int? businessId,
+    int? limit,
+    int? offset,
   }) {
     return getIt<ListInvoiceTemplatesUseCase>().call(
       session,
       businessId: businessId,
+      limit: limit,
+      offset: offset,
     );
   }
 }

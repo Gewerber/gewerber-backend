@@ -1,0 +1,18 @@
+class: AccountingTransaction
+table: accounting_transaction
+fields:
+  businessId: int, relation(parent=business, onDelete=Cascade)
+  type: TransactionType
+  category: TransactionCategory
+  description: String?
+  occurredAt: DateTime
+  amountCents: int
+  receiptDocumentId: int?, relation(parent=document, onDelete=SetNull)
+  relatedInvoiceId: int?, relation(parent=invoice, onDelete=SetNull)
+  createdAt: DateTime, default=now
+  updatedAt: DateTime, default=now
+indexes:
+  accounting_transaction_business_idx:
+    fields: businessId, occurredAt
+  accounting_transaction_category_idx:
+    fields: businessId, category

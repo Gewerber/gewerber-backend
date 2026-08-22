@@ -15,8 +15,10 @@ abstract interface class InvoiceTemplateGateway {
 
   Future<List<InvoiceTemplate>> findByBusinessId(
     Session session,
-    int businessId,
-  );
+    int businessId, {
+    int limit = 100,
+    int offset = 0,
+  });
 
   /// Clears the default flag of all templates of a business.
   Future<void> clearDefaultFlags(

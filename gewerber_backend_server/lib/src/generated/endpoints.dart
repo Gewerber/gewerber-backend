@@ -14,50 +14,87 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import '../auth/email_idp_endpoint.dart' as _i2;
 import '../auth/jwt_refresh_endpoint.dart' as _i3;
 import '../core/entitlement/endpoints/entitlement_endpoint.dart' as _i4;
-import '../modules/business/endpoints/business_endpoint.dart' as _i5;
-import '../modules/business/endpoints/business_settings_endpoint.dart' as _i6;
-import '../modules/documents/endpoints/document_endpoint.dart' as _i7;
-import '../modules/invoicing/endpoints/customer_endpoint.dart' as _i8;
-import '../modules/invoicing/endpoints/invoice_endpoint.dart' as _i9;
-import '../modules/invoicing/endpoints/invoice_template_endpoint.dart' as _i10;
-import '../modules/invoicing/endpoints/payment_endpoint.dart' as _i11;
-import '../modules/user/endpoints/user_profile_endpoint.dart' as _i12;
-import 'package:gewerber_backend_server/src/generated/modules/business/models/create_business_request.dart'
-    as _i13;
-import 'package:gewerber_backend_server/src/generated/modules/business/models/update_business_request.dart'
-    as _i14;
-import 'package:gewerber_backend_server/src/generated/modules/business/models/update_business_settings_request.dart'
-    as _i15;
-import 'package:gewerber_backend_server/src/generated/modules/documents/models/upload_document_request.dart'
-    as _i16;
-import 'package:gewerber_backend_server/src/generated/modules/documents/models/document_kind.dart'
-    as _i17;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_customer_request.dart'
-    as _i18;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/update_customer_request.dart'
+import '../modules/accounting/endpoints/accounting_endpoint.dart' as _i5;
+import '../modules/business/endpoints/business_endpoint.dart' as _i6;
+import '../modules/business/endpoints/business_settings_endpoint.dart' as _i7;
+import '../modules/documents/endpoints/document_endpoint.dart' as _i8;
+import '../modules/guidance/endpoints/guidance_endpoint.dart' as _i9;
+import '../modules/invoicing/endpoints/customer_endpoint.dart' as _i10;
+import '../modules/invoicing/endpoints/invoice_endpoint.dart' as _i11;
+import '../modules/invoicing/endpoints/invoice_template_endpoint.dart' as _i12;
+import '../modules/invoicing/endpoints/payment_endpoint.dart' as _i13;
+import '../modules/invoicing/endpoints/reminder_endpoint.dart' as _i14;
+import '../modules/time_tracking/endpoints/project_endpoint.dart' as _i15;
+import '../modules/time_tracking/endpoints/task_endpoint.dart' as _i16;
+import '../modules/time_tracking/endpoints/time_entry_endpoint.dart' as _i17;
+import '../modules/user/endpoints/user_profile_endpoint.dart' as _i18;
+import 'package:gewerber_backend_server/src/generated/modules/accounting/models/create_transaction_request.dart'
     as _i19;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer_status.dart'
+import 'package:gewerber_backend_server/src/generated/modules/accounting/models/update_transaction_request.dart'
     as _i20;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_invoice_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/accounting/models/transaction_type.dart'
     as _i21;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/update_invoice_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/accounting/models/transaction_category.dart'
     as _i22;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_status.dart'
+import 'package:gewerber_backend_server/src/generated/modules/business/models/create_business_request.dart'
     as _i23;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_invoice_template_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/business/models/update_business_request.dart'
     as _i24;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/update_invoice_template_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/business/models/update_business_settings_request.dart'
     as _i25;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/record_payment_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/documents/models/upload_document_request.dart'
     as _i26;
-import 'package:gewerber_backend_server/src/generated/modules/user/models/update_user_profile_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/documents/models/document_kind.dart'
     as _i27;
-import 'package:gewerber_commercial_server/gewerber_commercial_server.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_customer_request.dart'
     as _i28;
-import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/update_customer_request.dart'
     as _i29;
-import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer_status.dart'
     as _i30;
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_invoice_request.dart'
+    as _i31;
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/update_invoice_request.dart'
+    as _i32;
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_status.dart'
+    as _i33;
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_invoice_template_request.dart'
+    as _i34;
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/update_invoice_template_request.dart'
+    as _i35;
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/record_payment_request.dart'
+    as _i36;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/create_project_request.dart'
+    as _i37;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/update_project_request.dart'
+    as _i38;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/project_status.dart'
+    as _i39;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/create_task_request.dart'
+    as _i40;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/update_task_request.dart'
+    as _i41;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/task_status.dart'
+    as _i42;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/start_timer_request.dart'
+    as _i43;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/create_time_entry_request.dart'
+    as _i44;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/update_time_entry_request.dart'
+    as _i45;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/create_time_entries_invoice_request.dart'
+    as _i46;
+import 'package:gewerber_backend_server/src/generated/modules/user/models/update_user_profile_request.dart'
+    as _i47;
+import 'package:gewerber_commercial_server/gewerber_commercial_server.dart'
+    as _i48;
+import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
+    as _i49;
+import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
+    as _i50;
+import 'package:gewerber_backend_server/src/generated/future_calls.dart'
+    as _i51;
+export 'future_calls.dart' show ServerpodFutureCallsGetter;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -81,49 +118,85 @@ class Endpoints extends _i1.EndpointDispatch {
           'entitlement',
           null,
         ),
-      'business': _i5.BusinessEndpoint()
+      'accounting': _i5.AccountingEndpoint()
+        ..initialize(
+          server,
+          'accounting',
+          null,
+        ),
+      'business': _i6.BusinessEndpoint()
         ..initialize(
           server,
           'business',
           null,
         ),
-      'businessSettings': _i6.BusinessSettingsEndpoint()
+      'businessSettings': _i7.BusinessSettingsEndpoint()
         ..initialize(
           server,
           'businessSettings',
           null,
         ),
-      'document': _i7.DocumentEndpoint()
+      'document': _i8.DocumentEndpoint()
         ..initialize(
           server,
           'document',
           null,
         ),
-      'customer': _i8.CustomerEndpoint()
+      'guidance': _i9.GuidanceEndpoint()
+        ..initialize(
+          server,
+          'guidance',
+          null,
+        ),
+      'customer': _i10.CustomerEndpoint()
         ..initialize(
           server,
           'customer',
           null,
         ),
-      'invoice': _i9.InvoiceEndpoint()
+      'invoice': _i11.InvoiceEndpoint()
         ..initialize(
           server,
           'invoice',
           null,
         ),
-      'invoiceTemplate': _i10.InvoiceTemplateEndpoint()
+      'invoiceTemplate': _i12.InvoiceTemplateEndpoint()
         ..initialize(
           server,
           'invoiceTemplate',
           null,
         ),
-      'payment': _i11.PaymentEndpoint()
+      'payment': _i13.PaymentEndpoint()
         ..initialize(
           server,
           'payment',
           null,
         ),
-      'userProfile': _i12.UserProfileEndpoint()
+      'reminder': _i14.ReminderEndpoint()
+        ..initialize(
+          server,
+          'reminder',
+          null,
+        ),
+      'project': _i15.ProjectEndpoint()
+        ..initialize(
+          server,
+          'project',
+          null,
+        ),
+      'task': _i16.TaskEndpoint()
+        ..initialize(
+          server,
+          'task',
+          null,
+        ),
+      'timeEntry': _i17.TimeEntryEndpoint()
+        ..initialize(
+          server,
+          'timeEntry',
+          null,
+        ),
+      'userProfile': _i18.UserProfileEndpoint()
         ..initialize(
           server,
           'userProfile',
@@ -359,6 +432,235 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
+    connectors['accounting'] = _i1.EndpointConnector(
+      name: 'accounting',
+      endpoint: endpoints['accounting']!,
+      methodConnectors: {
+        'create': _i1.MethodConnector(
+          name: 'create',
+          params: {
+            'request': _i1.ParameterDescription(
+              name: 'request',
+              type: _i1.getType<_i19.CreateTransactionRequest>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['accounting'] as _i5.AccountingEndpoint).create(
+                    session,
+                    params['request'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'get': _i1.MethodConnector(
+          name: 'get',
+          params: {
+            'transactionId': _i1.ParameterDescription(
+              name: 'transactionId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['accounting'] as _i5.AccountingEndpoint).get(
+                    session,
+                    params['transactionId'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'update': _i1.MethodConnector(
+          name: 'update',
+          params: {
+            'request': _i1.ParameterDescription(
+              name: 'request',
+              type: _i1.getType<_i20.UpdateTransactionRequest>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['accounting'] as _i5.AccountingEndpoint).update(
+                    session,
+                    params['request'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'list': _i1.MethodConnector(
+          name: 'list',
+          params: {
+            'type': _i1.ParameterDescription(
+              name: 'type',
+              type: _i1.getType<_i21.TransactionType?>(),
+              nullable: true,
+            ),
+            'category': _i1.ParameterDescription(
+              name: 'category',
+              type: _i1.getType<_i22.TransactionCategory?>(),
+              nullable: true,
+            ),
+            'from': _i1.ParameterDescription(
+              name: 'from',
+              type: _i1.getType<DateTime?>(),
+              nullable: true,
+            ),
+            'to': _i1.ParameterDescription(
+              name: 'to',
+              type: _i1.getType<DateTime?>(),
+              nullable: true,
+            ),
+            'limit': _i1.ParameterDescription(
+              name: 'limit',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'offset': _i1.ParameterDescription(
+              name: 'offset',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['accounting'] as _i5.AccountingEndpoint).list(
+                    session,
+                    type: params['type'],
+                    category: params['category'],
+                    from: params['from'],
+                    to: params['to'],
+                    limit: params['limit'],
+                    offset: params['offset'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'delete': _i1.MethodConnector(
+          name: 'delete',
+          params: {
+            'transactionId': _i1.ParameterDescription(
+              name: 'transactionId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['accounting'] as _i5.AccountingEndpoint).delete(
+                    session,
+                    params['transactionId'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'profitLoss': _i1.MethodConnector(
+          name: 'profitLoss',
+          params: {
+            'from': _i1.ParameterDescription(
+              name: 'from',
+              type: _i1.getType<DateTime>(),
+              nullable: false,
+            ),
+            'to': _i1.ParameterDescription(
+              name: 'to',
+              type: _i1.getType<DateTime>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['accounting'] as _i5.AccountingEndpoint)
+                  .profitLoss(
+                    session,
+                    params['from'],
+                    params['to'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'exportCsv': _i1.MethodConnector(
+          name: 'exportCsv',
+          params: {
+            'type': _i1.ParameterDescription(
+              name: 'type',
+              type: _i1.getType<_i21.TransactionType?>(),
+              nullable: true,
+            ),
+            'from': _i1.ParameterDescription(
+              name: 'from',
+              type: _i1.getType<DateTime?>(),
+              nullable: true,
+            ),
+            'to': _i1.ParameterDescription(
+              name: 'to',
+              type: _i1.getType<DateTime?>(),
+              nullable: true,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['accounting'] as _i5.AccountingEndpoint).exportCsv(
+                    session,
+                    type: params['type'],
+                    from: params['from'],
+                    to: params['to'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+      },
+    );
     connectors['business'] = _i1.EndpointConnector(
       name: 'business',
       endpoint: endpoints['business']!,
@@ -368,7 +670,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'request': _i1.ParameterDescription(
               name: 'request',
-              type: _i1.getType<_i13.CreateBusinessRequest>(),
+              type: _i1.getType<_i23.CreateBusinessRequest>(),
               nullable: false,
             ),
           },
@@ -376,7 +678,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['business'] as _i5.BusinessEndpoint).create(
+              ) async => (endpoints['business'] as _i6.BusinessEndpoint).create(
                 session,
                 params['request'],
               ),
@@ -394,7 +696,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['business'] as _i5.BusinessEndpoint).get(
+              ) async => (endpoints['business'] as _i6.BusinessEndpoint).get(
                 session,
                 businessId: params['businessId'],
               ),
@@ -404,7 +706,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'request': _i1.ParameterDescription(
               name: 'request',
-              type: _i1.getType<_i14.UpdateBusinessRequest>(),
+              type: _i1.getType<_i24.UpdateBusinessRequest>(),
               nullable: false,
             ),
           },
@@ -412,7 +714,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['business'] as _i5.BusinessEndpoint).update(
+              ) async => (endpoints['business'] as _i6.BusinessEndpoint).update(
                 session,
                 params['request'],
               ),
@@ -424,7 +726,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['business'] as _i5.BusinessEndpoint)
+              ) async => (endpoints['business'] as _i6.BusinessEndpoint)
                   .listMine(session),
         ),
       },
@@ -448,7 +750,7 @@ class Endpoints extends _i1.EndpointDispatch {
                 Map<String, dynamic> params,
               ) async =>
                   (endpoints['businessSettings']
-                          as _i6.BusinessSettingsEndpoint)
+                          as _i7.BusinessSettingsEndpoint)
                       .get(
                         session,
                         businessId: params['businessId'],
@@ -459,7 +761,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'request': _i1.ParameterDescription(
               name: 'request',
-              type: _i1.getType<_i15.UpdateBusinessSettingsRequest>(),
+              type: _i1.getType<_i25.UpdateBusinessSettingsRequest>(),
               nullable: false,
             ),
           },
@@ -469,7 +771,7 @@ class Endpoints extends _i1.EndpointDispatch {
                 Map<String, dynamic> params,
               ) async =>
                   (endpoints['businessSettings']
-                          as _i6.BusinessSettingsEndpoint)
+                          as _i7.BusinessSettingsEndpoint)
                       .update(
                         session,
                         params['request'],
@@ -486,7 +788,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'request': _i1.ParameterDescription(
               name: 'request',
-              type: _i1.getType<_i16.UploadDocumentRequest>(),
+              type: _i1.getType<_i26.UploadDocumentRequest>(),
               nullable: false,
             ),
           },
@@ -494,7 +796,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['document'] as _i7.DocumentEndpoint).upload(
+              ) async => (endpoints['document'] as _i8.DocumentEndpoint).upload(
                 session,
                 params['request'],
               ),
@@ -509,7 +811,7 @@ class Endpoints extends _i1.EndpointDispatch {
             ),
             'kind': _i1.ParameterDescription(
               name: 'kind',
-              type: _i1.getType<_i17.DocumentKind?>(),
+              type: _i1.getType<_i27.DocumentKind?>(),
               nullable: true,
             ),
             'relatedEntityType': _i1.ParameterDescription(
@@ -522,17 +824,29 @@ class Endpoints extends _i1.EndpointDispatch {
               type: _i1.getType<String?>(),
               nullable: true,
             ),
+            'limit': _i1.ParameterDescription(
+              name: 'limit',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'offset': _i1.ParameterDescription(
+              name: 'offset',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
           },
           call:
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['document'] as _i7.DocumentEndpoint).list(
+              ) async => (endpoints['document'] as _i8.DocumentEndpoint).list(
                 session,
                 businessId: params['businessId'],
                 kind: params['kind'],
                 relatedEntityType: params['relatedEntityType'],
                 relatedEntityId: params['relatedEntityId'],
+                limit: params['limit'],
+                offset: params['offset'],
               ),
         ),
         'get': _i1.MethodConnector(
@@ -548,7 +862,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['document'] as _i7.DocumentEndpoint).get(
+              ) async => (endpoints['document'] as _i8.DocumentEndpoint).get(
                 session,
                 params['documentId'],
               ),
@@ -567,7 +881,7 @@ class Endpoints extends _i1.EndpointDispatch {
                 _i1.Session session,
                 Map<String, dynamic> params,
               ) async =>
-                  (endpoints['document'] as _i7.DocumentEndpoint).download(
+                  (endpoints['document'] as _i8.DocumentEndpoint).download(
                     session,
                     params['documentId'],
                   ),
@@ -585,10 +899,84 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['document'] as _i7.DocumentEndpoint).delete(
+              ) async => (endpoints['document'] as _i8.DocumentEndpoint).delete(
                 session,
                 params['documentId'],
               ),
+        ),
+      },
+    );
+    connectors['guidance'] = _i1.EndpointConnector(
+      name: 'guidance',
+      endpoint: endpoints['guidance']!,
+      methodConnectors: {
+        'tips': _i1.MethodConnector(
+          name: 'tips',
+          params: {},
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['guidance'] as _i9.GuidanceEndpoint).tips(session),
+        ),
+        'checklists': _i1.MethodConnector(
+          name: 'checklists',
+          params: {},
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['guidance'] as _i9.GuidanceEndpoint)
+                  .checklists(session),
+        ),
+        'myProgress': _i1.MethodConnector(
+          name: 'myProgress',
+          params: {},
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['guidance'] as _i9.GuidanceEndpoint)
+                  .myProgress(session),
+        ),
+        'markCompleted': _i1.MethodConnector(
+          name: 'markCompleted',
+          params: {
+            'itemKey': _i1.ParameterDescription(
+              name: 'itemKey',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['guidance'] as _i9.GuidanceEndpoint).markCompleted(
+                    session,
+                    params['itemKey'],
+                  ),
+        ),
+        'dismissTip': _i1.MethodConnector(
+          name: 'dismissTip',
+          params: {
+            'topic': _i1.ParameterDescription(
+              name: 'topic',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['guidance'] as _i9.GuidanceEndpoint).dismissTip(
+                    session,
+                    params['topic'],
+                  ),
         ),
       },
     );
@@ -601,7 +989,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'request': _i1.ParameterDescription(
               name: 'request',
-              type: _i1.getType<_i18.CreateCustomerRequest>(),
+              type: _i1.getType<_i28.CreateCustomerRequest>(),
               nullable: false,
             ),
             'businessId': _i1.ParameterDescription(
@@ -614,11 +1002,12 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['customer'] as _i8.CustomerEndpoint).create(
-                session,
-                params['request'],
-                businessId: params['businessId'],
-              ),
+              ) async =>
+                  (endpoints['customer'] as _i10.CustomerEndpoint).create(
+                    session,
+                    params['request'],
+                    businessId: params['businessId'],
+                  ),
         ),
         'get': _i1.MethodConnector(
           name: 'get',
@@ -638,7 +1027,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['customer'] as _i8.CustomerEndpoint).get(
+              ) async => (endpoints['customer'] as _i10.CustomerEndpoint).get(
                 session,
                 params['customerId'],
                 businessId: params['businessId'],
@@ -649,7 +1038,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'request': _i1.ParameterDescription(
               name: 'request',
-              type: _i1.getType<_i19.UpdateCustomerRequest>(),
+              type: _i1.getType<_i29.UpdateCustomerRequest>(),
               nullable: false,
             ),
             'businessId': _i1.ParameterDescription(
@@ -662,18 +1051,19 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['customer'] as _i8.CustomerEndpoint).update(
-                session,
-                params['request'],
-                businessId: params['businessId'],
-              ),
+              ) async =>
+                  (endpoints['customer'] as _i10.CustomerEndpoint).update(
+                    session,
+                    params['request'],
+                    businessId: params['businessId'],
+                  ),
         ),
         'list': _i1.MethodConnector(
           name: 'list',
           params: {
             'status': _i1.ParameterDescription(
               name: 'status',
-              type: _i1.getType<_i20.CustomerStatus?>(),
+              type: _i1.getType<_i30.CustomerStatus?>(),
               nullable: true,
             ),
             'limit': _i1.ParameterDescription(
@@ -696,7 +1086,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['customer'] as _i8.CustomerEndpoint).list(
+              ) async => (endpoints['customer'] as _i10.CustomerEndpoint).list(
                 session,
                 status: params['status'],
                 limit: params['limit'],
@@ -715,7 +1105,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'request': _i1.ParameterDescription(
               name: 'request',
-              type: _i1.getType<_i21.CreateInvoiceRequest>(),
+              type: _i1.getType<_i31.CreateInvoiceRequest>(),
               nullable: false,
             ),
             'businessId': _i1.ParameterDescription(
@@ -728,7 +1118,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['invoice'] as _i9.InvoiceEndpoint).create(
+              ) async => (endpoints['invoice'] as _i11.InvoiceEndpoint).create(
                 session,
                 params['request'],
                 businessId: params['businessId'],
@@ -752,7 +1142,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['invoice'] as _i9.InvoiceEndpoint).get(
+              ) async => (endpoints['invoice'] as _i11.InvoiceEndpoint).get(
                 session,
                 params['invoiceId'],
                 businessId: params['businessId'],
@@ -776,18 +1166,19 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['invoice'] as _i9.InvoiceEndpoint).getItems(
-                session,
-                params['invoiceId'],
-                businessId: params['businessId'],
-              ),
+              ) async =>
+                  (endpoints['invoice'] as _i11.InvoiceEndpoint).getItems(
+                    session,
+                    params['invoiceId'],
+                    businessId: params['businessId'],
+                  ),
         ),
         'update': _i1.MethodConnector(
           name: 'update',
           params: {
             'request': _i1.ParameterDescription(
               name: 'request',
-              type: _i1.getType<_i22.UpdateInvoiceRequest>(),
+              type: _i1.getType<_i32.UpdateInvoiceRequest>(),
               nullable: false,
             ),
             'businessId': _i1.ParameterDescription(
@@ -800,7 +1191,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['invoice'] as _i9.InvoiceEndpoint).update(
+              ) async => (endpoints['invoice'] as _i11.InvoiceEndpoint).update(
                 session,
                 params['request'],
                 businessId: params['businessId'],
@@ -811,7 +1202,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'status': _i1.ParameterDescription(
               name: 'status',
-              type: _i1.getType<_i23.InvoiceStatus?>(),
+              type: _i1.getType<_i33.InvoiceStatus?>(),
               nullable: true,
             ),
             'limit': _i1.ParameterDescription(
@@ -834,7 +1225,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['invoice'] as _i9.InvoiceEndpoint).list(
+              ) async => (endpoints['invoice'] as _i11.InvoiceEndpoint).list(
                 session,
                 status: params['status'],
                 limit: params['limit'],
@@ -860,24 +1251,18 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['invoice'] as _i9.InvoiceEndpoint).delete(
+              ) async => (endpoints['invoice'] as _i11.InvoiceEndpoint).delete(
                 session,
                 params['invoiceId'],
                 businessId: params['businessId'],
               ),
         ),
-      },
-    );
-    connectors['invoiceTemplate'] = _i1.EndpointConnector(
-      name: 'invoiceTemplate',
-      endpoint: endpoints['invoiceTemplate']!,
-      methodConnectors: {
-        'create': _i1.MethodConnector(
-          name: 'create',
+        'markSent': _i1.MethodConnector(
+          name: 'markSent',
           params: {
-            'request': _i1.ParameterDescription(
-              name: 'request',
-              type: _i1.getType<_i24.CreateInvoiceTemplateRequest>(),
+            'invoiceId': _i1.ParameterDescription(
+              name: 'invoiceId',
+              type: _i1.getType<int>(),
               nullable: false,
             ),
             'businessId': _i1.ParameterDescription(
@@ -891,7 +1276,137 @@ class Endpoints extends _i1.EndpointDispatch {
                 _i1.Session session,
                 Map<String, dynamic> params,
               ) async =>
-                  (endpoints['invoiceTemplate'] as _i10.InvoiceTemplateEndpoint)
+                  (endpoints['invoice'] as _i11.InvoiceEndpoint).markSent(
+                    session,
+                    params['invoiceId'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'cancel': _i1.MethodConnector(
+          name: 'cancel',
+          params: {
+            'invoiceId': _i1.ParameterDescription(
+              name: 'invoiceId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['invoice'] as _i11.InvoiceEndpoint).cancel(
+                session,
+                params['invoiceId'],
+                businessId: params['businessId'],
+              ),
+        ),
+        'exportCsv': _i1.MethodConnector(
+          name: 'exportCsv',
+          params: {
+            'status': _i1.ParameterDescription(
+              name: 'status',
+              type: _i1.getType<_i33.InvoiceStatus?>(),
+              nullable: true,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['invoice'] as _i11.InvoiceEndpoint).exportCsv(
+                    session,
+                    status: params['status'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'exportJson': _i1.MethodConnector(
+          name: 'exportJson',
+          params: {
+            'status': _i1.ParameterDescription(
+              name: 'status',
+              type: _i1.getType<_i33.InvoiceStatus?>(),
+              nullable: true,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['invoice'] as _i11.InvoiceEndpoint).exportJson(
+                    session,
+                    status: params['status'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'generatePdf': _i1.MethodConnector(
+          name: 'generatePdf',
+          params: {
+            'invoiceId': _i1.ParameterDescription(
+              name: 'invoiceId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['invoice'] as _i11.InvoiceEndpoint).generatePdf(
+                    session,
+                    params['invoiceId'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+      },
+    );
+    connectors['invoiceTemplate'] = _i1.EndpointConnector(
+      name: 'invoiceTemplate',
+      endpoint: endpoints['invoiceTemplate']!,
+      methodConnectors: {
+        'create': _i1.MethodConnector(
+          name: 'create',
+          params: {
+            'request': _i1.ParameterDescription(
+              name: 'request',
+              type: _i1.getType<_i34.CreateInvoiceTemplateRequest>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['invoiceTemplate'] as _i12.InvoiceTemplateEndpoint)
                       .create(
                         session,
                         params['request'],
@@ -917,7 +1432,7 @@ class Endpoints extends _i1.EndpointDispatch {
                 _i1.Session session,
                 Map<String, dynamic> params,
               ) async =>
-                  (endpoints['invoiceTemplate'] as _i10.InvoiceTemplateEndpoint)
+                  (endpoints['invoiceTemplate'] as _i12.InvoiceTemplateEndpoint)
                       .get(
                         session,
                         params['templateId'],
@@ -929,7 +1444,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'request': _i1.ParameterDescription(
               name: 'request',
-              type: _i1.getType<_i25.UpdateInvoiceTemplateRequest>(),
+              type: _i1.getType<_i35.UpdateInvoiceTemplateRequest>(),
               nullable: false,
             ),
             'businessId': _i1.ParameterDescription(
@@ -943,7 +1458,7 @@ class Endpoints extends _i1.EndpointDispatch {
                 _i1.Session session,
                 Map<String, dynamic> params,
               ) async =>
-                  (endpoints['invoiceTemplate'] as _i10.InvoiceTemplateEndpoint)
+                  (endpoints['invoiceTemplate'] as _i12.InvoiceTemplateEndpoint)
                       .update(
                         session,
                         params['request'],
@@ -958,16 +1473,28 @@ class Endpoints extends _i1.EndpointDispatch {
               type: _i1.getType<int?>(),
               nullable: true,
             ),
+            'limit': _i1.ParameterDescription(
+              name: 'limit',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'offset': _i1.ParameterDescription(
+              name: 'offset',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
           },
           call:
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
               ) async =>
-                  (endpoints['invoiceTemplate'] as _i10.InvoiceTemplateEndpoint)
+                  (endpoints['invoiceTemplate'] as _i12.InvoiceTemplateEndpoint)
                       .list(
                         session,
                         businessId: params['businessId'],
+                        limit: params['limit'],
+                        offset: params['offset'],
                       ),
         ),
       },
@@ -981,7 +1508,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'request': _i1.ParameterDescription(
               name: 'request',
-              type: _i1.getType<_i26.RecordPaymentRequest>(),
+              type: _i1.getType<_i36.RecordPaymentRequest>(),
               nullable: false,
             ),
             'businessId': _i1.ParameterDescription(
@@ -994,7 +1521,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['payment'] as _i11.PaymentEndpoint).record(
+              ) async => (endpoints['payment'] as _i13.PaymentEndpoint).record(
                 session,
                 params['request'],
                 businessId: params['businessId'],
@@ -1018,11 +1545,596 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['payment'] as _i11.PaymentEndpoint).status(
+              ) async => (endpoints['payment'] as _i13.PaymentEndpoint).status(
                 session,
                 params['invoiceId'],
                 businessId: params['businessId'],
               ),
+        ),
+      },
+    );
+    connectors['reminder'] = _i1.EndpointConnector(
+      name: 'reminder',
+      endpoint: endpoints['reminder']!,
+      methodConnectors: {
+        'list': _i1.MethodConnector(
+          name: 'list',
+          params: {
+            'invoiceId': _i1.ParameterDescription(
+              name: 'invoiceId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['reminder'] as _i14.ReminderEndpoint).list(
+                session,
+                params['invoiceId'],
+                businessId: params['businessId'],
+              ),
+        ),
+        'send': _i1.MethodConnector(
+          name: 'send',
+          params: {
+            'invoiceId': _i1.ParameterDescription(
+              name: 'invoiceId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['reminder'] as _i14.ReminderEndpoint).send(
+                session,
+                params['invoiceId'],
+                businessId: params['businessId'],
+              ),
+        ),
+      },
+    );
+    connectors['project'] = _i1.EndpointConnector(
+      name: 'project',
+      endpoint: endpoints['project']!,
+      methodConnectors: {
+        'create': _i1.MethodConnector(
+          name: 'create',
+          params: {
+            'request': _i1.ParameterDescription(
+              name: 'request',
+              type: _i1.getType<_i37.CreateProjectRequest>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['project'] as _i15.ProjectEndpoint).create(
+                session,
+                params['request'],
+                businessId: params['businessId'],
+              ),
+        ),
+        'get': _i1.MethodConnector(
+          name: 'get',
+          params: {
+            'projectId': _i1.ParameterDescription(
+              name: 'projectId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['project'] as _i15.ProjectEndpoint).get(
+                session,
+                params['projectId'],
+                businessId: params['businessId'],
+              ),
+        ),
+        'getTasks': _i1.MethodConnector(
+          name: 'getTasks',
+          params: {
+            'projectId': _i1.ParameterDescription(
+              name: 'projectId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['project'] as _i15.ProjectEndpoint).getTasks(
+                    session,
+                    params['projectId'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'update': _i1.MethodConnector(
+          name: 'update',
+          params: {
+            'request': _i1.ParameterDescription(
+              name: 'request',
+              type: _i1.getType<_i38.UpdateProjectRequest>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['project'] as _i15.ProjectEndpoint).update(
+                session,
+                params['request'],
+                businessId: params['businessId'],
+              ),
+        ),
+        'list': _i1.MethodConnector(
+          name: 'list',
+          params: {
+            'status': _i1.ParameterDescription(
+              name: 'status',
+              type: _i1.getType<_i39.ProjectStatus?>(),
+              nullable: true,
+            ),
+            'limit': _i1.ParameterDescription(
+              name: 'limit',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'offset': _i1.ParameterDescription(
+              name: 'offset',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['project'] as _i15.ProjectEndpoint).list(
+                session,
+                status: params['status'],
+                limit: params['limit'],
+                offset: params['offset'],
+                businessId: params['businessId'],
+              ),
+        ),
+        'delete': _i1.MethodConnector(
+          name: 'delete',
+          params: {
+            'projectId': _i1.ParameterDescription(
+              name: 'projectId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['project'] as _i15.ProjectEndpoint).delete(
+                session,
+                params['projectId'],
+                businessId: params['businessId'],
+              ),
+        ),
+      },
+    );
+    connectors['task'] = _i1.EndpointConnector(
+      name: 'task',
+      endpoint: endpoints['task']!,
+      methodConnectors: {
+        'create': _i1.MethodConnector(
+          name: 'create',
+          params: {
+            'request': _i1.ParameterDescription(
+              name: 'request',
+              type: _i1.getType<_i40.CreateTaskRequest>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['task'] as _i16.TaskEndpoint).create(
+                session,
+                params['request'],
+                businessId: params['businessId'],
+              ),
+        ),
+        'update': _i1.MethodConnector(
+          name: 'update',
+          params: {
+            'request': _i1.ParameterDescription(
+              name: 'request',
+              type: _i1.getType<_i41.UpdateTaskRequest>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['task'] as _i16.TaskEndpoint).update(
+                session,
+                params['request'],
+                businessId: params['businessId'],
+              ),
+        ),
+        'list': _i1.MethodConnector(
+          name: 'list',
+          params: {
+            'projectId': _i1.ParameterDescription(
+              name: 'projectId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'status': _i1.ParameterDescription(
+              name: 'status',
+              type: _i1.getType<_i42.TaskStatus?>(),
+              nullable: true,
+            ),
+            'limit': _i1.ParameterDescription(
+              name: 'limit',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'offset': _i1.ParameterDescription(
+              name: 'offset',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['task'] as _i16.TaskEndpoint).list(
+                session,
+                projectId: params['projectId'],
+                status: params['status'],
+                limit: params['limit'],
+                offset: params['offset'],
+                businessId: params['businessId'],
+              ),
+        ),
+      },
+    );
+    connectors['timeEntry'] = _i1.EndpointConnector(
+      name: 'timeEntry',
+      endpoint: endpoints['timeEntry']!,
+      methodConnectors: {
+        'startTimer': _i1.MethodConnector(
+          name: 'startTimer',
+          params: {
+            'request': _i1.ParameterDescription(
+              name: 'request',
+              type: _i1.getType<_i43.StartTimerRequest>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['timeEntry'] as _i17.TimeEntryEndpoint).startTimer(
+                    session,
+                    params['request'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'stopTimer': _i1.MethodConnector(
+          name: 'stopTimer',
+          params: {
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['timeEntry'] as _i17.TimeEntryEndpoint).stopTimer(
+                    session,
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'create': _i1.MethodConnector(
+          name: 'create',
+          params: {
+            'request': _i1.ParameterDescription(
+              name: 'request',
+              type: _i1.getType<_i44.CreateTimeEntryRequest>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['timeEntry'] as _i17.TimeEntryEndpoint).create(
+                    session,
+                    params['request'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'get': _i1.MethodConnector(
+          name: 'get',
+          params: {
+            'timeEntryId': _i1.ParameterDescription(
+              name: 'timeEntryId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['timeEntry'] as _i17.TimeEntryEndpoint).get(
+                session,
+                params['timeEntryId'],
+                businessId: params['businessId'],
+              ),
+        ),
+        'update': _i1.MethodConnector(
+          name: 'update',
+          params: {
+            'request': _i1.ParameterDescription(
+              name: 'request',
+              type: _i1.getType<_i45.UpdateTimeEntryRequest>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['timeEntry'] as _i17.TimeEntryEndpoint).update(
+                    session,
+                    params['request'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'list': _i1.MethodConnector(
+          name: 'list',
+          params: {
+            'projectId': _i1.ParameterDescription(
+              name: 'projectId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'taskId': _i1.ParameterDescription(
+              name: 'taskId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'from': _i1.ParameterDescription(
+              name: 'from',
+              type: _i1.getType<DateTime?>(),
+              nullable: true,
+            ),
+            'to': _i1.ParameterDescription(
+              name: 'to',
+              type: _i1.getType<DateTime?>(),
+              nullable: true,
+            ),
+            'billable': _i1.ParameterDescription(
+              name: 'billable',
+              type: _i1.getType<bool?>(),
+              nullable: true,
+            ),
+            'limit': _i1.ParameterDescription(
+              name: 'limit',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'offset': _i1.ParameterDescription(
+              name: 'offset',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['timeEntry'] as _i17.TimeEntryEndpoint).list(
+                    session,
+                    projectId: params['projectId'],
+                    taskId: params['taskId'],
+                    from: params['from'],
+                    to: params['to'],
+                    billable: params['billable'],
+                    limit: params['limit'],
+                    offset: params['offset'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'delete': _i1.MethodConnector(
+          name: 'delete',
+          params: {
+            'timeEntryId': _i1.ParameterDescription(
+              name: 'timeEntryId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['timeEntry'] as _i17.TimeEntryEndpoint).delete(
+                    session,
+                    params['timeEntryId'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'report': _i1.MethodConnector(
+          name: 'report',
+          params: {
+            'from': _i1.ParameterDescription(
+              name: 'from',
+              type: _i1.getType<DateTime>(),
+              nullable: false,
+            ),
+            'to': _i1.ParameterDescription(
+              name: 'to',
+              type: _i1.getType<DateTime>(),
+              nullable: false,
+            ),
+            'projectId': _i1.ParameterDescription(
+              name: 'projectId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['timeEntry'] as _i17.TimeEntryEndpoint).report(
+                    session,
+                    params['from'],
+                    params['to'],
+                    projectId: params['projectId'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'createInvoice': _i1.MethodConnector(
+          name: 'createInvoice',
+          params: {
+            'request': _i1.ParameterDescription(
+              name: 'request',
+              type: _i1.getType<_i46.CreateTimeEntriesInvoiceRequest>(),
+              nullable: false,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['timeEntry'] as _i17.TimeEntryEndpoint)
+                  .createInvoice(
+                    session,
+                    params['request'],
+                    businessId: params['businessId'],
+                  ),
         ),
       },
     );
@@ -1037,7 +2149,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['userProfile'] as _i12.UserProfileEndpoint)
+              ) async => (endpoints['userProfile'] as _i18.UserProfileEndpoint)
                   .getMyProfile(session),
         ),
         'update': _i1.MethodConnector(
@@ -1045,7 +2157,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'request': _i1.ParameterDescription(
               name: 'request',
-              type: _i1.getType<_i27.UpdateUserProfileRequest>(),
+              type: _i1.getType<_i47.UpdateUserProfileRequest>(),
               nullable: false,
             ),
           },
@@ -1054,18 +2166,23 @@ class Endpoints extends _i1.EndpointDispatch {
                 _i1.Session session,
                 Map<String, dynamic> params,
               ) async =>
-                  (endpoints['userProfile'] as _i12.UserProfileEndpoint).update(
+                  (endpoints['userProfile'] as _i18.UserProfileEndpoint).update(
                     session,
                     params['request'],
                   ),
         ),
       },
     );
-    modules['gewerber_commercial'] = _i28.Endpoints()
+    modules['gewerber_commercial'] = _i48.Endpoints()
       ..initializeEndpoints(server);
-    modules['serverpod_auth_idp'] = _i29.Endpoints()
+    modules['serverpod_auth_idp'] = _i49.Endpoints()
       ..initializeEndpoints(server);
-    modules['serverpod_auth_core'] = _i30.Endpoints()
+    modules['serverpod_auth_core'] = _i50.Endpoints()
       ..initializeEndpoints(server);
+  }
+
+  @override
+  _i1.FutureCallDispatch? get futureCalls {
+    return _i51.FutureCalls();
   }
 }

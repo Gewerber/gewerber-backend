@@ -1,0 +1,12 @@
+class: UserGuidanceProgress
+table: user_guidance_progress
+fields:
+  userId: UuidValue
+  itemKey: String
+  completedAt: DateTime?
+  dismissedAt: DateTime?
+  updatedAt: DateTime, default=now
+indexes:
+  user_guidance_progress_unique_idx:
+    fields: userId, itemKey
+    unique: true

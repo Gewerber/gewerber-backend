@@ -1,0 +1,6 @@
+class: UpdateTaskRequest
+fields:
+  taskId: int
+  name: String
+  status: TaskStatus
+  hourlyRateCents: int?

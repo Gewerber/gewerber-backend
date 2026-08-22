@@ -1,0 +1,7 @@
+class: StartTimerRequest
+fields:
+  projectId: int?
+  taskId: int?
+  description: String?
+  startedAt: DateTime?
+  billable: bool, default=true

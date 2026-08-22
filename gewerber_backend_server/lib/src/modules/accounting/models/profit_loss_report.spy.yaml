@@ -1,0 +1,9 @@
+class: ProfitLossReport
+fields:
+  from: DateTime
+  to: DateTime
+  incomeCents: int
+  expenseCents: int
+  profitCents: int
+  incomeLines: List<ProfitLossLine>
+  expenseLines: List<ProfitLossLine>

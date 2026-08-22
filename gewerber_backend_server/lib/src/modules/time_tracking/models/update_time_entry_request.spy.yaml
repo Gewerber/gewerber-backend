@@ -1,0 +1,9 @@
+class: UpdateTimeEntryRequest
+fields:
+  timeEntryId: int
+  projectId: int?
+  taskId: int?
+  description: String?
+  startedAt: DateTime
+  durationMinutes: int
+  billable: bool

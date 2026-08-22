@@ -1,0 +1,8 @@
+class: CreateTimeEntryRequest
+fields:
+  projectId: int?
+  taskId: int?
+  description: String?
+  startedAt: DateTime
+  durationMinutes: int
+  billable: bool, default=true

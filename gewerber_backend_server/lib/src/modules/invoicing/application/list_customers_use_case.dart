@@ -27,8 +27,8 @@ class ListCustomersUseCase {
       session,
       businessId: tenant.businessId,
       status: status,
-      limit: limit,
-      offset: offset,
+      limit: limit ?? 100,
+      offset: offset ?? 0,
     );
   }
 }

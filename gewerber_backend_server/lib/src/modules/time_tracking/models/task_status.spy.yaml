@@ -1,0 +1,6 @@
+enum: TaskStatus
+serialized: byName
+default: open
+values:
+  - open
+  - done

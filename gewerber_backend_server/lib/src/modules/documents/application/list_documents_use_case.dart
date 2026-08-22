@@ -18,8 +18,8 @@ class ListDocumentsUseCase {
     DocumentKind? kind,
     String? relatedEntityType,
     String? relatedEntityId,
-    int limit = 100,
-    int offset = 0,
+    int? limit,
+    int? offset,
   }) async {
     final tenant = await _tenantResolver.resolve(
       session,
@@ -31,8 +31,8 @@ class ListDocumentsUseCase {
       kind: kind,
       relatedEntityType: relatedEntityType,
       relatedEntityId: relatedEntityId,
-      limit: limit,
-      offset: offset,
+      limit: limit ?? 100,
+      offset: offset ?? 0,
     );
   }
 }

@@ -10,6 +10,7 @@ import 'src/core/mail/email_template.dart';
 import 'src/core/mail/mail_service.dart';
 import 'src/generated/endpoints.dart';
 import 'src/generated/protocol.dart';
+import 'src/modules/invoicing/jobs/invoicing_job_scheduler.dart';
 
 /// The starting point of the Serverpod server.
 void run(List<String> args) async {
@@ -70,6 +71,10 @@ void run(List<String> args) async {
 
   // Start the server.
   await pod.start();
+
+  // Background jobs: materialize due recurring invoices and mark overdue
+  // invoices periodically.
+  await const InvoicingJobScheduler().ensureScheduled(pod.futureCalls);
 }
 
 /// Generates a 6-digit numeric verification code, matching the format the

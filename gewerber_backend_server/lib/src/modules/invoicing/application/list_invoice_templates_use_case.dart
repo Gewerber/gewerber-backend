@@ -15,11 +15,18 @@ class ListInvoiceTemplatesUseCase {
   Future<List<InvoiceTemplate>> call(
     Session session, {
     int? businessId,
+    int? limit,
+    int? offset,
   }) async {
     final tenant = await _tenantResolver.resolve(
       session,
       businessId: businessId,
     );
-    return _templates.findByBusinessId(session, tenant.businessId);
+    return _templates.findByBusinessId(
+      session,
+      tenant.businessId,
+      limit: limit ?? 100,
+      offset: offset ?? 0,
+    );
   }
 }

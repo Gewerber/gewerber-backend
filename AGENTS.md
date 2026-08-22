@@ -20,9 +20,17 @@ gewerber_backend_server/lib/src/
     events/                      # EventBus (MessageCentral wrapper)
     errors/                      # Serializable exceptions (NotFound, Validation, Forbidden, Conflict)
     endpoints/                   # BusinessScopedEndpoint base class
+    entitlement/                 # Feature gating scaffold (all features enabled in OSS)
+    mail/                        # MailService (SMTP) + EmailTemplate
+    sequence/                    # GoBD-safe number sequences
   modules/
-    business/                    # M1: Business + Membership + onboarding
-    # invoicing/ time_tracking/ accounting/ documents/ guidance/ — next phases
+    business/                    # M1: Business + Membership + BusinessSettings
+    invoicing/                   # M2: Customer, Invoice, templates, payments, reminders, PDF, recurring, export
+    time_tracking/               # M3: Project, Task, TimeEntry (timer), rounding, reports, billing
+    accounting/                  # M4: Income/expense transactions, receipts, P&L, CSV export
+    documents/                   # Document storage (upload/download, private storage)
+    guidance/                    # M5: Tooltips, checklists, per-user progress
+    user/                        # UserProfile
   auth/                          # serverpod_auth_idp email/JWT endpoints
   generated/                     # Serverpod-generated code (do not edit)
 ```
@@ -42,8 +50,31 @@ gewerber_backend_server/lib/src/
 | Endpoint | Methods | Auth |
 |---|---|---|
 | `business` | create, get, update, listMine | requireLogin |
+| `businessSettings` | get, update | requireLogin |
+| `userProfile` | getMyProfile, update | requireLogin |
+| `customer` | create, get, update, list | requireLogin |
+| `invoice` | create, get, getItems, update, list, delete, markSent, cancel, generatePdf, exportCsv, exportJson | requireLogin |
+| `invoiceTemplate` | create, get, update, list | requireLogin |
+| `payment` | record, status | requireLogin |
+| `reminder` | list, send | requireLogin |
+| `document` | upload, list, get, download, delete | requireLogin |
+| `entitlement` | list | requireLogin |
+| `project` | create, get, getTasks, update, list, delete | requireLogin |
+| `task` | create, update, list | requireLogin |
+| `timeEntry` | startTimer, stopTimer, create, get, update, list, delete, report, createInvoice | requireLogin |
+| `accounting` | create, get, update, list, delete, profitLoss, exportCsv | requireLogin |
+| `guidance` | tips, checklists, myProgress, markCompleted, dismissTip | requireLogin |
 | auth (module) | email login/register, JWT refresh | per serverpod_auth |
 | `waitlist` (commercial module) | join | public |
+
+## Background jobs
+
+Invoicing future calls are scheduled at server start (`server.dart` →
+`InvoicingJobScheduler.ensureScheduled`, hourly, idempotent):
+
+- `process-recurring-invoices` — materializes due recurring invoices.
+- `mark-overdue-invoices` — marks sent/partially paid invoices past their due
+  date as overdue.
 
 ## Commercial module
 
@@ -63,10 +94,10 @@ prefixed `commercial_*` and migrate together with the server
 |---|---|---|
 | M0 | DI, tenant, audit, errors, events, base endpoint | ✅ Done |
 | M1 | Business + Membership + onboarding | ✅ Done |
-| M2 | Invoicing (Client, Invoice, TaxRuleEngine, PDF, recurring) | Planned |
-| M3 | Time tracking (Project, Task, TimeEntry, rounding, reports) | Planned |
-| M4 | Accounting (Expense, Income, P&L, receipts) | Planned |
-| M5 | Guidance (tooltips, checklists) | Planned |
+| M2 | Invoicing (Customer, Invoice, TaxRuleEngine, PDF, recurring, reminders, export) | ✅ Done |
+| M3 | Time tracking (Project, Task, TimeEntry, rounding, reports, billing) | ✅ Done |
+| M4 | Accounting (Expense, Income, P&L, receipts, export) | ✅ Done |
+| M5 | Guidance (tooltips, checklists, per-user progress) | ✅ Done |
 
 ## Commands
 

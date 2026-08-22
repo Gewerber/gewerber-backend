@@ -59,6 +59,23 @@ class ServerpodInvoiceGateway implements InvoiceGateway {
   }
 
   @override
+  Future<int> markOverdue(Session session, DateTime now) async {
+    final updated = await Invoice.db.updateWhere(
+      session,
+      where: (t) =>
+          (t.status.equals(InvoiceStatus.sent) |
+              t.status.equals(InvoiceStatus.partiallyPaid)) &
+          t.dueDate.notEquals(null) &
+          (t.dueDate < now),
+      columnValues: (t) => [
+        t.status(InvoiceStatus.overdue),
+        t.updatedAt(DateTime.now()),
+      ],
+    );
+    return updated.length;
+  }
+
+  @override
   Future<Invoice> delete(
     Session session,
     Invoice invoice, {

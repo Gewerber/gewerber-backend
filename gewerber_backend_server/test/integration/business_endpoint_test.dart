@@ -59,7 +59,7 @@ void main() {
     test('when name is empty then ValidationException is thrown', () async {
       final request = CreateBusinessRequest(name: '   ');
 
-      expect(
+      await expectLater(
         () => endpoints.business.create(authenticatedSession, request),
         throwsA(isA<ValidationException>()),
       );
@@ -100,7 +100,7 @@ void main() {
           authentication: AuthenticationOverride.unauthenticated(),
         );
 
-        expect(
+        await expectLater(
           () => endpoints.business.listMine(unauthenticatedSession),
           throwsA(isA<ServerpodUnauthenticatedException>()),
         );

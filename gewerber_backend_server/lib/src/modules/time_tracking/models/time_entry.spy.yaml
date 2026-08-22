@@ -1,0 +1,21 @@
+class: TimeEntry
+table: time_entry
+fields:
+  businessId: int, relation(parent=business, onDelete=Cascade)
+  projectId: int?, relation(parent=project, onDelete=SetNull)
+  taskId: int?, relation(parent=task, onDelete=SetNull)
+  description: String?
+  startedAt: DateTime
+  stoppedAt: DateTime?
+  durationMinutes: int?
+  billable: bool, default=true
+  invoicedAt: DateTime?
+  createdAt: DateTime, default=now
+  updatedAt: DateTime, default=now
+indexes:
+  time_entry_business_started_idx:
+    fields: businessId, startedAt
+  time_entry_project_idx:
+    fields: projectId
+  time_entry_task_idx:
+    fields: taskId

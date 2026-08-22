@@ -35,12 +35,16 @@ class ServerpodInvoiceTemplateGateway implements InvoiceTemplateGateway {
   @override
   Future<List<InvoiceTemplate>> findByBusinessId(
     Session session,
-    int businessId,
-  ) {
+    int businessId, {
+    int limit = 100,
+    int offset = 0,
+  }) {
     return InvoiceTemplate.db.find(
       session,
       where: (t) => t.businessId.equals(businessId),
       orderBy: (t) => t.createdAt,
+      limit: limit,
+      offset: offset,
     );
   }
 

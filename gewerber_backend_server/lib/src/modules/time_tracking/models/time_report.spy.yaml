@@ -1,0 +1,8 @@
+class: TimeReport
+fields:
+  from: DateTime
+  to: DateTime
+  totalMinutes: int
+  billableMinutes: int
+  roundedMinutes: int
+  lines: List<TimeReportLine>

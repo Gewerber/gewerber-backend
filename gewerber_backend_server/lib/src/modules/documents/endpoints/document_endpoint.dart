@@ -22,6 +22,8 @@ class DocumentEndpoint extends BusinessScopedEndpoint {
     DocumentKind? kind,
     String? relatedEntityType,
     String? relatedEntityId,
+    int? limit,
+    int? offset,
   }) {
     return getIt<ListDocumentsUseCase>().call(
       session,
@@ -29,6 +31,8 @@ class DocumentEndpoint extends BusinessScopedEndpoint {
       kind: kind,
       relatedEntityType: relatedEntityType,
       relatedEntityId: relatedEntityId,
+      limit: limit,
+      offset: offset,
     );
   }
 

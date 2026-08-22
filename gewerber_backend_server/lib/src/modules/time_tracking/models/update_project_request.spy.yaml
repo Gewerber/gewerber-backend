@@ -1,0 +1,8 @@
+class: UpdateProjectRequest
+fields:
+  projectId: int
+  name: String
+  status: ProjectStatus
+  customerId: int?
+  hourlyRateCents: int?
+  notes: String?

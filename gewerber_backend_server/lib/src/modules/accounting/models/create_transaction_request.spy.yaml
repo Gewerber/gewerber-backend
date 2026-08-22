@@ -1,0 +1,9 @@
+class: CreateTransactionRequest
+fields:
+  type: TransactionType
+  category: TransactionCategory
+  description: String?
+  occurredAt: DateTime
+  amountCents: int
+  receiptDocumentId: int?
+  relatedInvoiceId: int?
