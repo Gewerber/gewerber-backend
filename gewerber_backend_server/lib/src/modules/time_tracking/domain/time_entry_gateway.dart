@@ -11,6 +11,10 @@ abstract interface class TimeEntryGateway {
 
   Future<TimeEntry?> findById(Session session, int id);
 
+  /// Loads every entry with an id from [ids], regardless of state. Missing
+  /// ids are simply absent from the result — callers must detect that.
+  Future<List<TimeEntry>> findByIds(Session session, Set<int> ids);
+
   Future<TimeEntry> update(
     Session session,
     TimeEntry entry, {

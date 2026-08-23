@@ -142,16 +142,19 @@ class UpdateInvoiceUseCase {
         InvoiceMapper.items(effectiveItems, invoiceId: invoice.id!),
         transaction: transaction,
       );
+
+      // Same transaction as the change (see CreateInvoiceUseCase).
+      await _audit.log(
+        session,
+        action: 'invoice.update',
+        entityType: 'Invoice',
+        entityId: '${invoice.id}',
+        tenant: tenant,
+        transaction: transaction,
+      );
       return invoice;
     });
 
-    await _audit.log(
-      session,
-      action: 'invoice.update',
-      entityType: 'Invoice',
-      entityId: '${updated.id}',
-      tenant: tenant,
-    );
     return updated;
   }
 }

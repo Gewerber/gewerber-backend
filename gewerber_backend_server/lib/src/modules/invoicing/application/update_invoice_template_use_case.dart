@@ -64,7 +64,7 @@ class UpdateInvoiceTemplateUseCase {
           transaction: transaction,
         );
       }
-      return _templates.update(
+      final result = await _templates.update(
         session,
         InvoiceTemplate(
           id: existing.id,
@@ -78,15 +78,19 @@ class UpdateInvoiceTemplateUseCase {
         ),
         transaction: transaction,
       );
+
+      // Same transaction as the change (see CreateInvoiceUseCase).
+      await _audit.log(
+        session,
+        action: 'invoiceTemplate.update',
+        entityType: 'InvoiceTemplate',
+        entityId: '${result.id}',
+        tenant: tenant,
+        transaction: transaction,
+      );
+      return result;
     });
 
-    await _audit.log(
-      session,
-      action: 'invoiceTemplate.update',
-      entityType: 'InvoiceTemplate',
-      entityId: '${updated.id}',
-      tenant: tenant,
-    );
     return updated;
   }
 }

@@ -47,9 +47,11 @@ abstract interface class InvoiceGateway {
     int? offset,
   });
 
-  /// Marks sent/partially paid invoices whose due date has passed as overdue.
-  /// Returns the number of updated invoices.
-  Future<int> markOverdue(Session session, DateTime now);
+  /// Marks sent/partially paid invoices whose due date has passed as overdue,
+  /// iterating businesses so each UPDATE can use the composite
+  /// `(businessId, status, dueDate)` index. Returns the number of updated
+  /// invoices per business id — callers use it for system-event auditing.
+  Future<Map<int, int>> markOverdue(Session session, DateTime now);
 
   /// Keyset-paginated slice of invoices strictly before the cursor position
   /// ([beforeIssueDate], [beforeId]) in the stable order

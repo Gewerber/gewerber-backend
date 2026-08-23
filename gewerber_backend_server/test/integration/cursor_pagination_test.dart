@@ -13,9 +13,10 @@ import 'test_tools/serverpod_test_tools.dart';
 /// Tests for the keyset/cursor pagination endpoints
 /// (`invoice.listCursorPage` / `customer.listCursorPage`).
 ///
-/// Documented behaviour: a cursor minted for another tenant yields an *empty
-/// page* (not an error) so tenant boundaries never leak row positions; a
-/// structurally malformed cursor is rejected with [ValidationException].
+/// Documented behaviour: cursors are tenant-scoped. A cursor minted for
+/// another tenant is rejected with [ValidationException] (field `cursor`),
+/// exactly like a structurally malformed cursor — a silent empty page would
+/// hide client bugs.
 void main() {
   const userAId = 'a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d';
   const userBId = 'b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e';
@@ -345,8 +346,7 @@ void main() {
 
     group('tenant isolation', () {
       test(
-        'when a cursor of another tenant is used then an empty page is '
-        'returned (documented behaviour)',
+        'when a cursor of another tenant is used then it is rejected',
         () async {
           final ownFirst = await endpoints.invoice.listCursorPage(
             authenticatedSession,
@@ -355,13 +355,36 @@ void main() {
           );
           expect(ownFirst.nextCursor, isNotNull);
 
-          final foreign = await endpoints.invoice.listCursorPage(
-            otherSession,
-            cursor: ownFirst.nextCursor,
-            businessId: otherBusinessId,
+          await expectLater(
+            () => endpoints.invoice.listCursorPage(
+              otherSession,
+              cursor: ownFirst.nextCursor,
+              businessId: otherBusinessId,
+            ),
+            throwsA(
+              isA<ValidationException>().having(
+                (e) => e.field,
+                'field',
+                'cursor',
+              ),
+            ),
           );
-          expect(foreign.items, isEmpty);
-          expect(foreign.nextCursor, isNull);
+
+          // Same rejection for the customers endpoint.
+          final ownCustomerFirst = await endpoints.customer.listCursorPage(
+            authenticatedSession,
+            limit: 2,
+            businessId: businessId,
+          );
+          expect(ownCustomerFirst.nextCursor, isNotNull);
+          await expectLater(
+            () => endpoints.customer.listCursorPage(
+              otherSession,
+              cursor: ownCustomerFirst.nextCursor,
+              businessId: otherBusinessId,
+            ),
+            throwsA(isA<ValidationException>()),
+          );
 
           // Tenant B's own walk is unaffected and never contains A's rows.
           final ownB = await endpoints.invoice.listCursorPage(

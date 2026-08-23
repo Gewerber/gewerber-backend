@@ -297,9 +297,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i783.UserGuidanceProgressGateway>(),
       ),
     );
-    gh.singleton<_i780.MarkOverdueInvoicesUseCase>(
-      () => _i780.MarkOverdueInvoicesUseCase(gh<_i517.InvoiceGateway>()),
-    );
     gh.singleton<_i556.ProcessRecurringInvoicesUseCase>(
       () => _i556.ProcessRecurringInvoicesUseCase(
         gh<_i517.InvoiceGateway>(),
@@ -308,6 +305,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i141.BusinessSettingsGateway>(),
         gh<_i988.InvoiceNumberService>(),
         gh<_i755.TaxRuleEngine>(),
+        gh<_i473.AuditService>(),
       ),
     );
     gh.singleton<_i1059.CreateBusinessUseCase>(
@@ -315,6 +313,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i647.BusinessGateway>(),
         gh<_i688.MembershipGateway>(),
         gh<_i467.UserProfileGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i780.MarkOverdueInvoicesUseCase>(
+      () => _i780.MarkOverdueInvoicesUseCase(
+        gh<_i517.InvoiceGateway>(),
         gh<_i473.AuditService>(),
       ),
     );
@@ -555,6 +559,20 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
+    gh.singleton<_i912.MarkGuidanceCompletedUseCase>(
+      () => _i912.MarkGuidanceCompletedUseCase(
+        gh<_i912.GuidanceSessionService>(),
+        gh<_i783.UserGuidanceProgressGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i912.DismissGuidanceTipUseCase>(
+      () => _i912.DismissGuidanceTipUseCase(
+        gh<_i912.GuidanceSessionService>(),
+        gh<_i783.UserGuidanceProgressGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
     gh.singleton<_i562.SendPaymentReminderUseCase>(
       () => _i562.SendPaymentReminderUseCase(
         gh<_i343.TenantResolver>(),
@@ -759,18 +777,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i343.TenantResolver>(),
         gh<_i974.ProjectGateway>(),
         gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i912.MarkGuidanceCompletedUseCase>(
-      () => _i912.MarkGuidanceCompletedUseCase(
-        gh<_i912.GuidanceSessionService>(),
-        gh<_i783.UserGuidanceProgressGateway>(),
-      ),
-    );
-    gh.singleton<_i912.DismissGuidanceTipUseCase>(
-      () => _i912.DismissGuidanceTipUseCase(
-        gh<_i912.GuidanceSessionService>(),
-        gh<_i783.UserGuidanceProgressGateway>(),
       ),
     );
     gh.singleton<_i877.DeleteDocumentUseCase>(

@@ -50,8 +50,10 @@
       (`invoice.listCursorPage` / `customer.listCursorPage`: opaque base64url-курсор
       {v, businessId, lastId, sortValue}, стабильный порядок issueDate/createdAt DESC +
       id DESC tiebreak, `nextCursor: null` = конец; без total count — O(page size).
-      Курсор чужого tenant'а → ПУСТАЯ страница (документировано), мусорный курсор →
-      ValidationException; старые `list`/`listPage` не тронуты)
+      Курсор чужого tenant'а → ValidationException(field: 'cursor') ✅ 2026-08-23,
+      решение владельца — security best practice вместо молчаливой пустой страницы;
+      тамперенный/мусорный курсор тоже ValidationException; старые `list`/`listPage`
+      не тронуты)
 - [x] Ревизия индексов в миграциях: `businessId` везде (аудит 2026-08-23 —
       покрыты все business-scoped таблицы; recurring прикрыт существующим
       `invoice_recurrence_idx`), составной `(businessId, status, dueDate)`
@@ -73,7 +75,11 @@
 - [x] Resource limits (mem/cpu) в `deploy/docker-compose.yml` ✅ 2026-08-23
       (`deploy.resources.limits`: server 1g/1.0, postgres 512m/0.50,
       redis 256m/0.25; override через `.env`, переменные задокументированы)
-- [ ] Задокументировать роль Redis (кэш vs messaging) + решить persistence
+- [x] Задокументировать роль Redis (кэш vs messaging) + решить persistence
+      ✅ 2026-08-23 (`deploy/README.md` раздел «Redis»: инвентаризация — код
+      Redis-backed фичи не использует, Redis = headroom для >1 реплики;
+      persistence OFF (--save "" --appendonly no в docker-compose) — всё
+      durable живёт в Postgres; критерии «когда нужен / когда можно убрать»)
 
 ### Безопасность / комплаенс
 - [x] **IDOR**: владение `templateId` в Create/UpdateInvoiceRequest ✅ 2026-08-22 (батч C1: NotFoundException при чужом/несуществующем шаблоне)
@@ -101,15 +107,37 @@
       `findByInvoiceIds` у PaymentRecordGateway и ReminderGateway по образцу items;
       версия формата экспорта 1 → 2, manifest layout дополнен; тесты: секции обоих
       бизнесов, чужие платежи/напоминания отсутствуют)
-- [ ] Upload: MIME/расширение whitelist (сейчас лимит только 512 KB, `upload_document_use_case.dart:68-78`)
-- [ ] Audit: писать запись в той же транзакции (или outbox); аудировать guidance progress
+- [x] Upload: MIME/расширение whitelist ✅ 2026-08-23
+      (`documents/domain/upload_policy.dart` — консервативный список:
+      pdf/png/jpeg/webp/txt/csv/zip; расширение решает, переданный content-type
+      должен быть из глобального whitelist'а; рассинхрон расширение↔MIME —
+      доверяем расширению, warning в лог. Размер ограничен `maxRequestSize`
+      на HTTP-слое, отдельный лимит в use case не нужен)
+- [x] Audit: писать запись в той же транзакции (или outbox); аудировать guidance progress
       и recurring-materialization; заполнить `AuditEntry.businessId` для системных событий
-- [ ] Длина верификационных кодов 8 знаков (дефолт serverpod_auth; сейчас 6, `server.dart:82-90`)
+      ✅ 2026-08-23 (`AuditService.log(transaction:)`; аудит перенесён внутрь tx:
+      invoice.create/update, payment.record, template create/update, business.create;
+      account.delete остался после commit намеренно — без персональных ссылок;
+      новые события: guidance.markCompleted/dismissTip (user-scoped),
+      invoice.recurringMaterialized (в tx материализации, businessId заполнен),
+      invoice.markOverdue (per-business, businessId + count); тест: rollback мутации
+      не оставляет audit-запись)
+- [x] Длина верификационных кодов 8 знаков ✅ 2026-08-23
+      (`server.dart`: `_verificationCodeLength = 8`, генератор переименован в
+      `_generateVerificationCode`; длина задаётся функцией-генератором IdP,
+      отдельного конфиг-параметра нет. ⚠️ Проверить input-маску кода в
+      gewerber-app — клиент может ожидать 6 цифр)
 
 ---
 
 ## Этап 2 — Новые возможности (P2)
 
+- [x] **Поштучный биллинг time entries**: `timeEntry.createInvoice` принимает
+      опциональный `timeEntryIds: List<int>?` ✅ 2026-08-23 (запрос владельца;
+      null/пустой → прежний режим «проект+период»; с ID — валидации: tenant,
+      тот же проект, stoppedAt != null, billable, не invoiced; нарушения одним
+      ValidationException(field: 'timeEntryIds') с перечислением проблемных ID;
+      ⚠️ тип `List<int>` — TimeEntry.id серийный int, а не UuidValue)
 - [x] **Recurring management API**: эндпоинт `recurringSchedule` (create/get/list/update/cancel) ✅ 2026-08-22
       (батч D1 — разблокировка UI приложения; расписание = поля исходного инвойса,
       без дублирования сущности; IDOR ×5 тестов; attach разрешён для любого статуса инвойса,

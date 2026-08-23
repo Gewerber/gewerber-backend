@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:serverpod/serverpod.dart';
 
+import '../../../core/audit/audit_service.dart';
 import '../../../core/tenant/session_auth.dart';
 import '../../../generated/protocol.dart';
 import '../../user/domain/account_deletion.dart';
@@ -35,10 +36,15 @@ class GuidanceSessionService {
 
 @singleton
 class MarkGuidanceCompletedUseCase {
-  MarkGuidanceCompletedUseCase(this._sessionService, this._progress);
+  MarkGuidanceCompletedUseCase(
+    this._sessionService,
+    this._progress,
+    this._audit,
+  );
 
   final GuidanceSessionService _sessionService;
   final UserGuidanceProgressGateway _progress;
+  final AuditService _audit;
 
   Future<UserGuidanceProgress> call(Session session, String itemKey) async {
     final userId = await _sessionService.requireUser(session);
@@ -50,7 +56,7 @@ class MarkGuidanceCompletedUseCase {
       userId: userId,
       itemKey: itemKey,
     );
-    return _progress.upsert(
+    final result = await _progress.upsert(
       session,
       UserGuidanceProgress(
         id: existing?.id,
@@ -60,15 +66,32 @@ class MarkGuidanceCompletedUseCase {
         dismissedAt: existing?.dismissedAt,
       ),
     );
+
+    // Guidance progress is personal data; its writes are audited too. There
+    // is no tenant scope, so the entry carries only the user id.
+    await _audit.log(
+      session,
+      action: 'guidance.markCompleted',
+      entityType: 'UserGuidanceProgress',
+      entityId: itemKey,
+      changes: {'repeat': existing != null ? 'true' : 'false'},
+      userId: userId,
+    );
+    return result;
   }
 }
 
 @singleton
 class DismissGuidanceTipUseCase {
-  DismissGuidanceTipUseCase(this._sessionService, this._progress);
+  DismissGuidanceTipUseCase(
+    this._sessionService,
+    this._progress,
+    this._audit,
+  );
 
   final GuidanceSessionService _sessionService;
   final UserGuidanceProgressGateway _progress;
+  final AuditService _audit;
 
   Future<UserGuidanceProgress> call(Session session, String topic) async {
     final userId = await _sessionService.requireUser(session);
@@ -78,7 +101,7 @@ class DismissGuidanceTipUseCase {
       userId: userId,
       itemKey: itemKey,
     );
-    return _progress.upsert(
+    final result = await _progress.upsert(
       session,
       UserGuidanceProgress(
         id: existing?.id,
@@ -88,5 +111,15 @@ class DismissGuidanceTipUseCase {
         dismissedAt: DateTime.now(),
       ),
     );
+
+    await _audit.log(
+      session,
+      action: 'guidance.dismissTip',
+      entityType: 'UserGuidanceProgress',
+      entityId: itemKey,
+      changes: {'topic': topic},
+      userId: userId,
+    );
+    return result;
   }
 }

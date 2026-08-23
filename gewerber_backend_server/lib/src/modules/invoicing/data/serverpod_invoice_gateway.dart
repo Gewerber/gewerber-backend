@@ -131,14 +131,15 @@ class ServerpodInvoiceGateway implements InvoiceGateway {
   }
 
   @override
-  Future<int> markOverdue(Session session, DateTime now) async {
+  Future<Map<int, int>> markOverdue(Session session, DateTime now) async {
     // The hourly job has no tenant scope, but a global UPDATE without a
     // `businessId` predicate cannot use the composite
     // `(businessId, status, dueDate)` index efficiently. Instead, iterate the
     // businesses and run one indexed UPDATE per business — same rows are
-    // updated as before, just seeked per tenant.
+    // updated as before, just seeked per tenant. The per-business counts let
+    // the caller audit the system event with a filled businessId.
     final businesses = await Business.db.find(session);
-    var updatedTotal = 0;
+    final updatedByBusiness = <int, int>{};
     for (final business in businesses) {
       final businessId = business.id;
       if (businessId == null) continue;
@@ -155,9 +156,11 @@ class ServerpodInvoiceGateway implements InvoiceGateway {
           t.updatedAt(DateTime.now()),
         ],
       );
-      updatedTotal += updated.length;
+      if (updated.isNotEmpty) {
+        updatedByBusiness[businessId] = updated.length;
+      }
     }
-    return updatedTotal;
+    return updatedByBusiness;
   }
 
   @override

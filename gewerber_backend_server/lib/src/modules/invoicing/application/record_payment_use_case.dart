@@ -118,17 +118,21 @@ class RecordPaymentUseCase {
         ),
         transaction: transaction,
       );
+
+      // Same transaction as the locked read-modify-write cycle: a rolled
+      // back payment never leaves an audit entry behind.
+      await _audit.log(
+        session,
+        action: 'payment.record',
+        entityType: 'Invoice',
+        entityId: '${created.invoiceId}',
+        changes: {'amountCents': '${created.amountCents}'},
+        tenant: tenant,
+        transaction: transaction,
+      );
       return created;
     });
 
-    await _audit.log(
-      session,
-      action: 'payment.record',
-      entityType: 'Invoice',
-      entityId: '${record.invoiceId}',
-      changes: {'amountCents': '${record.amountCents}'},
-      tenant: tenant,
-    );
     return record;
   }
 }

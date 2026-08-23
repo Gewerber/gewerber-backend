@@ -63,20 +63,24 @@ class CreateBusinessUseCase {
         ),
         transaction: transaction,
       );
+
+      // Same transaction as the change: business + owner membership + audit
+      // entry are all-or-nothing.
+      await _audit.log(
+        session,
+        action: 'business.create',
+        entityType: 'Business',
+        entityId: '${created.id}',
+        tenant: TenantContext(
+          userId: userId,
+          businessId: created.id!,
+          role: MembershipRole.owner,
+        ),
+        transaction: transaction,
+      );
       return created;
     });
 
-    await _audit.log(
-      session,
-      action: 'business.create',
-      entityType: 'Business',
-      entityId: '${business.id}',
-      tenant: TenantContext(
-        userId: userId,
-        businessId: business.id!,
-        role: MembershipRole.owner,
-      ),
-    );
     return business;
   }
 

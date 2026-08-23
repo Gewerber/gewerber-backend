@@ -142,16 +142,20 @@ class CreateInvoiceUseCase {
         InvoiceMapper.items(effectiveItems, invoiceId: created.id!),
         transaction: transaction,
       );
+
+      // Same transaction as the change: the audit trail can never describe
+      // an invoice that was rolled back (and vice versa).
+      await _audit.log(
+        session,
+        action: 'invoice.create',
+        entityType: 'Invoice',
+        entityId: '${created.id}',
+        tenant: tenant,
+        transaction: transaction,
+      );
       return created;
     });
 
-    await _audit.log(
-      session,
-      action: 'invoice.create',
-      entityType: 'Invoice',
-      entityId: '${invoice.id}',
-      tenant: tenant,
-    );
     return invoice;
   }
 }

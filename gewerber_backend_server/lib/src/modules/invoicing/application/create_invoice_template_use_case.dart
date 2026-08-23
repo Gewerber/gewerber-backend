@@ -57,7 +57,7 @@ class CreateInvoiceTemplateUseCase {
           transaction: transaction,
         );
       }
-      return _templates.create(
+      final created = await _templates.create(
         session,
         InvoiceTemplate(
           businessId: tenant.businessId,
@@ -69,15 +69,19 @@ class CreateInvoiceTemplateUseCase {
         ),
         transaction: transaction,
       );
+
+      // Same transaction as the change (see CreateInvoiceUseCase).
+      await _audit.log(
+        session,
+        action: 'invoiceTemplate.create',
+        entityType: 'InvoiceTemplate',
+        entityId: '${created.id}',
+        tenant: tenant,
+        transaction: transaction,
+      );
+      return created;
     });
 
-    await _audit.log(
-      session,
-      action: 'invoiceTemplate.create',
-      entityType: 'InvoiceTemplate',
-      entityId: '${template.id}',
-      tenant: tenant,
-    );
     return template;
   }
 }

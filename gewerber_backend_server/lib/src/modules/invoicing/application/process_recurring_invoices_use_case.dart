@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:serverpod/serverpod.dart';
 
+import '../../../core/audit/audit_service.dart';
 import '../../../generated/protocol.dart';
 import '../../business/domain/business_gateway.dart';
 import '../../business/domain/business_settings_gateway.dart';
@@ -19,6 +20,10 @@ import '../domain/tax_rule_engine.dart';
 /// `dueDate` of `issueDate + paymentTermsDays`, and its VAT amounts are
 /// re-evaluated at materialization time (e.g. Kleinunternehmer §19 changes
 /// are reflected instead of copying stale totals from the source).
+///
+/// Every materialized clone is audited (`invoice.recurringMaterialized`) in
+/// the same transaction, attributed to the owning business without a user —
+/// it is a system event.
 @singleton
 class ProcessRecurringInvoicesUseCase {
   ProcessRecurringInvoicesUseCase(
@@ -28,6 +33,7 @@ class ProcessRecurringInvoicesUseCase {
     this._businessSettings,
     this._numbers,
     this._taxRules,
+    this._audit,
   );
 
   final InvoiceGateway _invoices;
@@ -36,6 +42,7 @@ class ProcessRecurringInvoicesUseCase {
   final BusinessSettingsGateway _businessSettings;
   final InvoiceNumberService _numbers;
   final TaxRuleEngine _taxRules;
+  final AuditService _audit;
 
   Future<int> call(Session session, {DateTime? now}) async {
     final reference = now ?? DateTime.now();
@@ -171,6 +178,22 @@ class ProcessRecurringInvoicesUseCase {
             recurrenceOccurrencesCreated: occurrences,
             createdAt: source.createdAt,
           ),
+          transaction: transaction,
+        );
+
+        // System event, attributed to the owning business (no user): audited
+        // atomically with the clone so the trail matches the created invoice.
+        await _audit.log(
+          session,
+          action: 'invoice.recurringMaterialized',
+          entityType: 'Invoice',
+          entityId: '${clone.id}',
+          changes: {
+            'sourceInvoiceId': '${source.id}',
+            'issueDate': next.toUtc().toIso8601String(),
+            if (finished) 'scheduleFinished': 'true',
+          },
+          businessId: source.businessId,
           transaction: transaction,
         );
       });

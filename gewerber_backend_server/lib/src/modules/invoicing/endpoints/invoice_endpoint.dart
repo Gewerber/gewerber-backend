@@ -98,8 +98,9 @@ class InvoiceEndpoint extends BusinessScopedEndpoint {
   /// `issueDate DESC, id DESC`. Pass the previous page's
   /// [InvoiceCursorPage.nextCursor] back as `cursor` (`null` = first page);
   /// a `null` result cursor marks the end. Cursors are tenant-scoped: one
-  /// minted for another business yields an empty page. The page size cap is
-  /// applied as in [list]; no total count is computed.
+  /// minted for another business is rejected with a [ValidationException]
+  /// (field `cursor`), just like a malformed or tampered cursor. The page
+  /// size cap is applied as in [list]; no total count is computed.
   Future<InvoiceCursorPage> listCursorPage(
     Session session, {
     InvoiceStatus? status,

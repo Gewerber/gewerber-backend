@@ -731,8 +731,9 @@ class EndpointCustomer extends EndpointBusinessScoped {
   /// `createdAt DESC, id DESC`. Pass the previous page's
   /// [CustomerCursorPage.nextCursor] back as `cursor` (`null` = first page);
   /// a `null` result cursor marks the end. Cursors are tenant-scoped: one
-  /// minted for another business yields an empty page. The page size cap is
-  /// applied as in [list]; no total count is computed.
+  /// minted for another business is rejected with a [ValidationException]
+  /// (field `cursor`), just like a malformed or tampered cursor. The page
+  /// size cap is applied as in [list]; no total count is computed.
   _i3.Future<_i29.CustomerCursorPage> listCursorPage({
     _i27.CustomerStatus? status,
     int? limit,
@@ -843,8 +844,9 @@ class EndpointInvoice extends EndpointBusinessScoped {
   /// `issueDate DESC, id DESC`. Pass the previous page's
   /// [InvoiceCursorPage.nextCursor] back as `cursor` (`null` = first page);
   /// a `null` result cursor marks the end. Cursors are tenant-scoped: one
-  /// minted for another business yields an empty page. The page size cap is
-  /// applied as in [list]; no total count is computed.
+  /// minted for another business is rejected with a [ValidationException]
+  /// (field `cursor`), just like a malformed or tampered cursor. The page
+  /// size cap is applied as in [list]; no total count is computed.
   _i3.Future<_i36.InvoiceCursorPage> listCursorPage({
     _i34.InvoiceStatus? status,
     int? limit,

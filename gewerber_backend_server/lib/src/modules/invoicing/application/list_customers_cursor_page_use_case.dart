@@ -12,7 +12,10 @@ import '../domain/customer_gateway.dart';
 /// Instead of `offset` the client passes back the opaque
 /// [CustomerCursorPage.nextCursor] of the previous page (`null` = first
 /// page). The stable total order is `createdAt DESC, id DESC`; a cursor must
-/// only be used with the same filters it was issued with.
+/// only be used with the same filters it was issued with. Cursors are
+/// tenant-scoped: one minted for another business is rejected with a
+/// [ValidationException] (field `cursor`) — as is any malformed or tampered
+/// cursor.
 ///
 /// No total count is computed — keyset pagination stays O(page size)
 /// regardless of table size. A `nextCursor` of `null` marks the end.
@@ -38,13 +41,15 @@ class ListCustomersCursorPageUseCase {
 
     final position = decodeListCursor(cursor);
     // Cursors are minted per tenant and never cross tenant boundaries. A
-    // foreign cursor yields an empty page (documented behaviour) instead of
-    // an arbitrary slice of this tenant's data.
+    // foreign cursor is rejected instead of being silently answered with an
+    // empty page so client bugs (wrong tenant/business context) surface
+    // immediately.
     if (position != null && position.businessId != tenant.businessId) {
-      return CustomerCursorPage(
-        items: const [],
-        nextCursor: null,
-        limit: effectiveLimit,
+      throw ValidationException(
+        message:
+            'This pagination cursor was issued for another business and '
+            'cannot be used here.',
+        field: 'cursor',
       );
     }
 
