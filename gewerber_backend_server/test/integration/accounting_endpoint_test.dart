@@ -183,6 +183,185 @@ void main() {
       },
     );
 
+    test('when linking an own related invoice then it is stored', () async {
+      final invoice = await endpoints.invoice.create(
+        sessionA,
+        CreateInvoiceRequest(
+          items: [
+            InvoiceItemRequest(
+              description: 'Beratung',
+              quantity: 1,
+              unitPriceCents: 10000,
+            ),
+          ],
+        ),
+        businessId: businessId,
+      );
+
+      final transaction = await endpoints.accounting.create(
+        sessionA,
+        CreateTransactionRequest(
+          type: TransactionType.income,
+          category: TransactionCategory.serviceRevenue,
+          occurredAt: DateTime(2026, 8, 12),
+          amountCents: 11900,
+          relatedInvoiceId: invoice.id,
+        ),
+        businessId: businessId,
+      );
+      expect(transaction.relatedInvoiceId, invoice.id);
+    });
+
+    test(
+      'when related invoice belongs to another tenant then NotFoundException',
+      () async {
+        final sessionB = sessionBuilder.copyWith(
+          authentication: AuthenticationOverride.authenticationInfo(
+            userBId,
+            {},
+          ),
+        );
+        final businessB = await endpoints.business.create(
+          sessionB,
+          CreateBusinessRequest(name: 'Gewerbe B'),
+        );
+        final foreignInvoice = await endpoints.invoice.create(
+          sessionB,
+          CreateInvoiceRequest(
+            items: [
+              InvoiceItemRequest(
+                description: 'Fremd',
+                quantity: 1,
+                unitPriceCents: 5000,
+              ),
+            ],
+          ),
+          businessId: businessB.id!,
+        );
+
+        await expectLater(
+          () => endpoints.accounting.create(
+            sessionA,
+            CreateTransactionRequest(
+              type: TransactionType.income,
+              category: TransactionCategory.serviceRevenue,
+              occurredAt: DateTime(2026, 8, 12),
+              amountCents: 100,
+              relatedInvoiceId: foreignInvoice.id,
+            ),
+            businessId: businessId,
+          ),
+          throwsA(isA<NotFoundException>()),
+        );
+      },
+    );
+
+    test(
+      'when updating with a receipt of another tenant then NotFoundException',
+      () async {
+        final transaction = await createExpense();
+        final sessionB = sessionBuilder.copyWith(
+          authentication: AuthenticationOverride.authenticationInfo(
+            userBId,
+            {},
+          ),
+        );
+        final businessB = await endpoints.business.create(
+          sessionB,
+          CreateBusinessRequest(name: 'Gewerbe B'),
+        );
+        final foreignReceipt = await endpoints.document.upload(
+          sessionB,
+          UploadDocumentRequest(
+            businessId: businessB.id!,
+            kind: DocumentKind.receipt,
+            fileName: 'fremd.pdf',
+            data: ByteData.sublistView(utf8.encode('x')),
+          ),
+        );
+
+        await expectLater(
+          () => endpoints.accounting.update(
+            sessionA,
+            UpdateTransactionRequest(
+              transactionId: transaction.id!,
+              type: TransactionType.expense,
+              category: TransactionCategory.office,
+              description: 'Büromaterial',
+              occurredAt: DateTime(2026, 8, 10),
+              amountCents: 5000,
+              receiptDocumentId: foreignReceipt.id,
+            ),
+            businessId: businessId,
+          ),
+          throwsA(isA<NotFoundException>()),
+        );
+
+        // The transaction must keep its previous (empty) receipt.
+        final fetched = await endpoints.accounting.get(
+          sessionA,
+          transaction.id!,
+          businessId: businessId,
+        );
+        expect(fetched.receiptDocumentId, isNull);
+      },
+    );
+
+    test(
+      'when updating with a related invoice of another tenant then NotFoundException',
+      () async {
+        final transaction = await createExpense();
+        final sessionB = sessionBuilder.copyWith(
+          authentication: AuthenticationOverride.authenticationInfo(
+            userBId,
+            {},
+          ),
+        );
+        final businessB = await endpoints.business.create(
+          sessionB,
+          CreateBusinessRequest(name: 'Gewerbe B'),
+        );
+        final foreignInvoice = await endpoints.invoice.create(
+          sessionB,
+          CreateInvoiceRequest(
+            items: [
+              InvoiceItemRequest(
+                description: 'Fremd',
+                quantity: 1,
+                unitPriceCents: 5000,
+              ),
+            ],
+          ),
+          businessId: businessB.id!,
+        );
+
+        await expectLater(
+          () => endpoints.accounting.update(
+            sessionA,
+            UpdateTransactionRequest(
+              transactionId: transaction.id!,
+              type: TransactionType.expense,
+              category: TransactionCategory.office,
+              description: 'Büromaterial',
+              occurredAt: DateTime(2026, 8, 10),
+              amountCents: 5000,
+              relatedInvoiceId: foreignInvoice.id,
+            ),
+            businessId: businessId,
+          ),
+          throwsA(isA<NotFoundException>()),
+        );
+
+        // The transaction must keep its previous (empty) reference.
+        final fetched = await endpoints.accounting.get(
+          sessionA,
+          transaction.id!,
+          businessId: businessId,
+        );
+        expect(fetched.relatedInvoiceId, isNull);
+      },
+    );
+
     test('when updating and deleting then changes apply', () async {
       final transaction = await createExpense();
 

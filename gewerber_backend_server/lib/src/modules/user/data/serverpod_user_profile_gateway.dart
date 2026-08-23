@@ -7,10 +7,15 @@ import '../domain/user_profile_gateway.dart';
 @Singleton(as: UserProfileGateway)
 class ServerpodUserProfileGateway implements UserProfileGateway {
   @override
-  Future<UserProfile?> findByUserId(Session session, UuidValue userId) {
+  Future<UserProfile?> findByUserId(
+    Session session,
+    UuidValue userId, {
+    Transaction? transaction,
+  }) {
     return UserProfile.db.findFirstRow(
       session,
       where: (t) => t.userId.equals(userId),
+      transaction: transaction,
     );
   }
 
@@ -28,7 +33,11 @@ class ServerpodUserProfileGateway implements UserProfileGateway {
   }
 
   @override
-  Future<UserProfile> update(Session session, UserProfile profile) {
-    return UserProfile.db.updateRow(session, profile);
+  Future<UserProfile> update(
+    Session session,
+    UserProfile profile, {
+    Transaction? transaction,
+  }) {
+    return UserProfile.db.updateRow(session, profile, transaction: transaction);
   }
 }

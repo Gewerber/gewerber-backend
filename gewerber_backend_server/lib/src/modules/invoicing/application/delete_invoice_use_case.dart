@@ -30,10 +30,10 @@ class DeleteInvoiceUseCase {
         entityId: '$invoiceId',
       );
     }
-    if (invoice.status == InvoiceStatus.sent ||
-        invoice.status == InvoiceStatus.paid) {
+    if (invoice.status != InvoiceStatus.draft &&
+        invoice.status != InvoiceStatus.cancelled) {
       throw ConflictException(
-        message: 'Cannot delete a sent or paid invoice.',
+        message: 'Only draft or cancelled invoices can be deleted.',
       );
     }
 

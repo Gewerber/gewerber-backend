@@ -19,3 +19,10 @@ indexes:
     fields: projectId
   time_entry_task_idx:
     fields: taskId
+  # DB-level guarantee that only one timer runs per business: at most one row
+  # per businessId with a NULL stoppedAt (NULLs are treated as equal, so they
+  # collide; stopped entries carry distinct timestamps or NULL-safe values).
+  time_entry_business_running_idx:
+    fields: businessId, stoppedAt
+    unique: true
+    nulls_distinct: false

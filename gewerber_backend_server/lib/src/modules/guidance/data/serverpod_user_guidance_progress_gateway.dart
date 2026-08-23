@@ -38,9 +38,19 @@ class ServerpodUserGuidanceProgressGateway
     Session session,
     UserGuidanceProgress progress,
   ) async {
+    // Progress rows are always written for an authenticated user; a null
+    // userId only exists on rows whose account was deleted (GDPR Art. 17).
+    final userId = progress.userId;
+    if (userId == null) {
+      throw ArgumentError.value(
+        progress,
+        'progress',
+        'userId must not be null',
+      );
+    }
     final existing = await find(
       session,
-      userId: progress.userId,
+      userId: userId,
       itemKey: progress.itemKey,
     );
     if (existing == null) {

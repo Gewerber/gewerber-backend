@@ -2,18 +2,40 @@ import 'package:injectable/injectable.dart';
 import 'package:serverpod/serverpod.dart';
 
 import '../../../generated/protocol.dart';
+import '../../business/domain/business_gateway.dart';
+import '../../business/domain/business_settings_gateway.dart';
+import '../domain/invoice_calculator.dart';
 import '../domain/invoice_gateway.dart';
 import '../domain/invoice_item_gateway.dart';
+import '../domain/invoice_number_service.dart';
+import '../domain/recurrence.dart';
+import '../domain/tax_rule_engine.dart';
 
 /// Materializes due recurring invoices from their source invoices.
 /// A source invoice with a future [nextRecurrenceDate] is cloned into a new
 /// `draft` invoice, then the source's next recurrence date is advanced.
+///
+/// The clone gets a fresh GoBD-safe number from the business sequence, a
+/// `dueDate` of `issueDate + paymentTermsDays`, and its VAT amounts are
+/// re-evaluated at materialization time (e.g. Kleinunternehmer §19 changes
+/// are reflected instead of copying stale totals from the source).
 @singleton
 class ProcessRecurringInvoicesUseCase {
-  ProcessRecurringInvoicesUseCase(this._invoices, this._items);
+  ProcessRecurringInvoicesUseCase(
+    this._invoices,
+    this._items,
+    this._businesses,
+    this._businessSettings,
+    this._numbers,
+    this._taxRules,
+  );
 
   final InvoiceGateway _invoices;
   final InvoiceItemGateway _items;
+  final BusinessGateway _businesses;
+  final BusinessSettingsGateway _businessSettings;
+  final InvoiceNumberService _numbers;
+  final TaxRuleEngine _taxRules;
 
   Future<int> call(Session session, {DateTime? now}) async {
     final reference = now ?? DateTime.now();
@@ -32,23 +54,59 @@ class ProcessRecurringInvoicesUseCase {
       }
 
       final sourceItems = await _items.findByInvoiceId(session, source.id!);
+      final business =
+          await _businesses.findById(session, source.businessId) ??
+          (throw StateError(
+            'Business ${source.businessId} of recurring invoice '
+            '${source.id} is missing.',
+          ));
+      final settings = await _businessSettings.findByBusinessId(
+        session,
+        source.businessId,
+      );
+
       await session.db.transaction((transaction) async {
+        final number = await _numbers.nextInvoiceNumber(
+          session,
+          businessId: source.businessId,
+          issueDate: next,
+          settings: settings ?? BusinessSettings(businessId: source.businessId),
+          transaction: transaction,
+        );
+
+        // Re-evaluate Kleinunternehmer/VAT at materialization time.
+        final requestedItems = [
+          for (final item in sourceItems)
+            InvoiceItemRequest(
+              description: item.description,
+              quantity: item.quantity,
+              unit: item.unit,
+              unitPriceCents: item.unitPriceCents,
+              vatRate: item.vatRate,
+            ),
+        ];
+        final effectiveItems = _taxRules.applyKleinunternehmerOverride(
+          business,
+          requestedItems,
+        );
+        final totals = InvoiceCalculator.totals(effectiveItems, _taxRules);
+
         final clone = await _invoices.create(
           session,
           Invoice(
             businessId: source.businessId,
-            number: await _nextNumberForSource(session, source),
+            number: number,
             type: source.type,
             customerId: source.customerId,
             issueDate: next,
-            dueDate: source.dueDate,
+            dueDate: next.add(Duration(days: source.paymentTermsDays)),
             serviceDateFrom: source.serviceDateFrom,
             serviceDateTo: source.serviceDateTo,
             locale: source.locale,
             currency: source.currency,
-            subtotalCents: source.subtotalCents,
-            vatTotalCents: source.vatTotalCents,
-            totalCents: source.totalCents,
+            subtotalCents: totals.subtotalCents,
+            vatTotalCents: totals.vatTotalCents,
+            totalCents: totals.totalCents,
             paymentTermsDays: source.paymentTermsDays,
             notes: source.notes,
             templateId: source.templateId,
@@ -58,22 +116,24 @@ class ProcessRecurringInvoicesUseCase {
         await _items.insertAll(
           session,
           [
-            for (var i = 0; i < sourceItems.length; i++)
+            for (var i = 0; i < effectiveItems.length; i++)
               InvoiceItem(
                 invoiceId: clone.id!,
                 position: sourceItems[i].position,
-                description: sourceItems[i].description,
-                quantity: sourceItems[i].quantity,
-                unit: sourceItems[i].unit,
-                unitPriceCents: sourceItems[i].unitPriceCents,
-                vatRate: sourceItems[i].vatRate,
-                lineTotalCents: sourceItems[i].lineTotalCents,
+                description: effectiveItems[i].description,
+                quantity: effectiveItems[i].quantity,
+                unit: effectiveItems[i].unit,
+                unitPriceCents: effectiveItems[i].unitPriceCents,
+                vatRate: effectiveItems[i].vatRate,
+                lineTotalCents: InvoiceCalculator.lineTotalCents(
+                  effectiveItems[i],
+                ),
               ),
           ],
           transaction: transaction,
         );
 
-        final nextDate = _advance(next, interval);
+        final nextDate = advanceRecurrence(next, interval);
         final occurrences = source.recurrenceOccurrencesCreated + 1;
         final finished =
             nextDate.isAfter(
@@ -120,52 +180,24 @@ class ProcessRecurringInvoicesUseCase {
     return created;
   }
 
+  /// A clone for [next] already exists when there is a draft invoice of the
+  /// same business with that issue date (the source itself excluded).
   Future<bool> _hasMaterialized(
     Session session,
     Invoice source,
     DateTime next,
   ) async {
-    final clones = await _invoices.find(
+    final drafts = await _invoices.find(
       session,
       businessId: source.businessId,
-      limit: 1,
+      status: InvoiceStatus.draft,
+      issueDate: next,
     );
-    return clones.any(
+    return drafts.any(
       (c) =>
           c.id != source.id &&
-          c.issueDate == next &&
           c.status == InvoiceStatus.draft &&
           c.templateId == source.templateId,
     );
-  }
-
-  Future<String> _nextNumberForSource(Session session, Invoice source) {
-    // Numbering for materialized invoices is handled by the number service on
-    // creation; here we reuse the source number with a suffix to guarantee
-    // uniqueness within the business.
-    return Future.value('${source.number}-R');
-  }
-
-  DateTime _advance(DateTime date, RecurrenceInterval interval) {
-    final local = date.toLocal();
-    return switch (interval) {
-      RecurrenceInterval.daily => local.add(const Duration(days: 1)),
-      RecurrenceInterval.weekly => local.add(const Duration(days: 7)),
-      RecurrenceInterval.monthly => DateTime(
-        local.year,
-        local.month + 1,
-        local.day,
-      ),
-      RecurrenceInterval.quarterly => DateTime(
-        local.year,
-        local.month + 3,
-        local.day,
-      ),
-      RecurrenceInterval.yearly => DateTime(
-        local.year + 1,
-        local.month,
-        local.day,
-      ),
-    };
   }
 }

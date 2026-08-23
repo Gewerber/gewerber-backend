@@ -53,17 +53,7 @@ class StartTimerUseCase {
       request.taskId,
     );
 
-    final entry = await _entries.create(
-      session,
-      TimeEntry(
-        businessId: tenant.businessId,
-        projectId: request.projectId,
-        taskId: request.taskId,
-        description: request.description,
-        startedAt: request.startedAt ?? DateTime.now(),
-        billable: request.billable,
-      ),
-    );
+    final entry = await _startEntry(session, tenant, request);
     await _audit.log(
       session,
       action: 'time_entry.startTimer',
@@ -72,6 +62,40 @@ class StartTimerUseCase {
       tenant: tenant,
     );
     return entry;
+  }
+
+  /// Creates the running entry. The partial unique index
+  /// (`time_entry_business_running_idx`, one row per business with a NULL
+  /// `stoppedAt`) is the source of truth: if two concurrent starts race past
+  /// the check above, the loser hits the index violation here and it is
+  /// surfaced as a [ConflictException].
+  Future<TimeEntry> _startEntry(
+    Session session,
+    TenantContext tenant,
+    StartTimerRequest request,
+  ) async {
+    try {
+      return await _entries.create(
+        session,
+        TimeEntry(
+          businessId: tenant.businessId,
+          projectId: request.projectId,
+          taskId: request.taskId,
+          description: request.description,
+          startedAt: request.startedAt ?? DateTime.now(),
+          billable: request.billable,
+        ),
+      );
+    } on DatabaseQueryException catch (e) {
+      if (e.constraintName == 'time_entry_business_running_idx') {
+        throw ConflictException(
+          message:
+              'A timer is already running. Stop it before starting a new '
+              'one.',
+        );
+      }
+      rethrow;
+    }
   }
 
   Future<void> _validateReferences(

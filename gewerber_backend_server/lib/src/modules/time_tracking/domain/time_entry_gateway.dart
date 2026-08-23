@@ -17,6 +17,10 @@ abstract interface class TimeEntryGateway {
     Transaction? transaction,
   });
 
+  /// Marks every entry in [ids] as invoiced at [invoicedAt] using a single
+  /// batched `UPDATE ... WHERE id IN (...)` inside a transaction.
+  Future<void> markInvoiced(Session session, Set<int> ids, DateTime invoicedAt);
+
   /// The currently running timer of a business, if any.
   Future<TimeEntry?> findRunning(Session session, int businessId);
 

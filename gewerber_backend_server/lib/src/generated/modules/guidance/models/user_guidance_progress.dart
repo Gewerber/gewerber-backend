@@ -16,7 +16,7 @@ abstract class UserGuidanceProgress
     implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   UserGuidanceProgress._({
     this.id,
-    required this.userId,
+    this.userId,
     required this.itemKey,
     this.completedAt,
     this.dismissedAt,
@@ -25,7 +25,7 @@ abstract class UserGuidanceProgress
 
   factory UserGuidanceProgress({
     int? id,
-    required _i1.UuidValue userId,
+    _i1.UuidValue? userId,
     required String itemKey,
     DateTime? completedAt,
     DateTime? dismissedAt,
@@ -37,7 +37,9 @@ abstract class UserGuidanceProgress
   ) {
     return UserGuidanceProgress(
       id: jsonSerialization['id'] as int?,
-      userId: _i1.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
+      userId: jsonSerialization['userId'] == null
+          ? null
+          : _i1.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
       itemKey: jsonSerialization['itemKey'] as String,
       completedAt: jsonSerialization['completedAt'] == null
           ? null
@@ -62,7 +64,8 @@ abstract class UserGuidanceProgress
   @override
   int? id;
 
-  _i1.UuidValue userId;
+  /// Nullable: set to null when the account is deleted (GDPR Art. 17).
+  _i1.UuidValue? userId;
 
   String itemKey;
 
@@ -91,7 +94,7 @@ abstract class UserGuidanceProgress
     return {
       '__className__': 'UserGuidanceProgress',
       if (id != null) 'id': id,
-      'userId': userId.toJson(),
+      if (userId != null) 'userId': userId?.toJson(),
       'itemKey': itemKey,
       if (completedAt != null) 'completedAt': completedAt?.toJson(),
       if (dismissedAt != null) 'dismissedAt': dismissedAt?.toJson(),
@@ -104,7 +107,7 @@ abstract class UserGuidanceProgress
     return {
       '__className__': 'UserGuidanceProgress',
       if (id != null) 'id': id,
-      'userId': userId.toJson(),
+      if (userId != null) 'userId': userId?.toJson(),
       'itemKey': itemKey,
       if (completedAt != null) 'completedAt': completedAt?.toJson(),
       if (dismissedAt != null) 'dismissedAt': dismissedAt?.toJson(),
@@ -145,7 +148,7 @@ class _Undefined {}
 class _UserGuidanceProgressImpl extends UserGuidanceProgress {
   _UserGuidanceProgressImpl({
     int? id,
-    required _i1.UuidValue userId,
+    _i1.UuidValue? userId,
     required String itemKey,
     DateTime? completedAt,
     DateTime? dismissedAt,
@@ -165,7 +168,7 @@ class _UserGuidanceProgressImpl extends UserGuidanceProgress {
   @override
   UserGuidanceProgress copyWith({
     Object? id = _Undefined,
-    _i1.UuidValue? userId,
+    Object? userId = _Undefined,
     String? itemKey,
     Object? completedAt = _Undefined,
     Object? dismissedAt = _Undefined,
@@ -173,7 +176,7 @@ class _UserGuidanceProgressImpl extends UserGuidanceProgress {
   }) {
     return UserGuidanceProgress(
       id: id is int? ? id : this.id,
-      userId: userId ?? this.userId,
+      userId: userId is _i1.UuidValue? ? userId : this.userId,
       itemKey: itemKey ?? this.itemKey,
       completedAt: completedAt is DateTime? ? completedAt : this.completedAt,
       dismissedAt: dismissedAt is DateTime? ? dismissedAt : this.dismissedAt,
@@ -186,7 +189,7 @@ class UserGuidanceProgressUpdateTable
     extends _i1.UpdateTable<UserGuidanceProgressTable> {
   UserGuidanceProgressUpdateTable(super.table);
 
-  _i1.ColumnValue<_i1.UuidValue, _i1.UuidValue> userId(_i1.UuidValue value) =>
+  _i1.ColumnValue<_i1.UuidValue, _i1.UuidValue> userId(_i1.UuidValue? value) =>
       _i1.ColumnValue(
         table.userId,
         value,
@@ -245,6 +248,7 @@ class UserGuidanceProgressTable extends _i1.Table<int?> {
 
   late final UserGuidanceProgressUpdateTable updateTable;
 
+  /// Nullable: set to null when the account is deleted (GDPR Art. 17).
   late final _i1.ColumnUuid userId;
 
   late final _i1.ColumnString itemKey;

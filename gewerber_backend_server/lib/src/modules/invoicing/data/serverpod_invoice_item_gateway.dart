@@ -28,6 +28,21 @@ class ServerpodInvoiceItemGateway implements InvoiceItemGateway {
   }
 
   @override
+  Future<List<InvoiceItem>> findByInvoiceIds(
+    Session session,
+    List<int> invoiceIds,
+  ) {
+    if (invoiceIds.isEmpty) return Future.value(const []);
+    // `position` matches the per-invoice ordering of [findByInvoiceId]; the
+    // id tiebreak keeps the result deterministic for duplicate positions.
+    return InvoiceItem.db.find(
+      session,
+      where: (t) => t.invoiceId.inSet(invoiceIds.toSet()),
+      orderByList: (t) => [t.position.asc(), t.id.asc()],
+    );
+  }
+
+  @override
   Future<void> deleteByInvoiceId(
     Session session,
     int invoiceId, {

@@ -9,5 +9,9 @@ abstract interface class PaymentRecordGateway {
     Transaction? transaction,
   });
 
-  Future<List<PaymentRecord>> findByInvoiceId(Session session, int invoiceId);
+  Future<List<PaymentRecord>> findByInvoiceId(
+    Session session,
+    int invoiceId, {
+    Transaction? transaction,
+  });
 }

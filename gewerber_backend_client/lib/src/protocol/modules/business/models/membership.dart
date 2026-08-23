@@ -17,7 +17,7 @@ abstract class Membership
     implements _i1.SerializableModel, _i1.ProtocolSerialization {
   Membership._({
     this.id,
-    required this.userId,
+    this.userId,
     required this.businessId,
     _i2.MembershipRole? role,
     DateTime? createdAt,
@@ -26,7 +26,7 @@ abstract class Membership
 
   factory Membership({
     int? id,
-    required _i1.UuidValue userId,
+    _i1.UuidValue? userId,
     required int businessId,
     _i2.MembershipRole? role,
     DateTime? createdAt,
@@ -35,7 +35,9 @@ abstract class Membership
   factory Membership.fromJson(Map<String, dynamic> jsonSerialization) {
     return Membership(
       id: jsonSerialization['id'] as int?,
-      userId: _i1.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
+      userId: jsonSerialization['userId'] == null
+          ? null
+          : _i1.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
       businessId: jsonSerialization['businessId'] as int,
       role: jsonSerialization['role'] == null
           ? null
@@ -51,7 +53,8 @@ abstract class Membership
   /// the id will be null.
   int? id;
 
-  _i1.UuidValue userId;
+  /// Nullable: set to null when the account is deleted (GDPR Art. 17).
+  _i1.UuidValue? userId;
 
   int businessId;
 
@@ -74,7 +77,7 @@ abstract class Membership
     return {
       '__className__': 'Membership',
       if (id != null) 'id': id,
-      'userId': userId.toJson(),
+      if (userId != null) 'userId': userId?.toJson(),
       'businessId': businessId,
       'role': role.toJson(),
       'createdAt': createdAt.toJson(),
@@ -86,7 +89,7 @@ abstract class Membership
     return {
       '__className__': 'Membership',
       if (id != null) 'id': id,
-      'userId': userId.toJson(),
+      if (userId != null) 'userId': userId?.toJson(),
       'businessId': businessId,
       'role': role.toJson(),
       'createdAt': createdAt.toJson(),
@@ -104,7 +107,7 @@ class _Undefined {}
 class _MembershipImpl extends Membership {
   _MembershipImpl({
     int? id,
-    required _i1.UuidValue userId,
+    _i1.UuidValue? userId,
     required int businessId,
     _i2.MembershipRole? role,
     DateTime? createdAt,
@@ -122,14 +125,14 @@ class _MembershipImpl extends Membership {
   @override
   Membership copyWith({
     Object? id = _Undefined,
-    _i1.UuidValue? userId,
+    Object? userId = _Undefined,
     int? businessId,
     _i2.MembershipRole? role,
     DateTime? createdAt,
   }) {
     return Membership(
       id: id is int? ? id : this.id,
-      userId: userId ?? this.userId,
+      userId: userId is _i1.UuidValue? ? userId : this.userId,
       businessId: businessId ?? this.businessId,
       role: role ?? this.role,
       createdAt: createdAt ?? this.createdAt,

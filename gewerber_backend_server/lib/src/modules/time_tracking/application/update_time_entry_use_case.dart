@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:serverpod/serverpod.dart';
 
 import '../../../core/audit/audit_service.dart';
+import '../../../core/tenant/tenant_context.dart';
 import '../../../core/tenant/tenant_resolver.dart';
 import '../../../generated/protocol.dart';
 import '../domain/project_gateway.dart';
@@ -60,21 +61,7 @@ class UpdateTimeEntryUseCase {
       request.taskId,
     );
 
-    final updated = await _entries.update(
-      session,
-      entry.copyWith(
-        projectId: request.projectId,
-        taskId: request.taskId,
-        description: request.description,
-        startedAt: request.startedAt,
-        stoppedAt: request.startedAt.add(
-          Duration(minutes: request.durationMinutes),
-        ),
-        durationMinutes: request.durationMinutes,
-        billable: request.billable,
-        updatedAt: DateTime.now(),
-      ),
-    );
+    final updated = await _updateEntry(session, tenant, entry, request);
     await _audit.log(
       session,
       action: 'time_entry.update',
@@ -83,6 +70,45 @@ class UpdateTimeEntryUseCase {
       tenant: tenant,
     );
     return updated;
+  }
+
+  /// Applies the update. The unique index
+  /// (`time_entry_business_running_idx`, `(businessId, stoppedAt)` with
+  /// NULLS NOT DISTINCT) forbids two stopped entries with byte-identical end
+  /// times in one business — a manual input collision is a user input
+  /// problem, so it is surfaced as a [ValidationException] instead of a 500.
+  Future<TimeEntry> _updateEntry(
+    Session session,
+    TenantContext tenant,
+    TimeEntry entry,
+    UpdateTimeEntryRequest request,
+  ) async {
+    try {
+      return await _entries.update(
+        session,
+        entry.copyWith(
+          projectId: request.projectId,
+          taskId: request.taskId,
+          description: request.description,
+          startedAt: request.startedAt,
+          stoppedAt: request.startedAt.add(
+            Duration(minutes: request.durationMinutes),
+          ),
+          durationMinutes: request.durationMinutes,
+          billable: request.billable,
+          updatedAt: DateTime.now(),
+        ),
+      );
+    } on DatabaseQueryException catch (e) {
+      if (e.constraintName == 'time_entry_business_running_idx') {
+        throw ValidationException(
+          message:
+              'A time entry with this exact end time already exists in this '
+              'business. Adjust the start time or duration.',
+        );
+      }
+      rethrow;
+    }
   }
 
   Future<void> _validateReferences(

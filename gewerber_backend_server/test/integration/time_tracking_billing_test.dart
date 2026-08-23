@@ -178,6 +178,42 @@ void main() {
         );
       });
 
+      test(
+        'when invoicing multiple entries then all are marked in one batch',
+        () async {
+          final entryIds = <int>[];
+          for (var i = 0; i < 3; i++) {
+            final entry = await endpoints.timeEntry.create(
+              authenticatedSession,
+              CreateTimeEntryRequest(
+                projectId: project.id,
+                taskId: task.id,
+                startedAt: DateTime(2026, 8, 3 + i, 9),
+                durationMinutes: 60,
+              ),
+              businessId: businessId,
+            );
+            entryIds.add(entry.id!);
+          }
+
+          await endpoints.timeEntry.createInvoice(
+            authenticatedSession,
+            CreateTimeEntriesInvoiceRequest(projectId: project.id!),
+            businessId: businessId,
+          );
+
+          // Every entry was updated by the single batched statement.
+          final entries = await TimeEntry.db.find(
+            authenticatedSession.build(),
+            where: (t) => t.id.inSet(entryIds.toSet()),
+          );
+          expect(entries.map((e) => e.id), unorderedEquals(entryIds));
+          expect(entries.map((e) => e.invoicedAt), everyElement(isNotNull));
+          // One shared timestamp proves a single UPDATE wrote them all.
+          expect(entries.map((e) => e.invoicedAt!.toUtc()).toSet().length, 1);
+        },
+      );
+
       test('when B accesses projects of A then isolation applies', () async {
         final sessionB = sessionBuilder.copyWith(
           authentication: AuthenticationOverride.authenticationInfo(

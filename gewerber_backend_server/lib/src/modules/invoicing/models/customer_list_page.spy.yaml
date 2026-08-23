@@ -1,0 +1,6 @@
+class: CustomerListPage
+fields:
+  items: List<Customer>
+  totalCount: int
+  limit: int
+  offset: int

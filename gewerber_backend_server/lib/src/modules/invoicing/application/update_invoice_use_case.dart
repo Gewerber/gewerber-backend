@@ -4,10 +4,13 @@ import 'package:serverpod/serverpod.dart';
 import '../../../core/audit/audit_service.dart';
 import '../../../core/tenant/tenant_resolver.dart';
 import '../../../generated/protocol.dart';
+import '../../business/domain/business_gateway.dart';
+import '../domain/customer_gateway.dart';
 import '../domain/invoice_calculator.dart';
 import '../domain/invoice_gateway.dart';
 import '../domain/invoice_item_gateway.dart';
 import '../domain/invoice_mapper.dart';
+import '../domain/invoice_template_gateway.dart';
 import '../domain/tax_rule_engine.dart';
 
 @singleton
@@ -16,6 +19,9 @@ class UpdateInvoiceUseCase {
     this._tenantResolver,
     this._invoices,
     this._items,
+    this._businesses,
+    this._customers,
+    this._templates,
     this._taxRules,
     this._audit,
   );
@@ -23,6 +29,9 @@ class UpdateInvoiceUseCase {
   final TenantResolver _tenantResolver;
   final InvoiceGateway _invoices;
   final InvoiceItemGateway _items;
+  final BusinessGateway _businesses;
+  final CustomerGateway _customers;
+  final InvoiceTemplateGateway _templates;
   final TaxRuleEngine _taxRules;
   final AuditService _audit;
 
@@ -42,14 +51,53 @@ class UpdateInvoiceUseCase {
         entityId: '${request.invoiceId}',
       );
     }
+    if (existing.status != InvoiceStatus.draft) {
+      throw ConflictException(
+        message: 'Only draft invoices can be edited.',
+      );
+    }
     if (request.items.isEmpty) {
       throw ValidationException(
         message: 'At least one invoice item is required.',
         field: 'items',
       );
     }
+    if (request.customerId != null) {
+      final customer = await _customers.findById(session, request.customerId!);
+      if (customer == null || customer.businessId != tenant.businessId) {
+        throw NotFoundException(
+          entityType: 'Customer',
+          entityId: '${request.customerId}',
+        );
+      }
+    }
 
-    final totals = InvoiceCalculator.totals(request.items, _taxRules);
+    // Optional reference, but it must belong to the current tenant.
+    if (request.templateId != null) {
+      final template = await _templates.findById(session, request.templateId!);
+      if (template == null || template.businessId != tenant.businessId) {
+        throw NotFoundException(
+          entityType: 'InvoiceTemplate',
+          entityId: '${request.templateId}',
+        );
+      }
+    }
+
+    final business =
+        await _businesses.findById(session, tenant.businessId) ??
+        (throw NotFoundException(
+          entityType: 'Business',
+          entityId: '${tenant.businessId}',
+        ));
+
+    // Kleinunternehmer §19: VAT must not be charged regardless of the
+    // requested item rates (same override as in CreateInvoiceUseCase).
+    final effectiveItems = _taxRules.applyKleinunternehmerOverride(
+      business,
+      request.items,
+    );
+
+    final totals = InvoiceCalculator.totals(effectiveItems, _taxRules);
     final updated = await session.db.transaction((transaction) async {
       final invoice = await _invoices.update(
         session,
@@ -91,7 +139,7 @@ class UpdateInvoiceUseCase {
       );
       await _items.insertAll(
         session,
-        InvoiceMapper.items(request.items, invoiceId: invoice.id!),
+        InvoiceMapper.items(effectiveItems, invoiceId: invoice.id!),
         transaction: transaction,
       );
       return invoice;

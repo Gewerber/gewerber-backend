@@ -22,12 +22,14 @@ class ServerpodPaymentRecordGateway implements PaymentRecordGateway {
   @override
   Future<List<PaymentRecord>> findByInvoiceId(
     Session session,
-    int invoiceId,
-  ) {
+    int invoiceId, {
+    Transaction? transaction,
+  }) {
     return PaymentRecord.db.find(
       session,
       where: (t) => t.invoiceId.equals(invoiceId),
       orderBy: (t) => t.paidAt,
+      transaction: transaction,
     );
   }
 }

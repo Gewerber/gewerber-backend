@@ -44,12 +44,14 @@ customer:
   - get:
   - update:
   - list:
+  - listPage:
 invoice:
   - create:
   - get:
   - getItems:
   - update:
   - list:
+  - listPage:
   - delete:
   - markSent:
   - cancel:
@@ -64,6 +66,12 @@ invoiceTemplate:
 payment:
   - record:
   - status:
+recurringSchedule:
+  - create:
+  - get:
+  - list:
+  - update:
+  - cancel:
 reminder:
   - list:
   - send:
@@ -91,3 +99,5 @@ timeEntry:
 userProfile:
   - getMyProfile:
   - update:
+  - deleteMyAccount:
+  - exportMyData:

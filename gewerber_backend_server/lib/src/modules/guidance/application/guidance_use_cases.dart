@@ -3,15 +3,31 @@ import 'package:serverpod/serverpod.dart';
 
 import '../../../core/tenant/session_auth.dart';
 import '../../../generated/protocol.dart';
+import '../../user/domain/account_deletion.dart';
+import '../../user/domain/user_profile_gateway.dart';
 import '../domain/user_guidance_progress_gateway.dart';
 
-/// Base logic shared by guidance mutations: resolves the authenticated user.
+/// Base logic shared by guidance mutations: resolves the authenticated user
+/// and rejects soft-deleted accounts.
 @singleton
 class GuidanceSessionService {
+  GuidanceSessionService(this._profiles);
+
+  final UserProfileGateway _profiles;
+
+  /// Resolves the authenticated user or throws [ForbiddenException].
+  ///
+  /// A soft-deleted account (GDPR Art. 17 tombstone on `UserProfile`) must not
+  /// write guidance progress again — [UserGuidanceProgressGateway.upsert]
+  /// would otherwise re-create personal rows for it.
   Future<UuidValue> requireUser(Session session) async {
     final userId = session.authUserId;
     if (userId == null) {
       throw ForbiddenException(message: 'Not authenticated.');
+    }
+    final profile = await _profiles.findByUserId(session, userId);
+    if (profile != null && profile.deletedAt != null) {
+      throwAccountDeleted(userId);
     }
     return userId;
   }

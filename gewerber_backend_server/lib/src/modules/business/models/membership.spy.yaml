@@ -1,7 +1,8 @@
 class: Membership
 table: membership
 fields:
-  userId: UuidValue
+  ### Nullable: set to null when the account is deleted (GDPR Art. 17).
+  userId: UuidValue?
   businessId: int, relation(parent=business, onDelete=Cascade)
   role: MembershipRole, default=member
   createdAt: DateTime, default=now

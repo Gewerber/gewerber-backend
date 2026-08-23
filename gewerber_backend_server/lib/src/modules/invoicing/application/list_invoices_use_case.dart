@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:serverpod/serverpod.dart';
 
+import '../../../core/pagination/list_limits.dart';
 import '../../../core/tenant/tenant_resolver.dart';
 import '../../../generated/protocol.dart';
 import '../domain/invoice_gateway.dart';
@@ -27,7 +28,7 @@ class ListInvoicesUseCase {
       session,
       businessId: tenant.businessId,
       status: status,
-      limit: limit ?? 100,
+      limit: clampListLimit(limit),
       offset: offset ?? 0,
     );
   }

@@ -76,12 +76,24 @@ class ExportInvoicesUseCase {
       businessId: businessId,
     );
 
+    // Batched loading: one query for all items instead of one per invoice.
+    final itemsByInvoice = <int, List<InvoiceItem>>{};
+    final items = await _items.findByInvoiceIds(
+      session,
+      [for (final invoice in invoices) invoice.id!],
+    );
+    for (final item in items) {
+      itemsByInvoice.putIfAbsent(item.invoiceId, () => []).add(item);
+    }
+
     final payload = <Map<String, dynamic>>[];
     for (final invoice in invoices) {
-      final items = await _items.findByInvoiceId(session, invoice.id!);
       payload.add({
         'invoice': invoice.toJson(),
-        'items': items.map((item) => item.toJson()).toList(),
+        'items': [
+          for (final item in itemsByInvoice[invoice.id!] ?? const [])
+            item.toJson(),
+        ],
       });
     }
     return jsonEncode({
@@ -113,14 +125,11 @@ class ExportInvoicesUseCase {
     List<Invoice> invoices,
   ) async {
     final ids = invoices.map((i) => i.customerId).whereType<int>().toSet();
-    final result = <int, String>{};
-    for (final id in ids) {
-      final customer = await _customers.findById(session, id);
-      if (customer != null) {
-        result[id] = customer.companyName ?? customer.name;
-      }
-    }
-    return result;
+    final customers = await _customers.findByIds(session, ids);
+    return {
+      for (final customer in customers)
+        customer.id!: customer.companyName ?? customer.name,
+    };
   }
 
   String _formatDate(DateTime dateTime) {

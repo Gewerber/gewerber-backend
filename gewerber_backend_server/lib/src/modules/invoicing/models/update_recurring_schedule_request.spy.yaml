@@ -1,0 +1,12 @@
+class: UpdateRecurringScheduleRequest
+fields:
+  invoiceId: int
+  interval: RecurrenceInterval?
+  nextRecurrenceDate: DateTime?
+  recurrenceEndDate: DateTime?
+  recurrenceMaxOccurrences: int?
+  ### Clear flags: when true, the corresponding field is removed from the
+  ### schedule regardless of the field's value above (`null` alone means
+  ### "keep as is", so an explicit flag is needed to lift a limit).
+  clearRecurrenceEndDate: bool, default=false
+  clearMaxOccurrences: bool, default=false

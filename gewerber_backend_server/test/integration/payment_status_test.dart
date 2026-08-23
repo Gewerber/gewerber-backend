@@ -106,25 +106,35 @@ void main() {
       expect(status.isPaid, true);
     });
 
-    test('when overpayment then remaining clamps to zero', () async {
-      await endpoints.payment.record(
-        authenticatedSession,
-        RecordPaymentRequest(
-          invoiceId: invoice.id!,
-          amountCents: invoice.totalCents + 5000,
-          method: PaymentMethod.bankTransfer,
+    test('when overpayment then ValidationException', () async {
+      await expectLater(
+        () => endpoints.payment.record(
+          authenticatedSession,
+          RecordPaymentRequest(
+            invoiceId: invoice.id!,
+            amountCents: invoice.totalCents + 5000,
+            method: PaymentMethod.bankTransfer,
+          ),
+          businessId: businessId,
         ),
-        businessId: businessId,
+        throwsA(isA<ValidationException>()),
       );
 
+      // The rejected payment must not be persisted and the invoice status
+      // must stay untouched.
       final status = await endpoints.payment.status(
         authenticatedSession,
         invoice.id!,
         businessId: businessId,
       );
-
-      expect(status.remainingCents, 0);
-      expect(status.isPaid, true);
+      expect(status.paidTotalCents, 0);
+      expect(status.payments, isEmpty);
+      final fetched = await endpoints.invoice.get(
+        authenticatedSession,
+        invoice.id!,
+        businessId: businessId,
+      );
+      expect(fetched.status, InvoiceStatus.draft);
     });
 
     test('when invoice does not exist then NotFoundException', () async {

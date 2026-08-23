@@ -21,6 +21,12 @@ class ServerpodCustomerGateway implements CustomerGateway {
   }
 
   @override
+  Future<List<Customer>> findByIds(Session session, Set<int> ids) {
+    if (ids.isEmpty) return Future.value(const []);
+    return Customer.db.find(session, where: (t) => t.id.inSet(ids));
+  }
+
+  @override
   Future<Customer> update(Session session, Customer customer) {
     return Customer.db.updateRow(session, customer);
   }
@@ -41,6 +47,20 @@ class ServerpodCustomerGateway implements CustomerGateway {
       orderByList: (t) => [t.createdAt.desc()],
       limit: limit,
       offset: offset,
+    );
+  }
+
+  @override
+  Future<int> count(
+    Session session, {
+    required int businessId,
+    CustomerStatus? status,
+  }) {
+    return Customer.db.count(
+      session,
+      where: (t) => status == null
+          ? t.businessId.equals(businessId)
+          : t.businessId.equals(businessId) & t.status.equals(status),
     );
   }
 }

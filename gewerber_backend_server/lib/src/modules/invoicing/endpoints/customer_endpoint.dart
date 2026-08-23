@@ -5,6 +5,7 @@ import '../../../core/endpoints/business_scoped_endpoint.dart';
 import '../../../generated/protocol.dart';
 import '../application/create_customer_use_case.dart';
 import '../application/get_customer_use_case.dart';
+import '../application/list_customers_page_use_case.dart';
 import '../application/list_customers_use_case.dart';
 import '../application/update_customer_use_case.dart';
 
@@ -49,6 +50,24 @@ class CustomerEndpoint extends BusinessScopedEndpoint {
     int? businessId,
   }) {
     return getIt<ListCustomersUseCase>().call(
+      session,
+      status: status,
+      limit: limit,
+      offset: offset,
+      businessId: businessId,
+    );
+  }
+
+  /// Paged variant of [list] that additionally returns the total number of
+  /// matching rows. The page size cap is applied as in [list].
+  Future<CustomerListPage> listPage(
+    Session session, {
+    CustomerStatus? status,
+    int? limit,
+    int? offset,
+    int? businessId,
+  }) {
+    return getIt<ListCustomersPageUseCase>().call(
       session,
       status: status,
       limit: limit,

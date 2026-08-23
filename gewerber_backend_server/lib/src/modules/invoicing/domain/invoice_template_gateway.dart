@@ -11,7 +11,11 @@ abstract interface class InvoiceTemplateGateway {
 
   Future<InvoiceTemplate?> findById(Session session, int id);
 
-  Future<InvoiceTemplate> update(Session session, InvoiceTemplate template);
+  Future<InvoiceTemplate> update(
+    Session session,
+    InvoiceTemplate template, {
+    Transaction? transaction,
+  });
 
   Future<List<InvoiceTemplate>> findByBusinessId(
     Session session,

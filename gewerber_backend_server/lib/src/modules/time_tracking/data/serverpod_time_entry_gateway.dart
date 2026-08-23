@@ -30,6 +30,24 @@ class ServerpodTimeEntryGateway implements TimeEntryGateway {
   }
 
   @override
+  Future<void> markInvoiced(
+    Session session,
+    Set<int> ids,
+    DateTime invoicedAt,
+  ) async {
+    if (ids.isEmpty) return;
+    await session.db.transaction((transaction) {
+      return TimeEntry.db.updateWhere(
+        session,
+        where: (t) => t.id.inSet(ids),
+        columnValues: (t) => [t.invoicedAt(invoicedAt)],
+        transaction: transaction,
+        noReturn: true,
+      );
+    });
+  }
+
+  @override
   Future<TimeEntry?> findRunning(Session session, int businessId) async {
     final running = await TimeEntry.db.find(
       session,

@@ -123,13 +123,12 @@ class CreateTimeEntriesInvoiceUseCase {
       businessId: tenant.businessId,
     );
 
-    final invoicedAt = DateTime.now();
-    for (final entry in stopped) {
-      await _entries.update(
-        session,
-        entry.copyWith(invoicedAt: invoicedAt),
-      );
-    }
+    // One batched UPDATE instead of one statement per entry.
+    await _entries.markInvoiced(
+      session,
+      {for (final entry in stopped) entry.id!},
+      DateTime.now(),
+    );
 
     await _audit.log(
       session,

@@ -1,7 +1,8 @@
 class: UserGuidanceProgress
 table: user_guidance_progress
 fields:
-  userId: UuidValue
+  ### Nullable: set to null when the account is deleted (GDPR Art. 17).
+  userId: UuidValue?
   itemKey: String
   completedAt: DateTime?
   dismissedAt: DateTime?

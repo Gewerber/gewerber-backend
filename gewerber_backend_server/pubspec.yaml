@@ -17,6 +17,7 @@ environment:
 resolution: workspace
 
 dependencies:
+  archive: ^4.0.0
   get_it: ^9.2.1
   gewerber_commercial_server:
     git:
