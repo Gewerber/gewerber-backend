@@ -27,6 +27,8 @@ void main() {
   const ownCustomerName = 'Export Kunde';
   const foreignCustomerName = 'Fremd Kunde';
   const foreignInvoiceNumber = 'FREMDE-001';
+  const ownPaymentReference = 'SEPA-EXPORT-001';
+  const foreignPaymentReference = 'FREMD-SEPA-001';
 
   setUpAll(() async {
     await configureDependencies();
@@ -105,6 +107,29 @@ void main() {
       );
       invoiceItemId = items.single.id!;
 
+      // Payments and reminders of the own invoice (sent first, as required).
+      await endpoints.invoice.markSent(
+        sessionA,
+        invoice.id!,
+        businessId: businessAId,
+      );
+      final ownPayment = await endpoints.payment.record(
+        sessionA,
+        RecordPaymentRequest(
+          invoiceId: invoice.id!,
+          amountCents: 1500,
+          reference: ownPaymentReference,
+        ),
+        businessId: businessAId,
+      );
+      expect(ownPayment.invoiceId, invoice.id);
+      final ownReminder = await endpoints.reminder.send(
+        sessionA,
+        invoice.id!,
+        businessId: businessAId,
+      );
+      expect(ownReminder.level, 1);
+
       final project = await endpoints.project.create(
         sessionA,
         CreateProjectRequest(name: 'Export Projekt'),
@@ -158,13 +183,16 @@ void main() {
       // Foreign tenant B must never leak into A's export.
       final foreignCustomer = await endpoints.customer.create(
         sessionB,
-        CreateCustomerRequest(name: foreignCustomerName),
+        CreateCustomerRequest(
+          name: foreignCustomerName,
+          email: 'fremd@example.de',
+        ),
         businessId: businessBId = (await endpoints.business.create(
           sessionB,
           CreateBusinessRequest(name: 'Fremdes Gewerbe B'),
         )).id!,
       );
-      await endpoints.invoice.create(
+      final foreignInvoice = await endpoints.invoice.create(
         sessionB,
         CreateInvoiceRequest(
           customerId: foreignCustomer.id,
@@ -176,6 +204,26 @@ void main() {
             ),
           ],
         ),
+        businessId: businessBId,
+      );
+      // Foreign payments/reminders must not leak either.
+      await endpoints.invoice.markSent(
+        sessionB,
+        foreignInvoice.id!,
+        businessId: businessBId,
+      );
+      await endpoints.payment.record(
+        sessionB,
+        RecordPaymentRequest(
+          invoiceId: foreignInvoice.id!,
+          amountCents: 123,
+          reference: foreignPaymentReference,
+        ),
+        businessId: businessBId,
+      );
+      await endpoints.reminder.send(
+        sessionB,
+        foreignInvoice.id!,
         businessId: businessBId,
       );
       await endpoints.document.upload(
@@ -255,6 +303,8 @@ void main() {
             '$prefix/business.json',
             '$prefix/customers.json',
             '$prefix/invoices.json',
+            '$prefix/payments.json',
+            '$prefix/reminders.json',
             '$prefix/projects.json',
             '$prefix/tasks.json',
             '$prefix/time_entries.json',
@@ -270,6 +320,45 @@ void main() {
         expect(
           (customers['items'].single as Map)['name'],
           ownCustomerName,
+        );
+      },
+    );
+
+    test(
+      'when exporting then payments and reminders sections are included',
+      () {
+        final prefix = 'businesses/$businessAId';
+
+        final payments = jsonDecode(text('$prefix/payments.json')) as Map;
+        expect(payments['count'], 1);
+        final payment = (payments['items'].single as Map);
+        expect(payment['amountCents'], 1500);
+        expect(payment['reference'], ownPaymentReference);
+        expect(payment['invoiceId'], isNotNull);
+
+        final reminders = jsonDecode(text('$prefix/reminders.json')) as Map;
+        expect(reminders['count'], 1);
+        final reminder = (reminders['items'].single as Map);
+        expect(reminder['level'], 1);
+        expect(reminder['invoiceId'], payment['invoiceId']);
+
+        // The second own business has no invoices yet: empty but present
+        // sections keep the layout uniform.
+        final emptyPrefix = 'businesses/$secondBusinessAId';
+        expect(jsonDecode(text('$emptyPrefix/payments.json'))['count'], 0);
+        expect(jsonDecode(text('$emptyPrefix/reminders.json'))['count'], 0);
+
+        // The manifest documents both new files and bumps the format version.
+        final manifest =
+            jsonDecode(text('manifest.json')) as Map<String, dynamic>;
+        expect(manifest['version'], 2);
+        expect(
+          (manifest['layout'] as Map).keys.join('\n'),
+          contains('payments.json'),
+        );
+        expect(
+          (manifest['layout'] as Map).keys.join('\n'),
+          contains('reminders.json'),
         );
       },
     );
@@ -348,6 +437,7 @@ void main() {
         expect(everything, isNot(contains(foreignInvoiceNumber)));
         expect(everything, isNot(contains(foreignDocumentContent)));
         expect(everything, isNot(contains(userBId)));
+        expect(everything, isNot(contains(foreignPaymentReference)));
 
         // No section of the foreign business exists in the archive.
         for (final name in files.keys) {

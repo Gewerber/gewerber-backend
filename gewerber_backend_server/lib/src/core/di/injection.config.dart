@@ -95,12 +95,16 @@ import '../../modules/invoicing/application/get_payment_status_use_case.dart'
     as _i236;
 import '../../modules/invoicing/application/get_recurring_schedule_use_case.dart'
     as _i382;
+import '../../modules/invoicing/application/list_customers_cursor_page_use_case.dart'
+    as _i907;
 import '../../modules/invoicing/application/list_customers_page_use_case.dart'
     as _i658;
 import '../../modules/invoicing/application/list_customers_use_case.dart'
     as _i893;
 import '../../modules/invoicing/application/list_invoice_templates_use_case.dart'
     as _i558;
+import '../../modules/invoicing/application/list_invoices_cursor_page_use_case.dart'
+    as _i749;
 import '../../modules/invoicing/application/list_invoices_page_use_case.dart'
     as _i255;
 import '../../modules/invoicing/application/list_invoices_use_case.dart'
@@ -276,9 +280,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
-    gh.singleton<_i780.MarkOverdueInvoicesUseCase>(
-      () => _i780.MarkOverdueInvoicesUseCase(gh<_i517.InvoiceGateway>()),
-    );
     gh.singleton<_i435.ExportMyDataUseCase>(
       () => _i435.ExportMyDataUseCase(
         gh<_i467.UserProfileGateway>(),
@@ -286,6 +287,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i696.CustomerGateway>(),
         gh<_i517.InvoiceGateway>(),
         gh<_i20.InvoiceItemGateway>(),
+        gh<_i1025.PaymentRecordGateway>(),
+        gh<_i788.ReminderGateway>(),
         gh<_i974.ProjectGateway>(),
         gh<_i18.TaskGateway>(),
         gh<_i417.TimeEntryGateway>(),
@@ -293,6 +296,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i643.DocumentGateway>(),
         gh<_i783.UserGuidanceProgressGateway>(),
       ),
+    );
+    gh.singleton<_i780.MarkOverdueInvoicesUseCase>(
+      () => _i780.MarkOverdueInvoicesUseCase(gh<_i517.InvoiceGateway>()),
     );
     gh.singleton<_i556.ProcessRecurringInvoicesUseCase>(
       () => _i556.ProcessRecurringInvoicesUseCase(
@@ -352,6 +358,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i517.InvoiceGateway>(),
       ),
     );
+    gh.singleton<_i749.ListInvoicesCursorPageUseCase>(
+      () => _i749.ListInvoicesCursorPageUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+      ),
+    );
     gh.singleton<_i255.ListInvoicesPageUseCase>(
       () => _i255.ListInvoicesPageUseCase(
         gh<_i343.TenantResolver>(),
@@ -372,6 +384,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i318.GetCustomerUseCase>(
       () => _i318.GetCustomerUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i696.CustomerGateway>(),
+      ),
+    );
+    gh.singleton<_i907.ListCustomersCursorPageUseCase>(
+      () => _i907.ListCustomersCursorPageUseCase(
         gh<_i343.TenantResolver>(),
         gh<_i696.CustomerGateway>(),
       ),

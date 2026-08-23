@@ -51,6 +51,37 @@ class ServerpodCustomerGateway implements CustomerGateway {
   }
 
   @override
+  Future<List<Customer>> findPageBefore(
+    Session session, {
+    required int businessId,
+    CustomerStatus? status,
+    DateTime? beforeCreatedAt,
+    int? beforeId,
+    required int limit,
+  }) {
+    return Customer.db.find(
+      session,
+      where: (t) {
+        var expression = t.businessId.equals(businessId);
+        if (status != null) {
+          expression = expression & t.status.equals(status);
+        }
+        if (beforeCreatedAt != null && beforeId != null) {
+          // Keyset predicate for the DESC ordering below: everything strictly
+          // after the cursor row, with the id as deterministic tiebreak.
+          expression =
+              expression &
+              ((t.createdAt < beforeCreatedAt) |
+                  (t.createdAt.equals(beforeCreatedAt) & (t.id < beforeId)));
+        }
+        return expression;
+      },
+      orderByList: (t) => [t.createdAt.desc(), t.id.desc()],
+      limit: limit,
+    );
+  }
+
+  @override
   Future<int> count(
     Session session, {
     required int businessId,

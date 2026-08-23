@@ -14,4 +14,12 @@ abstract interface class PaymentRecordGateway {
     int invoiceId, {
     Transaction? transaction,
   });
+
+  /// Loads payment records of many invoices in one query, ordered by paidAt
+  /// (then id) within each invoice.
+  Future<List<PaymentRecord>> findByInvoiceIds(
+    Session session,
+    List<int> invoiceIds, {
+    Transaction? transaction,
+  });
 }

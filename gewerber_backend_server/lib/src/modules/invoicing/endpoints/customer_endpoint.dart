@@ -5,6 +5,7 @@ import '../../../core/endpoints/business_scoped_endpoint.dart';
 import '../../../generated/protocol.dart';
 import '../application/create_customer_use_case.dart';
 import '../application/get_customer_use_case.dart';
+import '../application/list_customers_cursor_page_use_case.dart';
 import '../application/list_customers_page_use_case.dart';
 import '../application/list_customers_use_case.dart';
 import '../application/update_customer_use_case.dart';
@@ -72,6 +73,28 @@ class CustomerEndpoint extends BusinessScopedEndpoint {
       status: status,
       limit: limit,
       offset: offset,
+      businessId: businessId,
+    );
+  }
+
+  /// Keyset-paginated variant of [list] for very large lists. Stable order:
+  /// `createdAt DESC, id DESC`. Pass the previous page's
+  /// [CustomerCursorPage.nextCursor] back as `cursor` (`null` = first page);
+  /// a `null` result cursor marks the end. Cursors are tenant-scoped: one
+  /// minted for another business yields an empty page. The page size cap is
+  /// applied as in [list]; no total count is computed.
+  Future<CustomerCursorPage> listCursorPage(
+    Session session, {
+    CustomerStatus? status,
+    int? limit,
+    String? cursor,
+    int? businessId,
+  }) {
+    return getIt<ListCustomersCursorPageUseCase>().call(
+      session,
+      status: status,
+      limit: limit,
+      cursor: cursor,
       businessId: businessId,
     );
   }

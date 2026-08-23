@@ -46,16 +46,33 @@
       `customer.listPage` → `InvoiceListPage` / `CustomerListPage`
       {items, totalCount, limit, offset} ✅ 2026-08-23 (старые `list` не тронуты;
       кап лимита как в `list`)
-- [ ] Cursor-based пагинация для больших списков (продолжение пилота)
+- [x] Cursor-based пагинация для больших списков (продолжение пилота) ✅ 2026-08-23
+      (`invoice.listCursorPage` / `customer.listCursorPage`: opaque base64url-курсор
+      {v, businessId, lastId, sortValue}, стабильный порядок issueDate/createdAt DESC +
+      id DESC tiebreak, `nextCursor: null` = конец; без total count — O(page size).
+      Курсор чужого tenant'а → ПУСТАЯ страница (документировано), мусорный курсор →
+      ValidationException; старые `list`/`listPage` не тронуты)
 - [x] Ревизия индексов в миграциях: `businessId` везде (аудит 2026-08-23 —
       покрыты все business-scoped таблицы; recurring прикрыт существующим
       `invoice_recurrence_idx`), составной `(businessId, status, dueDate)`
       для overdue-job добавлен (миграция `20260823054539439`)
+- [x] markOverdue per-business обход ✅ 2026-08-23 (hourly job обновляет
+      per-business с предикатом `businessId = ?` — композитный индекс
+      `(businessId, status, dueDate)` теперь используется; поведение идентичное,
+      тест на несколько бизнесов + нетронутые статусы)
 
 ### Надёжность данных / деплой
-- [ ] Бэкапы Postgres: pg_dump/WAL cron + restore runbook (`deploy/`)
-- [ ] Log retention job — `sessionLogs.persistentEnabled: true` растёт бесконтрольно
-- [ ] Resource limits (mem/cpu) в `deploy/docker-compose.yml`
+- [x] Бэкапы Postgres: pg_dump (custom format) cron + restore runbook (`deploy/`)
+      ✅ 2026-08-23 (`deploy/backup.sh` — daily naming, retention, integrity-check;
+      `deploy/restore.sh` — верификация, подтверждение, stop server → restore → start;
+      runbook с RTO/RPO в `deploy/README.md`; WAL/PITR для RPO < 6 ч — за скобками)
+- [x] Log retention — `sessionLogs.persistentEnabled: true` растёт бесконтрольно
+      ✅ 2026-08-23 (документировано в `deploy/README.md`: переключатель persistence
+      в `config/<runmode>.yaml`, SQL-пример DELETE старше N дней для
+      `serverpod_session_log` (+ query/message child tables), cron-пример)
+- [x] Resource limits (mem/cpu) в `deploy/docker-compose.yml` ✅ 2026-08-23
+      (`deploy.resources.limits`: server 1g/1.0, postgres 512m/0.50,
+      redis 256m/0.25; override через `.env`, переменные задокументированы)
 - [ ] Задокументировать роль Redis (кэш vs messaging) + решить persistence
 
 ### Безопасность / комплаенс
@@ -79,7 +96,11 @@
       бизнесу: customers / invoices+items / projects+tasks+time entries /
       transactions / documents (метаданные + содержимое из DatabaseStorage,
       defensive-cap 512 KB на файл). Чужие tenant'ы не читаются (тест).
-- [ ] **GDPR Art. 20** — доделки: включить payments/reminders в экспорт (нужен batched `findByInvoiceIds` у gateway); cursor-based пагинация отдельно
+- [x] **GDPR Art. 20** — payments/reminders включены в экспорт ✅ 2026-08-23
+      (`payments.json` / `reminders.json` внутри `businesses/<id>/`; batched
+      `findByInvoiceIds` у PaymentRecordGateway и ReminderGateway по образцу items;
+      версия формата экспорта 1 → 2, manifest layout дополнен; тесты: секции обоих
+      бизнесов, чужие платежи/напоминания отсутствуют)
 - [ ] Upload: MIME/расширение whitelist (сейчас лимит только 512 KB, `upload_document_use_case.dart:68-78`)
 - [ ] Audit: писать запись в той же транзакции (или outbox); аудировать guidance progress
       и recurring-materialization; заполнить `AuditEntry.businessId` для системных событий

@@ -44,6 +44,16 @@ services:
       timeout: 5s
       retries: 3
       start_period: 30s
+    # Resource limits (honored by `docker compose up`, not just Swarm).
+    # Defaults suit a small VPS; override per environment via .env
+    # (SERVER_MEM_LIMIT / SERVER_CPU_LIMIT etc.).
+    deploy:
+      resources:
+        limits:
+          cpus: "${SERVER_CPU_LIMIT:-1.0}"
+          memory: ${SERVER_MEM_LIMIT:-1g}
+        reservations:
+          memory: ${SERVER_MEM_RESERVATION:-256m}
     networks:
       - internal
       - proxy
@@ -90,6 +100,13 @@ services:
       timeout: 5s
       retries: 5
       start_period: 15s
+    deploy:
+      resources:
+        limits:
+          cpus: "${POSTGRES_CPU_LIMIT:-0.50}"
+          memory: ${POSTGRES_MEM_LIMIT:-512m}
+        reservations:
+          memory: ${POSTGRES_MEM_RESERVATION:-256m}
     networks:
       - internal
 
@@ -105,6 +122,13 @@ services:
       timeout: 5s
       retries: 5
       start_period: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: "${REDIS_CPU_LIMIT:-0.25}"
+          memory: ${REDIS_MEM_LIMIT:-256m}
+        reservations:
+          memory: ${REDIS_MEM_RESERVATION:-64m}
     networks:
       - internal
 

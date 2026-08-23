@@ -23,4 +23,19 @@ class ServerpodReminderGateway implements ReminderGateway {
       orderBy: (t) => t.sentAt,
     );
   }
+
+  @override
+  Future<List<Reminder>> findByInvoiceIds(
+    Session session,
+    List<int> invoiceIds,
+  ) {
+    if (invoiceIds.isEmpty) return Future.value(const []);
+    // `sentAt` matches the per-invoice ordering of [findByInvoiceId]; the id
+    // tiebreak keeps the result deterministic for identical timestamps.
+    return Reminder.db.find(
+      session,
+      where: (t) => t.invoiceId.inSet(invoiceIds.toSet()),
+      orderByList: (t) => [t.sentAt.asc(), t.id.asc()],
+    );
+  }
 }

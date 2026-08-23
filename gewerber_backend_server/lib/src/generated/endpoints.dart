@@ -1143,6 +1143,43 @@ class Endpoints extends _i1.EndpointDispatch {
                     businessId: params['businessId'],
                   ),
         ),
+        'listCursorPage': _i1.MethodConnector(
+          name: 'listCursorPage',
+          params: {
+            'status': _i1.ParameterDescription(
+              name: 'status',
+              type: _i1.getType<_i31.CustomerStatus?>(),
+              nullable: true,
+            ),
+            'limit': _i1.ParameterDescription(
+              name: 'limit',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'cursor': _i1.ParameterDescription(
+              name: 'cursor',
+              type: _i1.getType<String?>(),
+              nullable: true,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['customer'] as _i10.CustomerEndpoint)
+                  .listCursorPage(
+                    session,
+                    status: params['status'],
+                    limit: params['limit'],
+                    cursor: params['cursor'],
+                    businessId: params['businessId'],
+                  ),
+        ),
       },
     );
     connectors['invoice'] = _i1.EndpointConnector(
@@ -1316,6 +1353,43 @@ class Endpoints extends _i1.EndpointDispatch {
                     status: params['status'],
                     limit: params['limit'],
                     offset: params['offset'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'listCursorPage': _i1.MethodConnector(
+          name: 'listCursorPage',
+          params: {
+            'status': _i1.ParameterDescription(
+              name: 'status',
+              type: _i1.getType<_i34.InvoiceStatus?>(),
+              nullable: true,
+            ),
+            'limit': _i1.ParameterDescription(
+              name: 'limit',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'cursor': _i1.ParameterDescription(
+              name: 'cursor',
+              type: _i1.getType<String?>(),
+              nullable: true,
+            ),
+            'businessId': _i1.ParameterDescription(
+              name: 'businessId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['invoice'] as _i11.InvoiceEndpoint).listCursorPage(
+                    session,
+                    status: params['status'],
+                    limit: params['limit'],
+                    cursor: params['cursor'],
                     businessId: params['businessId'],
                   ),
         ),

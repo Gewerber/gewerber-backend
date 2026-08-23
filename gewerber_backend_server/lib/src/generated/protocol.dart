@@ -60,77 +60,79 @@ import 'modules/invoicing/models/create_invoice_template_request.dart' as _i43;
 import 'modules/invoicing/models/create_recurring_schedule_request.dart'
     as _i44;
 import 'modules/invoicing/models/customer.dart' as _i45;
-import 'modules/invoicing/models/customer_list_page.dart' as _i46;
-import 'modules/invoicing/models/customer_status.dart' as _i47;
-import 'modules/invoicing/models/invoice.dart' as _i48;
-import 'modules/invoicing/models/invoice_item.dart' as _i49;
-import 'modules/invoicing/models/invoice_item_request.dart' as _i50;
-import 'modules/invoicing/models/invoice_item_unit.dart' as _i51;
-import 'modules/invoicing/models/invoice_list_page.dart' as _i52;
-import 'modules/invoicing/models/invoice_payment_status.dart' as _i53;
-import 'modules/invoicing/models/invoice_status.dart' as _i54;
-import 'modules/invoicing/models/invoice_template.dart' as _i55;
-import 'modules/invoicing/models/invoice_type.dart' as _i56;
-import 'modules/invoicing/models/payment_method.dart' as _i57;
-import 'modules/invoicing/models/payment_record.dart' as _i58;
-import 'modules/invoicing/models/record_payment_request.dart' as _i59;
-import 'modules/invoicing/models/recurrence_interval.dart' as _i60;
-import 'modules/invoicing/models/reminder.dart' as _i61;
-import 'modules/invoicing/models/update_customer_request.dart' as _i62;
-import 'modules/invoicing/models/update_invoice_request.dart' as _i63;
-import 'modules/invoicing/models/update_invoice_template_request.dart' as _i64;
+import 'modules/invoicing/models/customer_cursor_page.dart' as _i46;
+import 'modules/invoicing/models/customer_list_page.dart' as _i47;
+import 'modules/invoicing/models/customer_status.dart' as _i48;
+import 'modules/invoicing/models/invoice.dart' as _i49;
+import 'modules/invoicing/models/invoice_cursor_page.dart' as _i50;
+import 'modules/invoicing/models/invoice_item.dart' as _i51;
+import 'modules/invoicing/models/invoice_item_request.dart' as _i52;
+import 'modules/invoicing/models/invoice_item_unit.dart' as _i53;
+import 'modules/invoicing/models/invoice_list_page.dart' as _i54;
+import 'modules/invoicing/models/invoice_payment_status.dart' as _i55;
+import 'modules/invoicing/models/invoice_status.dart' as _i56;
+import 'modules/invoicing/models/invoice_template.dart' as _i57;
+import 'modules/invoicing/models/invoice_type.dart' as _i58;
+import 'modules/invoicing/models/payment_method.dart' as _i59;
+import 'modules/invoicing/models/payment_record.dart' as _i60;
+import 'modules/invoicing/models/record_payment_request.dart' as _i61;
+import 'modules/invoicing/models/recurrence_interval.dart' as _i62;
+import 'modules/invoicing/models/reminder.dart' as _i63;
+import 'modules/invoicing/models/update_customer_request.dart' as _i64;
+import 'modules/invoicing/models/update_invoice_request.dart' as _i65;
+import 'modules/invoicing/models/update_invoice_template_request.dart' as _i66;
 import 'modules/invoicing/models/update_recurring_schedule_request.dart'
-    as _i65;
-import 'modules/invoicing/models/vat_rate.dart' as _i66;
-import 'modules/time_tracking/models/create_project_request.dart' as _i67;
-import 'modules/time_tracking/models/create_task_request.dart' as _i68;
+    as _i67;
+import 'modules/invoicing/models/vat_rate.dart' as _i68;
+import 'modules/time_tracking/models/create_project_request.dart' as _i69;
+import 'modules/time_tracking/models/create_task_request.dart' as _i70;
 import 'modules/time_tracking/models/create_time_entries_invoice_request.dart'
-    as _i69;
-import 'modules/time_tracking/models/create_time_entry_request.dart' as _i70;
-import 'modules/time_tracking/models/project.dart' as _i71;
-import 'modules/time_tracking/models/project_status.dart' as _i72;
-import 'modules/time_tracking/models/start_timer_request.dart' as _i73;
-import 'modules/time_tracking/models/task.dart' as _i74;
-import 'modules/time_tracking/models/task_status.dart' as _i75;
-import 'modules/time_tracking/models/time_entry.dart' as _i76;
-import 'modules/time_tracking/models/time_report.dart' as _i77;
-import 'modules/time_tracking/models/time_report_line.dart' as _i78;
-import 'modules/time_tracking/models/update_project_request.dart' as _i79;
-import 'modules/time_tracking/models/update_task_request.dart' as _i80;
-import 'modules/time_tracking/models/update_time_entry_request.dart' as _i81;
-import 'modules/user/models/app_theme.dart' as _i82;
-import 'modules/user/models/update_user_profile_request.dart' as _i83;
-import 'modules/user/models/user_profile.dart' as _i84;
+    as _i71;
+import 'modules/time_tracking/models/create_time_entry_request.dart' as _i72;
+import 'modules/time_tracking/models/project.dart' as _i73;
+import 'modules/time_tracking/models/project_status.dart' as _i74;
+import 'modules/time_tracking/models/start_timer_request.dart' as _i75;
+import 'modules/time_tracking/models/task.dart' as _i76;
+import 'modules/time_tracking/models/task_status.dart' as _i77;
+import 'modules/time_tracking/models/time_entry.dart' as _i78;
+import 'modules/time_tracking/models/time_report.dart' as _i79;
+import 'modules/time_tracking/models/time_report_line.dart' as _i80;
+import 'modules/time_tracking/models/update_project_request.dart' as _i81;
+import 'modules/time_tracking/models/update_task_request.dart' as _i82;
+import 'modules/time_tracking/models/update_time_entry_request.dart' as _i83;
+import 'modules/user/models/app_theme.dart' as _i84;
+import 'modules/user/models/update_user_profile_request.dart' as _i85;
+import 'modules/user/models/user_profile.dart' as _i86;
 import 'package:gewerber_backend_server/src/generated/core/entitlement/feature.dart'
-    as _i85;
-import 'package:gewerber_backend_server/src/generated/modules/accounting/models/accounting_transaction.dart'
-    as _i86;
-import 'package:gewerber_backend_server/src/generated/modules/business/models/business.dart'
     as _i87;
-import 'package:gewerber_backend_server/src/generated/modules/documents/models/document.dart'
+import 'package:gewerber_backend_server/src/generated/modules/accounting/models/accounting_transaction.dart'
     as _i88;
-import 'package:gewerber_backend_server/src/generated/modules/guidance/models/guidance_tip.dart'
+import 'package:gewerber_backend_server/src/generated/modules/business/models/business.dart'
     as _i89;
-import 'package:gewerber_backend_server/src/generated/modules/guidance/models/checklist_definition.dart'
+import 'package:gewerber_backend_server/src/generated/modules/documents/models/document.dart'
     as _i90;
-import 'package:gewerber_backend_server/src/generated/modules/guidance/models/user_guidance_progress.dart'
+import 'package:gewerber_backend_server/src/generated/modules/guidance/models/guidance_tip.dart'
     as _i91;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer.dart'
+import 'package:gewerber_backend_server/src/generated/modules/guidance/models/checklist_definition.dart'
     as _i92;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_item.dart'
+import 'package:gewerber_backend_server/src/generated/modules/guidance/models/user_guidance_progress.dart'
     as _i93;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer.dart'
     as _i94;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_template.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_item.dart'
     as _i95;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/reminder.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice.dart'
     as _i96;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/task.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_template.dart'
     as _i97;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/project.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/reminder.dart'
     as _i98;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/time_entry.dart'
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/task.dart'
     as _i99;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/project.dart'
+    as _i100;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/time_entry.dart'
+    as _i101;
 export 'core/audit/audit_entry.dart';
 export 'core/entitlement/feature.dart';
 export 'core/errors/conflict_exception.dart';
@@ -171,9 +173,11 @@ export 'modules/invoicing/models/create_invoice_request.dart';
 export 'modules/invoicing/models/create_invoice_template_request.dart';
 export 'modules/invoicing/models/create_recurring_schedule_request.dart';
 export 'modules/invoicing/models/customer.dart';
+export 'modules/invoicing/models/customer_cursor_page.dart';
 export 'modules/invoicing/models/customer_list_page.dart';
 export 'modules/invoicing/models/customer_status.dart';
 export 'modules/invoicing/models/invoice.dart';
+export 'modules/invoicing/models/invoice_cursor_page.dart';
 export 'modules/invoicing/models/invoice_item.dart';
 export 'modules/invoicing/models/invoice_item_request.dart';
 export 'modules/invoicing/models/invoice_item_unit.dart';
@@ -2406,122 +2410,128 @@ class Protocol extends _i1.DatabaseSerializationManager {
     if (t == _i45.Customer) {
       return _i45.Customer.fromJson(data) as T;
     }
-    if (t == _i46.CustomerListPage) {
-      return _i46.CustomerListPage.fromJson(data) as T;
+    if (t == _i46.CustomerCursorPage) {
+      return _i46.CustomerCursorPage.fromJson(data) as T;
     }
-    if (t == _i47.CustomerStatus) {
-      return _i47.CustomerStatus.fromJson(data) as T;
+    if (t == _i47.CustomerListPage) {
+      return _i47.CustomerListPage.fromJson(data) as T;
     }
-    if (t == _i48.Invoice) {
-      return _i48.Invoice.fromJson(data) as T;
+    if (t == _i48.CustomerStatus) {
+      return _i48.CustomerStatus.fromJson(data) as T;
     }
-    if (t == _i49.InvoiceItem) {
-      return _i49.InvoiceItem.fromJson(data) as T;
+    if (t == _i49.Invoice) {
+      return _i49.Invoice.fromJson(data) as T;
     }
-    if (t == _i50.InvoiceItemRequest) {
-      return _i50.InvoiceItemRequest.fromJson(data) as T;
+    if (t == _i50.InvoiceCursorPage) {
+      return _i50.InvoiceCursorPage.fromJson(data) as T;
     }
-    if (t == _i51.InvoiceItemUnit) {
-      return _i51.InvoiceItemUnit.fromJson(data) as T;
+    if (t == _i51.InvoiceItem) {
+      return _i51.InvoiceItem.fromJson(data) as T;
     }
-    if (t == _i52.InvoiceListPage) {
-      return _i52.InvoiceListPage.fromJson(data) as T;
+    if (t == _i52.InvoiceItemRequest) {
+      return _i52.InvoiceItemRequest.fromJson(data) as T;
     }
-    if (t == _i53.InvoicePaymentStatus) {
-      return _i53.InvoicePaymentStatus.fromJson(data) as T;
+    if (t == _i53.InvoiceItemUnit) {
+      return _i53.InvoiceItemUnit.fromJson(data) as T;
     }
-    if (t == _i54.InvoiceStatus) {
-      return _i54.InvoiceStatus.fromJson(data) as T;
+    if (t == _i54.InvoiceListPage) {
+      return _i54.InvoiceListPage.fromJson(data) as T;
     }
-    if (t == _i55.InvoiceTemplate) {
-      return _i55.InvoiceTemplate.fromJson(data) as T;
+    if (t == _i55.InvoicePaymentStatus) {
+      return _i55.InvoicePaymentStatus.fromJson(data) as T;
     }
-    if (t == _i56.InvoiceType) {
-      return _i56.InvoiceType.fromJson(data) as T;
+    if (t == _i56.InvoiceStatus) {
+      return _i56.InvoiceStatus.fromJson(data) as T;
     }
-    if (t == _i57.PaymentMethod) {
-      return _i57.PaymentMethod.fromJson(data) as T;
+    if (t == _i57.InvoiceTemplate) {
+      return _i57.InvoiceTemplate.fromJson(data) as T;
     }
-    if (t == _i58.PaymentRecord) {
-      return _i58.PaymentRecord.fromJson(data) as T;
+    if (t == _i58.InvoiceType) {
+      return _i58.InvoiceType.fromJson(data) as T;
     }
-    if (t == _i59.RecordPaymentRequest) {
-      return _i59.RecordPaymentRequest.fromJson(data) as T;
+    if (t == _i59.PaymentMethod) {
+      return _i59.PaymentMethod.fromJson(data) as T;
     }
-    if (t == _i60.RecurrenceInterval) {
-      return _i60.RecurrenceInterval.fromJson(data) as T;
+    if (t == _i60.PaymentRecord) {
+      return _i60.PaymentRecord.fromJson(data) as T;
     }
-    if (t == _i61.Reminder) {
-      return _i61.Reminder.fromJson(data) as T;
+    if (t == _i61.RecordPaymentRequest) {
+      return _i61.RecordPaymentRequest.fromJson(data) as T;
     }
-    if (t == _i62.UpdateCustomerRequest) {
-      return _i62.UpdateCustomerRequest.fromJson(data) as T;
+    if (t == _i62.RecurrenceInterval) {
+      return _i62.RecurrenceInterval.fromJson(data) as T;
     }
-    if (t == _i63.UpdateInvoiceRequest) {
-      return _i63.UpdateInvoiceRequest.fromJson(data) as T;
+    if (t == _i63.Reminder) {
+      return _i63.Reminder.fromJson(data) as T;
     }
-    if (t == _i64.UpdateInvoiceTemplateRequest) {
-      return _i64.UpdateInvoiceTemplateRequest.fromJson(data) as T;
+    if (t == _i64.UpdateCustomerRequest) {
+      return _i64.UpdateCustomerRequest.fromJson(data) as T;
     }
-    if (t == _i65.UpdateRecurringScheduleRequest) {
-      return _i65.UpdateRecurringScheduleRequest.fromJson(data) as T;
+    if (t == _i65.UpdateInvoiceRequest) {
+      return _i65.UpdateInvoiceRequest.fromJson(data) as T;
     }
-    if (t == _i66.VatRate) {
-      return _i66.VatRate.fromJson(data) as T;
+    if (t == _i66.UpdateInvoiceTemplateRequest) {
+      return _i66.UpdateInvoiceTemplateRequest.fromJson(data) as T;
     }
-    if (t == _i67.CreateProjectRequest) {
-      return _i67.CreateProjectRequest.fromJson(data) as T;
+    if (t == _i67.UpdateRecurringScheduleRequest) {
+      return _i67.UpdateRecurringScheduleRequest.fromJson(data) as T;
     }
-    if (t == _i68.CreateTaskRequest) {
-      return _i68.CreateTaskRequest.fromJson(data) as T;
+    if (t == _i68.VatRate) {
+      return _i68.VatRate.fromJson(data) as T;
     }
-    if (t == _i69.CreateTimeEntriesInvoiceRequest) {
-      return _i69.CreateTimeEntriesInvoiceRequest.fromJson(data) as T;
+    if (t == _i69.CreateProjectRequest) {
+      return _i69.CreateProjectRequest.fromJson(data) as T;
     }
-    if (t == _i70.CreateTimeEntryRequest) {
-      return _i70.CreateTimeEntryRequest.fromJson(data) as T;
+    if (t == _i70.CreateTaskRequest) {
+      return _i70.CreateTaskRequest.fromJson(data) as T;
     }
-    if (t == _i71.Project) {
-      return _i71.Project.fromJson(data) as T;
+    if (t == _i71.CreateTimeEntriesInvoiceRequest) {
+      return _i71.CreateTimeEntriesInvoiceRequest.fromJson(data) as T;
     }
-    if (t == _i72.ProjectStatus) {
-      return _i72.ProjectStatus.fromJson(data) as T;
+    if (t == _i72.CreateTimeEntryRequest) {
+      return _i72.CreateTimeEntryRequest.fromJson(data) as T;
     }
-    if (t == _i73.StartTimerRequest) {
-      return _i73.StartTimerRequest.fromJson(data) as T;
+    if (t == _i73.Project) {
+      return _i73.Project.fromJson(data) as T;
     }
-    if (t == _i74.Task) {
-      return _i74.Task.fromJson(data) as T;
+    if (t == _i74.ProjectStatus) {
+      return _i74.ProjectStatus.fromJson(data) as T;
     }
-    if (t == _i75.TaskStatus) {
-      return _i75.TaskStatus.fromJson(data) as T;
+    if (t == _i75.StartTimerRequest) {
+      return _i75.StartTimerRequest.fromJson(data) as T;
     }
-    if (t == _i76.TimeEntry) {
-      return _i76.TimeEntry.fromJson(data) as T;
+    if (t == _i76.Task) {
+      return _i76.Task.fromJson(data) as T;
     }
-    if (t == _i77.TimeReport) {
-      return _i77.TimeReport.fromJson(data) as T;
+    if (t == _i77.TaskStatus) {
+      return _i77.TaskStatus.fromJson(data) as T;
     }
-    if (t == _i78.TimeReportLine) {
-      return _i78.TimeReportLine.fromJson(data) as T;
+    if (t == _i78.TimeEntry) {
+      return _i78.TimeEntry.fromJson(data) as T;
     }
-    if (t == _i79.UpdateProjectRequest) {
-      return _i79.UpdateProjectRequest.fromJson(data) as T;
+    if (t == _i79.TimeReport) {
+      return _i79.TimeReport.fromJson(data) as T;
     }
-    if (t == _i80.UpdateTaskRequest) {
-      return _i80.UpdateTaskRequest.fromJson(data) as T;
+    if (t == _i80.TimeReportLine) {
+      return _i80.TimeReportLine.fromJson(data) as T;
     }
-    if (t == _i81.UpdateTimeEntryRequest) {
-      return _i81.UpdateTimeEntryRequest.fromJson(data) as T;
+    if (t == _i81.UpdateProjectRequest) {
+      return _i81.UpdateProjectRequest.fromJson(data) as T;
     }
-    if (t == _i82.AppTheme) {
-      return _i82.AppTheme.fromJson(data) as T;
+    if (t == _i82.UpdateTaskRequest) {
+      return _i82.UpdateTaskRequest.fromJson(data) as T;
     }
-    if (t == _i83.UpdateUserProfileRequest) {
-      return _i83.UpdateUserProfileRequest.fromJson(data) as T;
+    if (t == _i83.UpdateTimeEntryRequest) {
+      return _i83.UpdateTimeEntryRequest.fromJson(data) as T;
     }
-    if (t == _i84.UserProfile) {
-      return _i84.UserProfile.fromJson(data) as T;
+    if (t == _i84.AppTheme) {
+      return _i84.AppTheme.fromJson(data) as T;
+    }
+    if (t == _i85.UpdateUserProfileRequest) {
+      return _i85.UpdateUserProfileRequest.fromJson(data) as T;
+    }
+    if (t == _i86.UserProfile) {
+      return _i86.UserProfile.fromJson(data) as T;
     }
     if (t == _i1.getType<_i6.AuditEntry?>()) {
       return (data != null ? _i6.AuditEntry.fromJson(data) : null) as T;
@@ -2669,144 +2679,151 @@ class Protocol extends _i1.DatabaseSerializationManager {
     if (t == _i1.getType<_i45.Customer?>()) {
       return (data != null ? _i45.Customer.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i46.CustomerListPage?>()) {
-      return (data != null ? _i46.CustomerListPage.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i47.CustomerStatus?>()) {
-      return (data != null ? _i47.CustomerStatus.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i48.Invoice?>()) {
-      return (data != null ? _i48.Invoice.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i49.InvoiceItem?>()) {
-      return (data != null ? _i49.InvoiceItem.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i50.InvoiceItemRequest?>()) {
-      return (data != null ? _i50.InvoiceItemRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i46.CustomerCursorPage?>()) {
+      return (data != null ? _i46.CustomerCursorPage.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i51.InvoiceItemUnit?>()) {
-      return (data != null ? _i51.InvoiceItemUnit.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i47.CustomerListPage?>()) {
+      return (data != null ? _i47.CustomerListPage.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i52.InvoiceListPage?>()) {
-      return (data != null ? _i52.InvoiceListPage.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i48.CustomerStatus?>()) {
+      return (data != null ? _i48.CustomerStatus.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i53.InvoicePaymentStatus?>()) {
-      return (data != null ? _i53.InvoicePaymentStatus.fromJson(data) : null)
+    if (t == _i1.getType<_i49.Invoice?>()) {
+      return (data != null ? _i49.Invoice.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i50.InvoiceCursorPage?>()) {
+      return (data != null ? _i50.InvoiceCursorPage.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i51.InvoiceItem?>()) {
+      return (data != null ? _i51.InvoiceItem.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i52.InvoiceItemRequest?>()) {
+      return (data != null ? _i52.InvoiceItemRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i54.InvoiceStatus?>()) {
-      return (data != null ? _i54.InvoiceStatus.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i53.InvoiceItemUnit?>()) {
+      return (data != null ? _i53.InvoiceItemUnit.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i55.InvoiceTemplate?>()) {
-      return (data != null ? _i55.InvoiceTemplate.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i54.InvoiceListPage?>()) {
+      return (data != null ? _i54.InvoiceListPage.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i56.InvoiceType?>()) {
-      return (data != null ? _i56.InvoiceType.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i57.PaymentMethod?>()) {
-      return (data != null ? _i57.PaymentMethod.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i58.PaymentRecord?>()) {
-      return (data != null ? _i58.PaymentRecord.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i59.RecordPaymentRequest?>()) {
-      return (data != null ? _i59.RecordPaymentRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i55.InvoicePaymentStatus?>()) {
+      return (data != null ? _i55.InvoicePaymentStatus.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i60.RecurrenceInterval?>()) {
-      return (data != null ? _i60.RecurrenceInterval.fromJson(data) : null)
+    if (t == _i1.getType<_i56.InvoiceStatus?>()) {
+      return (data != null ? _i56.InvoiceStatus.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i57.InvoiceTemplate?>()) {
+      return (data != null ? _i57.InvoiceTemplate.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i58.InvoiceType?>()) {
+      return (data != null ? _i58.InvoiceType.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i59.PaymentMethod?>()) {
+      return (data != null ? _i59.PaymentMethod.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i60.PaymentRecord?>()) {
+      return (data != null ? _i60.PaymentRecord.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i61.RecordPaymentRequest?>()) {
+      return (data != null ? _i61.RecordPaymentRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i61.Reminder?>()) {
-      return (data != null ? _i61.Reminder.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i62.UpdateCustomerRequest?>()) {
-      return (data != null ? _i62.UpdateCustomerRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i62.RecurrenceInterval?>()) {
+      return (data != null ? _i62.RecurrenceInterval.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i63.UpdateInvoiceRequest?>()) {
-      return (data != null ? _i63.UpdateInvoiceRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i63.Reminder?>()) {
+      return (data != null ? _i63.Reminder.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i64.UpdateCustomerRequest?>()) {
+      return (data != null ? _i64.UpdateCustomerRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i64.UpdateInvoiceTemplateRequest?>()) {
+    if (t == _i1.getType<_i65.UpdateInvoiceRequest?>()) {
+      return (data != null ? _i65.UpdateInvoiceRequest.fromJson(data) : null)
+          as T;
+    }
+    if (t == _i1.getType<_i66.UpdateInvoiceTemplateRequest?>()) {
       return (data != null
-              ? _i64.UpdateInvoiceTemplateRequest.fromJson(data)
+              ? _i66.UpdateInvoiceTemplateRequest.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i65.UpdateRecurringScheduleRequest?>()) {
+    if (t == _i1.getType<_i67.UpdateRecurringScheduleRequest?>()) {
       return (data != null
-              ? _i65.UpdateRecurringScheduleRequest.fromJson(data)
+              ? _i67.UpdateRecurringScheduleRequest.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i66.VatRate?>()) {
-      return (data != null ? _i66.VatRate.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i68.VatRate?>()) {
+      return (data != null ? _i68.VatRate.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i67.CreateProjectRequest?>()) {
-      return (data != null ? _i67.CreateProjectRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i69.CreateProjectRequest?>()) {
+      return (data != null ? _i69.CreateProjectRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i68.CreateTaskRequest?>()) {
-      return (data != null ? _i68.CreateTaskRequest.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i70.CreateTaskRequest?>()) {
+      return (data != null ? _i70.CreateTaskRequest.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i69.CreateTimeEntriesInvoiceRequest?>()) {
+    if (t == _i1.getType<_i71.CreateTimeEntriesInvoiceRequest?>()) {
       return (data != null
-              ? _i69.CreateTimeEntriesInvoiceRequest.fromJson(data)
+              ? _i71.CreateTimeEntriesInvoiceRequest.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i70.CreateTimeEntryRequest?>()) {
-      return (data != null ? _i70.CreateTimeEntryRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i72.CreateTimeEntryRequest?>()) {
+      return (data != null ? _i72.CreateTimeEntryRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i71.Project?>()) {
-      return (data != null ? _i71.Project.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i73.Project?>()) {
+      return (data != null ? _i73.Project.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i72.ProjectStatus?>()) {
-      return (data != null ? _i72.ProjectStatus.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i74.ProjectStatus?>()) {
+      return (data != null ? _i74.ProjectStatus.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i73.StartTimerRequest?>()) {
-      return (data != null ? _i73.StartTimerRequest.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i75.StartTimerRequest?>()) {
+      return (data != null ? _i75.StartTimerRequest.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i74.Task?>()) {
-      return (data != null ? _i74.Task.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i76.Task?>()) {
+      return (data != null ? _i76.Task.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i75.TaskStatus?>()) {
-      return (data != null ? _i75.TaskStatus.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i77.TaskStatus?>()) {
+      return (data != null ? _i77.TaskStatus.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i76.TimeEntry?>()) {
-      return (data != null ? _i76.TimeEntry.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i78.TimeEntry?>()) {
+      return (data != null ? _i78.TimeEntry.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i77.TimeReport?>()) {
-      return (data != null ? _i77.TimeReport.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i79.TimeReport?>()) {
+      return (data != null ? _i79.TimeReport.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i78.TimeReportLine?>()) {
-      return (data != null ? _i78.TimeReportLine.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i80.TimeReportLine?>()) {
+      return (data != null ? _i80.TimeReportLine.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i79.UpdateProjectRequest?>()) {
-      return (data != null ? _i79.UpdateProjectRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i81.UpdateProjectRequest?>()) {
+      return (data != null ? _i81.UpdateProjectRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i80.UpdateTaskRequest?>()) {
-      return (data != null ? _i80.UpdateTaskRequest.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i82.UpdateTaskRequest?>()) {
+      return (data != null ? _i82.UpdateTaskRequest.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i81.UpdateTimeEntryRequest?>()) {
-      return (data != null ? _i81.UpdateTimeEntryRequest.fromJson(data) : null)
+    if (t == _i1.getType<_i83.UpdateTimeEntryRequest?>()) {
+      return (data != null ? _i83.UpdateTimeEntryRequest.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i82.AppTheme?>()) {
-      return (data != null ? _i82.AppTheme.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i84.AppTheme?>()) {
+      return (data != null ? _i84.AppTheme.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i83.UpdateUserProfileRequest?>()) {
+    if (t == _i1.getType<_i85.UpdateUserProfileRequest?>()) {
       return (data != null
-              ? _i83.UpdateUserProfileRequest.fromJson(data)
+              ? _i85.UpdateUserProfileRequest.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i84.UserProfile?>()) {
-      return (data != null ? _i84.UserProfile.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i86.UserProfile?>()) {
+      return (data != null ? _i86.UserProfile.fromJson(data) : null) as T;
     }
     if (t == Map<String, String>) {
       return (data as Map).map(
@@ -2835,9 +2852,9 @@ class Protocol extends _i1.DatabaseSerializationManager {
               .toList()
           as T;
     }
-    if (t == List<_i50.InvoiceItemRequest>) {
+    if (t == List<_i52.InvoiceItemRequest>) {
       return (data as List)
-              .map((e) => deserialize<_i50.InvoiceItemRequest>(e))
+              .map((e) => deserialize<_i52.InvoiceItemRequest>(e))
               .toList()
           as T;
     }
@@ -2845,91 +2862,91 @@ class Protocol extends _i1.DatabaseSerializationManager {
       return (data as List).map((e) => deserialize<_i45.Customer>(e)).toList()
           as T;
     }
-    if (t == List<_i48.Invoice>) {
-      return (data as List).map((e) => deserialize<_i48.Invoice>(e)).toList()
+    if (t == List<_i49.Invoice>) {
+      return (data as List).map((e) => deserialize<_i49.Invoice>(e)).toList()
           as T;
     }
-    if (t == List<_i58.PaymentRecord>) {
+    if (t == List<_i60.PaymentRecord>) {
       return (data as List)
-              .map((e) => deserialize<_i58.PaymentRecord>(e))
+              .map((e) => deserialize<_i60.PaymentRecord>(e))
               .toList()
           as T;
     }
-    if (t == List<_i78.TimeReportLine>) {
+    if (t == List<_i80.TimeReportLine>) {
       return (data as List)
-              .map((e) => deserialize<_i78.TimeReportLine>(e))
+              .map((e) => deserialize<_i80.TimeReportLine>(e))
               .toList()
           as T;
     }
-    if (t == List<_i85.Feature>) {
-      return (data as List).map((e) => deserialize<_i85.Feature>(e)).toList()
+    if (t == List<_i87.Feature>) {
+      return (data as List).map((e) => deserialize<_i87.Feature>(e)).toList()
           as T;
     }
-    if (t == List<_i86.AccountingTransaction>) {
+    if (t == List<_i88.AccountingTransaction>) {
       return (data as List)
-              .map((e) => deserialize<_i86.AccountingTransaction>(e))
+              .map((e) => deserialize<_i88.AccountingTransaction>(e))
               .toList()
           as T;
     }
-    if (t == List<_i87.Business>) {
-      return (data as List).map((e) => deserialize<_i87.Business>(e)).toList()
+    if (t == List<_i89.Business>) {
+      return (data as List).map((e) => deserialize<_i89.Business>(e)).toList()
           as T;
     }
-    if (t == List<_i88.Document>) {
-      return (data as List).map((e) => deserialize<_i88.Document>(e)).toList()
+    if (t == List<_i90.Document>) {
+      return (data as List).map((e) => deserialize<_i90.Document>(e)).toList()
           as T;
     }
-    if (t == List<_i89.GuidanceTip>) {
+    if (t == List<_i91.GuidanceTip>) {
       return (data as List)
-              .map((e) => deserialize<_i89.GuidanceTip>(e))
+              .map((e) => deserialize<_i91.GuidanceTip>(e))
               .toList()
           as T;
     }
-    if (t == List<_i90.ChecklistDefinition>) {
+    if (t == List<_i92.ChecklistDefinition>) {
       return (data as List)
-              .map((e) => deserialize<_i90.ChecklistDefinition>(e))
+              .map((e) => deserialize<_i92.ChecklistDefinition>(e))
               .toList()
           as T;
     }
-    if (t == List<_i91.UserGuidanceProgress>) {
+    if (t == List<_i93.UserGuidanceProgress>) {
       return (data as List)
-              .map((e) => deserialize<_i91.UserGuidanceProgress>(e))
+              .map((e) => deserialize<_i93.UserGuidanceProgress>(e))
               .toList()
           as T;
     }
-    if (t == List<_i92.Customer>) {
-      return (data as List).map((e) => deserialize<_i92.Customer>(e)).toList()
+    if (t == List<_i94.Customer>) {
+      return (data as List).map((e) => deserialize<_i94.Customer>(e)).toList()
           as T;
     }
-    if (t == List<_i93.InvoiceItem>) {
+    if (t == List<_i95.InvoiceItem>) {
       return (data as List)
-              .map((e) => deserialize<_i93.InvoiceItem>(e))
+              .map((e) => deserialize<_i95.InvoiceItem>(e))
               .toList()
           as T;
     }
-    if (t == List<_i94.Invoice>) {
-      return (data as List).map((e) => deserialize<_i94.Invoice>(e)).toList()
+    if (t == List<_i96.Invoice>) {
+      return (data as List).map((e) => deserialize<_i96.Invoice>(e)).toList()
           as T;
     }
-    if (t == List<_i95.InvoiceTemplate>) {
+    if (t == List<_i97.InvoiceTemplate>) {
       return (data as List)
-              .map((e) => deserialize<_i95.InvoiceTemplate>(e))
+              .map((e) => deserialize<_i97.InvoiceTemplate>(e))
               .toList()
           as T;
     }
-    if (t == List<_i96.Reminder>) {
-      return (data as List).map((e) => deserialize<_i96.Reminder>(e)).toList()
+    if (t == List<_i98.Reminder>) {
+      return (data as List).map((e) => deserialize<_i98.Reminder>(e)).toList()
           as T;
     }
-    if (t == List<_i97.Task>) {
-      return (data as List).map((e) => deserialize<_i97.Task>(e)).toList() as T;
+    if (t == List<_i99.Task>) {
+      return (data as List).map((e) => deserialize<_i99.Task>(e)).toList() as T;
     }
-    if (t == List<_i98.Project>) {
-      return (data as List).map((e) => deserialize<_i98.Project>(e)).toList()
+    if (t == List<_i100.Project>) {
+      return (data as List).map((e) => deserialize<_i100.Project>(e)).toList()
           as T;
     }
-    if (t == List<_i99.TimeEntry>) {
-      return (data as List).map((e) => deserialize<_i99.TimeEntry>(e)).toList()
+    if (t == List<_i101.TimeEntry>) {
+      return (data as List).map((e) => deserialize<_i101.TimeEntry>(e)).toList()
           as T;
     }
     try {
@@ -2989,45 +3006,47 @@ class Protocol extends _i1.DatabaseSerializationManager {
       _i43.CreateInvoiceTemplateRequest => 'CreateInvoiceTemplateRequest',
       _i44.CreateRecurringScheduleRequest => 'CreateRecurringScheduleRequest',
       _i45.Customer => 'Customer',
-      _i46.CustomerListPage => 'CustomerListPage',
-      _i47.CustomerStatus => 'CustomerStatus',
-      _i48.Invoice => 'Invoice',
-      _i49.InvoiceItem => 'InvoiceItem',
-      _i50.InvoiceItemRequest => 'InvoiceItemRequest',
-      _i51.InvoiceItemUnit => 'InvoiceItemUnit',
-      _i52.InvoiceListPage => 'InvoiceListPage',
-      _i53.InvoicePaymentStatus => 'InvoicePaymentStatus',
-      _i54.InvoiceStatus => 'InvoiceStatus',
-      _i55.InvoiceTemplate => 'InvoiceTemplate',
-      _i56.InvoiceType => 'InvoiceType',
-      _i57.PaymentMethod => 'PaymentMethod',
-      _i58.PaymentRecord => 'PaymentRecord',
-      _i59.RecordPaymentRequest => 'RecordPaymentRequest',
-      _i60.RecurrenceInterval => 'RecurrenceInterval',
-      _i61.Reminder => 'Reminder',
-      _i62.UpdateCustomerRequest => 'UpdateCustomerRequest',
-      _i63.UpdateInvoiceRequest => 'UpdateInvoiceRequest',
-      _i64.UpdateInvoiceTemplateRequest => 'UpdateInvoiceTemplateRequest',
-      _i65.UpdateRecurringScheduleRequest => 'UpdateRecurringScheduleRequest',
-      _i66.VatRate => 'VatRate',
-      _i67.CreateProjectRequest => 'CreateProjectRequest',
-      _i68.CreateTaskRequest => 'CreateTaskRequest',
-      _i69.CreateTimeEntriesInvoiceRequest => 'CreateTimeEntriesInvoiceRequest',
-      _i70.CreateTimeEntryRequest => 'CreateTimeEntryRequest',
-      _i71.Project => 'Project',
-      _i72.ProjectStatus => 'ProjectStatus',
-      _i73.StartTimerRequest => 'StartTimerRequest',
-      _i74.Task => 'Task',
-      _i75.TaskStatus => 'TaskStatus',
-      _i76.TimeEntry => 'TimeEntry',
-      _i77.TimeReport => 'TimeReport',
-      _i78.TimeReportLine => 'TimeReportLine',
-      _i79.UpdateProjectRequest => 'UpdateProjectRequest',
-      _i80.UpdateTaskRequest => 'UpdateTaskRequest',
-      _i81.UpdateTimeEntryRequest => 'UpdateTimeEntryRequest',
-      _i82.AppTheme => 'AppTheme',
-      _i83.UpdateUserProfileRequest => 'UpdateUserProfileRequest',
-      _i84.UserProfile => 'UserProfile',
+      _i46.CustomerCursorPage => 'CustomerCursorPage',
+      _i47.CustomerListPage => 'CustomerListPage',
+      _i48.CustomerStatus => 'CustomerStatus',
+      _i49.Invoice => 'Invoice',
+      _i50.InvoiceCursorPage => 'InvoiceCursorPage',
+      _i51.InvoiceItem => 'InvoiceItem',
+      _i52.InvoiceItemRequest => 'InvoiceItemRequest',
+      _i53.InvoiceItemUnit => 'InvoiceItemUnit',
+      _i54.InvoiceListPage => 'InvoiceListPage',
+      _i55.InvoicePaymentStatus => 'InvoicePaymentStatus',
+      _i56.InvoiceStatus => 'InvoiceStatus',
+      _i57.InvoiceTemplate => 'InvoiceTemplate',
+      _i58.InvoiceType => 'InvoiceType',
+      _i59.PaymentMethod => 'PaymentMethod',
+      _i60.PaymentRecord => 'PaymentRecord',
+      _i61.RecordPaymentRequest => 'RecordPaymentRequest',
+      _i62.RecurrenceInterval => 'RecurrenceInterval',
+      _i63.Reminder => 'Reminder',
+      _i64.UpdateCustomerRequest => 'UpdateCustomerRequest',
+      _i65.UpdateInvoiceRequest => 'UpdateInvoiceRequest',
+      _i66.UpdateInvoiceTemplateRequest => 'UpdateInvoiceTemplateRequest',
+      _i67.UpdateRecurringScheduleRequest => 'UpdateRecurringScheduleRequest',
+      _i68.VatRate => 'VatRate',
+      _i69.CreateProjectRequest => 'CreateProjectRequest',
+      _i70.CreateTaskRequest => 'CreateTaskRequest',
+      _i71.CreateTimeEntriesInvoiceRequest => 'CreateTimeEntriesInvoiceRequest',
+      _i72.CreateTimeEntryRequest => 'CreateTimeEntryRequest',
+      _i73.Project => 'Project',
+      _i74.ProjectStatus => 'ProjectStatus',
+      _i75.StartTimerRequest => 'StartTimerRequest',
+      _i76.Task => 'Task',
+      _i77.TaskStatus => 'TaskStatus',
+      _i78.TimeEntry => 'TimeEntry',
+      _i79.TimeReport => 'TimeReport',
+      _i80.TimeReportLine => 'TimeReportLine',
+      _i81.UpdateProjectRequest => 'UpdateProjectRequest',
+      _i82.UpdateTaskRequest => 'UpdateTaskRequest',
+      _i83.UpdateTimeEntryRequest => 'UpdateTimeEntryRequest',
+      _i84.AppTheme => 'AppTheme',
+      _i85.UpdateUserProfileRequest => 'UpdateUserProfileRequest',
+      _i86.UserProfile => 'UserProfile',
       _ => null,
     };
   }
@@ -3125,83 +3144,87 @@ class Protocol extends _i1.DatabaseSerializationManager {
         return 'CreateRecurringScheduleRequest';
       case _i45.Customer():
         return 'Customer';
-      case _i46.CustomerListPage():
+      case _i46.CustomerCursorPage():
+        return 'CustomerCursorPage';
+      case _i47.CustomerListPage():
         return 'CustomerListPage';
-      case _i47.CustomerStatus():
+      case _i48.CustomerStatus():
         return 'CustomerStatus';
-      case _i48.Invoice():
+      case _i49.Invoice():
         return 'Invoice';
-      case _i49.InvoiceItem():
+      case _i50.InvoiceCursorPage():
+        return 'InvoiceCursorPage';
+      case _i51.InvoiceItem():
         return 'InvoiceItem';
-      case _i50.InvoiceItemRequest():
+      case _i52.InvoiceItemRequest():
         return 'InvoiceItemRequest';
-      case _i51.InvoiceItemUnit():
+      case _i53.InvoiceItemUnit():
         return 'InvoiceItemUnit';
-      case _i52.InvoiceListPage():
+      case _i54.InvoiceListPage():
         return 'InvoiceListPage';
-      case _i53.InvoicePaymentStatus():
+      case _i55.InvoicePaymentStatus():
         return 'InvoicePaymentStatus';
-      case _i54.InvoiceStatus():
+      case _i56.InvoiceStatus():
         return 'InvoiceStatus';
-      case _i55.InvoiceTemplate():
+      case _i57.InvoiceTemplate():
         return 'InvoiceTemplate';
-      case _i56.InvoiceType():
+      case _i58.InvoiceType():
         return 'InvoiceType';
-      case _i57.PaymentMethod():
+      case _i59.PaymentMethod():
         return 'PaymentMethod';
-      case _i58.PaymentRecord():
+      case _i60.PaymentRecord():
         return 'PaymentRecord';
-      case _i59.RecordPaymentRequest():
+      case _i61.RecordPaymentRequest():
         return 'RecordPaymentRequest';
-      case _i60.RecurrenceInterval():
+      case _i62.RecurrenceInterval():
         return 'RecurrenceInterval';
-      case _i61.Reminder():
+      case _i63.Reminder():
         return 'Reminder';
-      case _i62.UpdateCustomerRequest():
+      case _i64.UpdateCustomerRequest():
         return 'UpdateCustomerRequest';
-      case _i63.UpdateInvoiceRequest():
+      case _i65.UpdateInvoiceRequest():
         return 'UpdateInvoiceRequest';
-      case _i64.UpdateInvoiceTemplateRequest():
+      case _i66.UpdateInvoiceTemplateRequest():
         return 'UpdateInvoiceTemplateRequest';
-      case _i65.UpdateRecurringScheduleRequest():
+      case _i67.UpdateRecurringScheduleRequest():
         return 'UpdateRecurringScheduleRequest';
-      case _i66.VatRate():
+      case _i68.VatRate():
         return 'VatRate';
-      case _i67.CreateProjectRequest():
+      case _i69.CreateProjectRequest():
         return 'CreateProjectRequest';
-      case _i68.CreateTaskRequest():
+      case _i70.CreateTaskRequest():
         return 'CreateTaskRequest';
-      case _i69.CreateTimeEntriesInvoiceRequest():
+      case _i71.CreateTimeEntriesInvoiceRequest():
         return 'CreateTimeEntriesInvoiceRequest';
-      case _i70.CreateTimeEntryRequest():
+      case _i72.CreateTimeEntryRequest():
         return 'CreateTimeEntryRequest';
-      case _i71.Project():
+      case _i73.Project():
         return 'Project';
-      case _i72.ProjectStatus():
+      case _i74.ProjectStatus():
         return 'ProjectStatus';
-      case _i73.StartTimerRequest():
+      case _i75.StartTimerRequest():
         return 'StartTimerRequest';
-      case _i74.Task():
+      case _i76.Task():
         return 'Task';
-      case _i75.TaskStatus():
+      case _i77.TaskStatus():
         return 'TaskStatus';
-      case _i76.TimeEntry():
+      case _i78.TimeEntry():
         return 'TimeEntry';
-      case _i77.TimeReport():
+      case _i79.TimeReport():
         return 'TimeReport';
-      case _i78.TimeReportLine():
+      case _i80.TimeReportLine():
         return 'TimeReportLine';
-      case _i79.UpdateProjectRequest():
+      case _i81.UpdateProjectRequest():
         return 'UpdateProjectRequest';
-      case _i80.UpdateTaskRequest():
+      case _i82.UpdateTaskRequest():
         return 'UpdateTaskRequest';
-      case _i81.UpdateTimeEntryRequest():
+      case _i83.UpdateTimeEntryRequest():
         return 'UpdateTimeEntryRequest';
-      case _i82.AppTheme():
+      case _i84.AppTheme():
         return 'AppTheme';
-      case _i83.UpdateUserProfileRequest():
+      case _i85.UpdateUserProfileRequest():
         return 'UpdateUserProfileRequest';
-      case _i84.UserProfile():
+      case _i86.UserProfile():
         return 'UserProfile';
     }
     className = _i3.Protocol().getClassNameForObject(data);
@@ -3355,122 +3378,128 @@ class Protocol extends _i1.DatabaseSerializationManager {
     if (dataClassName == 'Customer') {
       return deserialize<_i45.Customer>(data['data']);
     }
+    if (dataClassName == 'CustomerCursorPage') {
+      return deserialize<_i46.CustomerCursorPage>(data['data']);
+    }
     if (dataClassName == 'CustomerListPage') {
-      return deserialize<_i46.CustomerListPage>(data['data']);
+      return deserialize<_i47.CustomerListPage>(data['data']);
     }
     if (dataClassName == 'CustomerStatus') {
-      return deserialize<_i47.CustomerStatus>(data['data']);
+      return deserialize<_i48.CustomerStatus>(data['data']);
     }
     if (dataClassName == 'Invoice') {
-      return deserialize<_i48.Invoice>(data['data']);
+      return deserialize<_i49.Invoice>(data['data']);
+    }
+    if (dataClassName == 'InvoiceCursorPage') {
+      return deserialize<_i50.InvoiceCursorPage>(data['data']);
     }
     if (dataClassName == 'InvoiceItem') {
-      return deserialize<_i49.InvoiceItem>(data['data']);
+      return deserialize<_i51.InvoiceItem>(data['data']);
     }
     if (dataClassName == 'InvoiceItemRequest') {
-      return deserialize<_i50.InvoiceItemRequest>(data['data']);
+      return deserialize<_i52.InvoiceItemRequest>(data['data']);
     }
     if (dataClassName == 'InvoiceItemUnit') {
-      return deserialize<_i51.InvoiceItemUnit>(data['data']);
+      return deserialize<_i53.InvoiceItemUnit>(data['data']);
     }
     if (dataClassName == 'InvoiceListPage') {
-      return deserialize<_i52.InvoiceListPage>(data['data']);
+      return deserialize<_i54.InvoiceListPage>(data['data']);
     }
     if (dataClassName == 'InvoicePaymentStatus') {
-      return deserialize<_i53.InvoicePaymentStatus>(data['data']);
+      return deserialize<_i55.InvoicePaymentStatus>(data['data']);
     }
     if (dataClassName == 'InvoiceStatus') {
-      return deserialize<_i54.InvoiceStatus>(data['data']);
+      return deserialize<_i56.InvoiceStatus>(data['data']);
     }
     if (dataClassName == 'InvoiceTemplate') {
-      return deserialize<_i55.InvoiceTemplate>(data['data']);
+      return deserialize<_i57.InvoiceTemplate>(data['data']);
     }
     if (dataClassName == 'InvoiceType') {
-      return deserialize<_i56.InvoiceType>(data['data']);
+      return deserialize<_i58.InvoiceType>(data['data']);
     }
     if (dataClassName == 'PaymentMethod') {
-      return deserialize<_i57.PaymentMethod>(data['data']);
+      return deserialize<_i59.PaymentMethod>(data['data']);
     }
     if (dataClassName == 'PaymentRecord') {
-      return deserialize<_i58.PaymentRecord>(data['data']);
+      return deserialize<_i60.PaymentRecord>(data['data']);
     }
     if (dataClassName == 'RecordPaymentRequest') {
-      return deserialize<_i59.RecordPaymentRequest>(data['data']);
+      return deserialize<_i61.RecordPaymentRequest>(data['data']);
     }
     if (dataClassName == 'RecurrenceInterval') {
-      return deserialize<_i60.RecurrenceInterval>(data['data']);
+      return deserialize<_i62.RecurrenceInterval>(data['data']);
     }
     if (dataClassName == 'Reminder') {
-      return deserialize<_i61.Reminder>(data['data']);
+      return deserialize<_i63.Reminder>(data['data']);
     }
     if (dataClassName == 'UpdateCustomerRequest') {
-      return deserialize<_i62.UpdateCustomerRequest>(data['data']);
+      return deserialize<_i64.UpdateCustomerRequest>(data['data']);
     }
     if (dataClassName == 'UpdateInvoiceRequest') {
-      return deserialize<_i63.UpdateInvoiceRequest>(data['data']);
+      return deserialize<_i65.UpdateInvoiceRequest>(data['data']);
     }
     if (dataClassName == 'UpdateInvoiceTemplateRequest') {
-      return deserialize<_i64.UpdateInvoiceTemplateRequest>(data['data']);
+      return deserialize<_i66.UpdateInvoiceTemplateRequest>(data['data']);
     }
     if (dataClassName == 'UpdateRecurringScheduleRequest') {
-      return deserialize<_i65.UpdateRecurringScheduleRequest>(data['data']);
+      return deserialize<_i67.UpdateRecurringScheduleRequest>(data['data']);
     }
     if (dataClassName == 'VatRate') {
-      return deserialize<_i66.VatRate>(data['data']);
+      return deserialize<_i68.VatRate>(data['data']);
     }
     if (dataClassName == 'CreateProjectRequest') {
-      return deserialize<_i67.CreateProjectRequest>(data['data']);
+      return deserialize<_i69.CreateProjectRequest>(data['data']);
     }
     if (dataClassName == 'CreateTaskRequest') {
-      return deserialize<_i68.CreateTaskRequest>(data['data']);
+      return deserialize<_i70.CreateTaskRequest>(data['data']);
     }
     if (dataClassName == 'CreateTimeEntriesInvoiceRequest') {
-      return deserialize<_i69.CreateTimeEntriesInvoiceRequest>(data['data']);
+      return deserialize<_i71.CreateTimeEntriesInvoiceRequest>(data['data']);
     }
     if (dataClassName == 'CreateTimeEntryRequest') {
-      return deserialize<_i70.CreateTimeEntryRequest>(data['data']);
+      return deserialize<_i72.CreateTimeEntryRequest>(data['data']);
     }
     if (dataClassName == 'Project') {
-      return deserialize<_i71.Project>(data['data']);
+      return deserialize<_i73.Project>(data['data']);
     }
     if (dataClassName == 'ProjectStatus') {
-      return deserialize<_i72.ProjectStatus>(data['data']);
+      return deserialize<_i74.ProjectStatus>(data['data']);
     }
     if (dataClassName == 'StartTimerRequest') {
-      return deserialize<_i73.StartTimerRequest>(data['data']);
+      return deserialize<_i75.StartTimerRequest>(data['data']);
     }
     if (dataClassName == 'Task') {
-      return deserialize<_i74.Task>(data['data']);
+      return deserialize<_i76.Task>(data['data']);
     }
     if (dataClassName == 'TaskStatus') {
-      return deserialize<_i75.TaskStatus>(data['data']);
+      return deserialize<_i77.TaskStatus>(data['data']);
     }
     if (dataClassName == 'TimeEntry') {
-      return deserialize<_i76.TimeEntry>(data['data']);
+      return deserialize<_i78.TimeEntry>(data['data']);
     }
     if (dataClassName == 'TimeReport') {
-      return deserialize<_i77.TimeReport>(data['data']);
+      return deserialize<_i79.TimeReport>(data['data']);
     }
     if (dataClassName == 'TimeReportLine') {
-      return deserialize<_i78.TimeReportLine>(data['data']);
+      return deserialize<_i80.TimeReportLine>(data['data']);
     }
     if (dataClassName == 'UpdateProjectRequest') {
-      return deserialize<_i79.UpdateProjectRequest>(data['data']);
+      return deserialize<_i81.UpdateProjectRequest>(data['data']);
     }
     if (dataClassName == 'UpdateTaskRequest') {
-      return deserialize<_i80.UpdateTaskRequest>(data['data']);
+      return deserialize<_i82.UpdateTaskRequest>(data['data']);
     }
     if (dataClassName == 'UpdateTimeEntryRequest') {
-      return deserialize<_i81.UpdateTimeEntryRequest>(data['data']);
+      return deserialize<_i83.UpdateTimeEntryRequest>(data['data']);
     }
     if (dataClassName == 'AppTheme') {
-      return deserialize<_i82.AppTheme>(data['data']);
+      return deserialize<_i84.AppTheme>(data['data']);
     }
     if (dataClassName == 'UpdateUserProfileRequest') {
-      return deserialize<_i83.UpdateUserProfileRequest>(data['data']);
+      return deserialize<_i85.UpdateUserProfileRequest>(data['data']);
     }
     if (dataClassName == 'UserProfile') {
-      return deserialize<_i84.UserProfile>(data['data']);
+      return deserialize<_i86.UserProfile>(data['data']);
     }
     if (dataClassName.startsWith('gewerber_commercial.')) {
       data['className'] = dataClassName.substring(20);
@@ -3542,24 +3571,24 @@ class Protocol extends _i1.DatabaseSerializationManager {
         return _i40.UserGuidanceProgress.t;
       case _i45.Customer:
         return _i45.Customer.t;
-      case _i48.Invoice:
-        return _i48.Invoice.t;
-      case _i49.InvoiceItem:
-        return _i49.InvoiceItem.t;
-      case _i55.InvoiceTemplate:
-        return _i55.InvoiceTemplate.t;
-      case _i58.PaymentRecord:
-        return _i58.PaymentRecord.t;
-      case _i61.Reminder:
-        return _i61.Reminder.t;
-      case _i71.Project:
-        return _i71.Project.t;
-      case _i74.Task:
-        return _i74.Task.t;
-      case _i76.TimeEntry:
-        return _i76.TimeEntry.t;
-      case _i84.UserProfile:
-        return _i84.UserProfile.t;
+      case _i49.Invoice:
+        return _i49.Invoice.t;
+      case _i51.InvoiceItem:
+        return _i51.InvoiceItem.t;
+      case _i57.InvoiceTemplate:
+        return _i57.InvoiceTemplate.t;
+      case _i60.PaymentRecord:
+        return _i60.PaymentRecord.t;
+      case _i63.Reminder:
+        return _i63.Reminder.t;
+      case _i73.Project:
+        return _i73.Project.t;
+      case _i76.Task:
+        return _i76.Task.t;
+      case _i78.TimeEntry:
+        return _i78.TimeEntry.t;
+      case _i86.UserProfile:
+        return _i86.UserProfile.t;
     }
     return null;
   }

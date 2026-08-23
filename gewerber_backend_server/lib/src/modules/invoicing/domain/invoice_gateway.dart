@@ -51,6 +51,20 @@ abstract interface class InvoiceGateway {
   /// Returns the number of updated invoices.
   Future<int> markOverdue(Session session, DateTime now);
 
+  /// Keyset-paginated slice of invoices strictly before the cursor position
+  /// ([beforeIssueDate], [beforeId]) in the stable order
+  /// `issueDate DESC, id DESC`. Pass both cursor values of the previous
+  /// page's last row; omit them for the first page. [limit] is applied as-is
+  /// (callers may request one extra row to detect a following page).
+  Future<List<Invoice>> findPageBefore(
+    Session session, {
+    required int businessId,
+    InvoiceStatus? status,
+    DateTime? beforeIssueDate,
+    int? beforeId,
+    required int limit,
+  });
+
   /// Counts invoices matching the same filter as [find], ignoring
   /// limit/offset — used to build paginated list pages.
   Future<int> count(

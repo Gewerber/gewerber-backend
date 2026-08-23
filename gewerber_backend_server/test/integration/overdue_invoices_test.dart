@@ -186,5 +186,114 @@ void main() {
         expect(fetched.status, InvoiceStatus.overdue);
       },
     );
+
+    test(
+      'when several businesses have candidates then exactly their '
+      'sent/partially-paid past-due rows are updated',
+      () async {
+        final session = authenticatedSession.build();
+        final secondBusiness = await endpoints.business.create(
+          authenticatedSession,
+          CreateBusinessRequest(name: 'Zweitgewerbe Overdue'),
+        );
+        final secondBusinessId = secondBusiness.id!;
+
+        Future<Invoice> seedRawInvoice(
+          int targetBusinessId,
+          String number,
+          InvoiceStatus status,
+          DateTime? dueDate,
+        ) async {
+          final invoice = Invoice(
+            businessId: targetBusinessId,
+            number: number,
+            status: status,
+            issueDate: DateTime(2026, 7, 15),
+            dueDate: dueDate,
+          );
+          return Invoice.db.insertRow(session, invoice);
+        }
+
+        // Business A: one candidate plus three look-alikes that must stay.
+        final aCandidate = await seedRawInvoice(
+          businessId,
+          'OV-A-001',
+          InvoiceStatus.sent,
+          pastDue,
+        );
+        final aFuture = await seedRawInvoice(
+          businessId,
+          'OV-A-002',
+          InvoiceStatus.sent,
+          futureDue,
+        );
+        final aDraft = await seedRawInvoice(
+          businessId,
+          'OV-A-003',
+          InvoiceStatus.draft,
+          pastDue,
+        );
+        final aPaid = await seedRawInvoice(
+          businessId,
+          'OV-A-004',
+          InvoiceStatus.paid,
+          pastDue,
+        );
+
+        // Business B: one candidate; an already-overdue row is not part of
+        // the predicate and must not be touched again.
+        final bCandidate = await seedRawInvoice(
+          secondBusinessId,
+          'OV-B-001',
+          InvoiceStatus.partiallyPaid,
+          pastDue,
+        );
+        final bAlreadyOverdue = await seedRawInvoice(
+          secondBusinessId,
+          'OV-B-002',
+          InvoiceStatus.overdue,
+          pastDue,
+        );
+        final bUpdatedAtBefore = bAlreadyOverdue.updatedAt;
+
+        final updated = await getIt<MarkOverdueInvoicesUseCase>().call(
+          session,
+          now: reference,
+        );
+        expect(updated, 2);
+
+        expect(
+          (await Invoice.db.findById(session, aCandidate.id!))!.status,
+          InvoiceStatus.overdue,
+        );
+        expect(
+          (await Invoice.db.findById(session, bCandidate.id!))!.status,
+          InvoiceStatus.overdue,
+        );
+        // Untouched rows keep their exact status.
+        expect(
+          (await Invoice.db.findById(session, aFuture.id!))!.status,
+          InvoiceStatus.sent,
+        );
+        expect(
+          (await Invoice.db.findById(session, aDraft.id!))!.status,
+          InvoiceStatus.draft,
+        );
+        expect(
+          (await Invoice.db.findById(session, aPaid.id!))!.status,
+          InvoiceStatus.paid,
+        );
+        final stillOverdue = await Invoice.db.findById(
+          session,
+          bAlreadyOverdue.id!,
+        );
+        expect(stillOverdue!.status, InvoiceStatus.overdue);
+        expect(
+          stillOverdue.updatedAt.isAtSameMomentAs(bUpdatedAtBefore),
+          isTrue,
+          reason: 'already-overdue rows are outside the update predicate',
+        );
+      },
+    );
   });
 }

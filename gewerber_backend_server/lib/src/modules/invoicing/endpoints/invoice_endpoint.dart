@@ -9,6 +9,7 @@ import '../application/delete_invoice_use_case.dart';
 import '../application/export_invoices_use_case.dart';
 import '../application/generate_invoice_pdf_use_case.dart';
 import '../application/get_invoice_use_case.dart';
+import '../application/list_invoices_cursor_page_use_case.dart';
 import '../application/list_invoices_page_use_case.dart';
 import '../application/list_invoices_use_case.dart';
 import '../application/mark_invoice_sent_use_case.dart';
@@ -89,6 +90,28 @@ class InvoiceEndpoint extends BusinessScopedEndpoint {
       status: status,
       limit: limit,
       offset: offset,
+      businessId: businessId,
+    );
+  }
+
+  /// Keyset-paginated variant of [list] for very large lists. Stable order:
+  /// `issueDate DESC, id DESC`. Pass the previous page's
+  /// [InvoiceCursorPage.nextCursor] back as `cursor` (`null` = first page);
+  /// a `null` result cursor marks the end. Cursors are tenant-scoped: one
+  /// minted for another business yields an empty page. The page size cap is
+  /// applied as in [list]; no total count is computed.
+  Future<InvoiceCursorPage> listCursorPage(
+    Session session, {
+    InvoiceStatus? status,
+    int? limit,
+    String? cursor,
+    int? businessId,
+  }) {
+    return getIt<ListInvoicesCursorPageUseCase>().call(
+      session,
+      status: status,
+      limit: limit,
+      cursor: cursor,
       businessId: businessId,
     );
   }

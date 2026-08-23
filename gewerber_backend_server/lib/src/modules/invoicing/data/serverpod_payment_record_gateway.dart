@@ -32,4 +32,21 @@ class ServerpodPaymentRecordGateway implements PaymentRecordGateway {
       transaction: transaction,
     );
   }
+
+  @override
+  Future<List<PaymentRecord>> findByInvoiceIds(
+    Session session,
+    List<int> invoiceIds, {
+    Transaction? transaction,
+  }) {
+    if (invoiceIds.isEmpty) return Future.value(const []);
+    // `paidAt` matches the per-invoice ordering of [findByInvoiceId]; the id
+    // tiebreak keeps the result deterministic for identical timestamps.
+    return PaymentRecord.db.find(
+      session,
+      where: (t) => t.invoiceId.inSet(invoiceIds.toSet()),
+      orderByList: (t) => [t.paidAt.asc(), t.id.asc()],
+      transaction: transaction,
+    );
+  }
 }

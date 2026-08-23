@@ -14,6 +14,8 @@ import '../../guidance/domain/user_guidance_progress_gateway.dart';
 import '../../invoicing/domain/customer_gateway.dart';
 import '../../invoicing/domain/invoice_gateway.dart';
 import '../../invoicing/domain/invoice_item_gateway.dart';
+import '../../invoicing/domain/payment_record_gateway.dart';
+import '../../invoicing/domain/reminder_gateway.dart';
 import '../../time_tracking/domain/project_gateway.dart';
 import '../../time_tracking/domain/task_gateway.dart';
 import '../../time_tracking/domain/time_entry_gateway.dart';
@@ -23,10 +25,11 @@ import '../domain/user_profile_gateway.dart';
 /// Builds a GDPR Art. 20 data export for the logged-in user as a ZIP archive.
 ///
 /// The archive contains every business the user is a member of (and only
-/// those): customers, invoices with items, projects/tasks/time entries,
-/// accounting transactions and document metadata + content. Per-user data
-/// (profile, memberships, guidance progress) is included once at the top
-/// level; foreign tenants are never read.
+/// those): customers, invoices with items, payments, reminders,
+/// projects/tasks/time entries, accounting transactions and document
+/// metadata + content. Per-user data (profile, memberships, guidance
+/// progress) is included once at the top level; foreign tenants are never
+/// read.
 ///
 /// Inside the archive every section is a self-documenting JSON file (UTF-8);
 /// the layout is versioned via `manifest.json`. Document contents are read
@@ -39,6 +42,8 @@ class ExportMyDataUseCase {
     this._customers,
     this._invoices,
     this._items,
+    this._payments,
+    this._reminders,
     this._projects,
     this._tasks,
     this._timeEntries,
@@ -49,7 +54,12 @@ class ExportMyDataUseCase {
 
   /// Version of the export format written into `manifest.json`. Bump on
   /// breaking changes of the layout so consumers can adapt.
-  static const int exportFormatVersion = 1;
+  ///
+  /// History:
+  /// - 1: initial layout.
+  /// - 2: added `businesses/<id>/payments.json` and
+  ///   `businesses/<id>/reminders.json`.
+  static const int exportFormatVersion = 2;
 
   static const String _manifestPath = 'manifest.json';
   static const String _profilePath = 'profile.json';
@@ -67,6 +77,8 @@ class ExportMyDataUseCase {
   final CustomerGateway _customers;
   final InvoiceGateway _invoices;
   final InvoiceItemGateway _items;
+  final PaymentRecordGateway _payments;
+  final ReminderGateway _reminders;
   final ProjectGateway _projects;
   final TaskGateway _tasks;
   final TimeEntryGateway _timeEntries;
@@ -148,6 +160,13 @@ class ExportMyDataUseCase {
         ],
       });
 
+      // Payments and reminders of the invoices above, batched in one query
+      // each. Every row carries its `invoiceId`.
+      final payments = await _payments.findByInvoiceIds(session, invoiceIds);
+      addJson('$prefix/payments.json', _section(payments));
+      final reminders = await _reminders.findByInvoiceIds(session, invoiceIds);
+      addJson('$prefix/reminders.json', _section(reminders));
+
       // Projects, tasks and time entries.
       final projects = await _projects.find(session, businessId: businessId);
       addJson('$prefix/projects.json', _section(projects));
@@ -206,6 +225,12 @@ class ExportMyDataUseCase {
       'guidance_progress.json': 'Per-user guidance progress.',
       'businesses/<id>/*.json':
           'All data of one business the user is a member of.',
+      'businesses/<id>/payments.json':
+          'Payment records of the business invoices (each row references '
+          'its invoiceId).',
+      'businesses/<id>/reminders.json':
+          'Payment reminders sent for the business invoices (each row '
+          'references its invoiceId).',
       'businesses/<id>/documents/files/*':
           'Document contents referenced by document_files.json.',
     },

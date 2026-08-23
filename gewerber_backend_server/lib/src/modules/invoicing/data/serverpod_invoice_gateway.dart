@@ -100,20 +100,64 @@ class ServerpodInvoiceGateway implements InvoiceGateway {
   }
 
   @override
-  Future<int> markOverdue(Session session, DateTime now) async {
-    final updated = await Invoice.db.updateWhere(
+  Future<List<Invoice>> findPageBefore(
+    Session session, {
+    required int businessId,
+    InvoiceStatus? status,
+    DateTime? beforeIssueDate,
+    int? beforeId,
+    required int limit,
+  }) {
+    return Invoice.db.find(
       session,
-      where: (t) =>
-          (t.status.equals(InvoiceStatus.sent) |
-              t.status.equals(InvoiceStatus.partiallyPaid)) &
-          t.dueDate.notEquals(null) &
-          (t.dueDate < now),
-      columnValues: (t) => [
-        t.status(InvoiceStatus.overdue),
-        t.updatedAt(DateTime.now()),
-      ],
+      where: (t) {
+        var expression = t.businessId.equals(businessId);
+        if (status != null) {
+          expression = expression & t.status.equals(status);
+        }
+        if (beforeIssueDate != null && beforeId != null) {
+          // Keyset predicate for the DESC ordering below: everything strictly
+          // after the cursor row, with the id as deterministic tiebreak.
+          expression =
+              expression &
+              ((t.issueDate < beforeIssueDate) |
+                  (t.issueDate.equals(beforeIssueDate) & (t.id < beforeId)));
+        }
+        return expression;
+      },
+      orderByList: (t) => [t.issueDate.desc(), t.id.desc()],
+      limit: limit,
     );
-    return updated.length;
+  }
+
+  @override
+  Future<int> markOverdue(Session session, DateTime now) async {
+    // The hourly job has no tenant scope, but a global UPDATE without a
+    // `businessId` predicate cannot use the composite
+    // `(businessId, status, dueDate)` index efficiently. Instead, iterate the
+    // businesses and run one indexed UPDATE per business — same rows are
+    // updated as before, just seeked per tenant.
+    final businesses = await Business.db.find(session);
+    var updatedTotal = 0;
+    for (final business in businesses) {
+      final businessId = business.id;
+      if (businessId == null) continue;
+      final updated = await Invoice.db.updateWhere(
+        session,
+        where: (t) =>
+            t.businessId.equals(businessId) &
+            (t.status.equals(InvoiceStatus.sent) |
+                t.status.equals(InvoiceStatus.partiallyPaid)) &
+            t.dueDate.notEquals(null) &
+            (t.dueDate < now),
+        columnValues: (t) => [
+          t.status(InvoiceStatus.overdue),
+          t.updatedAt(DateTime.now()),
+        ],
+      );
+      updatedTotal += updated.length;
+    }
+    return updatedTotal;
   }
 
   @override
