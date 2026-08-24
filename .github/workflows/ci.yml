@@ -6,10 +6,10 @@
 # Triggers on every PR and on pushes to main/develop. Make this check
 # required in branch protection so merges always pass analyze + tests.
 #
-# Required repository secrets:
-#   COMMERCIAL_REPO_TOKEN – PAT (or deploy token) with read access to the
-#                 private gewerber-backend-commercial repository, used by
-#                 `dart pub get` to fetch the git dependency
+# No repository secrets are required: the commercial module dependency
+# resolves against the public gewerber-backend--stubs repository. Developers
+# with access to the private module resolve it locally via a gitignored
+# pubspec_overrides.yaml.
 #
 # The test database mirrors gewerber_backend_server/docker-compose.yaml
 # (`postgres_test`) and config/test.yaml: port 9090, user postgres,
@@ -60,23 +60,6 @@ jobs:
         uses: dart-lang/setup-dart@v1
         with:
           sdk: stable
-
-      # The server depends on the private gewerber-backend-commercial module
-      # via a git dependency; grant `dart pub get` read access to it.
-      - name: Verify private dependency token
-        env:
-          COMMERCIAL_REPO_TOKEN: ${{ secrets.COMMERCIAL_REPO_TOKEN }}
-        run: |
-          if [ -z "$COMMERCIAL_REPO_TOKEN" ]; then
-            echo "::error::Secret COMMERCIAL_REPO_TOKEN is not set. Create a token with read access to the private gewerber-backend-commercial repository (Settings → Secrets and variables → Actions)."
-            exit 1
-          fi
-
-      - name: Grant access to private dependency
-        env:
-          COMMERCIAL_REPO_TOKEN: ${{ secrets.COMMERCIAL_REPO_TOKEN }}
-        run: |
-          git config --global url."https://x-access-token:${COMMERCIAL_REPO_TOKEN}@github.com/".insteadOf "https://github.com/"
 
       - name: Install dependencies
         run: dart pub get

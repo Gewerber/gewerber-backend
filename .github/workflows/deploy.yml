@@ -10,8 +10,9 @@
 #   GHCR_TOKEN  – PAT with read:packages, used by the VPS to pull the image
 #                 (omit only if the GHCR package is public)
 #   COMMERCIAL_REPO_TOKEN – PAT (or deploy token) with read access to the
-#                 private gewerber-backend-commercial repository, used by
-#                 `dart pub get` during the image build
+#                 private gewerber-backend-commercial repository. The image
+#                 build rewrites the public stub dependency to the real
+#                 module via a git insteadOf rule using this token.
 #   SMTP_*         – optional SMTP settings for transactional emails; when
 #                 SMTP_HOST is set, verification codes are sent by email
 #                 (see deploy/.env.example)
@@ -78,7 +79,7 @@ jobs:
           COMMERCIAL_REPO_TOKEN: ${{ secrets.COMMERCIAL_REPO_TOKEN }}
         run: |
           if [ -z "$COMMERCIAL_REPO_TOKEN" ]; then
-            echo "::error::Secret COMMERCIAL_REPO_TOKEN is not set. Create a token with read access to the private gewerber-backend-commercial repository (Settings → Secrets and variables → Actions)."
+            echo "::error::Secret COMMERCIAL_REPO_TOKEN is not set. Release builds resolve the real commercial module; create a token with read access to the private gewerber-backend-commercial repository (Settings → Secrets and variables → Actions)."
             exit 1
           fi
 
@@ -92,8 +93,8 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          # Grants `dart pub get` access to the private
-          # gewerber-backend-commercial git dependency.
+          # Rewrites the public stub dependency URLs to the real private
+          # module inside the Docker build (see Dockerfile).
           secrets: |
             git_token=${{ secrets.COMMERCIAL_REPO_TOKEN }}
 

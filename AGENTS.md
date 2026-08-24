@@ -79,14 +79,17 @@ Invoicing future calls are scheduled at server start (`server.dart` →
 ## Commercial module
 
 The closed-source `gewerber-backend-commercial` Serverpod module (nickname
-`commercial`) is wired in via `config/generator.yaml` (`modules:` section) and
-a git dependency in `gewerber_backend_server/pubspec.yaml`. For local
-development `pubspec_overrides.yaml` (gitignored) resolves it from the sibling
-`../gewerber-backend-commercial` checkout. Building the Docker image needs a
-GitHub token for the private repo (BuildKit secret `git_token`, see
-`Dockerfile`); CI needs the `COMMERCIAL_REPO_TOKEN` secret. Its tables are
+`commercial`) is wired in via `config/generator.yaml` (`modules:` section).
+The git dependency in `gewerber_backend_server/pubspec.yaml` points at the
+public stub packages (`Gewerber/gewerber-backend--stubs`), so OSS builds and
+CI resolve without any private access. Developers with a local checkout of the
+private repo override it via `pubspec_overrides.yaml` (gitignored,
+`../gewerber-backend-commercial`). Release image builds rewrite the stubs URL
+to the real module with a git `insteadOf` rule using the
+`COMMERCIAL_REPO_TOKEN` BuildKit secret (see `Dockerfile`). Its tables are
 prefixed `commercial_*` and migrate together with the server
-(`SERVERPOD_APPLY_MIGRATIONS=true`).
+(`SERVERPOD_APPLY_MIGRATIONS=true`). When endpoints or models of the module
+change, mirror the public API surface into `gewerber-backend--stubs`.
 
 ## Phases
 
