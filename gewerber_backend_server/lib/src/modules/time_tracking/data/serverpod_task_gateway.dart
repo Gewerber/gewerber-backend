@@ -21,6 +21,12 @@ class ServerpodTaskGateway implements TaskGateway {
   }
 
   @override
+  Future<List<Task>> findByIds(Session session, Set<int> ids) {
+    if (ids.isEmpty) return Future.value(const []);
+    return Task.db.find(session, where: (t) => t.id.inSet(ids));
+  }
+
+  @override
   Future<Task> update(Session session, Task task) {
     return Task.db.updateRow(session, task);
   }
