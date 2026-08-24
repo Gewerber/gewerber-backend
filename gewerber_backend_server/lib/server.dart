@@ -33,8 +33,8 @@ void run(List<String> args) async {
       // `config/passwords.yaml`). If no SMTP host is configured, the codes are
       // only logged, which keeps the flow usable in local development.
       EmailIdpConfigFromPasswords(
-        registrationVerificationCodeGenerator: _generateSixDigitCode,
-        passwordResetVerificationCodeGenerator: _generateSixDigitCode,
+        registrationVerificationCodeGenerator: _generateVerificationCode,
+        passwordResetVerificationCodeGenerator: _generateVerificationCode,
         sendRegistrationVerificationCode:
             (
               session, {
@@ -77,14 +77,23 @@ void run(List<String> args) async {
   await const InvoicingJobScheduler().ensureScheduled(pod.futureCalls);
 }
 
-/// Generates a 6-digit numeric verification code, matching the format the
-/// client app validates against (the IdP default is 8 digits).
-String _generateSixDigitCode() {
+/// Length of the email verification codes (registration + password reset).
+/// 8 digits give 10^8 combinations — brute-force resistant enough for a
+/// rate-limited, expiring code without being unreadable for users.
+const int _verificationCodeLength = 8;
+
+/// Generates a numeric verification code of [_verificationCodeLength]
+/// digits. The code length is set here because the email IdP takes the
+/// generator function as configuration (the IdP default is also 8 digits;
+/// keeping an explicit generator documents the contract).
+///
+/// Note: the client app must accept codes of this length in its input field.
+String _generateVerificationCode() {
   const digits = '0123456789';
   final random = Random.secure();
   return String.fromCharCodes(
     Iterable.generate(
-      6,
+      _verificationCodeLength,
       (_) => digits.codeUnitAt(random.nextInt(digits.length)),
     ),
   );

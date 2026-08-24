@@ -1,0 +1,7 @@
+class: CreateRecurringScheduleRequest
+fields:
+  invoiceId: int
+  interval: RecurrenceInterval
+  nextRecurrenceDate: DateTime?
+  recurrenceEndDate: DateTime?
+  recurrenceMaxOccurrences: int?

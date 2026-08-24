@@ -11,6 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i2;
 
 abstract class CreateTimeEntriesInvoiceRequest
     implements _i1.SerializableModel, _i1.ProtocolSerialization {
@@ -20,6 +21,7 @@ abstract class CreateTimeEntriesInvoiceRequest
     this.to,
     this.customerId,
     this.issueDate,
+    this.timeEntryIds,
   });
 
   factory CreateTimeEntriesInvoiceRequest({
@@ -28,6 +30,7 @@ abstract class CreateTimeEntriesInvoiceRequest
     DateTime? to,
     int? customerId,
     DateTime? issueDate,
+    List<int>? timeEntryIds,
   }) = _CreateTimeEntriesInvoiceRequestImpl;
 
   factory CreateTimeEntriesInvoiceRequest.fromJson(
@@ -45,6 +48,11 @@ abstract class CreateTimeEntriesInvoiceRequest
       issueDate: jsonSerialization['issueDate'] == null
           ? null
           : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['issueDate']),
+      timeEntryIds: jsonSerialization['timeEntryIds'] == null
+          ? null
+          : _i2.Protocol().deserialize<List<int>>(
+              jsonSerialization['timeEntryIds'],
+            ),
     );
   }
 
@@ -58,6 +66,8 @@ abstract class CreateTimeEntriesInvoiceRequest
 
   DateTime? issueDate;
 
+  List<int>? timeEntryIds;
+
   /// Returns a shallow copy of this [CreateTimeEntriesInvoiceRequest]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
@@ -67,6 +77,7 @@ abstract class CreateTimeEntriesInvoiceRequest
     DateTime? to,
     int? customerId,
     DateTime? issueDate,
+    List<int>? timeEntryIds,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -77,6 +88,7 @@ abstract class CreateTimeEntriesInvoiceRequest
       if (to != null) 'to': to?.toJson(),
       if (customerId != null) 'customerId': customerId,
       if (issueDate != null) 'issueDate': issueDate?.toJson(),
+      if (timeEntryIds != null) 'timeEntryIds': timeEntryIds?.toJson(),
     };
   }
 
@@ -89,6 +101,7 @@ abstract class CreateTimeEntriesInvoiceRequest
       if (to != null) 'to': to?.toJson(),
       if (customerId != null) 'customerId': customerId,
       if (issueDate != null) 'issueDate': issueDate?.toJson(),
+      if (timeEntryIds != null) 'timeEntryIds': timeEntryIds?.toJson(),
     };
   }
 
@@ -108,12 +121,14 @@ class _CreateTimeEntriesInvoiceRequestImpl
     DateTime? to,
     int? customerId,
     DateTime? issueDate,
+    List<int>? timeEntryIds,
   }) : super._(
          projectId: projectId,
          from: from,
          to: to,
          customerId: customerId,
          issueDate: issueDate,
+         timeEntryIds: timeEntryIds,
        );
 
   /// Returns a shallow copy of this [CreateTimeEntriesInvoiceRequest]
@@ -126,6 +141,7 @@ class _CreateTimeEntriesInvoiceRequestImpl
     Object? to = _Undefined,
     Object? customerId = _Undefined,
     Object? issueDate = _Undefined,
+    Object? timeEntryIds = _Undefined,
   }) {
     return CreateTimeEntriesInvoiceRequest(
       projectId: projectId ?? this.projectId,
@@ -133,6 +149,9 @@ class _CreateTimeEntriesInvoiceRequestImpl
       to: to is DateTime? ? to : this.to,
       customerId: customerId is int? ? customerId : this.customerId,
       issueDate: issueDate is DateTime? ? issueDate : this.issueDate,
+      timeEntryIds: timeEntryIds is List<int>?
+          ? timeEntryIds
+          : this.timeEntryIds?.map((e0) => e0).toList(),
     );
   }
 }

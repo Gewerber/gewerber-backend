@@ -25,6 +25,7 @@ abstract class UserProfile
     _i3.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
+    this.deletedAt,
   }) : locale = locale ?? _i2.Locale.de,
        themeMode = themeMode ?? _i3.AppTheme.system,
        createdAt = createdAt ?? DateTime.now(),
@@ -39,6 +40,7 @@ abstract class UserProfile
     _i3.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
+    DateTime? deletedAt,
   }) = _UserProfileImpl;
 
   factory UserProfile.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -59,6 +61,9 @@ abstract class UserProfile
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
           : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+      deletedAt: jsonSerialization['deletedAt'] == null
+          ? null
+          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['deletedAt']),
     );
   }
 
@@ -81,6 +86,11 @@ abstract class UserProfile
 
   DateTime updatedAt;
 
+  /// Set when the account was soft-deleted (GDPR Art. 17). Personal links in
+  /// business tables are severed at the same moment; business data is kept
+  /// (GoBD retention). A non-null value means the account must not be usable.
+  DateTime? deletedAt;
+
   /// Returns a shallow copy of this [UserProfile]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
@@ -93,6 +103,7 @@ abstract class UserProfile
     _i3.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
+    DateTime? deletedAt,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -106,6 +117,7 @@ abstract class UserProfile
       'themeMode': themeMode.toJson(),
       'createdAt': createdAt.toJson(),
       'updatedAt': updatedAt.toJson(),
+      if (deletedAt != null) 'deletedAt': deletedAt?.toJson(),
     };
   }
 
@@ -121,6 +133,7 @@ abstract class UserProfile
       'themeMode': themeMode.toJson(),
       'createdAt': createdAt.toJson(),
       'updatedAt': updatedAt.toJson(),
+      if (deletedAt != null) 'deletedAt': deletedAt?.toJson(),
     };
   }
 
@@ -142,6 +155,7 @@ class _UserProfileImpl extends UserProfile {
     _i3.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
+    DateTime? deletedAt,
   }) : super._(
          id: id,
          userId: userId,
@@ -151,6 +165,7 @@ class _UserProfileImpl extends UserProfile {
          themeMode: themeMode,
          createdAt: createdAt,
          updatedAt: updatedAt,
+         deletedAt: deletedAt,
        );
 
   /// Returns a shallow copy of this [UserProfile]
@@ -166,6 +181,7 @@ class _UserProfileImpl extends UserProfile {
     _i3.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
+    Object? deletedAt = _Undefined,
   }) {
     return UserProfile(
       id: id is int? ? id : this.id,
@@ -176,6 +192,7 @@ class _UserProfileImpl extends UserProfile {
       themeMode: themeMode ?? this.themeMode,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt is DateTime? ? deletedAt : this.deletedAt,
     );
   }
 }

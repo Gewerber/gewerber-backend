@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:serverpod/serverpod.dart';
 
+import '../../../core/pagination/list_limits.dart';
 import '../../../core/tenant/tenant_resolver.dart';
 import '../../../generated/protocol.dart';
 import '../domain/transaction_gateway.dart';
@@ -33,7 +34,7 @@ class ListTransactionsUseCase {
       category: category,
       from: from,
       to: to,
-      limit: limit ?? 100,
+      limit: clampListLimit(limit),
       offset: offset ?? 0,
     );
   }

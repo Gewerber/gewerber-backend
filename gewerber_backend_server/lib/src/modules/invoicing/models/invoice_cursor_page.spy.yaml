@@ -1,0 +1,5 @@
+class: InvoiceCursorPage
+fields:
+  items: List<Invoice>
+  nextCursor: String?
+  limit: int

@@ -3,6 +3,7 @@ import 'package:serverpod/serverpod.dart';
 
 import '../../../core/tenant/session_auth.dart';
 import '../../../generated/protocol.dart';
+import '../domain/account_deletion.dart';
 import '../domain/user_profile_gateway.dart';
 
 @singleton
@@ -18,6 +19,9 @@ class GetMyProfileUseCase {
     }
     final existing = await _profiles.findByUserId(session, userId);
     if (existing != null) {
+      if (existing.deletedAt != null) {
+        throwAccountDeleted(userId);
+      }
       return existing;
     }
     try {

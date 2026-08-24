@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:serverpod/serverpod.dart';
 
+import '../../../core/pagination/list_limits.dart';
 import '../../../core/tenant/tenant_resolver.dart';
 import '../../../generated/protocol.dart';
 import '../domain/invoice_template_gateway.dart';
@@ -25,7 +26,7 @@ class ListInvoiceTemplatesUseCase {
     return _templates.findByBusinessId(
       session,
       tenant.businessId,
-      limit: limit ?? 100,
+      limit: clampListLimit(limit),
       offset: offset ?? 0,
     );
   }

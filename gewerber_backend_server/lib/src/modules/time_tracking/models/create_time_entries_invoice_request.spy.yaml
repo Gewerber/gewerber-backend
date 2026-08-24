@@ -5,3 +5,7 @@ fields:
   to: DateTime?
   customerId: int?
   issueDate: DateTime?
+  # Optional explicit selection (per-entry billing). When absent or empty,
+  # all billable, uninvoiced entries of `projectId` within [from, to] are
+  # billed (legacy behaviour). When present, ONLY these entries are billed.
+  timeEntryIds: List<int>?

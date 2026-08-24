@@ -4,6 +4,7 @@ import 'package:serverpod/serverpod.dart';
 import '../../../core/audit/audit_service.dart';
 import '../../../core/tenant/session_auth.dart';
 import '../../../generated/protocol.dart';
+import '../domain/account_deletion.dart';
 import '../domain/user_profile_gateway.dart';
 
 @singleton
@@ -23,6 +24,9 @@ class UpdateUserProfileUseCase {
     }
 
     final existing = await _profiles.findByUserId(session, userId);
+    if (existing != null && existing.deletedAt != null) {
+      throwAccountDeleted(userId);
+    }
     final base = existing ?? UserProfile(userId: userId);
 
     final updated = base.copyWith(

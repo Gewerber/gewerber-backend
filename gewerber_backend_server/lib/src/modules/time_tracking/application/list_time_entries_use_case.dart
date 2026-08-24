@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:serverpod/serverpod.dart';
 
+import '../../../core/pagination/list_limits.dart';
 import '../../../core/tenant/tenant_resolver.dart';
 import '../../../generated/protocol.dart';
 import '../domain/time_entry_gateway.dart';
@@ -35,7 +36,7 @@ class ListTimeEntriesUseCase {
       from: from,
       to: to,
       billable: billable,
-      limit: limit ?? 100,
+      limit: clampListLimit(limit),
       offset: offset ?? 0,
     );
   }

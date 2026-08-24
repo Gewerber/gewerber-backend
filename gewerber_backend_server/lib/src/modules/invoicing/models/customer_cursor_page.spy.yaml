@@ -1,0 +1,5 @@
+class: CustomerCursorPage
+fields:
+  items: List<Customer>
+  nextCursor: String?
+  limit: int

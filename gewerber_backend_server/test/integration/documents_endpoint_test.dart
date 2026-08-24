@@ -41,12 +41,13 @@ void main() {
       String content = 'Gewerber test content',
       DocumentKind kind = DocumentKind.attachment,
       int? overrideBusinessId,
+      String? mimeType = 'text/plain',
     }) {
       return UploadDocumentRequest(
         businessId: overrideBusinessId ?? businessId,
         kind: kind,
         fileName: fileName,
-        mimeType: 'text/plain',
+        mimeType: mimeType,
         data: ByteData.sublistView(utf8.encode(content)),
       );
     }
@@ -153,6 +154,87 @@ void main() {
         throwsA(isA<ValidationException>()),
       );
     });
+
+    test('when uploading a whitelisted type then it is stored', () async {
+      final document = await endpoints.document.upload(
+        authenticatedSession,
+        uploadRequest(
+          fileName: 'rechnung.pdf',
+          mimeType: 'application/pdf',
+          content: '%PDF-1.4 fake pdf',
+        ),
+      );
+      expect(document.storagePath, endsWith('.pdf'));
+      expect(document.mimeType, 'application/pdf');
+    });
+
+    test(
+      'when extension is not whitelisted then ValidationException',
+      () async {
+        for (final fileName in ['payload.exe', 'script.js', 'page.html']) {
+          await expectLater(
+            () => endpoints.document.upload(
+              authenticatedSession,
+              uploadRequest(fileName: fileName),
+            ),
+            throwsA(
+              isA<ValidationException>().having(
+                (e) => e.field,
+                'field',
+                'fileName',
+              ),
+            ),
+            reason: '"$fileName" must be rejected',
+          );
+        }
+      },
+    );
+
+    test('when the file has no extension then ValidationException', () async {
+      await expectLater(
+        () => endpoints.document.upload(
+          authenticatedSession,
+          uploadRequest(fileName: 'README'),
+        ),
+        throwsA(isA<ValidationException>()),
+      );
+    });
+
+    test(
+      'when content type is not whitelisted then ValidationException',
+      () async {
+        await expectLater(
+          () => endpoints.document.upload(
+            authenticatedSession,
+            uploadRequest(
+              fileName: 'notes.txt',
+              mimeType: 'application/x-msdownload',
+            ),
+          ),
+          throwsA(
+            isA<ValidationException>().having(
+              (e) => e.field,
+              'field',
+              'mimeType',
+            ),
+          ),
+        );
+      },
+    );
+
+    test(
+      'when extension and content type disagree then the extension wins',
+      () async {
+        // Mislabeled MIME types are common in clients: the extension decides.
+        final document = await endpoints.document.upload(
+          authenticatedSession,
+          uploadRequest(fileName: 'b.pdf', mimeType: 'text/plain'),
+        );
+        expect(document.fileName, 'b.pdf');
+        expect(document.mimeType, 'text/plain');
+        expect(document.storagePath, endsWith('.pdf'));
+      },
+    );
 
     test(
       'when other tenant accesses a document then NotFoundException',

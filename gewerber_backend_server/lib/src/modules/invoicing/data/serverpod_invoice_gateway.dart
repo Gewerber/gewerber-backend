@@ -21,6 +21,20 @@ class ServerpodInvoiceGateway implements InvoiceGateway {
   }
 
   @override
+  Future<Invoice?> findByIdForUpdate(
+    Session session,
+    int id, {
+    required Transaction transaction,
+  }) {
+    return Invoice.db.findById(
+      session,
+      id,
+      lockMode: LockMode.forUpdate,
+      transaction: transaction,
+    );
+  }
+
+  @override
   Future<Invoice> update(
     Session session,
     Invoice invoice, {
@@ -34,14 +48,21 @@ class ServerpodInvoiceGateway implements InvoiceGateway {
     Session session, {
     required int businessId,
     InvoiceStatus? status,
+    DateTime? issueDate,
     int? limit,
     int? offset,
   }) {
     return Invoice.db.find(
       session,
-      where: (t) => status == null
-          ? t.businessId.equals(businessId)
-          : t.businessId.equals(businessId) & t.status.equals(status),
+      where: (t) {
+        var expression = status == null
+            ? t.businessId.equals(businessId)
+            : t.businessId.equals(businessId) & t.status.equals(status);
+        if (issueDate != null) {
+          expression = expression & t.issueDate.equals(issueDate);
+        }
+        return expression;
+      },
       orderByList: (t) => [t.issueDate.desc()],
       limit: limit,
       offset: offset,
@@ -59,20 +80,101 @@ class ServerpodInvoiceGateway implements InvoiceGateway {
   }
 
   @override
-  Future<int> markOverdue(Session session, DateTime now) async {
-    final updated = await Invoice.db.updateWhere(
+  Future<List<Invoice>> findRecurring(
+    Session session, {
+    required int businessId,
+    int? limit,
+    int? offset,
+  }) {
+    // PostgreSQL sorts NULLs last on ASC, so finished schedules (no next
+    // date anymore) come after the upcoming ones.
+    return Invoice.db.find(
       session,
       where: (t) =>
-          (t.status.equals(InvoiceStatus.sent) |
-              t.status.equals(InvoiceStatus.partiallyPaid)) &
-          t.dueDate.notEquals(null) &
-          (t.dueDate < now),
-      columnValues: (t) => [
-        t.status(InvoiceStatus.overdue),
-        t.updatedAt(DateTime.now()),
-      ],
+          t.businessId.equals(businessId) &
+          t.recurrenceInterval.notEquals(null),
+      orderByList: (t) => [t.nextRecurrenceDate.asc(), t.id.desc()],
+      limit: limit,
+      offset: offset,
     );
-    return updated.length;
+  }
+
+  @override
+  Future<List<Invoice>> findPageBefore(
+    Session session, {
+    required int businessId,
+    InvoiceStatus? status,
+    DateTime? beforeIssueDate,
+    int? beforeId,
+    required int limit,
+  }) {
+    return Invoice.db.find(
+      session,
+      where: (t) {
+        var expression = t.businessId.equals(businessId);
+        if (status != null) {
+          expression = expression & t.status.equals(status);
+        }
+        if (beforeIssueDate != null && beforeId != null) {
+          // Keyset predicate for the DESC ordering below: everything strictly
+          // after the cursor row, with the id as deterministic tiebreak.
+          expression =
+              expression &
+              ((t.issueDate < beforeIssueDate) |
+                  (t.issueDate.equals(beforeIssueDate) & (t.id < beforeId)));
+        }
+        return expression;
+      },
+      orderByList: (t) => [t.issueDate.desc(), t.id.desc()],
+      limit: limit,
+    );
+  }
+
+  @override
+  Future<Map<int, int>> markOverdue(Session session, DateTime now) async {
+    // The hourly job has no tenant scope, but a global UPDATE without a
+    // `businessId` predicate cannot use the composite
+    // `(businessId, status, dueDate)` index efficiently. Instead, iterate the
+    // businesses and run one indexed UPDATE per business — same rows are
+    // updated as before, just seeked per tenant. The per-business counts let
+    // the caller audit the system event with a filled businessId.
+    final businesses = await Business.db.find(session);
+    final updatedByBusiness = <int, int>{};
+    for (final business in businesses) {
+      final businessId = business.id;
+      if (businessId == null) continue;
+      final updated = await Invoice.db.updateWhere(
+        session,
+        where: (t) =>
+            t.businessId.equals(businessId) &
+            (t.status.equals(InvoiceStatus.sent) |
+                t.status.equals(InvoiceStatus.partiallyPaid)) &
+            t.dueDate.notEquals(null) &
+            (t.dueDate < now),
+        columnValues: (t) => [
+          t.status(InvoiceStatus.overdue),
+          t.updatedAt(DateTime.now()),
+        ],
+      );
+      if (updated.isNotEmpty) {
+        updatedByBusiness[businessId] = updated.length;
+      }
+    }
+    return updatedByBusiness;
+  }
+
+  @override
+  Future<int> count(
+    Session session, {
+    required int businessId,
+    InvoiceStatus? status,
+  }) {
+    return Invoice.db.count(
+      session,
+      where: (t) => status == null
+          ? t.businessId.equals(businessId)
+          : t.businessId.equals(businessId) & t.status.equals(status),
+    );
   }
 
   @override

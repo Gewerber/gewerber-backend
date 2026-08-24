@@ -12,6 +12,7 @@ import '../domain/invoice_gateway.dart';
 import '../domain/invoice_item_gateway.dart';
 import '../domain/invoice_mapper.dart';
 import '../domain/invoice_number_service.dart';
+import '../domain/invoice_template_gateway.dart';
 import '../domain/tax_rule_engine.dart';
 
 @singleton
@@ -23,6 +24,7 @@ class CreateInvoiceUseCase {
     this._businesses,
     this._businessSettings,
     this._customers,
+    this._templates,
     this._numbers,
     this._taxRules,
     this._audit,
@@ -34,6 +36,7 @@ class CreateInvoiceUseCase {
   final BusinessGateway _businesses;
   final BusinessSettingsGateway _businessSettings;
   final CustomerGateway _customers;
+  final InvoiceTemplateGateway _templates;
   final InvoiceNumberService _numbers;
   final TaxRuleEngine _taxRules;
   final AuditService _audit;
@@ -54,6 +57,27 @@ class CreateInvoiceUseCase {
       );
     }
 
+    if (request.customerId != null) {
+      final customer = await _customers.findById(session, request.customerId!);
+      if (customer == null || customer.businessId != tenant.businessId) {
+        throw NotFoundException(
+          entityType: 'Customer',
+          entityId: '${request.customerId}',
+        );
+      }
+    }
+
+    // Optional reference, but it must belong to the current tenant.
+    if (request.templateId != null) {
+      final template = await _templates.findById(session, request.templateId!);
+      if (template == null || template.businessId != tenant.businessId) {
+        throw NotFoundException(
+          entityType: 'InvoiceTemplate',
+          entityId: '${request.templateId}',
+        );
+      }
+    }
+
     final business =
         await _businesses.findById(session, tenant.businessId) ??
         (throw NotFoundException(
@@ -61,28 +85,12 @@ class CreateInvoiceUseCase {
           entityId: '${tenant.businessId}',
         ));
 
-    final effectiveItems = [
-      for (final item in request.items)
-        business.isKleinunternehmer
-            ? InvoiceItemRequest(
-                description: item.description,
-                quantity: item.quantity,
-                unit: item.unit,
-                unitPriceCents: item.unitPriceCents,
-                vatRate: VatRate.none,
-              )
-            : item,
-    ];
-
-    final customer = request.customerId == null
-        ? null
-        : await _customers.findById(session, request.customerId!);
-    if (request.customerId != null && customer == null) {
-      throw NotFoundException(
-        entityType: 'Customer',
-        entityId: '${request.customerId}',
-      );
-    }
+    // Kleinunternehmer §19: VAT must not be charged regardless of the
+    // requested item rates.
+    final effectiveItems = _taxRules.applyKleinunternehmerOverride(
+      business,
+      request.items,
+    );
 
     final settings = await _businessSettings.findByBusinessId(
       session,
@@ -134,16 +142,20 @@ class CreateInvoiceUseCase {
         InvoiceMapper.items(effectiveItems, invoiceId: created.id!),
         transaction: transaction,
       );
+
+      // Same transaction as the change: the audit trail can never describe
+      // an invoice that was rolled back (and vice versa).
+      await _audit.log(
+        session,
+        action: 'invoice.create',
+        entityType: 'Invoice',
+        entityId: '${created.id}',
+        tenant: tenant,
+        transaction: transaction,
+      );
       return created;
     });
 
-    await _audit.log(
-      session,
-      action: 'invoice.create',
-      entityType: 'Invoice',
-      entityId: '${invoice.id}',
-      tenant: tenant,
-    );
     return invoice;
   }
 }

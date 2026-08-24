@@ -27,9 +27,14 @@ class ServerpodInvoiceTemplateGateway implements InvoiceTemplateGateway {
   @override
   Future<InvoiceTemplate> update(
     Session session,
-    InvoiceTemplate template,
-  ) {
-    return InvoiceTemplate.db.updateRow(session, template);
+    InvoiceTemplate template, {
+    Transaction? transaction,
+  }) {
+    return InvoiceTemplate.db.updateRow(
+      session,
+      template,
+      transaction: transaction,
+    );
   }
 
   @override

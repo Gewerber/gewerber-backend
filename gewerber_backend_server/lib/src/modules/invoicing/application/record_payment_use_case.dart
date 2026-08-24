@@ -36,21 +36,41 @@ class RecordPaymentUseCase {
         field: 'amountCents',
       );
     }
-    final invoice = await _invoices.findById(session, request.invoiceId);
-    if (invoice == null || invoice.businessId != tenant.businessId) {
-      throw NotFoundException(
-        entityType: 'Invoice',
-        entityId: '${request.invoiceId}',
-      );
-    }
 
-    final existingTotal = (await _payments.findByInvoiceId(
-      session,
-      request.invoiceId,
-    )).fold(0, (sum, p) => sum + p.amountCents);
-    final paidTotal = existingTotal + request.amountCents;
-
+    // The whole read-modify-write cycle runs inside one transaction and the
+    // invoice row is locked (`SELECT ... FOR UPDATE`), so concurrent payments
+    // on the same invoice are serialized and cannot double-count the paid
+    // total (TOCTOU).
     final record = await session.db.transaction((transaction) async {
+      final invoice = await _invoices.findByIdForUpdate(
+        session,
+        request.invoiceId,
+        transaction: transaction,
+      );
+      if (invoice == null || invoice.businessId != tenant.businessId) {
+        throw NotFoundException(
+          entityType: 'Invoice',
+          entityId: '${request.invoiceId}',
+        );
+      }
+
+      final existingTotal = (await _payments.findByInvoiceId(
+        session,
+        request.invoiceId,
+        transaction: transaction,
+      )).fold(0, (sum, p) => sum + p.amountCents);
+      final paidTotal = existingTotal + request.amountCents;
+
+      if (paidTotal > invoice.totalCents) {
+        throw ValidationException(
+          message:
+              'Payment of $paidTotal cents would exceed the invoice total '
+              'of ${invoice.totalCents} cents '
+              '(${invoice.totalCents - existingTotal} cents remaining).',
+          field: 'amountCents',
+        );
+      }
+
       final created = await _payments.create(
         session,
         PaymentRecord(
@@ -98,17 +118,21 @@ class RecordPaymentUseCase {
         ),
         transaction: transaction,
       );
+
+      // Same transaction as the locked read-modify-write cycle: a rolled
+      // back payment never leaves an audit entry behind.
+      await _audit.log(
+        session,
+        action: 'payment.record',
+        entityType: 'Invoice',
+        entityId: '${created.invoiceId}',
+        changes: {'amountCents': '${created.amountCents}'},
+        tenant: tenant,
+        transaction: transaction,
+      );
       return created;
     });
 
-    await _audit.log(
-      session,
-      action: 'payment.record',
-      entityType: 'Invoice',
-      entityId: '${record.invoiceId}',
-      changes: {'amountCents': '${record.amountCents}'},
-      tenant: tenant,
-    );
     return record;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:serverpod/serverpod.dart';
 
+import '../../../core/pagination/list_limits.dart';
 import '../../../core/tenant/tenant_resolver.dart';
 import '../../../generated/protocol.dart';
 import '../domain/document_gateway.dart';
@@ -31,7 +32,7 @@ class ListDocumentsUseCase {
       kind: kind,
       relatedEntityType: relatedEntityType,
       relatedEntityId: relatedEntityId,
-      limit: limit ?? 100,
+      limit: clampListLimit(limit),
       offset: offset ?? 0,
     );
   }

@@ -11,11 +11,19 @@ abstract interface class TimeEntryGateway {
 
   Future<TimeEntry?> findById(Session session, int id);
 
+  /// Loads every entry with an id from [ids], regardless of state. Missing
+  /// ids are simply absent from the result — callers must detect that.
+  Future<List<TimeEntry>> findByIds(Session session, Set<int> ids);
+
   Future<TimeEntry> update(
     Session session,
     TimeEntry entry, {
     Transaction? transaction,
   });
+
+  /// Marks every entry in [ids] as invoiced at [invoicedAt] using a single
+  /// batched `UPDATE ... WHERE id IN (...)` inside a transaction.
+  Future<void> markInvoiced(Session session, Set<int> ids, DateTime invoicedAt);
 
   /// The currently running timer of a business, if any.
   Future<TimeEntry?> findRunning(Session session, int businessId);

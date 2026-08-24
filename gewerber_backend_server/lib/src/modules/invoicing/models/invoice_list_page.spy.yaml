@@ -1,0 +1,6 @@
+class: InvoiceListPage
+fields:
+  items: List<Invoice>
+  totalCount: int
+  limit: int
+  offset: int

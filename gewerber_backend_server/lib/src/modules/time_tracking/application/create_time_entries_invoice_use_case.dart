@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:serverpod/serverpod.dart';
 
 import '../../../core/audit/audit_service.dart';
+import '../../../core/tenant/tenant_context.dart';
 import '../../../core/tenant/tenant_resolver.dart';
 import '../../../generated/protocol.dart';
 import '../../invoicing/application/create_invoice_use_case.dart';
@@ -9,10 +10,21 @@ import '../domain/project_gateway.dart';
 import '../domain/task_gateway.dart';
 import '../domain/time_entry_gateway.dart';
 
-/// Converts billable, not-yet-invoiced time entries of a project into a new
-/// draft invoice. Entries are grouped by task; the hourly rate is taken from
-/// the task with the project rate as fallback. The converted entries are
-/// marked with `invoicedAt` so they cannot be billed twice.
+/// Converts billable, not-yet-invoiced time entries into a new draft invoice.
+///
+/// Two modes:
+/// - **Period mode** (default): [CreateTimeEntriesInvoiceRequest.timeEntryIds]
+///   is `null` or empty — every billable, uninvoiced, stopped entry of the
+///   project within `[from, to]` is billed (legacy behaviour).
+/// - **Per-entry mode**: a non-empty [CreateTimeEntriesInvoiceRequest.timeEntryIds]
+///   bills ONLY the referenced entries. Every id is validated against the
+///   current tenant, the requested project and its billable state:
+///   unknown ids, foreign-tenant rows, running/non-billable and already
+///   invoiced entries are rejected together in one [ValidationException].
+///
+/// Entries are grouped by task; the hourly rate is taken from the task with
+/// the project rate as fallback. The converted entries are marked with
+/// `invoicedAt` so they cannot be billed twice.
 @singleton
 class CreateTimeEntriesInvoiceUseCase {
   CreateTimeEntriesInvoiceUseCase(
@@ -48,20 +60,10 @@ class CreateTimeEntriesInvoiceUseCase {
       );
     }
 
-    final entries = await _entries.find(
-      session,
-      businessId: tenant.businessId,
-      projectId: project.id,
-      from: request.from,
-      to: request.to,
-      billable: true,
-      uninvoicedOnly: true,
-      limit: 10000,
-      offset: 0,
-    );
-    final stopped = entries
-        .where((e) => e.stoppedAt != null && e.durationMinutes != null)
-        .toList();
+    final explicitIds = request.timeEntryIds;
+    final stopped = (explicitIds == null || explicitIds.isEmpty)
+        ? await _findByPeriod(session, tenant, request)
+        : await _findByExplicitIds(session, tenant, request, explicitIds);
     if (stopped.isEmpty) {
       throw ValidationException(
         message:
@@ -123,23 +125,96 @@ class CreateTimeEntriesInvoiceUseCase {
       businessId: tenant.businessId,
     );
 
-    final invoicedAt = DateTime.now();
-    for (final entry in stopped) {
-      await _entries.update(
-        session,
-        entry.copyWith(invoicedAt: invoicedAt),
-      );
-    }
+    // One batched UPDATE instead of one statement per entry.
+    await _entries.markInvoiced(
+      session,
+      {for (final entry in stopped) entry.id!},
+      DateTime.now(),
+    );
 
     await _audit.log(
       session,
       action: 'time_entry.createInvoice',
       entityType: 'Invoice',
       entityId: '${invoice.id}',
-      changes: {'timeEntries': '${stopped.length}'},
+      changes: {
+        'timeEntries': '${stopped.length}',
+        if (explicitIds != null && explicitIds.isNotEmpty) 'mode': 'selected',
+      },
       tenant: tenant,
     );
     return invoice;
+  }
+
+  /// Legacy period mode: every billable, uninvoiced, stopped entry of the
+  /// project within the requested period.
+  Future<List<TimeEntry>> _findByPeriod(
+    Session session,
+    TenantContext tenant,
+    CreateTimeEntriesInvoiceRequest request,
+  ) async {
+    final entries = await _entries.find(
+      session,
+      businessId: tenant.businessId,
+      projectId: request.projectId,
+      from: request.from,
+      to: request.to,
+      billable: true,
+      uninvoicedOnly: true,
+      limit: 10000,
+      offset: 0,
+    );
+    return entries
+        .where((e) => e.stoppedAt != null && e.durationMinutes != null)
+        .toList();
+  }
+
+  /// Per-entry mode: loads exactly the requested ids and validates every one
+  /// of them. Any violation aborts the whole call with a [ValidationException]
+  /// that names each offending id and its reason — the call never falls back
+  /// to silently billing a subset.
+  Future<List<TimeEntry>> _findByExplicitIds(
+    Session session,
+    TenantContext tenant,
+    CreateTimeEntriesInvoiceRequest request,
+    List<int> requestedIds,
+  ) async {
+    final uniqueIds = requestedIds.toSet();
+    final loaded = await _entries.findByIds(session, uniqueIds);
+    final byId = {for (final entry in loaded) entry.id!: entry};
+
+    final problems = <String>[];
+    for (final id in uniqueIds) {
+      final entry = byId[id];
+      if (entry == null) {
+        problems.add('$id: does not exist');
+      } else if (entry.businessId != tenant.businessId) {
+        problems.add('$id: belongs to another business');
+      } else if (entry.projectId != request.projectId) {
+        problems.add('$id: belongs to another project');
+      } else if (entry.stoppedAt == null || entry.durationMinutes == null) {
+        problems.add('$id: timer is still running');
+      } else if (!entry.billable) {
+        problems.add('$id: is not billable');
+      } else if (entry.invoicedAt != null) {
+        problems.add('$id: already invoiced');
+      }
+    }
+    if (problems.isNotEmpty) {
+      throw ValidationException(
+        message:
+            'The following selected time entries cannot be invoiced: '
+            '${problems.join('; ')}.',
+        field: 'timeEntryIds',
+      );
+    }
+
+    return [
+      for (final id in uniqueIds)
+        // Null-safe: every id passed the validation above, so the lookup
+        // always succeeds.
+        byId[id]!,
+    ];
   }
 
   String _formatHours(int minutes) {

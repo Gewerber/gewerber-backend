@@ -64,6 +64,25 @@ class TaxRuleEngine {
     return VatRate.standard;
   }
 
+  /// Applies the Kleinunternehmer §19 override to the requested invoice
+  /// items: when [business] operates under the small-business rule, no VAT
+  /// may be charged or shown regardless of the requested rates — every item
+  /// is forced to [VatRate.none].
+  ///
+  /// Shared by invoice create/update and recurring materialization so that
+  /// the rule is evaluated at a single place.
+  List<InvoiceItemRequest> applyKleinunternehmerOverride(
+    Business business,
+    Iterable<InvoiceItemRequest> items,
+  ) {
+    if (!business.isKleinunternehmer) {
+      return List.of(items);
+    }
+    return [
+      for (final item in items) item.copyWith(vatRate: VatRate.none),
+    ];
+  }
+
   int percentFor(VatRate rate) {
     return switch (rate) {
       VatRate.standard => standardPercent,

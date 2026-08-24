@@ -36,6 +36,7 @@ List<String> splitCsvRow(String row) {
 }
 
 void main() {
+  final exportedAtPattern = RegExp(r'"exportedAt":"[^"]*"');
   const testUserId = 'a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d';
   const otherUserId = 'b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e';
 
@@ -163,6 +164,87 @@ void main() {
       expect(items.length, 1);
       expect((items.first as Map<String, dynamic>)['description'], 'Beratung');
     });
+
+    test(
+      'when exporting JSON with many invoices then the output matches the '
+      'legacy per-invoice pipeline byte-for-byte',
+      () async {
+        // Multi-customer, multi-item fixture.
+        final secondCustomer = await endpoints.customer.create(
+          authenticatedSession,
+          CreateCustomerRequest(name: 'Berg GmbH'),
+          businessId: businessId,
+        );
+        await createInvoice(unitPriceCents: 10000);
+        await endpoints.invoice.create(
+          authenticatedSession,
+          CreateInvoiceRequest(
+            customerId: secondCustomer.id,
+            issueDate: DateTime(2026, 7, 30),
+            dueDate: DateTime(2026, 8, 13),
+            items: [
+              InvoiceItemRequest(
+                description: 'Pflege',
+                quantity: 1,
+                unitPriceCents: 5000,
+                vatRate: VatRate.reduced,
+              ),
+              InvoiceItemRequest(
+                description: 'Fahrtkosten',
+                quantity: 3,
+                unit: InvoiceItemUnit.piece,
+                unitPriceCents: 50,
+                vatRate: VatRate.none,
+              ),
+              InvoiceItemRequest(
+                description: 'Beratung',
+                quantity: 2,
+                unit: InvoiceItemUnit.hour,
+                unitPriceCents: 9000,
+                vatRate: VatRate.standard,
+              ),
+            ],
+          ),
+          businessId: businessId,
+        );
+
+        final raw = await endpoints.invoice.exportJson(
+          authenticatedSession,
+          businessId: businessId,
+        );
+
+        // Reference implementation replicating the previous N+1 behaviour:
+        // one item lookup per invoice via `invoice.getItems` (same gateway
+        // call the old export used), same payload structure.
+        final invoices = await endpoints.invoice.list(
+          authenticatedSession,
+          businessId: businessId,
+        );
+        final expectedPayload = <Map<String, dynamic>>[];
+        for (final invoice in invoices) {
+          final items = await endpoints.invoice.getItems(
+            authenticatedSession,
+            invoice.id!,
+            businessId: businessId,
+          );
+          expectedPayload.add({
+            'invoice': invoice.toJson(),
+            'items': items.map((item) => item.toJson()).toList(),
+          });
+        }
+        final expectedRaw = jsonEncode({
+          'exportedAt': 'IGNORED',
+          'invoices': expectedPayload,
+        });
+
+        String normalize(String json) =>
+            json.replaceAll(exportedAtPattern, '"exportedAt":"IGNORED"');
+
+        // Byte-for-byte identical except for the volatile exportedAt stamp
+        // (which differed between any two runs of the old code as well).
+        expect(normalize(raw), normalize(expectedRaw));
+      },
+    );
 
     test('when exporting then other tenant data is not included', () async {
       await createInvoice();

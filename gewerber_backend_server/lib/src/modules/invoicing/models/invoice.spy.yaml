@@ -37,3 +37,8 @@ indexes:
     fields: customerId
   invoice_recurrence_idx:
     fields: businessId, nextRecurrenceDate
+  # Serves the hourly mark-overdue job and tenant-wide status listings that
+  # filter by payment state and due date (`status IN (sent, partiallyPaid)
+  # AND dueDate < now`).
+  invoice_business_status_due_idx:
+    fields: businessId, status, dueDate

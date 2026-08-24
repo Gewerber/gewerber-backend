@@ -51,7 +51,7 @@ gewerber_backend_server/lib/src/
 |---|---|---|
 | `business` | create, get, update, listMine | requireLogin |
 | `businessSettings` | get, update | requireLogin |
-| `userProfile` | getMyProfile, update | requireLogin |
+| `userProfile` | getMyProfile, update, deleteMyAccount | requireLogin |
 | `customer` | create, get, update, list | requireLogin |
 | `invoice` | create, get, getItems, update, list, delete, markSent, cancel, generatePdf, exportCsv, exportJson | requireLogin |
 | `invoiceTemplate` | create, get, update, list | requireLogin |
