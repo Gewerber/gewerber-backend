@@ -21,7 +21,7 @@ dependencies:
   get_it: ^9.2.1
   gewerber_commercial_server:
     git:
-      url: https://github.com/Gewerber/gewerber-backend-commercial.git
+      url: https://github.com/Gewerber/gewerber-backend--stubs.git
       ref: main
       path: gewerber_commercial_server
   injectable: ^3.0.0
