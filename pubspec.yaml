@@ -1,8 +1,8 @@
 name: _
 description: Gewerber open-source backend — Dart workspace root for the Serverpod server and generated client.
 publish_to: none
-repository: https://github.com/Gewerber/gewerber-backend-core
-issue_tracker: https://github.com/Gewerber/gewerber-backend-core/issues
+repository: https://github.com/Gewerber/gewerber-backend
+issue_tracker: https://github.com/Gewerber/gewerber-backend/issues
 
 environment:
   sdk: '^3.12.0'

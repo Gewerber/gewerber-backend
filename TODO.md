@@ -1,4 +1,4 @@
-# TODO — gewerber-backend-core
+# TODO — gewerber-backend
 
 План по итогам аудита (2026-08). Порядок: этапы 0 → 1 → 2 → 3(масштабирование).
 Каждый фикс сопровождать интеграционным тестом (`withServerpod`, postgres_test).
