@@ -1,0 +1,5 @@
+class: AdminBusinessPage
+fields:
+  items: List<Business>
+  nextCursor: String?
+  limit: int

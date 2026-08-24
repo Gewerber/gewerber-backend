@@ -31,109 +31,129 @@ import 'package:gewerber_backend_server/src/generated/modules/accounting/models/
     as _i11;
 import 'package:gewerber_backend_server/src/generated/modules/accounting/models/profit_loss_report.dart'
     as _i12;
-import 'package:gewerber_backend_server/src/generated/modules/business/models/business.dart'
+import 'package:gewerber_backend_server/src/generated/modules/admin/models/admin_audit_page.dart'
     as _i13;
-import 'package:gewerber_backend_server/src/generated/modules/business/models/create_business_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/admin/models/admin_business_page.dart'
     as _i14;
-import 'package:gewerber_backend_server/src/generated/modules/business/models/update_business_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/admin/models/admin_business_detail.dart'
     as _i15;
-import 'package:gewerber_backend_server/src/generated/modules/business/models/business_settings.dart'
+import 'package:gewerber_backend_server/src/generated/modules/business/models/membership.dart'
     as _i16;
-import 'package:gewerber_backend_server/src/generated/modules/business/models/update_business_settings_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/business/models/membership_role.dart'
     as _i17;
-import 'package:gewerber_backend_server/src/generated/modules/dashboard/models/dashboard_summary.dart'
-    as _i18;
-import 'package:gewerber_backend_server/src/generated/modules/documents/models/document.dart'
-    as _i19;
-import 'package:gewerber_backend_server/src/generated/modules/documents/models/upload_document_request.dart'
-    as _i20;
-import 'package:gewerber_backend_server/src/generated/modules/documents/models/document_kind.dart'
-    as _i21;
-import 'dart:typed_data' as _i22;
 import 'package:gewerber_backend_server/src/generated/modules/guidance/models/guidance_tip.dart'
-    as _i23;
-import 'package:gewerber_backend_server/src/generated/modules/guidance/models/checklist_definition.dart'
-    as _i24;
-import 'package:gewerber_backend_server/src/generated/modules/guidance/models/user_guidance_progress.dart'
-    as _i25;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer.dart'
-    as _i26;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_customer_request.dart'
-    as _i27;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/update_customer_request.dart'
-    as _i28;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer_status.dart'
-    as _i29;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer_list_page.dart'
-    as _i30;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer_cursor_page.dart'
-    as _i31;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice.dart'
-    as _i32;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_invoice_request.dart'
-    as _i33;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_item.dart'
-    as _i34;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/update_invoice_request.dart'
-    as _i35;
+    as _i18;
+import 'package:gewerber_backend_server/src/generated/modules/admin/models/admin_invoice_page.dart'
+    as _i19;
 import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_status.dart'
+    as _i20;
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice.dart'
+    as _i21;
+import 'package:gewerber_backend_server/src/generated/modules/admin/models/admin_stats_overview.dart'
+    as _i22;
+import 'package:gewerber_backend_server/src/generated/modules/admin/models/admin_user_summary_page.dart'
+    as _i23;
+import 'package:gewerber_backend_server/src/generated/modules/admin/models/admin_user_dossier.dart'
+    as _i24;
+import 'package:gewerber_backend_server/src/generated/modules/admin/models/admin_auth_status.dart'
+    as _i25;
+import 'package:gewerber_backend_server/src/generated/modules/business/models/business.dart'
+    as _i26;
+import 'package:gewerber_backend_server/src/generated/modules/business/models/create_business_request.dart'
+    as _i27;
+import 'package:gewerber_backend_server/src/generated/modules/business/models/update_business_request.dart'
+    as _i28;
+import 'package:gewerber_backend_server/src/generated/modules/business/models/business_settings.dart'
+    as _i29;
+import 'package:gewerber_backend_server/src/generated/modules/business/models/update_business_settings_request.dart'
+    as _i30;
+import 'package:gewerber_backend_server/src/generated/modules/dashboard/models/dashboard_summary.dart'
+    as _i31;
+import 'package:gewerber_backend_server/src/generated/modules/documents/models/document.dart'
+    as _i32;
+import 'package:gewerber_backend_server/src/generated/modules/documents/models/upload_document_request.dart'
+    as _i33;
+import 'package:gewerber_backend_server/src/generated/modules/documents/models/document_kind.dart'
+    as _i34;
+import 'dart:typed_data' as _i35;
+import 'package:gewerber_backend_server/src/generated/modules/guidance/models/checklist_definition.dart'
     as _i36;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_list_page.dart'
+import 'package:gewerber_backend_server/src/generated/modules/guidance/models/user_guidance_progress.dart'
     as _i37;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_cursor_page.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer.dart'
     as _i38;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_template.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_customer_request.dart'
     as _i39;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_invoice_template_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/update_customer_request.dart'
     as _i40;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/update_invoice_template_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer_status.dart'
     as _i41;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/payment_record.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer_list_page.dart'
     as _i42;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/record_payment_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer_cursor_page.dart'
     as _i43;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_payment_status.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_invoice_request.dart'
     as _i44;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_recurring_schedule_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_item.dart'
     as _i45;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/update_recurring_schedule_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/update_invoice_request.dart'
     as _i46;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/reminder.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_list_page.dart'
     as _i47;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/project.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_cursor_page.dart'
     as _i48;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/create_project_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_template.dart'
     as _i49;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/task.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_invoice_template_request.dart'
     as _i50;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/update_project_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/update_invoice_template_request.dart'
     as _i51;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/project_status.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/payment_record.dart'
     as _i52;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/create_task_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/record_payment_request.dart'
     as _i53;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/update_task_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_payment_status.dart'
     as _i54;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/task_status.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_recurring_schedule_request.dart'
     as _i55;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/time_entry.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/update_recurring_schedule_request.dart'
     as _i56;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/start_timer_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/reminder.dart'
     as _i57;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/create_time_entry_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/project.dart'
     as _i58;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/update_time_entry_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/create_project_request.dart'
     as _i59;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/time_report.dart'
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/task.dart'
     as _i60;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/create_time_entries_invoice_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/update_project_request.dart'
     as _i61;
-import 'package:gewerber_backend_server/src/generated/modules/user/models/user_profile.dart'
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/project_status.dart'
     as _i62;
-import 'package:gewerber_backend_server/src/generated/modules/user/models/update_user_profile_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/create_task_request.dart'
     as _i63;
-import 'package:gewerber_backend_server/src/generated/future_calls.dart'
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/update_task_request.dart'
     as _i64;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/task_status.dart'
+    as _i65;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/time_entry.dart'
+    as _i66;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/start_timer_request.dart'
+    as _i67;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/create_time_entry_request.dart'
+    as _i68;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/update_time_entry_request.dart'
+    as _i69;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/time_report.dart'
+    as _i70;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/create_time_entries_invoice_request.dart'
+    as _i71;
+import 'package:gewerber_backend_server/src/generated/modules/user/models/user_profile.dart'
+    as _i72;
+import 'package:gewerber_backend_server/src/generated/modules/user/models/update_user_profile_request.dart'
+    as _i73;
+import 'package:gewerber_backend_server/src/generated/future_calls.dart'
+    as _i74;
 import 'package:gewerber_backend_server/src/generated/protocol.dart';
 import 'package:gewerber_backend_server/src/generated/endpoints.dart';
 export 'package:serverpod_test/serverpod_test_public_exports.dart';
@@ -272,6 +292,18 @@ class TestEndpoints {
 
   late final _AccountingEndpoint accounting;
 
+  late final _AdminAuditEndpoint adminAudit;
+
+  late final _AdminBusinessesEndpoint adminBusinesses;
+
+  late final _AdminGuidanceEndpoint adminGuidance;
+
+  late final _AdminInvoicesEndpoint adminInvoices;
+
+  late final _AdminStatsEndpoint adminStats;
+
+  late final _AdminUsersEndpoint adminUsers;
+
   late final _BusinessEndpoint business;
 
   late final _BusinessSettingsEndpoint businessSettings;
@@ -323,6 +355,30 @@ class _InternalTestEndpoints extends TestEndpoints
       serializationManager,
     );
     accounting = _AccountingEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    adminAudit = _AdminAuditEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    adminBusinesses = _AdminBusinessesEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    adminGuidance = _AdminGuidanceEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    adminInvoices = _AdminInvoicesEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    adminStats = _AdminStatsEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    adminUsers = _AdminUsersEndpoint(
       endpoints,
       serializationManager,
     );
@@ -1027,6 +1083,601 @@ class _AccountingEndpoint {
   }
 }
 
+class _AdminAuditEndpoint {
+  _AdminAuditEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _i2.EndpointDispatch _endpointDispatch;
+
+  final _i2.SerializationManager _serializationManager;
+
+  _i4.Future<_i13.AdminAuditPage> auditQuery(
+    _i1.TestSessionBuilder sessionBuilder, {
+    _i2.UuidValue? actorUserId,
+    String? action,
+    DateTime? since,
+    int? limit,
+  }) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'adminAudit',
+            method: 'auditQuery',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'adminAudit',
+          methodName: 'auditQuery',
+          parameters: _i1.testObjectToJson({
+            'actorUserId': actorUserId,
+            'action': action,
+            'since': since,
+            'limit': limit,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<_i13.AdminAuditPage>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+}
+
+class _AdminBusinessesEndpoint {
+  _AdminBusinessesEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _i2.EndpointDispatch _endpointDispatch;
+
+  final _i2.SerializationManager _serializationManager;
+
+  _i4.Future<_i14.AdminBusinessPage> businessesSearch(
+    _i1.TestSessionBuilder sessionBuilder, {
+    String? query,
+    int? limit,
+    String? cursor,
+  }) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'adminBusinesses',
+            method: 'businessesSearch',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'adminBusinesses',
+          methodName: 'businessesSearch',
+          parameters: _i1.testObjectToJson({
+            'query': query,
+            'limit': limit,
+            'cursor': cursor,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<_i14.AdminBusinessPage>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _i4.Future<_i15.AdminBusinessDetail> businessesGet(
+    _i1.TestSessionBuilder sessionBuilder,
+    int businessId,
+  ) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'adminBusinesses',
+            method: 'businessesGet',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'adminBusinesses',
+          methodName: 'businessesGet',
+          parameters: _i1.testObjectToJson({'businessId': businessId}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<_i15.AdminBusinessDetail>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _i4.Future<_i16.Membership> membershipsSetRole(
+    _i1.TestSessionBuilder sessionBuilder, {
+    required int membershipId,
+    required _i17.MembershipRole role,
+    required bool confirm,
+  }) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'adminBusinesses',
+            method: 'membershipsSetRole',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'adminBusinesses',
+          methodName: 'membershipsSetRole',
+          parameters: _i1.testObjectToJson({
+            'membershipId': membershipId,
+            'role': role,
+            'confirm': confirm,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<_i16.Membership>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+}
+
+class _AdminGuidanceEndpoint {
+  _AdminGuidanceEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _i2.EndpointDispatch _endpointDispatch;
+
+  final _i2.SerializationManager _serializationManager;
+
+  _i4.Future<List<_i18.GuidanceTip>> guidanceTipsList(
+    _i1.TestSessionBuilder sessionBuilder,
+  ) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'adminGuidance',
+            method: 'guidanceTipsList',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'adminGuidance',
+          methodName: 'guidanceTipsList',
+          parameters: _i1.testObjectToJson({}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<List<_i18.GuidanceTip>>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _i4.Future<_i18.GuidanceTip> guidanceTipUpsert(
+    _i1.TestSessionBuilder sessionBuilder, {
+    required String topic,
+    required String title,
+    required String body,
+    required bool confirm,
+  }) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'adminGuidance',
+            method: 'guidanceTipUpsert',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'adminGuidance',
+          methodName: 'guidanceTipUpsert',
+          parameters: _i1.testObjectToJson({
+            'topic': topic,
+            'title': title,
+            'body': body,
+            'confirm': confirm,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<_i18.GuidanceTip>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+}
+
+class _AdminInvoicesEndpoint {
+  _AdminInvoicesEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _i2.EndpointDispatch _endpointDispatch;
+
+  final _i2.SerializationManager _serializationManager;
+
+  _i4.Future<_i19.AdminInvoicePage> invoicesList(
+    _i1.TestSessionBuilder sessionBuilder, {
+    int? businessId,
+    _i20.InvoiceStatus? status,
+    DateTime? from,
+    DateTime? to,
+    int? limit,
+    String? cursor,
+  }) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'adminInvoices',
+            method: 'invoicesList',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'adminInvoices',
+          methodName: 'invoicesList',
+          parameters: _i1.testObjectToJson({
+            'businessId': businessId,
+            'status': status,
+            'from': from,
+            'to': to,
+            'limit': limit,
+            'cursor': cursor,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<_i19.AdminInvoicePage>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _i4.Future<_i21.Invoice> invoicesGet(
+    _i1.TestSessionBuilder sessionBuilder,
+    int invoiceId,
+  ) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'adminInvoices',
+            method: 'invoicesGet',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'adminInvoices',
+          methodName: 'invoicesGet',
+          parameters: _i1.testObjectToJson({'invoiceId': invoiceId}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<_i21.Invoice>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _i4.Future<_i21.Invoice> invoiceCancelAdmin(
+    _i1.TestSessionBuilder sessionBuilder, {
+    required int invoiceId,
+    required String reason,
+    required bool confirm,
+  }) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'adminInvoices',
+            method: 'invoiceCancelAdmin',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'adminInvoices',
+          methodName: 'invoiceCancelAdmin',
+          parameters: _i1.testObjectToJson({
+            'invoiceId': invoiceId,
+            'reason': reason,
+            'confirm': confirm,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<_i21.Invoice>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+}
+
+class _AdminStatsEndpoint {
+  _AdminStatsEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _i2.EndpointDispatch _endpointDispatch;
+
+  final _i2.SerializationManager _serializationManager;
+
+  _i4.Future<_i22.AdminStatsOverview> statsOverview(
+    _i1.TestSessionBuilder sessionBuilder,
+  ) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'adminStats',
+            method: 'statsOverview',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'adminStats',
+          methodName: 'statsOverview',
+          parameters: _i1.testObjectToJson({}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<_i22.AdminStatsOverview>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+}
+
+class _AdminUsersEndpoint {
+  _AdminUsersEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _i2.EndpointDispatch _endpointDispatch;
+
+  final _i2.SerializationManager _serializationManager;
+
+  _i4.Future<_i23.AdminUserSummaryPage> usersSearch(
+    _i1.TestSessionBuilder sessionBuilder, {
+    String? query,
+    int? limit,
+    String? cursor,
+  }) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'adminUsers',
+            method: 'usersSearch',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'adminUsers',
+          methodName: 'usersSearch',
+          parameters: _i1.testObjectToJson({
+            'query': query,
+            'limit': limit,
+            'cursor': cursor,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<_i23.AdminUserSummaryPage>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _i4.Future<_i24.AdminUserDossier> usersGet(
+    _i1.TestSessionBuilder sessionBuilder,
+    _i2.UuidValue userId,
+  ) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'adminUsers',
+            method: 'usersGet',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'adminUsers',
+          methodName: 'usersGet',
+          parameters: _i1.testObjectToJson({'userId': userId}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<_i24.AdminUserDossier>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _i4.Future<_i24.AdminUserDossier> usersBan(
+    _i1.TestSessionBuilder sessionBuilder, {
+    required _i2.UuidValue userId,
+    required String reason,
+    required bool confirm,
+  }) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'adminUsers',
+            method: 'usersBan',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'adminUsers',
+          methodName: 'usersBan',
+          parameters: _i1.testObjectToJson({
+            'userId': userId,
+            'reason': reason,
+            'confirm': confirm,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<_i24.AdminUserDossier>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _i4.Future<_i24.AdminUserDossier> usersUnban(
+    _i1.TestSessionBuilder sessionBuilder, {
+    required _i2.UuidValue userId,
+    required bool confirm,
+  }) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'adminUsers',
+            method: 'usersUnban',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'adminUsers',
+          methodName: 'usersUnban',
+          parameters: _i1.testObjectToJson({
+            'userId': userId,
+            'confirm': confirm,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<_i24.AdminUserDossier>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _i4.Future<_i25.AdminAuthStatus> usersVerifyEmail(
+    _i1.TestSessionBuilder sessionBuilder, {
+    required _i2.UuidValue userId,
+    required bool confirm,
+  }) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'adminUsers',
+            method: 'usersVerifyEmail',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'adminUsers',
+          methodName: 'usersVerifyEmail',
+          parameters: _i1.testObjectToJson({
+            'userId': userId,
+            'confirm': confirm,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<_i25.AdminAuthStatus>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+}
+
 class _BusinessEndpoint {
   _BusinessEndpoint(
     this._endpointDispatch,
@@ -1037,9 +1688,9 @@ class _BusinessEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i13.Business> create(
+  _i4.Future<_i26.Business> create(
     _i1.TestSessionBuilder sessionBuilder,
-    _i14.CreateBusinessRequest request,
+    _i27.CreateBusinessRequest request,
   ) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
@@ -1060,7 +1711,7 @@ class _BusinessEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i13.Business>);
+                as _i4.Future<_i26.Business>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1068,7 +1719,7 @@ class _BusinessEndpoint {
     });
   }
 
-  _i4.Future<_i13.Business> get(
+  _i4.Future<_i26.Business> get(
     _i1.TestSessionBuilder sessionBuilder, {
     int? businessId,
   }) async {
@@ -1091,7 +1742,7 @@ class _BusinessEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i13.Business>);
+                as _i4.Future<_i26.Business>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1099,9 +1750,9 @@ class _BusinessEndpoint {
     });
   }
 
-  _i4.Future<_i13.Business> update(
+  _i4.Future<_i26.Business> update(
     _i1.TestSessionBuilder sessionBuilder,
-    _i15.UpdateBusinessRequest request,
+    _i28.UpdateBusinessRequest request,
   ) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
@@ -1122,7 +1773,7 @@ class _BusinessEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i13.Business>);
+                as _i4.Future<_i26.Business>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1130,7 +1781,7 @@ class _BusinessEndpoint {
     });
   }
 
-  _i4.Future<List<_i13.Business>> listMine(
+  _i4.Future<List<_i26.Business>> listMine(
     _i1.TestSessionBuilder sessionBuilder,
   ) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -1152,7 +1803,7 @@ class _BusinessEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<List<_i13.Business>>);
+                as _i4.Future<List<_i26.Business>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1171,7 +1822,7 @@ class _BusinessSettingsEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i16.BusinessSettings> get(
+  _i4.Future<_i29.BusinessSettings> get(
     _i1.TestSessionBuilder sessionBuilder, {
     int? businessId,
   }) async {
@@ -1194,7 +1845,7 @@ class _BusinessSettingsEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i16.BusinessSettings>);
+                as _i4.Future<_i29.BusinessSettings>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1202,9 +1853,9 @@ class _BusinessSettingsEndpoint {
     });
   }
 
-  _i4.Future<_i16.BusinessSettings> update(
+  _i4.Future<_i29.BusinessSettings> update(
     _i1.TestSessionBuilder sessionBuilder,
-    _i17.UpdateBusinessSettingsRequest request,
+    _i30.UpdateBusinessSettingsRequest request,
   ) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
@@ -1225,7 +1876,7 @@ class _BusinessSettingsEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i16.BusinessSettings>);
+                as _i4.Future<_i29.BusinessSettings>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1244,7 +1895,7 @@ class _DashboardEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i18.DashboardSummary> getSummary(
+  _i4.Future<_i31.DashboardSummary> getSummary(
     _i1.TestSessionBuilder sessionBuilder, {
     int? trendMonths,
     int? recentLimit,
@@ -1279,7 +1930,7 @@ class _DashboardEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i18.DashboardSummary>);
+                as _i4.Future<_i31.DashboardSummary>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1298,9 +1949,9 @@ class _DocumentEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i19.Document> upload(
+  _i4.Future<_i32.Document> upload(
     _i1.TestSessionBuilder sessionBuilder,
-    _i20.UploadDocumentRequest request,
+    _i33.UploadDocumentRequest request,
   ) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
@@ -1321,7 +1972,7 @@ class _DocumentEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i19.Document>);
+                as _i4.Future<_i32.Document>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1329,10 +1980,10 @@ class _DocumentEndpoint {
     });
   }
 
-  _i4.Future<List<_i19.Document>> list(
+  _i4.Future<List<_i32.Document>> list(
     _i1.TestSessionBuilder sessionBuilder, {
     int? businessId,
-    _i21.DocumentKind? kind,
+    _i34.DocumentKind? kind,
     String? relatedEntityType,
     String? relatedEntityId,
     int? limit,
@@ -1364,7 +2015,7 @@ class _DocumentEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<List<_i19.Document>>);
+                as _i4.Future<List<_i32.Document>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1372,7 +2023,7 @@ class _DocumentEndpoint {
     });
   }
 
-  _i4.Future<_i19.Document> get(
+  _i4.Future<_i32.Document> get(
     _i1.TestSessionBuilder sessionBuilder,
     int documentId,
   ) async {
@@ -1395,7 +2046,7 @@ class _DocumentEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i19.Document>);
+                as _i4.Future<_i32.Document>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1403,7 +2054,7 @@ class _DocumentEndpoint {
     });
   }
 
-  _i4.Future<_i22.ByteData> download(
+  _i4.Future<_i35.ByteData> download(
     _i1.TestSessionBuilder sessionBuilder,
     int documentId,
   ) async {
@@ -1426,7 +2077,7 @@ class _DocumentEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i22.ByteData>);
+                as _i4.Future<_i35.ByteData>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1476,7 +2127,7 @@ class _GuidanceEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<List<_i23.GuidanceTip>> tips(
+  _i4.Future<List<_i18.GuidanceTip>> tips(
     _i1.TestSessionBuilder sessionBuilder,
   ) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -1498,7 +2149,7 @@ class _GuidanceEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<List<_i23.GuidanceTip>>);
+                as _i4.Future<List<_i18.GuidanceTip>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1506,7 +2157,7 @@ class _GuidanceEndpoint {
     });
   }
 
-  _i4.Future<List<_i24.ChecklistDefinition>> checklists(
+  _i4.Future<List<_i36.ChecklistDefinition>> checklists(
     _i1.TestSessionBuilder sessionBuilder,
   ) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -1528,7 +2179,7 @@ class _GuidanceEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<List<_i24.ChecklistDefinition>>);
+                as _i4.Future<List<_i36.ChecklistDefinition>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1536,7 +2187,7 @@ class _GuidanceEndpoint {
     });
   }
 
-  _i4.Future<List<_i25.UserGuidanceProgress>> myProgress(
+  _i4.Future<List<_i37.UserGuidanceProgress>> myProgress(
     _i1.TestSessionBuilder sessionBuilder,
   ) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -1558,7 +2209,7 @@ class _GuidanceEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<List<_i25.UserGuidanceProgress>>);
+                as _i4.Future<List<_i37.UserGuidanceProgress>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1566,7 +2217,7 @@ class _GuidanceEndpoint {
     });
   }
 
-  _i4.Future<_i25.UserGuidanceProgress> markCompleted(
+  _i4.Future<_i37.UserGuidanceProgress> markCompleted(
     _i1.TestSessionBuilder sessionBuilder,
     String itemKey,
   ) async {
@@ -1589,7 +2240,7 @@ class _GuidanceEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i25.UserGuidanceProgress>);
+                as _i4.Future<_i37.UserGuidanceProgress>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1597,7 +2248,7 @@ class _GuidanceEndpoint {
     });
   }
 
-  _i4.Future<_i25.UserGuidanceProgress> dismissTip(
+  _i4.Future<_i37.UserGuidanceProgress> dismissTip(
     _i1.TestSessionBuilder sessionBuilder,
     String topic,
   ) async {
@@ -1620,7 +2271,7 @@ class _GuidanceEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i25.UserGuidanceProgress>);
+                as _i4.Future<_i37.UserGuidanceProgress>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1639,9 +2290,9 @@ class _CustomerEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i26.Customer> create(
+  _i4.Future<_i38.Customer> create(
     _i1.TestSessionBuilder sessionBuilder,
-    _i27.CreateCustomerRequest request, {
+    _i39.CreateCustomerRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -1666,7 +2317,7 @@ class _CustomerEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i26.Customer>);
+                as _i4.Future<_i38.Customer>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1674,7 +2325,7 @@ class _CustomerEndpoint {
     });
   }
 
-  _i4.Future<_i26.Customer> get(
+  _i4.Future<_i38.Customer> get(
     _i1.TestSessionBuilder sessionBuilder,
     int customerId, {
     int? businessId,
@@ -1701,7 +2352,7 @@ class _CustomerEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i26.Customer>);
+                as _i4.Future<_i38.Customer>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1709,9 +2360,9 @@ class _CustomerEndpoint {
     });
   }
 
-  _i4.Future<_i26.Customer> update(
+  _i4.Future<_i38.Customer> update(
     _i1.TestSessionBuilder sessionBuilder,
-    _i28.UpdateCustomerRequest request, {
+    _i40.UpdateCustomerRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -1736,7 +2387,7 @@ class _CustomerEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i26.Customer>);
+                as _i4.Future<_i38.Customer>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1744,9 +2395,9 @@ class _CustomerEndpoint {
     });
   }
 
-  _i4.Future<List<_i26.Customer>> list(
+  _i4.Future<List<_i38.Customer>> list(
     _i1.TestSessionBuilder sessionBuilder, {
-    _i29.CustomerStatus? status,
+    _i41.CustomerStatus? status,
     int? limit,
     int? offset,
     int? businessId,
@@ -1775,7 +2426,7 @@ class _CustomerEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<List<_i26.Customer>>);
+                as _i4.Future<List<_i38.Customer>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1783,9 +2434,9 @@ class _CustomerEndpoint {
     });
   }
 
-  _i4.Future<_i30.CustomerListPage> listPage(
+  _i4.Future<_i42.CustomerListPage> listPage(
     _i1.TestSessionBuilder sessionBuilder, {
-    _i29.CustomerStatus? status,
+    _i41.CustomerStatus? status,
     int? limit,
     int? offset,
     int? businessId,
@@ -1814,7 +2465,7 @@ class _CustomerEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i30.CustomerListPage>);
+                as _i4.Future<_i42.CustomerListPage>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1822,9 +2473,9 @@ class _CustomerEndpoint {
     });
   }
 
-  _i4.Future<_i31.CustomerCursorPage> listCursorPage(
+  _i4.Future<_i43.CustomerCursorPage> listCursorPage(
     _i1.TestSessionBuilder sessionBuilder, {
-    _i29.CustomerStatus? status,
+    _i41.CustomerStatus? status,
     int? limit,
     String? cursor,
     int? businessId,
@@ -1853,7 +2504,7 @@ class _CustomerEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i31.CustomerCursorPage>);
+                as _i4.Future<_i43.CustomerCursorPage>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1872,9 +2523,9 @@ class _InvoiceEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i32.Invoice> create(
+  _i4.Future<_i21.Invoice> create(
     _i1.TestSessionBuilder sessionBuilder,
-    _i33.CreateInvoiceRequest request, {
+    _i44.CreateInvoiceRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -1899,7 +2550,7 @@ class _InvoiceEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i32.Invoice>);
+                as _i4.Future<_i21.Invoice>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1907,7 +2558,7 @@ class _InvoiceEndpoint {
     });
   }
 
-  _i4.Future<_i32.Invoice> get(
+  _i4.Future<_i21.Invoice> get(
     _i1.TestSessionBuilder sessionBuilder,
     int invoiceId, {
     int? businessId,
@@ -1934,7 +2585,7 @@ class _InvoiceEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i32.Invoice>);
+                as _i4.Future<_i21.Invoice>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1942,7 +2593,7 @@ class _InvoiceEndpoint {
     });
   }
 
-  _i4.Future<List<_i34.InvoiceItem>> getItems(
+  _i4.Future<List<_i45.InvoiceItem>> getItems(
     _i1.TestSessionBuilder sessionBuilder,
     int invoiceId, {
     int? businessId,
@@ -1969,7 +2620,7 @@ class _InvoiceEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<List<_i34.InvoiceItem>>);
+                as _i4.Future<List<_i45.InvoiceItem>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -1977,9 +2628,9 @@ class _InvoiceEndpoint {
     });
   }
 
-  _i4.Future<_i32.Invoice> update(
+  _i4.Future<_i21.Invoice> update(
     _i1.TestSessionBuilder sessionBuilder,
-    _i35.UpdateInvoiceRequest request, {
+    _i46.UpdateInvoiceRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -2004,7 +2655,7 @@ class _InvoiceEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i32.Invoice>);
+                as _i4.Future<_i21.Invoice>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2012,9 +2663,9 @@ class _InvoiceEndpoint {
     });
   }
 
-  _i4.Future<List<_i32.Invoice>> list(
+  _i4.Future<List<_i21.Invoice>> list(
     _i1.TestSessionBuilder sessionBuilder, {
-    _i36.InvoiceStatus? status,
+    _i20.InvoiceStatus? status,
     int? limit,
     int? offset,
     int? businessId,
@@ -2043,7 +2694,7 @@ class _InvoiceEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<List<_i32.Invoice>>);
+                as _i4.Future<List<_i21.Invoice>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2051,9 +2702,9 @@ class _InvoiceEndpoint {
     });
   }
 
-  _i4.Future<_i37.InvoiceListPage> listPage(
+  _i4.Future<_i47.InvoiceListPage> listPage(
     _i1.TestSessionBuilder sessionBuilder, {
-    _i36.InvoiceStatus? status,
+    _i20.InvoiceStatus? status,
     int? limit,
     int? offset,
     int? businessId,
@@ -2082,7 +2733,7 @@ class _InvoiceEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i37.InvoiceListPage>);
+                as _i4.Future<_i47.InvoiceListPage>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2090,9 +2741,9 @@ class _InvoiceEndpoint {
     });
   }
 
-  _i4.Future<_i38.InvoiceCursorPage> listCursorPage(
+  _i4.Future<_i48.InvoiceCursorPage> listCursorPage(
     _i1.TestSessionBuilder sessionBuilder, {
-    _i36.InvoiceStatus? status,
+    _i20.InvoiceStatus? status,
     int? limit,
     String? cursor,
     int? businessId,
@@ -2121,7 +2772,7 @@ class _InvoiceEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i38.InvoiceCursorPage>);
+                as _i4.Future<_i48.InvoiceCursorPage>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2164,7 +2815,7 @@ class _InvoiceEndpoint {
     });
   }
 
-  _i4.Future<_i32.Invoice> markSent(
+  _i4.Future<_i21.Invoice> markSent(
     _i1.TestSessionBuilder sessionBuilder,
     int invoiceId, {
     int? businessId,
@@ -2191,7 +2842,7 @@ class _InvoiceEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i32.Invoice>);
+                as _i4.Future<_i21.Invoice>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2199,7 +2850,7 @@ class _InvoiceEndpoint {
     });
   }
 
-  _i4.Future<_i32.Invoice> cancel(
+  _i4.Future<_i21.Invoice> cancel(
     _i1.TestSessionBuilder sessionBuilder,
     int invoiceId, {
     int? businessId,
@@ -2226,7 +2877,7 @@ class _InvoiceEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i32.Invoice>);
+                as _i4.Future<_i21.Invoice>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2236,7 +2887,7 @@ class _InvoiceEndpoint {
 
   _i4.Future<String> exportCsv(
     _i1.TestSessionBuilder sessionBuilder, {
-    _i36.InvoiceStatus? status,
+    _i20.InvoiceStatus? status,
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -2271,7 +2922,7 @@ class _InvoiceEndpoint {
 
   _i4.Future<String> exportJson(
     _i1.TestSessionBuilder sessionBuilder, {
-    _i36.InvoiceStatus? status,
+    _i20.InvoiceStatus? status,
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -2304,7 +2955,7 @@ class _InvoiceEndpoint {
     });
   }
 
-  _i4.Future<_i19.Document> generatePdf(
+  _i4.Future<_i32.Document> generatePdf(
     _i1.TestSessionBuilder sessionBuilder,
     int invoiceId, {
     int? businessId,
@@ -2331,7 +2982,7 @@ class _InvoiceEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i19.Document>);
+                as _i4.Future<_i32.Document>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2350,9 +3001,9 @@ class _InvoiceTemplateEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i39.InvoiceTemplate> create(
+  _i4.Future<_i49.InvoiceTemplate> create(
     _i1.TestSessionBuilder sessionBuilder,
-    _i40.CreateInvoiceTemplateRequest request, {
+    _i50.CreateInvoiceTemplateRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -2377,7 +3028,7 @@ class _InvoiceTemplateEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i39.InvoiceTemplate>);
+                as _i4.Future<_i49.InvoiceTemplate>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2385,7 +3036,7 @@ class _InvoiceTemplateEndpoint {
     });
   }
 
-  _i4.Future<_i39.InvoiceTemplate> get(
+  _i4.Future<_i49.InvoiceTemplate> get(
     _i1.TestSessionBuilder sessionBuilder,
     int templateId, {
     int? businessId,
@@ -2412,7 +3063,7 @@ class _InvoiceTemplateEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i39.InvoiceTemplate>);
+                as _i4.Future<_i49.InvoiceTemplate>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2420,9 +3071,9 @@ class _InvoiceTemplateEndpoint {
     });
   }
 
-  _i4.Future<_i39.InvoiceTemplate> update(
+  _i4.Future<_i49.InvoiceTemplate> update(
     _i1.TestSessionBuilder sessionBuilder,
-    _i41.UpdateInvoiceTemplateRequest request, {
+    _i51.UpdateInvoiceTemplateRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -2447,7 +3098,7 @@ class _InvoiceTemplateEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i39.InvoiceTemplate>);
+                as _i4.Future<_i49.InvoiceTemplate>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2455,7 +3106,7 @@ class _InvoiceTemplateEndpoint {
     });
   }
 
-  _i4.Future<List<_i39.InvoiceTemplate>> list(
+  _i4.Future<List<_i49.InvoiceTemplate>> list(
     _i1.TestSessionBuilder sessionBuilder, {
     int? businessId,
     int? limit,
@@ -2484,7 +3135,7 @@ class _InvoiceTemplateEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<List<_i39.InvoiceTemplate>>);
+                as _i4.Future<List<_i49.InvoiceTemplate>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2503,9 +3154,9 @@ class _PaymentEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i42.PaymentRecord> record(
+  _i4.Future<_i52.PaymentRecord> record(
     _i1.TestSessionBuilder sessionBuilder,
-    _i43.RecordPaymentRequest request, {
+    _i53.RecordPaymentRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -2530,7 +3181,7 @@ class _PaymentEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i42.PaymentRecord>);
+                as _i4.Future<_i52.PaymentRecord>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2538,7 +3189,7 @@ class _PaymentEndpoint {
     });
   }
 
-  _i4.Future<_i44.InvoicePaymentStatus> status(
+  _i4.Future<_i54.InvoicePaymentStatus> status(
     _i1.TestSessionBuilder sessionBuilder,
     int invoiceId, {
     int? businessId,
@@ -2565,7 +3216,7 @@ class _PaymentEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i44.InvoicePaymentStatus>);
+                as _i4.Future<_i54.InvoicePaymentStatus>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2584,9 +3235,9 @@ class _RecurringScheduleEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i32.Invoice> create(
+  _i4.Future<_i21.Invoice> create(
     _i1.TestSessionBuilder sessionBuilder,
-    _i45.CreateRecurringScheduleRequest request, {
+    _i55.CreateRecurringScheduleRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -2611,7 +3262,7 @@ class _RecurringScheduleEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i32.Invoice>);
+                as _i4.Future<_i21.Invoice>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2619,7 +3270,7 @@ class _RecurringScheduleEndpoint {
     });
   }
 
-  _i4.Future<_i32.Invoice> get(
+  _i4.Future<_i21.Invoice> get(
     _i1.TestSessionBuilder sessionBuilder,
     int invoiceId, {
     int? businessId,
@@ -2646,7 +3297,7 @@ class _RecurringScheduleEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i32.Invoice>);
+                as _i4.Future<_i21.Invoice>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2654,7 +3305,7 @@ class _RecurringScheduleEndpoint {
     });
   }
 
-  _i4.Future<List<_i32.Invoice>> list(
+  _i4.Future<List<_i21.Invoice>> list(
     _i1.TestSessionBuilder sessionBuilder, {
     int? limit,
     int? offset,
@@ -2683,7 +3334,7 @@ class _RecurringScheduleEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<List<_i32.Invoice>>);
+                as _i4.Future<List<_i21.Invoice>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2691,9 +3342,9 @@ class _RecurringScheduleEndpoint {
     });
   }
 
-  _i4.Future<_i32.Invoice> update(
+  _i4.Future<_i21.Invoice> update(
     _i1.TestSessionBuilder sessionBuilder,
-    _i46.UpdateRecurringScheduleRequest request, {
+    _i56.UpdateRecurringScheduleRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -2718,7 +3369,7 @@ class _RecurringScheduleEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i32.Invoice>);
+                as _i4.Future<_i21.Invoice>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2726,7 +3377,7 @@ class _RecurringScheduleEndpoint {
     });
   }
 
-  _i4.Future<_i32.Invoice> cancel(
+  _i4.Future<_i21.Invoice> cancel(
     _i1.TestSessionBuilder sessionBuilder,
     int invoiceId, {
     int? businessId,
@@ -2753,7 +3404,7 @@ class _RecurringScheduleEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i32.Invoice>);
+                as _i4.Future<_i21.Invoice>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2772,7 +3423,7 @@ class _ReminderEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<List<_i47.Reminder>> list(
+  _i4.Future<List<_i57.Reminder>> list(
     _i1.TestSessionBuilder sessionBuilder,
     int invoiceId, {
     int? businessId,
@@ -2799,7 +3450,7 @@ class _ReminderEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<List<_i47.Reminder>>);
+                as _i4.Future<List<_i57.Reminder>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2807,7 +3458,7 @@ class _ReminderEndpoint {
     });
   }
 
-  _i4.Future<_i47.Reminder> send(
+  _i4.Future<_i57.Reminder> send(
     _i1.TestSessionBuilder sessionBuilder,
     int invoiceId, {
     int? businessId,
@@ -2834,7 +3485,7 @@ class _ReminderEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i47.Reminder>);
+                as _i4.Future<_i57.Reminder>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2853,9 +3504,9 @@ class _ProjectEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i48.Project> create(
+  _i4.Future<_i58.Project> create(
     _i1.TestSessionBuilder sessionBuilder,
-    _i49.CreateProjectRequest request, {
+    _i59.CreateProjectRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -2880,7 +3531,7 @@ class _ProjectEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i48.Project>);
+                as _i4.Future<_i58.Project>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2888,7 +3539,7 @@ class _ProjectEndpoint {
     });
   }
 
-  _i4.Future<_i48.Project> get(
+  _i4.Future<_i58.Project> get(
     _i1.TestSessionBuilder sessionBuilder,
     int projectId, {
     int? businessId,
@@ -2915,7 +3566,7 @@ class _ProjectEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i48.Project>);
+                as _i4.Future<_i58.Project>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2923,7 +3574,7 @@ class _ProjectEndpoint {
     });
   }
 
-  _i4.Future<List<_i50.Task>> getTasks(
+  _i4.Future<List<_i60.Task>> getTasks(
     _i1.TestSessionBuilder sessionBuilder,
     int projectId, {
     int? businessId,
@@ -2950,7 +3601,7 @@ class _ProjectEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<List<_i50.Task>>);
+                as _i4.Future<List<_i60.Task>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2958,9 +3609,9 @@ class _ProjectEndpoint {
     });
   }
 
-  _i4.Future<_i48.Project> update(
+  _i4.Future<_i58.Project> update(
     _i1.TestSessionBuilder sessionBuilder,
-    _i51.UpdateProjectRequest request, {
+    _i61.UpdateProjectRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -2985,7 +3636,7 @@ class _ProjectEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i48.Project>);
+                as _i4.Future<_i58.Project>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -2993,9 +3644,9 @@ class _ProjectEndpoint {
     });
   }
 
-  _i4.Future<List<_i48.Project>> list(
+  _i4.Future<List<_i58.Project>> list(
     _i1.TestSessionBuilder sessionBuilder, {
-    _i52.ProjectStatus? status,
+    _i62.ProjectStatus? status,
     int? limit,
     int? offset,
     int? businessId,
@@ -3024,7 +3675,7 @@ class _ProjectEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<List<_i48.Project>>);
+                as _i4.Future<List<_i58.Project>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -3078,9 +3729,9 @@ class _TaskEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i50.Task> create(
+  _i4.Future<_i60.Task> create(
     _i1.TestSessionBuilder sessionBuilder,
-    _i53.CreateTaskRequest request, {
+    _i63.CreateTaskRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -3105,7 +3756,7 @@ class _TaskEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i50.Task>);
+                as _i4.Future<_i60.Task>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -3113,9 +3764,9 @@ class _TaskEndpoint {
     });
   }
 
-  _i4.Future<_i50.Task> update(
+  _i4.Future<_i60.Task> update(
     _i1.TestSessionBuilder sessionBuilder,
-    _i54.UpdateTaskRequest request, {
+    _i64.UpdateTaskRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -3140,7 +3791,7 @@ class _TaskEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i50.Task>);
+                as _i4.Future<_i60.Task>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -3148,10 +3799,10 @@ class _TaskEndpoint {
     });
   }
 
-  _i4.Future<List<_i50.Task>> list(
+  _i4.Future<List<_i60.Task>> list(
     _i1.TestSessionBuilder sessionBuilder, {
     int? projectId,
-    _i55.TaskStatus? status,
+    _i65.TaskStatus? status,
     int? limit,
     int? offset,
     int? businessId,
@@ -3181,7 +3832,7 @@ class _TaskEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<List<_i50.Task>>);
+                as _i4.Future<List<_i60.Task>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -3200,9 +3851,9 @@ class _TimeEntryEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i56.TimeEntry> startTimer(
+  _i4.Future<_i66.TimeEntry> startTimer(
     _i1.TestSessionBuilder sessionBuilder,
-    _i57.StartTimerRequest request, {
+    _i67.StartTimerRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -3227,7 +3878,7 @@ class _TimeEntryEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i56.TimeEntry>);
+                as _i4.Future<_i66.TimeEntry>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -3235,7 +3886,7 @@ class _TimeEntryEndpoint {
     });
   }
 
-  _i4.Future<_i56.TimeEntry> stopTimer(
+  _i4.Future<_i66.TimeEntry> stopTimer(
     _i1.TestSessionBuilder sessionBuilder, {
     int? businessId,
   }) async {
@@ -3258,7 +3909,7 @@ class _TimeEntryEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i56.TimeEntry>);
+                as _i4.Future<_i66.TimeEntry>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -3266,9 +3917,9 @@ class _TimeEntryEndpoint {
     });
   }
 
-  _i4.Future<_i56.TimeEntry> create(
+  _i4.Future<_i66.TimeEntry> create(
     _i1.TestSessionBuilder sessionBuilder,
-    _i58.CreateTimeEntryRequest request, {
+    _i68.CreateTimeEntryRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -3293,7 +3944,7 @@ class _TimeEntryEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i56.TimeEntry>);
+                as _i4.Future<_i66.TimeEntry>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -3301,7 +3952,7 @@ class _TimeEntryEndpoint {
     });
   }
 
-  _i4.Future<_i56.TimeEntry> get(
+  _i4.Future<_i66.TimeEntry> get(
     _i1.TestSessionBuilder sessionBuilder,
     int timeEntryId, {
     int? businessId,
@@ -3328,7 +3979,7 @@ class _TimeEntryEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i56.TimeEntry>);
+                as _i4.Future<_i66.TimeEntry>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -3336,9 +3987,9 @@ class _TimeEntryEndpoint {
     });
   }
 
-  _i4.Future<_i56.TimeEntry> update(
+  _i4.Future<_i66.TimeEntry> update(
     _i1.TestSessionBuilder sessionBuilder,
-    _i59.UpdateTimeEntryRequest request, {
+    _i69.UpdateTimeEntryRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -3363,7 +4014,7 @@ class _TimeEntryEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i56.TimeEntry>);
+                as _i4.Future<_i66.TimeEntry>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -3371,7 +4022,7 @@ class _TimeEntryEndpoint {
     });
   }
 
-  _i4.Future<List<_i56.TimeEntry>> list(
+  _i4.Future<List<_i66.TimeEntry>> list(
     _i1.TestSessionBuilder sessionBuilder, {
     int? projectId,
     int? taskId,
@@ -3410,7 +4061,7 @@ class _TimeEntryEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<List<_i56.TimeEntry>>);
+                as _i4.Future<List<_i66.TimeEntry>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -3453,7 +4104,7 @@ class _TimeEntryEndpoint {
     });
   }
 
-  _i4.Future<_i60.TimeReport> report(
+  _i4.Future<_i70.TimeReport> report(
     _i1.TestSessionBuilder sessionBuilder,
     DateTime from,
     DateTime to, {
@@ -3484,7 +4135,7 @@ class _TimeEntryEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i60.TimeReport>);
+                as _i4.Future<_i70.TimeReport>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -3492,9 +4143,9 @@ class _TimeEntryEndpoint {
     });
   }
 
-  _i4.Future<_i32.Invoice> createInvoice(
+  _i4.Future<_i21.Invoice> createInvoice(
     _i1.TestSessionBuilder sessionBuilder,
-    _i61.CreateTimeEntriesInvoiceRequest request, {
+    _i71.CreateTimeEntriesInvoiceRequest request, {
     int? businessId,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -3519,7 +4170,7 @@ class _TimeEntryEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i32.Invoice>);
+                as _i4.Future<_i21.Invoice>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -3538,7 +4189,7 @@ class _UserProfileEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i62.UserProfile> getMyProfile(
+  _i4.Future<_i72.UserProfile> getMyProfile(
     _i1.TestSessionBuilder sessionBuilder,
   ) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -3560,7 +4211,7 @@ class _UserProfileEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i62.UserProfile>);
+                as _i4.Future<_i72.UserProfile>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -3568,9 +4219,9 @@ class _UserProfileEndpoint {
     });
   }
 
-  _i4.Future<_i62.UserProfile> update(
+  _i4.Future<_i72.UserProfile> update(
     _i1.TestSessionBuilder sessionBuilder,
-    _i63.UpdateUserProfileRequest request,
+    _i73.UpdateUserProfileRequest request,
   ) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
@@ -3591,7 +4242,7 @@ class _UserProfileEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i62.UserProfile>);
+                as _i4.Future<_i72.UserProfile>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -3629,7 +4280,7 @@ class _UserProfileEndpoint {
     });
   }
 
-  _i4.Future<_i22.ByteData> exportMyData(
+  _i4.Future<_i35.ByteData> exportMyData(
     _i1.TestSessionBuilder sessionBuilder,
   ) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
@@ -3651,7 +4302,7 @@ class _UserProfileEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i22.ByteData>);
+                as _i4.Future<_i35.ByteData>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -3665,7 +4316,7 @@ class _MarkOverdueInvoicesFutureCall {
     var _localUniqueSession = (sessionBuilder as _i1.InternalTestSessionBuilder)
         .internalBuild();
     try {
-      await _i64.MarkOverdueInvoicesProcessFutureCall().invoke(
+      await _i74.MarkOverdueInvoicesProcessFutureCall().invoke(
         _localUniqueSession,
         null,
       );
@@ -3680,7 +4331,7 @@ class _ProcessRecurringInvoicesFutureCall {
     var _localUniqueSession = (sessionBuilder as _i1.InternalTestSessionBuilder)
         .internalBuild();
     try {
-      await _i64.ProcessRecurringInvoicesProcessFutureCall().invoke(
+      await _i74.ProcessRecurringInvoicesProcessFutureCall().invoke(
         _localUniqueSession,
         null,
       );

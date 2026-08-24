@@ -1,0 +1,11 @@
+class: AdminUserSummary
+fields:
+  userId: UuidValue
+  email: String?
+  displayName: String?
+  blocked: bool
+  emailConfirmed: bool
+  ### Global role from the `admin_user` allowlist (`null` = regular user).
+  globalRole: AdminRole?
+  profileCreatedAt: DateTime?
+  deletedAt: DateTime?

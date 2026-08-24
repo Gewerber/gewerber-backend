@@ -1,0 +1,4 @@
+class: InvoiceStatusCount
+fields:
+  status: InvoiceStatus
+  count: int

@@ -1,0 +1,9 @@
+class: AdminStatsOverview
+fields:
+  usersTotal: int
+  usersLast7Days: int
+  usersLast30Days: int
+  businessesTotal: int
+  invoicesByStatus: List<InvoiceStatusCount>
+  ### Time entries with a running (not yet stopped) timer across all tenants.
+  activeTimers: int

@@ -5,6 +5,7 @@ import '../../../core/tenant/session_auth.dart';
 import '../../../generated/protocol.dart';
 import '../application/guidance_use_cases.dart';
 import '../domain/guidance_content_provider.dart';
+import '../domain/guidance_tip_override_gateway.dart';
 import '../domain/user_guidance_progress_gateway.dart';
 
 /// Serves curated guidance content (tooltips, checklists, "What is this?"
@@ -13,9 +14,24 @@ class GuidanceEndpoint extends Endpoint {
   @override
   bool get requireLogin => true;
 
-  /// All contextual tooltips.
+  /// All contextual tooltips: curated in-code content with admin-managed
+  /// overrides applied (see `adminGuidance.guidanceTipUpsert`).
   Future<List<GuidanceTip>> tips(Session session) async {
-    return getIt<GuidanceContentProvider>().tips();
+    final base = getIt<GuidanceContentProvider>().tips();
+    final overrides = await getIt<GuidanceTipOverrideGateway>().listAll(
+      session,
+    );
+    if (overrides.isEmpty) return base;
+
+    final byTopic = {for (final tip in base) tip.topic: tip};
+    for (final override in overrides) {
+      byTopic[override.topic] = GuidanceTip(
+        topic: override.topic,
+        title: override.title,
+        body: override.body,
+      );
+    }
+    return byTopic.values.toList();
   }
 
   /// All checklists with their items.

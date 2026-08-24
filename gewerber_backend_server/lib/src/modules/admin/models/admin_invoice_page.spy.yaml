@@ -1,0 +1,5 @@
+class: AdminInvoicePage
+fields:
+  items: List<Invoice>
+  nextCursor: String?
+  limit: int

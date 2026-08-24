@@ -1,0 +1,4 @@
+class: AdminAuditPage
+fields:
+  items: List<AdminAuditEntry>
+  limit: int

@@ -1,0 +1,9 @@
+### Complete dossier of one user for support and moderation workflows.
+class: AdminUserDossier
+fields:
+  profile: UserProfile?
+  email: String?
+  authStatus: AdminAuthStatus
+  memberships: List<AdminMembershipInfo>
+  ### Global role from the `admin_user` allowlist (`null` = regular user).
+  globalRole: AdminRole?

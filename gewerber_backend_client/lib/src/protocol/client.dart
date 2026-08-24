@@ -30,111 +30,131 @@ import 'package:gewerber_backend_client/src/protocol/modules/accounting/models/t
     as _i10;
 import 'package:gewerber_backend_client/src/protocol/modules/accounting/models/profit_loss_report.dart'
     as _i11;
-import 'package:gewerber_backend_client/src/protocol/modules/business/models/business.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_audit_page.dart'
     as _i12;
-import 'package:gewerber_backend_client/src/protocol/modules/business/models/create_business_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_business_page.dart'
     as _i13;
-import 'package:gewerber_backend_client/src/protocol/modules/business/models/update_business_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_business_detail.dart'
     as _i14;
-import 'package:gewerber_backend_client/src/protocol/modules/business/models/business_settings.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/membership.dart'
     as _i15;
-import 'package:gewerber_backend_client/src/protocol/modules/business/models/update_business_settings_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/membership_role.dart'
     as _i16;
-import 'package:gewerber_backend_client/src/protocol/modules/dashboard/models/dashboard_summary.dart'
-    as _i17;
-import 'package:gewerber_backend_client/src/protocol/modules/documents/models/document.dart'
-    as _i18;
-import 'package:gewerber_backend_client/src/protocol/modules/documents/models/upload_document_request.dart'
-    as _i19;
-import 'package:gewerber_backend_client/src/protocol/modules/documents/models/document_kind.dart'
-    as _i20;
-import 'dart:typed_data' as _i21;
 import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/guidance_tip.dart'
-    as _i22;
-import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/checklist_definition.dart'
-    as _i23;
-import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/user_guidance_progress.dart'
-    as _i24;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer.dart'
-    as _i25;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_customer_request.dart'
-    as _i26;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_customer_request.dart'
-    as _i27;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer_status.dart'
-    as _i28;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer_list_page.dart'
-    as _i29;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer_cursor_page.dart'
-    as _i30;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice.dart'
-    as _i31;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_invoice_request.dart'
-    as _i32;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_item.dart'
-    as _i33;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_invoice_request.dart'
-    as _i34;
+    as _i17;
+import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_invoice_page.dart'
+    as _i18;
 import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_status.dart'
+    as _i19;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice.dart'
+    as _i20;
+import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_stats_overview.dart'
+    as _i21;
+import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_user_summary_page.dart'
+    as _i22;
+import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_user_dossier.dart'
+    as _i23;
+import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_auth_status.dart'
+    as _i24;
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/business.dart'
+    as _i25;
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/create_business_request.dart'
+    as _i26;
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/update_business_request.dart'
+    as _i27;
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/business_settings.dart'
+    as _i28;
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/update_business_settings_request.dart'
+    as _i29;
+import 'package:gewerber_backend_client/src/protocol/modules/dashboard/models/dashboard_summary.dart'
+    as _i30;
+import 'package:gewerber_backend_client/src/protocol/modules/documents/models/document.dart'
+    as _i31;
+import 'package:gewerber_backend_client/src/protocol/modules/documents/models/upload_document_request.dart'
+    as _i32;
+import 'package:gewerber_backend_client/src/protocol/modules/documents/models/document_kind.dart'
+    as _i33;
+import 'dart:typed_data' as _i34;
+import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/checklist_definition.dart'
     as _i35;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_list_page.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/user_guidance_progress.dart'
     as _i36;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_cursor_page.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer.dart'
     as _i37;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_template.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_customer_request.dart'
     as _i38;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_invoice_template_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_customer_request.dart'
     as _i39;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_invoice_template_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer_status.dart'
     as _i40;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/payment_record.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer_list_page.dart'
     as _i41;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/record_payment_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer_cursor_page.dart'
     as _i42;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_payment_status.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_invoice_request.dart'
     as _i43;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_recurring_schedule_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_item.dart'
     as _i44;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_recurring_schedule_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_invoice_request.dart'
     as _i45;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/reminder.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_list_page.dart'
     as _i46;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/project.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_cursor_page.dart'
     as _i47;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/create_project_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_template.dart'
     as _i48;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/task.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_invoice_template_request.dart'
     as _i49;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/update_project_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_invoice_template_request.dart'
     as _i50;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/project_status.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/payment_record.dart'
     as _i51;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/create_task_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/record_payment_request.dart'
     as _i52;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/update_task_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_payment_status.dart'
     as _i53;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/task_status.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_recurring_schedule_request.dart'
     as _i54;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/time_entry.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_recurring_schedule_request.dart'
     as _i55;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/start_timer_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/reminder.dart'
     as _i56;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/create_time_entry_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/project.dart'
     as _i57;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/update_time_entry_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/create_project_request.dart'
     as _i58;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/time_report.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/task.dart'
     as _i59;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/create_time_entries_invoice_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/update_project_request.dart'
     as _i60;
-import 'package:gewerber_backend_client/src/protocol/modules/user/models/user_profile.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/project_status.dart'
     as _i61;
-import 'package:gewerber_backend_client/src/protocol/modules/user/models/update_user_profile_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/create_task_request.dart'
     as _i62;
-import 'package:gewerber_commercial_client/gewerber_commercial_client.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/update_task_request.dart'
     as _i63;
-import 'package:http/http.dart' as _i64;
-import 'protocol.dart' as _i65;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/task_status.dart'
+    as _i64;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/time_entry.dart'
+    as _i65;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/start_timer_request.dart'
+    as _i66;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/create_time_entry_request.dart'
+    as _i67;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/update_time_entry_request.dart'
+    as _i68;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/time_report.dart'
+    as _i69;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/create_time_entries_invoice_request.dart'
+    as _i70;
+import 'package:gewerber_backend_client/src/protocol/modules/user/models/user_profile.dart'
+    as _i71;
+import 'package:gewerber_backend_client/src/protocol/modules/user/models/update_user_profile_request.dart'
+    as _i72;
+import 'package:gewerber_commercial_client/gewerber_commercial_client.dart'
+    as _i73;
+import 'package:http/http.dart' as _i74;
+import 'protocol.dart' as _i75;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
 /// are made available on the server and enable the corresponding sign-in widget
@@ -357,6 +377,20 @@ class EndpointJwtRefresh extends _i4.EndpointRefreshJwtTokens {
   );
 }
 
+/// Base class for global-administration endpoints (`modules/admin`).
+///
+/// Every method must start with [requireAdmin], which resolves the caller's
+/// global role from the `admin_user` allowlist:
+/// - `moderator` satisfies read-only calls,
+/// - `admin` is required for mutations.
+///
+/// Mutations must additionally write an `AuditEntry` via [AuditService] with
+/// the acting admin as actor.
+/// {@category Endpoint}
+abstract class EndpointAdmin extends _i2.EndpointRef {
+  EndpointAdmin(_i2.EndpointCaller caller) : super(caller);
+}
+
 /// {@category Endpoint}
 abstract class EndpointBusinessScoped extends _i2.EndpointRef {
   EndpointBusinessScoped(_i2.EndpointCaller caller) : super(caller);
@@ -488,6 +522,277 @@ class EndpointAccounting extends EndpointBusinessScoped {
   );
 }
 
+/// Read access to the audit trail for moderators.
+/// {@category Endpoint}
+class EndpointAdminAudit extends EndpointAdmin {
+  EndpointAdminAudit(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'adminAudit';
+
+  /// Newest-first audit entries, optionally filtered by acting user, action
+  /// (exact match) and lower time bound. Limited pages, no cursor — use
+  /// `since` of the oldest returned entry to page further.
+  _i3.Future<_i12.AdminAuditPage> auditQuery({
+    _i2.UuidValue? actorUserId,
+    String? action,
+    DateTime? since,
+    int? limit,
+  }) => caller.callServerEndpoint<_i12.AdminAuditPage>(
+    'adminAudit',
+    'auditQuery',
+    {
+      'actorUserId': actorUserId,
+      'action': action,
+      'since': since,
+      'limit': limit,
+    },
+  );
+}
+
+/// Cross-tenant business and membership administration. Reads are available
+/// to moderators; role changes require the `admin` role.
+/// {@category Endpoint}
+class EndpointAdminBusinesses extends EndpointAdmin {
+  EndpointAdminBusinesses(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'adminBusinesses';
+
+  /// Keyset-paginated business search by name substring.
+  _i3.Future<_i13.AdminBusinessPage> businessesSearch({
+    String? query,
+    int? limit,
+    String? cursor,
+  }) => caller.callServerEndpoint<_i13.AdminBusinessPage>(
+    'adminBusinesses',
+    'businessesSearch',
+    {
+      'query': query,
+      'limit': limit,
+      'cursor': cursor,
+    },
+  );
+
+  /// One business with all of its memberships.
+  _i3.Future<_i14.AdminBusinessDetail> businessesGet(int businessId) =>
+      caller.callServerEndpoint<_i14.AdminBusinessDetail>(
+        'adminBusinesses',
+        'businessesGet',
+        {'businessId': businessId},
+      );
+
+  /// Changes the tenant role of a membership. Refuses to demote the last
+  /// owner of a business ([ConflictException]).
+  _i3.Future<_i15.Membership> membershipsSetRole({
+    required int membershipId,
+    required _i16.MembershipRole role,
+    required bool confirm,
+  }) => caller.callServerEndpoint<_i15.Membership>(
+    'adminBusinesses',
+    'membershipsSetRole',
+    {
+      'membershipId': membershipId,
+      'role': role,
+      'confirm': confirm,
+    },
+  );
+}
+
+/// Administration of guidance content: read the effective tips (curated
+/// in-code content merged with admin overrides), upsert overrides.
+/// {@category Endpoint}
+class EndpointAdminGuidance extends EndpointAdmin {
+  EndpointAdminGuidance(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'adminGuidance';
+
+  /// The effective tips as users see them in `guidance.tips`.
+  _i3.Future<List<_i17.GuidanceTip>> guidanceTipsList() =>
+      caller.callServerEndpoint<List<_i17.GuidanceTip>>(
+        'adminGuidance',
+        'guidanceTipsList',
+        {},
+      );
+
+  /// Creates or replaces an admin-managed tip by its unique topic. A topic
+  /// that matches a curated tip overrides it; other topics are appended as
+  /// new tips.
+  _i3.Future<_i17.GuidanceTip> guidanceTipUpsert({
+    required String topic,
+    required String title,
+    required String body,
+    required bool confirm,
+  }) => caller.callServerEndpoint<_i17.GuidanceTip>(
+    'adminGuidance',
+    'guidanceTipUpsert',
+    {
+      'topic': topic,
+      'title': title,
+      'body': body,
+      'confirm': confirm,
+    },
+  );
+}
+
+/// Cross-tenant invoice reads for support plus admin-side cancellation.
+/// {@category Endpoint}
+class EndpointAdminInvoices extends EndpointAdmin {
+  EndpointAdminInvoices(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'adminInvoices';
+
+  /// Keyset-paginated invoice list ordered by `issueDate DESC`, optionally
+  /// filtered by tenant, status and issue-date range (`from` inclusive,
+  /// `to` inclusive).
+  _i3.Future<_i18.AdminInvoicePage> invoicesList({
+    int? businessId,
+    _i19.InvoiceStatus? status,
+    DateTime? from,
+    DateTime? to,
+    int? limit,
+    String? cursor,
+  }) => caller.callServerEndpoint<_i18.AdminInvoicePage>(
+    'adminInvoices',
+    'invoicesList',
+    {
+      'businessId': businessId,
+      'status': status,
+      'from': from,
+      'to': to,
+      'limit': limit,
+      'cursor': cursor,
+    },
+  );
+
+  /// A single invoice across tenants.
+  _i3.Future<_i20.Invoice> invoicesGet(int invoiceId) =>
+      caller.callServerEndpoint<_i20.Invoice>(
+        'adminInvoices',
+        'invoicesGet',
+        {'invoiceId': invoiceId},
+      );
+
+  /// Cancels an invoice in an open state (`sent`, `partiallyPaid`,
+  /// `overdue`). Drafts belong to their owners; paid invoices are immutable
+  /// (GoBD) — both are rejected with [ConflictException].
+  _i3.Future<_i20.Invoice> invoiceCancelAdmin({
+    required int invoiceId,
+    required String reason,
+    required bool confirm,
+  }) => caller.callServerEndpoint<_i20.Invoice>(
+    'adminInvoices',
+    'invoiceCancelAdmin',
+    {
+      'invoiceId': invoiceId,
+      'reason': reason,
+      'confirm': confirm,
+    },
+  );
+}
+
+/// Platform-wide counters for the admin overview. Moderator and up.
+/// {@category Endpoint}
+class EndpointAdminStats extends EndpointAdmin {
+  EndpointAdminStats(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'adminStats';
+
+  /// User, business, invoice-status and running-timer counts across all
+  /// tenants.
+  _i3.Future<_i21.AdminStatsOverview> statsOverview() =>
+      caller.callServerEndpoint<_i21.AdminStatsOverview>(
+        'adminStats',
+        'statsOverview',
+        {},
+      );
+}
+
+/// User directory reads and auth-level mutations (ban/unban/verify).
+///
+/// Reads are available to moderators; mutations require the `admin` role and
+/// an explicit `confirm: true`.
+/// {@category Endpoint}
+class EndpointAdminUsers extends EndpointAdmin {
+  EndpointAdminUsers(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'adminUsers';
+
+  /// Keyset-paginated search over all users by email substring.
+  _i3.Future<_i22.AdminUserSummaryPage> usersSearch({
+    String? query,
+    int? limit,
+    String? cursor,
+  }) => caller.callServerEndpoint<_i22.AdminUserSummaryPage>(
+    'adminUsers',
+    'usersSearch',
+    {
+      'query': query,
+      'limit': limit,
+      'cursor': cursor,
+    },
+  );
+
+  /// Full dossier of one user: profile, memberships with business names and
+  /// auth status.
+  _i3.Future<_i23.AdminUserDossier> usersGet(_i2.UuidValue userId) =>
+      caller.callServerEndpoint<_i23.AdminUserDossier>(
+        'adminUsers',
+        'usersGet',
+        {'userId': userId},
+      );
+
+  /// Blocks a user on the authentication level. `reason` is mandatory and
+  /// stored in the audit trail; refresh tokens are invalidated immediately.
+  /// No user data is deleted.
+  _i3.Future<_i23.AdminUserDossier> usersBan({
+    required _i2.UuidValue userId,
+    required String reason,
+    required bool confirm,
+  }) => caller.callServerEndpoint<_i23.AdminUserDossier>(
+    'adminUsers',
+    'usersBan',
+    {
+      'userId': userId,
+      'reason': reason,
+      'confirm': confirm,
+    },
+  );
+
+  /// Lifts a ban. The user can sign in again; previously deleted refresh
+  /// tokens are not restored.
+  _i3.Future<_i23.AdminUserDossier> usersUnban({
+    required _i2.UuidValue userId,
+    required bool confirm,
+  }) => caller.callServerEndpoint<_i23.AdminUserDossier>(
+    'adminUsers',
+    'usersUnban',
+    {
+      'userId': userId,
+      'confirm': confirm,
+    },
+  );
+
+  /// Reports/confirms the email verification state of a user (idempotent:
+  /// in the Serverpod email IdP an account only exists once its verification
+  /// code was confirmed).
+  _i3.Future<_i24.AdminAuthStatus> usersVerifyEmail({
+    required _i2.UuidValue userId,
+    required bool confirm,
+  }) => caller.callServerEndpoint<_i24.AdminAuthStatus>(
+    'adminUsers',
+    'usersVerifyEmail',
+    {
+      'userId': userId,
+      'confirm': confirm,
+    },
+  );
+}
+
 /// {@category Endpoint}
 class EndpointBusiness extends EndpointBusinessScoped {
   EndpointBusiness(_i2.EndpointCaller caller) : super(caller);
@@ -495,29 +800,29 @@ class EndpointBusiness extends EndpointBusinessScoped {
   @override
   String get name => 'business';
 
-  _i3.Future<_i12.Business> create(_i13.CreateBusinessRequest request) =>
-      caller.callServerEndpoint<_i12.Business>(
+  _i3.Future<_i25.Business> create(_i26.CreateBusinessRequest request) =>
+      caller.callServerEndpoint<_i25.Business>(
         'business',
         'create',
         {'request': request},
       );
 
-  _i3.Future<_i12.Business> get({int? businessId}) =>
-      caller.callServerEndpoint<_i12.Business>(
+  _i3.Future<_i25.Business> get({int? businessId}) =>
+      caller.callServerEndpoint<_i25.Business>(
         'business',
         'get',
         {'businessId': businessId},
       );
 
-  _i3.Future<_i12.Business> update(_i14.UpdateBusinessRequest request) =>
-      caller.callServerEndpoint<_i12.Business>(
+  _i3.Future<_i25.Business> update(_i27.UpdateBusinessRequest request) =>
+      caller.callServerEndpoint<_i25.Business>(
         'business',
         'update',
         {'request': request},
       );
 
-  _i3.Future<List<_i12.Business>> listMine() =>
-      caller.callServerEndpoint<List<_i12.Business>>(
+  _i3.Future<List<_i25.Business>> listMine() =>
+      caller.callServerEndpoint<List<_i25.Business>>(
         'business',
         'listMine',
         {},
@@ -531,16 +836,16 @@ class EndpointBusinessSettings extends EndpointBusinessScoped {
   @override
   String get name => 'businessSettings';
 
-  _i3.Future<_i15.BusinessSettings> get({int? businessId}) =>
-      caller.callServerEndpoint<_i15.BusinessSettings>(
+  _i3.Future<_i28.BusinessSettings> get({int? businessId}) =>
+      caller.callServerEndpoint<_i28.BusinessSettings>(
         'businessSettings',
         'get',
         {'businessId': businessId},
       );
 
-  _i3.Future<_i15.BusinessSettings> update(
-    _i16.UpdateBusinessSettingsRequest request,
-  ) => caller.callServerEndpoint<_i15.BusinessSettings>(
+  _i3.Future<_i28.BusinessSettings> update(
+    _i29.UpdateBusinessSettingsRequest request,
+  ) => caller.callServerEndpoint<_i28.BusinessSettings>(
     'businessSettings',
     'update',
     {'request': request},
@@ -557,14 +862,14 @@ class EndpointDashboard extends EndpointBusinessScoped {
   /// Aggregated dashboard summary of the tenant: current-month KPIs, monthly
   /// trend, recent activity feeds and open receivables. All list sizes are
   /// clamped server-side; [asOf] anchors every window (tests only).
-  _i3.Future<_i17.DashboardSummary> getSummary({
+  _i3.Future<_i30.DashboardSummary> getSummary({
     int? trendMonths,
     int? recentLimit,
     int? overdueLimit,
     int? debtorLimit,
     DateTime? asOf,
     int? businessId,
-  }) => caller.callServerEndpoint<_i17.DashboardSummary>(
+  }) => caller.callServerEndpoint<_i30.DashboardSummary>(
     'dashboard',
     'getSummary',
     {
@@ -585,21 +890,21 @@ class EndpointDocument extends EndpointBusinessScoped {
   @override
   String get name => 'document';
 
-  _i3.Future<_i18.Document> upload(_i19.UploadDocumentRequest request) =>
-      caller.callServerEndpoint<_i18.Document>(
+  _i3.Future<_i31.Document> upload(_i32.UploadDocumentRequest request) =>
+      caller.callServerEndpoint<_i31.Document>(
         'document',
         'upload',
         {'request': request},
       );
 
-  _i3.Future<List<_i18.Document>> list({
+  _i3.Future<List<_i31.Document>> list({
     int? businessId,
-    _i20.DocumentKind? kind,
+    _i33.DocumentKind? kind,
     String? relatedEntityType,
     String? relatedEntityId,
     int? limit,
     int? offset,
-  }) => caller.callServerEndpoint<List<_i18.Document>>(
+  }) => caller.callServerEndpoint<List<_i31.Document>>(
     'document',
     'list',
     {
@@ -612,15 +917,15 @@ class EndpointDocument extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i18.Document> get(int documentId) =>
-      caller.callServerEndpoint<_i18.Document>(
+  _i3.Future<_i31.Document> get(int documentId) =>
+      caller.callServerEndpoint<_i31.Document>(
         'document',
         'get',
         {'documentId': documentId},
       );
 
-  _i3.Future<_i21.ByteData> download(int documentId) =>
-      caller.callServerEndpoint<_i21.ByteData>(
+  _i3.Future<_i34.ByteData> download(int documentId) =>
+      caller.callServerEndpoint<_i34.ByteData>(
         'document',
         'download',
         {'documentId': documentId},
@@ -642,41 +947,42 @@ class EndpointGuidance extends _i2.EndpointRef {
   @override
   String get name => 'guidance';
 
-  /// All contextual tooltips.
-  _i3.Future<List<_i22.GuidanceTip>> tips() =>
-      caller.callServerEndpoint<List<_i22.GuidanceTip>>(
+  /// All contextual tooltips: curated in-code content with admin-managed
+  /// overrides applied (see `adminGuidance.guidanceTipUpsert`).
+  _i3.Future<List<_i17.GuidanceTip>> tips() =>
+      caller.callServerEndpoint<List<_i17.GuidanceTip>>(
         'guidance',
         'tips',
         {},
       );
 
   /// All checklists with their items.
-  _i3.Future<List<_i23.ChecklistDefinition>> checklists() =>
-      caller.callServerEndpoint<List<_i23.ChecklistDefinition>>(
+  _i3.Future<List<_i35.ChecklistDefinition>> checklists() =>
+      caller.callServerEndpoint<List<_i35.ChecklistDefinition>>(
         'guidance',
         'checklists',
         {},
       );
 
   /// The signed-in user's progress (completed/dismissed items).
-  _i3.Future<List<_i24.UserGuidanceProgress>> myProgress() =>
-      caller.callServerEndpoint<List<_i24.UserGuidanceProgress>>(
+  _i3.Future<List<_i36.UserGuidanceProgress>> myProgress() =>
+      caller.callServerEndpoint<List<_i36.UserGuidanceProgress>>(
         'guidance',
         'myProgress',
         {},
       );
 
   /// Marks a checklist item (or any guidance item key) as completed.
-  _i3.Future<_i24.UserGuidanceProgress> markCompleted(String itemKey) =>
-      caller.callServerEndpoint<_i24.UserGuidanceProgress>(
+  _i3.Future<_i36.UserGuidanceProgress> markCompleted(String itemKey) =>
+      caller.callServerEndpoint<_i36.UserGuidanceProgress>(
         'guidance',
         'markCompleted',
         {'itemKey': itemKey},
       );
 
   /// Dismisses a tooltip so it is not shown again.
-  _i3.Future<_i24.UserGuidanceProgress> dismissTip(String topic) =>
-      caller.callServerEndpoint<_i24.UserGuidanceProgress>(
+  _i3.Future<_i36.UserGuidanceProgress> dismissTip(String topic) =>
+      caller.callServerEndpoint<_i36.UserGuidanceProgress>(
         'guidance',
         'dismissTip',
         {'topic': topic},
@@ -690,10 +996,10 @@ class EndpointCustomer extends EndpointBusinessScoped {
   @override
   String get name => 'customer';
 
-  _i3.Future<_i25.Customer> create(
-    _i26.CreateCustomerRequest request, {
+  _i3.Future<_i37.Customer> create(
+    _i38.CreateCustomerRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i25.Customer>(
+  }) => caller.callServerEndpoint<_i37.Customer>(
     'customer',
     'create',
     {
@@ -702,10 +1008,10 @@ class EndpointCustomer extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i25.Customer> get(
+  _i3.Future<_i37.Customer> get(
     int customerId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i25.Customer>(
+  }) => caller.callServerEndpoint<_i37.Customer>(
     'customer',
     'get',
     {
@@ -714,10 +1020,10 @@ class EndpointCustomer extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i25.Customer> update(
-    _i27.UpdateCustomerRequest request, {
+  _i3.Future<_i37.Customer> update(
+    _i39.UpdateCustomerRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i25.Customer>(
+  }) => caller.callServerEndpoint<_i37.Customer>(
     'customer',
     'update',
     {
@@ -726,12 +1032,12 @@ class EndpointCustomer extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i25.Customer>> list({
-    _i28.CustomerStatus? status,
+  _i3.Future<List<_i37.Customer>> list({
+    _i40.CustomerStatus? status,
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i25.Customer>>(
+  }) => caller.callServerEndpoint<List<_i37.Customer>>(
     'customer',
     'list',
     {
@@ -744,12 +1050,12 @@ class EndpointCustomer extends EndpointBusinessScoped {
 
   /// Paged variant of [list] that additionally returns the total number of
   /// matching rows. The page size cap is applied as in [list].
-  _i3.Future<_i29.CustomerListPage> listPage({
-    _i28.CustomerStatus? status,
+  _i3.Future<_i41.CustomerListPage> listPage({
+    _i40.CustomerStatus? status,
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<_i29.CustomerListPage>(
+  }) => caller.callServerEndpoint<_i41.CustomerListPage>(
     'customer',
     'listPage',
     {
@@ -767,12 +1073,12 @@ class EndpointCustomer extends EndpointBusinessScoped {
   /// minted for another business is rejected with a [ValidationException]
   /// (field `cursor`), just like a malformed or tampered cursor. The page
   /// size cap is applied as in [list]; no total count is computed.
-  _i3.Future<_i30.CustomerCursorPage> listCursorPage({
-    _i28.CustomerStatus? status,
+  _i3.Future<_i42.CustomerCursorPage> listCursorPage({
+    _i40.CustomerStatus? status,
     int? limit,
     String? cursor,
     int? businessId,
-  }) => caller.callServerEndpoint<_i30.CustomerCursorPage>(
+  }) => caller.callServerEndpoint<_i42.CustomerCursorPage>(
     'customer',
     'listCursorPage',
     {
@@ -791,10 +1097,10 @@ class EndpointInvoice extends EndpointBusinessScoped {
   @override
   String get name => 'invoice';
 
-  _i3.Future<_i31.Invoice> create(
-    _i32.CreateInvoiceRequest request, {
+  _i3.Future<_i20.Invoice> create(
+    _i43.CreateInvoiceRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i31.Invoice>(
+  }) => caller.callServerEndpoint<_i20.Invoice>(
     'invoice',
     'create',
     {
@@ -803,10 +1109,10 @@ class EndpointInvoice extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i31.Invoice> get(
+  _i3.Future<_i20.Invoice> get(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i31.Invoice>(
+  }) => caller.callServerEndpoint<_i20.Invoice>(
     'invoice',
     'get',
     {
@@ -815,10 +1121,10 @@ class EndpointInvoice extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i33.InvoiceItem>> getItems(
+  _i3.Future<List<_i44.InvoiceItem>> getItems(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i33.InvoiceItem>>(
+  }) => caller.callServerEndpoint<List<_i44.InvoiceItem>>(
     'invoice',
     'getItems',
     {
@@ -827,10 +1133,10 @@ class EndpointInvoice extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i31.Invoice> update(
-    _i34.UpdateInvoiceRequest request, {
+  _i3.Future<_i20.Invoice> update(
+    _i45.UpdateInvoiceRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i31.Invoice>(
+  }) => caller.callServerEndpoint<_i20.Invoice>(
     'invoice',
     'update',
     {
@@ -839,12 +1145,12 @@ class EndpointInvoice extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i31.Invoice>> list({
-    _i35.InvoiceStatus? status,
+  _i3.Future<List<_i20.Invoice>> list({
+    _i19.InvoiceStatus? status,
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i31.Invoice>>(
+  }) => caller.callServerEndpoint<List<_i20.Invoice>>(
     'invoice',
     'list',
     {
@@ -857,12 +1163,12 @@ class EndpointInvoice extends EndpointBusinessScoped {
 
   /// Paged variant of [list] that additionally returns the total number of
   /// matching rows. The page size cap is applied as in [list].
-  _i3.Future<_i36.InvoiceListPage> listPage({
-    _i35.InvoiceStatus? status,
+  _i3.Future<_i46.InvoiceListPage> listPage({
+    _i19.InvoiceStatus? status,
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<_i36.InvoiceListPage>(
+  }) => caller.callServerEndpoint<_i46.InvoiceListPage>(
     'invoice',
     'listPage',
     {
@@ -880,12 +1186,12 @@ class EndpointInvoice extends EndpointBusinessScoped {
   /// minted for another business is rejected with a [ValidationException]
   /// (field `cursor`), just like a malformed or tampered cursor. The page
   /// size cap is applied as in [list]; no total count is computed.
-  _i3.Future<_i37.InvoiceCursorPage> listCursorPage({
-    _i35.InvoiceStatus? status,
+  _i3.Future<_i47.InvoiceCursorPage> listCursorPage({
+    _i19.InvoiceStatus? status,
     int? limit,
     String? cursor,
     int? businessId,
-  }) => caller.callServerEndpoint<_i37.InvoiceCursorPage>(
+  }) => caller.callServerEndpoint<_i47.InvoiceCursorPage>(
     'invoice',
     'listCursorPage',
     {
@@ -909,10 +1215,10 @@ class EndpointInvoice extends EndpointBusinessScoped {
   );
 
   /// Transitions a draft invoice to `sent`.
-  _i3.Future<_i31.Invoice> markSent(
+  _i3.Future<_i20.Invoice> markSent(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i31.Invoice>(
+  }) => caller.callServerEndpoint<_i20.Invoice>(
     'invoice',
     'markSent',
     {
@@ -922,10 +1228,10 @@ class EndpointInvoice extends EndpointBusinessScoped {
   );
 
   /// Cancels an invoice that is not paid or already cancelled.
-  _i3.Future<_i31.Invoice> cancel(
+  _i3.Future<_i20.Invoice> cancel(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i31.Invoice>(
+  }) => caller.callServerEndpoint<_i20.Invoice>(
     'invoice',
     'cancel',
     {
@@ -936,7 +1242,7 @@ class EndpointInvoice extends EndpointBusinessScoped {
 
   /// Exports invoices as CSV (semicolon-separated, comma decimals).
   _i3.Future<String> exportCsv({
-    _i35.InvoiceStatus? status,
+    _i19.InvoiceStatus? status,
     int? businessId,
   }) => caller.callServerEndpoint<String>(
     'invoice',
@@ -949,7 +1255,7 @@ class EndpointInvoice extends EndpointBusinessScoped {
 
   /// Exports invoices (with items) as a JSON string.
   _i3.Future<String> exportJson({
-    _i35.InvoiceStatus? status,
+    _i19.InvoiceStatus? status,
     int? businessId,
   }) => caller.callServerEndpoint<String>(
     'invoice',
@@ -962,10 +1268,10 @@ class EndpointInvoice extends EndpointBusinessScoped {
 
   /// Generates the PDF for the invoice, stores it as a private document and
   /// returns the document metadata. Download via `document.download`.
-  _i3.Future<_i18.Document> generatePdf(
+  _i3.Future<_i31.Document> generatePdf(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i18.Document>(
+  }) => caller.callServerEndpoint<_i31.Document>(
     'invoice',
     'generatePdf',
     {
@@ -982,10 +1288,10 @@ class EndpointInvoiceTemplate extends EndpointBusinessScoped {
   @override
   String get name => 'invoiceTemplate';
 
-  _i3.Future<_i38.InvoiceTemplate> create(
-    _i39.CreateInvoiceTemplateRequest request, {
+  _i3.Future<_i48.InvoiceTemplate> create(
+    _i49.CreateInvoiceTemplateRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i38.InvoiceTemplate>(
+  }) => caller.callServerEndpoint<_i48.InvoiceTemplate>(
     'invoiceTemplate',
     'create',
     {
@@ -994,10 +1300,10 @@ class EndpointInvoiceTemplate extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i38.InvoiceTemplate> get(
+  _i3.Future<_i48.InvoiceTemplate> get(
     int templateId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i38.InvoiceTemplate>(
+  }) => caller.callServerEndpoint<_i48.InvoiceTemplate>(
     'invoiceTemplate',
     'get',
     {
@@ -1006,10 +1312,10 @@ class EndpointInvoiceTemplate extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i38.InvoiceTemplate> update(
-    _i40.UpdateInvoiceTemplateRequest request, {
+  _i3.Future<_i48.InvoiceTemplate> update(
+    _i50.UpdateInvoiceTemplateRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i38.InvoiceTemplate>(
+  }) => caller.callServerEndpoint<_i48.InvoiceTemplate>(
     'invoiceTemplate',
     'update',
     {
@@ -1018,11 +1324,11 @@ class EndpointInvoiceTemplate extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i38.InvoiceTemplate>> list({
+  _i3.Future<List<_i48.InvoiceTemplate>> list({
     int? businessId,
     int? limit,
     int? offset,
-  }) => caller.callServerEndpoint<List<_i38.InvoiceTemplate>>(
+  }) => caller.callServerEndpoint<List<_i48.InvoiceTemplate>>(
     'invoiceTemplate',
     'list',
     {
@@ -1040,10 +1346,10 @@ class EndpointPayment extends EndpointBusinessScoped {
   @override
   String get name => 'payment';
 
-  _i3.Future<_i41.PaymentRecord> record(
-    _i42.RecordPaymentRequest request, {
+  _i3.Future<_i51.PaymentRecord> record(
+    _i52.RecordPaymentRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i41.PaymentRecord>(
+  }) => caller.callServerEndpoint<_i51.PaymentRecord>(
     'payment',
     'record',
     {
@@ -1052,10 +1358,10 @@ class EndpointPayment extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i43.InvoicePaymentStatus> status(
+  _i3.Future<_i53.InvoicePaymentStatus> status(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i43.InvoicePaymentStatus>(
+  }) => caller.callServerEndpoint<_i53.InvoicePaymentStatus>(
     'payment',
     'status',
     {
@@ -1079,10 +1385,10 @@ class EndpointRecurringSchedule extends EndpointBusinessScoped {
 
   /// Attaches a recurring schedule to an invoice. The next issue date is
   /// recalculated from the invoice's issue date when not given explicitly.
-  _i3.Future<_i31.Invoice> create(
-    _i44.CreateRecurringScheduleRequest request, {
+  _i3.Future<_i20.Invoice> create(
+    _i54.CreateRecurringScheduleRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i31.Invoice>(
+  }) => caller.callServerEndpoint<_i20.Invoice>(
     'recurringSchedule',
     'create',
     {
@@ -1093,10 +1399,10 @@ class EndpointRecurringSchedule extends EndpointBusinessScoped {
 
   /// Returns the schedule (i.e. its source invoice) or `NotFoundException`
   /// when it does not exist.
-  _i3.Future<_i31.Invoice> get(
+  _i3.Future<_i20.Invoice> get(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i31.Invoice>(
+  }) => caller.callServerEndpoint<_i20.Invoice>(
     'recurringSchedule',
     'get',
     {
@@ -1106,11 +1412,11 @@ class EndpointRecurringSchedule extends EndpointBusinessScoped {
   );
 
   /// Lists all schedules of the tenant, upcoming next issue first.
-  _i3.Future<List<_i31.Invoice>> list({
+  _i3.Future<List<_i20.Invoice>> list({
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i31.Invoice>>(
+  }) => caller.callServerEndpoint<List<_i20.Invoice>>(
     'recurringSchedule',
     'list',
     {
@@ -1121,10 +1427,10 @@ class EndpointRecurringSchedule extends EndpointBusinessScoped {
   );
 
   /// Updates schedule settings (`null` fields keep their current value).
-  _i3.Future<_i31.Invoice> update(
-    _i45.UpdateRecurringScheduleRequest request, {
+  _i3.Future<_i20.Invoice> update(
+    _i55.UpdateRecurringScheduleRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i31.Invoice>(
+  }) => caller.callServerEndpoint<_i20.Invoice>(
     'recurringSchedule',
     'update',
     {
@@ -1134,10 +1440,10 @@ class EndpointRecurringSchedule extends EndpointBusinessScoped {
   );
 
   /// Cancels the schedule; already materialized invoices are kept.
-  _i3.Future<_i31.Invoice> cancel(
+  _i3.Future<_i20.Invoice> cancel(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i31.Invoice>(
+  }) => caller.callServerEndpoint<_i20.Invoice>(
     'recurringSchedule',
     'cancel',
     {
@@ -1155,10 +1461,10 @@ class EndpointReminder extends EndpointBusinessScoped {
   String get name => 'reminder';
 
   /// Lists all reminders sent for the invoice, ordered by send date.
-  _i3.Future<List<_i46.Reminder>> list(
+  _i3.Future<List<_i56.Reminder>> list(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i46.Reminder>>(
+  }) => caller.callServerEndpoint<List<_i56.Reminder>>(
     'reminder',
     'list',
     {
@@ -1170,10 +1476,10 @@ class EndpointReminder extends EndpointBusinessScoped {
   /// Sends a payment reminder to the customer and records it. The reminder
   /// level is incremented on every send and mirrored to the invoice's
   /// `dunningLevel`.
-  _i3.Future<_i46.Reminder> send(
+  _i3.Future<_i56.Reminder> send(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i46.Reminder>(
+  }) => caller.callServerEndpoint<_i56.Reminder>(
     'reminder',
     'send',
     {
@@ -1190,10 +1496,10 @@ class EndpointProject extends EndpointBusinessScoped {
   @override
   String get name => 'project';
 
-  _i3.Future<_i47.Project> create(
-    _i48.CreateProjectRequest request, {
+  _i3.Future<_i57.Project> create(
+    _i58.CreateProjectRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i47.Project>(
+  }) => caller.callServerEndpoint<_i57.Project>(
     'project',
     'create',
     {
@@ -1202,10 +1508,10 @@ class EndpointProject extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i47.Project> get(
+  _i3.Future<_i57.Project> get(
     int projectId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i47.Project>(
+  }) => caller.callServerEndpoint<_i57.Project>(
     'project',
     'get',
     {
@@ -1214,10 +1520,10 @@ class EndpointProject extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i49.Task>> getTasks(
+  _i3.Future<List<_i59.Task>> getTasks(
     int projectId, {
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i49.Task>>(
+  }) => caller.callServerEndpoint<List<_i59.Task>>(
     'project',
     'getTasks',
     {
@@ -1226,10 +1532,10 @@ class EndpointProject extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i47.Project> update(
-    _i50.UpdateProjectRequest request, {
+  _i3.Future<_i57.Project> update(
+    _i60.UpdateProjectRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i47.Project>(
+  }) => caller.callServerEndpoint<_i57.Project>(
     'project',
     'update',
     {
@@ -1238,12 +1544,12 @@ class EndpointProject extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i47.Project>> list({
-    _i51.ProjectStatus? status,
+  _i3.Future<List<_i57.Project>> list({
+    _i61.ProjectStatus? status,
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i47.Project>>(
+  }) => caller.callServerEndpoint<List<_i57.Project>>(
     'project',
     'list',
     {
@@ -1274,10 +1580,10 @@ class EndpointTask extends EndpointBusinessScoped {
   @override
   String get name => 'task';
 
-  _i3.Future<_i49.Task> create(
-    _i52.CreateTaskRequest request, {
+  _i3.Future<_i59.Task> create(
+    _i62.CreateTaskRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i49.Task>(
+  }) => caller.callServerEndpoint<_i59.Task>(
     'task',
     'create',
     {
@@ -1286,10 +1592,10 @@ class EndpointTask extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i49.Task> update(
-    _i53.UpdateTaskRequest request, {
+  _i3.Future<_i59.Task> update(
+    _i63.UpdateTaskRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i49.Task>(
+  }) => caller.callServerEndpoint<_i59.Task>(
     'task',
     'update',
     {
@@ -1298,13 +1604,13 @@ class EndpointTask extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i49.Task>> list({
+  _i3.Future<List<_i59.Task>> list({
     int? projectId,
-    _i54.TaskStatus? status,
+    _i64.TaskStatus? status,
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i49.Task>>(
+  }) => caller.callServerEndpoint<List<_i59.Task>>(
     'task',
     'list',
     {
@@ -1325,10 +1631,10 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
   String get name => 'timeEntry';
 
   /// Starts a timer. Only one timer may run per business.
-  _i3.Future<_i55.TimeEntry> startTimer(
-    _i56.StartTimerRequest request, {
+  _i3.Future<_i65.TimeEntry> startTimer(
+    _i66.StartTimerRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i55.TimeEntry>(
+  }) => caller.callServerEndpoint<_i65.TimeEntry>(
     'timeEntry',
     'startTimer',
     {
@@ -1338,18 +1644,18 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
   );
 
   /// Stops the running timer and stores the (rounded) duration.
-  _i3.Future<_i55.TimeEntry> stopTimer({int? businessId}) =>
-      caller.callServerEndpoint<_i55.TimeEntry>(
+  _i3.Future<_i65.TimeEntry> stopTimer({int? businessId}) =>
+      caller.callServerEndpoint<_i65.TimeEntry>(
         'timeEntry',
         'stopTimer',
         {'businessId': businessId},
       );
 
   /// Creates a manual time entry.
-  _i3.Future<_i55.TimeEntry> create(
-    _i57.CreateTimeEntryRequest request, {
+  _i3.Future<_i65.TimeEntry> create(
+    _i67.CreateTimeEntryRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i55.TimeEntry>(
+  }) => caller.callServerEndpoint<_i65.TimeEntry>(
     'timeEntry',
     'create',
     {
@@ -1358,10 +1664,10 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i55.TimeEntry> get(
+  _i3.Future<_i65.TimeEntry> get(
     int timeEntryId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i55.TimeEntry>(
+  }) => caller.callServerEndpoint<_i65.TimeEntry>(
     'timeEntry',
     'get',
     {
@@ -1370,10 +1676,10 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i55.TimeEntry> update(
-    _i58.UpdateTimeEntryRequest request, {
+  _i3.Future<_i65.TimeEntry> update(
+    _i68.UpdateTimeEntryRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i55.TimeEntry>(
+  }) => caller.callServerEndpoint<_i65.TimeEntry>(
     'timeEntry',
     'update',
     {
@@ -1382,7 +1688,7 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i55.TimeEntry>> list({
+  _i3.Future<List<_i65.TimeEntry>> list({
     int? projectId,
     int? taskId,
     DateTime? from,
@@ -1391,7 +1697,7 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i55.TimeEntry>>(
+  }) => caller.callServerEndpoint<List<_i65.TimeEntry>>(
     'timeEntry',
     'list',
     {
@@ -1419,12 +1725,12 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
   );
 
   /// Aggregates stopped time entries of the period into a report.
-  _i3.Future<_i59.TimeReport> report(
+  _i3.Future<_i69.TimeReport> report(
     DateTime from,
     DateTime to, {
     int? projectId,
     int? businessId,
-  }) => caller.callServerEndpoint<_i59.TimeReport>(
+  }) => caller.callServerEndpoint<_i69.TimeReport>(
     'timeEntry',
     'report',
     {
@@ -1437,10 +1743,10 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
 
   /// Converts billable, uninvoiced time entries of a project into a draft
   /// invoice.
-  _i3.Future<_i31.Invoice> createInvoice(
-    _i60.CreateTimeEntriesInvoiceRequest request, {
+  _i3.Future<_i20.Invoice> createInvoice(
+    _i70.CreateTimeEntriesInvoiceRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i31.Invoice>(
+  }) => caller.callServerEndpoint<_i20.Invoice>(
     'timeEntry',
     'createInvoice',
     {
@@ -1457,15 +1763,15 @@ class EndpointUserProfile extends _i2.EndpointRef {
   @override
   String get name => 'userProfile';
 
-  _i3.Future<_i61.UserProfile> getMyProfile() =>
-      caller.callServerEndpoint<_i61.UserProfile>(
+  _i3.Future<_i71.UserProfile> getMyProfile() =>
+      caller.callServerEndpoint<_i71.UserProfile>(
         'userProfile',
         'getMyProfile',
         {},
       );
 
-  _i3.Future<_i61.UserProfile> update(_i62.UpdateUserProfileRequest request) =>
-      caller.callServerEndpoint<_i61.UserProfile>(
+  _i3.Future<_i71.UserProfile> update(_i72.UpdateUserProfileRequest request) =>
+      caller.callServerEndpoint<_i71.UserProfile>(
         'userProfile',
         'update',
         {'request': request},
@@ -1485,8 +1791,8 @@ class EndpointUserProfile extends _i2.EndpointRef {
   /// a member of with its customers, invoices (+items), projects, tasks,
   /// time entries, transactions and documents. Foreign tenants are not
   /// included.
-  _i3.Future<_i21.ByteData> exportMyData() =>
-      caller.callServerEndpoint<_i21.ByteData>(
+  _i3.Future<_i34.ByteData> exportMyData() =>
+      caller.callServerEndpoint<_i34.ByteData>(
         'userProfile',
         'exportMyData',
         {},
@@ -1495,16 +1801,16 @@ class EndpointUserProfile extends _i2.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    commercial = _i63.Caller(client);
-    serverpod_auth_idp = _i1.Caller(client);
+    commercial = _i73.Caller(client);
     serverpod_auth_core = _i4.Caller(client);
+    serverpod_auth_idp = _i1.Caller(client);
   }
 
-  late final _i63.Caller commercial;
-
-  late final _i1.Caller serverpod_auth_idp;
+  late final _i73.Caller commercial;
 
   late final _i4.Caller serverpod_auth_core;
+
+  late final _i1.Caller serverpod_auth_idp;
 }
 
 class Client extends _i2.ServerpodClientShared {
@@ -1521,10 +1827,10 @@ class Client extends _i2.ServerpodClientShared {
     onFailedCall,
     Function(_i2.MethodCallContext)? onSucceededCall,
     bool? disconnectStreamsOnLostInternetConnection,
-    _i64.Client? httpClientOverride,
+    _i74.Client? httpClientOverride,
   }) : super(
          host,
-         _i65.Protocol(),
+         _i75.Protocol(),
          securityContext: securityContext,
          streamingConnectionTimeout: streamingConnectionTimeout,
          connectionTimeout: connectionTimeout,
@@ -1538,6 +1844,12 @@ class Client extends _i2.ServerpodClientShared {
     jwtRefresh = EndpointJwtRefresh(this);
     entitlement = EndpointEntitlement(this);
     accounting = EndpointAccounting(this);
+    adminAudit = EndpointAdminAudit(this);
+    adminBusinesses = EndpointAdminBusinesses(this);
+    adminGuidance = EndpointAdminGuidance(this);
+    adminInvoices = EndpointAdminInvoices(this);
+    adminStats = EndpointAdminStats(this);
+    adminUsers = EndpointAdminUsers(this);
     business = EndpointBusiness(this);
     businessSettings = EndpointBusinessSettings(this);
     dashboard = EndpointDashboard(this);
@@ -1563,6 +1875,18 @@ class Client extends _i2.ServerpodClientShared {
   late final EndpointEntitlement entitlement;
 
   late final EndpointAccounting accounting;
+
+  late final EndpointAdminAudit adminAudit;
+
+  late final EndpointAdminBusinesses adminBusinesses;
+
+  late final EndpointAdminGuidance adminGuidance;
+
+  late final EndpointAdminInvoices adminInvoices;
+
+  late final EndpointAdminStats adminStats;
+
+  late final EndpointAdminUsers adminUsers;
 
   late final EndpointBusiness business;
 
@@ -1602,6 +1926,12 @@ class Client extends _i2.ServerpodClientShared {
     'jwtRefresh': jwtRefresh,
     'entitlement': entitlement,
     'accounting': accounting,
+    'adminAudit': adminAudit,
+    'adminBusinesses': adminBusinesses,
+    'adminGuidance': adminGuidance,
+    'adminInvoices': adminInvoices,
+    'adminStats': adminStats,
+    'adminUsers': adminUsers,
     'business': business,
     'businessSettings': businessSettings,
     'dashboard': dashboard,
@@ -1622,7 +1952,7 @@ class Client extends _i2.ServerpodClientShared {
   @override
   Map<String, _i2.ModuleEndpointCaller> get moduleLookup => {
     'commercial': modules.commercial,
-    'serverpod_auth_idp': modules.serverpod_auth_idp,
     'serverpod_auth_core': modules.serverpod_auth_core,
+    'serverpod_auth_idp': modules.serverpod_auth_idp,
   };
 }

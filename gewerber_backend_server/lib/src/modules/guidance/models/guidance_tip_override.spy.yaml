@@ -1,0 +1,16 @@
+### Admin-managed override of a curated in-code [GuidanceTip]. Keyed by
+### `topic`: when present it replaces the built-in tip with the same topic
+### (in `guidance.tips` and in the admin listing). Topics without a built-in
+### tip are appended as new tips.
+class: GuidanceTipOverride
+serverOnly: true
+table: guidance_tip_override
+fields:
+  topic: String
+  title: String
+  body: String
+  updatedAt: DateTime, default=now
+indexes:
+  guidance_tip_override_topic_unique_idx:
+    fields: topic
+    unique: true
