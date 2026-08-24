@@ -290,14 +290,20 @@ class GetDashboardSummaryUseCase {
     return math.max(0, invoice.totalCents - paid);
   }
 
-  /// Customer display name: personal name before company name; `null` means
-  /// "no customer" (deleted customer rows detach via SetNull) — clients
-  /// render their own fallback label for it.
+  /// Customer display name: personal name before company name. `null` means
+  /// "no displayable name" — either no customer row (deleted rows detach via
+  /// SetNull) or a customer with neither personal nor company name; clients
+  /// render their own fallback label for it. An empty string never escapes:
+  /// a nameless customer folds into `null` just like a missing one.
   static String? _customerName(int? customerId, Map<int, Customer> customers) {
     if (customerId == null) return null;
     final customer = customers[customerId];
     if (customer == null) return null;
-    return customer.name.isNotEmpty ? customer.name : customer.companyName;
+    final resolved = customer.name.isNotEmpty
+        ? customer.name
+        : customer.companyName;
+    if (resolved == null || resolved.isEmpty) return null;
+    return resolved;
   }
 
   ReceivablesSummary _buildReceivables({

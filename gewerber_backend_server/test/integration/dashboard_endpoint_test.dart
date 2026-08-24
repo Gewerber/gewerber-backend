@@ -387,6 +387,13 @@ void main() {
           CreateCustomerRequest(name: 'Verschwunden'),
           businessId: businessId,
         );
+        // Nameless customer (empty personal AND company name) — seeded via
+        // the DB because the endpoint rejects empty names. Must surface as
+        // `null` in the summary, never as ''.
+        final anonym = await Customer.db.insertRow(
+          sessionA.build(),
+          Customer(businessId: businessId, name: '', companyName: ''),
+        );
 
         await seedInvoice(
           customerId: kundeEins.id,
@@ -414,6 +421,14 @@ void main() {
           unitPriceCents: 1000,
           markSent: true,
         );
+        // Nameless customer still owes money — group must exist with a
+        // null name (fallback on the client), not an empty string.
+        await seedInvoice(
+          customerId: anonym.id,
+          dueDate: DateTime.utc(2026, 9, 5),
+          unitPriceCents: 1000,
+          markSent: true,
+        );
         final db = sessionA.build();
         final row = await Customer.db.findById(db, verschwunden.id!);
         await Customer.db.deleteRow(db, row!);
@@ -430,6 +445,7 @@ void main() {
         expect(debtors.map((d) => d.customerName).toList(), [
           'Zwei GmbH', // 10710
           'Kunde Eins', // 9520
+          null, // nameless customer row ("no name" — never '')
           null, // deleted customer group ("no customer")
         ]);
         expect(debtors[0].openTotalCents, 10710);
@@ -437,8 +453,10 @@ void main() {
         expect(debtors[1].overdueTotalCents, 3570);
         expect(debtors[1].oldestDueDate, DateTime.utc(2026, 7, 20));
         expect(debtors[1].openCount, 2);
-        expect(debtors[2].customerId, isNull);
+        expect(debtors[2].customerId, anonym.id);
         expect(debtors[2].openTotalCents, 1190);
+        expect(debtors[3].customerId, isNull);
+        expect(debtors[3].openTotalCents, 1190);
 
         final limited = await endpoints.dashboard.getSummary(
           sessionA,
