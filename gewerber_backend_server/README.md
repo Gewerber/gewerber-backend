@@ -2,7 +2,7 @@
 
 Serverpod server for the Gewerber open-source core (auth, invoicing, time tracking, basic accounting, guidance).
 
-Part of the [`gewerber-backend-core`](../README.md) Dart workspace. See the workspace [`AGENTS.md`](../AGENTS.md) for agent/tooling conventions.
+Part of the [`gewerber-backend`](../README.md) Dart workspace. See the workspace [`AGENTS.md`](../AGENTS.md) for agent/tooling conventions.
 
 ## Running
 
