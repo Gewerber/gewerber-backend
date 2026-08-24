@@ -215,6 +215,16 @@ void main() {
       },
     );
 
+    // GOLDEN invariant: summing the monthly trend reproduces
+    // accounting.profitLoss over [trendFrom, trendTo].
+    //
+    // Window semantics differ on purpose (v1): trend buckets are half-open
+    // UTC months ([monthStart, nextMonthStart)) while profitLoss treats its
+    // `to` bound inclusively (`occurredAt <= to`). A transaction at exactly
+    // `trendTo` therefore counts toward profitLoss but falls outside every
+    // trend bucket. Practical impact is nil for v1 (the boundary instant is
+    // an exact month-start midnight); when P&L switches to half-open
+    // intervals, remove this divergence.
     test('GOLDEN: monthly trend totals equal accounting profitLoss', () async {
       await seedTransaction(
         type: TransactionType.income,

@@ -433,6 +433,14 @@ class GetDashboardSummaryUseCase {
 
   /// Aggregates capped transactions into consecutive UTC monthly buckets.
   /// Buckets with no activity stay at zero so charts remain continuous.
+  ///
+  /// Window semantics (v1): buckets are half-open UTC months
+  /// ([monthStart, nextMonthStart)), whereas the fetch bounds above — and
+  /// accounting.profitLoss's inclusive `to` parameter (`occurredAt <= to`) —
+  /// are not. A transaction with occurredAt exactly on a bucket end counts
+  /// toward profitLoss but drops out of the trend here. Practical impact is
+  /// nil for v1 (that boundary instant is an exact month-start midnight);
+  /// once P&L switches to half-open intervals, remove this divergence.
   List<MonthlyTrendPoint> _buildTrend({
     required List<AccountingTransaction> transactions,
     required List<DateTime> bucketStarts,
