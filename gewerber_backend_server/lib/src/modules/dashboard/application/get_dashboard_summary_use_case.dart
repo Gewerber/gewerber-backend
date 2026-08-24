@@ -207,14 +207,16 @@ class GetDashboardSummaryUseCase {
     final recentEntries = await recentEntriesFuture;
     final monthEntries = await monthEntriesFuture;
 
-    final projectNames = await _projectNames(session, [
-      ...recentEntries,
-      ...monthEntries,
-    ]);
-    final taskNames = await _taskNames(session, [
-      ...recentEntries,
-      ...monthEntries,
-    ]);
+    final projectNames = await _projectNames(
+      session,
+      tenant.businessId,
+      [...recentEntries, ...monthEntries],
+    );
+    final taskNames = await _taskNames(
+      session,
+      tenant.businessId,
+      [...recentEntries, ...monthEntries],
+    );
 
     return DashboardSummary(
       generatedAt: DateTime.now().toUtc(),
@@ -480,23 +482,34 @@ class GetDashboardSummaryUseCase {
     ];
   }
 
+  /// Resolves project display names for feed entries. The ids originate from
+  /// tenant-scoped entry queries, yet the lookup re-applies [businessId] as
+  /// an IDOR backstop against future callers or corrupt rows.
   Future<Map<int, String>> _projectNames(
     Session session,
+    int businessId,
     List<TimeEntry> entries,
   ) async {
     final ids = entries.map((e) => e.projectId).whereType<int>().toSet();
     if (ids.isEmpty) return const {};
-    final projects = await _projects.findByIds(session, ids);
+    final projects = await _projects.findByIds(
+      session,
+      ids,
+      businessId: businessId,
+    );
     return {for (final project in projects) project.id!: project.name};
   }
 
+  /// Resolves task display names for feed entries. See [_projectNames] for
+  /// why [businessId] is re-applied here.
   Future<Map<int, String>> _taskNames(
     Session session,
+    int businessId,
     List<TimeEntry> entries,
   ) async {
     final ids = entries.map((e) => e.taskId).whereType<int>().toSet();
     if (ids.isEmpty) return const {};
-    final tasks = await _tasks.findByIds(session, ids);
+    final tasks = await _tasks.findByIds(session, ids, businessId: businessId);
     return {for (final task in tasks) task.id!: task.name};
   }
 }
