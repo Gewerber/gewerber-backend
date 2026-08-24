@@ -1,0 +1,6 @@
+class: MonthlyTrendPoint
+fields:
+  monthStart: DateTime
+  incomeCents: int
+  expenseCents: int
+  profitCents: int

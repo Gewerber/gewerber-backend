@@ -1,0 +1,11 @@
+class: RecentTimeEntry
+fields:
+  id: int
+  startedAt: DateTime
+  stoppedAt: DateTime?
+  durationMinutes: int?
+  billable: bool
+  projectId: int?
+  projectName: String?
+  taskId: int?
+  taskName: String?

@@ -27,6 +27,8 @@ business:
 businessSettings:
   - get:
   - update:
+dashboard:
+  - getSummary:
 document:
   - upload:
   - list:

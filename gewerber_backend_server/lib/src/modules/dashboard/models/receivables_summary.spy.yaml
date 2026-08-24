@@ -1,0 +1,8 @@
+class: ReceivablesSummary
+fields:
+  openInvoicesCount: int
+  openTotalCents: int
+  overdueCount: int
+  overdueTotalCents: int
+  debtors: List<DebtorSummary>
+  overdueInvoices: List<Invoice>

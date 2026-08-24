@@ -50,6 +50,8 @@ import '../../modules/business/data/serverpod_tenant_resolver.dart' as _i707;
 import '../../modules/business/domain/business_gateway.dart' as _i647;
 import '../../modules/business/domain/business_settings_gateway.dart' as _i141;
 import '../../modules/business/domain/membership_gateway.dart' as _i688;
+import '../../modules/dashboard/application/get_dashboard_summary_use_case.dart'
+    as _i799;
 import '../../modules/documents/application/delete_document_use_case.dart'
     as _i877;
 import '../../modules/documents/application/download_document_use_case.dart'
@@ -694,6 +696,19 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i974.ProjectGateway>(),
         gh<_i18.TaskGateway>(),
         gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i799.GetDashboardSummaryUseCase>(
+      () => _i799.GetDashboardSummaryUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i141.BusinessSettingsGateway>(),
+        gh<_i1065.TransactionGateway>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i1025.PaymentRecordGateway>(),
+        gh<_i696.CustomerGateway>(),
+        gh<_i417.TimeEntryGateway>(),
+        gh<_i974.ProjectGateway>(),
+        gh<_i18.TaskGateway>(),
       ),
     );
     gh.singleton<_i236.GetPaymentStatusUseCase>(
