@@ -213,7 +213,7 @@ Rationale:
 3. RDB snapshots would spend the (small) memory/CPU budget on writing data
    we have decided not to keep, and AOF would add fsync latency for the same
    nothing.
-4. Backups deliberately exclude Redis (see [Backups](#backups-backupshk)) —
+   4. Backups deliberately exclude Redis (see [Backups](#backups-backupsh)) —
    persisting to disk would create a false sense of a second data copy.
 
 If the project ever moves real state into Redis (e.g. distributed locks for

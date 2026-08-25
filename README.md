@@ -1,7 +1,7 @@
-# 🧩 Gewerber Backend Core
+# 🧩 Gewerber Backend
 
 ![Serverpod](https://img.shields.io/badge/Serverpod-4.x-blue.svg?style=flat-square)
-![Dart](https://img.shields.io/badge/Dart-%5E3.10.3-0175C2.svg?logo=dart&logoColor=white&style=flat-square)
+![Dart](https://img.shields.io/badge/Dart-%5E3.12.0-0175C2.svg?logo=dart&logoColor=white&style=flat-square)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791.svg?logo=postgresql&logoColor=white&style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)
 
@@ -15,7 +15,7 @@ Part of the [Gewerber GitHub organization](https://github.com/Gewerber). This is
 
 - **Serverpod** `4.x` — backend framework
 - **PostgreSQL** — database
-- **Dart SDK** `^3.10.3`
+- **Dart SDK** `^3.12.0`
 
 ---
 

@@ -20,7 +20,7 @@ gewerber_backend_server/lib/src/
     admin/                       # AdminUser allowlist (AdminRole), AdminRoleResolver, AdminContext
     events/                      # EventBus (MessageCentral wrapper)
     errors/                      # Serializable exceptions (NotFound, Validation, Forbidden, Conflict)
-    endpoints/                   # BusinessScopedEndpoint base class
+    endpoints/                   # BusinessScopedEndpoint, AdminEndpoint base classes
     entitlement/                 # Feature gating scaffold (all features enabled in OSS)
     mail/                        # MailService (SMTP) + EmailTemplate
     sequence/                    # GoBD-safe number sequences
@@ -30,6 +30,8 @@ gewerber_backend_server/lib/src/
     time_tracking/               # M3: Project, Task, TimeEntry (timer), rounding, reports, billing
     accounting/                  # M4: Income/expense transactions, receipts, P&L, CSV export
     documents/                   # Document storage (upload/download, private storage)
+    dashboard/                   # Aggregated dashboard summary
+    admin/                       # Admin API (global roles, audit, used by gewerber-mcp)
     guidance/                    # M5: Tooltips, checklists, per-user progress
     user/                        # UserProfile
   auth/                          # serverpod_auth_idp email/JWT endpoints
@@ -52,11 +54,12 @@ gewerber_backend_server/lib/src/
 |---|---|---|
 | `business` | create, get, update, listMine | requireLogin |
 | `businessSettings` | get, update | requireLogin |
-| `userProfile` | getMyProfile, update, deleteMyAccount | requireLogin |
-| `customer` | create, get, update, list | requireLogin |
-| `invoice` | create, get, getItems, update, list, delete, markSent, cancel, generatePdf, exportCsv, exportJson | requireLogin |
+| `userProfile` | getMyProfile, update, deleteMyAccount, exportMyData | requireLogin |
+| `customer` | create, get, update, list, listPage, listCursorPage | requireLogin |
+| `invoice` | create, get, getItems, update, list, listPage, listCursorPage, delete, markSent, cancel, generatePdf, exportCsv, exportJson | requireLogin |
 | `invoiceTemplate` | create, get, update, list | requireLogin |
 | `payment` | record, status | requireLogin |
+| `recurringSchedule` | create, get, list, update, cancel | requireLogin |
 | `reminder` | list, send | requireLogin |
 | `document` | upload, list, get, download, delete | requireLogin |
 | `entitlement` | list | requireLogin |
