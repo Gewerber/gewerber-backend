@@ -60,13 +60,20 @@ class ServerpodAdminBusinessGateway implements AdminBusinessGateway {
 
       // Serialize competing role changes on the same business: the row lock
       // on the parent business orders concurrent demotions, so two admins
-      // can never both pass the last-owner check below.
-      await Business.db.findById(
+      // can never both pass the last-owner check below. Fail closed when the
+      // parent is gone (orphaned membership) instead of skipping the lock.
+      final business = await Business.db.findById(
         session,
         membership.businessId,
         lockMode: LockMode.forUpdate,
         transaction: tx,
       );
+      if (business == null) {
+        throw NotFoundException(
+          entityType: 'Business',
+          entityId: '${membership.businessId}',
+        );
+      }
 
       final demotesAnOwner =
           membership.role == MembershipRole.owner &&

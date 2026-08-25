@@ -67,7 +67,7 @@ gewerber_backend_server/lib/src/
 | `dashboard` | getSummary | requireLogin |
 | `guidance` | tips, checklists, myProgress, markCompleted, dismissTip | requireLogin |
 | `adminStats` | statsOverview | global role moderator |
-| `adminUsers` | usersSearch, usersGet / usersBan, usersUnban, usersVerifyEmail | moderator read / admin write + `confirm` |
+| `adminUsers` | usersSearch, usersGet / usersVerifyEmail (read-only compliance check) / usersBan, usersUnban | moderator read / admin check (no `confirm`) / admin write + `confirm` |
 | `adminBusinesses` | businessesSearch, businessesGet, membershipsSetRole | moderator read / admin write + `confirm` |
 | `adminInvoices` | invoicesList, invoicesGet / invoiceCancelAdmin | moderator read / admin write + `confirm` |
 | `adminAudit` | auditQuery | moderator |
