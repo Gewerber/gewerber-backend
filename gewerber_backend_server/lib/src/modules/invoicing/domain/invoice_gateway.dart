@@ -53,6 +53,16 @@ abstract interface class InvoiceGateway {
   /// invoices per business id — callers use it for system-event auditing.
   Future<Map<int, int>> markOverdue(Session session, DateTime now);
 
+  /// Open (unsettled) sales invoices of a business — `type == invoice` with
+  /// status `sent`, `partiallyPaid` or `overdue` — ordered by due date
+  /// ascending (NULLs last), id as tiebreak. Credit notes are excluded.
+  /// [limit] is applied as-is; callers cap it to keep the query bounded.
+  Future<List<Invoice>> findOpenOrderedByDueDate(
+    Session session, {
+    required int businessId,
+    required int limit,
+  });
+
   /// Keyset-paginated slice of invoices strictly before the cursor position
   /// ([beforeIssueDate], [beforeId]) in the stable order
   /// `issueDate DESC, id DESC`. Pass both cursor values of the previous

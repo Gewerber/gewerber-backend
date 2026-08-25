@@ -21,6 +21,21 @@ class ServerpodProjectGateway implements ProjectGateway {
   }
 
   @override
+  Future<List<Project>> findByIds(
+    Session session,
+    Set<int> ids, {
+    int? businessId,
+  }) {
+    if (ids.isEmpty) return Future.value(const []);
+    return Project.db.find(
+      session,
+      where: (t) => businessId == null
+          ? t.id.inSet(ids)
+          : t.id.inSet(ids) & t.businessId.equals(businessId),
+    );
+  }
+
+  @override
   Future<Project> update(Session session, Project project) {
     return Project.db.updateRow(session, project);
   }

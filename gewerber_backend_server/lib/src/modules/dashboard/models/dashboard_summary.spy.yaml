@@ -1,0 +1,12 @@
+class: DashboardSummary
+fields:
+  generatedAt: DateTime
+  asOf: DateTime
+  trendFrom: DateTime
+  trendTo: DateTime
+  kpis: DashboardKpis
+  monthlyTrend: List<MonthlyTrendPoint>
+  recentInvoices: List<Invoice>
+  recentTransactions: List<AccountingTransaction>
+  recentTimeEntries: List<RecentTimeEntry>
+  receivables: ReceivablesSummary

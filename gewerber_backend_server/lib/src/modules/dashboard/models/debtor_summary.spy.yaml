@@ -1,0 +1,8 @@
+class: DebtorSummary
+fields:
+  customerId: int?
+  customerName: String?
+  openCount: int
+  openTotalCents: int
+  overdueTotalCents: int
+  oldestDueDate: DateTime?

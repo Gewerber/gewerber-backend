@@ -63,6 +63,7 @@ gewerber_backend_server/lib/src/
 | `task` | create, update, list | requireLogin |
 | `timeEntry` | startTimer, stopTimer, create, get, update, list, delete, report, createInvoice | requireLogin |
 | `accounting` | create, get, update, list, delete, profitLoss, exportCsv | requireLogin |
+| `dashboard` | getSummary | requireLogin |
 | `guidance` | tips, checklists, myProgress, markCompleted, dismissTip | requireLogin |
 | auth (module) | email login/register, JWT refresh | per serverpod_auth |
 | `waitlist` (commercial module) | join | public |

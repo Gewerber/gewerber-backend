@@ -100,6 +100,27 @@ class ServerpodInvoiceGateway implements InvoiceGateway {
   }
 
   @override
+  Future<List<Invoice>> findOpenOrderedByDueDate(
+    Session session, {
+    required int businessId,
+    required int limit,
+  }) {
+    // Follow-up: credit notes are not compensated server-side yet — they are
+    // excluded from open receivables here until a netting strategy exists.
+    return Invoice.db.find(
+      session,
+      where: (t) =>
+          t.businessId.equals(businessId) &
+          t.type.equals(InvoiceType.invoice) &
+          (t.status.equals(InvoiceStatus.sent) |
+              t.status.equals(InvoiceStatus.partiallyPaid) |
+              t.status.equals(InvoiceStatus.overdue)),
+      orderByList: (t) => [t.dueDate.asc(), t.id.asc()],
+      limit: limit,
+    );
+  }
+
+  @override
   Future<List<Invoice>> findPageBefore(
     Session session, {
     required int businessId,

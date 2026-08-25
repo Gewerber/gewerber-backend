@@ -1,0 +1,10 @@
+class: DashboardKpis
+fields:
+  periodFrom: DateTime
+  periodTo: DateTime
+  incomeCents: int
+  expenseCents: int
+  profitCents: int
+  totalMinutes: int
+  billableMinutes: int
+  roundedMinutes: int
