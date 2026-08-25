@@ -63,7 +63,9 @@ abstract class AdminUser
   int? id;
 
   /// The `AuthUser.id` of the admin (same identifier space as
-  /// `session.authUserId`).
+  /// `session.authUserId`). Deliberately no FK: the row references a table
+  /// owned by the external `serverpod_auth_core` module, and coupling our
+  /// migrations to its schema would make upgrades fragile.
   _i1.UuidValue userId;
 
   _i2.AdminRole role;
@@ -226,7 +228,9 @@ class AdminUserTable extends _i1.Table<int?> {
   late final AdminUserUpdateTable updateTable;
 
   /// The `AuthUser.id` of the admin (same identifier space as
-  /// `session.authUserId`).
+  /// `session.authUserId`). Deliberately no FK: the row references a table
+  /// owned by the external `serverpod_auth_core` module, and coupling our
+  /// migrations to its schema would make upgrades fragile.
   late final _i1.ColumnUuid userId;
 
   late final _i1.ColumnEnum<_i2.AdminRole> role;

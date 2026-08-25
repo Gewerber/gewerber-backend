@@ -17,11 +17,15 @@ abstract interface class AdminBusinessGateway {
   Future<AdminBusinessDetail> getBusiness(Session session, int businessId);
 
   /// Changes a membership's role after validating that a business always
-  /// keeps at least one owner.
+  /// keeps at least one owner. Concurrent role changes on the same business
+  /// are serialized via a row lock on the parent business.
+  ///
+  /// Runs inside [transaction] when given (so the caller can audit in the
+  /// same transaction); otherwise opens its own.
   Future<Membership> setMembershipRole(
     Session session,
     int membershipId,
     MembershipRole role, {
-    UuidValue? actorUserId,
+    Transaction? transaction,
   });
 }

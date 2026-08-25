@@ -23,20 +23,15 @@ class ServerpodGuidanceTipOverrideGateway
     GuidanceTipOverride override, {
     Transaction? transaction,
   }) async {
-    final existing = await GuidanceTipOverride.db.findFirstRow(
+    // Atomic ON CONFLICT upsert: no check-then-insert race between two
+    // admins editing the same topic.
+    final row = await GuidanceTipOverride.db.upsertRow(
       session,
-      where: (t) => t.topic.equals(override.topic),
+      override..updatedAt = DateTime.now().toUtc(),
+      conflictColumns: (t) => [t.topic],
       transaction: transaction,
     );
-
-    if (existing == null) {
-      return GuidanceTipOverride.db.insertRow(session, override);
-    }
-
-    existing
-      ..title = override.title
-      ..body = override.body
-      ..updatedAt = DateTime.now().toUtc();
-    return GuidanceTipOverride.db.updateRow(session, existing);
+    // Without `updateWhere` the conflicting row is always affected.
+    return row!;
   }
 }

@@ -31,7 +31,9 @@ class ServerpodAdminAuditGateway implements AdminAuditGateway {
         }
         return expression;
       },
-      orderBy: (t) => t.createdAt.desc(),
+      // Secondary sort by id keeps the order stable for entries written in
+      // the same transaction (same timestamp) — required for keyset paging.
+      orderByList: (t) => [t.createdAt.desc(), t.id.desc()],
       limit: limit,
     );
 

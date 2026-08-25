@@ -74,20 +74,20 @@ class AdminUsersEndpoint extends AdminEndpoint {
     );
   }
 
-  /// Reports/confirms the email verification state of a user (idempotent:
-  /// in the Serverpod email IdP an account only exists once its verification
-  /// code was confirmed).
+  /// Reports the email verification state of a user. Read-only check
+  /// (audited as `admin.verifyEmailCheck`): with the Serverpod email IdP an
+  /// account only exists once its verification code was confirmed, so there
+  /// is no unverified state to flip. Throws [NotFoundException] for users
+  /// without any email account.
   Future<AdminAuthStatus> usersVerifyEmail(
     Session session, {
     required UuidValue userId,
-    required bool confirm,
   }) async {
     final actor = await requireAdmin(session, minRole: AdminRole.admin);
     return getIt<VerifyUserEmailUseCase>().call(
       session,
       actor: actor,
       userId: userId,
-      confirm: confirm,
     );
   }
 }

@@ -11,6 +11,10 @@ import '../domain/require_confirm.dart';
 /// Bans a user on the authentication level. No user data is deleted —
 /// lifting the block with [UnbanUserUseCase] restores access (minus the
 /// deleted refresh tokens).
+///
+/// Residual risk (accepted, see `ServerpodAdminAuthGateway`): block flag,
+/// token purge and connection revocation are separate commits — they are not
+/// wrapped in one transaction with the audit entry.
 @singleton
 class BanUserUseCase {
   BanUserUseCase(this._auth, this._directory, this._audit);
@@ -84,14 +88,15 @@ class UnbanUserUseCase {
   }
 }
 
-/// Marks the email verification state of a user as confirmed.
+/// Reports the email verification state of a user.
 ///
 /// With `serverpod_auth_idp` 4.x an `EmailAccount` row only exists after the
 /// registration verification code was confirmed — there is no persistent
-/// "unverified" flag to flip. This endpoint therefore verifies that an email
-/// account exists and reports its status; it fails with [NotFoundException]
-/// for users without any email account. It stays part of the admin surface
-/// so the MCP workflow does not depend on IdP internals.
+/// "unverified" flag to flip, so there is nothing to mutate. This use case is
+/// therefore a read-only compliance check (audited as such): it verifies that
+/// an email account exists and reports its status; it fails with
+/// [NotFoundException] for users without any email account. It stays part of
+/// the admin surface so the MCP workflow does not depend on IdP internals.
 @singleton
 class VerifyUserEmailUseCase {
   VerifyUserEmailUseCase(this._auth, this._audit);
@@ -103,21 +108,20 @@ class VerifyUserEmailUseCase {
     Session session, {
     required AdminContext actor,
     required UuidValue userId,
-    required bool confirm,
   }) async {
-    requireConfirm(confirm);
-
     final state = await _auth.authState(session, userId);
     if (!state.emailConfirmed) {
       throw NotFoundException(entityType: 'EmailAccount', entityId: '$userId');
     }
 
+    // Read-only check — the entry records that the state was inspected, it
+    // does not claim a change.
     await _audit.log(
       session,
-      action: 'admin.verifyEmail',
+      action: 'admin.verifyEmailCheck',
       entityType: 'EmailAccount',
       entityId: '$userId',
-      changes: {'email': state.email ?? '', 'confirmed': 'true'},
+      changes: {'email': state.email ?? ''},
       userId: actor.userId,
     );
 

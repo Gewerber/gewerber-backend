@@ -43,13 +43,13 @@ class ServerpodAdminBusinessGateway implements AdminBusinessGateway {
     Session session,
     int membershipId,
     MembershipRole role, {
-    UuidValue? actorUserId,
-  }) async {
-    return session.db.transaction((transaction) async {
+    Transaction? transaction,
+  }) {
+    Future<Membership> run(Transaction tx) async {
       final membership = await Membership.db.findById(
         session,
         membershipId,
-        transaction: transaction,
+        transaction: tx,
       );
       if (membership == null) {
         throw NotFoundException(
@@ -58,16 +58,27 @@ class ServerpodAdminBusinessGateway implements AdminBusinessGateway {
         );
       }
 
+      // Serialize competing role changes on the same business: the row lock
+      // on the parent business orders concurrent demotions, so two admins
+      // can never both pass the last-owner check below.
+      await Business.db.findById(
+        session,
+        membership.businessId,
+        lockMode: LockMode.forUpdate,
+        transaction: tx,
+      );
+
       final demotesAnOwner =
           membership.role == MembershipRole.owner &&
           role != MembershipRole.owner;
       if (demotesAnOwner) {
+        // Recounted inside the business lock — no TOCTOU window.
         final owners = await Membership.db.count(
           session,
           where: (t) =>
               t.businessId.equals(membership.businessId) &
               t.role.equals(MembershipRole.owner),
-          transaction: transaction,
+          transaction: tx,
         );
         if (owners <= 1) {
           throw ConflictException(
@@ -79,8 +90,10 @@ class ServerpodAdminBusinessGateway implements AdminBusinessGateway {
       }
 
       membership.role = role;
-      return Membership.db.updateRow(session, membership);
-    });
+      return Membership.db.updateRow(session, membership, transaction: tx);
+    }
+
+    return transaction == null ? session.db.transaction(run) : run(transaction);
   }
 
   Future<AdminBusinessDetail> _withMemberships(

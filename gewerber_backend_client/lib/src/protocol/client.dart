@@ -777,19 +777,17 @@ class EndpointAdminUsers extends EndpointAdmin {
     },
   );
 
-  /// Reports/confirms the email verification state of a user (idempotent:
-  /// in the Serverpod email IdP an account only exists once its verification
-  /// code was confirmed).
+  /// Reports the email verification state of a user. Read-only check
+  /// (audited as `admin.verifyEmailCheck`): with the Serverpod email IdP an
+  /// account only exists once its verification code was confirmed, so there
+  /// is no unverified state to flip. Throws [NotFoundException] for users
+  /// without any email account.
   _i3.Future<_i24.AdminAuthStatus> usersVerifyEmail({
     required _i2.UuidValue userId,
-    required bool confirm,
   }) => caller.callServerEndpoint<_i24.AdminAuthStatus>(
     'adminUsers',
     'usersVerifyEmail',
-    {
-      'userId': userId,
-      'confirm': confirm,
-    },
+    {'userId': userId},
   );
 }
 

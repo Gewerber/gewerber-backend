@@ -10,7 +10,9 @@ serverOnly: true
 table: admin_user
 fields:
   ### The `AuthUser.id` of the admin (same identifier space as
-  ### `session.authUserId`).
+  ### `session.authUserId`). Deliberately no FK: the row references a table
+  ### owned by the external `serverpod_auth_core` module, and coupling our
+  ### migrations to its schema would make upgrades fragile.
   userId: UuidValue
   role: AdminRole, default=moderator
   createdAt: DateTime, default=now

@@ -1645,7 +1645,6 @@ class _AdminUsersEndpoint {
   _i4.Future<_i25.AdminAuthStatus> usersVerifyEmail(
     _i1.TestSessionBuilder sessionBuilder, {
     required _i2.UuidValue userId,
-    required bool confirm,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
@@ -1658,10 +1657,7 @@ class _AdminUsersEndpoint {
           createSessionCallback: (_) => _localUniqueSession,
           endpointPath: 'adminUsers',
           methodName: 'usersVerifyEmail',
-          parameters: _i1.testObjectToJson({
-            'userId': userId,
-            'confirm': confirm,
-          }),
+          parameters: _i1.testObjectToJson({'userId': userId}),
           serializationManager: _serializationManager,
         );
         var _localReturnValue =

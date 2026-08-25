@@ -1154,11 +1154,6 @@ class Endpoints extends _i1.EndpointDispatch {
               type: _i1.getType<_i1.UuidValue>(),
               nullable: false,
             ),
-            'confirm': _i1.ParameterDescription(
-              name: 'confirm',
-              type: _i1.getType<bool>(),
-              nullable: false,
-            ),
           },
           call:
               (
@@ -1168,7 +1163,6 @@ class Endpoints extends _i1.EndpointDispatch {
                   .usersVerifyEmail(
                     session,
                     userId: params['userId'],
-                    confirm: params['confirm'],
                   ),
         ),
       },

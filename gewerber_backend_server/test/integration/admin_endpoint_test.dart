@@ -17,13 +17,16 @@ import 'test_tools/serverpod_test_tools.dart';
 /// - moderators may read but not mutate,
 /// - admins ban/unban users, change membership roles (last owner protected)
 ///   and cancel invoices, every mutation audited,
-/// - destructive mutations require an explicit `confirm: true`.
+/// - destructive mutations require an explicit `confirm: true`,
+/// - email verification checks are read-only and audited as such,
+/// - listings paginate with keyset cursors capped at 200 rows per page.
 void main() {
   // Fixed identifiers so sessions can be built with matching auth overrides.
   const adminId = 'a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d';
   const moderatorId = 'b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e';
   const plainUserId = 'c3d4e5f6-a7b8-4c9d-8e0f-1a2b3c4d5e6f';
   const targetUserId = 'd4e5f6a7-b8c9-4d0e-9f1a-2b3c4d5e6f7a';
+  const extraUserId = 'e5f6a7b8-c9d0-4e1f-a2b3-c4d5e6f7a8b9';
 
   late Session rawSession;
 
@@ -162,6 +165,19 @@ void main() {
           throwsA(isA<ForbiddenException>()),
         );
       });
+
+      test(
+        'when an unauthenticated session reads then the call is rejected',
+        () async {
+          final unauthenticated = sessionBuilder.copyWith(
+            authentication: AuthenticationOverride.unauthenticated(),
+          );
+          await expectLater(
+            () => endpoints.adminStats.statsOverview(unauthenticated),
+            throwsA(isA<ServerpodUnauthenticatedException>()),
+          );
+        },
+      );
     });
 
     group('confirm guard', () {
@@ -180,6 +196,64 @@ void main() {
           );
           final state = await core.AuthUser.db.findById(rawSession, target);
           expect(state?.blocked, false);
+        },
+      );
+    });
+
+    group('email verification check', () {
+      test(
+        'when checking a registered user then the status is confirmed and '
+        'the check is audited',
+        () async {
+          final target = await seedUser(
+            rawSession,
+            targetUserId,
+            email: 'verified@example.com',
+          );
+
+          final status = await endpoints.adminUsers.usersVerifyEmail(
+            adminSession,
+            userId: target,
+          );
+
+          expect(status.emailConfirmed, true);
+          expect(status.email, 'verified@example.com');
+
+          final logged = await AuditEntry.db.find(
+            rawSession,
+            where: (t) => t.action.equals('admin.verifyEmailCheck'),
+          );
+          expect(logged, hasLength(1));
+          expect(logged.single.changes?['email'], 'verified@example.com');
+        },
+      );
+
+      test(
+        'when the user has no email account then NotFound is thrown',
+        () async {
+          // Auth user exists but never completed an email registration.
+          final target = await seedUser(rawSession, targetUserId);
+
+          await expectLater(
+            () => endpoints.adminUsers.usersVerifyEmail(
+              adminSession,
+              userId: target,
+            ),
+            throwsA(isA<NotFoundException>()),
+          );
+        },
+      );
+
+      test(
+        'when the auth user does not exist at all then NotFound is thrown',
+        () async {
+          await expectLater(
+            () => endpoints.adminUsers.usersVerifyEmail(
+              adminSession,
+              userId: UuidValue.fromString(targetUserId),
+            ),
+            throwsA(isA<NotFoundException>()),
+          );
         },
       );
     });
@@ -265,6 +339,63 @@ void main() {
           expect(page.nextCursor, isNull);
         },
       );
+    });
+
+    group('pagination', () {
+      test(
+        'when the cursor is malformed then ValidationException is thrown',
+        () async {
+          await expectLater(
+            () => endpoints.adminUsers.usersSearch(
+              adminSession,
+              cursor: '!!!not-a-cursor!!!',
+            ),
+            throwsA(isA<ValidationException>()),
+          );
+        },
+      );
+
+      test(
+        'when paging through usersSearch then the cursor roundtrips',
+        () async {
+          await seedUser(rawSession, targetUserId, email: 'page-a@example.com');
+          await seedUser(rawSession, plainUserId, email: 'page-b@example.com');
+          await seedUser(rawSession, extraUserId, email: 'page-c@example.com');
+
+          final first = await endpoints.adminUsers.usersSearch(
+            adminSession,
+            query: 'page-',
+            limit: 2,
+          );
+          expect(first.items.map((u) => u.email).toList(), [
+            'page-a@example.com',
+            'page-b@example.com',
+          ]);
+          expect(first.nextCursor, isNotNull);
+
+          final second = await endpoints.adminUsers.usersSearch(
+            adminSession,
+            query: 'page-',
+            limit: 2,
+            cursor: first.nextCursor,
+          );
+          expect(second.items.map((u) => u.email).toList(), [
+            'page-c@example.com',
+          ]);
+          expect(second.nextCursor, isNull);
+        },
+      );
+
+      test('when limit exceeds 200 then it is capped to 200', () async {
+        await seedUser(rawSession, targetUserId, email: 'capped@example.com');
+
+        final page = await endpoints.adminUsers.usersSearch(
+          adminSession,
+          limit: 100000,
+        );
+
+        expect(page.limit, 200);
+      });
     });
 
     group('membership roles', () {
@@ -400,6 +531,28 @@ void main() {
           throwsA(isA<ConflictException>()),
         );
       });
+
+      test(
+        'when cancelling a draft invoice then Conflict is thrown',
+        () async {
+          // Drafts are owned and deleted by their tenant, not by admins.
+          await Invoice.db.updateRow(
+            rawSession,
+            (await Invoice.db.findById(rawSession, invoiceId))!
+              ..status = InvoiceStatus.draft,
+          );
+
+          await expectLater(
+            () => endpoints.adminInvoices.invoiceCancelAdmin(
+              adminSession,
+              invoiceId: invoiceId,
+              reason: 'not sent yet',
+              confirm: true,
+            ),
+            throwsA(isA<ConflictException>()),
+          );
+        },
+      );
     });
 
     group('guidance tips', () {
@@ -495,6 +648,33 @@ void main() {
           final all = await endpoints.adminAudit.auditQuery(moderatorSession);
           expect(all.items, isNotEmpty);
           expect(all.limit, 50);
+        },
+      );
+
+      test(
+        'when since is in the future then no entries are returned',
+        () async {
+          final target = await seedUser(rawSession, targetUserId);
+          await endpoints.adminUsers.usersBan(
+            adminSession,
+            userId: target,
+            reason: 'since filter',
+            confirm: true,
+          );
+
+          final afterAll = await endpoints.adminAudit.auditQuery(
+            moderatorSession,
+            action: 'admin.userBan',
+            since: DateTime.now().toUtc().subtract(const Duration(hours: 1)),
+          );
+          expect(afterAll.items, hasLength(1));
+
+          final future = await endpoints.adminAudit.auditQuery(
+            moderatorSession,
+            action: 'admin.userBan',
+            since: DateTime.now().toUtc().add(const Duration(hours: 1)),
+          );
+          expect(future.items, isEmpty);
         },
       );
     });
