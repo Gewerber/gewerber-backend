@@ -31,6 +31,33 @@ import '../../modules/accounting/data/serverpod_transaction_gateway.dart'
 import '../../modules/accounting/domain/transaction_gateway.dart' as _i1065;
 import '../../modules/accounting/domain/transaction_reference_validator.dart'
     as _i394;
+import '../../modules/admin/application/cancel_invoice_as_admin_use_case.dart'
+    as _i282;
+import '../../modules/admin/application/get_admin_stats_use_case.dart' as _i893;
+import '../../modules/admin/application/guidance_admin_use_cases.dart' as _i136;
+import '../../modules/admin/application/query_audit_entries_use_case.dart'
+    as _i1007;
+import '../../modules/admin/application/read_admin_use_cases.dart' as _i172;
+import '../../modules/admin/application/search_admin_users_use_case.dart'
+    as _i402;
+import '../../modules/admin/application/set_membership_role_use_case.dart'
+    as _i1021;
+import '../../modules/admin/application/user_admin_use_cases.dart' as _i230;
+import '../../modules/admin/data/serverpod_admin_audit_gateway.dart' as _i226;
+import '../../modules/admin/data/serverpod_admin_auth_gateway.dart' as _i446;
+import '../../modules/admin/data/serverpod_admin_business_gateway.dart'
+    as _i786;
+import '../../modules/admin/data/serverpod_admin_directory_gateway.dart'
+    as _i581;
+import '../../modules/admin/data/serverpod_admin_invoice_gateway.dart' as _i217;
+import '../../modules/admin/data/serverpod_admin_role_resolver.dart' as _i341;
+import '../../modules/admin/data/serverpod_admin_stats_gateway.dart' as _i744;
+import '../../modules/admin/domain/admin_audit_gateway.dart' as _i486;
+import '../../modules/admin/domain/admin_auth_gateway.dart' as _i711;
+import '../../modules/admin/domain/admin_business_gateway.dart' as _i448;
+import '../../modules/admin/domain/admin_directory_gateway.dart' as _i260;
+import '../../modules/admin/domain/admin_invoice_gateway.dart' as _i852;
+import '../../modules/admin/domain/admin_stats_gateway.dart' as _i690;
 import '../../modules/business/application/create_business_use_case.dart'
     as _i1059;
 import '../../modules/business/application/get_business_settings_use_case.dart'
@@ -65,9 +92,13 @@ import '../../modules/documents/application/upload_document_use_case.dart'
 import '../../modules/documents/data/serverpod_document_gateway.dart' as _i249;
 import '../../modules/documents/domain/document_gateway.dart' as _i643;
 import '../../modules/guidance/application/guidance_use_cases.dart' as _i912;
+import '../../modules/guidance/data/serverpod_guidance_tip_override_gateway.dart'
+    as _i422;
 import '../../modules/guidance/data/serverpod_user_guidance_progress_gateway.dart'
     as _i851;
 import '../../modules/guidance/domain/guidance_content_provider.dart' as _i993;
+import '../../modules/guidance/domain/guidance_tip_override_gateway.dart'
+    as _i534;
 import '../../modules/guidance/domain/user_guidance_progress_gateway.dart'
     as _i783;
 import '../../modules/invoicing/application/cancel_invoice_use_case.dart'
@@ -102,7 +133,7 @@ import '../../modules/invoicing/application/list_customers_cursor_page_use_case.
 import '../../modules/invoicing/application/list_customers_page_use_case.dart'
     as _i658;
 import '../../modules/invoicing/application/list_customers_use_case.dart'
-    as _i893;
+    as _i894;
 import '../../modules/invoicing/application/list_invoice_templates_use_case.dart'
     as _i558;
 import '../../modules/invoicing/application/list_invoices_cursor_page_use_case.dart'
@@ -171,7 +202,7 @@ import '../../modules/time_tracking/application/get_time_entry_use_case.dart'
 import '../../modules/time_tracking/application/get_time_report_use_case.dart'
     as _i388;
 import '../../modules/time_tracking/application/list_projects_use_case.dart'
-    as _i226;
+    as _i227;
 import '../../modules/time_tracking/application/list_tasks_use_case.dart'
     as _i137;
 import '../../modules/time_tracking/application/list_time_entries_use_case.dart'
@@ -199,12 +230,13 @@ import '../../modules/user/application/delete_my_account_use_case.dart'
 import '../../modules/user/application/export_my_data_use_case.dart' as _i435;
 import '../../modules/user/application/get_my_profile_use_case.dart' as _i325;
 import '../../modules/user/application/update_user_profile_use_case.dart'
-    as _i282;
+    as _i283;
 import '../../modules/user/data/serverpod_account_anonymization_gateway.dart'
     as _i1024;
 import '../../modules/user/data/serverpod_user_profile_gateway.dart' as _i693;
 import '../../modules/user/domain/account_anonymization_gateway.dart' as _i655;
 import '../../modules/user/domain/user_profile_gateway.dart' as _i467;
+import '../admin/admin_role_resolver.dart' as _i62;
 import '../audit/audit_service.dart' as _i473;
 import '../entitlement/all_features_entitlement_provider.dart' as _i398;
 import '../entitlement/entitlement_provider.dart' as _i664;
@@ -231,10 +263,19 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i783.UserGuidanceProgressGateway>(
       () => _i851.ServerpodUserGuidanceProgressGateway(),
     );
+    gh.singleton<_i852.AdminInvoiceGateway>(
+      () => const _i217.ServerpodAdminInvoiceGateway(),
+    );
     gh.singleton<_i974.ProjectGateway>(() => _i616.ServerpodProjectGateway());
     gh.singleton<_i559.SequenceGateway>(() => _i445.ServerpodSequenceGateway());
     gh.singleton<_i988.InvoiceNumberService>(
       () => _i988.InvoiceNumberService(gh<_i559.SequenceGateway>()),
+    );
+    gh.singleton<_i62.AdminRoleResolver>(
+      () => const _i341.ServerpodAdminRoleResolver(),
+    );
+    gh.singleton<_i711.AdminAuthGateway>(
+      () => _i446.ServerpodAdminAuthGateway(),
     );
     gh.singleton<_i668.InvoicePdfGenerator>(
       () => const _i1030.PdfInvoiceGenerator(),
@@ -242,6 +283,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i647.BusinessGateway>(() => _i8.ServerpodBusinessGateway());
     gh.singleton<_i655.AccountAnonymizationGateway>(
       () => _i1024.ServerpodAccountAnonymizationGateway(),
+    );
+    gh.singleton<_i534.GuidanceTipOverrideGateway>(
+      () => const _i422.ServerpodGuidanceTipOverrideGateway(),
+    );
+    gh.singleton<_i486.AdminAuditGateway>(
+      () => const _i226.ServerpodAdminAuditGateway(),
     );
     gh.singleton<_i696.CustomerGateway>(() => _i356.ServerpodCustomerGateway());
     gh.singleton<_i1025.PaymentRecordGateway>(
@@ -252,8 +299,14 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i27.ServerpodInvoiceTemplateGateway(),
     );
     gh.singleton<_i517.InvoiceGateway>(() => _i109.ServerpodInvoiceGateway());
+    gh.singleton<_i1007.QueryAuditEntriesUseCase>(
+      () => _i1007.QueryAuditEntriesUseCase(gh<_i486.AdminAuditGateway>()),
+    );
     gh.singleton<_i688.MembershipGateway>(
       () => _i257.ServerpodMembershipGateway(),
+    );
+    gh.singleton<_i282.CancelInvoiceAsAdminUseCase>(
+      () => _i282.CancelInvoiceAsAdminUseCase(gh<_i473.AuditService>()),
     );
     gh.singleton<_i1065.TransactionGateway>(
       () => _i223.ServerpodTransactionGateway(),
@@ -261,8 +314,26 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i664.EntitlementProvider>(
       () => _i398.AllFeaturesEntitlementProvider(),
     );
+    gh.singleton<_i136.UpsertGuidanceTipUseCase>(
+      () => _i136.UpsertGuidanceTipUseCase(
+        gh<_i534.GuidanceTipOverrideGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
     gh.singleton<_i467.UserProfileGateway>(
       () => _i693.ServerpodUserProfileGateway(),
+    );
+    gh.singleton<_i448.AdminBusinessGateway>(
+      () => const _i786.ServerpodAdminBusinessGateway(),
+    );
+    gh.singleton<_i1021.SetMembershipRoleUseCase>(
+      () => _i1021.SetMembershipRoleUseCase(
+        gh<_i448.AdminBusinessGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i690.AdminStatsGateway>(
+      () => const _i744.ServerpodAdminStatsGateway(),
     );
     gh.singleton<_i417.TimeEntryGateway>(
       () => _i132.ServerpodTimeEntryGateway(),
@@ -276,11 +347,18 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i1012.ServerpodInvoiceItemGateway(),
     );
     gh.singleton<_i788.ReminderGateway>(() => _i754.ServerpodReminderGateway());
-    gh.singleton<_i282.UpdateUserProfileUseCase>(
-      () => _i282.UpdateUserProfileUseCase(
+    gh.singleton<_i283.UpdateUserProfileUseCase>(
+      () => _i283.UpdateUserProfileUseCase(
         gh<_i467.UserProfileGateway>(),
         gh<_i473.AuditService>(),
       ),
+    );
+    gh.singleton<_i172.SearchAdminBusinessesUseCase>(
+      () =>
+          _i172.SearchAdminBusinessesUseCase(gh<_i448.AdminBusinessGateway>()),
+    );
+    gh.singleton<_i172.GetAdminBusinessUseCase>(
+      () => _i172.GetAdminBusinessUseCase(gh<_i448.AdminBusinessGateway>()),
     );
     gh.singleton<_i435.ExportMyDataUseCase>(
       () => _i435.ExportMyDataUseCase(
@@ -310,6 +388,36 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
+    gh.singleton<_i260.AdminDirectoryGateway>(
+      () => _i581.ServerpodAdminDirectoryGateway(
+        gh<_i467.UserProfileGateway>(),
+        gh<_i62.AdminRoleResolver>(),
+      ),
+    );
+    gh.singleton<_i172.ListAdminInvoicesUseCase>(
+      () => _i172.ListAdminInvoicesUseCase(gh<_i852.AdminInvoiceGateway>()),
+    );
+    gh.singleton<_i172.GetAdminInvoiceUseCase>(
+      () => _i172.GetAdminInvoiceUseCase(gh<_i852.AdminInvoiceGateway>()),
+    );
+    gh.singleton<_i172.GetUserDossierUseCase>(
+      () => _i172.GetUserDossierUseCase(gh<_i260.AdminDirectoryGateway>()),
+    );
+    gh.singleton<_i402.SearchAdminUsersUseCase>(
+      () => _i402.SearchAdminUsersUseCase(gh<_i260.AdminDirectoryGateway>()),
+    );
+    gh.singleton<_i230.VerifyUserEmailUseCase>(
+      () => _i230.VerifyUserEmailUseCase(
+        gh<_i711.AdminAuthGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i136.ListAdminGuidanceTipsUseCase>(
+      () => _i136.ListAdminGuidanceTipsUseCase(
+        gh<_i993.GuidanceContentProvider>(),
+        gh<_i534.GuidanceTipOverrideGateway>(),
+      ),
+    );
     gh.singleton<_i1059.CreateBusinessUseCase>(
       () => _i1059.CreateBusinessUseCase(
         gh<_i647.BusinessGateway>(),
@@ -324,6 +432,20 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
+    gh.singleton<_i230.BanUserUseCase>(
+      () => _i230.BanUserUseCase(
+        gh<_i711.AdminAuthGateway>(),
+        gh<_i260.AdminDirectoryGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i230.UnbanUserUseCase>(
+      () => _i230.UnbanUserUseCase(
+        gh<_i711.AdminAuthGateway>(),
+        gh<_i260.AdminDirectoryGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
     gh.singleton<_i394.TransactionReferenceValidator>(
       () => _i394.TransactionReferenceValidator(
         gh<_i643.DocumentGateway>(),
@@ -332,6 +454,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i343.TenantResolver>(
       () => _i707.ServerpodTenantResolver(gh<_i688.MembershipGateway>()),
+    );
+    gh.singleton<_i893.GetAdminStatsUseCase>(
+      () => _i893.GetAdminStatsUseCase(gh<_i690.AdminStatsGateway>()),
     );
     gh.singleton<_i28.ListMyBusinessesUseCase>(
       () => _i28.ListMyBusinessesUseCase(
@@ -406,8 +531,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i696.CustomerGateway>(),
       ),
     );
-    gh.singleton<_i893.ListCustomersUseCase>(
-      () => _i893.ListCustomersUseCase(
+    gh.singleton<_i894.ListCustomersUseCase>(
+      () => _i894.ListCustomersUseCase(
         gh<_i343.TenantResolver>(),
         gh<_i696.CustomerGateway>(),
       ),
@@ -731,8 +856,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
-    gh.singleton<_i226.ListProjectsUseCase>(
-      () => _i226.ListProjectsUseCase(
+    gh.singleton<_i227.ListProjectsUseCase>(
+      () => _i227.ListProjectsUseCase(
         gh<_i343.TenantResolver>(),
         gh<_i974.ProjectGateway>(),
       ),

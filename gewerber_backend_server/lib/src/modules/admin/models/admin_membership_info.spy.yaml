@@ -1,0 +1,4 @@
+class: AdminMembershipInfo
+fields:
+  membership: Membership
+  businessName: String

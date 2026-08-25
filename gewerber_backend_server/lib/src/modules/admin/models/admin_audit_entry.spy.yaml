@@ -1,0 +1,11 @@
+### Client-visible projection of the server-only [AuditEntry].
+class: AdminAuditEntry
+fields:
+  id: int?
+  businessId: int?
+  userId: UuidValue?
+  action: String
+  entityType: String
+  entityId: String?
+  changes: Map<String, String>?
+  createdAt: DateTime

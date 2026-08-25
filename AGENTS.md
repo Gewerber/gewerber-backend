@@ -17,6 +17,7 @@ gewerber_backend_server/lib/src/
     di/                          # get_it locator + injectable config
     tenant/                      # TenantContext, TenantResolver, Session.authUserId
     audit/                       # AuditEntry model + AuditService
+    admin/                       # AdminUser allowlist (AdminRole), AdminRoleResolver, AdminContext
     events/                      # EventBus (MessageCentral wrapper)
     errors/                      # Serializable exceptions (NotFound, Validation, Forbidden, Conflict)
     endpoints/                   # BusinessScopedEndpoint base class
@@ -65,8 +66,31 @@ gewerber_backend_server/lib/src/
 | `accounting` | create, get, update, list, delete, profitLoss, exportCsv | requireLogin |
 | `dashboard` | getSummary | requireLogin |
 | `guidance` | tips, checklists, myProgress, markCompleted, dismissTip | requireLogin |
+| `adminStats` | statsOverview | global role moderator |
+| `adminUsers` | usersSearch, usersGet / usersVerifyEmail (read-only compliance check) / usersBan, usersUnban | moderator read / admin check (no `confirm`) / admin write + `confirm` |
+| `adminBusinesses` | businessesSearch, businessesGet, membershipsSetRole | moderator read / admin write + `confirm` |
+| `adminInvoices` | invoicesList, invoicesGet / invoiceCancelAdmin | moderator read / admin write + `confirm` |
+| `adminAudit` | auditQuery | moderator |
+| `adminGuidance` | guidanceTipsList / guidanceTipUpsert | moderator read / admin write + `confirm` |
 | auth (module) | email login/register, JWT refresh | per serverpod_auth |
 | `waitlist` (commercial module) | join | public |
+
+## Admin API (`modules/admin`, used by `gewerber-mcp`)
+
+Global administration surface for the AI MCP server replacing the admin
+panel. Roles live in the `admin_user` allowlist table (`AdminRole`:
+`moderator` = read-only, `admin` = mutate); they are resolved from the DB on
+every request via `AdminRoleResolver` (base class `core/endpoints/
+AdminEndpoint.requireAdmin`). Mutations require `confirm: true` and write
+`audit_entry` rows with action prefix `admin.`. There is no user deletion —
+bans are flags on the auth user (`AuthUser.blocked` + refresh-token purge).
+
+**Granting the first admin** (out of band, by design): registered users only —
+
+```bash
+psql "$DATABASE_URL" -v email="'you@example.com'" -v role="'admin"' \
+  -f gewerber_backend_server/tool/grant_admin.sql
+```
 
 ## Background jobs
 

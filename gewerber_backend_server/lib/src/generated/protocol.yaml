@@ -19,6 +19,27 @@ accounting:
   - delete:
   - profitLoss:
   - exportCsv:
+adminAudit:
+  - auditQuery:
+adminBusinesses:
+  - businessesSearch:
+  - businessesGet:
+  - membershipsSetRole:
+adminGuidance:
+  - guidanceTipsList:
+  - guidanceTipUpsert:
+adminInvoices:
+  - invoicesList:
+  - invoicesGet:
+  - invoiceCancelAdmin:
+adminStats:
+  - statsOverview:
+adminUsers:
+  - usersSearch:
+  - usersGet:
+  - usersBan:
+  - usersUnban:
+  - usersVerifyEmail:
 business:
   - create:
   - get:

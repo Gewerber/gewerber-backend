@@ -1,0 +1,4 @@
+class: AdminBusinessDetail
+fields:
+  business: Business
+  memberships: List<AdminMembershipInfo>

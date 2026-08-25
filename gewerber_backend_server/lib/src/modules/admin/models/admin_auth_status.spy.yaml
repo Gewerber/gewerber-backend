@@ -1,0 +1,10 @@
+### Authentication-level state of a user as seen by the admin API.
+### `emailConfirmed` reflects the email IdP contract of Serverpod 4 beta:
+### an `EmailAccount` row only exists after the registration verification
+### code was confirmed, so an existing account is always confirmed.
+class: AdminAuthStatus
+fields:
+  blocked: bool
+  emailConfirmed: bool
+  email: String?
+  authUserCreatedAt: DateTime?

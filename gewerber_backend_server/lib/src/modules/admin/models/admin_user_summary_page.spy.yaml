@@ -1,0 +1,5 @@
+class: AdminUserSummaryPage
+fields:
+  items: List<AdminUserSummary>
+  nextCursor: String?
+  limit: int

@@ -1,0 +1,6 @@
+enum: AdminRole
+serialized: byName
+default: moderator
+values:
+  - moderator
+  - admin

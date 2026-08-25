@@ -1,0 +1,25 @@
+### Global admin allowlist for the platform administration API (used by the
+### `gewerber-mcp` server acting as an AI admin/moderator).
+###
+### Roles are resolved from this table on every admin request — unlike
+### `AuthUser.scopeNames`, which are baked into issued JWTs and would only
+### take effect after the next token refresh, allowlist changes apply
+### immediately.
+class: AdminUser
+serverOnly: true
+table: admin_user
+fields:
+  ### The `AuthUser.id` of the admin (same identifier space as
+  ### `session.authUserId`). Deliberately no FK: the row references a table
+  ### owned by the external `serverpod_auth_core` module, and coupling our
+  ### migrations to its schema would make upgrades fragile.
+  userId: UuidValue
+  role: AdminRole, default=moderator
+  createdAt: DateTime, default=now
+  ### The `AuthUser.id` of the admin who granted this role (`null` for the
+  ### bootstrap admin created by `tool/grant_admin.sql`).
+  createdBy: UuidValue?
+indexes:
+  admin_user_user_unique_idx:
+    fields: userId
+    unique: true
