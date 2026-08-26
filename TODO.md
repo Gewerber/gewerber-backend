@@ -17,6 +17,12 @@
       запретить для `partiallyPaid` и `overdue` ✅ 2026-08-22 (allow-list вместо deny-list)
 - [x] **RecordPayment**: перенести расчёт paidTotal внутрь транзакции
       (LockMode.forUpdate по invoice); отклонять переплату явно ✅ 2026-08-22
+- [ ] **RecordPayment × cancelled**: статус инвойса не проверяется — платёж по
+      отменённому инвойсу безусловно поднимет статус до partiallyPaid/paid.
+      Аудит 2026-08-26: подтверждено (статус перезаписывается в
+      `record_payment_use_case.dart`, гварда нет; сценарий достижим через
+      `adminInvoices.invoiceCancelAdmin`; теста нет). Отклонять платежи по
+      cancelled-инвойсам + интеграционный тест
 - [x] **Recurring**: номеровать клоны через `SequenceGateway`;
       `_hasMaterialized` без `limit:1`; `dueDate` клона = `issueDate + paymentTermsDays`;
       KU/VAT переоцениваются на момент materialization ✅ 2026-08-22
@@ -125,8 +131,12 @@
 - [x] Длина верификационных кодов 8 знаков ✅ 2026-08-23
       (`server.dart`: `_verificationCodeLength = 8`, генератор переименован в
       `_generateVerificationCode`; длина задаётся функцией-генератором IdP,
-      отдельного конфиг-параметра нет. ⚠️ Проверить input-маску кода в
-      gewerber-app — клиент может ожидать 6 цифр)
+      отдельного конфиг-параметра нет). Клиентская маска проверена аудитом
+      2026-08-26: gewerber-app принимает ровно 8 цифр
+      (`verification_code_input.dart` length=8, VO-регекс `^\d{8}$`),
+      серверный генератор выдаёт только цифры — конфликтов нет. Остаток:
+      мёртвая константа `verificationCodeLength = 6` в константах app-репо
+      (чистка на их стороне, см. app TODO)
 
 ---
 
