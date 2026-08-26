@@ -150,10 +150,12 @@ import 'package:gewerber_backend_server/src/generated/modules/time_tracking/mode
     as _i71;
 import 'package:gewerber_backend_server/src/generated/modules/user/models/user_profile.dart'
     as _i72;
-import 'package:gewerber_backend_server/src/generated/modules/user/models/update_user_profile_request.dart'
+import 'package:gewerber_backend_server/src/generated/modules/user/models/my_identity.dart'
     as _i73;
-import 'package:gewerber_backend_server/src/generated/future_calls.dart'
+import 'package:gewerber_backend_server/src/generated/modules/user/models/update_user_profile_request.dart'
     as _i74;
+import 'package:gewerber_backend_server/src/generated/future_calls.dart'
+    as _i75;
 import 'package:gewerber_backend_server/src/generated/protocol.dart';
 import 'package:gewerber_backend_server/src/generated/endpoints.dart';
 export 'package:serverpod_test/serverpod_test_public_exports.dart';
@@ -4215,9 +4217,37 @@ class _UserProfileEndpoint {
     });
   }
 
+  _i4.Future<_i73.MyIdentity> me(_i1.TestSessionBuilder sessionBuilder) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'userProfile',
+            method: 'me',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'userProfile',
+          methodName: 'me',
+          parameters: _i1.testObjectToJson({}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i4.Future<_i73.MyIdentity>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
   _i4.Future<_i72.UserProfile> update(
     _i1.TestSessionBuilder sessionBuilder,
-    _i73.UpdateUserProfileRequest request,
+    _i74.UpdateUserProfileRequest request,
   ) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
@@ -4312,7 +4342,7 @@ class _MarkOverdueInvoicesFutureCall {
     var _localUniqueSession = (sessionBuilder as _i1.InternalTestSessionBuilder)
         .internalBuild();
     try {
-      await _i74.MarkOverdueInvoicesProcessFutureCall().invoke(
+      await _i75.MarkOverdueInvoicesProcessFutureCall().invoke(
         _localUniqueSession,
         null,
       );
@@ -4327,7 +4357,7 @@ class _ProcessRecurringInvoicesFutureCall {
     var _localUniqueSession = (sessionBuilder as _i1.InternalTestSessionBuilder)
         .internalBuild();
     try {
-      await _i74.ProcessRecurringInvoicesProcessFutureCall().invoke(
+      await _i75.ProcessRecurringInvoicesProcessFutureCall().invoke(
         _localUniqueSession,
         null,
       );

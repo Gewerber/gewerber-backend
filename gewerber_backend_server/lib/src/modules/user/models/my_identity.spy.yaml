@@ -1,0 +1,5 @@
+class: MyIdentity
+fields:
+  userId: UuidValue
+  globalRole: AdminRole?
+  memberships: List<MyMembershipInfo>

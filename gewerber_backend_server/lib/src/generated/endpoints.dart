@@ -3013,6 +3013,16 @@ class Endpoints extends _i1.EndpointDispatch {
               ) async => (endpoints['userProfile'] as _i26.UserProfileEndpoint)
                   .getMyProfile(session),
         ),
+        'me': _i1.MethodConnector(
+          name: 'me',
+          params: {},
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['userProfile'] as _i26.UserProfileEndpoint)
+                  .me(session),
+        ),
         'update': _i1.MethodConnector(
           name: 'update',
           params: {

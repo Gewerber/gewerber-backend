@@ -1,0 +1,5 @@
+class: MyMembershipInfo
+fields:
+  businessId: int
+  businessName: String
+  role: MembershipRole
