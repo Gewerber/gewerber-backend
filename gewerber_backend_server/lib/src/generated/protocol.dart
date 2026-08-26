@@ -122,38 +122,40 @@ import 'modules/time_tracking/models/update_project_request.dart' as _i102;
 import 'modules/time_tracking/models/update_task_request.dart' as _i103;
 import 'modules/time_tracking/models/update_time_entry_request.dart' as _i104;
 import 'modules/user/models/app_theme.dart' as _i105;
-import 'modules/user/models/update_user_profile_request.dart' as _i106;
-import 'modules/user/models/user_profile.dart' as _i107;
+import 'modules/user/models/my_identity.dart' as _i106;
+import 'modules/user/models/my_membership_info.dart' as _i107;
+import 'modules/user/models/update_user_profile_request.dart' as _i108;
+import 'modules/user/models/user_profile.dart' as _i109;
 import 'package:gewerber_backend_server/src/generated/core/entitlement/feature.dart'
-    as _i108;
-import 'package:gewerber_backend_server/src/generated/modules/accounting/models/accounting_transaction.dart'
-    as _i109;
-import 'package:gewerber_backend_server/src/generated/modules/guidance/models/guidance_tip.dart'
     as _i110;
-import 'package:gewerber_backend_server/src/generated/modules/business/models/business.dart'
+import 'package:gewerber_backend_server/src/generated/modules/accounting/models/accounting_transaction.dart'
     as _i111;
-import 'package:gewerber_backend_server/src/generated/modules/documents/models/document.dart'
+import 'package:gewerber_backend_server/src/generated/modules/guidance/models/guidance_tip.dart'
     as _i112;
-import 'package:gewerber_backend_server/src/generated/modules/guidance/models/checklist_definition.dart'
+import 'package:gewerber_backend_server/src/generated/modules/business/models/business.dart'
     as _i113;
-import 'package:gewerber_backend_server/src/generated/modules/guidance/models/user_guidance_progress.dart'
+import 'package:gewerber_backend_server/src/generated/modules/documents/models/document.dart'
     as _i114;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer.dart'
+import 'package:gewerber_backend_server/src/generated/modules/guidance/models/checklist_definition.dart'
     as _i115;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_item.dart'
+import 'package:gewerber_backend_server/src/generated/modules/guidance/models/user_guidance_progress.dart'
     as _i116;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer.dart'
     as _i117;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_template.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_item.dart'
     as _i118;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/reminder.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice.dart'
     as _i119;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/task.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_template.dart'
     as _i120;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/project.dart'
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/reminder.dart'
     as _i121;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/time_entry.dart'
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/task.dart'
     as _i122;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/project.dart'
+    as _i123;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/time_entry.dart'
+    as _i124;
 export 'core/admin/admin_role.dart';
 export 'core/admin/admin_user.dart';
 export 'core/audit/audit_entry.dart';
@@ -254,6 +256,8 @@ export 'modules/time_tracking/models/update_project_request.dart';
 export 'modules/time_tracking/models/update_task_request.dart';
 export 'modules/time_tracking/models/update_time_entry_request.dart';
 export 'modules/user/models/app_theme.dart';
+export 'modules/user/models/my_identity.dart';
+export 'modules/user/models/my_membership_info.dart';
 export 'modules/user/models/update_user_profile_request.dart';
 export 'modules/user/models/user_profile.dart';
 
@@ -2747,11 +2751,17 @@ class Protocol extends _i1.DatabaseSerializationManager {
     if (t == _i105.AppTheme) {
       return _i105.AppTheme.fromJson(data) as T;
     }
-    if (t == _i106.UpdateUserProfileRequest) {
-      return _i106.UpdateUserProfileRequest.fromJson(data) as T;
+    if (t == _i106.MyIdentity) {
+      return _i106.MyIdentity.fromJson(data) as T;
     }
-    if (t == _i107.UserProfile) {
-      return _i107.UserProfile.fromJson(data) as T;
+    if (t == _i107.MyMembershipInfo) {
+      return _i107.MyMembershipInfo.fromJson(data) as T;
+    }
+    if (t == _i108.UpdateUserProfileRequest) {
+      return _i108.UpdateUserProfileRequest.fromJson(data) as T;
+    }
+    if (t == _i109.UserProfile) {
+      return _i109.UserProfile.fromJson(data) as T;
     }
     if (t == _i1.getType<_i6.AdminRole?>()) {
       return (data != null ? _i6.AdminRole.fromJson(data) : null) as T;
@@ -3108,14 +3118,20 @@ class Protocol extends _i1.DatabaseSerializationManager {
     if (t == _i1.getType<_i105.AppTheme?>()) {
       return (data != null ? _i105.AppTheme.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i106.UpdateUserProfileRequest?>()) {
+    if (t == _i1.getType<_i106.MyIdentity?>()) {
+      return (data != null ? _i106.MyIdentity.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i107.MyMembershipInfo?>()) {
+      return (data != null ? _i107.MyMembershipInfo.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i108.UpdateUserProfileRequest?>()) {
       return (data != null
-              ? _i106.UpdateUserProfileRequest.fromJson(data)
+              ? _i108.UpdateUserProfileRequest.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i107.UserProfile?>()) {
-      return (data != null ? _i107.UserProfile.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i109.UserProfile?>()) {
+      return (data != null ? _i109.UserProfile.fromJson(data) : null) as T;
     }
     if (t == Map<String, String>) {
       return (data as Map).map(
@@ -3231,76 +3247,82 @@ class Protocol extends _i1.DatabaseSerializationManager {
               .toList()
           as T;
     }
-    if (t == List<_i108.Feature>) {
-      return (data as List).map((e) => deserialize<_i108.Feature>(e)).toList()
-          as T;
-    }
-    if (t == List<_i109.AccountingTransaction>) {
+    if (t == List<_i107.MyMembershipInfo>) {
       return (data as List)
-              .map((e) => deserialize<_i109.AccountingTransaction>(e))
+              .map((e) => deserialize<_i107.MyMembershipInfo>(e))
               .toList()
           as T;
     }
-    if (t == List<_i110.GuidanceTip>) {
+    if (t == List<_i110.Feature>) {
+      return (data as List).map((e) => deserialize<_i110.Feature>(e)).toList()
+          as T;
+    }
+    if (t == List<_i111.AccountingTransaction>) {
       return (data as List)
-              .map((e) => deserialize<_i110.GuidanceTip>(e))
+              .map((e) => deserialize<_i111.AccountingTransaction>(e))
               .toList()
           as T;
     }
-    if (t == List<_i111.Business>) {
-      return (data as List).map((e) => deserialize<_i111.Business>(e)).toList()
-          as T;
-    }
-    if (t == List<_i112.Document>) {
-      return (data as List).map((e) => deserialize<_i112.Document>(e)).toList()
-          as T;
-    }
-    if (t == List<_i113.ChecklistDefinition>) {
+    if (t == List<_i112.GuidanceTip>) {
       return (data as List)
-              .map((e) => deserialize<_i113.ChecklistDefinition>(e))
+              .map((e) => deserialize<_i112.GuidanceTip>(e))
               .toList()
           as T;
     }
-    if (t == List<_i114.UserGuidanceProgress>) {
+    if (t == List<_i113.Business>) {
+      return (data as List).map((e) => deserialize<_i113.Business>(e)).toList()
+          as T;
+    }
+    if (t == List<_i114.Document>) {
+      return (data as List).map((e) => deserialize<_i114.Document>(e)).toList()
+          as T;
+    }
+    if (t == List<_i115.ChecklistDefinition>) {
       return (data as List)
-              .map((e) => deserialize<_i114.UserGuidanceProgress>(e))
+              .map((e) => deserialize<_i115.ChecklistDefinition>(e))
               .toList()
           as T;
     }
-    if (t == List<_i115.Customer>) {
-      return (data as List).map((e) => deserialize<_i115.Customer>(e)).toList()
-          as T;
-    }
-    if (t == List<_i116.InvoiceItem>) {
+    if (t == List<_i116.UserGuidanceProgress>) {
       return (data as List)
-              .map((e) => deserialize<_i116.InvoiceItem>(e))
+              .map((e) => deserialize<_i116.UserGuidanceProgress>(e))
               .toList()
           as T;
     }
-    if (t == List<_i117.Invoice>) {
-      return (data as List).map((e) => deserialize<_i117.Invoice>(e)).toList()
+    if (t == List<_i117.Customer>) {
+      return (data as List).map((e) => deserialize<_i117.Customer>(e)).toList()
           as T;
     }
-    if (t == List<_i118.InvoiceTemplate>) {
+    if (t == List<_i118.InvoiceItem>) {
       return (data as List)
-              .map((e) => deserialize<_i118.InvoiceTemplate>(e))
+              .map((e) => deserialize<_i118.InvoiceItem>(e))
               .toList()
           as T;
     }
-    if (t == List<_i119.Reminder>) {
-      return (data as List).map((e) => deserialize<_i119.Reminder>(e)).toList()
+    if (t == List<_i119.Invoice>) {
+      return (data as List).map((e) => deserialize<_i119.Invoice>(e)).toList()
           as T;
     }
-    if (t == List<_i120.Task>) {
-      return (data as List).map((e) => deserialize<_i120.Task>(e)).toList()
+    if (t == List<_i120.InvoiceTemplate>) {
+      return (data as List)
+              .map((e) => deserialize<_i120.InvoiceTemplate>(e))
+              .toList()
           as T;
     }
-    if (t == List<_i121.Project>) {
-      return (data as List).map((e) => deserialize<_i121.Project>(e)).toList()
+    if (t == List<_i121.Reminder>) {
+      return (data as List).map((e) => deserialize<_i121.Reminder>(e)).toList()
           as T;
     }
-    if (t == List<_i122.TimeEntry>) {
-      return (data as List).map((e) => deserialize<_i122.TimeEntry>(e)).toList()
+    if (t == List<_i122.Task>) {
+      return (data as List).map((e) => deserialize<_i122.Task>(e)).toList()
+          as T;
+    }
+    if (t == List<_i123.Project>) {
+      return (data as List).map((e) => deserialize<_i123.Project>(e)).toList()
+          as T;
+    }
+    if (t == List<_i124.TimeEntry>) {
+      return (data as List).map((e) => deserialize<_i124.TimeEntry>(e)).toList()
           as T;
     }
     try {
@@ -3420,8 +3442,10 @@ class Protocol extends _i1.DatabaseSerializationManager {
       _i103.UpdateTaskRequest => 'UpdateTaskRequest',
       _i104.UpdateTimeEntryRequest => 'UpdateTimeEntryRequest',
       _i105.AppTheme => 'AppTheme',
-      _i106.UpdateUserProfileRequest => 'UpdateUserProfileRequest',
-      _i107.UserProfile => 'UserProfile',
+      _i106.MyIdentity => 'MyIdentity',
+      _i107.MyMembershipInfo => 'MyMembershipInfo',
+      _i108.UpdateUserProfileRequest => 'UpdateUserProfileRequest',
+      _i109.UserProfile => 'UserProfile',
       _ => null,
     };
   }
@@ -3639,9 +3663,13 @@ class Protocol extends _i1.DatabaseSerializationManager {
         return 'UpdateTimeEntryRequest';
       case _i105.AppTheme():
         return 'AppTheme';
-      case _i106.UpdateUserProfileRequest():
+      case _i106.MyIdentity():
+        return 'MyIdentity';
+      case _i107.MyMembershipInfo():
+        return 'MyMembershipInfo';
+      case _i108.UpdateUserProfileRequest():
         return 'UpdateUserProfileRequest';
-      case _i107.UserProfile():
+      case _i109.UserProfile():
         return 'UserProfile';
     }
     className = _i3.Protocol().getClassNameForObject(data);
@@ -3975,11 +4003,17 @@ class Protocol extends _i1.DatabaseSerializationManager {
     if (dataClassName == 'AppTheme') {
       return deserialize<_i105.AppTheme>(data['data']);
     }
+    if (dataClassName == 'MyIdentity') {
+      return deserialize<_i106.MyIdentity>(data['data']);
+    }
+    if (dataClassName == 'MyMembershipInfo') {
+      return deserialize<_i107.MyMembershipInfo>(data['data']);
+    }
     if (dataClassName == 'UpdateUserProfileRequest') {
-      return deserialize<_i106.UpdateUserProfileRequest>(data['data']);
+      return deserialize<_i108.UpdateUserProfileRequest>(data['data']);
     }
     if (dataClassName == 'UserProfile') {
-      return deserialize<_i107.UserProfile>(data['data']);
+      return deserialize<_i109.UserProfile>(data['data']);
     }
     if (dataClassName.startsWith('gewerber_commercial.')) {
       data['className'] = dataClassName.substring(20);
@@ -4071,8 +4105,8 @@ class Protocol extends _i1.DatabaseSerializationManager {
         return _i97.Task.t;
       case _i99.TimeEntry:
         return _i99.TimeEntry.t;
-      case _i107.UserProfile:
-        return _i107.UserProfile.t;
+      case _i109.UserProfile:
+        return _i109.UserProfile.t;
     }
     return null;
   }
