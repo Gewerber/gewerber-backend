@@ -123,6 +123,7 @@ timeEntry:
   - createInvoice:
 userProfile:
   - getMyProfile:
+  - me:
   - update:
   - deleteMyAccount:
   - exportMyData:

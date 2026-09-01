@@ -149,12 +149,14 @@ import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/model
     as _i70;
 import 'package:gewerber_backend_client/src/protocol/modules/user/models/user_profile.dart'
     as _i71;
-import 'package:gewerber_backend_client/src/protocol/modules/user/models/update_user_profile_request.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/user/models/my_identity.dart'
     as _i72;
-import 'package:gewerber_commercial_client/gewerber_commercial_client.dart'
+import 'package:gewerber_backend_client/src/protocol/modules/user/models/update_user_profile_request.dart'
     as _i73;
-import 'package:http/http.dart' as _i74;
-import 'protocol.dart' as _i75;
+import 'package:gewerber_commercial_client/gewerber_commercial_client.dart'
+    as _i74;
+import 'package:http/http.dart' as _i75;
+import 'protocol.dart' as _i76;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
 /// are made available on the server and enable the corresponding sign-in widget
@@ -1768,7 +1770,20 @@ class EndpointUserProfile extends _i2.EndpointRef {
         {},
       );
 
-  _i3.Future<_i71.UserProfile> update(_i72.UpdateUserProfileRequest request) =>
+  /// Describes the authenticated caller's own identity: the global platform
+  /// admin role (if any, from the `admin_user` allowlist) and all business
+  /// memberships with business names, ordered by ascending `businessId`.
+  /// Clients use this to discover what they can access — notably the MCP
+  /// integration tooling opened up to regular users. Only the caller's own
+  /// data is read.
+  _i3.Future<_i72.MyIdentity> me() =>
+      caller.callServerEndpoint<_i72.MyIdentity>(
+        'userProfile',
+        'me',
+        {},
+      );
+
+  _i3.Future<_i71.UserProfile> update(_i73.UpdateUserProfileRequest request) =>
       caller.callServerEndpoint<_i71.UserProfile>(
         'userProfile',
         'update',
@@ -1799,12 +1814,12 @@ class EndpointUserProfile extends _i2.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    commercial = _i73.Caller(client);
+    commercial = _i74.Caller(client);
     serverpod_auth_core = _i4.Caller(client);
     serverpod_auth_idp = _i1.Caller(client);
   }
 
-  late final _i73.Caller commercial;
+  late final _i74.Caller commercial;
 
   late final _i4.Caller serverpod_auth_core;
 
@@ -1825,10 +1840,10 @@ class Client extends _i2.ServerpodClientShared {
     onFailedCall,
     Function(_i2.MethodCallContext)? onSucceededCall,
     bool? disconnectStreamsOnLostInternetConnection,
-    _i74.Client? httpClientOverride,
+    _i75.Client? httpClientOverride,
   }) : super(
          host,
-         _i75.Protocol(),
+         _i76.Protocol(),
          securityContext: securityContext,
          streamingConnectionTimeout: streamingConnectionTimeout,
          connectionTimeout: connectionTimeout,

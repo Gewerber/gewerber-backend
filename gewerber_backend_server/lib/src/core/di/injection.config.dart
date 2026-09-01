@@ -228,6 +228,7 @@ import '../../modules/time_tracking/domain/time_entry_gateway.dart' as _i417;
 import '../../modules/user/application/delete_my_account_use_case.dart'
     as _i710;
 import '../../modules/user/application/export_my_data_use_case.dart' as _i435;
+import '../../modules/user/application/get_my_identity_use_case.dart' as _i311;
 import '../../modules/user/application/get_my_profile_use_case.dart' as _i325;
 import '../../modules/user/application/update_user_profile_use_case.dart'
     as _i283;
@@ -375,6 +376,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i1065.TransactionGateway>(),
         gh<_i643.DocumentGateway>(),
         gh<_i783.UserGuidanceProgressGateway>(),
+      ),
+    );
+    gh.singleton<_i311.GetMyIdentityUseCase>(
+      () => _i311.GetMyIdentityUseCase(
+        gh<_i62.AdminRoleResolver>(),
+        gh<_i688.MembershipGateway>(),
+        gh<_i647.BusinessGateway>(),
       ),
     );
     gh.singleton<_i556.ProcessRecurringInvoicesUseCase>(
