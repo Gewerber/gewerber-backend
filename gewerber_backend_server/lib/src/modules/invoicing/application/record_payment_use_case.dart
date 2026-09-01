@@ -53,6 +53,12 @@ class RecordPaymentUseCase {
           entityId: '${request.invoiceId}',
         );
       }
+      if (invoice.status == InvoiceStatus.cancelled) {
+        throw ValidationException(
+          message: 'Cannot record payment on a cancelled invoice.',
+          field: 'invoiceId',
+        );
+      }
 
       final existingTotal = (await _payments.findByInvoiceId(
         session,
