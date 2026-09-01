@@ -80,14 +80,16 @@ void run(List<String> args) async {
 /// Length of the email verification codes (registration + password reset).
 /// 8 digits give 10^8 combinations — brute-force resistant enough for a
 /// rate-limited, expiring code without being unreadable for users.
+///
+/// Contract: the client app (gewerber-app) must accept codes of this exact
+/// length. The value is mirrored in `AppConstants.verificationCodeLength`
+/// in the app, but the two packages cannot share a Dart import.
 const int _verificationCodeLength = 8;
 
 /// Generates a numeric verification code of [_verificationCodeLength]
 /// digits. The code length is set here because the email IdP takes the
 /// generator function as configuration (the IdP default is also 8 digits;
 /// keeping an explicit generator documents the contract).
-///
-/// Note: the client app must accept codes of this length in its input field.
 String _generateVerificationCode() {
   const digits = '0123456789';
   final random = Random.secure();
