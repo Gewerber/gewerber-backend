@@ -145,7 +145,7 @@ import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/model
     as _i115;
 import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/time_entry.dart'
     as _i116;
-import 'package:gewerber_commercial_client/gewerber_commercial_client.dart'
+import 'package:gewerber_backend_commercial_client/gewerber_backend_commercial_client.dart'
     as _i117;
 import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
     as _i118;
@@ -1468,7 +1468,7 @@ class Protocol extends _i1.SerializationManager {
     if (className != null) {
       return className.contains('.')
           ? className
-          : 'gewerber_commercial.$className';
+          : 'gewerber_backend_commercial.$className';
     }
     className = _i118.Protocol().getClassNameForObject(data);
     if (className != null) {
@@ -1791,7 +1791,7 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'UserProfile') {
       return deserialize<_i101.UserProfile>(data['data']);
     }
-    if (dataClassName.startsWith('gewerber_commercial.')) {
+    if (dataClassName.startsWith('gewerber_backend_commercial.')) {
       data['className'] = dataClassName.substring(20);
       return _i117.Protocol().deserializeByClassName(data);
     }

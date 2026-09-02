@@ -153,7 +153,7 @@ import 'package:gewerber_backend_client/src/protocol/modules/user/models/my_iden
     as _i72;
 import 'package:gewerber_backend_client/src/protocol/modules/user/models/update_user_profile_request.dart'
     as _i73;
-import 'package:gewerber_commercial_client/gewerber_commercial_client.dart'
+import 'package:gewerber_backend_commercial_client/gewerber_backend_commercial_client.dart'
     as _i74;
 import 'package:http/http.dart' as _i75;
 import 'protocol.dart' as _i76;

@@ -13,7 +13,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod/protocol.dart' as _i2;
-import 'package:gewerber_commercial_server/gewerber_commercial_server.dart'
+import 'package:gewerber_backend_commercial_server/gewerber_backend_commercial_server.dart'
     as _i3;
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
     as _i4;
@@ -3676,7 +3676,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
     if (className != null) {
       return className.contains('.')
           ? className
-          : 'gewerber_commercial.$className';
+          : 'gewerber_backend_commercial.$className';
     }
     className = _i4.Protocol().getClassNameForObject(data);
     if (className != null) {
@@ -4015,7 +4015,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
     if (dataClassName == 'UserProfile') {
       return deserialize<_i109.UserProfile>(data['data']);
     }
-    if (dataClassName.startsWith('gewerber_commercial.')) {
+    if (dataClassName.startsWith('gewerber_backend_commercial.')) {
       data['className'] = dataClassName.substring(20);
       return _i3.Protocol().deserializeByClassName(data);
     }
