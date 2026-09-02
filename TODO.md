@@ -17,10 +17,10 @@
       запретить для `partiallyPaid` и `overdue` ✅ 2026-08-22 (allow-list вместо deny-list)
 - [x] **RecordPayment**: перенести расчёт paidTotal внутрь транзакции
       (LockMode.forUpdate по invoice); отклонять переплату явно ✅ 2026-08-22
-- [ ] **RecordPayment × cancelled**: статус инвойса не проверяется — платёж по
+- [x] **RecordPayment × cancelled**: статус инвойса не проверяется — платёж по
       отменённому инвойсу безусловно поднимет статус до partiallyPaid/paid.
       Аудит 2026-08-26: подтверждено (статус перезаписывается в
-      `record_payment_use_case.dart`, гварда нет; сценарий достижим через
+      `record_payment_use_case.dart`, гварда нет; сценарий achievable через
       `adminInvoices.invoiceCancelAdmin`; теста нет). Отклонять платежи по
       cancelled-инвойсам + интеграционный тест
 - [x] **Recurring**: номеровать клоны через `SequenceGateway`;
@@ -172,7 +172,7 @@
 ### Лидогенерация (связка с gewerber-website)
 - [ ] **Waitlist: атрибуция первого касания** — изменение в закрытом модуле
       `gewerber-backend-commercial`: расширить
-      `gewerber_commercial_server/lib/src/modules/waitlist/models/join_waitlist_request.spy.yaml`
+      `gewerber_backend_commercial_server/lib/src/modules/waitlist/models/join_waitlist_request.spy.yaml`
       и таблицу `waitlist_entry.spy.yaml` опциональными полями
       `utmTerm`, `utmContent`, `gclid`, `fbclid`, `landingPage` (все `String?`),
       пробросить в use case создания записи → `serverpod generate` +

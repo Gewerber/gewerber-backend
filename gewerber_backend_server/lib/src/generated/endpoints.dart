@@ -101,7 +101,7 @@ import 'package:gewerber_backend_server/src/generated/modules/time_tracking/mode
     as _i57;
 import 'package:gewerber_backend_server/src/generated/modules/user/models/update_user_profile_request.dart'
     as _i58;
-import 'package:gewerber_commercial_server/gewerber_commercial_server.dart'
+import 'package:gewerber_backend_commercial_server/gewerber_backend_commercial_server.dart'
     as _i59;
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
     as _i60;
@@ -3064,7 +3064,7 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
-    modules['gewerber_commercial'] = _i59.Endpoints()
+    modules['gewerber_backend_commercial'] = _i59.Endpoints()
       ..initializeEndpoints(server);
     modules['serverpod_auth_core'] = _i60.Endpoints()
       ..initializeEndpoints(server);

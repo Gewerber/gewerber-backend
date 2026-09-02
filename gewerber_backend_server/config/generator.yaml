@@ -4,5 +4,5 @@ client_package_path: ../gewerber_backend_client
 server_test_tools_path: test/integration/test_tools
 
 modules:
-  gewerber_commercial_server:
+  gewerber_backend_commercial_server:
     nickname: commercial
