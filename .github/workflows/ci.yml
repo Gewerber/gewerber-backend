@@ -7,7 +7,7 @@
 # required in branch protection so merges always pass analyze + tests.
 #
 # No repository secrets are required: the commercial module dependency
-# resolves against the public gewerber-backend--stubs repository. Developers
+# resolves against the public gewerber-backend-stubs repository. Developers
 # with access to the private module resolve it locally via a gitignored
 # pubspec_overrides.yaml.
 #
