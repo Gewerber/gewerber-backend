@@ -10,11 +10,13 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i2;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
 
 abstract class CreateTimeEntriesInvoiceRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   CreateTimeEntriesInvoiceRequest._({
     required this.projectId,
     this.from,
@@ -40,17 +42,17 @@ abstract class CreateTimeEntriesInvoiceRequest
       projectId: jsonSerialization['projectId'] as int,
       from: jsonSerialization['from'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['from']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['from']),
       to: jsonSerialization['to'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['to']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['to']),
       customerId: jsonSerialization['customerId'] as int?,
       issueDate: jsonSerialization['issueDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['issueDate']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['issueDate']),
       timeEntryIds: jsonSerialization['timeEntryIds'] == null
           ? null
-          : _i2.Protocol().deserialize<List<int>>(
+          : _itzp2rm6.Protocol().deserialize<List<int>>(
               jsonSerialization['timeEntryIds'],
             ),
     );
@@ -70,7 +72,7 @@ abstract class CreateTimeEntriesInvoiceRequest
 
   /// Returns a shallow copy of this [CreateTimeEntriesInvoiceRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   CreateTimeEntriesInvoiceRequest copyWith({
     int? projectId,
     DateTime? from,
@@ -107,7 +109,7 @@ abstract class CreateTimeEntriesInvoiceRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -133,7 +135,7 @@ class _CreateTimeEntriesInvoiceRequestImpl
 
   /// Returns a shallow copy of this [CreateTimeEntriesInvoiceRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   CreateTimeEntriesInvoiceRequest copyWith({
     int? projectId,

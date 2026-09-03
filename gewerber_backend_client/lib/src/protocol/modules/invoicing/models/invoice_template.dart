@@ -10,10 +10,11 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
 abstract class InvoiceTemplate
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   InvoiceTemplate._({
     this.id,
     required this.businessId,
@@ -47,16 +48,16 @@ abstract class InvoiceTemplate
       name: jsonSerialization['name'] as String,
       isDefault: jsonSerialization['isDefault'] == null
           ? null
-          : _i1.BoolJsonExtension.fromJson(jsonSerialization['isDefault']),
+          : _isc.BoolJsonExtension.fromJson(jsonSerialization['isDefault']),
       headerText: jsonSerialization['headerText'] as String?,
       footerText: jsonSerialization['footerText'] as String?,
       logoDocumentId: jsonSerialization['logoDocumentId'] as int?,
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -83,7 +84,7 @@ abstract class InvoiceTemplate
 
   /// Returns a shallow copy of this [InvoiceTemplate]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   InvoiceTemplate copyWith({
     int? id,
     int? businessId,
@@ -129,7 +130,7 @@ abstract class InvoiceTemplate
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -160,7 +161,7 @@ class _InvoiceTemplateImpl extends InvoiceTemplate {
 
   /// Returns a shallow copy of this [InvoiceTemplate]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   InvoiceTemplate copyWith({
     Object? id = _Undefined,

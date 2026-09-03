@@ -10,21 +10,22 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/invoicing/models/payment_method.dart' as _i2;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/invoicing/models/payment_method.dart' as _idng401x;
 
 abstract class PaymentRecord
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   PaymentRecord._({
     this.id,
     required this.invoiceId,
     DateTime? paidAt,
     required this.amountCents,
-    _i2.PaymentMethod? method,
+    _idng401x.PaymentMethod? method,
     this.reference,
     DateTime? createdAt,
   }) : paidAt = paidAt ?? DateTime.now(),
-       method = method ?? _i2.PaymentMethod.bankTransfer,
+       method = method ?? _idng401x.PaymentMethod.bankTransfer,
        createdAt = createdAt ?? DateTime.now();
 
   factory PaymentRecord({
@@ -32,7 +33,7 @@ abstract class PaymentRecord
     required int invoiceId,
     DateTime? paidAt,
     required int amountCents,
-    _i2.PaymentMethod? method,
+    _idng401x.PaymentMethod? method,
     String? reference,
     DateTime? createdAt,
   }) = _PaymentRecordImpl;
@@ -43,15 +44,17 @@ abstract class PaymentRecord
       invoiceId: jsonSerialization['invoiceId'] as int,
       paidAt: jsonSerialization['paidAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['paidAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['paidAt']),
       amountCents: jsonSerialization['amountCents'] as int,
       method: jsonSerialization['method'] == null
           ? null
-          : _i2.PaymentMethod.fromJson((jsonSerialization['method'] as String)),
+          : _idng401x.PaymentMethod.fromJson(
+              (jsonSerialization['method'] as String),
+            ),
       reference: jsonSerialization['reference'] as String?,
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
     );
   }
 
@@ -66,7 +69,7 @@ abstract class PaymentRecord
 
   int amountCents;
 
-  _i2.PaymentMethod method;
+  _idng401x.PaymentMethod method;
 
   String? reference;
 
@@ -74,13 +77,13 @@ abstract class PaymentRecord
 
   /// Returns a shallow copy of this [PaymentRecord]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   PaymentRecord copyWith({
     int? id,
     int? invoiceId,
     DateTime? paidAt,
     int? amountCents,
-    _i2.PaymentMethod? method,
+    _idng401x.PaymentMethod? method,
     String? reference,
     DateTime? createdAt,
   });
@@ -114,7 +117,7 @@ abstract class PaymentRecord
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -126,7 +129,7 @@ class _PaymentRecordImpl extends PaymentRecord {
     required int invoiceId,
     DateTime? paidAt,
     required int amountCents,
-    _i2.PaymentMethod? method,
+    _idng401x.PaymentMethod? method,
     String? reference,
     DateTime? createdAt,
   }) : super._(
@@ -141,14 +144,14 @@ class _PaymentRecordImpl extends PaymentRecord {
 
   /// Returns a shallow copy of this [PaymentRecord]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   PaymentRecord copyWith({
     Object? id = _Undefined,
     int? invoiceId,
     DateTime? paidAt,
     int? amountCents,
-    _i2.PaymentMethod? method,
+    _idng401x.PaymentMethod? method,
     Object? reference = _Undefined,
     DateTime? createdAt,
   }) {

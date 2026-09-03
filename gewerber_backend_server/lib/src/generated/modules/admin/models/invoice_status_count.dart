@@ -10,39 +10,40 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/invoicing/models/invoice_status.dart' as _i2;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/invoicing/models/invoice_status.dart' as _ib459vd4;
 
 abstract class InvoiceStatusCount
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   InvoiceStatusCount._({
     required this.status,
     required this.count,
   });
 
   factory InvoiceStatusCount({
-    required _i2.InvoiceStatus status,
+    required _ib459vd4.InvoiceStatus status,
     required int count,
   }) = _InvoiceStatusCountImpl;
 
   factory InvoiceStatusCount.fromJson(Map<String, dynamic> jsonSerialization) {
     return InvoiceStatusCount(
-      status: _i2.InvoiceStatus.fromJson(
+      status: _ib459vd4.InvoiceStatus.fromJson(
         (jsonSerialization['status'] as String),
       ),
       count: jsonSerialization['count'] as int,
     );
   }
 
-  _i2.InvoiceStatus status;
+  _ib459vd4.InvoiceStatus status;
 
   int count;
 
   /// Returns a shallow copy of this [InvoiceStatusCount]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   InvoiceStatusCount copyWith({
-    _i2.InvoiceStatus? status,
+    _ib459vd4.InvoiceStatus? status,
     int? count,
   });
   @override
@@ -65,13 +66,13 @@ abstract class InvoiceStatusCount
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
 class _InvoiceStatusCountImpl extends InvoiceStatusCount {
   _InvoiceStatusCountImpl({
-    required _i2.InvoiceStatus status,
+    required _ib459vd4.InvoiceStatus status,
     required int count,
   }) : super._(
          status: status,
@@ -80,10 +81,10 @@ class _InvoiceStatusCountImpl extends InvoiceStatusCount {
 
   /// Returns a shallow copy of this [InvoiceStatusCount]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   InvoiceStatusCount copyWith({
-    _i2.InvoiceStatus? status,
+    _ib459vd4.InvoiceStatus? status,
     int? count,
   }) {
     return InvoiceStatusCount(

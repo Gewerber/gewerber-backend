@@ -10,23 +10,24 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/business/models/country.dart' as _i2;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/business/models/country.dart' as _i60az94p;
 
 abstract class Address
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   Address._({
     required this.street,
     required this.zip,
     required this.city,
-    _i2.Country? country,
-  }) : country = country ?? _i2.Country.deu;
+    _i60az94p.Country? country,
+  }) : country = country ?? _i60az94p.Country.deu;
 
   factory Address({
     required String street,
     required String zip,
     required String city,
-    _i2.Country? country,
+    _i60az94p.Country? country,
   }) = _AddressImpl;
 
   factory Address.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -36,7 +37,9 @@ abstract class Address
       city: jsonSerialization['city'] as String,
       country: jsonSerialization['country'] == null
           ? null
-          : _i2.Country.fromJson((jsonSerialization['country'] as String)),
+          : _i60az94p.Country.fromJson(
+              (jsonSerialization['country'] as String),
+            ),
     );
   }
 
@@ -46,16 +49,16 @@ abstract class Address
 
   String city;
 
-  _i2.Country country;
+  _i60az94p.Country country;
 
   /// Returns a shallow copy of this [Address]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   Address copyWith({
     String? street,
     String? zip,
     String? city,
-    _i2.Country? country,
+    _i60az94p.Country? country,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -81,7 +84,7 @@ abstract class Address
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -90,7 +93,7 @@ class _AddressImpl extends Address {
     required String street,
     required String zip,
     required String city,
-    _i2.Country? country,
+    _i60az94p.Country? country,
   }) : super._(
          street: street,
          zip: zip,
@@ -100,13 +103,13 @@ class _AddressImpl extends Address {
 
   /// Returns a shallow copy of this [Address]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   Address copyWith({
     String? street,
     String? zip,
     String? city,
-    _i2.Country? country,
+    _i60az94p.Country? country,
   }) {
     return Address(
       street: street ?? this.street,

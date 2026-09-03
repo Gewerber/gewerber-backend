@@ -10,12 +10,14 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/invoicing/models/invoice.dart' as _i2;
-import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i3;
+
+import 'package:gewerber_backend_client/src/protocol/protocol.dart'
+    as _iipbhyvd;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/invoicing/models/invoice.dart' as _i2lykh97;
 
 abstract class AdminInvoicePage
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   AdminInvoicePage._({
     required this.items,
     this.nextCursor,
@@ -23,14 +25,14 @@ abstract class AdminInvoicePage
   });
 
   factory AdminInvoicePage({
-    required List<_i2.Invoice> items,
+    required List<_i2lykh97.Invoice> items,
     String? nextCursor,
     required int limit,
   }) = _AdminInvoicePageImpl;
 
   factory AdminInvoicePage.fromJson(Map<String, dynamic> jsonSerialization) {
     return AdminInvoicePage(
-      items: _i3.Protocol().deserialize<List<_i2.Invoice>>(
+      items: _iipbhyvd.Protocol().deserialize<List<_i2lykh97.Invoice>>(
         jsonSerialization['items'],
       ),
       nextCursor: jsonSerialization['nextCursor'] as String?,
@@ -38,7 +40,7 @@ abstract class AdminInvoicePage
     );
   }
 
-  List<_i2.Invoice> items;
+  List<_i2lykh97.Invoice> items;
 
   String? nextCursor;
 
@@ -46,9 +48,9 @@ abstract class AdminInvoicePage
 
   /// Returns a shallow copy of this [AdminInvoicePage]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   AdminInvoicePage copyWith({
-    List<_i2.Invoice>? items,
+    List<_i2lykh97.Invoice>? items,
     String? nextCursor,
     int? limit,
   });
@@ -74,7 +76,7 @@ abstract class AdminInvoicePage
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -82,7 +84,7 @@ class _Undefined {}
 
 class _AdminInvoicePageImpl extends AdminInvoicePage {
   _AdminInvoicePageImpl({
-    required List<_i2.Invoice> items,
+    required List<_i2lykh97.Invoice> items,
     String? nextCursor,
     required int limit,
   }) : super._(
@@ -93,10 +95,10 @@ class _AdminInvoicePageImpl extends AdminInvoicePage {
 
   /// Returns a shallow copy of this [AdminInvoicePage]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   AdminInvoicePage copyWith({
-    List<_i2.Invoice>? items,
+    List<_i2lykh97.Invoice>? items,
     Object? nextCursor = _Undefined,
     int? limit,
   }) {

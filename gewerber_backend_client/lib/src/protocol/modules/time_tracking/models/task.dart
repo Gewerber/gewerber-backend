@@ -10,21 +10,22 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/time_tracking/models/task_status.dart' as _i2;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/time_tracking/models/task_status.dart' as _i7bsstnn;
 
 abstract class Task
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   Task._({
     this.id,
     required this.businessId,
     required this.projectId,
     required this.name,
-    _i2.TaskStatus? status,
+    _i7bsstnn.TaskStatus? status,
     this.hourlyRateCents,
     DateTime? createdAt,
     DateTime? updatedAt,
-  }) : status = status ?? _i2.TaskStatus.open,
+  }) : status = status ?? _i7bsstnn.TaskStatus.open,
        createdAt = createdAt ?? DateTime.now(),
        updatedAt = updatedAt ?? DateTime.now();
 
@@ -33,7 +34,7 @@ abstract class Task
     required int businessId,
     required int projectId,
     required String name,
-    _i2.TaskStatus? status,
+    _i7bsstnn.TaskStatus? status,
     int? hourlyRateCents,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -47,14 +48,16 @@ abstract class Task
       name: jsonSerialization['name'] as String,
       status: jsonSerialization['status'] == null
           ? null
-          : _i2.TaskStatus.fromJson((jsonSerialization['status'] as String)),
+          : _i7bsstnn.TaskStatus.fromJson(
+              (jsonSerialization['status'] as String),
+            ),
       hourlyRateCents: jsonSerialization['hourlyRateCents'] as int?,
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -69,7 +72,7 @@ abstract class Task
 
   String name;
 
-  _i2.TaskStatus status;
+  _i7bsstnn.TaskStatus status;
 
   int? hourlyRateCents;
 
@@ -79,13 +82,13 @@ abstract class Task
 
   /// Returns a shallow copy of this [Task]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   Task copyWith({
     int? id,
     int? businessId,
     int? projectId,
     String? name,
-    _i2.TaskStatus? status,
+    _i7bsstnn.TaskStatus? status,
     int? hourlyRateCents,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -122,7 +125,7 @@ abstract class Task
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -134,7 +137,7 @@ class _TaskImpl extends Task {
     required int businessId,
     required int projectId,
     required String name,
-    _i2.TaskStatus? status,
+    _i7bsstnn.TaskStatus? status,
     int? hourlyRateCents,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -151,14 +154,14 @@ class _TaskImpl extends Task {
 
   /// Returns a shallow copy of this [Task]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   Task copyWith({
     Object? id = _Undefined,
     int? businessId,
     int? projectId,
     String? name,
-    _i2.TaskStatus? status,
+    _i7bsstnn.TaskStatus? status,
     Object? hourlyRateCents = _Undefined,
     DateTime? createdAt,
     DateTime? updatedAt,

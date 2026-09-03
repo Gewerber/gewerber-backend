@@ -10,25 +10,26 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/business/models/membership_role.dart' as _i2;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/business/models/membership_role.dart' as _i0s3lyvs;
 
 abstract class Membership
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   Membership._({
     this.id,
     this.userId,
     required this.businessId,
-    _i2.MembershipRole? role,
+    _i0s3lyvs.MembershipRole? role,
     DateTime? createdAt,
-  }) : role = role ?? _i2.MembershipRole.member,
+  }) : role = role ?? _i0s3lyvs.MembershipRole.member,
        createdAt = createdAt ?? DateTime.now();
 
   factory Membership({
     int? id,
-    _i1.UuidValue? userId,
+    _isc.UuidValue? userId,
     required int businessId,
-    _i2.MembershipRole? role,
+    _i0s3lyvs.MembershipRole? role,
     DateTime? createdAt,
   }) = _MembershipImpl;
 
@@ -37,14 +38,16 @@ abstract class Membership
       id: jsonSerialization['id'] as int?,
       userId: jsonSerialization['userId'] == null
           ? null
-          : _i1.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
+          : _isc.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
       businessId: jsonSerialization['businessId'] as int,
       role: jsonSerialization['role'] == null
           ? null
-          : _i2.MembershipRole.fromJson((jsonSerialization['role'] as String)),
+          : _i0s3lyvs.MembershipRole.fromJson(
+              (jsonSerialization['role'] as String),
+            ),
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
     );
   }
 
@@ -54,22 +57,22 @@ abstract class Membership
   int? id;
 
   /// Nullable: set to null when the account is deleted (GDPR Art. 17).
-  _i1.UuidValue? userId;
+  _isc.UuidValue? userId;
 
   int businessId;
 
-  _i2.MembershipRole role;
+  _i0s3lyvs.MembershipRole role;
 
   DateTime createdAt;
 
   /// Returns a shallow copy of this [Membership]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   Membership copyWith({
     int? id,
-    _i1.UuidValue? userId,
+    _isc.UuidValue? userId,
     int? businessId,
-    _i2.MembershipRole? role,
+    _i0s3lyvs.MembershipRole? role,
     DateTime? createdAt,
   });
   @override
@@ -98,7 +101,7 @@ abstract class Membership
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -107,9 +110,9 @@ class _Undefined {}
 class _MembershipImpl extends Membership {
   _MembershipImpl({
     int? id,
-    _i1.UuidValue? userId,
+    _isc.UuidValue? userId,
     required int businessId,
-    _i2.MembershipRole? role,
+    _i0s3lyvs.MembershipRole? role,
     DateTime? createdAt,
   }) : super._(
          id: id,
@@ -121,18 +124,18 @@ class _MembershipImpl extends Membership {
 
   /// Returns a shallow copy of this [Membership]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   Membership copyWith({
     Object? id = _Undefined,
     Object? userId = _Undefined,
     int? businessId,
-    _i2.MembershipRole? role,
+    _i0s3lyvs.MembershipRole? role,
     DateTime? createdAt,
   }) {
     return Membership(
       id: id is int? ? id : this.id,
-      userId: userId is _i1.UuidValue? ? userId : this.userId,
+      userId: userId is _isc.UuidValue? ? userId : this.userId,
       businessId: businessId ?? this.businessId,
       role: role ?? this.role,
       createdAt: createdAt ?? this.createdAt,

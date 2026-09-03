@@ -10,12 +10,14 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/invoicing/models/invoice.dart' as _i2;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i3;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/invoicing/models/invoice.dart' as _i2lykh97;
 
 abstract class InvoiceListPage
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   InvoiceListPage._({
     required this.items,
     required this.totalCount,
@@ -24,7 +26,7 @@ abstract class InvoiceListPage
   });
 
   factory InvoiceListPage({
-    required List<_i2.Invoice> items,
+    required List<_i2lykh97.Invoice> items,
     required int totalCount,
     required int limit,
     required int offset,
@@ -32,7 +34,7 @@ abstract class InvoiceListPage
 
   factory InvoiceListPage.fromJson(Map<String, dynamic> jsonSerialization) {
     return InvoiceListPage(
-      items: _i3.Protocol().deserialize<List<_i2.Invoice>>(
+      items: _itzp2rm6.Protocol().deserialize<List<_i2lykh97.Invoice>>(
         jsonSerialization['items'],
       ),
       totalCount: jsonSerialization['totalCount'] as int,
@@ -41,7 +43,7 @@ abstract class InvoiceListPage
     );
   }
 
-  List<_i2.Invoice> items;
+  List<_i2lykh97.Invoice> items;
 
   int totalCount;
 
@@ -51,9 +53,9 @@ abstract class InvoiceListPage
 
   /// Returns a shallow copy of this [InvoiceListPage]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   InvoiceListPage copyWith({
-    List<_i2.Invoice>? items,
+    List<_i2lykh97.Invoice>? items,
     int? totalCount,
     int? limit,
     int? offset,
@@ -82,13 +84,13 @@ abstract class InvoiceListPage
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
 class _InvoiceListPageImpl extends InvoiceListPage {
   _InvoiceListPageImpl({
-    required List<_i2.Invoice> items,
+    required List<_i2lykh97.Invoice> items,
     required int totalCount,
     required int limit,
     required int offset,
@@ -101,10 +103,10 @@ class _InvoiceListPageImpl extends InvoiceListPage {
 
   /// Returns a shallow copy of this [InvoiceListPage]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   InvoiceListPage copyWith({
-    List<_i2.Invoice>? items,
+    List<_i2lykh97.Invoice>? items,
     int? totalCount,
     int? limit,
     int? offset,

@@ -10,13 +10,15 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../core/admin/admin_role.dart' as _i2;
-import '../../../modules/user/models/my_membership_info.dart' as _i3;
-import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i4;
+
+import 'package:gewerber_backend_client/src/protocol/protocol.dart'
+    as _iipbhyvd;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../core/admin/admin_role.dart' as _isyiaiss;
+import '../../../modules/user/models/my_membership_info.dart' as _if7d4sy6;
 
 abstract class MyIdentity
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   MyIdentity._({
     required this.userId,
     this.globalRole,
@@ -24,36 +26,39 @@ abstract class MyIdentity
   });
 
   factory MyIdentity({
-    required _i1.UuidValue userId,
-    _i2.AdminRole? globalRole,
-    required List<_i3.MyMembershipInfo> memberships,
+    required _isc.UuidValue userId,
+    _isyiaiss.AdminRole? globalRole,
+    required List<_if7d4sy6.MyMembershipInfo> memberships,
   }) = _MyIdentityImpl;
 
   factory MyIdentity.fromJson(Map<String, dynamic> jsonSerialization) {
     return MyIdentity(
-      userId: _i1.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
+      userId: _isc.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
       globalRole: jsonSerialization['globalRole'] == null
           ? null
-          : _i2.AdminRole.fromJson((jsonSerialization['globalRole'] as String)),
-      memberships: _i4.Protocol().deserialize<List<_i3.MyMembershipInfo>>(
-        jsonSerialization['memberships'],
-      ),
+          : _isyiaiss.AdminRole.fromJson(
+              (jsonSerialization['globalRole'] as String),
+            ),
+      memberships: _iipbhyvd.Protocol()
+          .deserialize<List<_if7d4sy6.MyMembershipInfo>>(
+            jsonSerialization['memberships'],
+          ),
     );
   }
 
-  _i1.UuidValue userId;
+  _isc.UuidValue userId;
 
-  _i2.AdminRole? globalRole;
+  _isyiaiss.AdminRole? globalRole;
 
-  List<_i3.MyMembershipInfo> memberships;
+  List<_if7d4sy6.MyMembershipInfo> memberships;
 
   /// Returns a shallow copy of this [MyIdentity]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   MyIdentity copyWith({
-    _i1.UuidValue? userId,
-    _i2.AdminRole? globalRole,
-    List<_i3.MyMembershipInfo>? memberships,
+    _isc.UuidValue? userId,
+    _isyiaiss.AdminRole? globalRole,
+    List<_if7d4sy6.MyMembershipInfo>? memberships,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -79,7 +84,7 @@ abstract class MyIdentity
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -87,9 +92,9 @@ class _Undefined {}
 
 class _MyIdentityImpl extends MyIdentity {
   _MyIdentityImpl({
-    required _i1.UuidValue userId,
-    _i2.AdminRole? globalRole,
-    required List<_i3.MyMembershipInfo> memberships,
+    required _isc.UuidValue userId,
+    _isyiaiss.AdminRole? globalRole,
+    required List<_if7d4sy6.MyMembershipInfo> memberships,
   }) : super._(
          userId: userId,
          globalRole: globalRole,
@@ -98,16 +103,18 @@ class _MyIdentityImpl extends MyIdentity {
 
   /// Returns a shallow copy of this [MyIdentity]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   MyIdentity copyWith({
-    _i1.UuidValue? userId,
+    _isc.UuidValue? userId,
     Object? globalRole = _Undefined,
-    List<_i3.MyMembershipInfo>? memberships,
+    List<_if7d4sy6.MyMembershipInfo>? memberships,
   }) {
     return MyIdentity(
       userId: userId ?? this.userId,
-      globalRole: globalRole is _i2.AdminRole? ? globalRole : this.globalRole,
+      globalRole: globalRole is _isyiaiss.AdminRole?
+          ? globalRole
+          : this.globalRole,
       memberships:
           memberships ?? this.memberships.map((e0) => e0.copyWith()).toList(),
     );

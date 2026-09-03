@@ -10,16 +10,16 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-enum InvoiceStatus implements _i1.SerializableModel {
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
+enum InvoiceStatus implements _isc.SerializableModel {
   draft,
   sent,
   paid,
   partiallyPaid,
   overdue,
-  cancelled,
-  ;
+  cancelled;
 
   static InvoiceStatus fromJson(String name) {
     switch (name) {

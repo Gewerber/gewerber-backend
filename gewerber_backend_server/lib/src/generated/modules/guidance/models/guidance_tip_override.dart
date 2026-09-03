@@ -10,14 +10,15 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
+
+import 'package:serverpod/serverpod.dart' as _is;
 
 /// Admin-managed override of a curated in-code [GuidanceTip]. Keyed by
 /// `topic`: when present it replaces the built-in tip with the same topic
 /// (in `guidance.tips` and in the admin listing). Topics without a built-in
 /// tip are appended as new tips.
 abstract class GuidanceTipOverride
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   GuidanceTipOverride._({
     this.id,
     required this.topic,
@@ -42,7 +43,7 @@ abstract class GuidanceTipOverride
       body: jsonSerialization['body'] as String,
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -62,11 +63,11 @@ abstract class GuidanceTipOverride
   DateTime updatedAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [GuidanceTipOverride]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   GuidanceTipOverride copyWith({
     int? id,
     String? topic,
@@ -96,11 +97,11 @@ abstract class GuidanceTipOverride
   }
 
   static GuidanceTipOverrideIncludeList includeList({
-    _i1.WhereExpressionBuilder<GuidanceTipOverrideTable>? where,
+    _is.WhereExpressionBuilder<GuidanceTipOverrideTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<GuidanceTipOverrideTable>? orderBy,
-    _i1.OrderByListBuilder<GuidanceTipOverrideTable>? orderByList,
+    _is.OrderByBuilder<GuidanceTipOverrideTable>? orderBy,
+    _is.OrderByListBuilder<GuidanceTipOverrideTable>? orderByList,
     GuidanceTipOverrideInclude? include,
   }) {
     return GuidanceTipOverrideIncludeList._(
@@ -115,7 +116,7 @@ abstract class GuidanceTipOverride
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -138,7 +139,7 @@ class _GuidanceTipOverrideImpl extends GuidanceTipOverride {
 
   /// Returns a shallow copy of this [GuidanceTipOverride]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   GuidanceTipOverride copyWith({
     Object? id = _Undefined,
@@ -158,48 +159,48 @@ class _GuidanceTipOverrideImpl extends GuidanceTipOverride {
 }
 
 class GuidanceTipOverrideUpdateTable
-    extends _i1.UpdateTable<GuidanceTipOverrideTable> {
+    extends _is.UpdateTable<GuidanceTipOverrideTable> {
   GuidanceTipOverrideUpdateTable(super.table);
 
-  _i1.ColumnValue<String, String> topic(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> topic(String value) => _is.ColumnValue(
     table.topic,
     value,
   );
 
-  _i1.ColumnValue<String, String> title(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> title(String value) => _is.ColumnValue(
     table.title,
     value,
   );
 
-  _i1.ColumnValue<String, String> body(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> body(String value) => _is.ColumnValue(
     table.body,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
+      _is.ColumnValue(
         table.updatedAt,
         value,
       );
 }
 
-class GuidanceTipOverrideTable extends _i1.Table<int?> {
+class GuidanceTipOverrideTable extends _is.Table<int?> {
   GuidanceTipOverrideTable({super.tableRelation})
     : super(tableName: 'guidance_tip_override') {
     updateTable = GuidanceTipOverrideUpdateTable(this);
-    topic = _i1.ColumnString(
+    topic = _is.ColumnString(
       'topic',
       this,
     );
-    title = _i1.ColumnString(
+    title = _is.ColumnString(
       'title',
       this,
     );
-    body = _i1.ColumnString(
+    body = _is.ColumnString(
       'body',
       this,
     );
-    updatedAt = _i1.ColumnDateTime(
+    updatedAt = _is.ColumnDateTime(
       'updatedAt',
       this,
       hasDefault: true,
@@ -208,16 +209,16 @@ class GuidanceTipOverrideTable extends _i1.Table<int?> {
 
   late final GuidanceTipOverrideUpdateTable updateTable;
 
-  late final _i1.ColumnString topic;
+  late final _is.ColumnString topic;
 
-  late final _i1.ColumnString title;
+  late final _is.ColumnString title;
 
-  late final _i1.ColumnString body;
+  late final _is.ColumnString body;
 
-  late final _i1.ColumnDateTime updatedAt;
+  late final _is.ColumnDateTime updatedAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     topic,
     title,
@@ -226,19 +227,19 @@ class GuidanceTipOverrideTable extends _i1.Table<int?> {
   ];
 }
 
-class GuidanceTipOverrideInclude extends _i1.IncludeObject {
+class GuidanceTipOverrideInclude extends _is.IncludeObject {
   GuidanceTipOverrideInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => GuidanceTipOverride.t;
+  _is.Table<int?> get table => GuidanceTipOverride.t;
 }
 
-class GuidanceTipOverrideIncludeList extends _i1.IncludeList {
+class GuidanceTipOverrideIncludeList extends _is.IncludeList {
   GuidanceTipOverrideIncludeList._({
-    _i1.WhereExpressionBuilder<GuidanceTipOverrideTable>? where,
+    _is.WhereExpressionBuilder<GuidanceTipOverrideTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -249,10 +250,10 @@ class GuidanceTipOverrideIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => GuidanceTipOverride.t;
+  _is.Table<int?> get table => GuidanceTipOverride.t;
 }
 
 class GuidanceTipOverrideRepository {
@@ -281,15 +282,15 @@ class GuidanceTipOverrideRepository {
   /// );
   /// ```
   Future<List<GuidanceTipOverride>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<GuidanceTipOverrideTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<GuidanceTipOverrideTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<GuidanceTipOverrideTable>? orderBy,
-    _i1.OrderByListBuilder<GuidanceTipOverrideTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<GuidanceTipOverrideTable>? orderBy,
+    _is.OrderByListBuilder<GuidanceTipOverrideTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<GuidanceTipOverride>(
       where: where?.call(GuidanceTipOverride.t),
@@ -321,14 +322,14 @@ class GuidanceTipOverrideRepository {
   /// );
   /// ```
   Future<GuidanceTipOverride?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<GuidanceTipOverrideTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<GuidanceTipOverrideTable>? where,
     int? offset,
-    _i1.OrderByBuilder<GuidanceTipOverrideTable>? orderBy,
-    _i1.OrderByListBuilder<GuidanceTipOverrideTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<GuidanceTipOverrideTable>? orderBy,
+    _is.OrderByListBuilder<GuidanceTipOverrideTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<GuidanceTipOverride>(
       where: where?.call(GuidanceTipOverride.t),
@@ -343,11 +344,11 @@ class GuidanceTipOverrideRepository {
 
   /// Finds a single [GuidanceTipOverride] by its [id] or null if no such row exists.
   Future<GuidanceTipOverride?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<GuidanceTipOverride>(
       id,
@@ -372,9 +373,9 @@ class GuidanceTipOverrideRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<GuidanceTipOverride>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<GuidanceTipOverride> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -390,9 +391,9 @@ class GuidanceTipOverrideRepository {
   ///
   /// The returned [GuidanceTipOverride] will have its `id` field set.
   Future<GuidanceTipOverride> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     GuidanceTipOverride row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<GuidanceTipOverride>(
       row,
@@ -421,12 +422,12 @@ class GuidanceTipOverrideRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<GuidanceTipOverride>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<GuidanceTipOverride> rows, {
-    required _i1.ColumnSelections<GuidanceTipOverrideTable> conflictColumns,
-    _i1.ColumnSelections<GuidanceTipOverrideTable>? updateColumns,
-    _i1.WhereExpressionBuilder<GuidanceTipOverrideTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<GuidanceTipOverrideTable> conflictColumns,
+    _is.ColumnSelections<GuidanceTipOverrideTable>? updateColumns,
+    _is.WhereExpressionBuilder<GuidanceTipOverrideTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<GuidanceTipOverride>(
@@ -453,12 +454,12 @@ class GuidanceTipOverrideRepository {
   ///
   /// The returned [GuidanceTipOverride] will have its `id` field set.
   Future<GuidanceTipOverride?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     GuidanceTipOverride row, {
-    required _i1.ColumnSelections<GuidanceTipOverrideTable> conflictColumns,
-    _i1.ColumnSelections<GuidanceTipOverrideTable>? updateColumns,
-    _i1.WhereExpressionBuilder<GuidanceTipOverrideTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<GuidanceTipOverrideTable> conflictColumns,
+    _is.ColumnSelections<GuidanceTipOverrideTable>? updateColumns,
+    _is.WhereExpressionBuilder<GuidanceTipOverrideTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<GuidanceTipOverride>(
       row,
@@ -479,10 +480,10 @@ class GuidanceTipOverrideRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<GuidanceTipOverride>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<GuidanceTipOverride> rows, {
-    _i1.ColumnSelections<GuidanceTipOverrideTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<GuidanceTipOverrideTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<GuidanceTipOverride>(
@@ -497,10 +498,10 @@ class GuidanceTipOverrideRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<GuidanceTipOverride> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     GuidanceTipOverride row, {
-    _i1.ColumnSelections<GuidanceTipOverrideTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<GuidanceTipOverrideTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<GuidanceTipOverride>(
       row,
@@ -512,11 +513,11 @@ class GuidanceTipOverrideRepository {
   /// Updates a single [GuidanceTipOverride] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<GuidanceTipOverride?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<GuidanceTipOverrideUpdateTable>
+    required _is.ColumnValueListBuilder<GuidanceTipOverrideUpdateTable>
     columnValues,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<GuidanceTipOverride>(
       id,
@@ -532,15 +533,15 @@ class GuidanceTipOverrideRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<GuidanceTipOverride>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<GuidanceTipOverrideUpdateTable>
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<GuidanceTipOverrideUpdateTable>
     columnValues,
-    required _i1.WhereExpressionBuilder<GuidanceTipOverrideTable> where,
+    required _is.WhereExpressionBuilder<GuidanceTipOverrideTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<GuidanceTipOverrideTable>? orderBy,
-    _i1.OrderByListBuilder<GuidanceTipOverrideTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<GuidanceTipOverrideTable>? orderBy,
+    _is.OrderByListBuilder<GuidanceTipOverrideTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<GuidanceTipOverride>(
@@ -567,11 +568,11 @@ class GuidanceTipOverrideRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<GuidanceTipOverride>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<GuidanceTipOverride> rows, {
-    _i1.OrderByBuilder<GuidanceTipOverrideTable>? orderBy,
-    _i1.OrderByListBuilder<GuidanceTipOverrideTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<GuidanceTipOverrideTable>? orderBy,
+    _is.OrderByListBuilder<GuidanceTipOverrideTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<GuidanceTipOverride>(
@@ -585,9 +586,9 @@ class GuidanceTipOverrideRepository {
 
   /// Deletes a single [GuidanceTipOverride].
   Future<GuidanceTipOverride> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     GuidanceTipOverride row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<GuidanceTipOverride>(
       row,
@@ -604,11 +605,11 @@ class GuidanceTipOverrideRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<GuidanceTipOverride>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<GuidanceTipOverrideTable> where,
-    _i1.OrderByBuilder<GuidanceTipOverrideTable>? orderBy,
-    _i1.OrderByListBuilder<GuidanceTipOverrideTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<GuidanceTipOverrideTable> where,
+    _is.OrderByBuilder<GuidanceTipOverrideTable>? orderBy,
+    _is.OrderByListBuilder<GuidanceTipOverrideTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<GuidanceTipOverride>(
@@ -623,10 +624,10 @@ class GuidanceTipOverrideRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<GuidanceTipOverrideTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<GuidanceTipOverrideTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<GuidanceTipOverride>(
       where: where?.call(GuidanceTipOverride.t),
@@ -637,11 +638,11 @@ class GuidanceTipOverrideRepository {
 
   /// Acquires row-level locks on [GuidanceTipOverride] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<GuidanceTipOverrideTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<GuidanceTipOverrideTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<GuidanceTipOverride>(
       where: where(GuidanceTipOverride.t),

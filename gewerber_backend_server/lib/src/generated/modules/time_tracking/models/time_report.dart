@@ -10,12 +10,15 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/time_tracking/models/time_report_line.dart' as _i2;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i3;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/time_tracking/models/time_report_line.dart'
+    as _iudwqilh;
 
 abstract class TimeReport
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   TimeReport._({
     required this.from,
     required this.to,
@@ -31,17 +34,17 @@ abstract class TimeReport
     required int totalMinutes,
     required int billableMinutes,
     required int roundedMinutes,
-    required List<_i2.TimeReportLine> lines,
+    required List<_iudwqilh.TimeReportLine> lines,
   }) = _TimeReportImpl;
 
   factory TimeReport.fromJson(Map<String, dynamic> jsonSerialization) {
     return TimeReport(
-      from: _i1.DateTimeJsonExtension.fromJson(jsonSerialization['from']),
-      to: _i1.DateTimeJsonExtension.fromJson(jsonSerialization['to']),
+      from: _is.DateTimeJsonExtension.fromJson(jsonSerialization['from']),
+      to: _is.DateTimeJsonExtension.fromJson(jsonSerialization['to']),
       totalMinutes: jsonSerialization['totalMinutes'] as int,
       billableMinutes: jsonSerialization['billableMinutes'] as int,
       roundedMinutes: jsonSerialization['roundedMinutes'] as int,
-      lines: _i3.Protocol().deserialize<List<_i2.TimeReportLine>>(
+      lines: _itzp2rm6.Protocol().deserialize<List<_iudwqilh.TimeReportLine>>(
         jsonSerialization['lines'],
       ),
     );
@@ -57,18 +60,18 @@ abstract class TimeReport
 
   int roundedMinutes;
 
-  List<_i2.TimeReportLine> lines;
+  List<_iudwqilh.TimeReportLine> lines;
 
   /// Returns a shallow copy of this [TimeReport]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   TimeReport copyWith({
     DateTime? from,
     DateTime? to,
     int? totalMinutes,
     int? billableMinutes,
     int? roundedMinutes,
-    List<_i2.TimeReportLine>? lines,
+    List<_iudwqilh.TimeReportLine>? lines,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -98,7 +101,7 @@ abstract class TimeReport
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -109,7 +112,7 @@ class _TimeReportImpl extends TimeReport {
     required int totalMinutes,
     required int billableMinutes,
     required int roundedMinutes,
-    required List<_i2.TimeReportLine> lines,
+    required List<_iudwqilh.TimeReportLine> lines,
   }) : super._(
          from: from,
          to: to,
@@ -121,7 +124,7 @@ class _TimeReportImpl extends TimeReport {
 
   /// Returns a shallow copy of this [TimeReport]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   TimeReport copyWith({
     DateTime? from,
@@ -129,7 +132,7 @@ class _TimeReportImpl extends TimeReport {
     int? totalMinutes,
     int? billableMinutes,
     int? roundedMinutes,
-    List<_i2.TimeReportLine>? lines,
+    List<_iudwqilh.TimeReportLine>? lines,
   }) {
     return TimeReport(
       from: from ?? this.from,

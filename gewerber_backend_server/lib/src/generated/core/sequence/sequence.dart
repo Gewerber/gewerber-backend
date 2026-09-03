@@ -10,10 +10,11 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
+
+import 'package:serverpod/serverpod.dart' as _is;
 
 abstract class Sequence
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   Sequence._({
     this.id,
     required this.businessId,
@@ -42,7 +43,7 @@ abstract class Sequence
       lastValue: jsonSerialization['lastValue'] as int?,
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -64,11 +65,11 @@ abstract class Sequence
   DateTime updatedAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [Sequence]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   Sequence copyWith({
     int? id,
     int? businessId,
@@ -100,11 +101,11 @@ abstract class Sequence
   }
 
   static SequenceIncludeList includeList({
-    _i1.WhereExpressionBuilder<SequenceTable>? where,
+    _is.WhereExpressionBuilder<SequenceTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<SequenceTable>? orderBy,
-    _i1.OrderByListBuilder<SequenceTable>? orderByList,
+    _is.OrderByBuilder<SequenceTable>? orderBy,
+    _is.OrderByListBuilder<SequenceTable>? orderByList,
     SequenceInclude? include,
   }) {
     return SequenceIncludeList._(
@@ -119,7 +120,7 @@ abstract class Sequence
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -144,7 +145,7 @@ class _SequenceImpl extends Sequence {
 
   /// Returns a shallow copy of this [Sequence]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   Sequence copyWith({
     Object? id = _Undefined,
@@ -165,57 +166,57 @@ class _SequenceImpl extends Sequence {
   }
 }
 
-class SequenceUpdateTable extends _i1.UpdateTable<SequenceTable> {
+class SequenceUpdateTable extends _is.UpdateTable<SequenceTable> {
   SequenceUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> businessId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> businessId(int value) => _is.ColumnValue(
     table.businessId,
     value,
   );
 
-  _i1.ColumnValue<String, String> key(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> key(String value) => _is.ColumnValue(
     table.key,
     value,
   );
 
-  _i1.ColumnValue<int, int> year(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> year(int value) => _is.ColumnValue(
     table.year,
     value,
   );
 
-  _i1.ColumnValue<int, int> lastValue(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> lastValue(int value) => _is.ColumnValue(
     table.lastValue,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
+      _is.ColumnValue(
         table.updatedAt,
         value,
       );
 }
 
-class SequenceTable extends _i1.Table<int?> {
+class SequenceTable extends _is.Table<int?> {
   SequenceTable({super.tableRelation}) : super(tableName: 'number_sequence') {
     updateTable = SequenceUpdateTable(this);
-    businessId = _i1.ColumnInt(
+    businessId = _is.ColumnInt(
       'businessId',
       this,
     );
-    key = _i1.ColumnString(
+    key = _is.ColumnString(
       'key',
       this,
     );
-    year = _i1.ColumnInt(
+    year = _is.ColumnInt(
       'year',
       this,
     );
-    lastValue = _i1.ColumnInt(
+    lastValue = _is.ColumnInt(
       'lastValue',
       this,
       hasDefault: true,
     );
-    updatedAt = _i1.ColumnDateTime(
+    updatedAt = _is.ColumnDateTime(
       'updatedAt',
       this,
       hasDefault: true,
@@ -224,18 +225,18 @@ class SequenceTable extends _i1.Table<int?> {
 
   late final SequenceUpdateTable updateTable;
 
-  late final _i1.ColumnInt businessId;
+  late final _is.ColumnInt businessId;
 
-  late final _i1.ColumnString key;
+  late final _is.ColumnString key;
 
-  late final _i1.ColumnInt year;
+  late final _is.ColumnInt year;
 
-  late final _i1.ColumnInt lastValue;
+  late final _is.ColumnInt lastValue;
 
-  late final _i1.ColumnDateTime updatedAt;
+  late final _is.ColumnDateTime updatedAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     businessId,
     key,
@@ -245,19 +246,19 @@ class SequenceTable extends _i1.Table<int?> {
   ];
 }
 
-class SequenceInclude extends _i1.IncludeObject {
+class SequenceInclude extends _is.IncludeObject {
   SequenceInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => Sequence.t;
+  _is.Table<int?> get table => Sequence.t;
 }
 
-class SequenceIncludeList extends _i1.IncludeList {
+class SequenceIncludeList extends _is.IncludeList {
   SequenceIncludeList._({
-    _i1.WhereExpressionBuilder<SequenceTable>? where,
+    _is.WhereExpressionBuilder<SequenceTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -268,10 +269,10 @@ class SequenceIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => Sequence.t;
+  _is.Table<int?> get table => Sequence.t;
 }
 
 class SequenceRepository {
@@ -300,15 +301,15 @@ class SequenceRepository {
   /// );
   /// ```
   Future<List<Sequence>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<SequenceTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<SequenceTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<SequenceTable>? orderBy,
-    _i1.OrderByListBuilder<SequenceTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<SequenceTable>? orderBy,
+    _is.OrderByListBuilder<SequenceTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<Sequence>(
       where: where?.call(Sequence.t),
@@ -340,14 +341,14 @@ class SequenceRepository {
   /// );
   /// ```
   Future<Sequence?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<SequenceTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<SequenceTable>? where,
     int? offset,
-    _i1.OrderByBuilder<SequenceTable>? orderBy,
-    _i1.OrderByListBuilder<SequenceTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<SequenceTable>? orderBy,
+    _is.OrderByListBuilder<SequenceTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<Sequence>(
       where: where?.call(Sequence.t),
@@ -362,11 +363,11 @@ class SequenceRepository {
 
   /// Finds a single [Sequence] by its [id] or null if no such row exists.
   Future<Sequence?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<Sequence>(
       id,
@@ -391,9 +392,9 @@ class SequenceRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Sequence>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Sequence> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -409,9 +410,9 @@ class SequenceRepository {
   ///
   /// The returned [Sequence] will have its `id` field set.
   Future<Sequence> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Sequence row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<Sequence>(
       row,
@@ -440,12 +441,12 @@ class SequenceRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Sequence>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Sequence> rows, {
-    required _i1.ColumnSelections<SequenceTable> conflictColumns,
-    _i1.ColumnSelections<SequenceTable>? updateColumns,
-    _i1.WhereExpressionBuilder<SequenceTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<SequenceTable> conflictColumns,
+    _is.ColumnSelections<SequenceTable>? updateColumns,
+    _is.WhereExpressionBuilder<SequenceTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<Sequence>(
@@ -472,12 +473,12 @@ class SequenceRepository {
   ///
   /// The returned [Sequence] will have its `id` field set.
   Future<Sequence?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Sequence row, {
-    required _i1.ColumnSelections<SequenceTable> conflictColumns,
-    _i1.ColumnSelections<SequenceTable>? updateColumns,
-    _i1.WhereExpressionBuilder<SequenceTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<SequenceTable> conflictColumns,
+    _is.ColumnSelections<SequenceTable>? updateColumns,
+    _is.WhereExpressionBuilder<SequenceTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<Sequence>(
       row,
@@ -498,10 +499,10 @@ class SequenceRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Sequence>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Sequence> rows, {
-    _i1.ColumnSelections<SequenceTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<SequenceTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<Sequence>(
@@ -516,10 +517,10 @@ class SequenceRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<Sequence> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Sequence row, {
-    _i1.ColumnSelections<SequenceTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<SequenceTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<Sequence>(
       row,
@@ -531,10 +532,10 @@ class SequenceRepository {
   /// Updates a single [Sequence] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<Sequence?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<SequenceUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<SequenceUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<Sequence>(
       id,
@@ -550,14 +551,14 @@ class SequenceRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Sequence>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<SequenceUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<SequenceTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<SequenceUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<SequenceTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<SequenceTable>? orderBy,
-    _i1.OrderByListBuilder<SequenceTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<SequenceTable>? orderBy,
+    _is.OrderByListBuilder<SequenceTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<Sequence>(
@@ -584,11 +585,11 @@ class SequenceRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Sequence>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Sequence> rows, {
-    _i1.OrderByBuilder<SequenceTable>? orderBy,
-    _i1.OrderByListBuilder<SequenceTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<SequenceTable>? orderBy,
+    _is.OrderByListBuilder<SequenceTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<Sequence>(
@@ -602,9 +603,9 @@ class SequenceRepository {
 
   /// Deletes a single [Sequence].
   Future<Sequence> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Sequence row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<Sequence>(
       row,
@@ -621,11 +622,11 @@ class SequenceRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Sequence>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<SequenceTable> where,
-    _i1.OrderByBuilder<SequenceTable>? orderBy,
-    _i1.OrderByListBuilder<SequenceTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<SequenceTable> where,
+    _is.OrderByBuilder<SequenceTable>? orderBy,
+    _is.OrderByListBuilder<SequenceTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<Sequence>(
@@ -640,10 +641,10 @@ class SequenceRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<SequenceTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<SequenceTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<Sequence>(
       where: where?.call(Sequence.t),
@@ -654,11 +655,11 @@ class SequenceRepository {
 
   /// Acquires row-level locks on [Sequence] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<SequenceTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<SequenceTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<Sequence>(
       where: where(Sequence.t),

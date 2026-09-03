@@ -10,15 +10,17 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/business/models/legal_form.dart' as _i2;
-import '../../../modules/business/models/address.dart' as _i3;
-import '../../../modules/business/models/locale.dart' as _i4;
-import '../../../modules/business/models/currency.dart' as _i5;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i6;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/business/models/address.dart' as _iz28txwx;
+import '../../../modules/business/models/currency.dart' as _i80byysb;
+import '../../../modules/business/models/legal_form.dart' as _ibbkzk4j;
+import '../../../modules/business/models/locale.dart' as _ie5v8zdc;
 
 abstract class UpdateBusinessRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   UpdateBusinessRequest._({
     required this.businessId,
     required this.name,
@@ -36,15 +38,15 @@ abstract class UpdateBusinessRequest
   factory UpdateBusinessRequest({
     required int businessId,
     required String name,
-    required _i2.LegalForm legalForm,
+    required _ibbkzk4j.LegalForm legalForm,
     required bool isKleinunternehmer,
     String? vatId,
     String? taxNumber,
     String? email,
     String? phone,
-    _i3.Address? address,
-    required _i4.Locale locale,
-    required _i5.Currency currency,
+    _iz28txwx.Address? address,
+    required _ie5v8zdc.Locale locale,
+    required _i80byysb.Currency currency,
   }) = _UpdateBusinessRequestImpl;
 
   factory UpdateBusinessRequest.fromJson(
@@ -53,10 +55,10 @@ abstract class UpdateBusinessRequest
     return UpdateBusinessRequest(
       businessId: jsonSerialization['businessId'] as int,
       name: jsonSerialization['name'] as String,
-      legalForm: _i2.LegalForm.fromJson(
+      legalForm: _ibbkzk4j.LegalForm.fromJson(
         (jsonSerialization['legalForm'] as String),
       ),
-      isKleinunternehmer: _i1.BoolJsonExtension.fromJson(
+      isKleinunternehmer: _is.BoolJsonExtension.fromJson(
         jsonSerialization['isKleinunternehmer'],
       ),
       vatId: jsonSerialization['vatId'] as String?,
@@ -65,11 +67,13 @@ abstract class UpdateBusinessRequest
       phone: jsonSerialization['phone'] as String?,
       address: jsonSerialization['address'] == null
           ? null
-          : _i6.Protocol().deserialize<_i3.Address>(
+          : _itzp2rm6.Protocol().deserialize<_iz28txwx.Address>(
               jsonSerialization['address'],
             ),
-      locale: _i4.Locale.fromJson((jsonSerialization['locale'] as String)),
-      currency: _i5.Currency.fromJson(
+      locale: _ie5v8zdc.Locale.fromJson(
+        (jsonSerialization['locale'] as String),
+      ),
+      currency: _i80byysb.Currency.fromJson(
         (jsonSerialization['currency'] as String),
       ),
     );
@@ -79,7 +83,7 @@ abstract class UpdateBusinessRequest
 
   String name;
 
-  _i2.LegalForm legalForm;
+  _ibbkzk4j.LegalForm legalForm;
 
   bool isKleinunternehmer;
 
@@ -91,27 +95,27 @@ abstract class UpdateBusinessRequest
 
   String? phone;
 
-  _i3.Address? address;
+  _iz28txwx.Address? address;
 
-  _i4.Locale locale;
+  _ie5v8zdc.Locale locale;
 
-  _i5.Currency currency;
+  _i80byysb.Currency currency;
 
   /// Returns a shallow copy of this [UpdateBusinessRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   UpdateBusinessRequest copyWith({
     int? businessId,
     String? name,
-    _i2.LegalForm? legalForm,
+    _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     String? vatId,
     String? taxNumber,
     String? email,
     String? phone,
-    _i3.Address? address,
-    _i4.Locale? locale,
-    _i5.Currency? currency,
+    _iz28txwx.Address? address,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -151,7 +155,7 @@ abstract class UpdateBusinessRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -161,15 +165,15 @@ class _UpdateBusinessRequestImpl extends UpdateBusinessRequest {
   _UpdateBusinessRequestImpl({
     required int businessId,
     required String name,
-    required _i2.LegalForm legalForm,
+    required _ibbkzk4j.LegalForm legalForm,
     required bool isKleinunternehmer,
     String? vatId,
     String? taxNumber,
     String? email,
     String? phone,
-    _i3.Address? address,
-    required _i4.Locale locale,
-    required _i5.Currency currency,
+    _iz28txwx.Address? address,
+    required _ie5v8zdc.Locale locale,
+    required _i80byysb.Currency currency,
   }) : super._(
          businessId: businessId,
          name: name,
@@ -186,20 +190,20 @@ class _UpdateBusinessRequestImpl extends UpdateBusinessRequest {
 
   /// Returns a shallow copy of this [UpdateBusinessRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   UpdateBusinessRequest copyWith({
     int? businessId,
     String? name,
-    _i2.LegalForm? legalForm,
+    _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     Object? vatId = _Undefined,
     Object? taxNumber = _Undefined,
     Object? email = _Undefined,
     Object? phone = _Undefined,
     Object? address = _Undefined,
-    _i4.Locale? locale,
-    _i5.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
   }) {
     return UpdateBusinessRequest(
       businessId: businessId ?? this.businessId,
@@ -210,7 +214,9 @@ class _UpdateBusinessRequestImpl extends UpdateBusinessRequest {
       taxNumber: taxNumber is String? ? taxNumber : this.taxNumber,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
-      address: address is _i3.Address? ? address : this.address?.copyWith(),
+      address: address is _iz28txwx.Address?
+          ? address
+          : this.address?.copyWith(),
       locale: locale ?? this.locale,
       currency: currency ?? this.currency,
     );

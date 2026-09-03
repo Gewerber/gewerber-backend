@@ -10,12 +10,15 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/guidance/models/checklist_item_definition.dart' as _i2;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i3;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/guidance/models/checklist_item_definition.dart'
+    as _i1gzw9us;
 
 abstract class ChecklistDefinition
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   ChecklistDefinition._({
     required this.key,
     required this.title,
@@ -25,16 +28,17 @@ abstract class ChecklistDefinition
   factory ChecklistDefinition({
     required String key,
     required String title,
-    required List<_i2.ChecklistItemDefinition> items,
+    required List<_i1gzw9us.ChecklistItemDefinition> items,
   }) = _ChecklistDefinitionImpl;
 
   factory ChecklistDefinition.fromJson(Map<String, dynamic> jsonSerialization) {
     return ChecklistDefinition(
       key: jsonSerialization['key'] as String,
       title: jsonSerialization['title'] as String,
-      items: _i3.Protocol().deserialize<List<_i2.ChecklistItemDefinition>>(
-        jsonSerialization['items'],
-      ),
+      items: _itzp2rm6.Protocol()
+          .deserialize<List<_i1gzw9us.ChecklistItemDefinition>>(
+            jsonSerialization['items'],
+          ),
     );
   }
 
@@ -42,15 +46,15 @@ abstract class ChecklistDefinition
 
   String title;
 
-  List<_i2.ChecklistItemDefinition> items;
+  List<_i1gzw9us.ChecklistItemDefinition> items;
 
   /// Returns a shallow copy of this [ChecklistDefinition]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   ChecklistDefinition copyWith({
     String? key,
     String? title,
-    List<_i2.ChecklistItemDefinition>? items,
+    List<_i1gzw9us.ChecklistItemDefinition>? items,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -74,7 +78,7 @@ abstract class ChecklistDefinition
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -82,7 +86,7 @@ class _ChecklistDefinitionImpl extends ChecklistDefinition {
   _ChecklistDefinitionImpl({
     required String key,
     required String title,
-    required List<_i2.ChecklistItemDefinition> items,
+    required List<_i1gzw9us.ChecklistItemDefinition> items,
   }) : super._(
          key: key,
          title: title,
@@ -91,12 +95,12 @@ class _ChecklistDefinitionImpl extends ChecklistDefinition {
 
   /// Returns a shallow copy of this [ChecklistDefinition]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   ChecklistDefinition copyWith({
     String? key,
     String? title,
-    List<_i2.ChecklistItemDefinition>? items,
+    List<_i1gzw9us.ChecklistItemDefinition>? items,
   }) {
     return ChecklistDefinition(
       key: key ?? this.key,

@@ -10,12 +10,14 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/accounting/models/transaction_type.dart' as _i2;
-import '../../../modules/accounting/models/transaction_category.dart' as _i3;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/accounting/models/transaction_category.dart'
+    as _i1xoyxnt;
+import '../../../modules/accounting/models/transaction_type.dart' as _i74jrgmd;
 
 abstract class UpdateTransactionRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   UpdateTransactionRequest._({
     required this.transactionId,
     required this.type,
@@ -29,8 +31,8 @@ abstract class UpdateTransactionRequest
 
   factory UpdateTransactionRequest({
     required int transactionId,
-    required _i2.TransactionType type,
-    required _i3.TransactionCategory category,
+    required _i74jrgmd.TransactionType type,
+    required _i1xoyxnt.TransactionCategory category,
     String? description,
     required DateTime occurredAt,
     required int amountCents,
@@ -43,12 +45,14 @@ abstract class UpdateTransactionRequest
   ) {
     return UpdateTransactionRequest(
       transactionId: jsonSerialization['transactionId'] as int,
-      type: _i2.TransactionType.fromJson((jsonSerialization['type'] as String)),
-      category: _i3.TransactionCategory.fromJson(
+      type: _i74jrgmd.TransactionType.fromJson(
+        (jsonSerialization['type'] as String),
+      ),
+      category: _i1xoyxnt.TransactionCategory.fromJson(
         (jsonSerialization['category'] as String),
       ),
       description: jsonSerialization['description'] as String?,
-      occurredAt: _i1.DateTimeJsonExtension.fromJson(
+      occurredAt: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['occurredAt'],
       ),
       amountCents: jsonSerialization['amountCents'] as int,
@@ -59,9 +63,9 @@ abstract class UpdateTransactionRequest
 
   int transactionId;
 
-  _i2.TransactionType type;
+  _i74jrgmd.TransactionType type;
 
-  _i3.TransactionCategory category;
+  _i1xoyxnt.TransactionCategory category;
 
   String? description;
 
@@ -75,11 +79,11 @@ abstract class UpdateTransactionRequest
 
   /// Returns a shallow copy of this [UpdateTransactionRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   UpdateTransactionRequest copyWith({
     int? transactionId,
-    _i2.TransactionType? type,
-    _i3.TransactionCategory? category,
+    _i74jrgmd.TransactionType? type,
+    _i1xoyxnt.TransactionCategory? category,
     String? description,
     DateTime? occurredAt,
     int? amountCents,
@@ -118,7 +122,7 @@ abstract class UpdateTransactionRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -127,8 +131,8 @@ class _Undefined {}
 class _UpdateTransactionRequestImpl extends UpdateTransactionRequest {
   _UpdateTransactionRequestImpl({
     required int transactionId,
-    required _i2.TransactionType type,
-    required _i3.TransactionCategory category,
+    required _i74jrgmd.TransactionType type,
+    required _i1xoyxnt.TransactionCategory category,
     String? description,
     required DateTime occurredAt,
     required int amountCents,
@@ -147,12 +151,12 @@ class _UpdateTransactionRequestImpl extends UpdateTransactionRequest {
 
   /// Returns a shallow copy of this [UpdateTransactionRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   UpdateTransactionRequest copyWith({
     int? transactionId,
-    _i2.TransactionType? type,
-    _i3.TransactionCategory? category,
+    _i74jrgmd.TransactionType? type,
+    _i1xoyxnt.TransactionCategory? category,
     Object? description = _Undefined,
     DateTime? occurredAt,
     int? amountCents,

@@ -10,40 +10,42 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/admin/models/admin_audit_entry.dart' as _i2;
-import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i3;
+
+import 'package:gewerber_backend_client/src/protocol/protocol.dart'
+    as _iipbhyvd;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/admin/models/admin_audit_entry.dart' as _ih554ctd;
 
 abstract class AdminAuditPage
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   AdminAuditPage._({
     required this.items,
     required this.limit,
   });
 
   factory AdminAuditPage({
-    required List<_i2.AdminAuditEntry> items,
+    required List<_ih554ctd.AdminAuditEntry> items,
     required int limit,
   }) = _AdminAuditPageImpl;
 
   factory AdminAuditPage.fromJson(Map<String, dynamic> jsonSerialization) {
     return AdminAuditPage(
-      items: _i3.Protocol().deserialize<List<_i2.AdminAuditEntry>>(
+      items: _iipbhyvd.Protocol().deserialize<List<_ih554ctd.AdminAuditEntry>>(
         jsonSerialization['items'],
       ),
       limit: jsonSerialization['limit'] as int,
     );
   }
 
-  List<_i2.AdminAuditEntry> items;
+  List<_ih554ctd.AdminAuditEntry> items;
 
   int limit;
 
   /// Returns a shallow copy of this [AdminAuditPage]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   AdminAuditPage copyWith({
-    List<_i2.AdminAuditEntry>? items,
+    List<_ih554ctd.AdminAuditEntry>? items,
     int? limit,
   });
   @override
@@ -66,13 +68,13 @@ abstract class AdminAuditPage
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
 class _AdminAuditPageImpl extends AdminAuditPage {
   _AdminAuditPageImpl({
-    required List<_i2.AdminAuditEntry> items,
+    required List<_ih554ctd.AdminAuditEntry> items,
     required int limit,
   }) : super._(
          items: items,
@@ -81,10 +83,10 @@ class _AdminAuditPageImpl extends AdminAuditPage {
 
   /// Returns a shallow copy of this [AdminAuditPage]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   AdminAuditPage copyWith({
-    List<_i2.AdminAuditEntry>? items,
+    List<_ih554ctd.AdminAuditEntry>? items,
     int? limit,
   }) {
     return AdminAuditPage(

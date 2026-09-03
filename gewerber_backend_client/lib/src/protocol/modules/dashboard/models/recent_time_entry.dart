@@ -10,10 +10,11 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
 abstract class RecentTimeEntry
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   RecentTimeEntry._({
     required this.id,
     required this.startedAt,
@@ -41,14 +42,14 @@ abstract class RecentTimeEntry
   factory RecentTimeEntry.fromJson(Map<String, dynamic> jsonSerialization) {
     return RecentTimeEntry(
       id: jsonSerialization['id'] as int,
-      startedAt: _i1.DateTimeJsonExtension.fromJson(
+      startedAt: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['startedAt'],
       ),
       stoppedAt: jsonSerialization['stoppedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['stoppedAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['stoppedAt']),
       durationMinutes: jsonSerialization['durationMinutes'] as int?,
-      billable: _i1.BoolJsonExtension.fromJson(jsonSerialization['billable']),
+      billable: _isc.BoolJsonExtension.fromJson(jsonSerialization['billable']),
       projectId: jsonSerialization['projectId'] as int?,
       projectName: jsonSerialization['projectName'] as String?,
       taskId: jsonSerialization['taskId'] as int?,
@@ -76,7 +77,7 @@ abstract class RecentTimeEntry
 
   /// Returns a shallow copy of this [RecentTimeEntry]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   RecentTimeEntry copyWith({
     int? id,
     DateTime? startedAt,
@@ -122,7 +123,7 @@ abstract class RecentTimeEntry
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -153,7 +154,7 @@ class _RecentTimeEntryImpl extends RecentTimeEntry {
 
   /// Returns a shallow copy of this [RecentTimeEntry]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   RecentTimeEntry copyWith({
     int? id,

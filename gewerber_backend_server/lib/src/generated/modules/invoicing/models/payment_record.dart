@@ -10,21 +10,22 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/invoicing/models/payment_method.dart' as _i2;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/invoicing/models/payment_method.dart' as _idng401x;
 
 abstract class PaymentRecord
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   PaymentRecord._({
     this.id,
     required this.invoiceId,
     DateTime? paidAt,
     required this.amountCents,
-    _i2.PaymentMethod? method,
+    _idng401x.PaymentMethod? method,
     this.reference,
     DateTime? createdAt,
   }) : paidAt = paidAt ?? DateTime.now(),
-       method = method ?? _i2.PaymentMethod.bankTransfer,
+       method = method ?? _idng401x.PaymentMethod.bankTransfer,
        createdAt = createdAt ?? DateTime.now();
 
   factory PaymentRecord({
@@ -32,7 +33,7 @@ abstract class PaymentRecord
     required int invoiceId,
     DateTime? paidAt,
     required int amountCents,
-    _i2.PaymentMethod? method,
+    _idng401x.PaymentMethod? method,
     String? reference,
     DateTime? createdAt,
   }) = _PaymentRecordImpl;
@@ -43,15 +44,17 @@ abstract class PaymentRecord
       invoiceId: jsonSerialization['invoiceId'] as int,
       paidAt: jsonSerialization['paidAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['paidAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['paidAt']),
       amountCents: jsonSerialization['amountCents'] as int,
       method: jsonSerialization['method'] == null
           ? null
-          : _i2.PaymentMethod.fromJson((jsonSerialization['method'] as String)),
+          : _idng401x.PaymentMethod.fromJson(
+              (jsonSerialization['method'] as String),
+            ),
       reference: jsonSerialization['reference'] as String?,
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
     );
   }
 
@@ -68,24 +71,24 @@ abstract class PaymentRecord
 
   int amountCents;
 
-  _i2.PaymentMethod method;
+  _idng401x.PaymentMethod method;
 
   String? reference;
 
   DateTime createdAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [PaymentRecord]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   PaymentRecord copyWith({
     int? id,
     int? invoiceId,
     DateTime? paidAt,
     int? amountCents,
-    _i2.PaymentMethod? method,
+    _idng401x.PaymentMethod? method,
     String? reference,
     DateTime? createdAt,
   });
@@ -122,11 +125,11 @@ abstract class PaymentRecord
   }
 
   static PaymentRecordIncludeList includeList({
-    _i1.WhereExpressionBuilder<PaymentRecordTable>? where,
+    _is.WhereExpressionBuilder<PaymentRecordTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<PaymentRecordTable>? orderBy,
-    _i1.OrderByListBuilder<PaymentRecordTable>? orderByList,
+    _is.OrderByBuilder<PaymentRecordTable>? orderBy,
+    _is.OrderByListBuilder<PaymentRecordTable>? orderByList,
     PaymentRecordInclude? include,
   }) {
     return PaymentRecordIncludeList._(
@@ -141,7 +144,7 @@ abstract class PaymentRecord
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -153,7 +156,7 @@ class _PaymentRecordImpl extends PaymentRecord {
     required int invoiceId,
     DateTime? paidAt,
     required int amountCents,
-    _i2.PaymentMethod? method,
+    _idng401x.PaymentMethod? method,
     String? reference,
     DateTime? createdAt,
   }) : super._(
@@ -168,14 +171,14 @@ class _PaymentRecordImpl extends PaymentRecord {
 
   /// Returns a shallow copy of this [PaymentRecord]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   PaymentRecord copyWith({
     Object? id = _Undefined,
     int? invoiceId,
     DateTime? paidAt,
     int? amountCents,
-    _i2.PaymentMethod? method,
+    _idng401x.PaymentMethod? method,
     Object? reference = _Undefined,
     DateTime? createdAt,
   }) {
@@ -191,71 +194,71 @@ class _PaymentRecordImpl extends PaymentRecord {
   }
 }
 
-class PaymentRecordUpdateTable extends _i1.UpdateTable<PaymentRecordTable> {
+class PaymentRecordUpdateTable extends _is.UpdateTable<PaymentRecordTable> {
   PaymentRecordUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> invoiceId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> invoiceId(int value) => _is.ColumnValue(
     table.invoiceId,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> paidAt(DateTime value) => _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> paidAt(DateTime value) => _is.ColumnValue(
     table.paidAt,
     value,
   );
 
-  _i1.ColumnValue<int, int> amountCents(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> amountCents(int value) => _is.ColumnValue(
     table.amountCents,
     value,
   );
 
-  _i1.ColumnValue<_i2.PaymentMethod, _i2.PaymentMethod> method(
-    _i2.PaymentMethod value,
-  ) => _i1.ColumnValue(
+  _is.ColumnValue<_idng401x.PaymentMethod, _idng401x.PaymentMethod> method(
+    _idng401x.PaymentMethod value,
+  ) => _is.ColumnValue(
     table.method,
     value,
   );
 
-  _i1.ColumnValue<String, String> reference(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> reference(String? value) => _is.ColumnValue(
     table.reference,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _is.ColumnValue(
         table.createdAt,
         value,
       );
 }
 
-class PaymentRecordTable extends _i1.Table<int?> {
+class PaymentRecordTable extends _is.Table<int?> {
   PaymentRecordTable({super.tableRelation})
     : super(tableName: 'payment_record') {
     updateTable = PaymentRecordUpdateTable(this);
-    invoiceId = _i1.ColumnInt(
+    invoiceId = _is.ColumnInt(
       'invoiceId',
       this,
     );
-    paidAt = _i1.ColumnDateTime(
+    paidAt = _is.ColumnDateTime(
       'paidAt',
       this,
       hasDefault: true,
     );
-    amountCents = _i1.ColumnInt(
+    amountCents = _is.ColumnInt(
       'amountCents',
       this,
     );
-    method = _i1.ColumnEnum(
+    method = _is.ColumnEnum(
       'method',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    reference = _i1.ColumnString(
+    reference = _is.ColumnString(
       'reference',
       this,
     );
-    createdAt = _i1.ColumnDateTime(
+    createdAt = _is.ColumnDateTime(
       'createdAt',
       this,
       hasDefault: true,
@@ -264,20 +267,20 @@ class PaymentRecordTable extends _i1.Table<int?> {
 
   late final PaymentRecordUpdateTable updateTable;
 
-  late final _i1.ColumnInt invoiceId;
+  late final _is.ColumnInt invoiceId;
 
-  late final _i1.ColumnDateTime paidAt;
+  late final _is.ColumnDateTime paidAt;
 
-  late final _i1.ColumnInt amountCents;
+  late final _is.ColumnInt amountCents;
 
-  late final _i1.ColumnEnum<_i2.PaymentMethod> method;
+  late final _is.ColumnEnum<_idng401x.PaymentMethod> method;
 
-  late final _i1.ColumnString reference;
+  late final _is.ColumnString reference;
 
-  late final _i1.ColumnDateTime createdAt;
+  late final _is.ColumnDateTime createdAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     invoiceId,
     paidAt,
@@ -288,19 +291,19 @@ class PaymentRecordTable extends _i1.Table<int?> {
   ];
 }
 
-class PaymentRecordInclude extends _i1.IncludeObject {
+class PaymentRecordInclude extends _is.IncludeObject {
   PaymentRecordInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => PaymentRecord.t;
+  _is.Table<int?> get table => PaymentRecord.t;
 }
 
-class PaymentRecordIncludeList extends _i1.IncludeList {
+class PaymentRecordIncludeList extends _is.IncludeList {
   PaymentRecordIncludeList._({
-    _i1.WhereExpressionBuilder<PaymentRecordTable>? where,
+    _is.WhereExpressionBuilder<PaymentRecordTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -311,10 +314,10 @@ class PaymentRecordIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => PaymentRecord.t;
+  _is.Table<int?> get table => PaymentRecord.t;
 }
 
 class PaymentRecordRepository {
@@ -343,15 +346,15 @@ class PaymentRecordRepository {
   /// );
   /// ```
   Future<List<PaymentRecord>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<PaymentRecordTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<PaymentRecordTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<PaymentRecordTable>? orderBy,
-    _i1.OrderByListBuilder<PaymentRecordTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<PaymentRecordTable>? orderBy,
+    _is.OrderByListBuilder<PaymentRecordTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<PaymentRecord>(
       where: where?.call(PaymentRecord.t),
@@ -383,14 +386,14 @@ class PaymentRecordRepository {
   /// );
   /// ```
   Future<PaymentRecord?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<PaymentRecordTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<PaymentRecordTable>? where,
     int? offset,
-    _i1.OrderByBuilder<PaymentRecordTable>? orderBy,
-    _i1.OrderByListBuilder<PaymentRecordTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<PaymentRecordTable>? orderBy,
+    _is.OrderByListBuilder<PaymentRecordTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<PaymentRecord>(
       where: where?.call(PaymentRecord.t),
@@ -405,11 +408,11 @@ class PaymentRecordRepository {
 
   /// Finds a single [PaymentRecord] by its [id] or null if no such row exists.
   Future<PaymentRecord?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<PaymentRecord>(
       id,
@@ -434,9 +437,9 @@ class PaymentRecordRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<PaymentRecord>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<PaymentRecord> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -452,9 +455,9 @@ class PaymentRecordRepository {
   ///
   /// The returned [PaymentRecord] will have its `id` field set.
   Future<PaymentRecord> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     PaymentRecord row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<PaymentRecord>(
       row,
@@ -483,12 +486,12 @@ class PaymentRecordRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<PaymentRecord>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<PaymentRecord> rows, {
-    required _i1.ColumnSelections<PaymentRecordTable> conflictColumns,
-    _i1.ColumnSelections<PaymentRecordTable>? updateColumns,
-    _i1.WhereExpressionBuilder<PaymentRecordTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<PaymentRecordTable> conflictColumns,
+    _is.ColumnSelections<PaymentRecordTable>? updateColumns,
+    _is.WhereExpressionBuilder<PaymentRecordTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<PaymentRecord>(
@@ -515,12 +518,12 @@ class PaymentRecordRepository {
   ///
   /// The returned [PaymentRecord] will have its `id` field set.
   Future<PaymentRecord?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     PaymentRecord row, {
-    required _i1.ColumnSelections<PaymentRecordTable> conflictColumns,
-    _i1.ColumnSelections<PaymentRecordTable>? updateColumns,
-    _i1.WhereExpressionBuilder<PaymentRecordTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<PaymentRecordTable> conflictColumns,
+    _is.ColumnSelections<PaymentRecordTable>? updateColumns,
+    _is.WhereExpressionBuilder<PaymentRecordTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<PaymentRecord>(
       row,
@@ -541,10 +544,10 @@ class PaymentRecordRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<PaymentRecord>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<PaymentRecord> rows, {
-    _i1.ColumnSelections<PaymentRecordTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<PaymentRecordTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<PaymentRecord>(
@@ -559,10 +562,10 @@ class PaymentRecordRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<PaymentRecord> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     PaymentRecord row, {
-    _i1.ColumnSelections<PaymentRecordTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<PaymentRecordTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<PaymentRecord>(
       row,
@@ -574,10 +577,10 @@ class PaymentRecordRepository {
   /// Updates a single [PaymentRecord] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<PaymentRecord?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<PaymentRecordUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<PaymentRecordUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<PaymentRecord>(
       id,
@@ -593,14 +596,14 @@ class PaymentRecordRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<PaymentRecord>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<PaymentRecordUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<PaymentRecordTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<PaymentRecordUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<PaymentRecordTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<PaymentRecordTable>? orderBy,
-    _i1.OrderByListBuilder<PaymentRecordTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<PaymentRecordTable>? orderBy,
+    _is.OrderByListBuilder<PaymentRecordTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<PaymentRecord>(
@@ -627,11 +630,11 @@ class PaymentRecordRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<PaymentRecord>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<PaymentRecord> rows, {
-    _i1.OrderByBuilder<PaymentRecordTable>? orderBy,
-    _i1.OrderByListBuilder<PaymentRecordTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<PaymentRecordTable>? orderBy,
+    _is.OrderByListBuilder<PaymentRecordTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<PaymentRecord>(
@@ -645,9 +648,9 @@ class PaymentRecordRepository {
 
   /// Deletes a single [PaymentRecord].
   Future<PaymentRecord> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     PaymentRecord row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<PaymentRecord>(
       row,
@@ -664,11 +667,11 @@ class PaymentRecordRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<PaymentRecord>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<PaymentRecordTable> where,
-    _i1.OrderByBuilder<PaymentRecordTable>? orderBy,
-    _i1.OrderByListBuilder<PaymentRecordTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<PaymentRecordTable> where,
+    _is.OrderByBuilder<PaymentRecordTable>? orderBy,
+    _is.OrderByListBuilder<PaymentRecordTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<PaymentRecord>(
@@ -683,10 +686,10 @@ class PaymentRecordRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<PaymentRecordTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<PaymentRecordTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<PaymentRecord>(
       where: where?.call(PaymentRecord.t),
@@ -697,11 +700,11 @@ class PaymentRecordRepository {
 
   /// Acquires row-level locks on [PaymentRecord] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<PaymentRecordTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<PaymentRecordTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<PaymentRecord>(
       where: where(PaymentRecord.t),

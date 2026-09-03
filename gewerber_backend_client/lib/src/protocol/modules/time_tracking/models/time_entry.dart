@@ -10,10 +10,11 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
 abstract class TimeEntry
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   TimeEntry._({
     this.id,
     required this.businessId,
@@ -53,25 +54,27 @@ abstract class TimeEntry
       projectId: jsonSerialization['projectId'] as int?,
       taskId: jsonSerialization['taskId'] as int?,
       description: jsonSerialization['description'] as String?,
-      startedAt: _i1.DateTimeJsonExtension.fromJson(
+      startedAt: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['startedAt'],
       ),
       stoppedAt: jsonSerialization['stoppedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['stoppedAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['stoppedAt']),
       durationMinutes: jsonSerialization['durationMinutes'] as int?,
       billable: jsonSerialization['billable'] == null
           ? null
-          : _i1.BoolJsonExtension.fromJson(jsonSerialization['billable']),
+          : _isc.BoolJsonExtension.fromJson(jsonSerialization['billable']),
       invoicedAt: jsonSerialization['invoicedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['invoicedAt']),
+          : _isc.DateTimeJsonExtension.fromJson(
+              jsonSerialization['invoicedAt'],
+            ),
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -104,7 +107,7 @@ abstract class TimeEntry
 
   /// Returns a shallow copy of this [TimeEntry]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   TimeEntry copyWith({
     int? id,
     int? businessId,
@@ -159,7 +162,7 @@ abstract class TimeEntry
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -196,7 +199,7 @@ class _TimeEntryImpl extends TimeEntry {
 
   /// Returns a shallow copy of this [TimeEntry]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   TimeEntry copyWith({
     Object? id = _Undefined,

@@ -10,14 +10,15 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
 /// Authentication-level state of a user as seen by the admin API.
 /// `emailConfirmed` reflects the email IdP contract of Serverpod 4 beta:
 /// an `EmailAccount` row only exists after the registration verification
 /// code was confirmed, so an existing account is always confirmed.
 abstract class AdminAuthStatus
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   AdminAuthStatus._({
     required this.blocked,
     required this.emailConfirmed,
@@ -34,14 +35,14 @@ abstract class AdminAuthStatus
 
   factory AdminAuthStatus.fromJson(Map<String, dynamic> jsonSerialization) {
     return AdminAuthStatus(
-      blocked: _i1.BoolJsonExtension.fromJson(jsonSerialization['blocked']),
-      emailConfirmed: _i1.BoolJsonExtension.fromJson(
+      blocked: _isc.BoolJsonExtension.fromJson(jsonSerialization['blocked']),
+      emailConfirmed: _isc.BoolJsonExtension.fromJson(
         jsonSerialization['emailConfirmed'],
       ),
       email: jsonSerialization['email'] as String?,
       authUserCreatedAt: jsonSerialization['authUserCreatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _isc.DateTimeJsonExtension.fromJson(
               jsonSerialization['authUserCreatedAt'],
             ),
     );
@@ -57,7 +58,7 @@ abstract class AdminAuthStatus
 
   /// Returns a shallow copy of this [AdminAuthStatus]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   AdminAuthStatus copyWith({
     bool? blocked,
     bool? emailConfirmed,
@@ -90,7 +91,7 @@ abstract class AdminAuthStatus
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -111,7 +112,7 @@ class _AdminAuthStatusImpl extends AdminAuthStatus {
 
   /// Returns a shallow copy of this [AdminAuthStatus]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   AdminAuthStatus copyWith({
     bool? blocked,

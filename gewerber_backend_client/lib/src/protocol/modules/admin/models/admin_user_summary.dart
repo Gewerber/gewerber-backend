@@ -10,11 +10,12 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../core/admin/admin_role.dart' as _i2;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../core/admin/admin_role.dart' as _isyiaiss;
 
 abstract class AdminUserSummary
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   AdminUserSummary._({
     required this.userId,
     this.email,
@@ -27,40 +28,42 @@ abstract class AdminUserSummary
   });
 
   factory AdminUserSummary({
-    required _i1.UuidValue userId,
+    required _isc.UuidValue userId,
     String? email,
     String? displayName,
     required bool blocked,
     required bool emailConfirmed,
-    _i2.AdminRole? globalRole,
+    _isyiaiss.AdminRole? globalRole,
     DateTime? profileCreatedAt,
     DateTime? deletedAt,
   }) = _AdminUserSummaryImpl;
 
   factory AdminUserSummary.fromJson(Map<String, dynamic> jsonSerialization) {
     return AdminUserSummary(
-      userId: _i1.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
+      userId: _isc.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
       email: jsonSerialization['email'] as String?,
       displayName: jsonSerialization['displayName'] as String?,
-      blocked: _i1.BoolJsonExtension.fromJson(jsonSerialization['blocked']),
-      emailConfirmed: _i1.BoolJsonExtension.fromJson(
+      blocked: _isc.BoolJsonExtension.fromJson(jsonSerialization['blocked']),
+      emailConfirmed: _isc.BoolJsonExtension.fromJson(
         jsonSerialization['emailConfirmed'],
       ),
       globalRole: jsonSerialization['globalRole'] == null
           ? null
-          : _i2.AdminRole.fromJson((jsonSerialization['globalRole'] as String)),
+          : _isyiaiss.AdminRole.fromJson(
+              (jsonSerialization['globalRole'] as String),
+            ),
       profileCreatedAt: jsonSerialization['profileCreatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _isc.DateTimeJsonExtension.fromJson(
               jsonSerialization['profileCreatedAt'],
             ),
       deletedAt: jsonSerialization['deletedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['deletedAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['deletedAt']),
     );
   }
 
-  _i1.UuidValue userId;
+  _isc.UuidValue userId;
 
   String? email;
 
@@ -71,7 +74,7 @@ abstract class AdminUserSummary
   bool emailConfirmed;
 
   /// Global role from the `admin_user` allowlist (`null` = regular user).
-  _i2.AdminRole? globalRole;
+  _isyiaiss.AdminRole? globalRole;
 
   DateTime? profileCreatedAt;
 
@@ -79,14 +82,14 @@ abstract class AdminUserSummary
 
   /// Returns a shallow copy of this [AdminUserSummary]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   AdminUserSummary copyWith({
-    _i1.UuidValue? userId,
+    _isc.UuidValue? userId,
     String? email,
     String? displayName,
     bool? blocked,
     bool? emailConfirmed,
-    _i2.AdminRole? globalRole,
+    _isyiaiss.AdminRole? globalRole,
     DateTime? profileCreatedAt,
     DateTime? deletedAt,
   });
@@ -124,7 +127,7 @@ abstract class AdminUserSummary
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -132,12 +135,12 @@ class _Undefined {}
 
 class _AdminUserSummaryImpl extends AdminUserSummary {
   _AdminUserSummaryImpl({
-    required _i1.UuidValue userId,
+    required _isc.UuidValue userId,
     String? email,
     String? displayName,
     required bool blocked,
     required bool emailConfirmed,
-    _i2.AdminRole? globalRole,
+    _isyiaiss.AdminRole? globalRole,
     DateTime? profileCreatedAt,
     DateTime? deletedAt,
   }) : super._(
@@ -153,10 +156,10 @@ class _AdminUserSummaryImpl extends AdminUserSummary {
 
   /// Returns a shallow copy of this [AdminUserSummary]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   AdminUserSummary copyWith({
-    _i1.UuidValue? userId,
+    _isc.UuidValue? userId,
     Object? email = _Undefined,
     Object? displayName = _Undefined,
     bool? blocked,
@@ -171,7 +174,9 @@ class _AdminUserSummaryImpl extends AdminUserSummary {
       displayName: displayName is String? ? displayName : this.displayName,
       blocked: blocked ?? this.blocked,
       emailConfirmed: emailConfirmed ?? this.emailConfirmed,
-      globalRole: globalRole is _i2.AdminRole? ? globalRole : this.globalRole,
+      globalRole: globalRole is _isyiaiss.AdminRole?
+          ? globalRole
+          : this.globalRole,
       profileCreatedAt: profileCreatedAt is DateTime?
           ? profileCreatedAt
           : this.profileCreatedAt,

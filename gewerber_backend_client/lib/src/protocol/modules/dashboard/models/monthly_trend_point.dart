@@ -10,10 +10,11 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
 abstract class MonthlyTrendPoint
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   MonthlyTrendPoint._({
     required this.monthStart,
     required this.incomeCents,
@@ -30,7 +31,7 @@ abstract class MonthlyTrendPoint
 
   factory MonthlyTrendPoint.fromJson(Map<String, dynamic> jsonSerialization) {
     return MonthlyTrendPoint(
-      monthStart: _i1.DateTimeJsonExtension.fromJson(
+      monthStart: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['monthStart'],
       ),
       incomeCents: jsonSerialization['incomeCents'] as int,
@@ -49,7 +50,7 @@ abstract class MonthlyTrendPoint
 
   /// Returns a shallow copy of this [MonthlyTrendPoint]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   MonthlyTrendPoint copyWith({
     DateTime? monthStart,
     int? incomeCents,
@@ -80,7 +81,7 @@ abstract class MonthlyTrendPoint
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -99,7 +100,7 @@ class _MonthlyTrendPointImpl extends MonthlyTrendPoint {
 
   /// Returns a shallow copy of this [MonthlyTrendPoint]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   MonthlyTrendPoint copyWith({
     DateTime? monthStart,

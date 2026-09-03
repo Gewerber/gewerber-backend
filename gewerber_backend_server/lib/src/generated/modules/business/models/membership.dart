@@ -10,25 +10,26 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/business/models/membership_role.dart' as _i2;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/business/models/membership_role.dart' as _i0s3lyvs;
 
 abstract class Membership
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   Membership._({
     this.id,
     this.userId,
     required this.businessId,
-    _i2.MembershipRole? role,
+    _i0s3lyvs.MembershipRole? role,
     DateTime? createdAt,
-  }) : role = role ?? _i2.MembershipRole.member,
+  }) : role = role ?? _i0s3lyvs.MembershipRole.member,
        createdAt = createdAt ?? DateTime.now();
 
   factory Membership({
     int? id,
-    _i1.UuidValue? userId,
+    _is.UuidValue? userId,
     required int businessId,
-    _i2.MembershipRole? role,
+    _i0s3lyvs.MembershipRole? role,
     DateTime? createdAt,
   }) = _MembershipImpl;
 
@@ -37,14 +38,16 @@ abstract class Membership
       id: jsonSerialization['id'] as int?,
       userId: jsonSerialization['userId'] == null
           ? null
-          : _i1.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
+          : _is.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
       businessId: jsonSerialization['businessId'] as int,
       role: jsonSerialization['role'] == null
           ? null
-          : _i2.MembershipRole.fromJson((jsonSerialization['role'] as String)),
+          : _i0s3lyvs.MembershipRole.fromJson(
+              (jsonSerialization['role'] as String),
+            ),
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
     );
   }
 
@@ -56,25 +59,25 @@ abstract class Membership
   int? id;
 
   /// Nullable: set to null when the account is deleted (GDPR Art. 17).
-  _i1.UuidValue? userId;
+  _is.UuidValue? userId;
 
   int businessId;
 
-  _i2.MembershipRole role;
+  _i0s3lyvs.MembershipRole role;
 
   DateTime createdAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [Membership]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   Membership copyWith({
     int? id,
-    _i1.UuidValue? userId,
+    _is.UuidValue? userId,
     int? businessId,
-    _i2.MembershipRole? role,
+    _i0s3lyvs.MembershipRole? role,
     DateTime? createdAt,
   });
   @override
@@ -106,11 +109,11 @@ abstract class Membership
   }
 
   static MembershipIncludeList includeList({
-    _i1.WhereExpressionBuilder<MembershipTable>? where,
+    _is.WhereExpressionBuilder<MembershipTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<MembershipTable>? orderBy,
-    _i1.OrderByListBuilder<MembershipTable>? orderByList,
+    _is.OrderByBuilder<MembershipTable>? orderBy,
+    _is.OrderByListBuilder<MembershipTable>? orderByList,
     MembershipInclude? include,
   }) {
     return MembershipIncludeList._(
@@ -125,7 +128,7 @@ abstract class Membership
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -134,9 +137,9 @@ class _Undefined {}
 class _MembershipImpl extends Membership {
   _MembershipImpl({
     int? id,
-    _i1.UuidValue? userId,
+    _is.UuidValue? userId,
     required int businessId,
-    _i2.MembershipRole? role,
+    _i0s3lyvs.MembershipRole? role,
     DateTime? createdAt,
   }) : super._(
          id: id,
@@ -148,18 +151,18 @@ class _MembershipImpl extends Membership {
 
   /// Returns a shallow copy of this [Membership]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   Membership copyWith({
     Object? id = _Undefined,
     Object? userId = _Undefined,
     int? businessId,
-    _i2.MembershipRole? role,
+    _i0s3lyvs.MembershipRole? role,
     DateTime? createdAt,
   }) {
     return Membership(
       id: id is int? ? id : this.id,
-      userId: userId is _i1.UuidValue? ? userId : this.userId,
+      userId: userId is _is.UuidValue? ? userId : this.userId,
       businessId: businessId ?? this.businessId,
       role: role ?? this.role,
       createdAt: createdAt ?? this.createdAt,
@@ -167,52 +170,52 @@ class _MembershipImpl extends Membership {
   }
 }
 
-class MembershipUpdateTable extends _i1.UpdateTable<MembershipTable> {
+class MembershipUpdateTable extends _is.UpdateTable<MembershipTable> {
   MembershipUpdateTable(super.table);
 
-  _i1.ColumnValue<_i1.UuidValue, _i1.UuidValue> userId(_i1.UuidValue? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<_is.UuidValue, _is.UuidValue> userId(_is.UuidValue? value) =>
+      _is.ColumnValue(
         table.userId,
         value,
       );
 
-  _i1.ColumnValue<int, int> businessId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> businessId(int value) => _is.ColumnValue(
     table.businessId,
     value,
   );
 
-  _i1.ColumnValue<_i2.MembershipRole, _i2.MembershipRole> role(
-    _i2.MembershipRole value,
-  ) => _i1.ColumnValue(
+  _is.ColumnValue<_i0s3lyvs.MembershipRole, _i0s3lyvs.MembershipRole> role(
+    _i0s3lyvs.MembershipRole value,
+  ) => _is.ColumnValue(
     table.role,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _is.ColumnValue(
         table.createdAt,
         value,
       );
 }
 
-class MembershipTable extends _i1.Table<int?> {
+class MembershipTable extends _is.Table<int?> {
   MembershipTable({super.tableRelation}) : super(tableName: 'membership') {
     updateTable = MembershipUpdateTable(this);
-    userId = _i1.ColumnUuid(
+    userId = _is.ColumnUuid(
       'userId',
       this,
     );
-    businessId = _i1.ColumnInt(
+    businessId = _is.ColumnInt(
       'businessId',
       this,
     );
-    role = _i1.ColumnEnum(
+    role = _is.ColumnEnum(
       'role',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    createdAt = _i1.ColumnDateTime(
+    createdAt = _is.ColumnDateTime(
       'createdAt',
       this,
       hasDefault: true,
@@ -222,16 +225,16 @@ class MembershipTable extends _i1.Table<int?> {
   late final MembershipUpdateTable updateTable;
 
   /// Nullable: set to null when the account is deleted (GDPR Art. 17).
-  late final _i1.ColumnUuid userId;
+  late final _is.ColumnUuid userId;
 
-  late final _i1.ColumnInt businessId;
+  late final _is.ColumnInt businessId;
 
-  late final _i1.ColumnEnum<_i2.MembershipRole> role;
+  late final _is.ColumnEnum<_i0s3lyvs.MembershipRole> role;
 
-  late final _i1.ColumnDateTime createdAt;
+  late final _is.ColumnDateTime createdAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     userId,
     businessId,
@@ -240,19 +243,19 @@ class MembershipTable extends _i1.Table<int?> {
   ];
 }
 
-class MembershipInclude extends _i1.IncludeObject {
+class MembershipInclude extends _is.IncludeObject {
   MembershipInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => Membership.t;
+  _is.Table<int?> get table => Membership.t;
 }
 
-class MembershipIncludeList extends _i1.IncludeList {
+class MembershipIncludeList extends _is.IncludeList {
   MembershipIncludeList._({
-    _i1.WhereExpressionBuilder<MembershipTable>? where,
+    _is.WhereExpressionBuilder<MembershipTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -263,10 +266,10 @@ class MembershipIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => Membership.t;
+  _is.Table<int?> get table => Membership.t;
 }
 
 class MembershipRepository {
@@ -295,15 +298,15 @@ class MembershipRepository {
   /// );
   /// ```
   Future<List<Membership>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<MembershipTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<MembershipTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<MembershipTable>? orderBy,
-    _i1.OrderByListBuilder<MembershipTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<MembershipTable>? orderBy,
+    _is.OrderByListBuilder<MembershipTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<Membership>(
       where: where?.call(Membership.t),
@@ -335,14 +338,14 @@ class MembershipRepository {
   /// );
   /// ```
   Future<Membership?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<MembershipTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<MembershipTable>? where,
     int? offset,
-    _i1.OrderByBuilder<MembershipTable>? orderBy,
-    _i1.OrderByListBuilder<MembershipTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<MembershipTable>? orderBy,
+    _is.OrderByListBuilder<MembershipTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<Membership>(
       where: where?.call(Membership.t),
@@ -357,11 +360,11 @@ class MembershipRepository {
 
   /// Finds a single [Membership] by its [id] or null if no such row exists.
   Future<Membership?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<Membership>(
       id,
@@ -386,9 +389,9 @@ class MembershipRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Membership>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Membership> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -404,9 +407,9 @@ class MembershipRepository {
   ///
   /// The returned [Membership] will have its `id` field set.
   Future<Membership> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Membership row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<Membership>(
       row,
@@ -435,12 +438,12 @@ class MembershipRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Membership>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Membership> rows, {
-    required _i1.ColumnSelections<MembershipTable> conflictColumns,
-    _i1.ColumnSelections<MembershipTable>? updateColumns,
-    _i1.WhereExpressionBuilder<MembershipTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<MembershipTable> conflictColumns,
+    _is.ColumnSelections<MembershipTable>? updateColumns,
+    _is.WhereExpressionBuilder<MembershipTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<Membership>(
@@ -467,12 +470,12 @@ class MembershipRepository {
   ///
   /// The returned [Membership] will have its `id` field set.
   Future<Membership?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Membership row, {
-    required _i1.ColumnSelections<MembershipTable> conflictColumns,
-    _i1.ColumnSelections<MembershipTable>? updateColumns,
-    _i1.WhereExpressionBuilder<MembershipTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<MembershipTable> conflictColumns,
+    _is.ColumnSelections<MembershipTable>? updateColumns,
+    _is.WhereExpressionBuilder<MembershipTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<Membership>(
       row,
@@ -493,10 +496,10 @@ class MembershipRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Membership>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Membership> rows, {
-    _i1.ColumnSelections<MembershipTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<MembershipTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<Membership>(
@@ -511,10 +514,10 @@ class MembershipRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<Membership> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Membership row, {
-    _i1.ColumnSelections<MembershipTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<MembershipTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<Membership>(
       row,
@@ -526,10 +529,10 @@ class MembershipRepository {
   /// Updates a single [Membership] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<Membership?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<MembershipUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<MembershipUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<Membership>(
       id,
@@ -545,14 +548,14 @@ class MembershipRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Membership>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<MembershipUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<MembershipTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<MembershipUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<MembershipTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<MembershipTable>? orderBy,
-    _i1.OrderByListBuilder<MembershipTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<MembershipTable>? orderBy,
+    _is.OrderByListBuilder<MembershipTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<Membership>(
@@ -579,11 +582,11 @@ class MembershipRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Membership>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Membership> rows, {
-    _i1.OrderByBuilder<MembershipTable>? orderBy,
-    _i1.OrderByListBuilder<MembershipTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<MembershipTable>? orderBy,
+    _is.OrderByListBuilder<MembershipTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<Membership>(
@@ -597,9 +600,9 @@ class MembershipRepository {
 
   /// Deletes a single [Membership].
   Future<Membership> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Membership row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<Membership>(
       row,
@@ -616,11 +619,11 @@ class MembershipRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Membership>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<MembershipTable> where,
-    _i1.OrderByBuilder<MembershipTable>? orderBy,
-    _i1.OrderByListBuilder<MembershipTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<MembershipTable> where,
+    _is.OrderByBuilder<MembershipTable>? orderBy,
+    _is.OrderByListBuilder<MembershipTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<Membership>(
@@ -635,10 +638,10 @@ class MembershipRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<MembershipTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<MembershipTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<Membership>(
       where: where?.call(Membership.t),
@@ -649,11 +652,11 @@ class MembershipRepository {
 
   /// Acquires row-level locks on [Membership] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<MembershipTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<MembershipTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<Membership>(
       where: where(Membership.t),

@@ -10,13 +10,17 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/invoicing/models/recurrence_interval.dart' as _i2;
-import '../../../modules/invoicing/models/invoice_item_request.dart' as _i3;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i4;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/invoicing/models/invoice_item_request.dart'
+    as _ife8od1f;
+import '../../../modules/invoicing/models/recurrence_interval.dart'
+    as _i2jlpxj3;
 
 abstract class UpdateInvoiceRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   UpdateInvoiceRequest._({
     required this.invoiceId,
     this.customerId,
@@ -44,11 +48,11 @@ abstract class UpdateInvoiceRequest
     required int paymentTermsDays,
     int? templateId,
     String? notes,
-    _i2.RecurrenceInterval? recurrenceInterval,
+    _i2jlpxj3.RecurrenceInterval? recurrenceInterval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
-    required List<_i3.InvoiceItemRequest> items,
+    required List<_ife8od1f.InvoiceItemRequest> items,
   }) = _UpdateInvoiceRequestImpl;
 
   factory UpdateInvoiceRequest.fromJson(
@@ -57,20 +61,20 @@ abstract class UpdateInvoiceRequest
     return UpdateInvoiceRequest(
       invoiceId: jsonSerialization['invoiceId'] as int,
       customerId: jsonSerialization['customerId'] as int?,
-      issueDate: _i1.DateTimeJsonExtension.fromJson(
+      issueDate: _is.DateTimeJsonExtension.fromJson(
         jsonSerialization['issueDate'],
       ),
       dueDate: jsonSerialization['dueDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['dueDate']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['dueDate']),
       serviceDateFrom: jsonSerialization['serviceDateFrom'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['serviceDateFrom'],
             ),
       serviceDateTo: jsonSerialization['serviceDateTo'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['serviceDateTo'],
             ),
       paymentTermsDays: jsonSerialization['paymentTermsDays'] as int,
@@ -78,24 +82,25 @@ abstract class UpdateInvoiceRequest
       notes: jsonSerialization['notes'] as String?,
       recurrenceInterval: jsonSerialization['recurrenceInterval'] == null
           ? null
-          : _i2.RecurrenceInterval.fromJson(
+          : _i2jlpxj3.RecurrenceInterval.fromJson(
               (jsonSerialization['recurrenceInterval'] as String),
             ),
       nextRecurrenceDate: jsonSerialization['nextRecurrenceDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['nextRecurrenceDate'],
             ),
       recurrenceEndDate: jsonSerialization['recurrenceEndDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['recurrenceEndDate'],
             ),
       recurrenceMaxOccurrences:
           jsonSerialization['recurrenceMaxOccurrences'] as int?,
-      items: _i4.Protocol().deserialize<List<_i3.InvoiceItemRequest>>(
-        jsonSerialization['items'],
-      ),
+      items: _itzp2rm6.Protocol()
+          .deserialize<List<_ife8od1f.InvoiceItemRequest>>(
+            jsonSerialization['items'],
+          ),
     );
   }
 
@@ -117,7 +122,7 @@ abstract class UpdateInvoiceRequest
 
   String? notes;
 
-  _i2.RecurrenceInterval? recurrenceInterval;
+  _i2jlpxj3.RecurrenceInterval? recurrenceInterval;
 
   DateTime? nextRecurrenceDate;
 
@@ -125,11 +130,11 @@ abstract class UpdateInvoiceRequest
 
   int? recurrenceMaxOccurrences;
 
-  List<_i3.InvoiceItemRequest> items;
+  List<_ife8od1f.InvoiceItemRequest> items;
 
   /// Returns a shallow copy of this [UpdateInvoiceRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   UpdateInvoiceRequest copyWith({
     int? invoiceId,
     int? customerId,
@@ -140,11 +145,11 @@ abstract class UpdateInvoiceRequest
     int? paymentTermsDays,
     int? templateId,
     String? notes,
-    _i2.RecurrenceInterval? recurrenceInterval,
+    _i2jlpxj3.RecurrenceInterval? recurrenceInterval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
-    List<_i3.InvoiceItemRequest>? items,
+    List<_ife8od1f.InvoiceItemRequest>? items,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -198,7 +203,7 @@ abstract class UpdateInvoiceRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -215,11 +220,11 @@ class _UpdateInvoiceRequestImpl extends UpdateInvoiceRequest {
     required int paymentTermsDays,
     int? templateId,
     String? notes,
-    _i2.RecurrenceInterval? recurrenceInterval,
+    _i2jlpxj3.RecurrenceInterval? recurrenceInterval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
-    required List<_i3.InvoiceItemRequest> items,
+    required List<_ife8od1f.InvoiceItemRequest> items,
   }) : super._(
          invoiceId: invoiceId,
          customerId: customerId,
@@ -239,7 +244,7 @@ class _UpdateInvoiceRequestImpl extends UpdateInvoiceRequest {
 
   /// Returns a shallow copy of this [UpdateInvoiceRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   UpdateInvoiceRequest copyWith({
     int? invoiceId,
@@ -255,7 +260,7 @@ class _UpdateInvoiceRequestImpl extends UpdateInvoiceRequest {
     Object? nextRecurrenceDate = _Undefined,
     Object? recurrenceEndDate = _Undefined,
     Object? recurrenceMaxOccurrences = _Undefined,
-    List<_i3.InvoiceItemRequest>? items,
+    List<_ife8od1f.InvoiceItemRequest>? items,
   }) {
     return UpdateInvoiceRequest(
       invoiceId: invoiceId ?? this.invoiceId,
@@ -271,7 +276,7 @@ class _UpdateInvoiceRequestImpl extends UpdateInvoiceRequest {
       paymentTermsDays: paymentTermsDays ?? this.paymentTermsDays,
       templateId: templateId is int? ? templateId : this.templateId,
       notes: notes is String? ? notes : this.notes,
-      recurrenceInterval: recurrenceInterval is _i2.RecurrenceInterval?
+      recurrenceInterval: recurrenceInterval is _i2jlpxj3.RecurrenceInterval?
           ? recurrenceInterval
           : this.recurrenceInterval,
       nextRecurrenceDate: nextRecurrenceDate is DateTime?
