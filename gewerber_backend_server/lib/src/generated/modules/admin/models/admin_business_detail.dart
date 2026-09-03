@@ -10,44 +10,47 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/business/models/business.dart' as _i2;
-import '../../../modules/admin/models/admin_membership_info.dart' as _i3;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i4;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/admin/models/admin_membership_info.dart' as _ir926tki;
+import '../../../modules/business/models/business.dart' as _i2ifapy5;
 
 abstract class AdminBusinessDetail
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   AdminBusinessDetail._({
     required this.business,
     required this.memberships,
   });
 
   factory AdminBusinessDetail({
-    required _i2.Business business,
-    required List<_i3.AdminMembershipInfo> memberships,
+    required _i2ifapy5.Business business,
+    required List<_ir926tki.AdminMembershipInfo> memberships,
   }) = _AdminBusinessDetailImpl;
 
   factory AdminBusinessDetail.fromJson(Map<String, dynamic> jsonSerialization) {
     return AdminBusinessDetail(
-      business: _i4.Protocol().deserialize<_i2.Business>(
+      business: _itzp2rm6.Protocol().deserialize<_i2ifapy5.Business>(
         jsonSerialization['business'],
       ),
-      memberships: _i4.Protocol().deserialize<List<_i3.AdminMembershipInfo>>(
-        jsonSerialization['memberships'],
-      ),
+      memberships: _itzp2rm6.Protocol()
+          .deserialize<List<_ir926tki.AdminMembershipInfo>>(
+            jsonSerialization['memberships'],
+          ),
     );
   }
 
-  _i2.Business business;
+  _i2ifapy5.Business business;
 
-  List<_i3.AdminMembershipInfo> memberships;
+  List<_ir926tki.AdminMembershipInfo> memberships;
 
   /// Returns a shallow copy of this [AdminBusinessDetail]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   AdminBusinessDetail copyWith({
-    _i2.Business? business,
-    List<_i3.AdminMembershipInfo>? memberships,
+    _i2ifapy5.Business? business,
+    List<_ir926tki.AdminMembershipInfo>? memberships,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -71,14 +74,14 @@ abstract class AdminBusinessDetail
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
 class _AdminBusinessDetailImpl extends AdminBusinessDetail {
   _AdminBusinessDetailImpl({
-    required _i2.Business business,
-    required List<_i3.AdminMembershipInfo> memberships,
+    required _i2ifapy5.Business business,
+    required List<_ir926tki.AdminMembershipInfo> memberships,
   }) : super._(
          business: business,
          memberships: memberships,
@@ -86,11 +89,11 @@ class _AdminBusinessDetailImpl extends AdminBusinessDetail {
 
   /// Returns a shallow copy of this [AdminBusinessDetail]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   AdminBusinessDetail copyWith({
-    _i2.Business? business,
-    List<_i3.AdminMembershipInfo>? memberships,
+    _i2ifapy5.Business? business,
+    List<_ir926tki.AdminMembershipInfo>? memberships,
   }) {
     return AdminBusinessDetail(
       business: business ?? this.business.copyWith(),

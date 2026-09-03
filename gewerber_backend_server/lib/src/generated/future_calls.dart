@@ -9,26 +9,26 @@
 // ignore_for_file: use_super_parameters
 // ignore_for_file: invalid_use_of_internal_member
 // ignore_for_file: depend_on_referenced_packages
-
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import 'package:clock/clock.dart' as _i2;
-import 'dart:async' as _i3;
+
+import 'dart:async' as _ida;
+import 'package:clock/clock.dart' as _io0w16m8;
+import 'package:serverpod/serverpod.dart' as _is;
 import '../modules/invoicing/jobs/mark_overdue_invoices_future_call.dart'
-    as _i4;
+    as _i8yamz7j;
 import '../modules/invoicing/jobs/process_recurring_invoices_future_call.dart'
-    as _i5;
+    as _i5jk8erm;
 
 /// Invokes a future call.
 typedef _InvokeFutureCall =
-    Future<void> Function(String name, _i1.SerializableModel? object);
+    Future<void> Function(String name, _is.SerializableModel? object);
 
-extension ServerpodFutureCallsGetter on _i1.Serverpod {
+extension ServerpodFutureCallsGetter on _is.Serverpod {
   /// Generated future calls.
   FutureCalls get futureCalls => FutureCalls();
 }
 
-class FutureCalls extends _i1.FutureCallDispatch<_FutureCallRef> {
+class FutureCalls extends _is.FutureCallDispatch<_FutureCallRef> {
   FutureCalls._();
 
   factory FutureCalls() {
@@ -37,7 +37,7 @@ class FutureCalls extends _i1.FutureCallDispatch<_FutureCallRef> {
 
   static final FutureCalls _instance = FutureCalls._();
 
-  _i1.FutureCallManager? _futureCallManager;
+  _is.FutureCallManager? _futureCallManager;
 
   String? _serverId;
 
@@ -48,7 +48,7 @@ class FutureCalls extends _i1.FutureCallDispatch<_FutureCallRef> {
     return _serverId!;
   }
 
-  _i1.FutureCallManager get _effectiveFutureCallManager {
+  _is.FutureCallManager get _effectiveFutureCallManager {
     if (_futureCallManager == null) {
       throw StateError('FutureCalls is not initialized.');
     }
@@ -57,10 +57,10 @@ class FutureCalls extends _i1.FutureCallDispatch<_FutureCallRef> {
 
   @override
   void initialize(
-    _i1.FutureCallManager futureCallManager,
+    _is.FutureCallManager futureCallManager,
     String serverId,
   ) {
-    var registeredFutureCalls = <String, _i1.InvokableFutureCall>{
+    var registeredFutureCalls = <String, _is.InvokableFutureCall>{
       'MarkOverdueInvoicesProcessFutureCall':
           MarkOverdueInvoicesProcessFutureCall(),
       'ProcessRecurringInvoicesProcessFutureCall':
@@ -110,7 +110,7 @@ class FutureCalls extends _i1.FutureCallDispatch<_FutureCallRef> {
   }
 
   @override
-  _i1.RecurringFutureCallDispatch<_FutureCallRef> callRecurring({
+  _is.RecurringFutureCallDispatch<_FutureCallRef> callRecurring({
     String? identifier,
   }) {
     return _RecurringFutureCallDispatchImpl(
@@ -127,14 +127,14 @@ class FutureCalls extends _i1.FutureCallDispatch<_FutureCallRef> {
 }
 
 class _RecurringFutureCallDispatchImpl
-    extends _i1.RecurringFutureCallDispatch<_FutureCallRef> {
+    extends _is.RecurringFutureCallDispatch<_FutureCallRef> {
   _RecurringFutureCallDispatchImpl(
     this._futureCallManager,
     this._serverId,
     this._identifier,
   );
 
-  final _i1.FutureCallManager _futureCallManager;
+  final _is.FutureCallManager _futureCallManager;
 
   final String _serverId;
 
@@ -147,10 +147,10 @@ class _RecurringFutureCallDispatchImpl
         return _futureCallManager.scheduleFutureCall(
           name,
           object,
-          _i1.Cron.parse(cronExpression).nextTime(),
+          _is.Cron.parse(cronExpression).nextTime(),
           _serverId,
           _identifier,
-          scheduling: _i1.CronFutureCallScheduling(cron: cronExpression),
+          scheduling: _is.CronFutureCallScheduling(cron: cronExpression),
         );
       },
     );
@@ -161,7 +161,7 @@ class _RecurringFutureCallDispatchImpl
     Duration interval, {
     DateTime? start,
   }) {
-    final now = _i2.clock.now().toUtc();
+    final now = _io0w16m8.clock.now().toUtc();
     return _FutureCallRef(
       (name, object) {
         return _futureCallManager.scheduleFutureCall(
@@ -170,7 +170,7 @@ class _RecurringFutureCallDispatchImpl
           start ?? now.add(interval),
           _serverId,
           _identifier,
-          scheduling: _i1.IntervalFutureCallScheduling(
+          scheduling: _is.IntervalFutureCallScheduling(
             interval: interval,
             start: start,
           ),
@@ -219,24 +219,24 @@ class _ProcessRecurringInvoicesFutureCallDispatcher {
   }
 }
 
-class MarkOverdueInvoicesProcessFutureCall extends _i1.FutureCall
-    implements _i1.InvokableFutureCall {
+class MarkOverdueInvoicesProcessFutureCall extends _is.FutureCall
+    implements _is.InvokableFutureCall {
   @override
-  _i3.Future<void> invoke(
-    _i1.Session session,
-    _i1.SerializableModel? object,
+  _ida.Future<void> invoke(
+    _is.Session session,
+    _is.SerializableModel? object,
   ) async {
-    await _i4.MarkOverdueInvoicesFutureCall().process(session);
+    await _i8yamz7j.MarkOverdueInvoicesFutureCall().process(session);
   }
 }
 
-class ProcessRecurringInvoicesProcessFutureCall extends _i1.FutureCall
-    implements _i1.InvokableFutureCall {
+class ProcessRecurringInvoicesProcessFutureCall extends _is.FutureCall
+    implements _is.InvokableFutureCall {
   @override
-  _i3.Future<void> invoke(
-    _i1.Session session,
-    _i1.SerializableModel? object,
+  _ida.Future<void> invoke(
+    _is.Session session,
+    _is.SerializableModel? object,
   ) async {
-    await _i5.ProcessRecurringInvoicesFutureCall().process(session);
+    await _i5jk8erm.ProcessRecurringInvoicesFutureCall().process(session);
   }
 }

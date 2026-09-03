@@ -10,11 +10,12 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/business/models/membership_role.dart' as _i2;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/business/models/membership_role.dart' as _i0s3lyvs;
 
 abstract class MyMembershipInfo
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   MyMembershipInfo._({
     required this.businessId,
     required this.businessName,
@@ -24,14 +25,16 @@ abstract class MyMembershipInfo
   factory MyMembershipInfo({
     required int businessId,
     required String businessName,
-    required _i2.MembershipRole role,
+    required _i0s3lyvs.MembershipRole role,
   }) = _MyMembershipInfoImpl;
 
   factory MyMembershipInfo.fromJson(Map<String, dynamic> jsonSerialization) {
     return MyMembershipInfo(
       businessId: jsonSerialization['businessId'] as int,
       businessName: jsonSerialization['businessName'] as String,
-      role: _i2.MembershipRole.fromJson((jsonSerialization['role'] as String)),
+      role: _i0s3lyvs.MembershipRole.fromJson(
+        (jsonSerialization['role'] as String),
+      ),
     );
   }
 
@@ -39,15 +42,15 @@ abstract class MyMembershipInfo
 
   String businessName;
 
-  _i2.MembershipRole role;
+  _i0s3lyvs.MembershipRole role;
 
   /// Returns a shallow copy of this [MyMembershipInfo]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   MyMembershipInfo copyWith({
     int? businessId,
     String? businessName,
-    _i2.MembershipRole? role,
+    _i0s3lyvs.MembershipRole? role,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -71,7 +74,7 @@ abstract class MyMembershipInfo
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -79,7 +82,7 @@ class _MyMembershipInfoImpl extends MyMembershipInfo {
   _MyMembershipInfoImpl({
     required int businessId,
     required String businessName,
-    required _i2.MembershipRole role,
+    required _i0s3lyvs.MembershipRole role,
   }) : super._(
          businessId: businessId,
          businessName: businessName,
@@ -88,12 +91,12 @@ class _MyMembershipInfoImpl extends MyMembershipInfo {
 
   /// Returns a shallow copy of this [MyMembershipInfo]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   MyMembershipInfo copyWith({
     int? businessId,
     String? businessName,
-    _i2.MembershipRole? role,
+    _i0s3lyvs.MembershipRole? role,
   }) {
     return MyMembershipInfo(
       businessId: businessId ?? this.businessId,

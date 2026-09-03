@@ -10,28 +10,29 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/documents/models/document_kind.dart' as _i2;
-import 'dart:typed_data' as _i3;
+
+import 'dart:typed_data' as _idt;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/documents/models/document_kind.dart' as _iez1e0gu;
 
 abstract class UploadDocumentRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   UploadDocumentRequest._({
     required this.businessId,
-    _i2.DocumentKind? kind,
+    _iez1e0gu.DocumentKind? kind,
     required this.fileName,
     this.mimeType,
     required this.data,
     this.relatedEntityType,
     this.relatedEntityId,
-  }) : kind = kind ?? _i2.DocumentKind.attachment;
+  }) : kind = kind ?? _iez1e0gu.DocumentKind.attachment;
 
   factory UploadDocumentRequest({
     required int businessId,
-    _i2.DocumentKind? kind,
+    _iez1e0gu.DocumentKind? kind,
     required String fileName,
     String? mimeType,
-    required _i3.ByteData data,
+    required _idt.ByteData data,
     String? relatedEntityType,
     String? relatedEntityId,
   }) = _UploadDocumentRequestImpl;
@@ -43,10 +44,12 @@ abstract class UploadDocumentRequest
       businessId: jsonSerialization['businessId'] as int,
       kind: jsonSerialization['kind'] == null
           ? null
-          : _i2.DocumentKind.fromJson((jsonSerialization['kind'] as String)),
+          : _iez1e0gu.DocumentKind.fromJson(
+              (jsonSerialization['kind'] as String),
+            ),
       fileName: jsonSerialization['fileName'] as String,
       mimeType: jsonSerialization['mimeType'] as String?,
-      data: _i1.ByteDataJsonExtension.fromJson(jsonSerialization['data']),
+      data: _is.ByteDataJsonExtension.fromJson(jsonSerialization['data']),
       relatedEntityType: jsonSerialization['relatedEntityType'] as String?,
       relatedEntityId: jsonSerialization['relatedEntityId'] as String?,
     );
@@ -54,13 +57,13 @@ abstract class UploadDocumentRequest
 
   int businessId;
 
-  _i2.DocumentKind kind;
+  _iez1e0gu.DocumentKind kind;
 
   String fileName;
 
   String? mimeType;
 
-  _i3.ByteData data;
+  _idt.ByteData data;
 
   String? relatedEntityType;
 
@@ -68,13 +71,13 @@ abstract class UploadDocumentRequest
 
   /// Returns a shallow copy of this [UploadDocumentRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   UploadDocumentRequest copyWith({
     int? businessId,
-    _i2.DocumentKind? kind,
+    _iez1e0gu.DocumentKind? kind,
     String? fileName,
     String? mimeType,
-    _i3.ByteData? data,
+    _idt.ByteData? data,
     String? relatedEntityType,
     String? relatedEntityId,
   });
@@ -108,7 +111,7 @@ abstract class UploadDocumentRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -117,10 +120,10 @@ class _Undefined {}
 class _UploadDocumentRequestImpl extends UploadDocumentRequest {
   _UploadDocumentRequestImpl({
     required int businessId,
-    _i2.DocumentKind? kind,
+    _iez1e0gu.DocumentKind? kind,
     required String fileName,
     String? mimeType,
-    required _i3.ByteData data,
+    required _idt.ByteData data,
     String? relatedEntityType,
     String? relatedEntityId,
   }) : super._(
@@ -135,14 +138,14 @@ class _UploadDocumentRequestImpl extends UploadDocumentRequest {
 
   /// Returns a shallow copy of this [UploadDocumentRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   UploadDocumentRequest copyWith({
     int? businessId,
-    _i2.DocumentKind? kind,
+    _iez1e0gu.DocumentKind? kind,
     String? fileName,
     Object? mimeType = _Undefined,
-    _i3.ByteData? data,
+    _idt.ByteData? data,
     Object? relatedEntityType = _Undefined,
     Object? relatedEntityId = _Undefined,
   }) {

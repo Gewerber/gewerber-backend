@@ -10,12 +10,14 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/accounting/models/profit_loss_line.dart' as _i2;
-import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i3;
+
+import 'package:gewerber_backend_client/src/protocol/protocol.dart'
+    as _iipbhyvd;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/accounting/models/profit_loss_line.dart' as _iy1ovtjt;
 
 abstract class ProfitLossReport
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   ProfitLossReport._({
     required this.from,
     required this.to,
@@ -32,23 +34,25 @@ abstract class ProfitLossReport
     required int incomeCents,
     required int expenseCents,
     required int profitCents,
-    required List<_i2.ProfitLossLine> incomeLines,
-    required List<_i2.ProfitLossLine> expenseLines,
+    required List<_iy1ovtjt.ProfitLossLine> incomeLines,
+    required List<_iy1ovtjt.ProfitLossLine> expenseLines,
   }) = _ProfitLossReportImpl;
 
   factory ProfitLossReport.fromJson(Map<String, dynamic> jsonSerialization) {
     return ProfitLossReport(
-      from: _i1.DateTimeJsonExtension.fromJson(jsonSerialization['from']),
-      to: _i1.DateTimeJsonExtension.fromJson(jsonSerialization['to']),
+      from: _isc.DateTimeJsonExtension.fromJson(jsonSerialization['from']),
+      to: _isc.DateTimeJsonExtension.fromJson(jsonSerialization['to']),
       incomeCents: jsonSerialization['incomeCents'] as int,
       expenseCents: jsonSerialization['expenseCents'] as int,
       profitCents: jsonSerialization['profitCents'] as int,
-      incomeLines: _i3.Protocol().deserialize<List<_i2.ProfitLossLine>>(
-        jsonSerialization['incomeLines'],
-      ),
-      expenseLines: _i3.Protocol().deserialize<List<_i2.ProfitLossLine>>(
-        jsonSerialization['expenseLines'],
-      ),
+      incomeLines: _iipbhyvd.Protocol()
+          .deserialize<List<_iy1ovtjt.ProfitLossLine>>(
+            jsonSerialization['incomeLines'],
+          ),
+      expenseLines: _iipbhyvd.Protocol()
+          .deserialize<List<_iy1ovtjt.ProfitLossLine>>(
+            jsonSerialization['expenseLines'],
+          ),
     );
   }
 
@@ -62,21 +66,21 @@ abstract class ProfitLossReport
 
   int profitCents;
 
-  List<_i2.ProfitLossLine> incomeLines;
+  List<_iy1ovtjt.ProfitLossLine> incomeLines;
 
-  List<_i2.ProfitLossLine> expenseLines;
+  List<_iy1ovtjt.ProfitLossLine> expenseLines;
 
   /// Returns a shallow copy of this [ProfitLossReport]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   ProfitLossReport copyWith({
     DateTime? from,
     DateTime? to,
     int? incomeCents,
     int? expenseCents,
     int? profitCents,
-    List<_i2.ProfitLossLine>? incomeLines,
-    List<_i2.ProfitLossLine>? expenseLines,
+    List<_iy1ovtjt.ProfitLossLine>? incomeLines,
+    List<_iy1ovtjt.ProfitLossLine>? expenseLines,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -112,7 +116,7 @@ abstract class ProfitLossReport
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -123,8 +127,8 @@ class _ProfitLossReportImpl extends ProfitLossReport {
     required int incomeCents,
     required int expenseCents,
     required int profitCents,
-    required List<_i2.ProfitLossLine> incomeLines,
-    required List<_i2.ProfitLossLine> expenseLines,
+    required List<_iy1ovtjt.ProfitLossLine> incomeLines,
+    required List<_iy1ovtjt.ProfitLossLine> expenseLines,
   }) : super._(
          from: from,
          to: to,
@@ -137,7 +141,7 @@ class _ProfitLossReportImpl extends ProfitLossReport {
 
   /// Returns a shallow copy of this [ProfitLossReport]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   ProfitLossReport copyWith({
     DateTime? from,
@@ -145,8 +149,8 @@ class _ProfitLossReportImpl extends ProfitLossReport {
     int? incomeCents,
     int? expenseCents,
     int? profitCents,
-    List<_i2.ProfitLossLine>? incomeLines,
-    List<_i2.ProfitLossLine>? expenseLines,
+    List<_iy1ovtjt.ProfitLossLine>? incomeLines,
+    List<_iy1ovtjt.ProfitLossLine>? expenseLines,
   }) {
     return ProfitLossReport(
       from: from ?? this.from,

@@ -10,41 +10,42 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/documents/models/document_kind.dart' as _i2;
-import '../../../modules/documents/models/storage_location.dart' as _i3;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/documents/models/document_kind.dart' as _iez1e0gu;
+import '../../../modules/documents/models/storage_location.dart' as _i189k6zv;
 
 abstract class Document
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   Document._({
     this.id,
     required this.businessId,
-    _i2.DocumentKind? kind,
+    _iez1e0gu.DocumentKind? kind,
     required this.fileName,
     this.mimeType,
     this.sizeBytes,
-    _i3.StorageLocation? storageLocation,
+    _i189k6zv.StorageLocation? storageLocation,
     required this.storagePath,
     this.relatedEntityType,
     this.relatedEntityId,
     this.uploadedById,
     DateTime? createdAt,
-  }) : kind = kind ?? _i2.DocumentKind.attachment,
-       storageLocation = storageLocation ?? _i3.StorageLocation.private,
+  }) : kind = kind ?? _iez1e0gu.DocumentKind.attachment,
+       storageLocation = storageLocation ?? _i189k6zv.StorageLocation.private,
        createdAt = createdAt ?? DateTime.now();
 
   factory Document({
     int? id,
     required int businessId,
-    _i2.DocumentKind? kind,
+    _iez1e0gu.DocumentKind? kind,
     required String fileName,
     String? mimeType,
     int? sizeBytes,
-    _i3.StorageLocation? storageLocation,
+    _i189k6zv.StorageLocation? storageLocation,
     required String storagePath,
     String? relatedEntityType,
     String? relatedEntityId,
-    _i1.UuidValue? uploadedById,
+    _isc.UuidValue? uploadedById,
     DateTime? createdAt,
   }) = _DocumentImpl;
 
@@ -54,13 +55,15 @@ abstract class Document
       businessId: jsonSerialization['businessId'] as int,
       kind: jsonSerialization['kind'] == null
           ? null
-          : _i2.DocumentKind.fromJson((jsonSerialization['kind'] as String)),
+          : _iez1e0gu.DocumentKind.fromJson(
+              (jsonSerialization['kind'] as String),
+            ),
       fileName: jsonSerialization['fileName'] as String,
       mimeType: jsonSerialization['mimeType'] as String?,
       sizeBytes: jsonSerialization['sizeBytes'] as int?,
       storageLocation: jsonSerialization['storageLocation'] == null
           ? null
-          : _i3.StorageLocation.fromJson(
+          : _i189k6zv.StorageLocation.fromJson(
               (jsonSerialization['storageLocation'] as String),
             ),
       storagePath: jsonSerialization['storagePath'] as String,
@@ -68,12 +71,12 @@ abstract class Document
       relatedEntityId: jsonSerialization['relatedEntityId'] as String?,
       uploadedById: jsonSerialization['uploadedById'] == null
           ? null
-          : _i1.UuidValueJsonExtension.fromJson(
+          : _isc.UuidValueJsonExtension.fromJson(
               jsonSerialization['uploadedById'],
             ),
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
     );
   }
 
@@ -84,7 +87,7 @@ abstract class Document
 
   int businessId;
 
-  _i2.DocumentKind kind;
+  _iez1e0gu.DocumentKind kind;
 
   String fileName;
 
@@ -92,7 +95,7 @@ abstract class Document
 
   int? sizeBytes;
 
-  _i3.StorageLocation storageLocation;
+  _i189k6zv.StorageLocation storageLocation;
 
   String storagePath;
 
@@ -100,25 +103,25 @@ abstract class Document
 
   String? relatedEntityId;
 
-  _i1.UuidValue? uploadedById;
+  _isc.UuidValue? uploadedById;
 
   DateTime createdAt;
 
   /// Returns a shallow copy of this [Document]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   Document copyWith({
     int? id,
     int? businessId,
-    _i2.DocumentKind? kind,
+    _iez1e0gu.DocumentKind? kind,
     String? fileName,
     String? mimeType,
     int? sizeBytes,
-    _i3.StorageLocation? storageLocation,
+    _i189k6zv.StorageLocation? storageLocation,
     String? storagePath,
     String? relatedEntityType,
     String? relatedEntityId,
-    _i1.UuidValue? uploadedById,
+    _isc.UuidValue? uploadedById,
     DateTime? createdAt,
   });
   @override
@@ -161,7 +164,7 @@ abstract class Document
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -171,15 +174,15 @@ class _DocumentImpl extends Document {
   _DocumentImpl({
     int? id,
     required int businessId,
-    _i2.DocumentKind? kind,
+    _iez1e0gu.DocumentKind? kind,
     required String fileName,
     String? mimeType,
     int? sizeBytes,
-    _i3.StorageLocation? storageLocation,
+    _i189k6zv.StorageLocation? storageLocation,
     required String storagePath,
     String? relatedEntityType,
     String? relatedEntityId,
-    _i1.UuidValue? uploadedById,
+    _isc.UuidValue? uploadedById,
     DateTime? createdAt,
   }) : super._(
          id: id,
@@ -198,16 +201,16 @@ class _DocumentImpl extends Document {
 
   /// Returns a shallow copy of this [Document]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   Document copyWith({
     Object? id = _Undefined,
     int? businessId,
-    _i2.DocumentKind? kind,
+    _iez1e0gu.DocumentKind? kind,
     String? fileName,
     Object? mimeType = _Undefined,
     Object? sizeBytes = _Undefined,
-    _i3.StorageLocation? storageLocation,
+    _i189k6zv.StorageLocation? storageLocation,
     String? storagePath,
     Object? relatedEntityType = _Undefined,
     Object? relatedEntityId = _Undefined,
@@ -229,7 +232,7 @@ class _DocumentImpl extends Document {
       relatedEntityId: relatedEntityId is String?
           ? relatedEntityId
           : this.relatedEntityId,
-      uploadedById: uploadedById is _i1.UuidValue?
+      uploadedById: uploadedById is _isc.UuidValue?
           ? uploadedById
           : this.uploadedById,
       createdAt: createdAt ?? this.createdAt,

@@ -10,10 +10,11 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
+
+import 'package:serverpod/serverpod.dart' as _is;
 
 abstract class UpdateTimeEntryRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   UpdateTimeEntryRequest._({
     required this.timeEntryId,
     this.projectId,
@@ -42,11 +43,11 @@ abstract class UpdateTimeEntryRequest
       projectId: jsonSerialization['projectId'] as int?,
       taskId: jsonSerialization['taskId'] as int?,
       description: jsonSerialization['description'] as String?,
-      startedAt: _i1.DateTimeJsonExtension.fromJson(
+      startedAt: _is.DateTimeJsonExtension.fromJson(
         jsonSerialization['startedAt'],
       ),
       durationMinutes: jsonSerialization['durationMinutes'] as int,
-      billable: _i1.BoolJsonExtension.fromJson(jsonSerialization['billable']),
+      billable: _is.BoolJsonExtension.fromJson(jsonSerialization['billable']),
     );
   }
 
@@ -66,7 +67,7 @@ abstract class UpdateTimeEntryRequest
 
   /// Returns a shallow copy of this [UpdateTimeEntryRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   UpdateTimeEntryRequest copyWith({
     int? timeEntryId,
     int? projectId,
@@ -106,7 +107,7 @@ abstract class UpdateTimeEntryRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -133,7 +134,7 @@ class _UpdateTimeEntryRequestImpl extends UpdateTimeEntryRequest {
 
   /// Returns a shallow copy of this [UpdateTimeEntryRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   UpdateTimeEntryRequest copyWith({
     int? timeEntryId,

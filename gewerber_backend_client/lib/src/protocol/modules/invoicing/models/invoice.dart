@@ -10,28 +10,30 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/invoicing/models/invoice_type.dart' as _i2;
-import '../../../modules/invoicing/models/invoice_status.dart' as _i3;
-import '../../../modules/business/models/locale.dart' as _i4;
-import '../../../modules/business/models/currency.dart' as _i5;
-import '../../../modules/invoicing/models/recurrence_interval.dart' as _i6;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/business/models/currency.dart' as _i80byysb;
+import '../../../modules/business/models/locale.dart' as _ie5v8zdc;
+import '../../../modules/invoicing/models/invoice_status.dart' as _ib459vd4;
+import '../../../modules/invoicing/models/invoice_type.dart' as _i4s57tlu;
+import '../../../modules/invoicing/models/recurrence_interval.dart'
+    as _i2jlpxj3;
 
 abstract class Invoice
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   Invoice._({
     this.id,
     required this.businessId,
     required this.number,
-    _i2.InvoiceType? type,
-    _i3.InvoiceStatus? status,
+    _i4s57tlu.InvoiceType? type,
+    _ib459vd4.InvoiceStatus? status,
     this.customerId,
     required this.issueDate,
     this.dueDate,
     this.serviceDateFrom,
     this.serviceDateTo,
-    _i4.Locale? locale,
-    _i5.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     int? subtotalCents,
     int? vatTotalCents,
     int? totalCents,
@@ -47,10 +49,10 @@ abstract class Invoice
     int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
     DateTime? updatedAt,
-  }) : type = type ?? _i2.InvoiceType.invoice,
-       status = status ?? _i3.InvoiceStatus.draft,
-       locale = locale ?? _i4.Locale.de,
-       currency = currency ?? _i5.Currency.eur,
+  }) : type = type ?? _i4s57tlu.InvoiceType.invoice,
+       status = status ?? _ib459vd4.InvoiceStatus.draft,
+       locale = locale ?? _ie5v8zdc.Locale.de,
+       currency = currency ?? _i80byysb.Currency.eur,
        subtotalCents = subtotalCents ?? 0,
        vatTotalCents = vatTotalCents ?? 0,
        totalCents = totalCents ?? 0,
@@ -64,15 +66,15 @@ abstract class Invoice
     int? id,
     required int businessId,
     required String number,
-    _i2.InvoiceType? type,
-    _i3.InvoiceStatus? status,
+    _i4s57tlu.InvoiceType? type,
+    _ib459vd4.InvoiceStatus? status,
     int? customerId,
     required DateTime issueDate,
     DateTime? dueDate,
     DateTime? serviceDateFrom,
     DateTime? serviceDateTo,
-    _i4.Locale? locale,
-    _i5.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     int? subtotalCents,
     int? vatTotalCents,
     int? totalCents,
@@ -81,7 +83,7 @@ abstract class Invoice
     String? notes,
     int? templateId,
     int? pdfDocumentId,
-    _i6.RecurrenceInterval? recurrenceInterval,
+    _i2jlpxj3.RecurrenceInterval? recurrenceInterval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
@@ -97,33 +99,39 @@ abstract class Invoice
       number: jsonSerialization['number'] as String,
       type: jsonSerialization['type'] == null
           ? null
-          : _i2.InvoiceType.fromJson((jsonSerialization['type'] as String)),
+          : _i4s57tlu.InvoiceType.fromJson(
+              (jsonSerialization['type'] as String),
+            ),
       status: jsonSerialization['status'] == null
           ? null
-          : _i3.InvoiceStatus.fromJson((jsonSerialization['status'] as String)),
+          : _ib459vd4.InvoiceStatus.fromJson(
+              (jsonSerialization['status'] as String),
+            ),
       customerId: jsonSerialization['customerId'] as int?,
-      issueDate: _i1.DateTimeJsonExtension.fromJson(
+      issueDate: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['issueDate'],
       ),
       dueDate: jsonSerialization['dueDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['dueDate']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['dueDate']),
       serviceDateFrom: jsonSerialization['serviceDateFrom'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _isc.DateTimeJsonExtension.fromJson(
               jsonSerialization['serviceDateFrom'],
             ),
       serviceDateTo: jsonSerialization['serviceDateTo'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _isc.DateTimeJsonExtension.fromJson(
               jsonSerialization['serviceDateTo'],
             ),
       locale: jsonSerialization['locale'] == null
           ? null
-          : _i4.Locale.fromJson((jsonSerialization['locale'] as String)),
+          : _ie5v8zdc.Locale.fromJson((jsonSerialization['locale'] as String)),
       currency: jsonSerialization['currency'] == null
           ? null
-          : _i5.Currency.fromJson((jsonSerialization['currency'] as String)),
+          : _i80byysb.Currency.fromJson(
+              (jsonSerialization['currency'] as String),
+            ),
       subtotalCents: jsonSerialization['subtotalCents'] as int?,
       vatTotalCents: jsonSerialization['vatTotalCents'] as int?,
       totalCents: jsonSerialization['totalCents'] as int?,
@@ -134,17 +142,17 @@ abstract class Invoice
       pdfDocumentId: jsonSerialization['pdfDocumentId'] as int?,
       recurrenceInterval: jsonSerialization['recurrenceInterval'] == null
           ? null
-          : _i6.RecurrenceInterval.fromJson(
+          : _i2jlpxj3.RecurrenceInterval.fromJson(
               (jsonSerialization['recurrenceInterval'] as String),
             ),
       nextRecurrenceDate: jsonSerialization['nextRecurrenceDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _isc.DateTimeJsonExtension.fromJson(
               jsonSerialization['nextRecurrenceDate'],
             ),
       recurrenceEndDate: jsonSerialization['recurrenceEndDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _isc.DateTimeJsonExtension.fromJson(
               jsonSerialization['recurrenceEndDate'],
             ),
       recurrenceMaxOccurrences:
@@ -153,10 +161,10 @@ abstract class Invoice
           jsonSerialization['recurrenceOccurrencesCreated'] as int?,
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -169,9 +177,9 @@ abstract class Invoice
 
   String number;
 
-  _i2.InvoiceType type;
+  _i4s57tlu.InvoiceType type;
 
-  _i3.InvoiceStatus status;
+  _ib459vd4.InvoiceStatus status;
 
   int? customerId;
 
@@ -183,9 +191,9 @@ abstract class Invoice
 
   DateTime? serviceDateTo;
 
-  _i4.Locale locale;
+  _ie5v8zdc.Locale locale;
 
-  _i5.Currency currency;
+  _i80byysb.Currency currency;
 
   int subtotalCents;
 
@@ -203,7 +211,7 @@ abstract class Invoice
 
   int? pdfDocumentId;
 
-  _i6.RecurrenceInterval? recurrenceInterval;
+  _i2jlpxj3.RecurrenceInterval? recurrenceInterval;
 
   DateTime? nextRecurrenceDate;
 
@@ -219,20 +227,20 @@ abstract class Invoice
 
   /// Returns a shallow copy of this [Invoice]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   Invoice copyWith({
     int? id,
     int? businessId,
     String? number,
-    _i2.InvoiceType? type,
-    _i3.InvoiceStatus? status,
+    _i4s57tlu.InvoiceType? type,
+    _ib459vd4.InvoiceStatus? status,
     int? customerId,
     DateTime? issueDate,
     DateTime? dueDate,
     DateTime? serviceDateFrom,
     DateTime? serviceDateTo,
-    _i4.Locale? locale,
-    _i5.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     int? subtotalCents,
     int? vatTotalCents,
     int? totalCents,
@@ -241,7 +249,7 @@ abstract class Invoice
     String? notes,
     int? templateId,
     int? pdfDocumentId,
-    _i6.RecurrenceInterval? recurrenceInterval,
+    _i2jlpxj3.RecurrenceInterval? recurrenceInterval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
@@ -327,7 +335,7 @@ abstract class Invoice
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -338,15 +346,15 @@ class _InvoiceImpl extends Invoice {
     int? id,
     required int businessId,
     required String number,
-    _i2.InvoiceType? type,
-    _i3.InvoiceStatus? status,
+    _i4s57tlu.InvoiceType? type,
+    _ib459vd4.InvoiceStatus? status,
     int? customerId,
     required DateTime issueDate,
     DateTime? dueDate,
     DateTime? serviceDateFrom,
     DateTime? serviceDateTo,
-    _i4.Locale? locale,
-    _i5.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     int? subtotalCents,
     int? vatTotalCents,
     int? totalCents,
@@ -355,7 +363,7 @@ class _InvoiceImpl extends Invoice {
     String? notes,
     int? templateId,
     int? pdfDocumentId,
-    _i6.RecurrenceInterval? recurrenceInterval,
+    _i2jlpxj3.RecurrenceInterval? recurrenceInterval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
@@ -394,21 +402,21 @@ class _InvoiceImpl extends Invoice {
 
   /// Returns a shallow copy of this [Invoice]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   Invoice copyWith({
     Object? id = _Undefined,
     int? businessId,
     String? number,
-    _i2.InvoiceType? type,
-    _i3.InvoiceStatus? status,
+    _i4s57tlu.InvoiceType? type,
+    _ib459vd4.InvoiceStatus? status,
     Object? customerId = _Undefined,
     DateTime? issueDate,
     Object? dueDate = _Undefined,
     Object? serviceDateFrom = _Undefined,
     Object? serviceDateTo = _Undefined,
-    _i4.Locale? locale,
-    _i5.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     int? subtotalCents,
     int? vatTotalCents,
     int? totalCents,
@@ -450,7 +458,7 @@ class _InvoiceImpl extends Invoice {
       notes: notes is String? ? notes : this.notes,
       templateId: templateId is int? ? templateId : this.templateId,
       pdfDocumentId: pdfDocumentId is int? ? pdfDocumentId : this.pdfDocumentId,
-      recurrenceInterval: recurrenceInterval is _i6.RecurrenceInterval?
+      recurrenceInterval: recurrenceInterval is _i2jlpxj3.RecurrenceInterval?
           ? recurrenceInterval
           : this.recurrenceInterval,
       nextRecurrenceDate: nextRecurrenceDate is DateTime?

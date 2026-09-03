@@ -10,48 +10,50 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/business/models/legal_form.dart' as _i2;
-import '../../../modules/business/models/locale.dart' as _i3;
-import '../../../modules/business/models/currency.dart' as _i4;
-import '../../../modules/business/models/address.dart' as _i5;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i6;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/business/models/address.dart' as _iz28txwx;
+import '../../../modules/business/models/currency.dart' as _i80byysb;
+import '../../../modules/business/models/legal_form.dart' as _ibbkzk4j;
+import '../../../modules/business/models/locale.dart' as _ie5v8zdc;
 
 abstract class Business
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   Business._({
     this.id,
     required this.name,
-    _i2.LegalForm? legalForm,
+    _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     this.vatId,
     this.taxNumber,
     this.email,
     this.phone,
     this.address,
-    _i3.Locale? locale,
-    _i4.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     DateTime? createdAt,
     DateTime? updatedAt,
-  }) : legalForm = legalForm ?? _i2.LegalForm.einzelunternehmen,
+  }) : legalForm = legalForm ?? _ibbkzk4j.LegalForm.einzelunternehmen,
        isKleinunternehmer = isKleinunternehmer ?? false,
-       locale = locale ?? _i3.Locale.de,
-       currency = currency ?? _i4.Currency.eur,
+       locale = locale ?? _ie5v8zdc.Locale.de,
+       currency = currency ?? _i80byysb.Currency.eur,
        createdAt = createdAt ?? DateTime.now(),
        updatedAt = updatedAt ?? DateTime.now();
 
   factory Business({
     int? id,
     required String name,
-    _i2.LegalForm? legalForm,
+    _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     String? vatId,
     String? taxNumber,
     String? email,
     String? phone,
-    _i5.Address? address,
-    _i3.Locale? locale,
-    _i4.Currency? currency,
+    _iz28txwx.Address? address,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _BusinessImpl;
@@ -62,10 +64,12 @@ abstract class Business
       name: jsonSerialization['name'] as String,
       legalForm: jsonSerialization['legalForm'] == null
           ? null
-          : _i2.LegalForm.fromJson((jsonSerialization['legalForm'] as String)),
+          : _ibbkzk4j.LegalForm.fromJson(
+              (jsonSerialization['legalForm'] as String),
+            ),
       isKleinunternehmer: jsonSerialization['isKleinunternehmer'] == null
           ? null
-          : _i1.BoolJsonExtension.fromJson(
+          : _is.BoolJsonExtension.fromJson(
               jsonSerialization['isKleinunternehmer'],
             ),
       vatId: jsonSerialization['vatId'] as String?,
@@ -74,21 +78,23 @@ abstract class Business
       phone: jsonSerialization['phone'] as String?,
       address: jsonSerialization['address'] == null
           ? null
-          : _i6.Protocol().deserialize<_i5.Address>(
+          : _itzp2rm6.Protocol().deserialize<_iz28txwx.Address>(
               jsonSerialization['address'],
             ),
       locale: jsonSerialization['locale'] == null
           ? null
-          : _i3.Locale.fromJson((jsonSerialization['locale'] as String)),
+          : _ie5v8zdc.Locale.fromJson((jsonSerialization['locale'] as String)),
       currency: jsonSerialization['currency'] == null
           ? null
-          : _i4.Currency.fromJson((jsonSerialization['currency'] as String)),
+          : _i80byysb.Currency.fromJson(
+              (jsonSerialization['currency'] as String),
+            ),
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -101,7 +107,7 @@ abstract class Business
 
   String name;
 
-  _i2.LegalForm legalForm;
+  _ibbkzk4j.LegalForm legalForm;
 
   bool isKleinunternehmer;
 
@@ -113,34 +119,34 @@ abstract class Business
 
   String? phone;
 
-  _i5.Address? address;
+  _iz28txwx.Address? address;
 
-  _i3.Locale locale;
+  _ie5v8zdc.Locale locale;
 
-  _i4.Currency currency;
+  _i80byysb.Currency currency;
 
   DateTime createdAt;
 
   DateTime updatedAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [Business]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   Business copyWith({
     int? id,
     String? name,
-    _i2.LegalForm? legalForm,
+    _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     String? vatId,
     String? taxNumber,
     String? email,
     String? phone,
-    _i5.Address? address,
-    _i3.Locale? locale,
-    _i4.Currency? currency,
+    _iz28txwx.Address? address,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     DateTime? createdAt,
     DateTime? updatedAt,
   });
@@ -188,11 +194,11 @@ abstract class Business
   }
 
   static BusinessIncludeList includeList({
-    _i1.WhereExpressionBuilder<BusinessTable>? where,
+    _is.WhereExpressionBuilder<BusinessTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<BusinessTable>? orderBy,
-    _i1.OrderByListBuilder<BusinessTable>? orderByList,
+    _is.OrderByBuilder<BusinessTable>? orderBy,
+    _is.OrderByListBuilder<BusinessTable>? orderByList,
     BusinessInclude? include,
   }) {
     return BusinessIncludeList._(
@@ -207,7 +213,7 @@ abstract class Business
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -217,15 +223,15 @@ class _BusinessImpl extends Business {
   _BusinessImpl({
     int? id,
     required String name,
-    _i2.LegalForm? legalForm,
+    _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     String? vatId,
     String? taxNumber,
     String? email,
     String? phone,
-    _i5.Address? address,
-    _i3.Locale? locale,
-    _i4.Currency? currency,
+    _iz28txwx.Address? address,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) : super._(
@@ -246,20 +252,20 @@ class _BusinessImpl extends Business {
 
   /// Returns a shallow copy of this [Business]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   Business copyWith({
     Object? id = _Undefined,
     String? name,
-    _i2.LegalForm? legalForm,
+    _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     Object? vatId = _Undefined,
     Object? taxNumber = _Undefined,
     Object? email = _Undefined,
     Object? phone = _Undefined,
     Object? address = _Undefined,
-    _i3.Locale? locale,
-    _i4.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -272,7 +278,9 @@ class _BusinessImpl extends Business {
       taxNumber: taxNumber is String? ? taxNumber : this.taxNumber,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
-      address: address is _i5.Address? ? address : this.address?.copyWith(),
+      address: address is _iz28txwx.Address?
+          ? address
+          : this.address?.copyWith(),
       locale: locale ?? this.locale,
       currency: currency ?? this.currency,
       createdAt: createdAt ?? this.createdAt,
@@ -281,133 +289,136 @@ class _BusinessImpl extends Business {
   }
 }
 
-class BusinessUpdateTable extends _i1.UpdateTable<BusinessTable> {
+class BusinessUpdateTable extends _is.UpdateTable<BusinessTable> {
   BusinessUpdateTable(super.table);
 
-  _i1.ColumnValue<String, String> name(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> name(String value) => _is.ColumnValue(
     table.name,
     value,
   );
 
-  _i1.ColumnValue<_i2.LegalForm, _i2.LegalForm> legalForm(
-    _i2.LegalForm value,
-  ) => _i1.ColumnValue(
+  _is.ColumnValue<_ibbkzk4j.LegalForm, _ibbkzk4j.LegalForm> legalForm(
+    _ibbkzk4j.LegalForm value,
+  ) => _is.ColumnValue(
     table.legalForm,
     value,
   );
 
-  _i1.ColumnValue<bool, bool> isKleinunternehmer(bool value) => _i1.ColumnValue(
+  _is.ColumnValue<bool, bool> isKleinunternehmer(bool value) => _is.ColumnValue(
     table.isKleinunternehmer,
     value,
   );
 
-  _i1.ColumnValue<String, String> vatId(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> vatId(String? value) => _is.ColumnValue(
     table.vatId,
     value,
   );
 
-  _i1.ColumnValue<String, String> taxNumber(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> taxNumber(String? value) => _is.ColumnValue(
     table.taxNumber,
     value,
   );
 
-  _i1.ColumnValue<String, String> email(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> email(String? value) => _is.ColumnValue(
     table.email,
     value,
   );
 
-  _i1.ColumnValue<String, String> phone(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> phone(String? value) => _is.ColumnValue(
     table.phone,
     value,
   );
 
-  _i1.ColumnValue<_i5.Address, _i5.Address> address(_i5.Address? value) =>
-      _i1.ColumnValue(
-        table.address,
-        value,
-      );
+  _is.ColumnValue<_iz28txwx.Address, _iz28txwx.Address> address(
+    _iz28txwx.Address? value,
+  ) => _is.ColumnValue(
+    table.address,
+    value,
+  );
 
-  _i1.ColumnValue<_i3.Locale, _i3.Locale> locale(_i3.Locale value) =>
-      _i1.ColumnValue(
-        table.locale,
-        value,
-      );
+  _is.ColumnValue<_ie5v8zdc.Locale, _ie5v8zdc.Locale> locale(
+    _ie5v8zdc.Locale value,
+  ) => _is.ColumnValue(
+    table.locale,
+    value,
+  );
 
-  _i1.ColumnValue<_i4.Currency, _i4.Currency> currency(_i4.Currency value) =>
-      _i1.ColumnValue(
-        table.currency,
-        value,
-      );
+  _is.ColumnValue<_i80byysb.Currency, _i80byysb.Currency> currency(
+    _i80byysb.Currency value,
+  ) => _is.ColumnValue(
+    table.currency,
+    value,
+  );
 
-  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _is.ColumnValue(
         table.createdAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
+      _is.ColumnValue(
         table.updatedAt,
         value,
       );
 }
 
-class BusinessTable extends _i1.Table<int?> {
+class BusinessTable extends _is.Table<int?> {
   BusinessTable({super.tableRelation}) : super(tableName: 'business') {
     updateTable = BusinessUpdateTable(this);
-    name = _i1.ColumnString(
+    name = _is.ColumnString(
       'name',
       this,
     );
-    legalForm = _i1.ColumnEnum(
+    legalForm = _is.ColumnEnum(
       'legalForm',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    isKleinunternehmer = _i1.ColumnBool(
+    isKleinunternehmer = _is.ColumnBool(
       'isKleinunternehmer',
       this,
       hasDefault: true,
     );
-    vatId = _i1.ColumnString(
+    vatId = _is.ColumnString(
       'vatId',
       this,
     );
-    taxNumber = _i1.ColumnString(
+    taxNumber = _is.ColumnString(
       'taxNumber',
       this,
     );
-    email = _i1.ColumnString(
+    email = _is.ColumnString(
       'email',
       this,
     );
-    phone = _i1.ColumnString(
+    phone = _is.ColumnString(
       'phone',
       this,
     );
-    address = _i1.ColumnSerializable<_i5.Address>(
+    address = _is.ColumnSerializable<_iz28txwx.Address>(
       'address',
       this,
     );
-    locale = _i1.ColumnEnum(
+    locale = _is.ColumnEnum(
       'locale',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    currency = _i1.ColumnEnum(
+    currency = _is.ColumnEnum(
       'currency',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    createdAt = _i1.ColumnDateTime(
+    createdAt = _is.ColumnDateTime(
       'createdAt',
       this,
       hasDefault: true,
     );
-    updatedAt = _i1.ColumnDateTime(
+    updatedAt = _is.ColumnDateTime(
       'updatedAt',
       this,
       hasDefault: true,
@@ -416,32 +427,32 @@ class BusinessTable extends _i1.Table<int?> {
 
   late final BusinessUpdateTable updateTable;
 
-  late final _i1.ColumnString name;
+  late final _is.ColumnString name;
 
-  late final _i1.ColumnEnum<_i2.LegalForm> legalForm;
+  late final _is.ColumnEnum<_ibbkzk4j.LegalForm> legalForm;
 
-  late final _i1.ColumnBool isKleinunternehmer;
+  late final _is.ColumnBool isKleinunternehmer;
 
-  late final _i1.ColumnString vatId;
+  late final _is.ColumnString vatId;
 
-  late final _i1.ColumnString taxNumber;
+  late final _is.ColumnString taxNumber;
 
-  late final _i1.ColumnString email;
+  late final _is.ColumnString email;
 
-  late final _i1.ColumnString phone;
+  late final _is.ColumnString phone;
 
-  late final _i1.ColumnSerializable<_i5.Address> address;
+  late final _is.ColumnSerializable<_iz28txwx.Address> address;
 
-  late final _i1.ColumnEnum<_i3.Locale> locale;
+  late final _is.ColumnEnum<_ie5v8zdc.Locale> locale;
 
-  late final _i1.ColumnEnum<_i4.Currency> currency;
+  late final _is.ColumnEnum<_i80byysb.Currency> currency;
 
-  late final _i1.ColumnDateTime createdAt;
+  late final _is.ColumnDateTime createdAt;
 
-  late final _i1.ColumnDateTime updatedAt;
+  late final _is.ColumnDateTime updatedAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     name,
     legalForm,
@@ -458,19 +469,19 @@ class BusinessTable extends _i1.Table<int?> {
   ];
 }
 
-class BusinessInclude extends _i1.IncludeObject {
+class BusinessInclude extends _is.IncludeObject {
   BusinessInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => Business.t;
+  _is.Table<int?> get table => Business.t;
 }
 
-class BusinessIncludeList extends _i1.IncludeList {
+class BusinessIncludeList extends _is.IncludeList {
   BusinessIncludeList._({
-    _i1.WhereExpressionBuilder<BusinessTable>? where,
+    _is.WhereExpressionBuilder<BusinessTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -481,10 +492,10 @@ class BusinessIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => Business.t;
+  _is.Table<int?> get table => Business.t;
 }
 
 class BusinessRepository {
@@ -513,15 +524,15 @@ class BusinessRepository {
   /// );
   /// ```
   Future<List<Business>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<BusinessTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<BusinessTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<BusinessTable>? orderBy,
-    _i1.OrderByListBuilder<BusinessTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<BusinessTable>? orderBy,
+    _is.OrderByListBuilder<BusinessTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<Business>(
       where: where?.call(Business.t),
@@ -553,14 +564,14 @@ class BusinessRepository {
   /// );
   /// ```
   Future<Business?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<BusinessTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<BusinessTable>? where,
     int? offset,
-    _i1.OrderByBuilder<BusinessTable>? orderBy,
-    _i1.OrderByListBuilder<BusinessTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<BusinessTable>? orderBy,
+    _is.OrderByListBuilder<BusinessTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<Business>(
       where: where?.call(Business.t),
@@ -575,11 +586,11 @@ class BusinessRepository {
 
   /// Finds a single [Business] by its [id] or null if no such row exists.
   Future<Business?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<Business>(
       id,
@@ -604,9 +615,9 @@ class BusinessRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Business>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Business> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -622,9 +633,9 @@ class BusinessRepository {
   ///
   /// The returned [Business] will have its `id` field set.
   Future<Business> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Business row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<Business>(
       row,
@@ -653,12 +664,12 @@ class BusinessRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Business>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Business> rows, {
-    required _i1.ColumnSelections<BusinessTable> conflictColumns,
-    _i1.ColumnSelections<BusinessTable>? updateColumns,
-    _i1.WhereExpressionBuilder<BusinessTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<BusinessTable> conflictColumns,
+    _is.ColumnSelections<BusinessTable>? updateColumns,
+    _is.WhereExpressionBuilder<BusinessTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<Business>(
@@ -685,12 +696,12 @@ class BusinessRepository {
   ///
   /// The returned [Business] will have its `id` field set.
   Future<Business?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Business row, {
-    required _i1.ColumnSelections<BusinessTable> conflictColumns,
-    _i1.ColumnSelections<BusinessTable>? updateColumns,
-    _i1.WhereExpressionBuilder<BusinessTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<BusinessTable> conflictColumns,
+    _is.ColumnSelections<BusinessTable>? updateColumns,
+    _is.WhereExpressionBuilder<BusinessTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<Business>(
       row,
@@ -711,10 +722,10 @@ class BusinessRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Business>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Business> rows, {
-    _i1.ColumnSelections<BusinessTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<BusinessTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<Business>(
@@ -729,10 +740,10 @@ class BusinessRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<Business> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Business row, {
-    _i1.ColumnSelections<BusinessTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<BusinessTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<Business>(
       row,
@@ -744,10 +755,10 @@ class BusinessRepository {
   /// Updates a single [Business] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<Business?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<BusinessUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<BusinessUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<Business>(
       id,
@@ -763,14 +774,14 @@ class BusinessRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Business>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<BusinessUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<BusinessTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<BusinessUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<BusinessTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<BusinessTable>? orderBy,
-    _i1.OrderByListBuilder<BusinessTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<BusinessTable>? orderBy,
+    _is.OrderByListBuilder<BusinessTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<Business>(
@@ -797,11 +808,11 @@ class BusinessRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Business>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Business> rows, {
-    _i1.OrderByBuilder<BusinessTable>? orderBy,
-    _i1.OrderByListBuilder<BusinessTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<BusinessTable>? orderBy,
+    _is.OrderByListBuilder<BusinessTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<Business>(
@@ -815,9 +826,9 @@ class BusinessRepository {
 
   /// Deletes a single [Business].
   Future<Business> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Business row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<Business>(
       row,
@@ -834,11 +845,11 @@ class BusinessRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Business>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<BusinessTable> where,
-    _i1.OrderByBuilder<BusinessTable>? orderBy,
-    _i1.OrderByListBuilder<BusinessTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<BusinessTable> where,
+    _is.OrderByBuilder<BusinessTable>? orderBy,
+    _is.OrderByListBuilder<BusinessTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<Business>(
@@ -853,10 +864,10 @@ class BusinessRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<BusinessTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<BusinessTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<Business>(
       where: where?.call(Business.t),
@@ -867,11 +878,11 @@ class BusinessRepository {
 
   /// Acquires row-level locks on [Business] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<BusinessTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<BusinessTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<Business>(
       where: where(Business.t),

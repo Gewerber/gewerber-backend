@@ -10,11 +10,13 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/invoicing/models/recurrence_interval.dart' as _i2;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/invoicing/models/recurrence_interval.dart'
+    as _i2jlpxj3;
 
 abstract class CreateRecurringScheduleRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   CreateRecurringScheduleRequest._({
     required this.invoiceId,
     required this.interval,
@@ -25,7 +27,7 @@ abstract class CreateRecurringScheduleRequest
 
   factory CreateRecurringScheduleRequest({
     required int invoiceId,
-    required _i2.RecurrenceInterval interval,
+    required _i2jlpxj3.RecurrenceInterval interval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
@@ -36,17 +38,17 @@ abstract class CreateRecurringScheduleRequest
   ) {
     return CreateRecurringScheduleRequest(
       invoiceId: jsonSerialization['invoiceId'] as int,
-      interval: _i2.RecurrenceInterval.fromJson(
+      interval: _i2jlpxj3.RecurrenceInterval.fromJson(
         (jsonSerialization['interval'] as String),
       ),
       nextRecurrenceDate: jsonSerialization['nextRecurrenceDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _isc.DateTimeJsonExtension.fromJson(
               jsonSerialization['nextRecurrenceDate'],
             ),
       recurrenceEndDate: jsonSerialization['recurrenceEndDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _isc.DateTimeJsonExtension.fromJson(
               jsonSerialization['recurrenceEndDate'],
             ),
       recurrenceMaxOccurrences:
@@ -56,7 +58,7 @@ abstract class CreateRecurringScheduleRequest
 
   int invoiceId;
 
-  _i2.RecurrenceInterval interval;
+  _i2jlpxj3.RecurrenceInterval interval;
 
   DateTime? nextRecurrenceDate;
 
@@ -66,10 +68,10 @@ abstract class CreateRecurringScheduleRequest
 
   /// Returns a shallow copy of this [CreateRecurringScheduleRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   CreateRecurringScheduleRequest copyWith({
     int? invoiceId,
-    _i2.RecurrenceInterval? interval,
+    _i2jlpxj3.RecurrenceInterval? interval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
@@ -106,7 +108,7 @@ abstract class CreateRecurringScheduleRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -116,7 +118,7 @@ class _CreateRecurringScheduleRequestImpl
     extends CreateRecurringScheduleRequest {
   _CreateRecurringScheduleRequestImpl({
     required int invoiceId,
-    required _i2.RecurrenceInterval interval,
+    required _i2jlpxj3.RecurrenceInterval interval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
@@ -130,11 +132,11 @@ class _CreateRecurringScheduleRequestImpl
 
   /// Returns a shallow copy of this [CreateRecurringScheduleRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   CreateRecurringScheduleRequest copyWith({
     int? invoiceId,
-    _i2.RecurrenceInterval? interval,
+    _i2jlpxj3.RecurrenceInterval? interval,
     Object? nextRecurrenceDate = _Undefined,
     Object? recurrenceEndDate = _Undefined,
     Object? recurrenceMaxOccurrences = _Undefined,

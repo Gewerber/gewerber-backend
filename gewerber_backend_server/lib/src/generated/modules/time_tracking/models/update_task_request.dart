@@ -10,11 +10,12 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/time_tracking/models/task_status.dart' as _i2;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/time_tracking/models/task_status.dart' as _i7bsstnn;
 
 abstract class UpdateTaskRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   UpdateTaskRequest._({
     required this.taskId,
     required this.name,
@@ -25,7 +26,7 @@ abstract class UpdateTaskRequest
   factory UpdateTaskRequest({
     required int taskId,
     required String name,
-    required _i2.TaskStatus status,
+    required _i7bsstnn.TaskStatus status,
     int? hourlyRateCents,
   }) = _UpdateTaskRequestImpl;
 
@@ -33,7 +34,9 @@ abstract class UpdateTaskRequest
     return UpdateTaskRequest(
       taskId: jsonSerialization['taskId'] as int,
       name: jsonSerialization['name'] as String,
-      status: _i2.TaskStatus.fromJson((jsonSerialization['status'] as String)),
+      status: _i7bsstnn.TaskStatus.fromJson(
+        (jsonSerialization['status'] as String),
+      ),
       hourlyRateCents: jsonSerialization['hourlyRateCents'] as int?,
     );
   }
@@ -42,17 +45,17 @@ abstract class UpdateTaskRequest
 
   String name;
 
-  _i2.TaskStatus status;
+  _i7bsstnn.TaskStatus status;
 
   int? hourlyRateCents;
 
   /// Returns a shallow copy of this [UpdateTaskRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   UpdateTaskRequest copyWith({
     int? taskId,
     String? name,
-    _i2.TaskStatus? status,
+    _i7bsstnn.TaskStatus? status,
     int? hourlyRateCents,
   });
   @override
@@ -79,7 +82,7 @@ abstract class UpdateTaskRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -89,7 +92,7 @@ class _UpdateTaskRequestImpl extends UpdateTaskRequest {
   _UpdateTaskRequestImpl({
     required int taskId,
     required String name,
-    required _i2.TaskStatus status,
+    required _i7bsstnn.TaskStatus status,
     int? hourlyRateCents,
   }) : super._(
          taskId: taskId,
@@ -100,12 +103,12 @@ class _UpdateTaskRequestImpl extends UpdateTaskRequest {
 
   /// Returns a shallow copy of this [UpdateTaskRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   UpdateTaskRequest copyWith({
     int? taskId,
     String? name,
-    _i2.TaskStatus? status,
+    _i7bsstnn.TaskStatus? status,
     Object? hourlyRateCents = _Undefined,
   }) {
     return UpdateTaskRequest(

@@ -10,41 +10,42 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/documents/models/document_kind.dart' as _i2;
-import '../../../modules/documents/models/storage_location.dart' as _i3;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/documents/models/document_kind.dart' as _iez1e0gu;
+import '../../../modules/documents/models/storage_location.dart' as _i189k6zv;
 
 abstract class Document
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   Document._({
     this.id,
     required this.businessId,
-    _i2.DocumentKind? kind,
+    _iez1e0gu.DocumentKind? kind,
     required this.fileName,
     this.mimeType,
     this.sizeBytes,
-    _i3.StorageLocation? storageLocation,
+    _i189k6zv.StorageLocation? storageLocation,
     required this.storagePath,
     this.relatedEntityType,
     this.relatedEntityId,
     this.uploadedById,
     DateTime? createdAt,
-  }) : kind = kind ?? _i2.DocumentKind.attachment,
-       storageLocation = storageLocation ?? _i3.StorageLocation.private,
+  }) : kind = kind ?? _iez1e0gu.DocumentKind.attachment,
+       storageLocation = storageLocation ?? _i189k6zv.StorageLocation.private,
        createdAt = createdAt ?? DateTime.now();
 
   factory Document({
     int? id,
     required int businessId,
-    _i2.DocumentKind? kind,
+    _iez1e0gu.DocumentKind? kind,
     required String fileName,
     String? mimeType,
     int? sizeBytes,
-    _i3.StorageLocation? storageLocation,
+    _i189k6zv.StorageLocation? storageLocation,
     required String storagePath,
     String? relatedEntityType,
     String? relatedEntityId,
-    _i1.UuidValue? uploadedById,
+    _is.UuidValue? uploadedById,
     DateTime? createdAt,
   }) = _DocumentImpl;
 
@@ -54,13 +55,15 @@ abstract class Document
       businessId: jsonSerialization['businessId'] as int,
       kind: jsonSerialization['kind'] == null
           ? null
-          : _i2.DocumentKind.fromJson((jsonSerialization['kind'] as String)),
+          : _iez1e0gu.DocumentKind.fromJson(
+              (jsonSerialization['kind'] as String),
+            ),
       fileName: jsonSerialization['fileName'] as String,
       mimeType: jsonSerialization['mimeType'] as String?,
       sizeBytes: jsonSerialization['sizeBytes'] as int?,
       storageLocation: jsonSerialization['storageLocation'] == null
           ? null
-          : _i3.StorageLocation.fromJson(
+          : _i189k6zv.StorageLocation.fromJson(
               (jsonSerialization['storageLocation'] as String),
             ),
       storagePath: jsonSerialization['storagePath'] as String,
@@ -68,12 +71,12 @@ abstract class Document
       relatedEntityId: jsonSerialization['relatedEntityId'] as String?,
       uploadedById: jsonSerialization['uploadedById'] == null
           ? null
-          : _i1.UuidValueJsonExtension.fromJson(
+          : _is.UuidValueJsonExtension.fromJson(
               jsonSerialization['uploadedById'],
             ),
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
     );
   }
 
@@ -86,7 +89,7 @@ abstract class Document
 
   int businessId;
 
-  _i2.DocumentKind kind;
+  _iez1e0gu.DocumentKind kind;
 
   String fileName;
 
@@ -94,7 +97,7 @@ abstract class Document
 
   int? sizeBytes;
 
-  _i3.StorageLocation storageLocation;
+  _i189k6zv.StorageLocation storageLocation;
 
   String storagePath;
 
@@ -102,28 +105,28 @@ abstract class Document
 
   String? relatedEntityId;
 
-  _i1.UuidValue? uploadedById;
+  _is.UuidValue? uploadedById;
 
   DateTime createdAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [Document]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   Document copyWith({
     int? id,
     int? businessId,
-    _i2.DocumentKind? kind,
+    _iez1e0gu.DocumentKind? kind,
     String? fileName,
     String? mimeType,
     int? sizeBytes,
-    _i3.StorageLocation? storageLocation,
+    _i189k6zv.StorageLocation? storageLocation,
     String? storagePath,
     String? relatedEntityType,
     String? relatedEntityId,
-    _i1.UuidValue? uploadedById,
+    _is.UuidValue? uploadedById,
     DateTime? createdAt,
   });
   @override
@@ -169,11 +172,11 @@ abstract class Document
   }
 
   static DocumentIncludeList includeList({
-    _i1.WhereExpressionBuilder<DocumentTable>? where,
+    _is.WhereExpressionBuilder<DocumentTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<DocumentTable>? orderBy,
-    _i1.OrderByListBuilder<DocumentTable>? orderByList,
+    _is.OrderByBuilder<DocumentTable>? orderBy,
+    _is.OrderByListBuilder<DocumentTable>? orderByList,
     DocumentInclude? include,
   }) {
     return DocumentIncludeList._(
@@ -188,7 +191,7 @@ abstract class Document
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -198,15 +201,15 @@ class _DocumentImpl extends Document {
   _DocumentImpl({
     int? id,
     required int businessId,
-    _i2.DocumentKind? kind,
+    _iez1e0gu.DocumentKind? kind,
     required String fileName,
     String? mimeType,
     int? sizeBytes,
-    _i3.StorageLocation? storageLocation,
+    _i189k6zv.StorageLocation? storageLocation,
     required String storagePath,
     String? relatedEntityType,
     String? relatedEntityId,
-    _i1.UuidValue? uploadedById,
+    _is.UuidValue? uploadedById,
     DateTime? createdAt,
   }) : super._(
          id: id,
@@ -225,16 +228,16 @@ class _DocumentImpl extends Document {
 
   /// Returns a shallow copy of this [Document]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   Document copyWith({
     Object? id = _Undefined,
     int? businessId,
-    _i2.DocumentKind? kind,
+    _iez1e0gu.DocumentKind? kind,
     String? fileName,
     Object? mimeType = _Undefined,
     Object? sizeBytes = _Undefined,
-    _i3.StorageLocation? storageLocation,
+    _i189k6zv.StorageLocation? storageLocation,
     String? storagePath,
     Object? relatedEntityType = _Undefined,
     Object? relatedEntityId = _Undefined,
@@ -256,7 +259,7 @@ class _DocumentImpl extends Document {
       relatedEntityId: relatedEntityId is String?
           ? relatedEntityId
           : this.relatedEntityId,
-      uploadedById: uploadedById is _i1.UuidValue?
+      uploadedById: uploadedById is _is.UuidValue?
           ? uploadedById
           : this.uploadedById,
       createdAt: createdAt ?? this.createdAt,
@@ -264,122 +267,121 @@ class _DocumentImpl extends Document {
   }
 }
 
-class DocumentUpdateTable extends _i1.UpdateTable<DocumentTable> {
+class DocumentUpdateTable extends _is.UpdateTable<DocumentTable> {
   DocumentUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> businessId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> businessId(int value) => _is.ColumnValue(
     table.businessId,
     value,
   );
 
-  _i1.ColumnValue<_i2.DocumentKind, _i2.DocumentKind> kind(
-    _i2.DocumentKind value,
-  ) => _i1.ColumnValue(
+  _is.ColumnValue<_iez1e0gu.DocumentKind, _iez1e0gu.DocumentKind> kind(
+    _iez1e0gu.DocumentKind value,
+  ) => _is.ColumnValue(
     table.kind,
     value,
   );
 
-  _i1.ColumnValue<String, String> fileName(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> fileName(String value) => _is.ColumnValue(
     table.fileName,
     value,
   );
 
-  _i1.ColumnValue<String, String> mimeType(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> mimeType(String? value) => _is.ColumnValue(
     table.mimeType,
     value,
   );
 
-  _i1.ColumnValue<int, int> sizeBytes(int? value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> sizeBytes(int? value) => _is.ColumnValue(
     table.sizeBytes,
     value,
   );
 
-  _i1.ColumnValue<_i3.StorageLocation, _i3.StorageLocation> storageLocation(
-    _i3.StorageLocation value,
-  ) => _i1.ColumnValue(
+  _is.ColumnValue<_i189k6zv.StorageLocation, _i189k6zv.StorageLocation>
+  storageLocation(_i189k6zv.StorageLocation value) => _is.ColumnValue(
     table.storageLocation,
     value,
   );
 
-  _i1.ColumnValue<String, String> storagePath(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> storagePath(String value) => _is.ColumnValue(
     table.storagePath,
     value,
   );
 
-  _i1.ColumnValue<String, String> relatedEntityType(String? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<String, String> relatedEntityType(String? value) =>
+      _is.ColumnValue(
         table.relatedEntityType,
         value,
       );
 
-  _i1.ColumnValue<String, String> relatedEntityId(String? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<String, String> relatedEntityId(String? value) =>
+      _is.ColumnValue(
         table.relatedEntityId,
         value,
       );
 
-  _i1.ColumnValue<_i1.UuidValue, _i1.UuidValue> uploadedById(
-    _i1.UuidValue? value,
-  ) => _i1.ColumnValue(
+  _is.ColumnValue<_is.UuidValue, _is.UuidValue> uploadedById(
+    _is.UuidValue? value,
+  ) => _is.ColumnValue(
     table.uploadedById,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _is.ColumnValue(
         table.createdAt,
         value,
       );
 }
 
-class DocumentTable extends _i1.Table<int?> {
+class DocumentTable extends _is.Table<int?> {
   DocumentTable({super.tableRelation}) : super(tableName: 'document') {
     updateTable = DocumentUpdateTable(this);
-    businessId = _i1.ColumnInt(
+    businessId = _is.ColumnInt(
       'businessId',
       this,
     );
-    kind = _i1.ColumnEnum(
+    kind = _is.ColumnEnum(
       'kind',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    fileName = _i1.ColumnString(
+    fileName = _is.ColumnString(
       'fileName',
       this,
     );
-    mimeType = _i1.ColumnString(
+    mimeType = _is.ColumnString(
       'mimeType',
       this,
     );
-    sizeBytes = _i1.ColumnInt(
+    sizeBytes = _is.ColumnInt(
       'sizeBytes',
       this,
     );
-    storageLocation = _i1.ColumnEnum(
+    storageLocation = _is.ColumnEnum(
       'storageLocation',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    storagePath = _i1.ColumnString(
+    storagePath = _is.ColumnString(
       'storagePath',
       this,
     );
-    relatedEntityType = _i1.ColumnString(
+    relatedEntityType = _is.ColumnString(
       'relatedEntityType',
       this,
     );
-    relatedEntityId = _i1.ColumnString(
+    relatedEntityId = _is.ColumnString(
       'relatedEntityId',
       this,
     );
-    uploadedById = _i1.ColumnUuid(
+    uploadedById = _is.ColumnUuid(
       'uploadedById',
       this,
     );
-    createdAt = _i1.ColumnDateTime(
+    createdAt = _is.ColumnDateTime(
       'createdAt',
       this,
       hasDefault: true,
@@ -388,30 +390,30 @@ class DocumentTable extends _i1.Table<int?> {
 
   late final DocumentUpdateTable updateTable;
 
-  late final _i1.ColumnInt businessId;
+  late final _is.ColumnInt businessId;
 
-  late final _i1.ColumnEnum<_i2.DocumentKind> kind;
+  late final _is.ColumnEnum<_iez1e0gu.DocumentKind> kind;
 
-  late final _i1.ColumnString fileName;
+  late final _is.ColumnString fileName;
 
-  late final _i1.ColumnString mimeType;
+  late final _is.ColumnString mimeType;
 
-  late final _i1.ColumnInt sizeBytes;
+  late final _is.ColumnInt sizeBytes;
 
-  late final _i1.ColumnEnum<_i3.StorageLocation> storageLocation;
+  late final _is.ColumnEnum<_i189k6zv.StorageLocation> storageLocation;
 
-  late final _i1.ColumnString storagePath;
+  late final _is.ColumnString storagePath;
 
-  late final _i1.ColumnString relatedEntityType;
+  late final _is.ColumnString relatedEntityType;
 
-  late final _i1.ColumnString relatedEntityId;
+  late final _is.ColumnString relatedEntityId;
 
-  late final _i1.ColumnUuid uploadedById;
+  late final _is.ColumnUuid uploadedById;
 
-  late final _i1.ColumnDateTime createdAt;
+  late final _is.ColumnDateTime createdAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     businessId,
     kind,
@@ -427,19 +429,19 @@ class DocumentTable extends _i1.Table<int?> {
   ];
 }
 
-class DocumentInclude extends _i1.IncludeObject {
+class DocumentInclude extends _is.IncludeObject {
   DocumentInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => Document.t;
+  _is.Table<int?> get table => Document.t;
 }
 
-class DocumentIncludeList extends _i1.IncludeList {
+class DocumentIncludeList extends _is.IncludeList {
   DocumentIncludeList._({
-    _i1.WhereExpressionBuilder<DocumentTable>? where,
+    _is.WhereExpressionBuilder<DocumentTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -450,10 +452,10 @@ class DocumentIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => Document.t;
+  _is.Table<int?> get table => Document.t;
 }
 
 class DocumentRepository {
@@ -482,15 +484,15 @@ class DocumentRepository {
   /// );
   /// ```
   Future<List<Document>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<DocumentTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<DocumentTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<DocumentTable>? orderBy,
-    _i1.OrderByListBuilder<DocumentTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<DocumentTable>? orderBy,
+    _is.OrderByListBuilder<DocumentTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<Document>(
       where: where?.call(Document.t),
@@ -522,14 +524,14 @@ class DocumentRepository {
   /// );
   /// ```
   Future<Document?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<DocumentTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<DocumentTable>? where,
     int? offset,
-    _i1.OrderByBuilder<DocumentTable>? orderBy,
-    _i1.OrderByListBuilder<DocumentTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<DocumentTable>? orderBy,
+    _is.OrderByListBuilder<DocumentTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<Document>(
       where: where?.call(Document.t),
@@ -544,11 +546,11 @@ class DocumentRepository {
 
   /// Finds a single [Document] by its [id] or null if no such row exists.
   Future<Document?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<Document>(
       id,
@@ -573,9 +575,9 @@ class DocumentRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Document>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Document> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -591,9 +593,9 @@ class DocumentRepository {
   ///
   /// The returned [Document] will have its `id` field set.
   Future<Document> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Document row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<Document>(
       row,
@@ -622,12 +624,12 @@ class DocumentRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Document>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Document> rows, {
-    required _i1.ColumnSelections<DocumentTable> conflictColumns,
-    _i1.ColumnSelections<DocumentTable>? updateColumns,
-    _i1.WhereExpressionBuilder<DocumentTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<DocumentTable> conflictColumns,
+    _is.ColumnSelections<DocumentTable>? updateColumns,
+    _is.WhereExpressionBuilder<DocumentTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<Document>(
@@ -654,12 +656,12 @@ class DocumentRepository {
   ///
   /// The returned [Document] will have its `id` field set.
   Future<Document?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Document row, {
-    required _i1.ColumnSelections<DocumentTable> conflictColumns,
-    _i1.ColumnSelections<DocumentTable>? updateColumns,
-    _i1.WhereExpressionBuilder<DocumentTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<DocumentTable> conflictColumns,
+    _is.ColumnSelections<DocumentTable>? updateColumns,
+    _is.WhereExpressionBuilder<DocumentTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<Document>(
       row,
@@ -680,10 +682,10 @@ class DocumentRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Document>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Document> rows, {
-    _i1.ColumnSelections<DocumentTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<DocumentTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<Document>(
@@ -698,10 +700,10 @@ class DocumentRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<Document> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Document row, {
-    _i1.ColumnSelections<DocumentTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<DocumentTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<Document>(
       row,
@@ -713,10 +715,10 @@ class DocumentRepository {
   /// Updates a single [Document] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<Document?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<DocumentUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<DocumentUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<Document>(
       id,
@@ -732,14 +734,14 @@ class DocumentRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Document>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<DocumentUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<DocumentTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<DocumentUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<DocumentTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<DocumentTable>? orderBy,
-    _i1.OrderByListBuilder<DocumentTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<DocumentTable>? orderBy,
+    _is.OrderByListBuilder<DocumentTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<Document>(
@@ -766,11 +768,11 @@ class DocumentRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Document>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Document> rows, {
-    _i1.OrderByBuilder<DocumentTable>? orderBy,
-    _i1.OrderByListBuilder<DocumentTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<DocumentTable>? orderBy,
+    _is.OrderByListBuilder<DocumentTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<Document>(
@@ -784,9 +786,9 @@ class DocumentRepository {
 
   /// Deletes a single [Document].
   Future<Document> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Document row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<Document>(
       row,
@@ -803,11 +805,11 @@ class DocumentRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Document>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<DocumentTable> where,
-    _i1.OrderByBuilder<DocumentTable>? orderBy,
-    _i1.OrderByListBuilder<DocumentTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<DocumentTable> where,
+    _is.OrderByBuilder<DocumentTable>? orderBy,
+    _is.OrderByListBuilder<DocumentTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<Document>(
@@ -822,10 +824,10 @@ class DocumentRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<DocumentTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<DocumentTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<Document>(
       where: where?.call(Document.t),
@@ -836,11 +838,11 @@ class DocumentRepository {
 
   /// Acquires row-level locks on [Document] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<DocumentTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<DocumentTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<Document>(
       where: where(Document.t),

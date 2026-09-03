@@ -10,12 +10,14 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/invoicing/models/customer.dart' as _i2;
-import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i3;
+
+import 'package:gewerber_backend_client/src/protocol/protocol.dart'
+    as _iipbhyvd;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/invoicing/models/customer.dart' as _ix5o1eh3;
 
 abstract class CustomerListPage
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   CustomerListPage._({
     required this.items,
     required this.totalCount,
@@ -24,7 +26,7 @@ abstract class CustomerListPage
   });
 
   factory CustomerListPage({
-    required List<_i2.Customer> items,
+    required List<_ix5o1eh3.Customer> items,
     required int totalCount,
     required int limit,
     required int offset,
@@ -32,7 +34,7 @@ abstract class CustomerListPage
 
   factory CustomerListPage.fromJson(Map<String, dynamic> jsonSerialization) {
     return CustomerListPage(
-      items: _i3.Protocol().deserialize<List<_i2.Customer>>(
+      items: _iipbhyvd.Protocol().deserialize<List<_ix5o1eh3.Customer>>(
         jsonSerialization['items'],
       ),
       totalCount: jsonSerialization['totalCount'] as int,
@@ -41,7 +43,7 @@ abstract class CustomerListPage
     );
   }
 
-  List<_i2.Customer> items;
+  List<_ix5o1eh3.Customer> items;
 
   int totalCount;
 
@@ -51,9 +53,9 @@ abstract class CustomerListPage
 
   /// Returns a shallow copy of this [CustomerListPage]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   CustomerListPage copyWith({
-    List<_i2.Customer>? items,
+    List<_ix5o1eh3.Customer>? items,
     int? totalCount,
     int? limit,
     int? offset,
@@ -82,13 +84,13 @@ abstract class CustomerListPage
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
 class _CustomerListPageImpl extends CustomerListPage {
   _CustomerListPageImpl({
-    required List<_i2.Customer> items,
+    required List<_ix5o1eh3.Customer> items,
     required int totalCount,
     required int limit,
     required int offset,
@@ -101,10 +103,10 @@ class _CustomerListPageImpl extends CustomerListPage {
 
   /// Returns a shallow copy of this [CustomerListPage]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   CustomerListPage copyWith({
-    List<_i2.Customer>? items,
+    List<_ix5o1eh3.Customer>? items,
     int? totalCount,
     int? limit,
     int? offset,

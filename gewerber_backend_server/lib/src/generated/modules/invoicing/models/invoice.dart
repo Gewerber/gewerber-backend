@@ -10,28 +10,30 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/invoicing/models/invoice_type.dart' as _i2;
-import '../../../modules/invoicing/models/invoice_status.dart' as _i3;
-import '../../../modules/business/models/locale.dart' as _i4;
-import '../../../modules/business/models/currency.dart' as _i5;
-import '../../../modules/invoicing/models/recurrence_interval.dart' as _i6;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/business/models/currency.dart' as _i80byysb;
+import '../../../modules/business/models/locale.dart' as _ie5v8zdc;
+import '../../../modules/invoicing/models/invoice_status.dart' as _ib459vd4;
+import '../../../modules/invoicing/models/invoice_type.dart' as _i4s57tlu;
+import '../../../modules/invoicing/models/recurrence_interval.dart'
+    as _i2jlpxj3;
 
 abstract class Invoice
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   Invoice._({
     this.id,
     required this.businessId,
     required this.number,
-    _i2.InvoiceType? type,
-    _i3.InvoiceStatus? status,
+    _i4s57tlu.InvoiceType? type,
+    _ib459vd4.InvoiceStatus? status,
     this.customerId,
     required this.issueDate,
     this.dueDate,
     this.serviceDateFrom,
     this.serviceDateTo,
-    _i4.Locale? locale,
-    _i5.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     int? subtotalCents,
     int? vatTotalCents,
     int? totalCents,
@@ -47,10 +49,10 @@ abstract class Invoice
     int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
     DateTime? updatedAt,
-  }) : type = type ?? _i2.InvoiceType.invoice,
-       status = status ?? _i3.InvoiceStatus.draft,
-       locale = locale ?? _i4.Locale.de,
-       currency = currency ?? _i5.Currency.eur,
+  }) : type = type ?? _i4s57tlu.InvoiceType.invoice,
+       status = status ?? _ib459vd4.InvoiceStatus.draft,
+       locale = locale ?? _ie5v8zdc.Locale.de,
+       currency = currency ?? _i80byysb.Currency.eur,
        subtotalCents = subtotalCents ?? 0,
        vatTotalCents = vatTotalCents ?? 0,
        totalCents = totalCents ?? 0,
@@ -64,15 +66,15 @@ abstract class Invoice
     int? id,
     required int businessId,
     required String number,
-    _i2.InvoiceType? type,
-    _i3.InvoiceStatus? status,
+    _i4s57tlu.InvoiceType? type,
+    _ib459vd4.InvoiceStatus? status,
     int? customerId,
     required DateTime issueDate,
     DateTime? dueDate,
     DateTime? serviceDateFrom,
     DateTime? serviceDateTo,
-    _i4.Locale? locale,
-    _i5.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     int? subtotalCents,
     int? vatTotalCents,
     int? totalCents,
@@ -81,7 +83,7 @@ abstract class Invoice
     String? notes,
     int? templateId,
     int? pdfDocumentId,
-    _i6.RecurrenceInterval? recurrenceInterval,
+    _i2jlpxj3.RecurrenceInterval? recurrenceInterval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
@@ -97,33 +99,39 @@ abstract class Invoice
       number: jsonSerialization['number'] as String,
       type: jsonSerialization['type'] == null
           ? null
-          : _i2.InvoiceType.fromJson((jsonSerialization['type'] as String)),
+          : _i4s57tlu.InvoiceType.fromJson(
+              (jsonSerialization['type'] as String),
+            ),
       status: jsonSerialization['status'] == null
           ? null
-          : _i3.InvoiceStatus.fromJson((jsonSerialization['status'] as String)),
+          : _ib459vd4.InvoiceStatus.fromJson(
+              (jsonSerialization['status'] as String),
+            ),
       customerId: jsonSerialization['customerId'] as int?,
-      issueDate: _i1.DateTimeJsonExtension.fromJson(
+      issueDate: _is.DateTimeJsonExtension.fromJson(
         jsonSerialization['issueDate'],
       ),
       dueDate: jsonSerialization['dueDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['dueDate']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['dueDate']),
       serviceDateFrom: jsonSerialization['serviceDateFrom'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['serviceDateFrom'],
             ),
       serviceDateTo: jsonSerialization['serviceDateTo'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['serviceDateTo'],
             ),
       locale: jsonSerialization['locale'] == null
           ? null
-          : _i4.Locale.fromJson((jsonSerialization['locale'] as String)),
+          : _ie5v8zdc.Locale.fromJson((jsonSerialization['locale'] as String)),
       currency: jsonSerialization['currency'] == null
           ? null
-          : _i5.Currency.fromJson((jsonSerialization['currency'] as String)),
+          : _i80byysb.Currency.fromJson(
+              (jsonSerialization['currency'] as String),
+            ),
       subtotalCents: jsonSerialization['subtotalCents'] as int?,
       vatTotalCents: jsonSerialization['vatTotalCents'] as int?,
       totalCents: jsonSerialization['totalCents'] as int?,
@@ -134,17 +142,17 @@ abstract class Invoice
       pdfDocumentId: jsonSerialization['pdfDocumentId'] as int?,
       recurrenceInterval: jsonSerialization['recurrenceInterval'] == null
           ? null
-          : _i6.RecurrenceInterval.fromJson(
+          : _i2jlpxj3.RecurrenceInterval.fromJson(
               (jsonSerialization['recurrenceInterval'] as String),
             ),
       nextRecurrenceDate: jsonSerialization['nextRecurrenceDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['nextRecurrenceDate'],
             ),
       recurrenceEndDate: jsonSerialization['recurrenceEndDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['recurrenceEndDate'],
             ),
       recurrenceMaxOccurrences:
@@ -153,10 +161,10 @@ abstract class Invoice
           jsonSerialization['recurrenceOccurrencesCreated'] as int?,
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -171,9 +179,9 @@ abstract class Invoice
 
   String number;
 
-  _i2.InvoiceType type;
+  _i4s57tlu.InvoiceType type;
 
-  _i3.InvoiceStatus status;
+  _ib459vd4.InvoiceStatus status;
 
   int? customerId;
 
@@ -185,9 +193,9 @@ abstract class Invoice
 
   DateTime? serviceDateTo;
 
-  _i4.Locale locale;
+  _ie5v8zdc.Locale locale;
 
-  _i5.Currency currency;
+  _i80byysb.Currency currency;
 
   int subtotalCents;
 
@@ -205,7 +213,7 @@ abstract class Invoice
 
   int? pdfDocumentId;
 
-  _i6.RecurrenceInterval? recurrenceInterval;
+  _i2jlpxj3.RecurrenceInterval? recurrenceInterval;
 
   DateTime? nextRecurrenceDate;
 
@@ -220,24 +228,24 @@ abstract class Invoice
   DateTime updatedAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [Invoice]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   Invoice copyWith({
     int? id,
     int? businessId,
     String? number,
-    _i2.InvoiceType? type,
-    _i3.InvoiceStatus? status,
+    _i4s57tlu.InvoiceType? type,
+    _ib459vd4.InvoiceStatus? status,
     int? customerId,
     DateTime? issueDate,
     DateTime? dueDate,
     DateTime? serviceDateFrom,
     DateTime? serviceDateTo,
-    _i4.Locale? locale,
-    _i5.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     int? subtotalCents,
     int? vatTotalCents,
     int? totalCents,
@@ -246,7 +254,7 @@ abstract class Invoice
     String? notes,
     int? templateId,
     int? pdfDocumentId,
-    _i6.RecurrenceInterval? recurrenceInterval,
+    _i2jlpxj3.RecurrenceInterval? recurrenceInterval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
@@ -335,11 +343,11 @@ abstract class Invoice
   }
 
   static InvoiceIncludeList includeList({
-    _i1.WhereExpressionBuilder<InvoiceTable>? where,
+    _is.WhereExpressionBuilder<InvoiceTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<InvoiceTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceTable>? orderByList,
+    _is.OrderByBuilder<InvoiceTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceTable>? orderByList,
     InvoiceInclude? include,
   }) {
     return InvoiceIncludeList._(
@@ -354,7 +362,7 @@ abstract class Invoice
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -365,15 +373,15 @@ class _InvoiceImpl extends Invoice {
     int? id,
     required int businessId,
     required String number,
-    _i2.InvoiceType? type,
-    _i3.InvoiceStatus? status,
+    _i4s57tlu.InvoiceType? type,
+    _ib459vd4.InvoiceStatus? status,
     int? customerId,
     required DateTime issueDate,
     DateTime? dueDate,
     DateTime? serviceDateFrom,
     DateTime? serviceDateTo,
-    _i4.Locale? locale,
-    _i5.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     int? subtotalCents,
     int? vatTotalCents,
     int? totalCents,
@@ -382,7 +390,7 @@ class _InvoiceImpl extends Invoice {
     String? notes,
     int? templateId,
     int? pdfDocumentId,
-    _i6.RecurrenceInterval? recurrenceInterval,
+    _i2jlpxj3.RecurrenceInterval? recurrenceInterval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
@@ -421,21 +429,21 @@ class _InvoiceImpl extends Invoice {
 
   /// Returns a shallow copy of this [Invoice]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   Invoice copyWith({
     Object? id = _Undefined,
     int? businessId,
     String? number,
-    _i2.InvoiceType? type,
-    _i3.InvoiceStatus? status,
+    _i4s57tlu.InvoiceType? type,
+    _ib459vd4.InvoiceStatus? status,
     Object? customerId = _Undefined,
     DateTime? issueDate,
     Object? dueDate = _Undefined,
     Object? serviceDateFrom = _Undefined,
     Object? serviceDateTo = _Undefined,
-    _i4.Locale? locale,
-    _i5.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     int? subtotalCents,
     int? vatTotalCents,
     int? totalCents,
@@ -477,7 +485,7 @@ class _InvoiceImpl extends Invoice {
       notes: notes is String? ? notes : this.notes,
       templateId: templateId is int? ? templateId : this.templateId,
       pdfDocumentId: pdfDocumentId is int? ? pdfDocumentId : this.pdfDocumentId,
-      recurrenceInterval: recurrenceInterval is _i6.RecurrenceInterval?
+      recurrenceInterval: recurrenceInterval is _i2jlpxj3.RecurrenceInterval?
           ? recurrenceInterval
           : this.recurrenceInterval,
       nextRecurrenceDate: nextRecurrenceDate is DateTime?
@@ -497,277 +505,279 @@ class _InvoiceImpl extends Invoice {
   }
 }
 
-class InvoiceUpdateTable extends _i1.UpdateTable<InvoiceTable> {
+class InvoiceUpdateTable extends _is.UpdateTable<InvoiceTable> {
   InvoiceUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> businessId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> businessId(int value) => _is.ColumnValue(
     table.businessId,
     value,
   );
 
-  _i1.ColumnValue<String, String> number(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> number(String value) => _is.ColumnValue(
     table.number,
     value,
   );
 
-  _i1.ColumnValue<_i2.InvoiceType, _i2.InvoiceType> type(
-    _i2.InvoiceType value,
-  ) => _i1.ColumnValue(
+  _is.ColumnValue<_i4s57tlu.InvoiceType, _i4s57tlu.InvoiceType> type(
+    _i4s57tlu.InvoiceType value,
+  ) => _is.ColumnValue(
     table.type,
     value,
   );
 
-  _i1.ColumnValue<_i3.InvoiceStatus, _i3.InvoiceStatus> status(
-    _i3.InvoiceStatus value,
-  ) => _i1.ColumnValue(
+  _is.ColumnValue<_ib459vd4.InvoiceStatus, _ib459vd4.InvoiceStatus> status(
+    _ib459vd4.InvoiceStatus value,
+  ) => _is.ColumnValue(
     table.status,
     value,
   );
 
-  _i1.ColumnValue<int, int> customerId(int? value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> customerId(int? value) => _is.ColumnValue(
     table.customerId,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> issueDate(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> issueDate(DateTime value) =>
+      _is.ColumnValue(
         table.issueDate,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> dueDate(DateTime? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> dueDate(DateTime? value) =>
+      _is.ColumnValue(
         table.dueDate,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> serviceDateFrom(DateTime? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> serviceDateFrom(DateTime? value) =>
+      _is.ColumnValue(
         table.serviceDateFrom,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> serviceDateTo(DateTime? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> serviceDateTo(DateTime? value) =>
+      _is.ColumnValue(
         table.serviceDateTo,
         value,
       );
 
-  _i1.ColumnValue<_i4.Locale, _i4.Locale> locale(_i4.Locale value) =>
-      _i1.ColumnValue(
-        table.locale,
-        value,
-      );
+  _is.ColumnValue<_ie5v8zdc.Locale, _ie5v8zdc.Locale> locale(
+    _ie5v8zdc.Locale value,
+  ) => _is.ColumnValue(
+    table.locale,
+    value,
+  );
 
-  _i1.ColumnValue<_i5.Currency, _i5.Currency> currency(_i5.Currency value) =>
-      _i1.ColumnValue(
-        table.currency,
-        value,
-      );
+  _is.ColumnValue<_i80byysb.Currency, _i80byysb.Currency> currency(
+    _i80byysb.Currency value,
+  ) => _is.ColumnValue(
+    table.currency,
+    value,
+  );
 
-  _i1.ColumnValue<int, int> subtotalCents(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> subtotalCents(int value) => _is.ColumnValue(
     table.subtotalCents,
     value,
   );
 
-  _i1.ColumnValue<int, int> vatTotalCents(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> vatTotalCents(int value) => _is.ColumnValue(
     table.vatTotalCents,
     value,
   );
 
-  _i1.ColumnValue<int, int> totalCents(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> totalCents(int value) => _is.ColumnValue(
     table.totalCents,
     value,
   );
 
-  _i1.ColumnValue<int, int> paymentTermsDays(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> paymentTermsDays(int value) => _is.ColumnValue(
     table.paymentTermsDays,
     value,
   );
 
-  _i1.ColumnValue<int, int> dunningLevel(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> dunningLevel(int value) => _is.ColumnValue(
     table.dunningLevel,
     value,
   );
 
-  _i1.ColumnValue<String, String> notes(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> notes(String? value) => _is.ColumnValue(
     table.notes,
     value,
   );
 
-  _i1.ColumnValue<int, int> templateId(int? value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> templateId(int? value) => _is.ColumnValue(
     table.templateId,
     value,
   );
 
-  _i1.ColumnValue<int, int> pdfDocumentId(int? value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> pdfDocumentId(int? value) => _is.ColumnValue(
     table.pdfDocumentId,
     value,
   );
 
-  _i1.ColumnValue<_i6.RecurrenceInterval, _i6.RecurrenceInterval>
-  recurrenceInterval(_i6.RecurrenceInterval? value) => _i1.ColumnValue(
+  _is.ColumnValue<_i2jlpxj3.RecurrenceInterval, _i2jlpxj3.RecurrenceInterval>
+  recurrenceInterval(_i2jlpxj3.RecurrenceInterval? value) => _is.ColumnValue(
     table.recurrenceInterval,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> nextRecurrenceDate(DateTime? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> nextRecurrenceDate(DateTime? value) =>
+      _is.ColumnValue(
         table.nextRecurrenceDate,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> recurrenceEndDate(DateTime? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> recurrenceEndDate(DateTime? value) =>
+      _is.ColumnValue(
         table.recurrenceEndDate,
         value,
       );
 
-  _i1.ColumnValue<int, int> recurrenceMaxOccurrences(int? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<int, int> recurrenceMaxOccurrences(int? value) =>
+      _is.ColumnValue(
         table.recurrenceMaxOccurrences,
         value,
       );
 
-  _i1.ColumnValue<int, int> recurrenceOccurrencesCreated(int value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<int, int> recurrenceOccurrencesCreated(int value) =>
+      _is.ColumnValue(
         table.recurrenceOccurrencesCreated,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _is.ColumnValue(
         table.createdAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
+      _is.ColumnValue(
         table.updatedAt,
         value,
       );
 }
 
-class InvoiceTable extends _i1.Table<int?> {
+class InvoiceTable extends _is.Table<int?> {
   InvoiceTable({super.tableRelation}) : super(tableName: 'invoice') {
     updateTable = InvoiceUpdateTable(this);
-    businessId = _i1.ColumnInt(
+    businessId = _is.ColumnInt(
       'businessId',
       this,
     );
-    number = _i1.ColumnString(
+    number = _is.ColumnString(
       'number',
       this,
     );
-    type = _i1.ColumnEnum(
+    type = _is.ColumnEnum(
       'type',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    status = _i1.ColumnEnum(
+    status = _is.ColumnEnum(
       'status',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    customerId = _i1.ColumnInt(
+    customerId = _is.ColumnInt(
       'customerId',
       this,
     );
-    issueDate = _i1.ColumnDateTime(
+    issueDate = _is.ColumnDateTime(
       'issueDate',
       this,
     );
-    dueDate = _i1.ColumnDateTime(
+    dueDate = _is.ColumnDateTime(
       'dueDate',
       this,
     );
-    serviceDateFrom = _i1.ColumnDateTime(
+    serviceDateFrom = _is.ColumnDateTime(
       'serviceDateFrom',
       this,
     );
-    serviceDateTo = _i1.ColumnDateTime(
+    serviceDateTo = _is.ColumnDateTime(
       'serviceDateTo',
       this,
     );
-    locale = _i1.ColumnEnum(
+    locale = _is.ColumnEnum(
       'locale',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    currency = _i1.ColumnEnum(
+    currency = _is.ColumnEnum(
       'currency',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    subtotalCents = _i1.ColumnInt(
+    subtotalCents = _is.ColumnInt(
       'subtotalCents',
       this,
       hasDefault: true,
     );
-    vatTotalCents = _i1.ColumnInt(
+    vatTotalCents = _is.ColumnInt(
       'vatTotalCents',
       this,
       hasDefault: true,
     );
-    totalCents = _i1.ColumnInt(
+    totalCents = _is.ColumnInt(
       'totalCents',
       this,
       hasDefault: true,
     );
-    paymentTermsDays = _i1.ColumnInt(
+    paymentTermsDays = _is.ColumnInt(
       'paymentTermsDays',
       this,
       hasDefault: true,
     );
-    dunningLevel = _i1.ColumnInt(
+    dunningLevel = _is.ColumnInt(
       'dunningLevel',
       this,
       hasDefault: true,
     );
-    notes = _i1.ColumnString(
+    notes = _is.ColumnString(
       'notes',
       this,
     );
-    templateId = _i1.ColumnInt(
+    templateId = _is.ColumnInt(
       'templateId',
       this,
     );
-    pdfDocumentId = _i1.ColumnInt(
+    pdfDocumentId = _is.ColumnInt(
       'pdfDocumentId',
       this,
     );
-    recurrenceInterval = _i1.ColumnEnum(
+    recurrenceInterval = _is.ColumnEnum(
       'recurrenceInterval',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
     );
-    nextRecurrenceDate = _i1.ColumnDateTime(
+    nextRecurrenceDate = _is.ColumnDateTime(
       'nextRecurrenceDate',
       this,
     );
-    recurrenceEndDate = _i1.ColumnDateTime(
+    recurrenceEndDate = _is.ColumnDateTime(
       'recurrenceEndDate',
       this,
     );
-    recurrenceMaxOccurrences = _i1.ColumnInt(
+    recurrenceMaxOccurrences = _is.ColumnInt(
       'recurrenceMaxOccurrences',
       this,
     );
-    recurrenceOccurrencesCreated = _i1.ColumnInt(
+    recurrenceOccurrencesCreated = _is.ColumnInt(
       'recurrenceOccurrencesCreated',
       this,
       hasDefault: true,
     );
-    createdAt = _i1.ColumnDateTime(
+    createdAt = _is.ColumnDateTime(
       'createdAt',
       this,
       hasDefault: true,
     );
-    updatedAt = _i1.ColumnDateTime(
+    updatedAt = _is.ColumnDateTime(
       'updatedAt',
       this,
       hasDefault: true,
@@ -776,60 +786,60 @@ class InvoiceTable extends _i1.Table<int?> {
 
   late final InvoiceUpdateTable updateTable;
 
-  late final _i1.ColumnInt businessId;
+  late final _is.ColumnInt businessId;
 
-  late final _i1.ColumnString number;
+  late final _is.ColumnString number;
 
-  late final _i1.ColumnEnum<_i2.InvoiceType> type;
+  late final _is.ColumnEnum<_i4s57tlu.InvoiceType> type;
 
-  late final _i1.ColumnEnum<_i3.InvoiceStatus> status;
+  late final _is.ColumnEnum<_ib459vd4.InvoiceStatus> status;
 
-  late final _i1.ColumnInt customerId;
+  late final _is.ColumnInt customerId;
 
-  late final _i1.ColumnDateTime issueDate;
+  late final _is.ColumnDateTime issueDate;
 
-  late final _i1.ColumnDateTime dueDate;
+  late final _is.ColumnDateTime dueDate;
 
-  late final _i1.ColumnDateTime serviceDateFrom;
+  late final _is.ColumnDateTime serviceDateFrom;
 
-  late final _i1.ColumnDateTime serviceDateTo;
+  late final _is.ColumnDateTime serviceDateTo;
 
-  late final _i1.ColumnEnum<_i4.Locale> locale;
+  late final _is.ColumnEnum<_ie5v8zdc.Locale> locale;
 
-  late final _i1.ColumnEnum<_i5.Currency> currency;
+  late final _is.ColumnEnum<_i80byysb.Currency> currency;
 
-  late final _i1.ColumnInt subtotalCents;
+  late final _is.ColumnInt subtotalCents;
 
-  late final _i1.ColumnInt vatTotalCents;
+  late final _is.ColumnInt vatTotalCents;
 
-  late final _i1.ColumnInt totalCents;
+  late final _is.ColumnInt totalCents;
 
-  late final _i1.ColumnInt paymentTermsDays;
+  late final _is.ColumnInt paymentTermsDays;
 
-  late final _i1.ColumnInt dunningLevel;
+  late final _is.ColumnInt dunningLevel;
 
-  late final _i1.ColumnString notes;
+  late final _is.ColumnString notes;
 
-  late final _i1.ColumnInt templateId;
+  late final _is.ColumnInt templateId;
 
-  late final _i1.ColumnInt pdfDocumentId;
+  late final _is.ColumnInt pdfDocumentId;
 
-  late final _i1.ColumnEnum<_i6.RecurrenceInterval> recurrenceInterval;
+  late final _is.ColumnEnum<_i2jlpxj3.RecurrenceInterval> recurrenceInterval;
 
-  late final _i1.ColumnDateTime nextRecurrenceDate;
+  late final _is.ColumnDateTime nextRecurrenceDate;
 
-  late final _i1.ColumnDateTime recurrenceEndDate;
+  late final _is.ColumnDateTime recurrenceEndDate;
 
-  late final _i1.ColumnInt recurrenceMaxOccurrences;
+  late final _is.ColumnInt recurrenceMaxOccurrences;
 
-  late final _i1.ColumnInt recurrenceOccurrencesCreated;
+  late final _is.ColumnInt recurrenceOccurrencesCreated;
 
-  late final _i1.ColumnDateTime createdAt;
+  late final _is.ColumnDateTime createdAt;
 
-  late final _i1.ColumnDateTime updatedAt;
+  late final _is.ColumnDateTime updatedAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     businessId,
     number,
@@ -860,19 +870,19 @@ class InvoiceTable extends _i1.Table<int?> {
   ];
 }
 
-class InvoiceInclude extends _i1.IncludeObject {
+class InvoiceInclude extends _is.IncludeObject {
   InvoiceInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => Invoice.t;
+  _is.Table<int?> get table => Invoice.t;
 }
 
-class InvoiceIncludeList extends _i1.IncludeList {
+class InvoiceIncludeList extends _is.IncludeList {
   InvoiceIncludeList._({
-    _i1.WhereExpressionBuilder<InvoiceTable>? where,
+    _is.WhereExpressionBuilder<InvoiceTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -883,10 +893,10 @@ class InvoiceIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => Invoice.t;
+  _is.Table<int?> get table => Invoice.t;
 }
 
 class InvoiceRepository {
@@ -915,15 +925,15 @@ class InvoiceRepository {
   /// );
   /// ```
   Future<List<Invoice>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<InvoiceTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<InvoiceTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<InvoiceTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<InvoiceTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<Invoice>(
       where: where?.call(Invoice.t),
@@ -955,14 +965,14 @@ class InvoiceRepository {
   /// );
   /// ```
   Future<Invoice?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<InvoiceTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<InvoiceTable>? where,
     int? offset,
-    _i1.OrderByBuilder<InvoiceTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<InvoiceTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<Invoice>(
       where: where?.call(Invoice.t),
@@ -977,11 +987,11 @@ class InvoiceRepository {
 
   /// Finds a single [Invoice] by its [id] or null if no such row exists.
   Future<Invoice?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<Invoice>(
       id,
@@ -1006,9 +1016,9 @@ class InvoiceRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Invoice>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Invoice> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -1024,9 +1034,9 @@ class InvoiceRepository {
   ///
   /// The returned [Invoice] will have its `id` field set.
   Future<Invoice> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Invoice row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<Invoice>(
       row,
@@ -1055,12 +1065,12 @@ class InvoiceRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Invoice>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Invoice> rows, {
-    required _i1.ColumnSelections<InvoiceTable> conflictColumns,
-    _i1.ColumnSelections<InvoiceTable>? updateColumns,
-    _i1.WhereExpressionBuilder<InvoiceTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<InvoiceTable> conflictColumns,
+    _is.ColumnSelections<InvoiceTable>? updateColumns,
+    _is.WhereExpressionBuilder<InvoiceTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<Invoice>(
@@ -1087,12 +1097,12 @@ class InvoiceRepository {
   ///
   /// The returned [Invoice] will have its `id` field set.
   Future<Invoice?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Invoice row, {
-    required _i1.ColumnSelections<InvoiceTable> conflictColumns,
-    _i1.ColumnSelections<InvoiceTable>? updateColumns,
-    _i1.WhereExpressionBuilder<InvoiceTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<InvoiceTable> conflictColumns,
+    _is.ColumnSelections<InvoiceTable>? updateColumns,
+    _is.WhereExpressionBuilder<InvoiceTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<Invoice>(
       row,
@@ -1113,10 +1123,10 @@ class InvoiceRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Invoice>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Invoice> rows, {
-    _i1.ColumnSelections<InvoiceTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<InvoiceTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<Invoice>(
@@ -1131,10 +1141,10 @@ class InvoiceRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<Invoice> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Invoice row, {
-    _i1.ColumnSelections<InvoiceTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<InvoiceTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<Invoice>(
       row,
@@ -1146,10 +1156,10 @@ class InvoiceRepository {
   /// Updates a single [Invoice] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<Invoice?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<InvoiceUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<InvoiceUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<Invoice>(
       id,
@@ -1165,14 +1175,14 @@ class InvoiceRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Invoice>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<InvoiceUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<InvoiceTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<InvoiceUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<InvoiceTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<InvoiceTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<InvoiceTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<Invoice>(
@@ -1199,11 +1209,11 @@ class InvoiceRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Invoice>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Invoice> rows, {
-    _i1.OrderByBuilder<InvoiceTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<InvoiceTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<Invoice>(
@@ -1217,9 +1227,9 @@ class InvoiceRepository {
 
   /// Deletes a single [Invoice].
   Future<Invoice> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Invoice row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<Invoice>(
       row,
@@ -1236,11 +1246,11 @@ class InvoiceRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Invoice>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<InvoiceTable> where,
-    _i1.OrderByBuilder<InvoiceTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<InvoiceTable> where,
+    _is.OrderByBuilder<InvoiceTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<Invoice>(
@@ -1255,10 +1265,10 @@ class InvoiceRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<InvoiceTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<InvoiceTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<Invoice>(
       where: where?.call(Invoice.t),
@@ -1269,11 +1279,11 @@ class InvoiceRepository {
 
   /// Acquires row-level locks on [Invoice] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<InvoiceTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<InvoiceTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<Invoice>(
       where: where(Invoice.t),

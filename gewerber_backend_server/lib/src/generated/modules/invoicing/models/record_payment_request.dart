@@ -10,24 +10,25 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/invoicing/models/payment_method.dart' as _i2;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/invoicing/models/payment_method.dart' as _idng401x;
 
 abstract class RecordPaymentRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   RecordPaymentRequest._({
     required this.invoiceId,
     this.paidAt,
     required this.amountCents,
-    _i2.PaymentMethod? method,
+    _idng401x.PaymentMethod? method,
     this.reference,
-  }) : method = method ?? _i2.PaymentMethod.bankTransfer;
+  }) : method = method ?? _idng401x.PaymentMethod.bankTransfer;
 
   factory RecordPaymentRequest({
     required int invoiceId,
     DateTime? paidAt,
     required int amountCents,
-    _i2.PaymentMethod? method,
+    _idng401x.PaymentMethod? method,
     String? reference,
   }) = _RecordPaymentRequestImpl;
 
@@ -38,11 +39,13 @@ abstract class RecordPaymentRequest
       invoiceId: jsonSerialization['invoiceId'] as int,
       paidAt: jsonSerialization['paidAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['paidAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['paidAt']),
       amountCents: jsonSerialization['amountCents'] as int,
       method: jsonSerialization['method'] == null
           ? null
-          : _i2.PaymentMethod.fromJson((jsonSerialization['method'] as String)),
+          : _idng401x.PaymentMethod.fromJson(
+              (jsonSerialization['method'] as String),
+            ),
       reference: jsonSerialization['reference'] as String?,
     );
   }
@@ -53,18 +56,18 @@ abstract class RecordPaymentRequest
 
   int amountCents;
 
-  _i2.PaymentMethod method;
+  _idng401x.PaymentMethod method;
 
   String? reference;
 
   /// Returns a shallow copy of this [RecordPaymentRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   RecordPaymentRequest copyWith({
     int? invoiceId,
     DateTime? paidAt,
     int? amountCents,
-    _i2.PaymentMethod? method,
+    _idng401x.PaymentMethod? method,
     String? reference,
   });
   @override
@@ -93,7 +96,7 @@ abstract class RecordPaymentRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -104,7 +107,7 @@ class _RecordPaymentRequestImpl extends RecordPaymentRequest {
     required int invoiceId,
     DateTime? paidAt,
     required int amountCents,
-    _i2.PaymentMethod? method,
+    _idng401x.PaymentMethod? method,
     String? reference,
   }) : super._(
          invoiceId: invoiceId,
@@ -116,13 +119,13 @@ class _RecordPaymentRequestImpl extends RecordPaymentRequest {
 
   /// Returns a shallow copy of this [RecordPaymentRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   RecordPaymentRequest copyWith({
     int? invoiceId,
     Object? paidAt = _Undefined,
     int? amountCents,
-    _i2.PaymentMethod? method,
+    _idng401x.PaymentMethod? method,
     Object? reference = _Undefined,
   }) {
     return RecordPaymentRequest(

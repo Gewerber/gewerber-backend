@@ -10,15 +10,15 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
 
-enum DocumentKind implements _i1.SerializableModel {
+import 'package:serverpod/serverpod.dart' as _is;
+
+enum DocumentKind implements _is.SerializableModel {
   invoicePdf,
   receipt,
   logo,
   attachment,
-  other,
-  ;
+  other;
 
   static DocumentKind fromJson(String name) {
     switch (name) {

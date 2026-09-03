@@ -10,11 +10,11 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
 
-enum Currency implements _i1.SerializableModel {
-  eur,
-  ;
+import 'package:serverpod/serverpod.dart' as _is;
+
+enum Currency implements _is.SerializableModel {
+  eur;
 
   static Currency fromJson(String name) {
     switch (name) {

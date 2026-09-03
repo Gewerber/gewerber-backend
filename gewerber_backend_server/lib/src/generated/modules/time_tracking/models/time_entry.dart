@@ -10,10 +10,11 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
+
+import 'package:serverpod/serverpod.dart' as _is;
 
 abstract class TimeEntry
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   TimeEntry._({
     this.id,
     required this.businessId,
@@ -53,25 +54,25 @@ abstract class TimeEntry
       projectId: jsonSerialization['projectId'] as int?,
       taskId: jsonSerialization['taskId'] as int?,
       description: jsonSerialization['description'] as String?,
-      startedAt: _i1.DateTimeJsonExtension.fromJson(
+      startedAt: _is.DateTimeJsonExtension.fromJson(
         jsonSerialization['startedAt'],
       ),
       stoppedAt: jsonSerialization['stoppedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['stoppedAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['stoppedAt']),
       durationMinutes: jsonSerialization['durationMinutes'] as int?,
       billable: jsonSerialization['billable'] == null
           ? null
-          : _i1.BoolJsonExtension.fromJson(jsonSerialization['billable']),
+          : _is.BoolJsonExtension.fromJson(jsonSerialization['billable']),
       invoicedAt: jsonSerialization['invoicedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['invoicedAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['invoicedAt']),
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -105,11 +106,11 @@ abstract class TimeEntry
   DateTime updatedAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [TimeEntry]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   TimeEntry copyWith({
     int? id,
     int? businessId,
@@ -167,11 +168,11 @@ abstract class TimeEntry
   }
 
   static TimeEntryIncludeList includeList({
-    _i1.WhereExpressionBuilder<TimeEntryTable>? where,
+    _is.WhereExpressionBuilder<TimeEntryTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<TimeEntryTable>? orderBy,
-    _i1.OrderByListBuilder<TimeEntryTable>? orderByList,
+    _is.OrderByBuilder<TimeEntryTable>? orderBy,
+    _is.OrderByListBuilder<TimeEntryTable>? orderByList,
     TimeEntryInclude? include,
   }) {
     return TimeEntryIncludeList._(
@@ -186,7 +187,7 @@ abstract class TimeEntry
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -223,7 +224,7 @@ class _TimeEntryImpl extends TimeEntry {
 
   /// Returns a shallow copy of this [TimeEntry]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   TimeEntry copyWith({
     Object? id = _Undefined,
@@ -258,116 +259,116 @@ class _TimeEntryImpl extends TimeEntry {
   }
 }
 
-class TimeEntryUpdateTable extends _i1.UpdateTable<TimeEntryTable> {
+class TimeEntryUpdateTable extends _is.UpdateTable<TimeEntryTable> {
   TimeEntryUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> businessId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> businessId(int value) => _is.ColumnValue(
     table.businessId,
     value,
   );
 
-  _i1.ColumnValue<int, int> projectId(int? value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> projectId(int? value) => _is.ColumnValue(
     table.projectId,
     value,
   );
 
-  _i1.ColumnValue<int, int> taskId(int? value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> taskId(int? value) => _is.ColumnValue(
     table.taskId,
     value,
   );
 
-  _i1.ColumnValue<String, String> description(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> description(String? value) => _is.ColumnValue(
     table.description,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> startedAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> startedAt(DateTime value) =>
+      _is.ColumnValue(
         table.startedAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> stoppedAt(DateTime? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> stoppedAt(DateTime? value) =>
+      _is.ColumnValue(
         table.stoppedAt,
         value,
       );
 
-  _i1.ColumnValue<int, int> durationMinutes(int? value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> durationMinutes(int? value) => _is.ColumnValue(
     table.durationMinutes,
     value,
   );
 
-  _i1.ColumnValue<bool, bool> billable(bool value) => _i1.ColumnValue(
+  _is.ColumnValue<bool, bool> billable(bool value) => _is.ColumnValue(
     table.billable,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> invoicedAt(DateTime? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> invoicedAt(DateTime? value) =>
+      _is.ColumnValue(
         table.invoicedAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _is.ColumnValue(
         table.createdAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
+      _is.ColumnValue(
         table.updatedAt,
         value,
       );
 }
 
-class TimeEntryTable extends _i1.Table<int?> {
+class TimeEntryTable extends _is.Table<int?> {
   TimeEntryTable({super.tableRelation}) : super(tableName: 'time_entry') {
     updateTable = TimeEntryUpdateTable(this);
-    businessId = _i1.ColumnInt(
+    businessId = _is.ColumnInt(
       'businessId',
       this,
     );
-    projectId = _i1.ColumnInt(
+    projectId = _is.ColumnInt(
       'projectId',
       this,
     );
-    taskId = _i1.ColumnInt(
+    taskId = _is.ColumnInt(
       'taskId',
       this,
     );
-    description = _i1.ColumnString(
+    description = _is.ColumnString(
       'description',
       this,
     );
-    startedAt = _i1.ColumnDateTime(
+    startedAt = _is.ColumnDateTime(
       'startedAt',
       this,
     );
-    stoppedAt = _i1.ColumnDateTime(
+    stoppedAt = _is.ColumnDateTime(
       'stoppedAt',
       this,
     );
-    durationMinutes = _i1.ColumnInt(
+    durationMinutes = _is.ColumnInt(
       'durationMinutes',
       this,
     );
-    billable = _i1.ColumnBool(
+    billable = _is.ColumnBool(
       'billable',
       this,
       hasDefault: true,
     );
-    invoicedAt = _i1.ColumnDateTime(
+    invoicedAt = _is.ColumnDateTime(
       'invoicedAt',
       this,
     );
-    createdAt = _i1.ColumnDateTime(
+    createdAt = _is.ColumnDateTime(
       'createdAt',
       this,
       hasDefault: true,
     );
-    updatedAt = _i1.ColumnDateTime(
+    updatedAt = _is.ColumnDateTime(
       'updatedAt',
       this,
       hasDefault: true,
@@ -376,30 +377,30 @@ class TimeEntryTable extends _i1.Table<int?> {
 
   late final TimeEntryUpdateTable updateTable;
 
-  late final _i1.ColumnInt businessId;
+  late final _is.ColumnInt businessId;
 
-  late final _i1.ColumnInt projectId;
+  late final _is.ColumnInt projectId;
 
-  late final _i1.ColumnInt taskId;
+  late final _is.ColumnInt taskId;
 
-  late final _i1.ColumnString description;
+  late final _is.ColumnString description;
 
-  late final _i1.ColumnDateTime startedAt;
+  late final _is.ColumnDateTime startedAt;
 
-  late final _i1.ColumnDateTime stoppedAt;
+  late final _is.ColumnDateTime stoppedAt;
 
-  late final _i1.ColumnInt durationMinutes;
+  late final _is.ColumnInt durationMinutes;
 
-  late final _i1.ColumnBool billable;
+  late final _is.ColumnBool billable;
 
-  late final _i1.ColumnDateTime invoicedAt;
+  late final _is.ColumnDateTime invoicedAt;
 
-  late final _i1.ColumnDateTime createdAt;
+  late final _is.ColumnDateTime createdAt;
 
-  late final _i1.ColumnDateTime updatedAt;
+  late final _is.ColumnDateTime updatedAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     businessId,
     projectId,
@@ -415,19 +416,19 @@ class TimeEntryTable extends _i1.Table<int?> {
   ];
 }
 
-class TimeEntryInclude extends _i1.IncludeObject {
+class TimeEntryInclude extends _is.IncludeObject {
   TimeEntryInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => TimeEntry.t;
+  _is.Table<int?> get table => TimeEntry.t;
 }
 
-class TimeEntryIncludeList extends _i1.IncludeList {
+class TimeEntryIncludeList extends _is.IncludeList {
   TimeEntryIncludeList._({
-    _i1.WhereExpressionBuilder<TimeEntryTable>? where,
+    _is.WhereExpressionBuilder<TimeEntryTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -438,10 +439,10 @@ class TimeEntryIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => TimeEntry.t;
+  _is.Table<int?> get table => TimeEntry.t;
 }
 
 class TimeEntryRepository {
@@ -470,15 +471,15 @@ class TimeEntryRepository {
   /// );
   /// ```
   Future<List<TimeEntry>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<TimeEntryTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<TimeEntryTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<TimeEntryTable>? orderBy,
-    _i1.OrderByListBuilder<TimeEntryTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<TimeEntryTable>? orderBy,
+    _is.OrderByListBuilder<TimeEntryTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<TimeEntry>(
       where: where?.call(TimeEntry.t),
@@ -510,14 +511,14 @@ class TimeEntryRepository {
   /// );
   /// ```
   Future<TimeEntry?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<TimeEntryTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<TimeEntryTable>? where,
     int? offset,
-    _i1.OrderByBuilder<TimeEntryTable>? orderBy,
-    _i1.OrderByListBuilder<TimeEntryTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<TimeEntryTable>? orderBy,
+    _is.OrderByListBuilder<TimeEntryTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<TimeEntry>(
       where: where?.call(TimeEntry.t),
@@ -532,11 +533,11 @@ class TimeEntryRepository {
 
   /// Finds a single [TimeEntry] by its [id] or null if no such row exists.
   Future<TimeEntry?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<TimeEntry>(
       id,
@@ -561,9 +562,9 @@ class TimeEntryRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<TimeEntry>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<TimeEntry> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -579,9 +580,9 @@ class TimeEntryRepository {
   ///
   /// The returned [TimeEntry] will have its `id` field set.
   Future<TimeEntry> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     TimeEntry row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<TimeEntry>(
       row,
@@ -610,12 +611,12 @@ class TimeEntryRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<TimeEntry>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<TimeEntry> rows, {
-    required _i1.ColumnSelections<TimeEntryTable> conflictColumns,
-    _i1.ColumnSelections<TimeEntryTable>? updateColumns,
-    _i1.WhereExpressionBuilder<TimeEntryTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<TimeEntryTable> conflictColumns,
+    _is.ColumnSelections<TimeEntryTable>? updateColumns,
+    _is.WhereExpressionBuilder<TimeEntryTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<TimeEntry>(
@@ -642,12 +643,12 @@ class TimeEntryRepository {
   ///
   /// The returned [TimeEntry] will have its `id` field set.
   Future<TimeEntry?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     TimeEntry row, {
-    required _i1.ColumnSelections<TimeEntryTable> conflictColumns,
-    _i1.ColumnSelections<TimeEntryTable>? updateColumns,
-    _i1.WhereExpressionBuilder<TimeEntryTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<TimeEntryTable> conflictColumns,
+    _is.ColumnSelections<TimeEntryTable>? updateColumns,
+    _is.WhereExpressionBuilder<TimeEntryTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<TimeEntry>(
       row,
@@ -668,10 +669,10 @@ class TimeEntryRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<TimeEntry>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<TimeEntry> rows, {
-    _i1.ColumnSelections<TimeEntryTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<TimeEntryTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<TimeEntry>(
@@ -686,10 +687,10 @@ class TimeEntryRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<TimeEntry> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     TimeEntry row, {
-    _i1.ColumnSelections<TimeEntryTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<TimeEntryTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<TimeEntry>(
       row,
@@ -701,10 +702,10 @@ class TimeEntryRepository {
   /// Updates a single [TimeEntry] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<TimeEntry?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<TimeEntryUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<TimeEntryUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<TimeEntry>(
       id,
@@ -720,14 +721,14 @@ class TimeEntryRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<TimeEntry>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<TimeEntryUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<TimeEntryTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<TimeEntryUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<TimeEntryTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<TimeEntryTable>? orderBy,
-    _i1.OrderByListBuilder<TimeEntryTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<TimeEntryTable>? orderBy,
+    _is.OrderByListBuilder<TimeEntryTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<TimeEntry>(
@@ -754,11 +755,11 @@ class TimeEntryRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<TimeEntry>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<TimeEntry> rows, {
-    _i1.OrderByBuilder<TimeEntryTable>? orderBy,
-    _i1.OrderByListBuilder<TimeEntryTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<TimeEntryTable>? orderBy,
+    _is.OrderByListBuilder<TimeEntryTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<TimeEntry>(
@@ -772,9 +773,9 @@ class TimeEntryRepository {
 
   /// Deletes a single [TimeEntry].
   Future<TimeEntry> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     TimeEntry row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<TimeEntry>(
       row,
@@ -791,11 +792,11 @@ class TimeEntryRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<TimeEntry>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<TimeEntryTable> where,
-    _i1.OrderByBuilder<TimeEntryTable>? orderBy,
-    _i1.OrderByListBuilder<TimeEntryTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<TimeEntryTable> where,
+    _is.OrderByBuilder<TimeEntryTable>? orderBy,
+    _is.OrderByListBuilder<TimeEntryTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<TimeEntry>(
@@ -810,10 +811,10 @@ class TimeEntryRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<TimeEntryTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<TimeEntryTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<TimeEntry>(
       where: where?.call(TimeEntry.t),
@@ -824,11 +825,11 @@ class TimeEntryRepository {
 
   /// Acquires row-level locks on [TimeEntry] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<TimeEntryTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<TimeEntryTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<TimeEntry>(
       where: where(TimeEntry.t),

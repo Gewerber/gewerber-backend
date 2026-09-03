@@ -10,10 +10,11 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
+
+import 'package:serverpod/serverpod.dart' as _is;
 
 abstract class UserGuidanceProgress
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   UserGuidanceProgress._({
     this.id,
     this.userId,
@@ -25,7 +26,7 @@ abstract class UserGuidanceProgress
 
   factory UserGuidanceProgress({
     int? id,
-    _i1.UuidValue? userId,
+    _is.UuidValue? userId,
     required String itemKey,
     DateTime? completedAt,
     DateTime? dismissedAt,
@@ -39,21 +40,21 @@ abstract class UserGuidanceProgress
       id: jsonSerialization['id'] as int?,
       userId: jsonSerialization['userId'] == null
           ? null
-          : _i1.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
+          : _is.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
       itemKey: jsonSerialization['itemKey'] as String,
       completedAt: jsonSerialization['completedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['completedAt'],
             ),
       dismissedAt: jsonSerialization['dismissedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['dismissedAt'],
             ),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -65,7 +66,7 @@ abstract class UserGuidanceProgress
   int? id;
 
   /// Nullable: set to null when the account is deleted (GDPR Art. 17).
-  _i1.UuidValue? userId;
+  _is.UuidValue? userId;
 
   String itemKey;
 
@@ -76,14 +77,14 @@ abstract class UserGuidanceProgress
   DateTime updatedAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [UserGuidanceProgress]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   UserGuidanceProgress copyWith({
     int? id,
-    _i1.UuidValue? userId,
+    _is.UuidValue? userId,
     String? itemKey,
     DateTime? completedAt,
     DateTime? dismissedAt,
@@ -120,11 +121,11 @@ abstract class UserGuidanceProgress
   }
 
   static UserGuidanceProgressIncludeList includeList({
-    _i1.WhereExpressionBuilder<UserGuidanceProgressTable>? where,
+    _is.WhereExpressionBuilder<UserGuidanceProgressTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<UserGuidanceProgressTable>? orderBy,
-    _i1.OrderByListBuilder<UserGuidanceProgressTable>? orderByList,
+    _is.OrderByBuilder<UserGuidanceProgressTable>? orderBy,
+    _is.OrderByListBuilder<UserGuidanceProgressTable>? orderByList,
     UserGuidanceProgressInclude? include,
   }) {
     return UserGuidanceProgressIncludeList._(
@@ -139,7 +140,7 @@ abstract class UserGuidanceProgress
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -148,7 +149,7 @@ class _Undefined {}
 class _UserGuidanceProgressImpl extends UserGuidanceProgress {
   _UserGuidanceProgressImpl({
     int? id,
-    _i1.UuidValue? userId,
+    _is.UuidValue? userId,
     required String itemKey,
     DateTime? completedAt,
     DateTime? dismissedAt,
@@ -164,7 +165,7 @@ class _UserGuidanceProgressImpl extends UserGuidanceProgress {
 
   /// Returns a shallow copy of this [UserGuidanceProgress]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   UserGuidanceProgress copyWith({
     Object? id = _Undefined,
@@ -176,7 +177,7 @@ class _UserGuidanceProgressImpl extends UserGuidanceProgress {
   }) {
     return UserGuidanceProgress(
       id: id is int? ? id : this.id,
-      userId: userId is _i1.UuidValue? ? userId : this.userId,
+      userId: userId is _is.UuidValue? ? userId : this.userId,
       itemKey: itemKey ?? this.itemKey,
       completedAt: completedAt is DateTime? ? completedAt : this.completedAt,
       dismissedAt: dismissedAt is DateTime? ? dismissedAt : this.dismissedAt,
@@ -186,60 +187,60 @@ class _UserGuidanceProgressImpl extends UserGuidanceProgress {
 }
 
 class UserGuidanceProgressUpdateTable
-    extends _i1.UpdateTable<UserGuidanceProgressTable> {
+    extends _is.UpdateTable<UserGuidanceProgressTable> {
   UserGuidanceProgressUpdateTable(super.table);
 
-  _i1.ColumnValue<_i1.UuidValue, _i1.UuidValue> userId(_i1.UuidValue? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<_is.UuidValue, _is.UuidValue> userId(_is.UuidValue? value) =>
+      _is.ColumnValue(
         table.userId,
         value,
       );
 
-  _i1.ColumnValue<String, String> itemKey(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> itemKey(String value) => _is.ColumnValue(
     table.itemKey,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> completedAt(DateTime? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> completedAt(DateTime? value) =>
+      _is.ColumnValue(
         table.completedAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> dismissedAt(DateTime? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> dismissedAt(DateTime? value) =>
+      _is.ColumnValue(
         table.dismissedAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
+      _is.ColumnValue(
         table.updatedAt,
         value,
       );
 }
 
-class UserGuidanceProgressTable extends _i1.Table<int?> {
+class UserGuidanceProgressTable extends _is.Table<int?> {
   UserGuidanceProgressTable({super.tableRelation})
     : super(tableName: 'user_guidance_progress') {
     updateTable = UserGuidanceProgressUpdateTable(this);
-    userId = _i1.ColumnUuid(
+    userId = _is.ColumnUuid(
       'userId',
       this,
     );
-    itemKey = _i1.ColumnString(
+    itemKey = _is.ColumnString(
       'itemKey',
       this,
     );
-    completedAt = _i1.ColumnDateTime(
+    completedAt = _is.ColumnDateTime(
       'completedAt',
       this,
     );
-    dismissedAt = _i1.ColumnDateTime(
+    dismissedAt = _is.ColumnDateTime(
       'dismissedAt',
       this,
     );
-    updatedAt = _i1.ColumnDateTime(
+    updatedAt = _is.ColumnDateTime(
       'updatedAt',
       this,
       hasDefault: true,
@@ -249,18 +250,18 @@ class UserGuidanceProgressTable extends _i1.Table<int?> {
   late final UserGuidanceProgressUpdateTable updateTable;
 
   /// Nullable: set to null when the account is deleted (GDPR Art. 17).
-  late final _i1.ColumnUuid userId;
+  late final _is.ColumnUuid userId;
 
-  late final _i1.ColumnString itemKey;
+  late final _is.ColumnString itemKey;
 
-  late final _i1.ColumnDateTime completedAt;
+  late final _is.ColumnDateTime completedAt;
 
-  late final _i1.ColumnDateTime dismissedAt;
+  late final _is.ColumnDateTime dismissedAt;
 
-  late final _i1.ColumnDateTime updatedAt;
+  late final _is.ColumnDateTime updatedAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     userId,
     itemKey,
@@ -270,19 +271,19 @@ class UserGuidanceProgressTable extends _i1.Table<int?> {
   ];
 }
 
-class UserGuidanceProgressInclude extends _i1.IncludeObject {
+class UserGuidanceProgressInclude extends _is.IncludeObject {
   UserGuidanceProgressInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => UserGuidanceProgress.t;
+  _is.Table<int?> get table => UserGuidanceProgress.t;
 }
 
-class UserGuidanceProgressIncludeList extends _i1.IncludeList {
+class UserGuidanceProgressIncludeList extends _is.IncludeList {
   UserGuidanceProgressIncludeList._({
-    _i1.WhereExpressionBuilder<UserGuidanceProgressTable>? where,
+    _is.WhereExpressionBuilder<UserGuidanceProgressTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -293,10 +294,10 @@ class UserGuidanceProgressIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => UserGuidanceProgress.t;
+  _is.Table<int?> get table => UserGuidanceProgress.t;
 }
 
 class UserGuidanceProgressRepository {
@@ -325,15 +326,15 @@ class UserGuidanceProgressRepository {
   /// );
   /// ```
   Future<List<UserGuidanceProgress>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<UserGuidanceProgressTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<UserGuidanceProgressTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<UserGuidanceProgressTable>? orderBy,
-    _i1.OrderByListBuilder<UserGuidanceProgressTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<UserGuidanceProgressTable>? orderBy,
+    _is.OrderByListBuilder<UserGuidanceProgressTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<UserGuidanceProgress>(
       where: where?.call(UserGuidanceProgress.t),
@@ -365,14 +366,14 @@ class UserGuidanceProgressRepository {
   /// );
   /// ```
   Future<UserGuidanceProgress?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<UserGuidanceProgressTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<UserGuidanceProgressTable>? where,
     int? offset,
-    _i1.OrderByBuilder<UserGuidanceProgressTable>? orderBy,
-    _i1.OrderByListBuilder<UserGuidanceProgressTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<UserGuidanceProgressTable>? orderBy,
+    _is.OrderByListBuilder<UserGuidanceProgressTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<UserGuidanceProgress>(
       where: where?.call(UserGuidanceProgress.t),
@@ -387,11 +388,11 @@ class UserGuidanceProgressRepository {
 
   /// Finds a single [UserGuidanceProgress] by its [id] or null if no such row exists.
   Future<UserGuidanceProgress?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<UserGuidanceProgress>(
       id,
@@ -416,9 +417,9 @@ class UserGuidanceProgressRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<UserGuidanceProgress>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<UserGuidanceProgress> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -434,9 +435,9 @@ class UserGuidanceProgressRepository {
   ///
   /// The returned [UserGuidanceProgress] will have its `id` field set.
   Future<UserGuidanceProgress> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     UserGuidanceProgress row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<UserGuidanceProgress>(
       row,
@@ -465,12 +466,12 @@ class UserGuidanceProgressRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<UserGuidanceProgress>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<UserGuidanceProgress> rows, {
-    required _i1.ColumnSelections<UserGuidanceProgressTable> conflictColumns,
-    _i1.ColumnSelections<UserGuidanceProgressTable>? updateColumns,
-    _i1.WhereExpressionBuilder<UserGuidanceProgressTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<UserGuidanceProgressTable> conflictColumns,
+    _is.ColumnSelections<UserGuidanceProgressTable>? updateColumns,
+    _is.WhereExpressionBuilder<UserGuidanceProgressTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<UserGuidanceProgress>(
@@ -497,12 +498,12 @@ class UserGuidanceProgressRepository {
   ///
   /// The returned [UserGuidanceProgress] will have its `id` field set.
   Future<UserGuidanceProgress?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     UserGuidanceProgress row, {
-    required _i1.ColumnSelections<UserGuidanceProgressTable> conflictColumns,
-    _i1.ColumnSelections<UserGuidanceProgressTable>? updateColumns,
-    _i1.WhereExpressionBuilder<UserGuidanceProgressTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<UserGuidanceProgressTable> conflictColumns,
+    _is.ColumnSelections<UserGuidanceProgressTable>? updateColumns,
+    _is.WhereExpressionBuilder<UserGuidanceProgressTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<UserGuidanceProgress>(
       row,
@@ -523,10 +524,10 @@ class UserGuidanceProgressRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<UserGuidanceProgress>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<UserGuidanceProgress> rows, {
-    _i1.ColumnSelections<UserGuidanceProgressTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<UserGuidanceProgressTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<UserGuidanceProgress>(
@@ -541,10 +542,10 @@ class UserGuidanceProgressRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<UserGuidanceProgress> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     UserGuidanceProgress row, {
-    _i1.ColumnSelections<UserGuidanceProgressTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<UserGuidanceProgressTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<UserGuidanceProgress>(
       row,
@@ -556,11 +557,11 @@ class UserGuidanceProgressRepository {
   /// Updates a single [UserGuidanceProgress] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<UserGuidanceProgress?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<UserGuidanceProgressUpdateTable>
+    required _is.ColumnValueListBuilder<UserGuidanceProgressUpdateTable>
     columnValues,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<UserGuidanceProgress>(
       id,
@@ -576,15 +577,15 @@ class UserGuidanceProgressRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<UserGuidanceProgress>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<UserGuidanceProgressUpdateTable>
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<UserGuidanceProgressUpdateTable>
     columnValues,
-    required _i1.WhereExpressionBuilder<UserGuidanceProgressTable> where,
+    required _is.WhereExpressionBuilder<UserGuidanceProgressTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<UserGuidanceProgressTable>? orderBy,
-    _i1.OrderByListBuilder<UserGuidanceProgressTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<UserGuidanceProgressTable>? orderBy,
+    _is.OrderByListBuilder<UserGuidanceProgressTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<UserGuidanceProgress>(
@@ -611,11 +612,11 @@ class UserGuidanceProgressRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<UserGuidanceProgress>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<UserGuidanceProgress> rows, {
-    _i1.OrderByBuilder<UserGuidanceProgressTable>? orderBy,
-    _i1.OrderByListBuilder<UserGuidanceProgressTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<UserGuidanceProgressTable>? orderBy,
+    _is.OrderByListBuilder<UserGuidanceProgressTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<UserGuidanceProgress>(
@@ -629,9 +630,9 @@ class UserGuidanceProgressRepository {
 
   /// Deletes a single [UserGuidanceProgress].
   Future<UserGuidanceProgress> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     UserGuidanceProgress row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<UserGuidanceProgress>(
       row,
@@ -648,11 +649,11 @@ class UserGuidanceProgressRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<UserGuidanceProgress>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<UserGuidanceProgressTable> where,
-    _i1.OrderByBuilder<UserGuidanceProgressTable>? orderBy,
-    _i1.OrderByListBuilder<UserGuidanceProgressTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<UserGuidanceProgressTable> where,
+    _is.OrderByBuilder<UserGuidanceProgressTable>? orderBy,
+    _is.OrderByListBuilder<UserGuidanceProgressTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<UserGuidanceProgress>(
@@ -667,10 +668,10 @@ class UserGuidanceProgressRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<UserGuidanceProgressTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<UserGuidanceProgressTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<UserGuidanceProgress>(
       where: where?.call(UserGuidanceProgress.t),
@@ -681,11 +682,11 @@ class UserGuidanceProgressRepository {
 
   /// Acquires row-level locks on [UserGuidanceProgress] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<UserGuidanceProgressTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<UserGuidanceProgressTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<UserGuidanceProgress>(
       where: where(UserGuidanceProgress.t),

@@ -10,22 +10,23 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/time_tracking/models/project_status.dart' as _i2;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/time_tracking/models/project_status.dart' as _i1ujg7mu;
 
 abstract class Project
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   Project._({
     this.id,
     required this.businessId,
     required this.name,
-    _i2.ProjectStatus? status,
+    _i1ujg7mu.ProjectStatus? status,
     this.customerId,
     this.hourlyRateCents,
     this.notes,
     DateTime? createdAt,
     DateTime? updatedAt,
-  }) : status = status ?? _i2.ProjectStatus.active,
+  }) : status = status ?? _i1ujg7mu.ProjectStatus.active,
        createdAt = createdAt ?? DateTime.now(),
        updatedAt = updatedAt ?? DateTime.now();
 
@@ -33,7 +34,7 @@ abstract class Project
     int? id,
     required int businessId,
     required String name,
-    _i2.ProjectStatus? status,
+    _i1ujg7mu.ProjectStatus? status,
     int? customerId,
     int? hourlyRateCents,
     String? notes,
@@ -48,16 +49,18 @@ abstract class Project
       name: jsonSerialization['name'] as String,
       status: jsonSerialization['status'] == null
           ? null
-          : _i2.ProjectStatus.fromJson((jsonSerialization['status'] as String)),
+          : _i1ujg7mu.ProjectStatus.fromJson(
+              (jsonSerialization['status'] as String),
+            ),
       customerId: jsonSerialization['customerId'] as int?,
       hourlyRateCents: jsonSerialization['hourlyRateCents'] as int?,
       notes: jsonSerialization['notes'] as String?,
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -70,7 +73,7 @@ abstract class Project
 
   String name;
 
-  _i2.ProjectStatus status;
+  _i1ujg7mu.ProjectStatus status;
 
   int? customerId;
 
@@ -84,12 +87,12 @@ abstract class Project
 
   /// Returns a shallow copy of this [Project]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   Project copyWith({
     int? id,
     int? businessId,
     String? name,
-    _i2.ProjectStatus? status,
+    _i1ujg7mu.ProjectStatus? status,
     int? customerId,
     int? hourlyRateCents,
     String? notes,
@@ -130,7 +133,7 @@ abstract class Project
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -141,7 +144,7 @@ class _ProjectImpl extends Project {
     int? id,
     required int businessId,
     required String name,
-    _i2.ProjectStatus? status,
+    _i1ujg7mu.ProjectStatus? status,
     int? customerId,
     int? hourlyRateCents,
     String? notes,
@@ -161,13 +164,13 @@ class _ProjectImpl extends Project {
 
   /// Returns a shallow copy of this [Project]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   Project copyWith({
     Object? id = _Undefined,
     int? businessId,
     String? name,
-    _i2.ProjectStatus? status,
+    _i1ujg7mu.ProjectStatus? status,
     Object? customerId = _Undefined,
     Object? hourlyRateCents = _Undefined,
     Object? notes = _Undefined,

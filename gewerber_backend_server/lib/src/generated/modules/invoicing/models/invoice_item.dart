@@ -10,26 +10,27 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/invoicing/models/invoice_item_unit.dart' as _i2;
-import '../../../modules/invoicing/models/vat_rate.dart' as _i3;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/invoicing/models/invoice_item_unit.dart' as _irh1ud1f;
+import '../../../modules/invoicing/models/vat_rate.dart' as _icqbpm4p;
 
 abstract class InvoiceItem
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   InvoiceItem._({
     this.id,
     required this.invoiceId,
     required this.position,
     required this.description,
     double? quantity,
-    _i2.InvoiceItemUnit? unit,
+    _irh1ud1f.InvoiceItemUnit? unit,
     int? unitPriceCents,
-    _i3.VatRate? vatRate,
+    _icqbpm4p.VatRate? vatRate,
     int? lineTotalCents,
   }) : quantity = quantity ?? 1.0,
-       unit = unit ?? _i2.InvoiceItemUnit.hour,
+       unit = unit ?? _irh1ud1f.InvoiceItemUnit.hour,
        unitPriceCents = unitPriceCents ?? 0,
-       vatRate = vatRate ?? _i3.VatRate.standard,
+       vatRate = vatRate ?? _icqbpm4p.VatRate.standard,
        lineTotalCents = lineTotalCents ?? 0;
 
   factory InvoiceItem({
@@ -38,9 +39,9 @@ abstract class InvoiceItem
     required int position,
     required String description,
     double? quantity,
-    _i2.InvoiceItemUnit? unit,
+    _irh1ud1f.InvoiceItemUnit? unit,
     int? unitPriceCents,
-    _i3.VatRate? vatRate,
+    _icqbpm4p.VatRate? vatRate,
     int? lineTotalCents,
   }) = _InvoiceItemImpl;
 
@@ -53,11 +54,15 @@ abstract class InvoiceItem
       quantity: (jsonSerialization['quantity'] as num?)?.toDouble(),
       unit: jsonSerialization['unit'] == null
           ? null
-          : _i2.InvoiceItemUnit.fromJson((jsonSerialization['unit'] as String)),
+          : _irh1ud1f.InvoiceItemUnit.fromJson(
+              (jsonSerialization['unit'] as String),
+            ),
       unitPriceCents: jsonSerialization['unitPriceCents'] as int?,
       vatRate: jsonSerialization['vatRate'] == null
           ? null
-          : _i3.VatRate.fromJson((jsonSerialization['vatRate'] as String)),
+          : _icqbpm4p.VatRate.fromJson(
+              (jsonSerialization['vatRate'] as String),
+            ),
       lineTotalCents: jsonSerialization['lineTotalCents'] as int?,
     );
   }
@@ -77,29 +82,29 @@ abstract class InvoiceItem
 
   double quantity;
 
-  _i2.InvoiceItemUnit unit;
+  _irh1ud1f.InvoiceItemUnit unit;
 
   int unitPriceCents;
 
-  _i3.VatRate vatRate;
+  _icqbpm4p.VatRate vatRate;
 
   int lineTotalCents;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [InvoiceItem]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   InvoiceItem copyWith({
     int? id,
     int? invoiceId,
     int? position,
     String? description,
     double? quantity,
-    _i2.InvoiceItemUnit? unit,
+    _irh1ud1f.InvoiceItemUnit? unit,
     int? unitPriceCents,
-    _i3.VatRate? vatRate,
+    _icqbpm4p.VatRate? vatRate,
     int? lineTotalCents,
   });
   @override
@@ -139,11 +144,11 @@ abstract class InvoiceItem
   }
 
   static InvoiceItemIncludeList includeList({
-    _i1.WhereExpressionBuilder<InvoiceItemTable>? where,
+    _is.WhereExpressionBuilder<InvoiceItemTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<InvoiceItemTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceItemTable>? orderByList,
+    _is.OrderByBuilder<InvoiceItemTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceItemTable>? orderByList,
     InvoiceItemInclude? include,
   }) {
     return InvoiceItemIncludeList._(
@@ -158,7 +163,7 @@ abstract class InvoiceItem
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -171,9 +176,9 @@ class _InvoiceItemImpl extends InvoiceItem {
     required int position,
     required String description,
     double? quantity,
-    _i2.InvoiceItemUnit? unit,
+    _irh1ud1f.InvoiceItemUnit? unit,
     int? unitPriceCents,
-    _i3.VatRate? vatRate,
+    _icqbpm4p.VatRate? vatRate,
     int? lineTotalCents,
   }) : super._(
          id: id,
@@ -189,7 +194,7 @@ class _InvoiceItemImpl extends InvoiceItem {
 
   /// Returns a shallow copy of this [InvoiceItem]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   InvoiceItem copyWith({
     Object? id = _Undefined,
@@ -197,9 +202,9 @@ class _InvoiceItemImpl extends InvoiceItem {
     int? position,
     String? description,
     double? quantity,
-    _i2.InvoiceItemUnit? unit,
+    _irh1ud1f.InvoiceItemUnit? unit,
     int? unitPriceCents,
-    _i3.VatRate? vatRate,
+    _icqbpm4p.VatRate? vatRate,
     int? lineTotalCents,
   }) {
     return InvoiceItem(
@@ -216,91 +221,92 @@ class _InvoiceItemImpl extends InvoiceItem {
   }
 }
 
-class InvoiceItemUpdateTable extends _i1.UpdateTable<InvoiceItemTable> {
+class InvoiceItemUpdateTable extends _is.UpdateTable<InvoiceItemTable> {
   InvoiceItemUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> invoiceId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> invoiceId(int value) => _is.ColumnValue(
     table.invoiceId,
     value,
   );
 
-  _i1.ColumnValue<int, int> position(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> position(int value) => _is.ColumnValue(
     table.position,
     value,
   );
 
-  _i1.ColumnValue<String, String> description(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> description(String value) => _is.ColumnValue(
     table.description,
     value,
   );
 
-  _i1.ColumnValue<double, double> quantity(double value) => _i1.ColumnValue(
+  _is.ColumnValue<double, double> quantity(double value) => _is.ColumnValue(
     table.quantity,
     value,
   );
 
-  _i1.ColumnValue<_i2.InvoiceItemUnit, _i2.InvoiceItemUnit> unit(
-    _i2.InvoiceItemUnit value,
-  ) => _i1.ColumnValue(
+  _is.ColumnValue<_irh1ud1f.InvoiceItemUnit, _irh1ud1f.InvoiceItemUnit> unit(
+    _irh1ud1f.InvoiceItemUnit value,
+  ) => _is.ColumnValue(
     table.unit,
     value,
   );
 
-  _i1.ColumnValue<int, int> unitPriceCents(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> unitPriceCents(int value) => _is.ColumnValue(
     table.unitPriceCents,
     value,
   );
 
-  _i1.ColumnValue<_i3.VatRate, _i3.VatRate> vatRate(_i3.VatRate value) =>
-      _i1.ColumnValue(
-        table.vatRate,
-        value,
-      );
+  _is.ColumnValue<_icqbpm4p.VatRate, _icqbpm4p.VatRate> vatRate(
+    _icqbpm4p.VatRate value,
+  ) => _is.ColumnValue(
+    table.vatRate,
+    value,
+  );
 
-  _i1.ColumnValue<int, int> lineTotalCents(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> lineTotalCents(int value) => _is.ColumnValue(
     table.lineTotalCents,
     value,
   );
 }
 
-class InvoiceItemTable extends _i1.Table<int?> {
+class InvoiceItemTable extends _is.Table<int?> {
   InvoiceItemTable({super.tableRelation}) : super(tableName: 'invoice_item') {
     updateTable = InvoiceItemUpdateTable(this);
-    invoiceId = _i1.ColumnInt(
+    invoiceId = _is.ColumnInt(
       'invoiceId',
       this,
     );
-    position = _i1.ColumnInt(
+    position = _is.ColumnInt(
       'position',
       this,
     );
-    description = _i1.ColumnString(
+    description = _is.ColumnString(
       'description',
       this,
     );
-    quantity = _i1.ColumnDouble(
+    quantity = _is.ColumnDouble(
       'quantity',
       this,
       hasDefault: true,
     );
-    unit = _i1.ColumnEnum(
+    unit = _is.ColumnEnum(
       'unit',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    unitPriceCents = _i1.ColumnInt(
+    unitPriceCents = _is.ColumnInt(
       'unitPriceCents',
       this,
       hasDefault: true,
     );
-    vatRate = _i1.ColumnEnum(
+    vatRate = _is.ColumnEnum(
       'vatRate',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    lineTotalCents = _i1.ColumnInt(
+    lineTotalCents = _is.ColumnInt(
       'lineTotalCents',
       this,
       hasDefault: true,
@@ -309,24 +315,24 @@ class InvoiceItemTable extends _i1.Table<int?> {
 
   late final InvoiceItemUpdateTable updateTable;
 
-  late final _i1.ColumnInt invoiceId;
+  late final _is.ColumnInt invoiceId;
 
-  late final _i1.ColumnInt position;
+  late final _is.ColumnInt position;
 
-  late final _i1.ColumnString description;
+  late final _is.ColumnString description;
 
-  late final _i1.ColumnDouble quantity;
+  late final _is.ColumnDouble quantity;
 
-  late final _i1.ColumnEnum<_i2.InvoiceItemUnit> unit;
+  late final _is.ColumnEnum<_irh1ud1f.InvoiceItemUnit> unit;
 
-  late final _i1.ColumnInt unitPriceCents;
+  late final _is.ColumnInt unitPriceCents;
 
-  late final _i1.ColumnEnum<_i3.VatRate> vatRate;
+  late final _is.ColumnEnum<_icqbpm4p.VatRate> vatRate;
 
-  late final _i1.ColumnInt lineTotalCents;
+  late final _is.ColumnInt lineTotalCents;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     invoiceId,
     position,
@@ -339,19 +345,19 @@ class InvoiceItemTable extends _i1.Table<int?> {
   ];
 }
 
-class InvoiceItemInclude extends _i1.IncludeObject {
+class InvoiceItemInclude extends _is.IncludeObject {
   InvoiceItemInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => InvoiceItem.t;
+  _is.Table<int?> get table => InvoiceItem.t;
 }
 
-class InvoiceItemIncludeList extends _i1.IncludeList {
+class InvoiceItemIncludeList extends _is.IncludeList {
   InvoiceItemIncludeList._({
-    _i1.WhereExpressionBuilder<InvoiceItemTable>? where,
+    _is.WhereExpressionBuilder<InvoiceItemTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -362,10 +368,10 @@ class InvoiceItemIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => InvoiceItem.t;
+  _is.Table<int?> get table => InvoiceItem.t;
 }
 
 class InvoiceItemRepository {
@@ -394,15 +400,15 @@ class InvoiceItemRepository {
   /// );
   /// ```
   Future<List<InvoiceItem>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<InvoiceItemTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<InvoiceItemTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<InvoiceItemTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceItemTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<InvoiceItemTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceItemTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<InvoiceItem>(
       where: where?.call(InvoiceItem.t),
@@ -434,14 +440,14 @@ class InvoiceItemRepository {
   /// );
   /// ```
   Future<InvoiceItem?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<InvoiceItemTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<InvoiceItemTable>? where,
     int? offset,
-    _i1.OrderByBuilder<InvoiceItemTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceItemTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<InvoiceItemTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceItemTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<InvoiceItem>(
       where: where?.call(InvoiceItem.t),
@@ -456,11 +462,11 @@ class InvoiceItemRepository {
 
   /// Finds a single [InvoiceItem] by its [id] or null if no such row exists.
   Future<InvoiceItem?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<InvoiceItem>(
       id,
@@ -485,9 +491,9 @@ class InvoiceItemRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<InvoiceItem>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<InvoiceItem> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -503,9 +509,9 @@ class InvoiceItemRepository {
   ///
   /// The returned [InvoiceItem] will have its `id` field set.
   Future<InvoiceItem> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     InvoiceItem row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<InvoiceItem>(
       row,
@@ -534,12 +540,12 @@ class InvoiceItemRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<InvoiceItem>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<InvoiceItem> rows, {
-    required _i1.ColumnSelections<InvoiceItemTable> conflictColumns,
-    _i1.ColumnSelections<InvoiceItemTable>? updateColumns,
-    _i1.WhereExpressionBuilder<InvoiceItemTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<InvoiceItemTable> conflictColumns,
+    _is.ColumnSelections<InvoiceItemTable>? updateColumns,
+    _is.WhereExpressionBuilder<InvoiceItemTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<InvoiceItem>(
@@ -566,12 +572,12 @@ class InvoiceItemRepository {
   ///
   /// The returned [InvoiceItem] will have its `id` field set.
   Future<InvoiceItem?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     InvoiceItem row, {
-    required _i1.ColumnSelections<InvoiceItemTable> conflictColumns,
-    _i1.ColumnSelections<InvoiceItemTable>? updateColumns,
-    _i1.WhereExpressionBuilder<InvoiceItemTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<InvoiceItemTable> conflictColumns,
+    _is.ColumnSelections<InvoiceItemTable>? updateColumns,
+    _is.WhereExpressionBuilder<InvoiceItemTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<InvoiceItem>(
       row,
@@ -592,10 +598,10 @@ class InvoiceItemRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<InvoiceItem>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<InvoiceItem> rows, {
-    _i1.ColumnSelections<InvoiceItemTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<InvoiceItemTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<InvoiceItem>(
@@ -610,10 +616,10 @@ class InvoiceItemRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<InvoiceItem> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     InvoiceItem row, {
-    _i1.ColumnSelections<InvoiceItemTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<InvoiceItemTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<InvoiceItem>(
       row,
@@ -625,10 +631,10 @@ class InvoiceItemRepository {
   /// Updates a single [InvoiceItem] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<InvoiceItem?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<InvoiceItemUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<InvoiceItemUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<InvoiceItem>(
       id,
@@ -644,14 +650,14 @@ class InvoiceItemRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<InvoiceItem>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<InvoiceItemUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<InvoiceItemTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<InvoiceItemUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<InvoiceItemTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<InvoiceItemTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceItemTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<InvoiceItemTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceItemTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<InvoiceItem>(
@@ -678,11 +684,11 @@ class InvoiceItemRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<InvoiceItem>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<InvoiceItem> rows, {
-    _i1.OrderByBuilder<InvoiceItemTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceItemTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<InvoiceItemTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceItemTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<InvoiceItem>(
@@ -696,9 +702,9 @@ class InvoiceItemRepository {
 
   /// Deletes a single [InvoiceItem].
   Future<InvoiceItem> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     InvoiceItem row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<InvoiceItem>(
       row,
@@ -715,11 +721,11 @@ class InvoiceItemRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<InvoiceItem>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<InvoiceItemTable> where,
-    _i1.OrderByBuilder<InvoiceItemTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceItemTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<InvoiceItemTable> where,
+    _is.OrderByBuilder<InvoiceItemTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceItemTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<InvoiceItem>(
@@ -734,10 +740,10 @@ class InvoiceItemRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<InvoiceItemTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<InvoiceItemTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<InvoiceItem>(
       where: where?.call(InvoiceItem.t),
@@ -748,11 +754,11 @@ class InvoiceItemRepository {
 
   /// Acquires row-level locks on [InvoiceItem] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<InvoiceItemTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<InvoiceItemTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<InvoiceItem>(
       where: where(InvoiceItem.t),

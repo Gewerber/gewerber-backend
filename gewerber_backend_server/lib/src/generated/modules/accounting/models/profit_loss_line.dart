@@ -10,11 +10,13 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/accounting/models/transaction_category.dart' as _i2;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/accounting/models/transaction_category.dart'
+    as _i1xoyxnt;
 
 abstract class ProfitLossLine
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   ProfitLossLine._({
     required this.category,
     required this.amountCents,
@@ -22,14 +24,14 @@ abstract class ProfitLossLine
   });
 
   factory ProfitLossLine({
-    required _i2.TransactionCategory category,
+    required _i1xoyxnt.TransactionCategory category,
     required int amountCents,
     required int count,
   }) = _ProfitLossLineImpl;
 
   factory ProfitLossLine.fromJson(Map<String, dynamic> jsonSerialization) {
     return ProfitLossLine(
-      category: _i2.TransactionCategory.fromJson(
+      category: _i1xoyxnt.TransactionCategory.fromJson(
         (jsonSerialization['category'] as String),
       ),
       amountCents: jsonSerialization['amountCents'] as int,
@@ -37,7 +39,7 @@ abstract class ProfitLossLine
     );
   }
 
-  _i2.TransactionCategory category;
+  _i1xoyxnt.TransactionCategory category;
 
   int amountCents;
 
@@ -45,9 +47,9 @@ abstract class ProfitLossLine
 
   /// Returns a shallow copy of this [ProfitLossLine]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   ProfitLossLine copyWith({
-    _i2.TransactionCategory? category,
+    _i1xoyxnt.TransactionCategory? category,
     int? amountCents,
     int? count,
   });
@@ -73,13 +75,13 @@ abstract class ProfitLossLine
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
 class _ProfitLossLineImpl extends ProfitLossLine {
   _ProfitLossLineImpl({
-    required _i2.TransactionCategory category,
+    required _i1xoyxnt.TransactionCategory category,
     required int amountCents,
     required int count,
   }) : super._(
@@ -90,10 +92,10 @@ class _ProfitLossLineImpl extends ProfitLossLine {
 
   /// Returns a shallow copy of this [ProfitLossLine]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   ProfitLossLine copyWith({
-    _i2.TransactionCategory? category,
+    _i1xoyxnt.TransactionCategory? category,
     int? amountCents,
     int? count,
   }) {

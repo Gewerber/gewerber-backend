@@ -10,16 +10,18 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/user/models/user_profile.dart' as _i2;
-import '../../../modules/admin/models/admin_auth_status.dart' as _i3;
-import '../../../modules/admin/models/admin_membership_info.dart' as _i4;
-import '../../../core/admin/admin_role.dart' as _i5;
-import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i6;
+
+import 'package:gewerber_backend_client/src/protocol/protocol.dart'
+    as _iipbhyvd;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../core/admin/admin_role.dart' as _isyiaiss;
+import '../../../modules/admin/models/admin_auth_status.dart' as _ipkga77r;
+import '../../../modules/admin/models/admin_membership_info.dart' as _ir926tki;
+import '../../../modules/user/models/user_profile.dart' as _igw681aa;
 
 /// Complete dossier of one user for support and moderation workflows.
 abstract class AdminUserDossier
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   AdminUserDossier._({
     this.profile,
     this.email,
@@ -29,53 +31,56 @@ abstract class AdminUserDossier
   });
 
   factory AdminUserDossier({
-    _i2.UserProfile? profile,
+    _igw681aa.UserProfile? profile,
     String? email,
-    required _i3.AdminAuthStatus authStatus,
-    required List<_i4.AdminMembershipInfo> memberships,
-    _i5.AdminRole? globalRole,
+    required _ipkga77r.AdminAuthStatus authStatus,
+    required List<_ir926tki.AdminMembershipInfo> memberships,
+    _isyiaiss.AdminRole? globalRole,
   }) = _AdminUserDossierImpl;
 
   factory AdminUserDossier.fromJson(Map<String, dynamic> jsonSerialization) {
     return AdminUserDossier(
       profile: jsonSerialization['profile'] == null
           ? null
-          : _i6.Protocol().deserialize<_i2.UserProfile>(
+          : _iipbhyvd.Protocol().deserialize<_igw681aa.UserProfile>(
               jsonSerialization['profile'],
             ),
       email: jsonSerialization['email'] as String?,
-      authStatus: _i6.Protocol().deserialize<_i3.AdminAuthStatus>(
+      authStatus: _iipbhyvd.Protocol().deserialize<_ipkga77r.AdminAuthStatus>(
         jsonSerialization['authStatus'],
       ),
-      memberships: _i6.Protocol().deserialize<List<_i4.AdminMembershipInfo>>(
-        jsonSerialization['memberships'],
-      ),
+      memberships: _iipbhyvd.Protocol()
+          .deserialize<List<_ir926tki.AdminMembershipInfo>>(
+            jsonSerialization['memberships'],
+          ),
       globalRole: jsonSerialization['globalRole'] == null
           ? null
-          : _i5.AdminRole.fromJson((jsonSerialization['globalRole'] as String)),
+          : _isyiaiss.AdminRole.fromJson(
+              (jsonSerialization['globalRole'] as String),
+            ),
     );
   }
 
-  _i2.UserProfile? profile;
+  _igw681aa.UserProfile? profile;
 
   String? email;
 
-  _i3.AdminAuthStatus authStatus;
+  _ipkga77r.AdminAuthStatus authStatus;
 
-  List<_i4.AdminMembershipInfo> memberships;
+  List<_ir926tki.AdminMembershipInfo> memberships;
 
   /// Global role from the `admin_user` allowlist (`null` = regular user).
-  _i5.AdminRole? globalRole;
+  _isyiaiss.AdminRole? globalRole;
 
   /// Returns a shallow copy of this [AdminUserDossier]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   AdminUserDossier copyWith({
-    _i2.UserProfile? profile,
+    _igw681aa.UserProfile? profile,
     String? email,
-    _i3.AdminAuthStatus? authStatus,
-    List<_i4.AdminMembershipInfo>? memberships,
-    _i5.AdminRole? globalRole,
+    _ipkga77r.AdminAuthStatus? authStatus,
+    List<_ir926tki.AdminMembershipInfo>? memberships,
+    _isyiaiss.AdminRole? globalRole,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -105,7 +110,7 @@ abstract class AdminUserDossier
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -113,11 +118,11 @@ class _Undefined {}
 
 class _AdminUserDossierImpl extends AdminUserDossier {
   _AdminUserDossierImpl({
-    _i2.UserProfile? profile,
+    _igw681aa.UserProfile? profile,
     String? email,
-    required _i3.AdminAuthStatus authStatus,
-    required List<_i4.AdminMembershipInfo> memberships,
-    _i5.AdminRole? globalRole,
+    required _ipkga77r.AdminAuthStatus authStatus,
+    required List<_ir926tki.AdminMembershipInfo> memberships,
+    _isyiaiss.AdminRole? globalRole,
   }) : super._(
          profile: profile,
          email: email,
@@ -128,22 +133,26 @@ class _AdminUserDossierImpl extends AdminUserDossier {
 
   /// Returns a shallow copy of this [AdminUserDossier]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   AdminUserDossier copyWith({
     Object? profile = _Undefined,
     Object? email = _Undefined,
-    _i3.AdminAuthStatus? authStatus,
-    List<_i4.AdminMembershipInfo>? memberships,
+    _ipkga77r.AdminAuthStatus? authStatus,
+    List<_ir926tki.AdminMembershipInfo>? memberships,
     Object? globalRole = _Undefined,
   }) {
     return AdminUserDossier(
-      profile: profile is _i2.UserProfile? ? profile : this.profile?.copyWith(),
+      profile: profile is _igw681aa.UserProfile?
+          ? profile
+          : this.profile?.copyWith(),
       email: email is String? ? email : this.email,
       authStatus: authStatus ?? this.authStatus.copyWith(),
       memberships:
           memberships ?? this.memberships.map((e0) => e0.copyWith()).toList(),
-      globalRole: globalRole is _i5.AdminRole? ? globalRole : this.globalRole,
+      globalRole: globalRole is _isyiaiss.AdminRole?
+          ? globalRole
+          : this.globalRole,
     );
   }
 }

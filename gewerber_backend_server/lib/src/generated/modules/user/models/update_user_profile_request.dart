@@ -10,12 +10,13 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/business/models/locale.dart' as _i2;
-import '../../../modules/user/models/app_theme.dart' as _i3;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/business/models/locale.dart' as _ie5v8zdc;
+import '../../../modules/user/models/app_theme.dart' as _ipe4su3u;
 
 abstract class UpdateUserProfileRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   UpdateUserProfileRequest._({
     this.displayName,
     required this.locale,
@@ -25,9 +26,9 @@ abstract class UpdateUserProfileRequest
 
   factory UpdateUserProfileRequest({
     String? displayName,
-    required _i2.Locale locale,
+    required _ie5v8zdc.Locale locale,
     String? timeZone,
-    required _i3.AppTheme themeMode,
+    required _ipe4su3u.AppTheme themeMode,
   }) = _UpdateUserProfileRequestImpl;
 
   factory UpdateUserProfileRequest.fromJson(
@@ -35,9 +36,11 @@ abstract class UpdateUserProfileRequest
   ) {
     return UpdateUserProfileRequest(
       displayName: jsonSerialization['displayName'] as String?,
-      locale: _i2.Locale.fromJson((jsonSerialization['locale'] as String)),
+      locale: _ie5v8zdc.Locale.fromJson(
+        (jsonSerialization['locale'] as String),
+      ),
       timeZone: jsonSerialization['timeZone'] as String?,
-      themeMode: _i3.AppTheme.fromJson(
+      themeMode: _ipe4su3u.AppTheme.fromJson(
         (jsonSerialization['themeMode'] as String),
       ),
     );
@@ -45,20 +48,20 @@ abstract class UpdateUserProfileRequest
 
   String? displayName;
 
-  _i2.Locale locale;
+  _ie5v8zdc.Locale locale;
 
   String? timeZone;
 
-  _i3.AppTheme themeMode;
+  _ipe4su3u.AppTheme themeMode;
 
   /// Returns a shallow copy of this [UpdateUserProfileRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   UpdateUserProfileRequest copyWith({
     String? displayName,
-    _i2.Locale? locale,
+    _ie5v8zdc.Locale? locale,
     String? timeZone,
-    _i3.AppTheme? themeMode,
+    _ipe4su3u.AppTheme? themeMode,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -84,7 +87,7 @@ abstract class UpdateUserProfileRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -93,9 +96,9 @@ class _Undefined {}
 class _UpdateUserProfileRequestImpl extends UpdateUserProfileRequest {
   _UpdateUserProfileRequestImpl({
     String? displayName,
-    required _i2.Locale locale,
+    required _ie5v8zdc.Locale locale,
     String? timeZone,
-    required _i3.AppTheme themeMode,
+    required _ipe4su3u.AppTheme themeMode,
   }) : super._(
          displayName: displayName,
          locale: locale,
@@ -105,13 +108,13 @@ class _UpdateUserProfileRequestImpl extends UpdateUserProfileRequest {
 
   /// Returns a shallow copy of this [UpdateUserProfileRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   UpdateUserProfileRequest copyWith({
     Object? displayName = _Undefined,
-    _i2.Locale? locale,
+    _ie5v8zdc.Locale? locale,
     Object? timeZone = _Undefined,
-    _i3.AppTheme? themeMode,
+    _ipe4su3u.AppTheme? themeMode,
   }) {
     return UpdateUserProfileRequest(
       displayName: displayName is String? ? displayName : this.displayName,

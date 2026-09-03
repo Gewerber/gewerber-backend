@@ -10,11 +10,13 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/invoicing/models/recurrence_interval.dart' as _i2;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/invoicing/models/recurrence_interval.dart'
+    as _i2jlpxj3;
 
 abstract class UpdateRecurringScheduleRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   UpdateRecurringScheduleRequest._({
     required this.invoiceId,
     this.interval,
@@ -28,7 +30,7 @@ abstract class UpdateRecurringScheduleRequest
 
   factory UpdateRecurringScheduleRequest({
     required int invoiceId,
-    _i2.RecurrenceInterval? interval,
+    _i2jlpxj3.RecurrenceInterval? interval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
@@ -43,17 +45,17 @@ abstract class UpdateRecurringScheduleRequest
       invoiceId: jsonSerialization['invoiceId'] as int,
       interval: jsonSerialization['interval'] == null
           ? null
-          : _i2.RecurrenceInterval.fromJson(
+          : _i2jlpxj3.RecurrenceInterval.fromJson(
               (jsonSerialization['interval'] as String),
             ),
       nextRecurrenceDate: jsonSerialization['nextRecurrenceDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['nextRecurrenceDate'],
             ),
       recurrenceEndDate: jsonSerialization['recurrenceEndDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['recurrenceEndDate'],
             ),
       recurrenceMaxOccurrences:
@@ -61,12 +63,12 @@ abstract class UpdateRecurringScheduleRequest
       clearRecurrenceEndDate:
           jsonSerialization['clearRecurrenceEndDate'] == null
           ? null
-          : _i1.BoolJsonExtension.fromJson(
+          : _is.BoolJsonExtension.fromJson(
               jsonSerialization['clearRecurrenceEndDate'],
             ),
       clearMaxOccurrences: jsonSerialization['clearMaxOccurrences'] == null
           ? null
-          : _i1.BoolJsonExtension.fromJson(
+          : _is.BoolJsonExtension.fromJson(
               jsonSerialization['clearMaxOccurrences'],
             ),
     );
@@ -74,7 +76,7 @@ abstract class UpdateRecurringScheduleRequest
 
   int invoiceId;
 
-  _i2.RecurrenceInterval? interval;
+  _i2jlpxj3.RecurrenceInterval? interval;
 
   DateTime? nextRecurrenceDate;
 
@@ -91,10 +93,10 @@ abstract class UpdateRecurringScheduleRequest
 
   /// Returns a shallow copy of this [UpdateRecurringScheduleRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   UpdateRecurringScheduleRequest copyWith({
     int? invoiceId,
-    _i2.RecurrenceInterval? interval,
+    _i2jlpxj3.RecurrenceInterval? interval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
@@ -137,7 +139,7 @@ abstract class UpdateRecurringScheduleRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -147,7 +149,7 @@ class _UpdateRecurringScheduleRequestImpl
     extends UpdateRecurringScheduleRequest {
   _UpdateRecurringScheduleRequestImpl({
     required int invoiceId,
-    _i2.RecurrenceInterval? interval,
+    _i2jlpxj3.RecurrenceInterval? interval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
@@ -165,7 +167,7 @@ class _UpdateRecurringScheduleRequestImpl
 
   /// Returns a shallow copy of this [UpdateRecurringScheduleRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   UpdateRecurringScheduleRequest copyWith({
     int? invoiceId,
@@ -178,7 +180,9 @@ class _UpdateRecurringScheduleRequestImpl
   }) {
     return UpdateRecurringScheduleRequest(
       invoiceId: invoiceId ?? this.invoiceId,
-      interval: interval is _i2.RecurrenceInterval? ? interval : this.interval,
+      interval: interval is _i2jlpxj3.RecurrenceInterval?
+          ? interval
+          : this.interval,
       nextRecurrenceDate: nextRecurrenceDate is DateTime?
           ? nextRecurrenceDate
           : this.nextRecurrenceDate,

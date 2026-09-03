@@ -10,11 +10,12 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/business/models/rounding_mode.dart' as _i2;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/business/models/rounding_mode.dart' as _ib9gbuqh;
 
 abstract class BusinessSettings
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   BusinessSettings._({
     this.id,
     required this.businessId,
@@ -22,13 +23,13 @@ abstract class BusinessSettings
     this.invoiceNumberPrefix,
     bool? invoiceNumberIncludeYear,
     int? invoiceNumberMinDigits,
-    _i2.RoundingMode? roundingMode,
+    _ib9gbuqh.RoundingMode? roundingMode,
     int? roundingGranularityMinutes,
     DateTime? updatedAt,
   }) : paymentTermsDays = paymentTermsDays ?? 14,
        invoiceNumberIncludeYear = invoiceNumberIncludeYear ?? true,
        invoiceNumberMinDigits = invoiceNumberMinDigits ?? 4,
-       roundingMode = roundingMode ?? _i2.RoundingMode.none,
+       roundingMode = roundingMode ?? _ib9gbuqh.RoundingMode.none,
        roundingGranularityMinutes = roundingGranularityMinutes ?? 1,
        updatedAt = updatedAt ?? DateTime.now();
 
@@ -39,7 +40,7 @@ abstract class BusinessSettings
     String? invoiceNumberPrefix,
     bool? invoiceNumberIncludeYear,
     int? invoiceNumberMinDigits,
-    _i2.RoundingMode? roundingMode,
+    _ib9gbuqh.RoundingMode? roundingMode,
     int? roundingGranularityMinutes,
     DateTime? updatedAt,
   }) = _BusinessSettingsImpl;
@@ -53,21 +54,21 @@ abstract class BusinessSettings
       invoiceNumberIncludeYear:
           jsonSerialization['invoiceNumberIncludeYear'] == null
           ? null
-          : _i1.BoolJsonExtension.fromJson(
+          : _is.BoolJsonExtension.fromJson(
               jsonSerialization['invoiceNumberIncludeYear'],
             ),
       invoiceNumberMinDigits:
           jsonSerialization['invoiceNumberMinDigits'] as int?,
       roundingMode: jsonSerialization['roundingMode'] == null
           ? null
-          : _i2.RoundingMode.fromJson(
+          : _ib9gbuqh.RoundingMode.fromJson(
               (jsonSerialization['roundingMode'] as String),
             ),
       roundingGranularityMinutes:
           jsonSerialization['roundingGranularityMinutes'] as int?,
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -88,18 +89,18 @@ abstract class BusinessSettings
 
   int invoiceNumberMinDigits;
 
-  _i2.RoundingMode roundingMode;
+  _ib9gbuqh.RoundingMode roundingMode;
 
   int roundingGranularityMinutes;
 
   DateTime updatedAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [BusinessSettings]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   BusinessSettings copyWith({
     int? id,
     int? businessId,
@@ -107,7 +108,7 @@ abstract class BusinessSettings
     String? invoiceNumberPrefix,
     bool? invoiceNumberIncludeYear,
     int? invoiceNumberMinDigits,
-    _i2.RoundingMode? roundingMode,
+    _ib9gbuqh.RoundingMode? roundingMode,
     int? roundingGranularityMinutes,
     DateTime? updatedAt,
   });
@@ -150,11 +151,11 @@ abstract class BusinessSettings
   }
 
   static BusinessSettingsIncludeList includeList({
-    _i1.WhereExpressionBuilder<BusinessSettingsTable>? where,
+    _is.WhereExpressionBuilder<BusinessSettingsTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<BusinessSettingsTable>? orderBy,
-    _i1.OrderByListBuilder<BusinessSettingsTable>? orderByList,
+    _is.OrderByBuilder<BusinessSettingsTable>? orderBy,
+    _is.OrderByListBuilder<BusinessSettingsTable>? orderByList,
     BusinessSettingsInclude? include,
   }) {
     return BusinessSettingsIncludeList._(
@@ -169,7 +170,7 @@ abstract class BusinessSettings
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -183,7 +184,7 @@ class _BusinessSettingsImpl extends BusinessSettings {
     String? invoiceNumberPrefix,
     bool? invoiceNumberIncludeYear,
     int? invoiceNumberMinDigits,
-    _i2.RoundingMode? roundingMode,
+    _ib9gbuqh.RoundingMode? roundingMode,
     int? roundingGranularityMinutes,
     DateTime? updatedAt,
   }) : super._(
@@ -200,7 +201,7 @@ class _BusinessSettingsImpl extends BusinessSettings {
 
   /// Returns a shallow copy of this [BusinessSettings]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   BusinessSettings copyWith({
     Object? id = _Undefined,
@@ -209,7 +210,7 @@ class _BusinessSettingsImpl extends BusinessSettings {
     Object? invoiceNumberPrefix = _Undefined,
     bool? invoiceNumberIncludeYear,
     int? invoiceNumberMinDigits,
-    _i2.RoundingMode? roundingMode,
+    _ib9gbuqh.RoundingMode? roundingMode,
     int? roundingGranularityMinutes,
     DateTime? updatedAt,
   }) {
@@ -233,96 +234,96 @@ class _BusinessSettingsImpl extends BusinessSettings {
 }
 
 class BusinessSettingsUpdateTable
-    extends _i1.UpdateTable<BusinessSettingsTable> {
+    extends _is.UpdateTable<BusinessSettingsTable> {
   BusinessSettingsUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> businessId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> businessId(int value) => _is.ColumnValue(
     table.businessId,
     value,
   );
 
-  _i1.ColumnValue<int, int> paymentTermsDays(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> paymentTermsDays(int value) => _is.ColumnValue(
     table.paymentTermsDays,
     value,
   );
 
-  _i1.ColumnValue<String, String> invoiceNumberPrefix(String? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<String, String> invoiceNumberPrefix(String? value) =>
+      _is.ColumnValue(
         table.invoiceNumberPrefix,
         value,
       );
 
-  _i1.ColumnValue<bool, bool> invoiceNumberIncludeYear(bool value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<bool, bool> invoiceNumberIncludeYear(bool value) =>
+      _is.ColumnValue(
         table.invoiceNumberIncludeYear,
         value,
       );
 
-  _i1.ColumnValue<int, int> invoiceNumberMinDigits(int value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<int, int> invoiceNumberMinDigits(int value) =>
+      _is.ColumnValue(
         table.invoiceNumberMinDigits,
         value,
       );
 
-  _i1.ColumnValue<_i2.RoundingMode, _i2.RoundingMode> roundingMode(
-    _i2.RoundingMode value,
-  ) => _i1.ColumnValue(
+  _is.ColumnValue<_ib9gbuqh.RoundingMode, _ib9gbuqh.RoundingMode> roundingMode(
+    _ib9gbuqh.RoundingMode value,
+  ) => _is.ColumnValue(
     table.roundingMode,
     value,
   );
 
-  _i1.ColumnValue<int, int> roundingGranularityMinutes(int value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<int, int> roundingGranularityMinutes(int value) =>
+      _is.ColumnValue(
         table.roundingGranularityMinutes,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
+      _is.ColumnValue(
         table.updatedAt,
         value,
       );
 }
 
-class BusinessSettingsTable extends _i1.Table<int?> {
+class BusinessSettingsTable extends _is.Table<int?> {
   BusinessSettingsTable({super.tableRelation})
     : super(tableName: 'business_settings') {
     updateTable = BusinessSettingsUpdateTable(this);
-    businessId = _i1.ColumnInt(
+    businessId = _is.ColumnInt(
       'businessId',
       this,
     );
-    paymentTermsDays = _i1.ColumnInt(
+    paymentTermsDays = _is.ColumnInt(
       'paymentTermsDays',
       this,
       hasDefault: true,
     );
-    invoiceNumberPrefix = _i1.ColumnString(
+    invoiceNumberPrefix = _is.ColumnString(
       'invoiceNumberPrefix',
       this,
     );
-    invoiceNumberIncludeYear = _i1.ColumnBool(
+    invoiceNumberIncludeYear = _is.ColumnBool(
       'invoiceNumberIncludeYear',
       this,
       hasDefault: true,
     );
-    invoiceNumberMinDigits = _i1.ColumnInt(
+    invoiceNumberMinDigits = _is.ColumnInt(
       'invoiceNumberMinDigits',
       this,
       hasDefault: true,
     );
-    roundingMode = _i1.ColumnEnum(
+    roundingMode = _is.ColumnEnum(
       'roundingMode',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    roundingGranularityMinutes = _i1.ColumnInt(
+    roundingGranularityMinutes = _is.ColumnInt(
       'roundingGranularityMinutes',
       this,
       hasDefault: true,
     );
-    updatedAt = _i1.ColumnDateTime(
+    updatedAt = _is.ColumnDateTime(
       'updatedAt',
       this,
       hasDefault: true,
@@ -331,24 +332,24 @@ class BusinessSettingsTable extends _i1.Table<int?> {
 
   late final BusinessSettingsUpdateTable updateTable;
 
-  late final _i1.ColumnInt businessId;
+  late final _is.ColumnInt businessId;
 
-  late final _i1.ColumnInt paymentTermsDays;
+  late final _is.ColumnInt paymentTermsDays;
 
-  late final _i1.ColumnString invoiceNumberPrefix;
+  late final _is.ColumnString invoiceNumberPrefix;
 
-  late final _i1.ColumnBool invoiceNumberIncludeYear;
+  late final _is.ColumnBool invoiceNumberIncludeYear;
 
-  late final _i1.ColumnInt invoiceNumberMinDigits;
+  late final _is.ColumnInt invoiceNumberMinDigits;
 
-  late final _i1.ColumnEnum<_i2.RoundingMode> roundingMode;
+  late final _is.ColumnEnum<_ib9gbuqh.RoundingMode> roundingMode;
 
-  late final _i1.ColumnInt roundingGranularityMinutes;
+  late final _is.ColumnInt roundingGranularityMinutes;
 
-  late final _i1.ColumnDateTime updatedAt;
+  late final _is.ColumnDateTime updatedAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     businessId,
     paymentTermsDays,
@@ -361,19 +362,19 @@ class BusinessSettingsTable extends _i1.Table<int?> {
   ];
 }
 
-class BusinessSettingsInclude extends _i1.IncludeObject {
+class BusinessSettingsInclude extends _is.IncludeObject {
   BusinessSettingsInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => BusinessSettings.t;
+  _is.Table<int?> get table => BusinessSettings.t;
 }
 
-class BusinessSettingsIncludeList extends _i1.IncludeList {
+class BusinessSettingsIncludeList extends _is.IncludeList {
   BusinessSettingsIncludeList._({
-    _i1.WhereExpressionBuilder<BusinessSettingsTable>? where,
+    _is.WhereExpressionBuilder<BusinessSettingsTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -384,10 +385,10 @@ class BusinessSettingsIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => BusinessSettings.t;
+  _is.Table<int?> get table => BusinessSettings.t;
 }
 
 class BusinessSettingsRepository {
@@ -416,15 +417,15 @@ class BusinessSettingsRepository {
   /// );
   /// ```
   Future<List<BusinessSettings>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<BusinessSettingsTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<BusinessSettingsTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<BusinessSettingsTable>? orderBy,
-    _i1.OrderByListBuilder<BusinessSettingsTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<BusinessSettingsTable>? orderBy,
+    _is.OrderByListBuilder<BusinessSettingsTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<BusinessSettings>(
       where: where?.call(BusinessSettings.t),
@@ -456,14 +457,14 @@ class BusinessSettingsRepository {
   /// );
   /// ```
   Future<BusinessSettings?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<BusinessSettingsTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<BusinessSettingsTable>? where,
     int? offset,
-    _i1.OrderByBuilder<BusinessSettingsTable>? orderBy,
-    _i1.OrderByListBuilder<BusinessSettingsTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<BusinessSettingsTable>? orderBy,
+    _is.OrderByListBuilder<BusinessSettingsTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<BusinessSettings>(
       where: where?.call(BusinessSettings.t),
@@ -478,11 +479,11 @@ class BusinessSettingsRepository {
 
   /// Finds a single [BusinessSettings] by its [id] or null if no such row exists.
   Future<BusinessSettings?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<BusinessSettings>(
       id,
@@ -507,9 +508,9 @@ class BusinessSettingsRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<BusinessSettings>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<BusinessSettings> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -525,9 +526,9 @@ class BusinessSettingsRepository {
   ///
   /// The returned [BusinessSettings] will have its `id` field set.
   Future<BusinessSettings> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     BusinessSettings row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<BusinessSettings>(
       row,
@@ -556,12 +557,12 @@ class BusinessSettingsRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<BusinessSettings>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<BusinessSettings> rows, {
-    required _i1.ColumnSelections<BusinessSettingsTable> conflictColumns,
-    _i1.ColumnSelections<BusinessSettingsTable>? updateColumns,
-    _i1.WhereExpressionBuilder<BusinessSettingsTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<BusinessSettingsTable> conflictColumns,
+    _is.ColumnSelections<BusinessSettingsTable>? updateColumns,
+    _is.WhereExpressionBuilder<BusinessSettingsTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<BusinessSettings>(
@@ -588,12 +589,12 @@ class BusinessSettingsRepository {
   ///
   /// The returned [BusinessSettings] will have its `id` field set.
   Future<BusinessSettings?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     BusinessSettings row, {
-    required _i1.ColumnSelections<BusinessSettingsTable> conflictColumns,
-    _i1.ColumnSelections<BusinessSettingsTable>? updateColumns,
-    _i1.WhereExpressionBuilder<BusinessSettingsTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<BusinessSettingsTable> conflictColumns,
+    _is.ColumnSelections<BusinessSettingsTable>? updateColumns,
+    _is.WhereExpressionBuilder<BusinessSettingsTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<BusinessSettings>(
       row,
@@ -614,10 +615,10 @@ class BusinessSettingsRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<BusinessSettings>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<BusinessSettings> rows, {
-    _i1.ColumnSelections<BusinessSettingsTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<BusinessSettingsTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<BusinessSettings>(
@@ -632,10 +633,10 @@ class BusinessSettingsRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<BusinessSettings> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     BusinessSettings row, {
-    _i1.ColumnSelections<BusinessSettingsTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<BusinessSettingsTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<BusinessSettings>(
       row,
@@ -647,11 +648,11 @@ class BusinessSettingsRepository {
   /// Updates a single [BusinessSettings] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<BusinessSettings?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<BusinessSettingsUpdateTable>
+    required _is.ColumnValueListBuilder<BusinessSettingsUpdateTable>
     columnValues,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<BusinessSettings>(
       id,
@@ -667,15 +668,15 @@ class BusinessSettingsRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<BusinessSettings>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<BusinessSettingsUpdateTable>
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<BusinessSettingsUpdateTable>
     columnValues,
-    required _i1.WhereExpressionBuilder<BusinessSettingsTable> where,
+    required _is.WhereExpressionBuilder<BusinessSettingsTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<BusinessSettingsTable>? orderBy,
-    _i1.OrderByListBuilder<BusinessSettingsTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<BusinessSettingsTable>? orderBy,
+    _is.OrderByListBuilder<BusinessSettingsTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<BusinessSettings>(
@@ -702,11 +703,11 @@ class BusinessSettingsRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<BusinessSettings>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<BusinessSettings> rows, {
-    _i1.OrderByBuilder<BusinessSettingsTable>? orderBy,
-    _i1.OrderByListBuilder<BusinessSettingsTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<BusinessSettingsTable>? orderBy,
+    _is.OrderByListBuilder<BusinessSettingsTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<BusinessSettings>(
@@ -720,9 +721,9 @@ class BusinessSettingsRepository {
 
   /// Deletes a single [BusinessSettings].
   Future<BusinessSettings> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     BusinessSettings row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<BusinessSettings>(
       row,
@@ -739,11 +740,11 @@ class BusinessSettingsRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<BusinessSettings>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<BusinessSettingsTable> where,
-    _i1.OrderByBuilder<BusinessSettingsTable>? orderBy,
-    _i1.OrderByListBuilder<BusinessSettingsTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<BusinessSettingsTable> where,
+    _is.OrderByBuilder<BusinessSettingsTable>? orderBy,
+    _is.OrderByListBuilder<BusinessSettingsTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<BusinessSettings>(
@@ -758,10 +759,10 @@ class BusinessSettingsRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<BusinessSettingsTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<BusinessSettingsTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<BusinessSettings>(
       where: where?.call(BusinessSettings.t),
@@ -772,11 +773,11 @@ class BusinessSettingsRepository {
 
   /// Acquires row-level locks on [BusinessSettings] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<BusinessSettingsTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<BusinessSettingsTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<BusinessSettings>(
       where: where(BusinessSettings.t),

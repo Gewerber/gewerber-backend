@@ -10,34 +10,35 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/business/models/locale.dart' as _i2;
-import '../../../modules/user/models/app_theme.dart' as _i3;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/business/models/locale.dart' as _ie5v8zdc;
+import '../../../modules/user/models/app_theme.dart' as _ipe4su3u;
 
 abstract class UserProfile
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   UserProfile._({
     this.id,
     required this.userId,
     this.displayName,
-    _i2.Locale? locale,
+    _ie5v8zdc.Locale? locale,
     this.timeZone,
-    _i3.AppTheme? themeMode,
+    _ipe4su3u.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
     this.deletedAt,
-  }) : locale = locale ?? _i2.Locale.de,
-       themeMode = themeMode ?? _i3.AppTheme.system,
+  }) : locale = locale ?? _ie5v8zdc.Locale.de,
+       themeMode = themeMode ?? _ipe4su3u.AppTheme.system,
        createdAt = createdAt ?? DateTime.now(),
        updatedAt = updatedAt ?? DateTime.now();
 
   factory UserProfile({
     int? id,
-    required _i1.UuidValue userId,
+    required _isc.UuidValue userId,
     String? displayName,
-    _i2.Locale? locale,
+    _ie5v8zdc.Locale? locale,
     String? timeZone,
-    _i3.AppTheme? themeMode,
+    _ipe4su3u.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? deletedAt,
@@ -46,24 +47,26 @@ abstract class UserProfile
   factory UserProfile.fromJson(Map<String, dynamic> jsonSerialization) {
     return UserProfile(
       id: jsonSerialization['id'] as int?,
-      userId: _i1.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
+      userId: _isc.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
       displayName: jsonSerialization['displayName'] as String?,
       locale: jsonSerialization['locale'] == null
           ? null
-          : _i2.Locale.fromJson((jsonSerialization['locale'] as String)),
+          : _ie5v8zdc.Locale.fromJson((jsonSerialization['locale'] as String)),
       timeZone: jsonSerialization['timeZone'] as String?,
       themeMode: jsonSerialization['themeMode'] == null
           ? null
-          : _i3.AppTheme.fromJson((jsonSerialization['themeMode'] as String)),
+          : _ipe4su3u.AppTheme.fromJson(
+              (jsonSerialization['themeMode'] as String),
+            ),
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
       deletedAt: jsonSerialization['deletedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['deletedAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['deletedAt']),
     );
   }
 
@@ -72,15 +75,15 @@ abstract class UserProfile
   /// the id will be null.
   int? id;
 
-  _i1.UuidValue userId;
+  _isc.UuidValue userId;
 
   String? displayName;
 
-  _i2.Locale locale;
+  _ie5v8zdc.Locale locale;
 
   String? timeZone;
 
-  _i3.AppTheme themeMode;
+  _ipe4su3u.AppTheme themeMode;
 
   DateTime createdAt;
 
@@ -93,14 +96,14 @@ abstract class UserProfile
 
   /// Returns a shallow copy of this [UserProfile]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   UserProfile copyWith({
     int? id,
-    _i1.UuidValue? userId,
+    _isc.UuidValue? userId,
     String? displayName,
-    _i2.Locale? locale,
+    _ie5v8zdc.Locale? locale,
     String? timeZone,
-    _i3.AppTheme? themeMode,
+    _ipe4su3u.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? deletedAt,
@@ -139,7 +142,7 @@ abstract class UserProfile
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -148,11 +151,11 @@ class _Undefined {}
 class _UserProfileImpl extends UserProfile {
   _UserProfileImpl({
     int? id,
-    required _i1.UuidValue userId,
+    required _isc.UuidValue userId,
     String? displayName,
-    _i2.Locale? locale,
+    _ie5v8zdc.Locale? locale,
     String? timeZone,
-    _i3.AppTheme? themeMode,
+    _ipe4su3u.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? deletedAt,
@@ -170,15 +173,15 @@ class _UserProfileImpl extends UserProfile {
 
   /// Returns a shallow copy of this [UserProfile]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   UserProfile copyWith({
     Object? id = _Undefined,
-    _i1.UuidValue? userId,
+    _isc.UuidValue? userId,
     Object? displayName = _Undefined,
-    _i2.Locale? locale,
+    _ie5v8zdc.Locale? locale,
     Object? timeZone = _Undefined,
-    _i3.AppTheme? themeMode,
+    _ipe4su3u.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
     Object? deletedAt = _Undefined,

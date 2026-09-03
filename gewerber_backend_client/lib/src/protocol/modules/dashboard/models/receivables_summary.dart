@@ -10,13 +10,15 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/dashboard/models/debtor_summary.dart' as _i2;
-import '../../../modules/invoicing/models/invoice.dart' as _i3;
-import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i4;
+
+import 'package:gewerber_backend_client/src/protocol/protocol.dart'
+    as _iipbhyvd;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/dashboard/models/debtor_summary.dart' as _iu6gdls1;
+import '../../../modules/invoicing/models/invoice.dart' as _i2lykh97;
 
 abstract class ReceivablesSummary
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   ReceivablesSummary._({
     required this.openInvoicesCount,
     required this.openTotalCents,
@@ -31,8 +33,8 @@ abstract class ReceivablesSummary
     required int openTotalCents,
     required int overdueCount,
     required int overdueTotalCents,
-    required List<_i2.DebtorSummary> debtors,
-    required List<_i3.Invoice> overdueInvoices,
+    required List<_iu6gdls1.DebtorSummary> debtors,
+    required List<_i2lykh97.Invoice> overdueInvoices,
   }) = _ReceivablesSummaryImpl;
 
   factory ReceivablesSummary.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -41,12 +43,13 @@ abstract class ReceivablesSummary
       openTotalCents: jsonSerialization['openTotalCents'] as int,
       overdueCount: jsonSerialization['overdueCount'] as int,
       overdueTotalCents: jsonSerialization['overdueTotalCents'] as int,
-      debtors: _i4.Protocol().deserialize<List<_i2.DebtorSummary>>(
+      debtors: _iipbhyvd.Protocol().deserialize<List<_iu6gdls1.DebtorSummary>>(
         jsonSerialization['debtors'],
       ),
-      overdueInvoices: _i4.Protocol().deserialize<List<_i3.Invoice>>(
-        jsonSerialization['overdueInvoices'],
-      ),
+      overdueInvoices: _iipbhyvd.Protocol()
+          .deserialize<List<_i2lykh97.Invoice>>(
+            jsonSerialization['overdueInvoices'],
+          ),
     );
   }
 
@@ -58,20 +61,20 @@ abstract class ReceivablesSummary
 
   int overdueTotalCents;
 
-  List<_i2.DebtorSummary> debtors;
+  List<_iu6gdls1.DebtorSummary> debtors;
 
-  List<_i3.Invoice> overdueInvoices;
+  List<_i2lykh97.Invoice> overdueInvoices;
 
   /// Returns a shallow copy of this [ReceivablesSummary]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   ReceivablesSummary copyWith({
     int? openInvoicesCount,
     int? openTotalCents,
     int? overdueCount,
     int? overdueTotalCents,
-    List<_i2.DebtorSummary>? debtors,
-    List<_i3.Invoice>? overdueInvoices,
+    List<_iu6gdls1.DebtorSummary>? debtors,
+    List<_i2lykh97.Invoice>? overdueInvoices,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -103,7 +106,7 @@ abstract class ReceivablesSummary
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -113,8 +116,8 @@ class _ReceivablesSummaryImpl extends ReceivablesSummary {
     required int openTotalCents,
     required int overdueCount,
     required int overdueTotalCents,
-    required List<_i2.DebtorSummary> debtors,
-    required List<_i3.Invoice> overdueInvoices,
+    required List<_iu6gdls1.DebtorSummary> debtors,
+    required List<_i2lykh97.Invoice> overdueInvoices,
   }) : super._(
          openInvoicesCount: openInvoicesCount,
          openTotalCents: openTotalCents,
@@ -126,15 +129,15 @@ class _ReceivablesSummaryImpl extends ReceivablesSummary {
 
   /// Returns a shallow copy of this [ReceivablesSummary]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   ReceivablesSummary copyWith({
     int? openInvoicesCount,
     int? openTotalCents,
     int? overdueCount,
     int? overdueTotalCents,
-    List<_i2.DebtorSummary>? debtors,
-    List<_i3.Invoice>? overdueInvoices,
+    List<_iu6gdls1.DebtorSummary>? debtors,
+    List<_i2lykh97.Invoice>? overdueInvoices,
   }) {
     return ReceivablesSummary(
       openInvoicesCount: openInvoicesCount ?? this.openInvoicesCount,

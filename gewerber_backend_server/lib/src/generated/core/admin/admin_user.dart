@@ -10,8 +10,9 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../core/admin/admin_role.dart' as _i2;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../core/admin/admin_role.dart' as _iagw83cd;
 
 /// Global admin allowlist for the platform administration API (used by the
 /// `gewerber-mcp` server acting as an AI admin/moderator).
@@ -21,37 +22,37 @@ import '../../core/admin/admin_role.dart' as _i2;
 /// take effect after the next token refresh, allowlist changes apply
 /// immediately.
 abstract class AdminUser
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   AdminUser._({
     this.id,
     required this.userId,
-    _i2.AdminRole? role,
+    _iagw83cd.AdminRole? role,
     DateTime? createdAt,
     this.createdBy,
-  }) : role = role ?? _i2.AdminRole.moderator,
+  }) : role = role ?? _iagw83cd.AdminRole.moderator,
        createdAt = createdAt ?? DateTime.now();
 
   factory AdminUser({
     int? id,
-    required _i1.UuidValue userId,
-    _i2.AdminRole? role,
+    required _is.UuidValue userId,
+    _iagw83cd.AdminRole? role,
     DateTime? createdAt,
-    _i1.UuidValue? createdBy,
+    _is.UuidValue? createdBy,
   }) = _AdminUserImpl;
 
   factory AdminUser.fromJson(Map<String, dynamic> jsonSerialization) {
     return AdminUser(
       id: jsonSerialization['id'] as int?,
-      userId: _i1.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
+      userId: _is.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
       role: jsonSerialization['role'] == null
           ? null
-          : _i2.AdminRole.fromJson((jsonSerialization['role'] as String)),
+          : _iagw83cd.AdminRole.fromJson((jsonSerialization['role'] as String)),
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       createdBy: jsonSerialization['createdBy'] == null
           ? null
-          : _i1.UuidValueJsonExtension.fromJson(jsonSerialization['createdBy']),
+          : _is.UuidValueJsonExtension.fromJson(jsonSerialization['createdBy']),
     );
   }
 
@@ -66,28 +67,28 @@ abstract class AdminUser
   /// `session.authUserId`). Deliberately no FK: the row references a table
   /// owned by the external `serverpod_auth_core` module, and coupling our
   /// migrations to its schema would make upgrades fragile.
-  _i1.UuidValue userId;
+  _is.UuidValue userId;
 
-  _i2.AdminRole role;
+  _iagw83cd.AdminRole role;
 
   DateTime createdAt;
 
   /// The `AuthUser.id` of the admin who granted this role (`null` for the
   /// bootstrap admin created by `tool/grant_admin.sql`).
-  _i1.UuidValue? createdBy;
+  _is.UuidValue? createdBy;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [AdminUser]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   AdminUser copyWith({
     int? id,
-    _i1.UuidValue? userId,
-    _i2.AdminRole? role,
+    _is.UuidValue? userId,
+    _iagw83cd.AdminRole? role,
     DateTime? createdAt,
-    _i1.UuidValue? createdBy,
+    _is.UuidValue? createdBy,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -111,11 +112,11 @@ abstract class AdminUser
   }
 
   static AdminUserIncludeList includeList({
-    _i1.WhereExpressionBuilder<AdminUserTable>? where,
+    _is.WhereExpressionBuilder<AdminUserTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AdminUserTable>? orderBy,
-    _i1.OrderByListBuilder<AdminUserTable>? orderByList,
+    _is.OrderByBuilder<AdminUserTable>? orderBy,
+    _is.OrderByListBuilder<AdminUserTable>? orderByList,
     AdminUserInclude? include,
   }) {
     return AdminUserIncludeList._(
@@ -130,7 +131,7 @@ abstract class AdminUser
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -139,10 +140,10 @@ class _Undefined {}
 class _AdminUserImpl extends AdminUser {
   _AdminUserImpl({
     int? id,
-    required _i1.UuidValue userId,
-    _i2.AdminRole? role,
+    required _is.UuidValue userId,
+    _iagw83cd.AdminRole? role,
     DateTime? createdAt,
-    _i1.UuidValue? createdBy,
+    _is.UuidValue? createdBy,
   }) : super._(
          id: id,
          userId: userId,
@@ -153,12 +154,12 @@ class _AdminUserImpl extends AdminUser {
 
   /// Returns a shallow copy of this [AdminUser]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   AdminUser copyWith({
     Object? id = _Undefined,
-    _i1.UuidValue? userId,
-    _i2.AdminRole? role,
+    _is.UuidValue? userId,
+    _iagw83cd.AdminRole? role,
     DateTime? createdAt,
     Object? createdBy = _Undefined,
   }) {
@@ -167,59 +168,60 @@ class _AdminUserImpl extends AdminUser {
       userId: userId ?? this.userId,
       role: role ?? this.role,
       createdAt: createdAt ?? this.createdAt,
-      createdBy: createdBy is _i1.UuidValue? ? createdBy : this.createdBy,
+      createdBy: createdBy is _is.UuidValue? ? createdBy : this.createdBy,
     );
   }
 }
 
-class AdminUserUpdateTable extends _i1.UpdateTable<AdminUserTable> {
+class AdminUserUpdateTable extends _is.UpdateTable<AdminUserTable> {
   AdminUserUpdateTable(super.table);
 
-  _i1.ColumnValue<_i1.UuidValue, _i1.UuidValue> userId(_i1.UuidValue value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<_is.UuidValue, _is.UuidValue> userId(_is.UuidValue value) =>
+      _is.ColumnValue(
         table.userId,
         value,
       );
 
-  _i1.ColumnValue<_i2.AdminRole, _i2.AdminRole> role(_i2.AdminRole value) =>
-      _i1.ColumnValue(
-        table.role,
-        value,
-      );
+  _is.ColumnValue<_iagw83cd.AdminRole, _iagw83cd.AdminRole> role(
+    _iagw83cd.AdminRole value,
+  ) => _is.ColumnValue(
+    table.role,
+    value,
+  );
 
-  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _is.ColumnValue(
         table.createdAt,
         value,
       );
 
-  _i1.ColumnValue<_i1.UuidValue, _i1.UuidValue> createdBy(
-    _i1.UuidValue? value,
-  ) => _i1.ColumnValue(
+  _is.ColumnValue<_is.UuidValue, _is.UuidValue> createdBy(
+    _is.UuidValue? value,
+  ) => _is.ColumnValue(
     table.createdBy,
     value,
   );
 }
 
-class AdminUserTable extends _i1.Table<int?> {
+class AdminUserTable extends _is.Table<int?> {
   AdminUserTable({super.tableRelation}) : super(tableName: 'admin_user') {
     updateTable = AdminUserUpdateTable(this);
-    userId = _i1.ColumnUuid(
+    userId = _is.ColumnUuid(
       'userId',
       this,
     );
-    role = _i1.ColumnEnum(
+    role = _is.ColumnEnum(
       'role',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    createdAt = _i1.ColumnDateTime(
+    createdAt = _is.ColumnDateTime(
       'createdAt',
       this,
       hasDefault: true,
     );
-    createdBy = _i1.ColumnUuid(
+    createdBy = _is.ColumnUuid(
       'createdBy',
       this,
     );
@@ -231,18 +233,18 @@ class AdminUserTable extends _i1.Table<int?> {
   /// `session.authUserId`). Deliberately no FK: the row references a table
   /// owned by the external `serverpod_auth_core` module, and coupling our
   /// migrations to its schema would make upgrades fragile.
-  late final _i1.ColumnUuid userId;
+  late final _is.ColumnUuid userId;
 
-  late final _i1.ColumnEnum<_i2.AdminRole> role;
+  late final _is.ColumnEnum<_iagw83cd.AdminRole> role;
 
-  late final _i1.ColumnDateTime createdAt;
+  late final _is.ColumnDateTime createdAt;
 
   /// The `AuthUser.id` of the admin who granted this role (`null` for the
   /// bootstrap admin created by `tool/grant_admin.sql`).
-  late final _i1.ColumnUuid createdBy;
+  late final _is.ColumnUuid createdBy;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     userId,
     role,
@@ -251,19 +253,19 @@ class AdminUserTable extends _i1.Table<int?> {
   ];
 }
 
-class AdminUserInclude extends _i1.IncludeObject {
+class AdminUserInclude extends _is.IncludeObject {
   AdminUserInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => AdminUser.t;
+  _is.Table<int?> get table => AdminUser.t;
 }
 
-class AdminUserIncludeList extends _i1.IncludeList {
+class AdminUserIncludeList extends _is.IncludeList {
   AdminUserIncludeList._({
-    _i1.WhereExpressionBuilder<AdminUserTable>? where,
+    _is.WhereExpressionBuilder<AdminUserTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -274,10 +276,10 @@ class AdminUserIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => AdminUser.t;
+  _is.Table<int?> get table => AdminUser.t;
 }
 
 class AdminUserRepository {
@@ -306,15 +308,15 @@ class AdminUserRepository {
   /// );
   /// ```
   Future<List<AdminUser>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<AdminUserTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<AdminUserTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AdminUserTable>? orderBy,
-    _i1.OrderByListBuilder<AdminUserTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<AdminUserTable>? orderBy,
+    _is.OrderByListBuilder<AdminUserTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<AdminUser>(
       where: where?.call(AdminUser.t),
@@ -346,14 +348,14 @@ class AdminUserRepository {
   /// );
   /// ```
   Future<AdminUser?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<AdminUserTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<AdminUserTable>? where,
     int? offset,
-    _i1.OrderByBuilder<AdminUserTable>? orderBy,
-    _i1.OrderByListBuilder<AdminUserTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<AdminUserTable>? orderBy,
+    _is.OrderByListBuilder<AdminUserTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<AdminUser>(
       where: where?.call(AdminUser.t),
@@ -368,11 +370,11 @@ class AdminUserRepository {
 
   /// Finds a single [AdminUser] by its [id] or null if no such row exists.
   Future<AdminUser?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<AdminUser>(
       id,
@@ -397,9 +399,9 @@ class AdminUserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AdminUser>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AdminUser> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -415,9 +417,9 @@ class AdminUserRepository {
   ///
   /// The returned [AdminUser] will have its `id` field set.
   Future<AdminUser> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AdminUser row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<AdminUser>(
       row,
@@ -446,12 +448,12 @@ class AdminUserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AdminUser>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AdminUser> rows, {
-    required _i1.ColumnSelections<AdminUserTable> conflictColumns,
-    _i1.ColumnSelections<AdminUserTable>? updateColumns,
-    _i1.WhereExpressionBuilder<AdminUserTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<AdminUserTable> conflictColumns,
+    _is.ColumnSelections<AdminUserTable>? updateColumns,
+    _is.WhereExpressionBuilder<AdminUserTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<AdminUser>(
@@ -478,12 +480,12 @@ class AdminUserRepository {
   ///
   /// The returned [AdminUser] will have its `id` field set.
   Future<AdminUser?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AdminUser row, {
-    required _i1.ColumnSelections<AdminUserTable> conflictColumns,
-    _i1.ColumnSelections<AdminUserTable>? updateColumns,
-    _i1.WhereExpressionBuilder<AdminUserTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<AdminUserTable> conflictColumns,
+    _is.ColumnSelections<AdminUserTable>? updateColumns,
+    _is.WhereExpressionBuilder<AdminUserTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<AdminUser>(
       row,
@@ -504,10 +506,10 @@ class AdminUserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AdminUser>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AdminUser> rows, {
-    _i1.ColumnSelections<AdminUserTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<AdminUserTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<AdminUser>(
@@ -522,10 +524,10 @@ class AdminUserRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<AdminUser> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AdminUser row, {
-    _i1.ColumnSelections<AdminUserTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<AdminUserTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<AdminUser>(
       row,
@@ -537,10 +539,10 @@ class AdminUserRepository {
   /// Updates a single [AdminUser] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<AdminUser?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<AdminUserUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<AdminUserUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<AdminUser>(
       id,
@@ -556,14 +558,14 @@ class AdminUserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AdminUser>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<AdminUserUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<AdminUserTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<AdminUserUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<AdminUserTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AdminUserTable>? orderBy,
-    _i1.OrderByListBuilder<AdminUserTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<AdminUserTable>? orderBy,
+    _is.OrderByListBuilder<AdminUserTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<AdminUser>(
@@ -590,11 +592,11 @@ class AdminUserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AdminUser>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AdminUser> rows, {
-    _i1.OrderByBuilder<AdminUserTable>? orderBy,
-    _i1.OrderByListBuilder<AdminUserTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<AdminUserTable>? orderBy,
+    _is.OrderByListBuilder<AdminUserTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<AdminUser>(
@@ -608,9 +610,9 @@ class AdminUserRepository {
 
   /// Deletes a single [AdminUser].
   Future<AdminUser> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AdminUser row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<AdminUser>(
       row,
@@ -627,11 +629,11 @@ class AdminUserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AdminUser>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<AdminUserTable> where,
-    _i1.OrderByBuilder<AdminUserTable>? orderBy,
-    _i1.OrderByListBuilder<AdminUserTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<AdminUserTable> where,
+    _is.OrderByBuilder<AdminUserTable>? orderBy,
+    _is.OrderByListBuilder<AdminUserTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<AdminUser>(
@@ -646,10 +648,10 @@ class AdminUserRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<AdminUserTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<AdminUserTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<AdminUser>(
       where: where?.call(AdminUser.t),
@@ -660,11 +662,11 @@ class AdminUserRepository {
 
   /// Acquires row-level locks on [AdminUser] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<AdminUserTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<AdminUserTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<AdminUser>(
       where: where(AdminUser.t),

@@ -10,13 +10,15 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/invoicing/models/customer_status.dart' as _i2;
-import '../../../modules/business/models/address.dart' as _i3;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i4;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/business/models/address.dart' as _iz28txwx;
+import '../../../modules/invoicing/models/customer_status.dart' as _iq2eew5f;
 
 abstract class UpdateCustomerRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   UpdateCustomerRequest._({
     required this.customerId,
     required this.status,
@@ -31,13 +33,13 @@ abstract class UpdateCustomerRequest
 
   factory UpdateCustomerRequest({
     required int customerId,
-    required _i2.CustomerStatus status,
+    required _iq2eew5f.CustomerStatus status,
     required String name,
     String? companyName,
     String? vatId,
     String? email,
     String? phone,
-    _i3.Address? address,
+    _iz28txwx.Address? address,
     String? notes,
   }) = _UpdateCustomerRequestImpl;
 
@@ -46,7 +48,7 @@ abstract class UpdateCustomerRequest
   ) {
     return UpdateCustomerRequest(
       customerId: jsonSerialization['customerId'] as int,
-      status: _i2.CustomerStatus.fromJson(
+      status: _iq2eew5f.CustomerStatus.fromJson(
         (jsonSerialization['status'] as String),
       ),
       name: jsonSerialization['name'] as String,
@@ -56,7 +58,7 @@ abstract class UpdateCustomerRequest
       phone: jsonSerialization['phone'] as String?,
       address: jsonSerialization['address'] == null
           ? null
-          : _i4.Protocol().deserialize<_i3.Address>(
+          : _itzp2rm6.Protocol().deserialize<_iz28txwx.Address>(
               jsonSerialization['address'],
             ),
       notes: jsonSerialization['notes'] as String?,
@@ -65,7 +67,7 @@ abstract class UpdateCustomerRequest
 
   int customerId;
 
-  _i2.CustomerStatus status;
+  _iq2eew5f.CustomerStatus status;
 
   String name;
 
@@ -77,22 +79,22 @@ abstract class UpdateCustomerRequest
 
   String? phone;
 
-  _i3.Address? address;
+  _iz28txwx.Address? address;
 
   String? notes;
 
   /// Returns a shallow copy of this [UpdateCustomerRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   UpdateCustomerRequest copyWith({
     int? customerId,
-    _i2.CustomerStatus? status,
+    _iq2eew5f.CustomerStatus? status,
     String? name,
     String? companyName,
     String? vatId,
     String? email,
     String? phone,
-    _i3.Address? address,
+    _iz28txwx.Address? address,
     String? notes,
   });
   @override
@@ -129,7 +131,7 @@ abstract class UpdateCustomerRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -138,13 +140,13 @@ class _Undefined {}
 class _UpdateCustomerRequestImpl extends UpdateCustomerRequest {
   _UpdateCustomerRequestImpl({
     required int customerId,
-    required _i2.CustomerStatus status,
+    required _iq2eew5f.CustomerStatus status,
     required String name,
     String? companyName,
     String? vatId,
     String? email,
     String? phone,
-    _i3.Address? address,
+    _iz28txwx.Address? address,
     String? notes,
   }) : super._(
          customerId: customerId,
@@ -160,11 +162,11 @@ class _UpdateCustomerRequestImpl extends UpdateCustomerRequest {
 
   /// Returns a shallow copy of this [UpdateCustomerRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   UpdateCustomerRequest copyWith({
     int? customerId,
-    _i2.CustomerStatus? status,
+    _iq2eew5f.CustomerStatus? status,
     String? name,
     Object? companyName = _Undefined,
     Object? vatId = _Undefined,
@@ -181,7 +183,9 @@ class _UpdateCustomerRequestImpl extends UpdateCustomerRequest {
       vatId: vatId is String? ? vatId : this.vatId,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
-      address: address is _i3.Address? ? address : this.address?.copyWith(),
+      address: address is _iz28txwx.Address?
+          ? address
+          : this.address?.copyWith(),
       notes: notes is String? ? notes : this.notes,
     );
   }

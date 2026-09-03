@@ -8,149 +8,154 @@
 // ignore_for_file: type_literal_in_constant_pattern
 // ignore_for_file: use_super_parameters
 // ignore_for_file: invalid_use_of_internal_member
-// ignore_for_file: dead_code, unnecessary_type_check
+// ignore_for_file: dead_code, no_leading_underscores_for_library_prefixes
+// ignore_for_file: unnecessary_type_check
 
-// ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import 'core/admin/admin_role.dart' as _i2;
-import 'core/entitlement/feature.dart' as _i3;
-import 'core/errors/conflict_exception.dart' as _i4;
-import 'core/errors/forbidden_exception.dart' as _i5;
-import 'core/errors/not_found_exception.dart' as _i6;
-import 'core/errors/validation_exception.dart' as _i7;
-import 'modules/accounting/models/accounting_transaction.dart' as _i8;
-import 'modules/accounting/models/create_transaction_request.dart' as _i9;
-import 'modules/accounting/models/profit_loss_line.dart' as _i10;
-import 'modules/accounting/models/profit_loss_report.dart' as _i11;
-import 'modules/accounting/models/transaction_category.dart' as _i12;
-import 'modules/accounting/models/transaction_type.dart' as _i13;
-import 'modules/accounting/models/update_transaction_request.dart' as _i14;
-import 'modules/admin/models/admin_audit_entry.dart' as _i15;
-import 'modules/admin/models/admin_audit_page.dart' as _i16;
-import 'modules/admin/models/admin_auth_status.dart' as _i17;
-import 'modules/admin/models/admin_business_detail.dart' as _i18;
-import 'modules/admin/models/admin_business_page.dart' as _i19;
-import 'modules/admin/models/admin_invoice_page.dart' as _i20;
-import 'modules/admin/models/admin_membership_info.dart' as _i21;
-import 'modules/admin/models/admin_stats_overview.dart' as _i22;
-import 'modules/admin/models/admin_user_dossier.dart' as _i23;
-import 'modules/admin/models/admin_user_summary.dart' as _i24;
-import 'modules/admin/models/admin_user_summary_page.dart' as _i25;
-import 'modules/admin/models/invoice_status_count.dart' as _i26;
-import 'modules/business/models/address.dart' as _i27;
-import 'modules/business/models/business.dart' as _i28;
-import 'modules/business/models/business_settings.dart' as _i29;
-import 'modules/business/models/country.dart' as _i30;
-import 'modules/business/models/create_business_request.dart' as _i31;
-import 'modules/business/models/currency.dart' as _i32;
-import 'modules/business/models/legal_form.dart' as _i33;
-import 'modules/business/models/locale.dart' as _i34;
-import 'modules/business/models/membership.dart' as _i35;
-import 'modules/business/models/membership_role.dart' as _i36;
-import 'modules/business/models/rounding_mode.dart' as _i37;
-import 'modules/business/models/update_business_request.dart' as _i38;
-import 'modules/business/models/update_business_settings_request.dart' as _i39;
-import 'modules/dashboard/models/dashboard_kpis.dart' as _i40;
-import 'modules/dashboard/models/dashboard_summary.dart' as _i41;
-import 'modules/dashboard/models/debtor_summary.dart' as _i42;
-import 'modules/dashboard/models/monthly_trend_point.dart' as _i43;
-import 'modules/dashboard/models/receivables_summary.dart' as _i44;
-import 'modules/dashboard/models/recent_time_entry.dart' as _i45;
-import 'modules/documents/models/document.dart' as _i46;
-import 'modules/documents/models/document_kind.dart' as _i47;
-import 'modules/documents/models/storage_location.dart' as _i48;
-import 'modules/documents/models/upload_document_request.dart' as _i49;
-import 'modules/guidance/models/checklist_definition.dart' as _i50;
-import 'modules/guidance/models/checklist_item_definition.dart' as _i51;
-import 'modules/guidance/models/guidance_tip.dart' as _i52;
-import 'modules/guidance/models/user_guidance_progress.dart' as _i53;
-import 'modules/invoicing/models/create_customer_request.dart' as _i54;
-import 'modules/invoicing/models/create_invoice_request.dart' as _i55;
-import 'modules/invoicing/models/create_invoice_template_request.dart' as _i56;
-import 'modules/invoicing/models/create_recurring_schedule_request.dart'
-    as _i57;
-import 'modules/invoicing/models/customer.dart' as _i58;
-import 'modules/invoicing/models/customer_cursor_page.dart' as _i59;
-import 'modules/invoicing/models/customer_list_page.dart' as _i60;
-import 'modules/invoicing/models/customer_status.dart' as _i61;
-import 'modules/invoicing/models/invoice.dart' as _i62;
-import 'modules/invoicing/models/invoice_cursor_page.dart' as _i63;
-import 'modules/invoicing/models/invoice_item.dart' as _i64;
-import 'modules/invoicing/models/invoice_item_request.dart' as _i65;
-import 'modules/invoicing/models/invoice_item_unit.dart' as _i66;
-import 'modules/invoicing/models/invoice_list_page.dart' as _i67;
-import 'modules/invoicing/models/invoice_payment_status.dart' as _i68;
-import 'modules/invoicing/models/invoice_status.dart' as _i69;
-import 'modules/invoicing/models/invoice_template.dart' as _i70;
-import 'modules/invoicing/models/invoice_type.dart' as _i71;
-import 'modules/invoicing/models/payment_method.dart' as _i72;
-import 'modules/invoicing/models/payment_record.dart' as _i73;
-import 'modules/invoicing/models/record_payment_request.dart' as _i74;
-import 'modules/invoicing/models/recurrence_interval.dart' as _i75;
-import 'modules/invoicing/models/reminder.dart' as _i76;
-import 'modules/invoicing/models/update_customer_request.dart' as _i77;
-import 'modules/invoicing/models/update_invoice_request.dart' as _i78;
-import 'modules/invoicing/models/update_invoice_template_request.dart' as _i79;
-import 'modules/invoicing/models/update_recurring_schedule_request.dart'
-    as _i80;
-import 'modules/invoicing/models/vat_rate.dart' as _i81;
-import 'modules/time_tracking/models/create_project_request.dart' as _i82;
-import 'modules/time_tracking/models/create_task_request.dart' as _i83;
-import 'modules/time_tracking/models/create_time_entries_invoice_request.dart'
-    as _i84;
-import 'modules/time_tracking/models/create_time_entry_request.dart' as _i85;
-import 'modules/time_tracking/models/project.dart' as _i86;
-import 'modules/time_tracking/models/project_status.dart' as _i87;
-import 'modules/time_tracking/models/start_timer_request.dart' as _i88;
-import 'modules/time_tracking/models/task.dart' as _i89;
-import 'modules/time_tracking/models/task_status.dart' as _i90;
-import 'modules/time_tracking/models/time_entry.dart' as _i91;
-import 'modules/time_tracking/models/time_report.dart' as _i92;
-import 'modules/time_tracking/models/time_report_line.dart' as _i93;
-import 'modules/time_tracking/models/update_project_request.dart' as _i94;
-import 'modules/time_tracking/models/update_task_request.dart' as _i95;
-import 'modules/time_tracking/models/update_time_entry_request.dart' as _i96;
-import 'modules/user/models/app_theme.dart' as _i97;
-import 'modules/user/models/my_identity.dart' as _i98;
-import 'modules/user/models/my_membership_info.dart' as _i99;
-import 'modules/user/models/update_user_profile_request.dart' as _i100;
-import 'modules/user/models/user_profile.dart' as _i101;
 import 'package:gewerber_backend_client/src/protocol/core/entitlement/feature.dart'
-    as _i102;
+    as _i6zpily8;
 import 'package:gewerber_backend_client/src/protocol/modules/accounting/models/accounting_transaction.dart'
-    as _i103;
-import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/guidance_tip.dart'
-    as _i104;
+    as _in4p196h;
 import 'package:gewerber_backend_client/src/protocol/modules/business/models/business.dart'
-    as _i105;
+    as _i0hkv0p3;
 import 'package:gewerber_backend_client/src/protocol/modules/documents/models/document.dart'
-    as _i106;
+    as _i6dacf8x;
 import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/checklist_definition.dart'
-    as _i107;
+    as _iijoyams;
+import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/guidance_tip.dart'
+    as _in4e0h8b;
 import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/user_guidance_progress.dart'
-    as _i108;
+    as _i965vnjh;
 import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer.dart'
-    as _i109;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_item.dart'
-    as _i110;
+    as _inumhip7;
 import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice.dart'
-    as _i111;
+    as _ijh06pcp;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_item.dart'
+    as _idltrgge;
 import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_template.dart'
-    as _i112;
+    as _ir2z9rpn;
 import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/reminder.dart'
-    as _i113;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/task.dart'
-    as _i114;
+    as _i89d689a;
 import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/project.dart'
-    as _i115;
+    as _i8k415ln;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/task.dart'
+    as _ib31j0is;
 import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/time_entry.dart'
-    as _i116;
+    as _iaj8oc9k;
 import 'package:gewerber_backend_commercial_client/gewerber_backend_commercial_client.dart'
-    as _i117;
+    as _ix6v1tim;
 import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
-    as _i118;
+    as _iacc;
 import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
-    as _i119;
+    as _iaic;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'core/admin/admin_role.dart' as _i409qkgd;
+import 'core/entitlement/feature.dart' as _i0s5j3nj;
+import 'core/errors/conflict_exception.dart' as _i5epujyq;
+import 'core/errors/forbidden_exception.dart' as _io9vwtrc;
+import 'core/errors/not_found_exception.dart' as _ixeh2c1z;
+import 'core/errors/validation_exception.dart' as _io4t73gt;
+import 'modules/accounting/models/accounting_transaction.dart' as _imcpe7lh;
+import 'modules/accounting/models/create_transaction_request.dart' as _ipamnsx8;
+import 'modules/accounting/models/profit_loss_line.dart' as _iixw78u5;
+import 'modules/accounting/models/profit_loss_report.dart' as _isurdgsv;
+import 'modules/accounting/models/transaction_category.dart' as _imo6tjrw;
+import 'modules/accounting/models/transaction_type.dart' as _ik9vnz0w;
+import 'modules/accounting/models/update_transaction_request.dart' as _iyj5tb39;
+import 'modules/admin/models/admin_audit_entry.dart' as _io6p5gfm;
+import 'modules/admin/models/admin_audit_page.dart' as _iaab9k46;
+import 'modules/admin/models/admin_auth_status.dart' as _ipsgq99z;
+import 'modules/admin/models/admin_business_detail.dart' as _i32iaxq2;
+import 'modules/admin/models/admin_business_page.dart' as _iytjl6p4;
+import 'modules/admin/models/admin_invoice_page.dart' as _ia380t04;
+import 'modules/admin/models/admin_membership_info.dart' as _igm2ntgz;
+import 'modules/admin/models/admin_stats_overview.dart' as _ihc64acz;
+import 'modules/admin/models/admin_user_dossier.dart' as _ibyotlfs;
+import 'modules/admin/models/admin_user_summary.dart' as _iwdjv467;
+import 'modules/admin/models/admin_user_summary_page.dart' as _i2f075pm;
+import 'modules/admin/models/invoice_status_count.dart' as _ikvugyyu;
+import 'modules/business/models/address.dart' as _izfx9e18;
+import 'modules/business/models/business.dart' as _im9zvu8o;
+import 'modules/business/models/business_settings.dart' as _ixvagzl5;
+import 'modules/business/models/country.dart' as _i8xf36x2;
+import 'modules/business/models/create_business_request.dart' as _i1txccp7;
+import 'modules/business/models/currency.dart' as _i1srbh9z;
+import 'modules/business/models/legal_form.dart' as _i5egs7uv;
+import 'modules/business/models/locale.dart' as _ii0188h0;
+import 'modules/business/models/membership.dart' as _iu72qgm4;
+import 'modules/business/models/membership_role.dart' as _iv0iprnk;
+import 'modules/business/models/rounding_mode.dart' as _iku7b3rb;
+import 'modules/business/models/update_business_request.dart' as _inkd6ewo;
+import 'modules/business/models/update_business_settings_request.dart'
+    as _ii46p08a;
+import 'modules/dashboard/models/dashboard_kpis.dart' as _i1j0w1sv;
+import 'modules/dashboard/models/dashboard_summary.dart' as _iw3j14uv;
+import 'modules/dashboard/models/debtor_summary.dart' as _ix33w5u6;
+import 'modules/dashboard/models/monthly_trend_point.dart' as _ixg6nsli;
+import 'modules/dashboard/models/receivables_summary.dart' as _ie3ro5gq;
+import 'modules/dashboard/models/recent_time_entry.dart' as _impe7ay9;
+import 'modules/documents/models/document.dart' as _i9jvbk51;
+import 'modules/documents/models/document_kind.dart' as _imaz1zqg;
+import 'modules/documents/models/storage_location.dart' as _i9qnixrl;
+import 'modules/documents/models/upload_document_request.dart' as _iz60udpo;
+import 'modules/guidance/models/checklist_definition.dart' as _i04z5hwj;
+import 'modules/guidance/models/checklist_item_definition.dart' as _i5jbvijx;
+import 'modules/guidance/models/guidance_tip.dart' as _irvclg1d;
+import 'modules/guidance/models/user_guidance_progress.dart' as _ik05lx5a;
+import 'modules/invoicing/models/create_customer_request.dart' as _i90hzmg5;
+import 'modules/invoicing/models/create_invoice_request.dart' as _ia6btdit;
+import 'modules/invoicing/models/create_invoice_template_request.dart'
+    as _iyi9fugk;
+import 'modules/invoicing/models/create_recurring_schedule_request.dart'
+    as _i4j5ra9q;
+import 'modules/invoicing/models/customer.dart' as _ic8wp775;
+import 'modules/invoicing/models/customer_cursor_page.dart' as _if0yalhk;
+import 'modules/invoicing/models/customer_list_page.dart' as _iakrzq1i;
+import 'modules/invoicing/models/customer_status.dart' as _ibddqx0x;
+import 'modules/invoicing/models/invoice.dart' as _imguyn55;
+import 'modules/invoicing/models/invoice_cursor_page.dart' as _i2f30jh4;
+import 'modules/invoicing/models/invoice_item.dart' as _iu86qxr6;
+import 'modules/invoicing/models/invoice_item_request.dart' as _it1pcy1x;
+import 'modules/invoicing/models/invoice_item_unit.dart' as _ik22qf7o;
+import 'modules/invoicing/models/invoice_list_page.dart' as _i6mqpqud;
+import 'modules/invoicing/models/invoice_payment_status.dart' as _i6e3kqsf;
+import 'modules/invoicing/models/invoice_status.dart' as _i80dthru;
+import 'modules/invoicing/models/invoice_template.dart' as _isaqeos4;
+import 'modules/invoicing/models/invoice_type.dart' as _io5qrdfp;
+import 'modules/invoicing/models/payment_method.dart' as _i31hy3jj;
+import 'modules/invoicing/models/payment_record.dart' as _id8w36x8;
+import 'modules/invoicing/models/record_payment_request.dart' as _i2drsvke;
+import 'modules/invoicing/models/recurrence_interval.dart' as _it8iedui;
+import 'modules/invoicing/models/reminder.dart' as _i0xuine3;
+import 'modules/invoicing/models/update_customer_request.dart' as _icatwcwa;
+import 'modules/invoicing/models/update_invoice_request.dart' as _iteadt76;
+import 'modules/invoicing/models/update_invoice_template_request.dart'
+    as _ilpliwg4;
+import 'modules/invoicing/models/update_recurring_schedule_request.dart'
+    as _i037hdza;
+import 'modules/invoicing/models/vat_rate.dart' as _id7e2pr5;
+import 'modules/time_tracking/models/create_project_request.dart' as _i8rbvyvx;
+import 'modules/time_tracking/models/create_task_request.dart' as _iagq7u79;
+import 'modules/time_tracking/models/create_time_entries_invoice_request.dart'
+    as _i3b86gp3;
+import 'modules/time_tracking/models/create_time_entry_request.dart'
+    as _i85810i7;
+import 'modules/time_tracking/models/project.dart' as _i2wiwzxn;
+import 'modules/time_tracking/models/project_status.dart' as _i8h0tbjs;
+import 'modules/time_tracking/models/start_timer_request.dart' as _i2ishkic;
+import 'modules/time_tracking/models/task.dart' as _ihpxqi7u;
+import 'modules/time_tracking/models/task_status.dart' as _iieqkj38;
+import 'modules/time_tracking/models/time_entry.dart' as _ii8lft1t;
+import 'modules/time_tracking/models/time_report.dart' as _ilk96oxt;
+import 'modules/time_tracking/models/time_report_line.dart' as _iify20ly;
+import 'modules/time_tracking/models/update_project_request.dart' as _ilqqks6d;
+import 'modules/time_tracking/models/update_task_request.dart' as _i3iu7ffh;
+import 'modules/time_tracking/models/update_time_entry_request.dart'
+    as _iferwyg8;
+import 'modules/user/models/app_theme.dart' as _iy79t9m6;
+import 'modules/user/models/my_identity.dart' as _i1sqdvz3;
+import 'modules/user/models/my_membership_info.dart' as _in8pujw9;
+import 'modules/user/models/update_user_profile_request.dart' as _i5r0ss6k;
+import 'modules/user/models/user_profile.dart' as _iung9xmp;
 export 'core/admin/admin_role.dart';
 export 'core/entitlement/feature.dart';
 export 'core/errors/conflict_exception.dart';
@@ -253,7 +258,7 @@ export 'modules/user/models/update_user_profile_request.dart';
 export 'modules/user/models/user_profile.dart';
 export 'client.dart';
 
-class Protocol extends _i1.SerializationManager {
+class Protocol extends _isc.SerializationManager {
   Protocol._();
 
   factory Protocol() => _instance;
@@ -287,662 +292,744 @@ class Protocol extends _i1.SerializationManager {
       }
     }
 
-    if (t == _i2.AdminRole) {
-      return _i2.AdminRole.fromJson(data) as T;
+    if (t == _i409qkgd.AdminRole) {
+      return _i409qkgd.AdminRole.fromJson(data) as T;
     }
-    if (t == _i3.Feature) {
-      return _i3.Feature.fromJson(data) as T;
+    if (t == _i0s5j3nj.Feature) {
+      return _i0s5j3nj.Feature.fromJson(data) as T;
     }
-    if (t == _i4.ConflictException) {
-      return _i4.ConflictException.fromJson(data) as T;
+    if (t == _i5epujyq.ConflictException) {
+      return _i5epujyq.ConflictException.fromJson(data) as T;
     }
-    if (t == _i5.ForbiddenException) {
-      return _i5.ForbiddenException.fromJson(data) as T;
+    if (t == _io9vwtrc.ForbiddenException) {
+      return _io9vwtrc.ForbiddenException.fromJson(data) as T;
     }
-    if (t == _i6.NotFoundException) {
-      return _i6.NotFoundException.fromJson(data) as T;
+    if (t == _ixeh2c1z.NotFoundException) {
+      return _ixeh2c1z.NotFoundException.fromJson(data) as T;
     }
-    if (t == _i7.ValidationException) {
-      return _i7.ValidationException.fromJson(data) as T;
+    if (t == _io4t73gt.ValidationException) {
+      return _io4t73gt.ValidationException.fromJson(data) as T;
     }
-    if (t == _i8.AccountingTransaction) {
-      return _i8.AccountingTransaction.fromJson(data) as T;
+    if (t == _imcpe7lh.AccountingTransaction) {
+      return _imcpe7lh.AccountingTransaction.fromJson(data) as T;
     }
-    if (t == _i9.CreateTransactionRequest) {
-      return _i9.CreateTransactionRequest.fromJson(data) as T;
+    if (t == _ipamnsx8.CreateTransactionRequest) {
+      return _ipamnsx8.CreateTransactionRequest.fromJson(data) as T;
     }
-    if (t == _i10.ProfitLossLine) {
-      return _i10.ProfitLossLine.fromJson(data) as T;
+    if (t == _iixw78u5.ProfitLossLine) {
+      return _iixw78u5.ProfitLossLine.fromJson(data) as T;
     }
-    if (t == _i11.ProfitLossReport) {
-      return _i11.ProfitLossReport.fromJson(data) as T;
+    if (t == _isurdgsv.ProfitLossReport) {
+      return _isurdgsv.ProfitLossReport.fromJson(data) as T;
     }
-    if (t == _i12.TransactionCategory) {
-      return _i12.TransactionCategory.fromJson(data) as T;
+    if (t == _imo6tjrw.TransactionCategory) {
+      return _imo6tjrw.TransactionCategory.fromJson(data) as T;
     }
-    if (t == _i13.TransactionType) {
-      return _i13.TransactionType.fromJson(data) as T;
+    if (t == _ik9vnz0w.TransactionType) {
+      return _ik9vnz0w.TransactionType.fromJson(data) as T;
     }
-    if (t == _i14.UpdateTransactionRequest) {
-      return _i14.UpdateTransactionRequest.fromJson(data) as T;
+    if (t == _iyj5tb39.UpdateTransactionRequest) {
+      return _iyj5tb39.UpdateTransactionRequest.fromJson(data) as T;
     }
-    if (t == _i15.AdminAuditEntry) {
-      return _i15.AdminAuditEntry.fromJson(data) as T;
+    if (t == _io6p5gfm.AdminAuditEntry) {
+      return _io6p5gfm.AdminAuditEntry.fromJson(data) as T;
     }
-    if (t == _i16.AdminAuditPage) {
-      return _i16.AdminAuditPage.fromJson(data) as T;
+    if (t == _iaab9k46.AdminAuditPage) {
+      return _iaab9k46.AdminAuditPage.fromJson(data) as T;
     }
-    if (t == _i17.AdminAuthStatus) {
-      return _i17.AdminAuthStatus.fromJson(data) as T;
+    if (t == _ipsgq99z.AdminAuthStatus) {
+      return _ipsgq99z.AdminAuthStatus.fromJson(data) as T;
     }
-    if (t == _i18.AdminBusinessDetail) {
-      return _i18.AdminBusinessDetail.fromJson(data) as T;
+    if (t == _i32iaxq2.AdminBusinessDetail) {
+      return _i32iaxq2.AdminBusinessDetail.fromJson(data) as T;
     }
-    if (t == _i19.AdminBusinessPage) {
-      return _i19.AdminBusinessPage.fromJson(data) as T;
+    if (t == _iytjl6p4.AdminBusinessPage) {
+      return _iytjl6p4.AdminBusinessPage.fromJson(data) as T;
     }
-    if (t == _i20.AdminInvoicePage) {
-      return _i20.AdminInvoicePage.fromJson(data) as T;
+    if (t == _ia380t04.AdminInvoicePage) {
+      return _ia380t04.AdminInvoicePage.fromJson(data) as T;
     }
-    if (t == _i21.AdminMembershipInfo) {
-      return _i21.AdminMembershipInfo.fromJson(data) as T;
+    if (t == _igm2ntgz.AdminMembershipInfo) {
+      return _igm2ntgz.AdminMembershipInfo.fromJson(data) as T;
     }
-    if (t == _i22.AdminStatsOverview) {
-      return _i22.AdminStatsOverview.fromJson(data) as T;
+    if (t == _ihc64acz.AdminStatsOverview) {
+      return _ihc64acz.AdminStatsOverview.fromJson(data) as T;
     }
-    if (t == _i23.AdminUserDossier) {
-      return _i23.AdminUserDossier.fromJson(data) as T;
+    if (t == _ibyotlfs.AdminUserDossier) {
+      return _ibyotlfs.AdminUserDossier.fromJson(data) as T;
     }
-    if (t == _i24.AdminUserSummary) {
-      return _i24.AdminUserSummary.fromJson(data) as T;
+    if (t == _iwdjv467.AdminUserSummary) {
+      return _iwdjv467.AdminUserSummary.fromJson(data) as T;
     }
-    if (t == _i25.AdminUserSummaryPage) {
-      return _i25.AdminUserSummaryPage.fromJson(data) as T;
+    if (t == _i2f075pm.AdminUserSummaryPage) {
+      return _i2f075pm.AdminUserSummaryPage.fromJson(data) as T;
     }
-    if (t == _i26.InvoiceStatusCount) {
-      return _i26.InvoiceStatusCount.fromJson(data) as T;
+    if (t == _ikvugyyu.InvoiceStatusCount) {
+      return _ikvugyyu.InvoiceStatusCount.fromJson(data) as T;
     }
-    if (t == _i27.Address) {
-      return _i27.Address.fromJson(data) as T;
+    if (t == _izfx9e18.Address) {
+      return _izfx9e18.Address.fromJson(data) as T;
     }
-    if (t == _i28.Business) {
-      return _i28.Business.fromJson(data) as T;
+    if (t == _im9zvu8o.Business) {
+      return _im9zvu8o.Business.fromJson(data) as T;
     }
-    if (t == _i29.BusinessSettings) {
-      return _i29.BusinessSettings.fromJson(data) as T;
+    if (t == _ixvagzl5.BusinessSettings) {
+      return _ixvagzl5.BusinessSettings.fromJson(data) as T;
     }
-    if (t == _i30.Country) {
-      return _i30.Country.fromJson(data) as T;
+    if (t == _i8xf36x2.Country) {
+      return _i8xf36x2.Country.fromJson(data) as T;
     }
-    if (t == _i31.CreateBusinessRequest) {
-      return _i31.CreateBusinessRequest.fromJson(data) as T;
+    if (t == _i1txccp7.CreateBusinessRequest) {
+      return _i1txccp7.CreateBusinessRequest.fromJson(data) as T;
     }
-    if (t == _i32.Currency) {
-      return _i32.Currency.fromJson(data) as T;
+    if (t == _i1srbh9z.Currency) {
+      return _i1srbh9z.Currency.fromJson(data) as T;
     }
-    if (t == _i33.LegalForm) {
-      return _i33.LegalForm.fromJson(data) as T;
+    if (t == _i5egs7uv.LegalForm) {
+      return _i5egs7uv.LegalForm.fromJson(data) as T;
     }
-    if (t == _i34.Locale) {
-      return _i34.Locale.fromJson(data) as T;
+    if (t == _ii0188h0.Locale) {
+      return _ii0188h0.Locale.fromJson(data) as T;
     }
-    if (t == _i35.Membership) {
-      return _i35.Membership.fromJson(data) as T;
+    if (t == _iu72qgm4.Membership) {
+      return _iu72qgm4.Membership.fromJson(data) as T;
     }
-    if (t == _i36.MembershipRole) {
-      return _i36.MembershipRole.fromJson(data) as T;
+    if (t == _iv0iprnk.MembershipRole) {
+      return _iv0iprnk.MembershipRole.fromJson(data) as T;
     }
-    if (t == _i37.RoundingMode) {
-      return _i37.RoundingMode.fromJson(data) as T;
+    if (t == _iku7b3rb.RoundingMode) {
+      return _iku7b3rb.RoundingMode.fromJson(data) as T;
     }
-    if (t == _i38.UpdateBusinessRequest) {
-      return _i38.UpdateBusinessRequest.fromJson(data) as T;
+    if (t == _inkd6ewo.UpdateBusinessRequest) {
+      return _inkd6ewo.UpdateBusinessRequest.fromJson(data) as T;
     }
-    if (t == _i39.UpdateBusinessSettingsRequest) {
-      return _i39.UpdateBusinessSettingsRequest.fromJson(data) as T;
+    if (t == _ii46p08a.UpdateBusinessSettingsRequest) {
+      return _ii46p08a.UpdateBusinessSettingsRequest.fromJson(data) as T;
     }
-    if (t == _i40.DashboardKpis) {
-      return _i40.DashboardKpis.fromJson(data) as T;
+    if (t == _i1j0w1sv.DashboardKpis) {
+      return _i1j0w1sv.DashboardKpis.fromJson(data) as T;
     }
-    if (t == _i41.DashboardSummary) {
-      return _i41.DashboardSummary.fromJson(data) as T;
+    if (t == _iw3j14uv.DashboardSummary) {
+      return _iw3j14uv.DashboardSummary.fromJson(data) as T;
     }
-    if (t == _i42.DebtorSummary) {
-      return _i42.DebtorSummary.fromJson(data) as T;
+    if (t == _ix33w5u6.DebtorSummary) {
+      return _ix33w5u6.DebtorSummary.fromJson(data) as T;
     }
-    if (t == _i43.MonthlyTrendPoint) {
-      return _i43.MonthlyTrendPoint.fromJson(data) as T;
+    if (t == _ixg6nsli.MonthlyTrendPoint) {
+      return _ixg6nsli.MonthlyTrendPoint.fromJson(data) as T;
     }
-    if (t == _i44.ReceivablesSummary) {
-      return _i44.ReceivablesSummary.fromJson(data) as T;
+    if (t == _ie3ro5gq.ReceivablesSummary) {
+      return _ie3ro5gq.ReceivablesSummary.fromJson(data) as T;
     }
-    if (t == _i45.RecentTimeEntry) {
-      return _i45.RecentTimeEntry.fromJson(data) as T;
+    if (t == _impe7ay9.RecentTimeEntry) {
+      return _impe7ay9.RecentTimeEntry.fromJson(data) as T;
     }
-    if (t == _i46.Document) {
-      return _i46.Document.fromJson(data) as T;
+    if (t == _i9jvbk51.Document) {
+      return _i9jvbk51.Document.fromJson(data) as T;
     }
-    if (t == _i47.DocumentKind) {
-      return _i47.DocumentKind.fromJson(data) as T;
+    if (t == _imaz1zqg.DocumentKind) {
+      return _imaz1zqg.DocumentKind.fromJson(data) as T;
     }
-    if (t == _i48.StorageLocation) {
-      return _i48.StorageLocation.fromJson(data) as T;
+    if (t == _i9qnixrl.StorageLocation) {
+      return _i9qnixrl.StorageLocation.fromJson(data) as T;
     }
-    if (t == _i49.UploadDocumentRequest) {
-      return _i49.UploadDocumentRequest.fromJson(data) as T;
+    if (t == _iz60udpo.UploadDocumentRequest) {
+      return _iz60udpo.UploadDocumentRequest.fromJson(data) as T;
     }
-    if (t == _i50.ChecklistDefinition) {
-      return _i50.ChecklistDefinition.fromJson(data) as T;
+    if (t == _i04z5hwj.ChecklistDefinition) {
+      return _i04z5hwj.ChecklistDefinition.fromJson(data) as T;
     }
-    if (t == _i51.ChecklistItemDefinition) {
-      return _i51.ChecklistItemDefinition.fromJson(data) as T;
+    if (t == _i5jbvijx.ChecklistItemDefinition) {
+      return _i5jbvijx.ChecklistItemDefinition.fromJson(data) as T;
     }
-    if (t == _i52.GuidanceTip) {
-      return _i52.GuidanceTip.fromJson(data) as T;
+    if (t == _irvclg1d.GuidanceTip) {
+      return _irvclg1d.GuidanceTip.fromJson(data) as T;
     }
-    if (t == _i53.UserGuidanceProgress) {
-      return _i53.UserGuidanceProgress.fromJson(data) as T;
+    if (t == _ik05lx5a.UserGuidanceProgress) {
+      return _ik05lx5a.UserGuidanceProgress.fromJson(data) as T;
     }
-    if (t == _i54.CreateCustomerRequest) {
-      return _i54.CreateCustomerRequest.fromJson(data) as T;
+    if (t == _i90hzmg5.CreateCustomerRequest) {
+      return _i90hzmg5.CreateCustomerRequest.fromJson(data) as T;
     }
-    if (t == _i55.CreateInvoiceRequest) {
-      return _i55.CreateInvoiceRequest.fromJson(data) as T;
+    if (t == _ia6btdit.CreateInvoiceRequest) {
+      return _ia6btdit.CreateInvoiceRequest.fromJson(data) as T;
     }
-    if (t == _i56.CreateInvoiceTemplateRequest) {
-      return _i56.CreateInvoiceTemplateRequest.fromJson(data) as T;
+    if (t == _iyi9fugk.CreateInvoiceTemplateRequest) {
+      return _iyi9fugk.CreateInvoiceTemplateRequest.fromJson(data) as T;
     }
-    if (t == _i57.CreateRecurringScheduleRequest) {
-      return _i57.CreateRecurringScheduleRequest.fromJson(data) as T;
+    if (t == _i4j5ra9q.CreateRecurringScheduleRequest) {
+      return _i4j5ra9q.CreateRecurringScheduleRequest.fromJson(data) as T;
     }
-    if (t == _i58.Customer) {
-      return _i58.Customer.fromJson(data) as T;
+    if (t == _ic8wp775.Customer) {
+      return _ic8wp775.Customer.fromJson(data) as T;
     }
-    if (t == _i59.CustomerCursorPage) {
-      return _i59.CustomerCursorPage.fromJson(data) as T;
+    if (t == _if0yalhk.CustomerCursorPage) {
+      return _if0yalhk.CustomerCursorPage.fromJson(data) as T;
     }
-    if (t == _i60.CustomerListPage) {
-      return _i60.CustomerListPage.fromJson(data) as T;
+    if (t == _iakrzq1i.CustomerListPage) {
+      return _iakrzq1i.CustomerListPage.fromJson(data) as T;
     }
-    if (t == _i61.CustomerStatus) {
-      return _i61.CustomerStatus.fromJson(data) as T;
+    if (t == _ibddqx0x.CustomerStatus) {
+      return _ibddqx0x.CustomerStatus.fromJson(data) as T;
     }
-    if (t == _i62.Invoice) {
-      return _i62.Invoice.fromJson(data) as T;
+    if (t == _imguyn55.Invoice) {
+      return _imguyn55.Invoice.fromJson(data) as T;
     }
-    if (t == _i63.InvoiceCursorPage) {
-      return _i63.InvoiceCursorPage.fromJson(data) as T;
+    if (t == _i2f30jh4.InvoiceCursorPage) {
+      return _i2f30jh4.InvoiceCursorPage.fromJson(data) as T;
     }
-    if (t == _i64.InvoiceItem) {
-      return _i64.InvoiceItem.fromJson(data) as T;
+    if (t == _iu86qxr6.InvoiceItem) {
+      return _iu86qxr6.InvoiceItem.fromJson(data) as T;
     }
-    if (t == _i65.InvoiceItemRequest) {
-      return _i65.InvoiceItemRequest.fromJson(data) as T;
+    if (t == _it1pcy1x.InvoiceItemRequest) {
+      return _it1pcy1x.InvoiceItemRequest.fromJson(data) as T;
     }
-    if (t == _i66.InvoiceItemUnit) {
-      return _i66.InvoiceItemUnit.fromJson(data) as T;
+    if (t == _ik22qf7o.InvoiceItemUnit) {
+      return _ik22qf7o.InvoiceItemUnit.fromJson(data) as T;
     }
-    if (t == _i67.InvoiceListPage) {
-      return _i67.InvoiceListPage.fromJson(data) as T;
+    if (t == _i6mqpqud.InvoiceListPage) {
+      return _i6mqpqud.InvoiceListPage.fromJson(data) as T;
     }
-    if (t == _i68.InvoicePaymentStatus) {
-      return _i68.InvoicePaymentStatus.fromJson(data) as T;
+    if (t == _i6e3kqsf.InvoicePaymentStatus) {
+      return _i6e3kqsf.InvoicePaymentStatus.fromJson(data) as T;
     }
-    if (t == _i69.InvoiceStatus) {
-      return _i69.InvoiceStatus.fromJson(data) as T;
+    if (t == _i80dthru.InvoiceStatus) {
+      return _i80dthru.InvoiceStatus.fromJson(data) as T;
     }
-    if (t == _i70.InvoiceTemplate) {
-      return _i70.InvoiceTemplate.fromJson(data) as T;
+    if (t == _isaqeos4.InvoiceTemplate) {
+      return _isaqeos4.InvoiceTemplate.fromJson(data) as T;
     }
-    if (t == _i71.InvoiceType) {
-      return _i71.InvoiceType.fromJson(data) as T;
+    if (t == _io5qrdfp.InvoiceType) {
+      return _io5qrdfp.InvoiceType.fromJson(data) as T;
     }
-    if (t == _i72.PaymentMethod) {
-      return _i72.PaymentMethod.fromJson(data) as T;
+    if (t == _i31hy3jj.PaymentMethod) {
+      return _i31hy3jj.PaymentMethod.fromJson(data) as T;
     }
-    if (t == _i73.PaymentRecord) {
-      return _i73.PaymentRecord.fromJson(data) as T;
+    if (t == _id8w36x8.PaymentRecord) {
+      return _id8w36x8.PaymentRecord.fromJson(data) as T;
     }
-    if (t == _i74.RecordPaymentRequest) {
-      return _i74.RecordPaymentRequest.fromJson(data) as T;
+    if (t == _i2drsvke.RecordPaymentRequest) {
+      return _i2drsvke.RecordPaymentRequest.fromJson(data) as T;
     }
-    if (t == _i75.RecurrenceInterval) {
-      return _i75.RecurrenceInterval.fromJson(data) as T;
+    if (t == _it8iedui.RecurrenceInterval) {
+      return _it8iedui.RecurrenceInterval.fromJson(data) as T;
     }
-    if (t == _i76.Reminder) {
-      return _i76.Reminder.fromJson(data) as T;
+    if (t == _i0xuine3.Reminder) {
+      return _i0xuine3.Reminder.fromJson(data) as T;
     }
-    if (t == _i77.UpdateCustomerRequest) {
-      return _i77.UpdateCustomerRequest.fromJson(data) as T;
+    if (t == _icatwcwa.UpdateCustomerRequest) {
+      return _icatwcwa.UpdateCustomerRequest.fromJson(data) as T;
     }
-    if (t == _i78.UpdateInvoiceRequest) {
-      return _i78.UpdateInvoiceRequest.fromJson(data) as T;
+    if (t == _iteadt76.UpdateInvoiceRequest) {
+      return _iteadt76.UpdateInvoiceRequest.fromJson(data) as T;
     }
-    if (t == _i79.UpdateInvoiceTemplateRequest) {
-      return _i79.UpdateInvoiceTemplateRequest.fromJson(data) as T;
+    if (t == _ilpliwg4.UpdateInvoiceTemplateRequest) {
+      return _ilpliwg4.UpdateInvoiceTemplateRequest.fromJson(data) as T;
     }
-    if (t == _i80.UpdateRecurringScheduleRequest) {
-      return _i80.UpdateRecurringScheduleRequest.fromJson(data) as T;
+    if (t == _i037hdza.UpdateRecurringScheduleRequest) {
+      return _i037hdza.UpdateRecurringScheduleRequest.fromJson(data) as T;
     }
-    if (t == _i81.VatRate) {
-      return _i81.VatRate.fromJson(data) as T;
+    if (t == _id7e2pr5.VatRate) {
+      return _id7e2pr5.VatRate.fromJson(data) as T;
     }
-    if (t == _i82.CreateProjectRequest) {
-      return _i82.CreateProjectRequest.fromJson(data) as T;
+    if (t == _i8rbvyvx.CreateProjectRequest) {
+      return _i8rbvyvx.CreateProjectRequest.fromJson(data) as T;
     }
-    if (t == _i83.CreateTaskRequest) {
-      return _i83.CreateTaskRequest.fromJson(data) as T;
+    if (t == _iagq7u79.CreateTaskRequest) {
+      return _iagq7u79.CreateTaskRequest.fromJson(data) as T;
     }
-    if (t == _i84.CreateTimeEntriesInvoiceRequest) {
-      return _i84.CreateTimeEntriesInvoiceRequest.fromJson(data) as T;
+    if (t == _i3b86gp3.CreateTimeEntriesInvoiceRequest) {
+      return _i3b86gp3.CreateTimeEntriesInvoiceRequest.fromJson(data) as T;
     }
-    if (t == _i85.CreateTimeEntryRequest) {
-      return _i85.CreateTimeEntryRequest.fromJson(data) as T;
+    if (t == _i85810i7.CreateTimeEntryRequest) {
+      return _i85810i7.CreateTimeEntryRequest.fromJson(data) as T;
     }
-    if (t == _i86.Project) {
-      return _i86.Project.fromJson(data) as T;
+    if (t == _i2wiwzxn.Project) {
+      return _i2wiwzxn.Project.fromJson(data) as T;
     }
-    if (t == _i87.ProjectStatus) {
-      return _i87.ProjectStatus.fromJson(data) as T;
+    if (t == _i8h0tbjs.ProjectStatus) {
+      return _i8h0tbjs.ProjectStatus.fromJson(data) as T;
     }
-    if (t == _i88.StartTimerRequest) {
-      return _i88.StartTimerRequest.fromJson(data) as T;
+    if (t == _i2ishkic.StartTimerRequest) {
+      return _i2ishkic.StartTimerRequest.fromJson(data) as T;
     }
-    if (t == _i89.Task) {
-      return _i89.Task.fromJson(data) as T;
+    if (t == _ihpxqi7u.Task) {
+      return _ihpxqi7u.Task.fromJson(data) as T;
     }
-    if (t == _i90.TaskStatus) {
-      return _i90.TaskStatus.fromJson(data) as T;
+    if (t == _iieqkj38.TaskStatus) {
+      return _iieqkj38.TaskStatus.fromJson(data) as T;
     }
-    if (t == _i91.TimeEntry) {
-      return _i91.TimeEntry.fromJson(data) as T;
+    if (t == _ii8lft1t.TimeEntry) {
+      return _ii8lft1t.TimeEntry.fromJson(data) as T;
     }
-    if (t == _i92.TimeReport) {
-      return _i92.TimeReport.fromJson(data) as T;
+    if (t == _ilk96oxt.TimeReport) {
+      return _ilk96oxt.TimeReport.fromJson(data) as T;
     }
-    if (t == _i93.TimeReportLine) {
-      return _i93.TimeReportLine.fromJson(data) as T;
+    if (t == _iify20ly.TimeReportLine) {
+      return _iify20ly.TimeReportLine.fromJson(data) as T;
     }
-    if (t == _i94.UpdateProjectRequest) {
-      return _i94.UpdateProjectRequest.fromJson(data) as T;
+    if (t == _ilqqks6d.UpdateProjectRequest) {
+      return _ilqqks6d.UpdateProjectRequest.fromJson(data) as T;
     }
-    if (t == _i95.UpdateTaskRequest) {
-      return _i95.UpdateTaskRequest.fromJson(data) as T;
+    if (t == _i3iu7ffh.UpdateTaskRequest) {
+      return _i3iu7ffh.UpdateTaskRequest.fromJson(data) as T;
     }
-    if (t == _i96.UpdateTimeEntryRequest) {
-      return _i96.UpdateTimeEntryRequest.fromJson(data) as T;
+    if (t == _iferwyg8.UpdateTimeEntryRequest) {
+      return _iferwyg8.UpdateTimeEntryRequest.fromJson(data) as T;
     }
-    if (t == _i97.AppTheme) {
-      return _i97.AppTheme.fromJson(data) as T;
+    if (t == _iy79t9m6.AppTheme) {
+      return _iy79t9m6.AppTheme.fromJson(data) as T;
     }
-    if (t == _i98.MyIdentity) {
-      return _i98.MyIdentity.fromJson(data) as T;
+    if (t == _i1sqdvz3.MyIdentity) {
+      return _i1sqdvz3.MyIdentity.fromJson(data) as T;
     }
-    if (t == _i99.MyMembershipInfo) {
-      return _i99.MyMembershipInfo.fromJson(data) as T;
+    if (t == _in8pujw9.MyMembershipInfo) {
+      return _in8pujw9.MyMembershipInfo.fromJson(data) as T;
     }
-    if (t == _i100.UpdateUserProfileRequest) {
-      return _i100.UpdateUserProfileRequest.fromJson(data) as T;
+    if (t == _i5r0ss6k.UpdateUserProfileRequest) {
+      return _i5r0ss6k.UpdateUserProfileRequest.fromJson(data) as T;
     }
-    if (t == _i101.UserProfile) {
-      return _i101.UserProfile.fromJson(data) as T;
+    if (t == _iung9xmp.UserProfile) {
+      return _iung9xmp.UserProfile.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i2.AdminRole?>()) {
-      return (data != null ? _i2.AdminRole.fromJson(data) : null) as T;
+    if (t == _isc.getType<_i409qkgd.AdminRole?>()) {
+      return (data != null ? _i409qkgd.AdminRole.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i3.Feature?>()) {
-      return (data != null ? _i3.Feature.fromJson(data) : null) as T;
+    if (t == _isc.getType<_i0s5j3nj.Feature?>()) {
+      return (data != null ? _i0s5j3nj.Feature.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i4.ConflictException?>()) {
-      return (data != null ? _i4.ConflictException.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i5.ForbiddenException?>()) {
-      return (data != null ? _i5.ForbiddenException.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i6.NotFoundException?>()) {
-      return (data != null ? _i6.NotFoundException.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i7.ValidationException?>()) {
-      return (data != null ? _i7.ValidationException.fromJson(data) : null)
+    if (t == _isc.getType<_i5epujyq.ConflictException?>()) {
+      return (data != null ? _i5epujyq.ConflictException.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i8.AccountingTransaction?>()) {
-      return (data != null ? _i8.AccountingTransaction.fromJson(data) : null)
+    if (t == _isc.getType<_io9vwtrc.ForbiddenException?>()) {
+      return (data != null ? _io9vwtrc.ForbiddenException.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i9.CreateTransactionRequest?>()) {
-      return (data != null ? _i9.CreateTransactionRequest.fromJson(data) : null)
+    if (t == _isc.getType<_ixeh2c1z.NotFoundException?>()) {
+      return (data != null ? _ixeh2c1z.NotFoundException.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i10.ProfitLossLine?>()) {
-      return (data != null ? _i10.ProfitLossLine.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i11.ProfitLossReport?>()) {
-      return (data != null ? _i11.ProfitLossReport.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i12.TransactionCategory?>()) {
-      return (data != null ? _i12.TransactionCategory.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i13.TransactionType?>()) {
-      return (data != null ? _i13.TransactionType.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i14.UpdateTransactionRequest?>()) {
+    if (t == _isc.getType<_io4t73gt.ValidationException?>()) {
       return (data != null
-              ? _i14.UpdateTransactionRequest.fromJson(data)
+              ? _io4t73gt.ValidationException.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i15.AdminAuditEntry?>()) {
-      return (data != null ? _i15.AdminAuditEntry.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i16.AdminAuditPage?>()) {
-      return (data != null ? _i16.AdminAuditPage.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i17.AdminAuthStatus?>()) {
-      return (data != null ? _i17.AdminAuthStatus.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i18.AdminBusinessDetail?>()) {
-      return (data != null ? _i18.AdminBusinessDetail.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i19.AdminBusinessPage?>()) {
-      return (data != null ? _i19.AdminBusinessPage.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i20.AdminInvoicePage?>()) {
-      return (data != null ? _i20.AdminInvoicePage.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i21.AdminMembershipInfo?>()) {
-      return (data != null ? _i21.AdminMembershipInfo.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i22.AdminStatsOverview?>()) {
-      return (data != null ? _i22.AdminStatsOverview.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i23.AdminUserDossier?>()) {
-      return (data != null ? _i23.AdminUserDossier.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i24.AdminUserSummary?>()) {
-      return (data != null ? _i24.AdminUserSummary.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i25.AdminUserSummaryPage?>()) {
-      return (data != null ? _i25.AdminUserSummaryPage.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i26.InvoiceStatusCount?>()) {
-      return (data != null ? _i26.InvoiceStatusCount.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i27.Address?>()) {
-      return (data != null ? _i27.Address.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i28.Business?>()) {
-      return (data != null ? _i28.Business.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i29.BusinessSettings?>()) {
-      return (data != null ? _i29.BusinessSettings.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i30.Country?>()) {
-      return (data != null ? _i30.Country.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i31.CreateBusinessRequest?>()) {
-      return (data != null ? _i31.CreateBusinessRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i32.Currency?>()) {
-      return (data != null ? _i32.Currency.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i33.LegalForm?>()) {
-      return (data != null ? _i33.LegalForm.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i34.Locale?>()) {
-      return (data != null ? _i34.Locale.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i35.Membership?>()) {
-      return (data != null ? _i35.Membership.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i36.MembershipRole?>()) {
-      return (data != null ? _i36.MembershipRole.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i37.RoundingMode?>()) {
-      return (data != null ? _i37.RoundingMode.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i38.UpdateBusinessRequest?>()) {
-      return (data != null ? _i38.UpdateBusinessRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i39.UpdateBusinessSettingsRequest?>()) {
+    if (t == _isc.getType<_imcpe7lh.AccountingTransaction?>()) {
       return (data != null
-              ? _i39.UpdateBusinessSettingsRequest.fromJson(data)
+              ? _imcpe7lh.AccountingTransaction.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i40.DashboardKpis?>()) {
-      return (data != null ? _i40.DashboardKpis.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i41.DashboardSummary?>()) {
-      return (data != null ? _i41.DashboardSummary.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i42.DebtorSummary?>()) {
-      return (data != null ? _i42.DebtorSummary.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i43.MonthlyTrendPoint?>()) {
-      return (data != null ? _i43.MonthlyTrendPoint.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i44.ReceivablesSummary?>()) {
-      return (data != null ? _i44.ReceivablesSummary.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i45.RecentTimeEntry?>()) {
-      return (data != null ? _i45.RecentTimeEntry.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i46.Document?>()) {
-      return (data != null ? _i46.Document.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i47.DocumentKind?>()) {
-      return (data != null ? _i47.DocumentKind.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i48.StorageLocation?>()) {
-      return (data != null ? _i48.StorageLocation.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i49.UploadDocumentRequest?>()) {
-      return (data != null ? _i49.UploadDocumentRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i50.ChecklistDefinition?>()) {
-      return (data != null ? _i50.ChecklistDefinition.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i51.ChecklistItemDefinition?>()) {
-      return (data != null ? _i51.ChecklistItemDefinition.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i52.GuidanceTip?>()) {
-      return (data != null ? _i52.GuidanceTip.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i53.UserGuidanceProgress?>()) {
-      return (data != null ? _i53.UserGuidanceProgress.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i54.CreateCustomerRequest?>()) {
-      return (data != null ? _i54.CreateCustomerRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i55.CreateInvoiceRequest?>()) {
-      return (data != null ? _i55.CreateInvoiceRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i56.CreateInvoiceTemplateRequest?>()) {
+    if (t == _isc.getType<_ipamnsx8.CreateTransactionRequest?>()) {
       return (data != null
-              ? _i56.CreateInvoiceTemplateRequest.fromJson(data)
+              ? _ipamnsx8.CreateTransactionRequest.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i57.CreateRecurringScheduleRequest?>()) {
+    if (t == _isc.getType<_iixw78u5.ProfitLossLine?>()) {
+      return (data != null ? _iixw78u5.ProfitLossLine.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_isurdgsv.ProfitLossReport?>()) {
+      return (data != null ? _isurdgsv.ProfitLossReport.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_imo6tjrw.TransactionCategory?>()) {
       return (data != null
-              ? _i57.CreateRecurringScheduleRequest.fromJson(data)
+              ? _imo6tjrw.TransactionCategory.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i58.Customer?>()) {
-      return (data != null ? _i58.Customer.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i59.CustomerCursorPage?>()) {
-      return (data != null ? _i59.CustomerCursorPage.fromJson(data) : null)
+    if (t == _isc.getType<_ik9vnz0w.TransactionType?>()) {
+      return (data != null ? _ik9vnz0w.TransactionType.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i60.CustomerListPage?>()) {
-      return (data != null ? _i60.CustomerListPage.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i61.CustomerStatus?>()) {
-      return (data != null ? _i61.CustomerStatus.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i62.Invoice?>()) {
-      return (data != null ? _i62.Invoice.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i63.InvoiceCursorPage?>()) {
-      return (data != null ? _i63.InvoiceCursorPage.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i64.InvoiceItem?>()) {
-      return (data != null ? _i64.InvoiceItem.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i65.InvoiceItemRequest?>()) {
-      return (data != null ? _i65.InvoiceItemRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i66.InvoiceItemUnit?>()) {
-      return (data != null ? _i66.InvoiceItemUnit.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i67.InvoiceListPage?>()) {
-      return (data != null ? _i67.InvoiceListPage.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i68.InvoicePaymentStatus?>()) {
-      return (data != null ? _i68.InvoicePaymentStatus.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i69.InvoiceStatus?>()) {
-      return (data != null ? _i69.InvoiceStatus.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i70.InvoiceTemplate?>()) {
-      return (data != null ? _i70.InvoiceTemplate.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i71.InvoiceType?>()) {
-      return (data != null ? _i71.InvoiceType.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i72.PaymentMethod?>()) {
-      return (data != null ? _i72.PaymentMethod.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i73.PaymentRecord?>()) {
-      return (data != null ? _i73.PaymentRecord.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i74.RecordPaymentRequest?>()) {
-      return (data != null ? _i74.RecordPaymentRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i75.RecurrenceInterval?>()) {
-      return (data != null ? _i75.RecurrenceInterval.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i76.Reminder?>()) {
-      return (data != null ? _i76.Reminder.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i77.UpdateCustomerRequest?>()) {
-      return (data != null ? _i77.UpdateCustomerRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i78.UpdateInvoiceRequest?>()) {
-      return (data != null ? _i78.UpdateInvoiceRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i79.UpdateInvoiceTemplateRequest?>()) {
+    if (t == _isc.getType<_iyj5tb39.UpdateTransactionRequest?>()) {
       return (data != null
-              ? _i79.UpdateInvoiceTemplateRequest.fromJson(data)
+              ? _iyj5tb39.UpdateTransactionRequest.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i80.UpdateRecurringScheduleRequest?>()) {
+    if (t == _isc.getType<_io6p5gfm.AdminAuditEntry?>()) {
+      return (data != null ? _io6p5gfm.AdminAuditEntry.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_iaab9k46.AdminAuditPage?>()) {
+      return (data != null ? _iaab9k46.AdminAuditPage.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_ipsgq99z.AdminAuthStatus?>()) {
+      return (data != null ? _ipsgq99z.AdminAuthStatus.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_i32iaxq2.AdminBusinessDetail?>()) {
       return (data != null
-              ? _i80.UpdateRecurringScheduleRequest.fromJson(data)
+              ? _i32iaxq2.AdminBusinessDetail.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i81.VatRate?>()) {
-      return (data != null ? _i81.VatRate.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i82.CreateProjectRequest?>()) {
-      return (data != null ? _i82.CreateProjectRequest.fromJson(data) : null)
+    if (t == _isc.getType<_iytjl6p4.AdminBusinessPage?>()) {
+      return (data != null ? _iytjl6p4.AdminBusinessPage.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i83.CreateTaskRequest?>()) {
-      return (data != null ? _i83.CreateTaskRequest.fromJson(data) : null) as T;
+    if (t == _isc.getType<_ia380t04.AdminInvoicePage?>()) {
+      return (data != null ? _ia380t04.AdminInvoicePage.fromJson(data) : null)
+          as T;
     }
-    if (t == _i1.getType<_i84.CreateTimeEntriesInvoiceRequest?>()) {
+    if (t == _isc.getType<_igm2ntgz.AdminMembershipInfo?>()) {
       return (data != null
-              ? _i84.CreateTimeEntriesInvoiceRequest.fromJson(data)
+              ? _igm2ntgz.AdminMembershipInfo.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i85.CreateTimeEntryRequest?>()) {
-      return (data != null ? _i85.CreateTimeEntryRequest.fromJson(data) : null)
+    if (t == _isc.getType<_ihc64acz.AdminStatsOverview?>()) {
+      return (data != null ? _ihc64acz.AdminStatsOverview.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i86.Project?>()) {
-      return (data != null ? _i86.Project.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i87.ProjectStatus?>()) {
-      return (data != null ? _i87.ProjectStatus.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i88.StartTimerRequest?>()) {
-      return (data != null ? _i88.StartTimerRequest.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i89.Task?>()) {
-      return (data != null ? _i89.Task.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i90.TaskStatus?>()) {
-      return (data != null ? _i90.TaskStatus.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i91.TimeEntry?>()) {
-      return (data != null ? _i91.TimeEntry.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i92.TimeReport?>()) {
-      return (data != null ? _i92.TimeReport.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i93.TimeReportLine?>()) {
-      return (data != null ? _i93.TimeReportLine.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i94.UpdateProjectRequest?>()) {
-      return (data != null ? _i94.UpdateProjectRequest.fromJson(data) : null)
+    if (t == _isc.getType<_ibyotlfs.AdminUserDossier?>()) {
+      return (data != null ? _ibyotlfs.AdminUserDossier.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i95.UpdateTaskRequest?>()) {
-      return (data != null ? _i95.UpdateTaskRequest.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i96.UpdateTimeEntryRequest?>()) {
-      return (data != null ? _i96.UpdateTimeEntryRequest.fromJson(data) : null)
+    if (t == _isc.getType<_iwdjv467.AdminUserSummary?>()) {
+      return (data != null ? _iwdjv467.AdminUserSummary.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i97.AppTheme?>()) {
-      return (data != null ? _i97.AppTheme.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i98.MyIdentity?>()) {
-      return (data != null ? _i98.MyIdentity.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i99.MyMembershipInfo?>()) {
-      return (data != null ? _i99.MyMembershipInfo.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i100.UpdateUserProfileRequest?>()) {
+    if (t == _isc.getType<_i2f075pm.AdminUserSummaryPage?>()) {
       return (data != null
-              ? _i100.UpdateUserProfileRequest.fromJson(data)
+              ? _i2f075pm.AdminUserSummaryPage.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i101.UserProfile?>()) {
-      return (data != null ? _i101.UserProfile.fromJson(data) : null) as T;
+    if (t == _isc.getType<_ikvugyyu.InvoiceStatusCount?>()) {
+      return (data != null ? _ikvugyyu.InvoiceStatusCount.fromJson(data) : null)
+          as T;
     }
-    if (t == List<_i10.ProfitLossLine>) {
+    if (t == _isc.getType<_izfx9e18.Address?>()) {
+      return (data != null ? _izfx9e18.Address.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_im9zvu8o.Business?>()) {
+      return (data != null ? _im9zvu8o.Business.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_ixvagzl5.BusinessSettings?>()) {
+      return (data != null ? _ixvagzl5.BusinessSettings.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_i8xf36x2.Country?>()) {
+      return (data != null ? _i8xf36x2.Country.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_i1txccp7.CreateBusinessRequest?>()) {
+      return (data != null
+              ? _i1txccp7.CreateBusinessRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_i1srbh9z.Currency?>()) {
+      return (data != null ? _i1srbh9z.Currency.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_i5egs7uv.LegalForm?>()) {
+      return (data != null ? _i5egs7uv.LegalForm.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_ii0188h0.Locale?>()) {
+      return (data != null ? _ii0188h0.Locale.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_iu72qgm4.Membership?>()) {
+      return (data != null ? _iu72qgm4.Membership.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_iv0iprnk.MembershipRole?>()) {
+      return (data != null ? _iv0iprnk.MembershipRole.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_iku7b3rb.RoundingMode?>()) {
+      return (data != null ? _iku7b3rb.RoundingMode.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_inkd6ewo.UpdateBusinessRequest?>()) {
+      return (data != null
+              ? _inkd6ewo.UpdateBusinessRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_ii46p08a.UpdateBusinessSettingsRequest?>()) {
+      return (data != null
+              ? _ii46p08a.UpdateBusinessSettingsRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_i1j0w1sv.DashboardKpis?>()) {
+      return (data != null ? _i1j0w1sv.DashboardKpis.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_iw3j14uv.DashboardSummary?>()) {
+      return (data != null ? _iw3j14uv.DashboardSummary.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_ix33w5u6.DebtorSummary?>()) {
+      return (data != null ? _ix33w5u6.DebtorSummary.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_ixg6nsli.MonthlyTrendPoint?>()) {
+      return (data != null ? _ixg6nsli.MonthlyTrendPoint.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_ie3ro5gq.ReceivablesSummary?>()) {
+      return (data != null ? _ie3ro5gq.ReceivablesSummary.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_impe7ay9.RecentTimeEntry?>()) {
+      return (data != null ? _impe7ay9.RecentTimeEntry.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_i9jvbk51.Document?>()) {
+      return (data != null ? _i9jvbk51.Document.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_imaz1zqg.DocumentKind?>()) {
+      return (data != null ? _imaz1zqg.DocumentKind.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_i9qnixrl.StorageLocation?>()) {
+      return (data != null ? _i9qnixrl.StorageLocation.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_iz60udpo.UploadDocumentRequest?>()) {
+      return (data != null
+              ? _iz60udpo.UploadDocumentRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_i04z5hwj.ChecklistDefinition?>()) {
+      return (data != null
+              ? _i04z5hwj.ChecklistDefinition.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_i5jbvijx.ChecklistItemDefinition?>()) {
+      return (data != null
+              ? _i5jbvijx.ChecklistItemDefinition.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_irvclg1d.GuidanceTip?>()) {
+      return (data != null ? _irvclg1d.GuidanceTip.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_ik05lx5a.UserGuidanceProgress?>()) {
+      return (data != null
+              ? _ik05lx5a.UserGuidanceProgress.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_i90hzmg5.CreateCustomerRequest?>()) {
+      return (data != null
+              ? _i90hzmg5.CreateCustomerRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_ia6btdit.CreateInvoiceRequest?>()) {
+      return (data != null
+              ? _ia6btdit.CreateInvoiceRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_iyi9fugk.CreateInvoiceTemplateRequest?>()) {
+      return (data != null
+              ? _iyi9fugk.CreateInvoiceTemplateRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_i4j5ra9q.CreateRecurringScheduleRequest?>()) {
+      return (data != null
+              ? _i4j5ra9q.CreateRecurringScheduleRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_ic8wp775.Customer?>()) {
+      return (data != null ? _ic8wp775.Customer.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_if0yalhk.CustomerCursorPage?>()) {
+      return (data != null ? _if0yalhk.CustomerCursorPage.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_iakrzq1i.CustomerListPage?>()) {
+      return (data != null ? _iakrzq1i.CustomerListPage.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_ibddqx0x.CustomerStatus?>()) {
+      return (data != null ? _ibddqx0x.CustomerStatus.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_imguyn55.Invoice?>()) {
+      return (data != null ? _imguyn55.Invoice.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_i2f30jh4.InvoiceCursorPage?>()) {
+      return (data != null ? _i2f30jh4.InvoiceCursorPage.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_iu86qxr6.InvoiceItem?>()) {
+      return (data != null ? _iu86qxr6.InvoiceItem.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_it1pcy1x.InvoiceItemRequest?>()) {
+      return (data != null ? _it1pcy1x.InvoiceItemRequest.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_ik22qf7o.InvoiceItemUnit?>()) {
+      return (data != null ? _ik22qf7o.InvoiceItemUnit.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_i6mqpqud.InvoiceListPage?>()) {
+      return (data != null ? _i6mqpqud.InvoiceListPage.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_i6e3kqsf.InvoicePaymentStatus?>()) {
+      return (data != null
+              ? _i6e3kqsf.InvoicePaymentStatus.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_i80dthru.InvoiceStatus?>()) {
+      return (data != null ? _i80dthru.InvoiceStatus.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_isaqeos4.InvoiceTemplate?>()) {
+      return (data != null ? _isaqeos4.InvoiceTemplate.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_io5qrdfp.InvoiceType?>()) {
+      return (data != null ? _io5qrdfp.InvoiceType.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_i31hy3jj.PaymentMethod?>()) {
+      return (data != null ? _i31hy3jj.PaymentMethod.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_id8w36x8.PaymentRecord?>()) {
+      return (data != null ? _id8w36x8.PaymentRecord.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_i2drsvke.RecordPaymentRequest?>()) {
+      return (data != null
+              ? _i2drsvke.RecordPaymentRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_it8iedui.RecurrenceInterval?>()) {
+      return (data != null ? _it8iedui.RecurrenceInterval.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_i0xuine3.Reminder?>()) {
+      return (data != null ? _i0xuine3.Reminder.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_icatwcwa.UpdateCustomerRequest?>()) {
+      return (data != null
+              ? _icatwcwa.UpdateCustomerRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_iteadt76.UpdateInvoiceRequest?>()) {
+      return (data != null
+              ? _iteadt76.UpdateInvoiceRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_ilpliwg4.UpdateInvoiceTemplateRequest?>()) {
+      return (data != null
+              ? _ilpliwg4.UpdateInvoiceTemplateRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_i037hdza.UpdateRecurringScheduleRequest?>()) {
+      return (data != null
+              ? _i037hdza.UpdateRecurringScheduleRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_id7e2pr5.VatRate?>()) {
+      return (data != null ? _id7e2pr5.VatRate.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_i8rbvyvx.CreateProjectRequest?>()) {
+      return (data != null
+              ? _i8rbvyvx.CreateProjectRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_iagq7u79.CreateTaskRequest?>()) {
+      return (data != null ? _iagq7u79.CreateTaskRequest.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_i3b86gp3.CreateTimeEntriesInvoiceRequest?>()) {
+      return (data != null
+              ? _i3b86gp3.CreateTimeEntriesInvoiceRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_i85810i7.CreateTimeEntryRequest?>()) {
+      return (data != null
+              ? _i85810i7.CreateTimeEntryRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_i2wiwzxn.Project?>()) {
+      return (data != null ? _i2wiwzxn.Project.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_i8h0tbjs.ProjectStatus?>()) {
+      return (data != null ? _i8h0tbjs.ProjectStatus.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_i2ishkic.StartTimerRequest?>()) {
+      return (data != null ? _i2ishkic.StartTimerRequest.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_ihpxqi7u.Task?>()) {
+      return (data != null ? _ihpxqi7u.Task.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_iieqkj38.TaskStatus?>()) {
+      return (data != null ? _iieqkj38.TaskStatus.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_ii8lft1t.TimeEntry?>()) {
+      return (data != null ? _ii8lft1t.TimeEntry.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_ilk96oxt.TimeReport?>()) {
+      return (data != null ? _ilk96oxt.TimeReport.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_iify20ly.TimeReportLine?>()) {
+      return (data != null ? _iify20ly.TimeReportLine.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_ilqqks6d.UpdateProjectRequest?>()) {
+      return (data != null
+              ? _ilqqks6d.UpdateProjectRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_i3iu7ffh.UpdateTaskRequest?>()) {
+      return (data != null ? _i3iu7ffh.UpdateTaskRequest.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_iferwyg8.UpdateTimeEntryRequest?>()) {
+      return (data != null
+              ? _iferwyg8.UpdateTimeEntryRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_iy79t9m6.AppTheme?>()) {
+      return (data != null ? _iy79t9m6.AppTheme.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_i1sqdvz3.MyIdentity?>()) {
+      return (data != null ? _i1sqdvz3.MyIdentity.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_in8pujw9.MyMembershipInfo?>()) {
+      return (data != null ? _in8pujw9.MyMembershipInfo.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_i5r0ss6k.UpdateUserProfileRequest?>()) {
+      return (data != null
+              ? _i5r0ss6k.UpdateUserProfileRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_iung9xmp.UserProfile?>()) {
+      return (data != null ? _iung9xmp.UserProfile.fromJson(data) : null) as T;
+    }
+    if (t == List<_iixw78u5.ProfitLossLine>) {
       return (data as List)
-              .map((e) => deserialize<_i10.ProfitLossLine>(e))
+              .map((e) => deserialize<_iixw78u5.ProfitLossLine>(e))
               .toList()
           as T;
     }
@@ -952,7 +1039,7 @@ class Protocol extends _i1.SerializationManager {
           )
           as T;
     }
-    if (t == _i1.getType<Map<String, String>?>()) {
+    if (t == _isc.getType<Map<String, String>?>()) {
       return (data != null
               ? (data as Map).map(
                   (k, v) =>
@@ -961,291 +1048,317 @@ class Protocol extends _i1.SerializationManager {
               : null)
           as T;
     }
-    if (t == List<_i15.AdminAuditEntry>) {
+    if (t == List<_io6p5gfm.AdminAuditEntry>) {
       return (data as List)
-              .map((e) => deserialize<_i15.AdminAuditEntry>(e))
+              .map((e) => deserialize<_io6p5gfm.AdminAuditEntry>(e))
               .toList()
           as T;
     }
-    if (t == List<_i21.AdminMembershipInfo>) {
+    if (t == List<_igm2ntgz.AdminMembershipInfo>) {
       return (data as List)
-              .map((e) => deserialize<_i21.AdminMembershipInfo>(e))
+              .map((e) => deserialize<_igm2ntgz.AdminMembershipInfo>(e))
               .toList()
           as T;
     }
-    if (t == List<_i28.Business>) {
-      return (data as List).map((e) => deserialize<_i28.Business>(e)).toList()
-          as T;
-    }
-    if (t == List<_i62.Invoice>) {
-      return (data as List).map((e) => deserialize<_i62.Invoice>(e)).toList()
-          as T;
-    }
-    if (t == List<_i26.InvoiceStatusCount>) {
+    if (t == List<_im9zvu8o.Business>) {
       return (data as List)
-              .map((e) => deserialize<_i26.InvoiceStatusCount>(e))
+              .map((e) => deserialize<_im9zvu8o.Business>(e))
               .toList()
           as T;
     }
-    if (t == List<_i24.AdminUserSummary>) {
+    if (t == List<_imguyn55.Invoice>) {
       return (data as List)
-              .map((e) => deserialize<_i24.AdminUserSummary>(e))
+              .map((e) => deserialize<_imguyn55.Invoice>(e))
               .toList()
           as T;
     }
-    if (t == List<_i43.MonthlyTrendPoint>) {
+    if (t == List<_ikvugyyu.InvoiceStatusCount>) {
       return (data as List)
-              .map((e) => deserialize<_i43.MonthlyTrendPoint>(e))
+              .map((e) => deserialize<_ikvugyyu.InvoiceStatusCount>(e))
               .toList()
           as T;
     }
-    if (t == List<_i8.AccountingTransaction>) {
+    if (t == List<_iwdjv467.AdminUserSummary>) {
       return (data as List)
-              .map((e) => deserialize<_i8.AccountingTransaction>(e))
+              .map((e) => deserialize<_iwdjv467.AdminUserSummary>(e))
               .toList()
           as T;
     }
-    if (t == List<_i45.RecentTimeEntry>) {
+    if (t == List<_ixg6nsli.MonthlyTrendPoint>) {
       return (data as List)
-              .map((e) => deserialize<_i45.RecentTimeEntry>(e))
+              .map((e) => deserialize<_ixg6nsli.MonthlyTrendPoint>(e))
               .toList()
           as T;
     }
-    if (t == List<_i42.DebtorSummary>) {
+    if (t == List<_imcpe7lh.AccountingTransaction>) {
       return (data as List)
-              .map((e) => deserialize<_i42.DebtorSummary>(e))
+              .map((e) => deserialize<_imcpe7lh.AccountingTransaction>(e))
               .toList()
           as T;
     }
-    if (t == List<_i51.ChecklistItemDefinition>) {
+    if (t == List<_impe7ay9.RecentTimeEntry>) {
       return (data as List)
-              .map((e) => deserialize<_i51.ChecklistItemDefinition>(e))
+              .map((e) => deserialize<_impe7ay9.RecentTimeEntry>(e))
               .toList()
           as T;
     }
-    if (t == List<_i65.InvoiceItemRequest>) {
+    if (t == List<_ix33w5u6.DebtorSummary>) {
       return (data as List)
-              .map((e) => deserialize<_i65.InvoiceItemRequest>(e))
+              .map((e) => deserialize<_ix33w5u6.DebtorSummary>(e))
               .toList()
           as T;
     }
-    if (t == List<_i58.Customer>) {
-      return (data as List).map((e) => deserialize<_i58.Customer>(e)).toList()
+    if (t == List<_i5jbvijx.ChecklistItemDefinition>) {
+      return (data as List)
+              .map((e) => deserialize<_i5jbvijx.ChecklistItemDefinition>(e))
+              .toList()
           as T;
     }
-    if (t == List<_i73.PaymentRecord>) {
+    if (t == List<_it1pcy1x.InvoiceItemRequest>) {
       return (data as List)
-              .map((e) => deserialize<_i73.PaymentRecord>(e))
+              .map((e) => deserialize<_it1pcy1x.InvoiceItemRequest>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_ic8wp775.Customer>) {
+      return (data as List)
+              .map((e) => deserialize<_ic8wp775.Customer>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_id8w36x8.PaymentRecord>) {
+      return (data as List)
+              .map((e) => deserialize<_id8w36x8.PaymentRecord>(e))
               .toList()
           as T;
     }
     if (t == List<int>) {
       return (data as List).map((e) => deserialize<int>(e)).toList() as T;
     }
-    if (t == _i1.getType<List<int>?>()) {
+    if (t == _isc.getType<List<int>?>()) {
       return (data != null
               ? (data as List).map((e) => deserialize<int>(e)).toList()
               : null)
           as T;
     }
-    if (t == List<_i93.TimeReportLine>) {
+    if (t == List<_iify20ly.TimeReportLine>) {
       return (data as List)
-              .map((e) => deserialize<_i93.TimeReportLine>(e))
+              .map((e) => deserialize<_iify20ly.TimeReportLine>(e))
               .toList()
           as T;
     }
-    if (t == List<_i99.MyMembershipInfo>) {
+    if (t == List<_in8pujw9.MyMembershipInfo>) {
       return (data as List)
-              .map((e) => deserialize<_i99.MyMembershipInfo>(e))
+              .map((e) => deserialize<_in8pujw9.MyMembershipInfo>(e))
               .toList()
           as T;
     }
-    if (t == List<_i102.Feature>) {
-      return (data as List).map((e) => deserialize<_i102.Feature>(e)).toList()
-          as T;
-    }
-    if (t == List<_i103.AccountingTransaction>) {
+    if (t == List<_i6zpily8.Feature>) {
       return (data as List)
-              .map((e) => deserialize<_i103.AccountingTransaction>(e))
+              .map((e) => deserialize<_i6zpily8.Feature>(e))
               .toList()
           as T;
     }
-    if (t == List<_i104.GuidanceTip>) {
+    if (t == List<_in4p196h.AccountingTransaction>) {
       return (data as List)
-              .map((e) => deserialize<_i104.GuidanceTip>(e))
+              .map((e) => deserialize<_in4p196h.AccountingTransaction>(e))
               .toList()
           as T;
     }
-    if (t == List<_i105.Business>) {
-      return (data as List).map((e) => deserialize<_i105.Business>(e)).toList()
-          as T;
-    }
-    if (t == List<_i106.Document>) {
-      return (data as List).map((e) => deserialize<_i106.Document>(e)).toList()
-          as T;
-    }
-    if (t == List<_i107.ChecklistDefinition>) {
+    if (t == List<_in4e0h8b.GuidanceTip>) {
       return (data as List)
-              .map((e) => deserialize<_i107.ChecklistDefinition>(e))
+              .map((e) => deserialize<_in4e0h8b.GuidanceTip>(e))
               .toList()
           as T;
     }
-    if (t == List<_i108.UserGuidanceProgress>) {
+    if (t == List<_i0hkv0p3.Business>) {
       return (data as List)
-              .map((e) => deserialize<_i108.UserGuidanceProgress>(e))
+              .map((e) => deserialize<_i0hkv0p3.Business>(e))
               .toList()
           as T;
     }
-    if (t == List<_i109.Customer>) {
-      return (data as List).map((e) => deserialize<_i109.Customer>(e)).toList()
-          as T;
-    }
-    if (t == List<_i110.InvoiceItem>) {
+    if (t == List<_i6dacf8x.Document>) {
       return (data as List)
-              .map((e) => deserialize<_i110.InvoiceItem>(e))
+              .map((e) => deserialize<_i6dacf8x.Document>(e))
               .toList()
           as T;
     }
-    if (t == List<_i111.Invoice>) {
-      return (data as List).map((e) => deserialize<_i111.Invoice>(e)).toList()
-          as T;
-    }
-    if (t == List<_i112.InvoiceTemplate>) {
+    if (t == List<_iijoyams.ChecklistDefinition>) {
       return (data as List)
-              .map((e) => deserialize<_i112.InvoiceTemplate>(e))
+              .map((e) => deserialize<_iijoyams.ChecklistDefinition>(e))
               .toList()
           as T;
     }
-    if (t == List<_i113.Reminder>) {
-      return (data as List).map((e) => deserialize<_i113.Reminder>(e)).toList()
+    if (t == List<_i965vnjh.UserGuidanceProgress>) {
+      return (data as List)
+              .map((e) => deserialize<_i965vnjh.UserGuidanceProgress>(e))
+              .toList()
           as T;
     }
-    if (t == List<_i114.Task>) {
-      return (data as List).map((e) => deserialize<_i114.Task>(e)).toList()
+    if (t == List<_inumhip7.Customer>) {
+      return (data as List)
+              .map((e) => deserialize<_inumhip7.Customer>(e))
+              .toList()
           as T;
     }
-    if (t == List<_i115.Project>) {
-      return (data as List).map((e) => deserialize<_i115.Project>(e)).toList()
+    if (t == List<_idltrgge.InvoiceItem>) {
+      return (data as List)
+              .map((e) => deserialize<_idltrgge.InvoiceItem>(e))
+              .toList()
           as T;
     }
-    if (t == List<_i116.TimeEntry>) {
-      return (data as List).map((e) => deserialize<_i116.TimeEntry>(e)).toList()
+    if (t == List<_ijh06pcp.Invoice>) {
+      return (data as List)
+              .map((e) => deserialize<_ijh06pcp.Invoice>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_ir2z9rpn.InvoiceTemplate>) {
+      return (data as List)
+              .map((e) => deserialize<_ir2z9rpn.InvoiceTemplate>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_i89d689a.Reminder>) {
+      return (data as List)
+              .map((e) => deserialize<_i89d689a.Reminder>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_ib31j0is.Task>) {
+      return (data as List).map((e) => deserialize<_ib31j0is.Task>(e)).toList()
+          as T;
+    }
+    if (t == List<_i8k415ln.Project>) {
+      return (data as List)
+              .map((e) => deserialize<_i8k415ln.Project>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_iaj8oc9k.TimeEntry>) {
+      return (data as List)
+              .map((e) => deserialize<_iaj8oc9k.TimeEntry>(e))
+              .toList()
           as T;
     }
     try {
-      return _i117.Protocol().deserialize<T>(data, t);
-    } on _i1.DeserializationTypeNotFoundException catch (_) {}
+      return _ix6v1tim.Protocol().deserialize<T>(data, t);
+    } on _isc.DeserializationTypeNotFoundException catch (_) {}
     try {
-      return _i118.Protocol().deserialize<T>(data, t);
-    } on _i1.DeserializationTypeNotFoundException catch (_) {}
+      return _iacc.Protocol().deserialize<T>(data, t);
+    } on _isc.DeserializationTypeNotFoundException catch (_) {}
     try {
-      return _i119.Protocol().deserialize<T>(data, t);
-    } on _i1.DeserializationTypeNotFoundException catch (_) {}
+      return _iaic.Protocol().deserialize<T>(data, t);
+    } on _isc.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
-      _i2.AdminRole => 'AdminRole',
-      _i3.Feature => 'Feature',
-      _i4.ConflictException => 'ConflictException',
-      _i5.ForbiddenException => 'ForbiddenException',
-      _i6.NotFoundException => 'NotFoundException',
-      _i7.ValidationException => 'ValidationException',
-      _i8.AccountingTransaction => 'AccountingTransaction',
-      _i9.CreateTransactionRequest => 'CreateTransactionRequest',
-      _i10.ProfitLossLine => 'ProfitLossLine',
-      _i11.ProfitLossReport => 'ProfitLossReport',
-      _i12.TransactionCategory => 'TransactionCategory',
-      _i13.TransactionType => 'TransactionType',
-      _i14.UpdateTransactionRequest => 'UpdateTransactionRequest',
-      _i15.AdminAuditEntry => 'AdminAuditEntry',
-      _i16.AdminAuditPage => 'AdminAuditPage',
-      _i17.AdminAuthStatus => 'AdminAuthStatus',
-      _i18.AdminBusinessDetail => 'AdminBusinessDetail',
-      _i19.AdminBusinessPage => 'AdminBusinessPage',
-      _i20.AdminInvoicePage => 'AdminInvoicePage',
-      _i21.AdminMembershipInfo => 'AdminMembershipInfo',
-      _i22.AdminStatsOverview => 'AdminStatsOverview',
-      _i23.AdminUserDossier => 'AdminUserDossier',
-      _i24.AdminUserSummary => 'AdminUserSummary',
-      _i25.AdminUserSummaryPage => 'AdminUserSummaryPage',
-      _i26.InvoiceStatusCount => 'InvoiceStatusCount',
-      _i27.Address => 'Address',
-      _i28.Business => 'Business',
-      _i29.BusinessSettings => 'BusinessSettings',
-      _i30.Country => 'Country',
-      _i31.CreateBusinessRequest => 'CreateBusinessRequest',
-      _i32.Currency => 'Currency',
-      _i33.LegalForm => 'LegalForm',
-      _i34.Locale => 'Locale',
-      _i35.Membership => 'Membership',
-      _i36.MembershipRole => 'MembershipRole',
-      _i37.RoundingMode => 'RoundingMode',
-      _i38.UpdateBusinessRequest => 'UpdateBusinessRequest',
-      _i39.UpdateBusinessSettingsRequest => 'UpdateBusinessSettingsRequest',
-      _i40.DashboardKpis => 'DashboardKpis',
-      _i41.DashboardSummary => 'DashboardSummary',
-      _i42.DebtorSummary => 'DebtorSummary',
-      _i43.MonthlyTrendPoint => 'MonthlyTrendPoint',
-      _i44.ReceivablesSummary => 'ReceivablesSummary',
-      _i45.RecentTimeEntry => 'RecentTimeEntry',
-      _i46.Document => 'Document',
-      _i47.DocumentKind => 'DocumentKind',
-      _i48.StorageLocation => 'StorageLocation',
-      _i49.UploadDocumentRequest => 'UploadDocumentRequest',
-      _i50.ChecklistDefinition => 'ChecklistDefinition',
-      _i51.ChecklistItemDefinition => 'ChecklistItemDefinition',
-      _i52.GuidanceTip => 'GuidanceTip',
-      _i53.UserGuidanceProgress => 'UserGuidanceProgress',
-      _i54.CreateCustomerRequest => 'CreateCustomerRequest',
-      _i55.CreateInvoiceRequest => 'CreateInvoiceRequest',
-      _i56.CreateInvoiceTemplateRequest => 'CreateInvoiceTemplateRequest',
-      _i57.CreateRecurringScheduleRequest => 'CreateRecurringScheduleRequest',
-      _i58.Customer => 'Customer',
-      _i59.CustomerCursorPage => 'CustomerCursorPage',
-      _i60.CustomerListPage => 'CustomerListPage',
-      _i61.CustomerStatus => 'CustomerStatus',
-      _i62.Invoice => 'Invoice',
-      _i63.InvoiceCursorPage => 'InvoiceCursorPage',
-      _i64.InvoiceItem => 'InvoiceItem',
-      _i65.InvoiceItemRequest => 'InvoiceItemRequest',
-      _i66.InvoiceItemUnit => 'InvoiceItemUnit',
-      _i67.InvoiceListPage => 'InvoiceListPage',
-      _i68.InvoicePaymentStatus => 'InvoicePaymentStatus',
-      _i69.InvoiceStatus => 'InvoiceStatus',
-      _i70.InvoiceTemplate => 'InvoiceTemplate',
-      _i71.InvoiceType => 'InvoiceType',
-      _i72.PaymentMethod => 'PaymentMethod',
-      _i73.PaymentRecord => 'PaymentRecord',
-      _i74.RecordPaymentRequest => 'RecordPaymentRequest',
-      _i75.RecurrenceInterval => 'RecurrenceInterval',
-      _i76.Reminder => 'Reminder',
-      _i77.UpdateCustomerRequest => 'UpdateCustomerRequest',
-      _i78.UpdateInvoiceRequest => 'UpdateInvoiceRequest',
-      _i79.UpdateInvoiceTemplateRequest => 'UpdateInvoiceTemplateRequest',
-      _i80.UpdateRecurringScheduleRequest => 'UpdateRecurringScheduleRequest',
-      _i81.VatRate => 'VatRate',
-      _i82.CreateProjectRequest => 'CreateProjectRequest',
-      _i83.CreateTaskRequest => 'CreateTaskRequest',
-      _i84.CreateTimeEntriesInvoiceRequest => 'CreateTimeEntriesInvoiceRequest',
-      _i85.CreateTimeEntryRequest => 'CreateTimeEntryRequest',
-      _i86.Project => 'Project',
-      _i87.ProjectStatus => 'ProjectStatus',
-      _i88.StartTimerRequest => 'StartTimerRequest',
-      _i89.Task => 'Task',
-      _i90.TaskStatus => 'TaskStatus',
-      _i91.TimeEntry => 'TimeEntry',
-      _i92.TimeReport => 'TimeReport',
-      _i93.TimeReportLine => 'TimeReportLine',
-      _i94.UpdateProjectRequest => 'UpdateProjectRequest',
-      _i95.UpdateTaskRequest => 'UpdateTaskRequest',
-      _i96.UpdateTimeEntryRequest => 'UpdateTimeEntryRequest',
-      _i97.AppTheme => 'AppTheme',
-      _i98.MyIdentity => 'MyIdentity',
-      _i99.MyMembershipInfo => 'MyMembershipInfo',
-      _i100.UpdateUserProfileRequest => 'UpdateUserProfileRequest',
-      _i101.UserProfile => 'UserProfile',
+      _i409qkgd.AdminRole => 'AdminRole',
+      _i0s5j3nj.Feature => 'Feature',
+      _i5epujyq.ConflictException => 'ConflictException',
+      _io9vwtrc.ForbiddenException => 'ForbiddenException',
+      _ixeh2c1z.NotFoundException => 'NotFoundException',
+      _io4t73gt.ValidationException => 'ValidationException',
+      _imcpe7lh.AccountingTransaction => 'AccountingTransaction',
+      _ipamnsx8.CreateTransactionRequest => 'CreateTransactionRequest',
+      _iixw78u5.ProfitLossLine => 'ProfitLossLine',
+      _isurdgsv.ProfitLossReport => 'ProfitLossReport',
+      _imo6tjrw.TransactionCategory => 'TransactionCategory',
+      _ik9vnz0w.TransactionType => 'TransactionType',
+      _iyj5tb39.UpdateTransactionRequest => 'UpdateTransactionRequest',
+      _io6p5gfm.AdminAuditEntry => 'AdminAuditEntry',
+      _iaab9k46.AdminAuditPage => 'AdminAuditPage',
+      _ipsgq99z.AdminAuthStatus => 'AdminAuthStatus',
+      _i32iaxq2.AdminBusinessDetail => 'AdminBusinessDetail',
+      _iytjl6p4.AdminBusinessPage => 'AdminBusinessPage',
+      _ia380t04.AdminInvoicePage => 'AdminInvoicePage',
+      _igm2ntgz.AdminMembershipInfo => 'AdminMembershipInfo',
+      _ihc64acz.AdminStatsOverview => 'AdminStatsOverview',
+      _ibyotlfs.AdminUserDossier => 'AdminUserDossier',
+      _iwdjv467.AdminUserSummary => 'AdminUserSummary',
+      _i2f075pm.AdminUserSummaryPage => 'AdminUserSummaryPage',
+      _ikvugyyu.InvoiceStatusCount => 'InvoiceStatusCount',
+      _izfx9e18.Address => 'Address',
+      _im9zvu8o.Business => 'Business',
+      _ixvagzl5.BusinessSettings => 'BusinessSettings',
+      _i8xf36x2.Country => 'Country',
+      _i1txccp7.CreateBusinessRequest => 'CreateBusinessRequest',
+      _i1srbh9z.Currency => 'Currency',
+      _i5egs7uv.LegalForm => 'LegalForm',
+      _ii0188h0.Locale => 'Locale',
+      _iu72qgm4.Membership => 'Membership',
+      _iv0iprnk.MembershipRole => 'MembershipRole',
+      _iku7b3rb.RoundingMode => 'RoundingMode',
+      _inkd6ewo.UpdateBusinessRequest => 'UpdateBusinessRequest',
+      _ii46p08a.UpdateBusinessSettingsRequest =>
+        'UpdateBusinessSettingsRequest',
+      _i1j0w1sv.DashboardKpis => 'DashboardKpis',
+      _iw3j14uv.DashboardSummary => 'DashboardSummary',
+      _ix33w5u6.DebtorSummary => 'DebtorSummary',
+      _ixg6nsli.MonthlyTrendPoint => 'MonthlyTrendPoint',
+      _ie3ro5gq.ReceivablesSummary => 'ReceivablesSummary',
+      _impe7ay9.RecentTimeEntry => 'RecentTimeEntry',
+      _i9jvbk51.Document => 'Document',
+      _imaz1zqg.DocumentKind => 'DocumentKind',
+      _i9qnixrl.StorageLocation => 'StorageLocation',
+      _iz60udpo.UploadDocumentRequest => 'UploadDocumentRequest',
+      _i04z5hwj.ChecklistDefinition => 'ChecklistDefinition',
+      _i5jbvijx.ChecklistItemDefinition => 'ChecklistItemDefinition',
+      _irvclg1d.GuidanceTip => 'GuidanceTip',
+      _ik05lx5a.UserGuidanceProgress => 'UserGuidanceProgress',
+      _i90hzmg5.CreateCustomerRequest => 'CreateCustomerRequest',
+      _ia6btdit.CreateInvoiceRequest => 'CreateInvoiceRequest',
+      _iyi9fugk.CreateInvoiceTemplateRequest => 'CreateInvoiceTemplateRequest',
+      _i4j5ra9q.CreateRecurringScheduleRequest =>
+        'CreateRecurringScheduleRequest',
+      _ic8wp775.Customer => 'Customer',
+      _if0yalhk.CustomerCursorPage => 'CustomerCursorPage',
+      _iakrzq1i.CustomerListPage => 'CustomerListPage',
+      _ibddqx0x.CustomerStatus => 'CustomerStatus',
+      _imguyn55.Invoice => 'Invoice',
+      _i2f30jh4.InvoiceCursorPage => 'InvoiceCursorPage',
+      _iu86qxr6.InvoiceItem => 'InvoiceItem',
+      _it1pcy1x.InvoiceItemRequest => 'InvoiceItemRequest',
+      _ik22qf7o.InvoiceItemUnit => 'InvoiceItemUnit',
+      _i6mqpqud.InvoiceListPage => 'InvoiceListPage',
+      _i6e3kqsf.InvoicePaymentStatus => 'InvoicePaymentStatus',
+      _i80dthru.InvoiceStatus => 'InvoiceStatus',
+      _isaqeos4.InvoiceTemplate => 'InvoiceTemplate',
+      _io5qrdfp.InvoiceType => 'InvoiceType',
+      _i31hy3jj.PaymentMethod => 'PaymentMethod',
+      _id8w36x8.PaymentRecord => 'PaymentRecord',
+      _i2drsvke.RecordPaymentRequest => 'RecordPaymentRequest',
+      _it8iedui.RecurrenceInterval => 'RecurrenceInterval',
+      _i0xuine3.Reminder => 'Reminder',
+      _icatwcwa.UpdateCustomerRequest => 'UpdateCustomerRequest',
+      _iteadt76.UpdateInvoiceRequest => 'UpdateInvoiceRequest',
+      _ilpliwg4.UpdateInvoiceTemplateRequest => 'UpdateInvoiceTemplateRequest',
+      _i037hdza.UpdateRecurringScheduleRequest =>
+        'UpdateRecurringScheduleRequest',
+      _id7e2pr5.VatRate => 'VatRate',
+      _i8rbvyvx.CreateProjectRequest => 'CreateProjectRequest',
+      _iagq7u79.CreateTaskRequest => 'CreateTaskRequest',
+      _i3b86gp3.CreateTimeEntriesInvoiceRequest =>
+        'CreateTimeEntriesInvoiceRequest',
+      _i85810i7.CreateTimeEntryRequest => 'CreateTimeEntryRequest',
+      _i2wiwzxn.Project => 'Project',
+      _i8h0tbjs.ProjectStatus => 'ProjectStatus',
+      _i2ishkic.StartTimerRequest => 'StartTimerRequest',
+      _ihpxqi7u.Task => 'Task',
+      _iieqkj38.TaskStatus => 'TaskStatus',
+      _ii8lft1t.TimeEntry => 'TimeEntry',
+      _ilk96oxt.TimeReport => 'TimeReport',
+      _iify20ly.TimeReportLine => 'TimeReportLine',
+      _ilqqks6d.UpdateProjectRequest => 'UpdateProjectRequest',
+      _i3iu7ffh.UpdateTaskRequest => 'UpdateTaskRequest',
+      _iferwyg8.UpdateTimeEntryRequest => 'UpdateTimeEntryRequest',
+      _iy79t9m6.AppTheme => 'AppTheme',
+      _i1sqdvz3.MyIdentity => 'MyIdentity',
+      _in8pujw9.MyMembershipInfo => 'MyMembershipInfo',
+      _i5r0ss6k.UpdateUserProfileRequest => 'UpdateUserProfileRequest',
+      _iung9xmp.UserProfile => 'UserProfile',
       _ => null,
     };
   }
@@ -1263,220 +1376,220 @@ class Protocol extends _i1.SerializationManager {
     }
 
     switch (data) {
-      case _i2.AdminRole():
+      case _i409qkgd.AdminRole():
         return 'AdminRole';
-      case _i3.Feature():
+      case _i0s5j3nj.Feature():
         return 'Feature';
-      case _i4.ConflictException():
+      case _i5epujyq.ConflictException():
         return 'ConflictException';
-      case _i5.ForbiddenException():
+      case _io9vwtrc.ForbiddenException():
         return 'ForbiddenException';
-      case _i6.NotFoundException():
+      case _ixeh2c1z.NotFoundException():
         return 'NotFoundException';
-      case _i7.ValidationException():
+      case _io4t73gt.ValidationException():
         return 'ValidationException';
-      case _i8.AccountingTransaction():
+      case _imcpe7lh.AccountingTransaction():
         return 'AccountingTransaction';
-      case _i9.CreateTransactionRequest():
+      case _ipamnsx8.CreateTransactionRequest():
         return 'CreateTransactionRequest';
-      case _i10.ProfitLossLine():
+      case _iixw78u5.ProfitLossLine():
         return 'ProfitLossLine';
-      case _i11.ProfitLossReport():
+      case _isurdgsv.ProfitLossReport():
         return 'ProfitLossReport';
-      case _i12.TransactionCategory():
+      case _imo6tjrw.TransactionCategory():
         return 'TransactionCategory';
-      case _i13.TransactionType():
+      case _ik9vnz0w.TransactionType():
         return 'TransactionType';
-      case _i14.UpdateTransactionRequest():
+      case _iyj5tb39.UpdateTransactionRequest():
         return 'UpdateTransactionRequest';
-      case _i15.AdminAuditEntry():
+      case _io6p5gfm.AdminAuditEntry():
         return 'AdminAuditEntry';
-      case _i16.AdminAuditPage():
+      case _iaab9k46.AdminAuditPage():
         return 'AdminAuditPage';
-      case _i17.AdminAuthStatus():
+      case _ipsgq99z.AdminAuthStatus():
         return 'AdminAuthStatus';
-      case _i18.AdminBusinessDetail():
+      case _i32iaxq2.AdminBusinessDetail():
         return 'AdminBusinessDetail';
-      case _i19.AdminBusinessPage():
+      case _iytjl6p4.AdminBusinessPage():
         return 'AdminBusinessPage';
-      case _i20.AdminInvoicePage():
+      case _ia380t04.AdminInvoicePage():
         return 'AdminInvoicePage';
-      case _i21.AdminMembershipInfo():
+      case _igm2ntgz.AdminMembershipInfo():
         return 'AdminMembershipInfo';
-      case _i22.AdminStatsOverview():
+      case _ihc64acz.AdminStatsOverview():
         return 'AdminStatsOverview';
-      case _i23.AdminUserDossier():
+      case _ibyotlfs.AdminUserDossier():
         return 'AdminUserDossier';
-      case _i24.AdminUserSummary():
+      case _iwdjv467.AdminUserSummary():
         return 'AdminUserSummary';
-      case _i25.AdminUserSummaryPage():
+      case _i2f075pm.AdminUserSummaryPage():
         return 'AdminUserSummaryPage';
-      case _i26.InvoiceStatusCount():
+      case _ikvugyyu.InvoiceStatusCount():
         return 'InvoiceStatusCount';
-      case _i27.Address():
+      case _izfx9e18.Address():
         return 'Address';
-      case _i28.Business():
+      case _im9zvu8o.Business():
         return 'Business';
-      case _i29.BusinessSettings():
+      case _ixvagzl5.BusinessSettings():
         return 'BusinessSettings';
-      case _i30.Country():
+      case _i8xf36x2.Country():
         return 'Country';
-      case _i31.CreateBusinessRequest():
+      case _i1txccp7.CreateBusinessRequest():
         return 'CreateBusinessRequest';
-      case _i32.Currency():
+      case _i1srbh9z.Currency():
         return 'Currency';
-      case _i33.LegalForm():
+      case _i5egs7uv.LegalForm():
         return 'LegalForm';
-      case _i34.Locale():
+      case _ii0188h0.Locale():
         return 'Locale';
-      case _i35.Membership():
+      case _iu72qgm4.Membership():
         return 'Membership';
-      case _i36.MembershipRole():
+      case _iv0iprnk.MembershipRole():
         return 'MembershipRole';
-      case _i37.RoundingMode():
+      case _iku7b3rb.RoundingMode():
         return 'RoundingMode';
-      case _i38.UpdateBusinessRequest():
+      case _inkd6ewo.UpdateBusinessRequest():
         return 'UpdateBusinessRequest';
-      case _i39.UpdateBusinessSettingsRequest():
+      case _ii46p08a.UpdateBusinessSettingsRequest():
         return 'UpdateBusinessSettingsRequest';
-      case _i40.DashboardKpis():
+      case _i1j0w1sv.DashboardKpis():
         return 'DashboardKpis';
-      case _i41.DashboardSummary():
+      case _iw3j14uv.DashboardSummary():
         return 'DashboardSummary';
-      case _i42.DebtorSummary():
+      case _ix33w5u6.DebtorSummary():
         return 'DebtorSummary';
-      case _i43.MonthlyTrendPoint():
+      case _ixg6nsli.MonthlyTrendPoint():
         return 'MonthlyTrendPoint';
-      case _i44.ReceivablesSummary():
+      case _ie3ro5gq.ReceivablesSummary():
         return 'ReceivablesSummary';
-      case _i45.RecentTimeEntry():
+      case _impe7ay9.RecentTimeEntry():
         return 'RecentTimeEntry';
-      case _i46.Document():
+      case _i9jvbk51.Document():
         return 'Document';
-      case _i47.DocumentKind():
+      case _imaz1zqg.DocumentKind():
         return 'DocumentKind';
-      case _i48.StorageLocation():
+      case _i9qnixrl.StorageLocation():
         return 'StorageLocation';
-      case _i49.UploadDocumentRequest():
+      case _iz60udpo.UploadDocumentRequest():
         return 'UploadDocumentRequest';
-      case _i50.ChecklistDefinition():
+      case _i04z5hwj.ChecklistDefinition():
         return 'ChecklistDefinition';
-      case _i51.ChecklistItemDefinition():
+      case _i5jbvijx.ChecklistItemDefinition():
         return 'ChecklistItemDefinition';
-      case _i52.GuidanceTip():
+      case _irvclg1d.GuidanceTip():
         return 'GuidanceTip';
-      case _i53.UserGuidanceProgress():
+      case _ik05lx5a.UserGuidanceProgress():
         return 'UserGuidanceProgress';
-      case _i54.CreateCustomerRequest():
+      case _i90hzmg5.CreateCustomerRequest():
         return 'CreateCustomerRequest';
-      case _i55.CreateInvoiceRequest():
+      case _ia6btdit.CreateInvoiceRequest():
         return 'CreateInvoiceRequest';
-      case _i56.CreateInvoiceTemplateRequest():
+      case _iyi9fugk.CreateInvoiceTemplateRequest():
         return 'CreateInvoiceTemplateRequest';
-      case _i57.CreateRecurringScheduleRequest():
+      case _i4j5ra9q.CreateRecurringScheduleRequest():
         return 'CreateRecurringScheduleRequest';
-      case _i58.Customer():
+      case _ic8wp775.Customer():
         return 'Customer';
-      case _i59.CustomerCursorPage():
+      case _if0yalhk.CustomerCursorPage():
         return 'CustomerCursorPage';
-      case _i60.CustomerListPage():
+      case _iakrzq1i.CustomerListPage():
         return 'CustomerListPage';
-      case _i61.CustomerStatus():
+      case _ibddqx0x.CustomerStatus():
         return 'CustomerStatus';
-      case _i62.Invoice():
+      case _imguyn55.Invoice():
         return 'Invoice';
-      case _i63.InvoiceCursorPage():
+      case _i2f30jh4.InvoiceCursorPage():
         return 'InvoiceCursorPage';
-      case _i64.InvoiceItem():
+      case _iu86qxr6.InvoiceItem():
         return 'InvoiceItem';
-      case _i65.InvoiceItemRequest():
+      case _it1pcy1x.InvoiceItemRequest():
         return 'InvoiceItemRequest';
-      case _i66.InvoiceItemUnit():
+      case _ik22qf7o.InvoiceItemUnit():
         return 'InvoiceItemUnit';
-      case _i67.InvoiceListPage():
+      case _i6mqpqud.InvoiceListPage():
         return 'InvoiceListPage';
-      case _i68.InvoicePaymentStatus():
+      case _i6e3kqsf.InvoicePaymentStatus():
         return 'InvoicePaymentStatus';
-      case _i69.InvoiceStatus():
+      case _i80dthru.InvoiceStatus():
         return 'InvoiceStatus';
-      case _i70.InvoiceTemplate():
+      case _isaqeos4.InvoiceTemplate():
         return 'InvoiceTemplate';
-      case _i71.InvoiceType():
+      case _io5qrdfp.InvoiceType():
         return 'InvoiceType';
-      case _i72.PaymentMethod():
+      case _i31hy3jj.PaymentMethod():
         return 'PaymentMethod';
-      case _i73.PaymentRecord():
+      case _id8w36x8.PaymentRecord():
         return 'PaymentRecord';
-      case _i74.RecordPaymentRequest():
+      case _i2drsvke.RecordPaymentRequest():
         return 'RecordPaymentRequest';
-      case _i75.RecurrenceInterval():
+      case _it8iedui.RecurrenceInterval():
         return 'RecurrenceInterval';
-      case _i76.Reminder():
+      case _i0xuine3.Reminder():
         return 'Reminder';
-      case _i77.UpdateCustomerRequest():
+      case _icatwcwa.UpdateCustomerRequest():
         return 'UpdateCustomerRequest';
-      case _i78.UpdateInvoiceRequest():
+      case _iteadt76.UpdateInvoiceRequest():
         return 'UpdateInvoiceRequest';
-      case _i79.UpdateInvoiceTemplateRequest():
+      case _ilpliwg4.UpdateInvoiceTemplateRequest():
         return 'UpdateInvoiceTemplateRequest';
-      case _i80.UpdateRecurringScheduleRequest():
+      case _i037hdza.UpdateRecurringScheduleRequest():
         return 'UpdateRecurringScheduleRequest';
-      case _i81.VatRate():
+      case _id7e2pr5.VatRate():
         return 'VatRate';
-      case _i82.CreateProjectRequest():
+      case _i8rbvyvx.CreateProjectRequest():
         return 'CreateProjectRequest';
-      case _i83.CreateTaskRequest():
+      case _iagq7u79.CreateTaskRequest():
         return 'CreateTaskRequest';
-      case _i84.CreateTimeEntriesInvoiceRequest():
+      case _i3b86gp3.CreateTimeEntriesInvoiceRequest():
         return 'CreateTimeEntriesInvoiceRequest';
-      case _i85.CreateTimeEntryRequest():
+      case _i85810i7.CreateTimeEntryRequest():
         return 'CreateTimeEntryRequest';
-      case _i86.Project():
+      case _i2wiwzxn.Project():
         return 'Project';
-      case _i87.ProjectStatus():
+      case _i8h0tbjs.ProjectStatus():
         return 'ProjectStatus';
-      case _i88.StartTimerRequest():
+      case _i2ishkic.StartTimerRequest():
         return 'StartTimerRequest';
-      case _i89.Task():
+      case _ihpxqi7u.Task():
         return 'Task';
-      case _i90.TaskStatus():
+      case _iieqkj38.TaskStatus():
         return 'TaskStatus';
-      case _i91.TimeEntry():
+      case _ii8lft1t.TimeEntry():
         return 'TimeEntry';
-      case _i92.TimeReport():
+      case _ilk96oxt.TimeReport():
         return 'TimeReport';
-      case _i93.TimeReportLine():
+      case _iify20ly.TimeReportLine():
         return 'TimeReportLine';
-      case _i94.UpdateProjectRequest():
+      case _ilqqks6d.UpdateProjectRequest():
         return 'UpdateProjectRequest';
-      case _i95.UpdateTaskRequest():
+      case _i3iu7ffh.UpdateTaskRequest():
         return 'UpdateTaskRequest';
-      case _i96.UpdateTimeEntryRequest():
+      case _iferwyg8.UpdateTimeEntryRequest():
         return 'UpdateTimeEntryRequest';
-      case _i97.AppTheme():
+      case _iy79t9m6.AppTheme():
         return 'AppTheme';
-      case _i98.MyIdentity():
+      case _i1sqdvz3.MyIdentity():
         return 'MyIdentity';
-      case _i99.MyMembershipInfo():
+      case _in8pujw9.MyMembershipInfo():
         return 'MyMembershipInfo';
-      case _i100.UpdateUserProfileRequest():
+      case _i5r0ss6k.UpdateUserProfileRequest():
         return 'UpdateUserProfileRequest';
-      case _i101.UserProfile():
+      case _iung9xmp.UserProfile():
         return 'UserProfile';
     }
-    className = _i117.Protocol().getClassNameForObject(data);
+    className = _ix6v1tim.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
           : 'gewerber_backend_commercial.$className';
     }
-    className = _i118.Protocol().getClassNameForObject(data);
+    className = _iacc.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
           : 'serverpod_auth_core.$className';
     }
-    className = _i119.Protocol().getClassNameForObject(data);
+    className = _iaic.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
@@ -1492,324 +1605,330 @@ class Protocol extends _i1.SerializationManager {
       return super.deserializeByClassName(data);
     }
     if (dataClassName == 'AdminRole') {
-      return deserialize<_i2.AdminRole>(data['data']);
+      return deserialize<_i409qkgd.AdminRole>(data['data']);
     }
     if (dataClassName == 'Feature') {
-      return deserialize<_i3.Feature>(data['data']);
+      return deserialize<_i0s5j3nj.Feature>(data['data']);
     }
     if (dataClassName == 'ConflictException') {
-      return deserialize<_i4.ConflictException>(data['data']);
+      return deserialize<_i5epujyq.ConflictException>(data['data']);
     }
     if (dataClassName == 'ForbiddenException') {
-      return deserialize<_i5.ForbiddenException>(data['data']);
+      return deserialize<_io9vwtrc.ForbiddenException>(data['data']);
     }
     if (dataClassName == 'NotFoundException') {
-      return deserialize<_i6.NotFoundException>(data['data']);
+      return deserialize<_ixeh2c1z.NotFoundException>(data['data']);
     }
     if (dataClassName == 'ValidationException') {
-      return deserialize<_i7.ValidationException>(data['data']);
+      return deserialize<_io4t73gt.ValidationException>(data['data']);
     }
     if (dataClassName == 'AccountingTransaction') {
-      return deserialize<_i8.AccountingTransaction>(data['data']);
+      return deserialize<_imcpe7lh.AccountingTransaction>(data['data']);
     }
     if (dataClassName == 'CreateTransactionRequest') {
-      return deserialize<_i9.CreateTransactionRequest>(data['data']);
+      return deserialize<_ipamnsx8.CreateTransactionRequest>(data['data']);
     }
     if (dataClassName == 'ProfitLossLine') {
-      return deserialize<_i10.ProfitLossLine>(data['data']);
+      return deserialize<_iixw78u5.ProfitLossLine>(data['data']);
     }
     if (dataClassName == 'ProfitLossReport') {
-      return deserialize<_i11.ProfitLossReport>(data['data']);
+      return deserialize<_isurdgsv.ProfitLossReport>(data['data']);
     }
     if (dataClassName == 'TransactionCategory') {
-      return deserialize<_i12.TransactionCategory>(data['data']);
+      return deserialize<_imo6tjrw.TransactionCategory>(data['data']);
     }
     if (dataClassName == 'TransactionType') {
-      return deserialize<_i13.TransactionType>(data['data']);
+      return deserialize<_ik9vnz0w.TransactionType>(data['data']);
     }
     if (dataClassName == 'UpdateTransactionRequest') {
-      return deserialize<_i14.UpdateTransactionRequest>(data['data']);
+      return deserialize<_iyj5tb39.UpdateTransactionRequest>(data['data']);
     }
     if (dataClassName == 'AdminAuditEntry') {
-      return deserialize<_i15.AdminAuditEntry>(data['data']);
+      return deserialize<_io6p5gfm.AdminAuditEntry>(data['data']);
     }
     if (dataClassName == 'AdminAuditPage') {
-      return deserialize<_i16.AdminAuditPage>(data['data']);
+      return deserialize<_iaab9k46.AdminAuditPage>(data['data']);
     }
     if (dataClassName == 'AdminAuthStatus') {
-      return deserialize<_i17.AdminAuthStatus>(data['data']);
+      return deserialize<_ipsgq99z.AdminAuthStatus>(data['data']);
     }
     if (dataClassName == 'AdminBusinessDetail') {
-      return deserialize<_i18.AdminBusinessDetail>(data['data']);
+      return deserialize<_i32iaxq2.AdminBusinessDetail>(data['data']);
     }
     if (dataClassName == 'AdminBusinessPage') {
-      return deserialize<_i19.AdminBusinessPage>(data['data']);
+      return deserialize<_iytjl6p4.AdminBusinessPage>(data['data']);
     }
     if (dataClassName == 'AdminInvoicePage') {
-      return deserialize<_i20.AdminInvoicePage>(data['data']);
+      return deserialize<_ia380t04.AdminInvoicePage>(data['data']);
     }
     if (dataClassName == 'AdminMembershipInfo') {
-      return deserialize<_i21.AdminMembershipInfo>(data['data']);
+      return deserialize<_igm2ntgz.AdminMembershipInfo>(data['data']);
     }
     if (dataClassName == 'AdminStatsOverview') {
-      return deserialize<_i22.AdminStatsOverview>(data['data']);
+      return deserialize<_ihc64acz.AdminStatsOverview>(data['data']);
     }
     if (dataClassName == 'AdminUserDossier') {
-      return deserialize<_i23.AdminUserDossier>(data['data']);
+      return deserialize<_ibyotlfs.AdminUserDossier>(data['data']);
     }
     if (dataClassName == 'AdminUserSummary') {
-      return deserialize<_i24.AdminUserSummary>(data['data']);
+      return deserialize<_iwdjv467.AdminUserSummary>(data['data']);
     }
     if (dataClassName == 'AdminUserSummaryPage') {
-      return deserialize<_i25.AdminUserSummaryPage>(data['data']);
+      return deserialize<_i2f075pm.AdminUserSummaryPage>(data['data']);
     }
     if (dataClassName == 'InvoiceStatusCount') {
-      return deserialize<_i26.InvoiceStatusCount>(data['data']);
+      return deserialize<_ikvugyyu.InvoiceStatusCount>(data['data']);
     }
     if (dataClassName == 'Address') {
-      return deserialize<_i27.Address>(data['data']);
+      return deserialize<_izfx9e18.Address>(data['data']);
     }
     if (dataClassName == 'Business') {
-      return deserialize<_i28.Business>(data['data']);
+      return deserialize<_im9zvu8o.Business>(data['data']);
     }
     if (dataClassName == 'BusinessSettings') {
-      return deserialize<_i29.BusinessSettings>(data['data']);
+      return deserialize<_ixvagzl5.BusinessSettings>(data['data']);
     }
     if (dataClassName == 'Country') {
-      return deserialize<_i30.Country>(data['data']);
+      return deserialize<_i8xf36x2.Country>(data['data']);
     }
     if (dataClassName == 'CreateBusinessRequest') {
-      return deserialize<_i31.CreateBusinessRequest>(data['data']);
+      return deserialize<_i1txccp7.CreateBusinessRequest>(data['data']);
     }
     if (dataClassName == 'Currency') {
-      return deserialize<_i32.Currency>(data['data']);
+      return deserialize<_i1srbh9z.Currency>(data['data']);
     }
     if (dataClassName == 'LegalForm') {
-      return deserialize<_i33.LegalForm>(data['data']);
+      return deserialize<_i5egs7uv.LegalForm>(data['data']);
     }
     if (dataClassName == 'Locale') {
-      return deserialize<_i34.Locale>(data['data']);
+      return deserialize<_ii0188h0.Locale>(data['data']);
     }
     if (dataClassName == 'Membership') {
-      return deserialize<_i35.Membership>(data['data']);
+      return deserialize<_iu72qgm4.Membership>(data['data']);
     }
     if (dataClassName == 'MembershipRole') {
-      return deserialize<_i36.MembershipRole>(data['data']);
+      return deserialize<_iv0iprnk.MembershipRole>(data['data']);
     }
     if (dataClassName == 'RoundingMode') {
-      return deserialize<_i37.RoundingMode>(data['data']);
+      return deserialize<_iku7b3rb.RoundingMode>(data['data']);
     }
     if (dataClassName == 'UpdateBusinessRequest') {
-      return deserialize<_i38.UpdateBusinessRequest>(data['data']);
+      return deserialize<_inkd6ewo.UpdateBusinessRequest>(data['data']);
     }
     if (dataClassName == 'UpdateBusinessSettingsRequest') {
-      return deserialize<_i39.UpdateBusinessSettingsRequest>(data['data']);
+      return deserialize<_ii46p08a.UpdateBusinessSettingsRequest>(data['data']);
     }
     if (dataClassName == 'DashboardKpis') {
-      return deserialize<_i40.DashboardKpis>(data['data']);
+      return deserialize<_i1j0w1sv.DashboardKpis>(data['data']);
     }
     if (dataClassName == 'DashboardSummary') {
-      return deserialize<_i41.DashboardSummary>(data['data']);
+      return deserialize<_iw3j14uv.DashboardSummary>(data['data']);
     }
     if (dataClassName == 'DebtorSummary') {
-      return deserialize<_i42.DebtorSummary>(data['data']);
+      return deserialize<_ix33w5u6.DebtorSummary>(data['data']);
     }
     if (dataClassName == 'MonthlyTrendPoint') {
-      return deserialize<_i43.MonthlyTrendPoint>(data['data']);
+      return deserialize<_ixg6nsli.MonthlyTrendPoint>(data['data']);
     }
     if (dataClassName == 'ReceivablesSummary') {
-      return deserialize<_i44.ReceivablesSummary>(data['data']);
+      return deserialize<_ie3ro5gq.ReceivablesSummary>(data['data']);
     }
     if (dataClassName == 'RecentTimeEntry') {
-      return deserialize<_i45.RecentTimeEntry>(data['data']);
+      return deserialize<_impe7ay9.RecentTimeEntry>(data['data']);
     }
     if (dataClassName == 'Document') {
-      return deserialize<_i46.Document>(data['data']);
+      return deserialize<_i9jvbk51.Document>(data['data']);
     }
     if (dataClassName == 'DocumentKind') {
-      return deserialize<_i47.DocumentKind>(data['data']);
+      return deserialize<_imaz1zqg.DocumentKind>(data['data']);
     }
     if (dataClassName == 'StorageLocation') {
-      return deserialize<_i48.StorageLocation>(data['data']);
+      return deserialize<_i9qnixrl.StorageLocation>(data['data']);
     }
     if (dataClassName == 'UploadDocumentRequest') {
-      return deserialize<_i49.UploadDocumentRequest>(data['data']);
+      return deserialize<_iz60udpo.UploadDocumentRequest>(data['data']);
     }
     if (dataClassName == 'ChecklistDefinition') {
-      return deserialize<_i50.ChecklistDefinition>(data['data']);
+      return deserialize<_i04z5hwj.ChecklistDefinition>(data['data']);
     }
     if (dataClassName == 'ChecklistItemDefinition') {
-      return deserialize<_i51.ChecklistItemDefinition>(data['data']);
+      return deserialize<_i5jbvijx.ChecklistItemDefinition>(data['data']);
     }
     if (dataClassName == 'GuidanceTip') {
-      return deserialize<_i52.GuidanceTip>(data['data']);
+      return deserialize<_irvclg1d.GuidanceTip>(data['data']);
     }
     if (dataClassName == 'UserGuidanceProgress') {
-      return deserialize<_i53.UserGuidanceProgress>(data['data']);
+      return deserialize<_ik05lx5a.UserGuidanceProgress>(data['data']);
     }
     if (dataClassName == 'CreateCustomerRequest') {
-      return deserialize<_i54.CreateCustomerRequest>(data['data']);
+      return deserialize<_i90hzmg5.CreateCustomerRequest>(data['data']);
     }
     if (dataClassName == 'CreateInvoiceRequest') {
-      return deserialize<_i55.CreateInvoiceRequest>(data['data']);
+      return deserialize<_ia6btdit.CreateInvoiceRequest>(data['data']);
     }
     if (dataClassName == 'CreateInvoiceTemplateRequest') {
-      return deserialize<_i56.CreateInvoiceTemplateRequest>(data['data']);
+      return deserialize<_iyi9fugk.CreateInvoiceTemplateRequest>(data['data']);
     }
     if (dataClassName == 'CreateRecurringScheduleRequest') {
-      return deserialize<_i57.CreateRecurringScheduleRequest>(data['data']);
+      return deserialize<_i4j5ra9q.CreateRecurringScheduleRequest>(
+        data['data'],
+      );
     }
     if (dataClassName == 'Customer') {
-      return deserialize<_i58.Customer>(data['data']);
+      return deserialize<_ic8wp775.Customer>(data['data']);
     }
     if (dataClassName == 'CustomerCursorPage') {
-      return deserialize<_i59.CustomerCursorPage>(data['data']);
+      return deserialize<_if0yalhk.CustomerCursorPage>(data['data']);
     }
     if (dataClassName == 'CustomerListPage') {
-      return deserialize<_i60.CustomerListPage>(data['data']);
+      return deserialize<_iakrzq1i.CustomerListPage>(data['data']);
     }
     if (dataClassName == 'CustomerStatus') {
-      return deserialize<_i61.CustomerStatus>(data['data']);
+      return deserialize<_ibddqx0x.CustomerStatus>(data['data']);
     }
     if (dataClassName == 'Invoice') {
-      return deserialize<_i62.Invoice>(data['data']);
+      return deserialize<_imguyn55.Invoice>(data['data']);
     }
     if (dataClassName == 'InvoiceCursorPage') {
-      return deserialize<_i63.InvoiceCursorPage>(data['data']);
+      return deserialize<_i2f30jh4.InvoiceCursorPage>(data['data']);
     }
     if (dataClassName == 'InvoiceItem') {
-      return deserialize<_i64.InvoiceItem>(data['data']);
+      return deserialize<_iu86qxr6.InvoiceItem>(data['data']);
     }
     if (dataClassName == 'InvoiceItemRequest') {
-      return deserialize<_i65.InvoiceItemRequest>(data['data']);
+      return deserialize<_it1pcy1x.InvoiceItemRequest>(data['data']);
     }
     if (dataClassName == 'InvoiceItemUnit') {
-      return deserialize<_i66.InvoiceItemUnit>(data['data']);
+      return deserialize<_ik22qf7o.InvoiceItemUnit>(data['data']);
     }
     if (dataClassName == 'InvoiceListPage') {
-      return deserialize<_i67.InvoiceListPage>(data['data']);
+      return deserialize<_i6mqpqud.InvoiceListPage>(data['data']);
     }
     if (dataClassName == 'InvoicePaymentStatus') {
-      return deserialize<_i68.InvoicePaymentStatus>(data['data']);
+      return deserialize<_i6e3kqsf.InvoicePaymentStatus>(data['data']);
     }
     if (dataClassName == 'InvoiceStatus') {
-      return deserialize<_i69.InvoiceStatus>(data['data']);
+      return deserialize<_i80dthru.InvoiceStatus>(data['data']);
     }
     if (dataClassName == 'InvoiceTemplate') {
-      return deserialize<_i70.InvoiceTemplate>(data['data']);
+      return deserialize<_isaqeos4.InvoiceTemplate>(data['data']);
     }
     if (dataClassName == 'InvoiceType') {
-      return deserialize<_i71.InvoiceType>(data['data']);
+      return deserialize<_io5qrdfp.InvoiceType>(data['data']);
     }
     if (dataClassName == 'PaymentMethod') {
-      return deserialize<_i72.PaymentMethod>(data['data']);
+      return deserialize<_i31hy3jj.PaymentMethod>(data['data']);
     }
     if (dataClassName == 'PaymentRecord') {
-      return deserialize<_i73.PaymentRecord>(data['data']);
+      return deserialize<_id8w36x8.PaymentRecord>(data['data']);
     }
     if (dataClassName == 'RecordPaymentRequest') {
-      return deserialize<_i74.RecordPaymentRequest>(data['data']);
+      return deserialize<_i2drsvke.RecordPaymentRequest>(data['data']);
     }
     if (dataClassName == 'RecurrenceInterval') {
-      return deserialize<_i75.RecurrenceInterval>(data['data']);
+      return deserialize<_it8iedui.RecurrenceInterval>(data['data']);
     }
     if (dataClassName == 'Reminder') {
-      return deserialize<_i76.Reminder>(data['data']);
+      return deserialize<_i0xuine3.Reminder>(data['data']);
     }
     if (dataClassName == 'UpdateCustomerRequest') {
-      return deserialize<_i77.UpdateCustomerRequest>(data['data']);
+      return deserialize<_icatwcwa.UpdateCustomerRequest>(data['data']);
     }
     if (dataClassName == 'UpdateInvoiceRequest') {
-      return deserialize<_i78.UpdateInvoiceRequest>(data['data']);
+      return deserialize<_iteadt76.UpdateInvoiceRequest>(data['data']);
     }
     if (dataClassName == 'UpdateInvoiceTemplateRequest') {
-      return deserialize<_i79.UpdateInvoiceTemplateRequest>(data['data']);
+      return deserialize<_ilpliwg4.UpdateInvoiceTemplateRequest>(data['data']);
     }
     if (dataClassName == 'UpdateRecurringScheduleRequest') {
-      return deserialize<_i80.UpdateRecurringScheduleRequest>(data['data']);
+      return deserialize<_i037hdza.UpdateRecurringScheduleRequest>(
+        data['data'],
+      );
     }
     if (dataClassName == 'VatRate') {
-      return deserialize<_i81.VatRate>(data['data']);
+      return deserialize<_id7e2pr5.VatRate>(data['data']);
     }
     if (dataClassName == 'CreateProjectRequest') {
-      return deserialize<_i82.CreateProjectRequest>(data['data']);
+      return deserialize<_i8rbvyvx.CreateProjectRequest>(data['data']);
     }
     if (dataClassName == 'CreateTaskRequest') {
-      return deserialize<_i83.CreateTaskRequest>(data['data']);
+      return deserialize<_iagq7u79.CreateTaskRequest>(data['data']);
     }
     if (dataClassName == 'CreateTimeEntriesInvoiceRequest') {
-      return deserialize<_i84.CreateTimeEntriesInvoiceRequest>(data['data']);
+      return deserialize<_i3b86gp3.CreateTimeEntriesInvoiceRequest>(
+        data['data'],
+      );
     }
     if (dataClassName == 'CreateTimeEntryRequest') {
-      return deserialize<_i85.CreateTimeEntryRequest>(data['data']);
+      return deserialize<_i85810i7.CreateTimeEntryRequest>(data['data']);
     }
     if (dataClassName == 'Project') {
-      return deserialize<_i86.Project>(data['data']);
+      return deserialize<_i2wiwzxn.Project>(data['data']);
     }
     if (dataClassName == 'ProjectStatus') {
-      return deserialize<_i87.ProjectStatus>(data['data']);
+      return deserialize<_i8h0tbjs.ProjectStatus>(data['data']);
     }
     if (dataClassName == 'StartTimerRequest') {
-      return deserialize<_i88.StartTimerRequest>(data['data']);
+      return deserialize<_i2ishkic.StartTimerRequest>(data['data']);
     }
     if (dataClassName == 'Task') {
-      return deserialize<_i89.Task>(data['data']);
+      return deserialize<_ihpxqi7u.Task>(data['data']);
     }
     if (dataClassName == 'TaskStatus') {
-      return deserialize<_i90.TaskStatus>(data['data']);
+      return deserialize<_iieqkj38.TaskStatus>(data['data']);
     }
     if (dataClassName == 'TimeEntry') {
-      return deserialize<_i91.TimeEntry>(data['data']);
+      return deserialize<_ii8lft1t.TimeEntry>(data['data']);
     }
     if (dataClassName == 'TimeReport') {
-      return deserialize<_i92.TimeReport>(data['data']);
+      return deserialize<_ilk96oxt.TimeReport>(data['data']);
     }
     if (dataClassName == 'TimeReportLine') {
-      return deserialize<_i93.TimeReportLine>(data['data']);
+      return deserialize<_iify20ly.TimeReportLine>(data['data']);
     }
     if (dataClassName == 'UpdateProjectRequest') {
-      return deserialize<_i94.UpdateProjectRequest>(data['data']);
+      return deserialize<_ilqqks6d.UpdateProjectRequest>(data['data']);
     }
     if (dataClassName == 'UpdateTaskRequest') {
-      return deserialize<_i95.UpdateTaskRequest>(data['data']);
+      return deserialize<_i3iu7ffh.UpdateTaskRequest>(data['data']);
     }
     if (dataClassName == 'UpdateTimeEntryRequest') {
-      return deserialize<_i96.UpdateTimeEntryRequest>(data['data']);
+      return deserialize<_iferwyg8.UpdateTimeEntryRequest>(data['data']);
     }
     if (dataClassName == 'AppTheme') {
-      return deserialize<_i97.AppTheme>(data['data']);
+      return deserialize<_iy79t9m6.AppTheme>(data['data']);
     }
     if (dataClassName == 'MyIdentity') {
-      return deserialize<_i98.MyIdentity>(data['data']);
+      return deserialize<_i1sqdvz3.MyIdentity>(data['data']);
     }
     if (dataClassName == 'MyMembershipInfo') {
-      return deserialize<_i99.MyMembershipInfo>(data['data']);
+      return deserialize<_in8pujw9.MyMembershipInfo>(data['data']);
     }
     if (dataClassName == 'UpdateUserProfileRequest') {
-      return deserialize<_i100.UpdateUserProfileRequest>(data['data']);
+      return deserialize<_i5r0ss6k.UpdateUserProfileRequest>(data['data']);
     }
     if (dataClassName == 'UserProfile') {
-      return deserialize<_i101.UserProfile>(data['data']);
+      return deserialize<_iung9xmp.UserProfile>(data['data']);
     }
     if (dataClassName.startsWith('gewerber_backend_commercial.')) {
-      data['className'] = dataClassName.substring(20);
-      return _i117.Protocol().deserializeByClassName(data);
+      data['className'] = dataClassName.substring(28);
+      return _ix6v1tim.Protocol().deserializeByClassName(data);
     }
     if (dataClassName.startsWith('serverpod_auth_core.')) {
       data['className'] = dataClassName.substring(20);
-      return _i118.Protocol().deserializeByClassName(data);
+      return _iacc.Protocol().deserializeByClassName(data);
     }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);
-      return _i119.Protocol().deserializeByClassName(data);
+      return _iaic.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }
 
   void _registerHostProtocols() {
-    _i117.Protocol().registerHostProtocol('gewerber_backend', this);
-    _i118.Protocol().registerHostProtocol('gewerber_backend', this);
-    _i119.Protocol().registerHostProtocol('gewerber_backend', this);
+    _ix6v1tim.Protocol().registerHostProtocol('gewerber_backend', this);
+    _iacc.Protocol().registerHostProtocol('gewerber_backend', this);
+    _iaic.Protocol().registerHostProtocol('gewerber_backend', this);
   }
 
   @override
@@ -1825,13 +1944,13 @@ class Protocol extends _i1.SerializationManager {
       return null;
     }
     try {
-      return _i117.Protocol().mapRecordToJson(record);
+      return _ix6v1tim.Protocol().mapRecordToJson(record);
     } catch (_) {}
     try {
-      return _i118.Protocol().mapRecordToJson(record);
+      return _iacc.Protocol().mapRecordToJson(record);
     } catch (_) {}
     try {
-      return _i119.Protocol().mapRecordToJson(record);
+      return _iaic.Protocol().mapRecordToJson(record);
     } catch (_) {}
     throw Exception('Unsupported record type ${record.runtimeType}');
   }

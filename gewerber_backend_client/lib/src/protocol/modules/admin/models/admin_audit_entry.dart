@@ -10,12 +10,14 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i2;
+
+import 'package:gewerber_backend_client/src/protocol/protocol.dart'
+    as _iipbhyvd;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
 /// Client-visible projection of the server-only [AuditEntry].
 abstract class AdminAuditEntry
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   AdminAuditEntry._({
     this.id,
     this.businessId,
@@ -30,7 +32,7 @@ abstract class AdminAuditEntry
   factory AdminAuditEntry({
     int? id,
     int? businessId,
-    _i1.UuidValue? userId,
+    _isc.UuidValue? userId,
     required String action,
     required String entityType,
     String? entityId,
@@ -44,16 +46,16 @@ abstract class AdminAuditEntry
       businessId: jsonSerialization['businessId'] as int?,
       userId: jsonSerialization['userId'] == null
           ? null
-          : _i1.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
+          : _isc.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
       action: jsonSerialization['action'] as String,
       entityType: jsonSerialization['entityType'] as String,
       entityId: jsonSerialization['entityId'] as String?,
       changes: jsonSerialization['changes'] == null
           ? null
-          : _i2.Protocol().deserialize<Map<String, String>>(
+          : _iipbhyvd.Protocol().deserialize<Map<String, String>>(
               jsonSerialization['changes'],
             ),
-      createdAt: _i1.DateTimeJsonExtension.fromJson(
+      createdAt: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['createdAt'],
       ),
     );
@@ -63,7 +65,7 @@ abstract class AdminAuditEntry
 
   int? businessId;
 
-  _i1.UuidValue? userId;
+  _isc.UuidValue? userId;
 
   String action;
 
@@ -77,11 +79,11 @@ abstract class AdminAuditEntry
 
   /// Returns a shallow copy of this [AdminAuditEntry]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   AdminAuditEntry copyWith({
     int? id,
     int? businessId,
-    _i1.UuidValue? userId,
+    _isc.UuidValue? userId,
     String? action,
     String? entityType,
     String? entityId,
@@ -120,7 +122,7 @@ abstract class AdminAuditEntry
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -130,7 +132,7 @@ class _AdminAuditEntryImpl extends AdminAuditEntry {
   _AdminAuditEntryImpl({
     int? id,
     int? businessId,
-    _i1.UuidValue? userId,
+    _isc.UuidValue? userId,
     required String action,
     required String entityType,
     String? entityId,
@@ -149,7 +151,7 @@ class _AdminAuditEntryImpl extends AdminAuditEntry {
 
   /// Returns a shallow copy of this [AdminAuditEntry]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   AdminAuditEntry copyWith({
     Object? id = _Undefined,
@@ -164,7 +166,7 @@ class _AdminAuditEntryImpl extends AdminAuditEntry {
     return AdminAuditEntry(
       id: id is int? ? id : this.id,
       businessId: businessId is int? ? businessId : this.businessId,
-      userId: userId is _i1.UuidValue? ? userId : this.userId,
+      userId: userId is _isc.UuidValue? ? userId : this.userId,
       action: action ?? this.action,
       entityType: entityType ?? this.entityType,
       entityId: entityId is String? ? entityId : this.entityId,

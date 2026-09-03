@@ -10,17 +10,19 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/invoicing/models/customer_status.dart' as _i2;
-import '../../../modules/business/models/address.dart' as _i3;
-import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i4;
+
+import 'package:gewerber_backend_client/src/protocol/protocol.dart'
+    as _iipbhyvd;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/business/models/address.dart' as _iz28txwx;
+import '../../../modules/invoicing/models/customer_status.dart' as _iq2eew5f;
 
 abstract class Customer
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   Customer._({
     this.id,
     required this.businessId,
-    _i2.CustomerStatus? status,
+    _iq2eew5f.CustomerStatus? status,
     required this.name,
     this.companyName,
     this.vatId,
@@ -30,20 +32,20 @@ abstract class Customer
     this.notes,
     DateTime? createdAt,
     DateTime? updatedAt,
-  }) : status = status ?? _i2.CustomerStatus.active,
+  }) : status = status ?? _iq2eew5f.CustomerStatus.active,
        createdAt = createdAt ?? DateTime.now(),
        updatedAt = updatedAt ?? DateTime.now();
 
   factory Customer({
     int? id,
     required int businessId,
-    _i2.CustomerStatus? status,
+    _iq2eew5f.CustomerStatus? status,
     required String name,
     String? companyName,
     String? vatId,
     String? email,
     String? phone,
-    _i3.Address? address,
+    _iz28txwx.Address? address,
     String? notes,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -55,7 +57,7 @@ abstract class Customer
       businessId: jsonSerialization['businessId'] as int,
       status: jsonSerialization['status'] == null
           ? null
-          : _i2.CustomerStatus.fromJson(
+          : _iq2eew5f.CustomerStatus.fromJson(
               (jsonSerialization['status'] as String),
             ),
       name: jsonSerialization['name'] as String,
@@ -65,16 +67,16 @@ abstract class Customer
       phone: jsonSerialization['phone'] as String?,
       address: jsonSerialization['address'] == null
           ? null
-          : _i4.Protocol().deserialize<_i3.Address>(
+          : _iipbhyvd.Protocol().deserialize<_iz28txwx.Address>(
               jsonSerialization['address'],
             ),
       notes: jsonSerialization['notes'] as String?,
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -85,7 +87,7 @@ abstract class Customer
 
   int businessId;
 
-  _i2.CustomerStatus status;
+  _iq2eew5f.CustomerStatus status;
 
   String name;
 
@@ -97,7 +99,7 @@ abstract class Customer
 
   String? phone;
 
-  _i3.Address? address;
+  _iz28txwx.Address? address;
 
   String? notes;
 
@@ -107,17 +109,17 @@ abstract class Customer
 
   /// Returns a shallow copy of this [Customer]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   Customer copyWith({
     int? id,
     int? businessId,
-    _i2.CustomerStatus? status,
+    _iq2eew5f.CustomerStatus? status,
     String? name,
     String? companyName,
     String? vatId,
     String? email,
     String? phone,
-    _i3.Address? address,
+    _iz28txwx.Address? address,
     String? notes,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -162,7 +164,7 @@ abstract class Customer
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -172,13 +174,13 @@ class _CustomerImpl extends Customer {
   _CustomerImpl({
     int? id,
     required int businessId,
-    _i2.CustomerStatus? status,
+    _iq2eew5f.CustomerStatus? status,
     required String name,
     String? companyName,
     String? vatId,
     String? email,
     String? phone,
-    _i3.Address? address,
+    _iz28txwx.Address? address,
     String? notes,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -199,12 +201,12 @@ class _CustomerImpl extends Customer {
 
   /// Returns a shallow copy of this [Customer]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   Customer copyWith({
     Object? id = _Undefined,
     int? businessId,
-    _i2.CustomerStatus? status,
+    _iq2eew5f.CustomerStatus? status,
     String? name,
     Object? companyName = _Undefined,
     Object? vatId = _Undefined,
@@ -224,7 +226,9 @@ class _CustomerImpl extends Customer {
       vatId: vatId is String? ? vatId : this.vatId,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
-      address: address is _i3.Address? ? address : this.address?.copyWith(),
+      address: address is _iz28txwx.Address?
+          ? address
+          : this.address?.copyWith(),
       notes: notes is String? ? notes : this.notes,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,

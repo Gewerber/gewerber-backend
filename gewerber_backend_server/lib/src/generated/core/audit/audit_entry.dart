@@ -10,11 +10,13 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i2;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
 
 abstract class AuditEntry
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   AuditEntry._({
     this.id,
     this.businessId,
@@ -29,7 +31,7 @@ abstract class AuditEntry
   factory AuditEntry({
     int? id,
     int? businessId,
-    _i1.UuidValue? userId,
+    _is.UuidValue? userId,
     required String action,
     required String entityType,
     String? entityId,
@@ -43,18 +45,18 @@ abstract class AuditEntry
       businessId: jsonSerialization['businessId'] as int?,
       userId: jsonSerialization['userId'] == null
           ? null
-          : _i1.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
+          : _is.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
       action: jsonSerialization['action'] as String,
       entityType: jsonSerialization['entityType'] as String,
       entityId: jsonSerialization['entityId'] as String?,
       changes: jsonSerialization['changes'] == null
           ? null
-          : _i2.Protocol().deserialize<Map<String, String>>(
+          : _itzp2rm6.Protocol().deserialize<Map<String, String>>(
               jsonSerialization['changes'],
             ),
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
     );
   }
 
@@ -67,7 +69,7 @@ abstract class AuditEntry
 
   int? businessId;
 
-  _i1.UuidValue? userId;
+  _is.UuidValue? userId;
 
   String action;
 
@@ -80,15 +82,15 @@ abstract class AuditEntry
   DateTime createdAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [AuditEntry]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   AuditEntry copyWith({
     int? id,
     int? businessId,
-    _i1.UuidValue? userId,
+    _is.UuidValue? userId,
     String? action,
     String? entityType,
     String? entityId,
@@ -120,11 +122,11 @@ abstract class AuditEntry
   }
 
   static AuditEntryIncludeList includeList({
-    _i1.WhereExpressionBuilder<AuditEntryTable>? where,
+    _is.WhereExpressionBuilder<AuditEntryTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AuditEntryTable>? orderBy,
-    _i1.OrderByListBuilder<AuditEntryTable>? orderByList,
+    _is.OrderByBuilder<AuditEntryTable>? orderBy,
+    _is.OrderByListBuilder<AuditEntryTable>? orderByList,
     AuditEntryInclude? include,
   }) {
     return AuditEntryIncludeList._(
@@ -139,7 +141,7 @@ abstract class AuditEntry
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -149,7 +151,7 @@ class _AuditEntryImpl extends AuditEntry {
   _AuditEntryImpl({
     int? id,
     int? businessId,
-    _i1.UuidValue? userId,
+    _is.UuidValue? userId,
     required String action,
     required String entityType,
     String? entityId,
@@ -168,7 +170,7 @@ class _AuditEntryImpl extends AuditEntry {
 
   /// Returns a shallow copy of this [AuditEntry]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   AuditEntry copyWith({
     Object? id = _Undefined,
@@ -183,7 +185,7 @@ class _AuditEntryImpl extends AuditEntry {
     return AuditEntry(
       id: id is int? ? id : this.id,
       businessId: businessId is int? ? businessId : this.businessId,
-      userId: userId is _i1.UuidValue? ? userId : this.userId,
+      userId: userId is _is.UuidValue? ? userId : this.userId,
       action: action ?? this.action,
       entityType: entityType ?? this.entityType,
       entityId: entityId is String? ? entityId : this.entityId,
@@ -203,77 +205,77 @@ class _AuditEntryImpl extends AuditEntry {
   }
 }
 
-class AuditEntryUpdateTable extends _i1.UpdateTable<AuditEntryTable> {
+class AuditEntryUpdateTable extends _is.UpdateTable<AuditEntryTable> {
   AuditEntryUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> businessId(int? value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> businessId(int? value) => _is.ColumnValue(
     table.businessId,
     value,
   );
 
-  _i1.ColumnValue<_i1.UuidValue, _i1.UuidValue> userId(_i1.UuidValue? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<_is.UuidValue, _is.UuidValue> userId(_is.UuidValue? value) =>
+      _is.ColumnValue(
         table.userId,
         value,
       );
 
-  _i1.ColumnValue<String, String> action(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> action(String value) => _is.ColumnValue(
     table.action,
     value,
   );
 
-  _i1.ColumnValue<String, String> entityType(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> entityType(String value) => _is.ColumnValue(
     table.entityType,
     value,
   );
 
-  _i1.ColumnValue<String, String> entityId(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> entityId(String? value) => _is.ColumnValue(
     table.entityId,
     value,
   );
 
-  _i1.ColumnValue<Map<String, String>, Map<String, String>> changes(
+  _is.ColumnValue<Map<String, String>, Map<String, String>> changes(
     Map<String, String>? value,
-  ) => _i1.ColumnValue(
+  ) => _is.ColumnValue(
     table.changes,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _is.ColumnValue(
         table.createdAt,
         value,
       );
 }
 
-class AuditEntryTable extends _i1.Table<int?> {
+class AuditEntryTable extends _is.Table<int?> {
   AuditEntryTable({super.tableRelation}) : super(tableName: 'audit_entry') {
     updateTable = AuditEntryUpdateTable(this);
-    businessId = _i1.ColumnInt(
+    businessId = _is.ColumnInt(
       'businessId',
       this,
     );
-    userId = _i1.ColumnUuid(
+    userId = _is.ColumnUuid(
       'userId',
       this,
     );
-    action = _i1.ColumnString(
+    action = _is.ColumnString(
       'action',
       this,
     );
-    entityType = _i1.ColumnString(
+    entityType = _is.ColumnString(
       'entityType',
       this,
     );
-    entityId = _i1.ColumnString(
+    entityId = _is.ColumnString(
       'entityId',
       this,
     );
-    changes = _i1.ColumnSerializable<Map<String, String>>(
+    changes = _is.ColumnSerializable<Map<String, String>>(
       'changes',
       this,
     );
-    createdAt = _i1.ColumnDateTime(
+    createdAt = _is.ColumnDateTime(
       'createdAt',
       this,
       hasDefault: true,
@@ -282,22 +284,22 @@ class AuditEntryTable extends _i1.Table<int?> {
 
   late final AuditEntryUpdateTable updateTable;
 
-  late final _i1.ColumnInt businessId;
+  late final _is.ColumnInt businessId;
 
-  late final _i1.ColumnUuid userId;
+  late final _is.ColumnUuid userId;
 
-  late final _i1.ColumnString action;
+  late final _is.ColumnString action;
 
-  late final _i1.ColumnString entityType;
+  late final _is.ColumnString entityType;
 
-  late final _i1.ColumnString entityId;
+  late final _is.ColumnString entityId;
 
-  late final _i1.ColumnSerializable<Map<String, String>> changes;
+  late final _is.ColumnSerializable<Map<String, String>> changes;
 
-  late final _i1.ColumnDateTime createdAt;
+  late final _is.ColumnDateTime createdAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     businessId,
     userId,
@@ -309,19 +311,19 @@ class AuditEntryTable extends _i1.Table<int?> {
   ];
 }
 
-class AuditEntryInclude extends _i1.IncludeObject {
+class AuditEntryInclude extends _is.IncludeObject {
   AuditEntryInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => AuditEntry.t;
+  _is.Table<int?> get table => AuditEntry.t;
 }
 
-class AuditEntryIncludeList extends _i1.IncludeList {
+class AuditEntryIncludeList extends _is.IncludeList {
   AuditEntryIncludeList._({
-    _i1.WhereExpressionBuilder<AuditEntryTable>? where,
+    _is.WhereExpressionBuilder<AuditEntryTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -332,10 +334,10 @@ class AuditEntryIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => AuditEntry.t;
+  _is.Table<int?> get table => AuditEntry.t;
 }
 
 class AuditEntryRepository {
@@ -364,15 +366,15 @@ class AuditEntryRepository {
   /// );
   /// ```
   Future<List<AuditEntry>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<AuditEntryTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<AuditEntryTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AuditEntryTable>? orderBy,
-    _i1.OrderByListBuilder<AuditEntryTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<AuditEntryTable>? orderBy,
+    _is.OrderByListBuilder<AuditEntryTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<AuditEntry>(
       where: where?.call(AuditEntry.t),
@@ -404,14 +406,14 @@ class AuditEntryRepository {
   /// );
   /// ```
   Future<AuditEntry?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<AuditEntryTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<AuditEntryTable>? where,
     int? offset,
-    _i1.OrderByBuilder<AuditEntryTable>? orderBy,
-    _i1.OrderByListBuilder<AuditEntryTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<AuditEntryTable>? orderBy,
+    _is.OrderByListBuilder<AuditEntryTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<AuditEntry>(
       where: where?.call(AuditEntry.t),
@@ -426,11 +428,11 @@ class AuditEntryRepository {
 
   /// Finds a single [AuditEntry] by its [id] or null if no such row exists.
   Future<AuditEntry?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<AuditEntry>(
       id,
@@ -455,9 +457,9 @@ class AuditEntryRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AuditEntry>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AuditEntry> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -473,9 +475,9 @@ class AuditEntryRepository {
   ///
   /// The returned [AuditEntry] will have its `id` field set.
   Future<AuditEntry> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AuditEntry row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<AuditEntry>(
       row,
@@ -504,12 +506,12 @@ class AuditEntryRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AuditEntry>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AuditEntry> rows, {
-    required _i1.ColumnSelections<AuditEntryTable> conflictColumns,
-    _i1.ColumnSelections<AuditEntryTable>? updateColumns,
-    _i1.WhereExpressionBuilder<AuditEntryTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<AuditEntryTable> conflictColumns,
+    _is.ColumnSelections<AuditEntryTable>? updateColumns,
+    _is.WhereExpressionBuilder<AuditEntryTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<AuditEntry>(
@@ -536,12 +538,12 @@ class AuditEntryRepository {
   ///
   /// The returned [AuditEntry] will have its `id` field set.
   Future<AuditEntry?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AuditEntry row, {
-    required _i1.ColumnSelections<AuditEntryTable> conflictColumns,
-    _i1.ColumnSelections<AuditEntryTable>? updateColumns,
-    _i1.WhereExpressionBuilder<AuditEntryTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<AuditEntryTable> conflictColumns,
+    _is.ColumnSelections<AuditEntryTable>? updateColumns,
+    _is.WhereExpressionBuilder<AuditEntryTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<AuditEntry>(
       row,
@@ -562,10 +564,10 @@ class AuditEntryRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AuditEntry>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AuditEntry> rows, {
-    _i1.ColumnSelections<AuditEntryTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<AuditEntryTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<AuditEntry>(
@@ -580,10 +582,10 @@ class AuditEntryRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<AuditEntry> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AuditEntry row, {
-    _i1.ColumnSelections<AuditEntryTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<AuditEntryTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<AuditEntry>(
       row,
@@ -595,10 +597,10 @@ class AuditEntryRepository {
   /// Updates a single [AuditEntry] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<AuditEntry?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<AuditEntryUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<AuditEntryUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<AuditEntry>(
       id,
@@ -614,14 +616,14 @@ class AuditEntryRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AuditEntry>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<AuditEntryUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<AuditEntryTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<AuditEntryUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<AuditEntryTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AuditEntryTable>? orderBy,
-    _i1.OrderByListBuilder<AuditEntryTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<AuditEntryTable>? orderBy,
+    _is.OrderByListBuilder<AuditEntryTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<AuditEntry>(
@@ -648,11 +650,11 @@ class AuditEntryRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AuditEntry>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AuditEntry> rows, {
-    _i1.OrderByBuilder<AuditEntryTable>? orderBy,
-    _i1.OrderByListBuilder<AuditEntryTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<AuditEntryTable>? orderBy,
+    _is.OrderByListBuilder<AuditEntryTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<AuditEntry>(
@@ -666,9 +668,9 @@ class AuditEntryRepository {
 
   /// Deletes a single [AuditEntry].
   Future<AuditEntry> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AuditEntry row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<AuditEntry>(
       row,
@@ -685,11 +687,11 @@ class AuditEntryRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AuditEntry>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<AuditEntryTable> where,
-    _i1.OrderByBuilder<AuditEntryTable>? orderBy,
-    _i1.OrderByListBuilder<AuditEntryTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<AuditEntryTable> where,
+    _is.OrderByBuilder<AuditEntryTable>? orderBy,
+    _is.OrderByListBuilder<AuditEntryTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<AuditEntry>(
@@ -704,10 +706,10 @@ class AuditEntryRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<AuditEntryTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<AuditEntryTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<AuditEntry>(
       where: where?.call(AuditEntry.t),
@@ -718,11 +720,11 @@ class AuditEntryRepository {
 
   /// Acquires row-level locks on [AuditEntry] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<AuditEntryTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<AuditEntryTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<AuditEntry>(
       where: where(AuditEntry.t),
