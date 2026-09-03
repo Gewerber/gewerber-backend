@@ -20,14 +20,14 @@ RUN printf '%s\n' \
   '  - gewerber_backend_server' \
   > pubspec.yaml
 # The dependency URLs point at the public stub packages
-# (gewerber-backend--stubs). Release builds inject the real private module by
+# (gewerber-backend-stubs). Release builds inject the real private module by
 # rewriting the stubs URL to gewerber-backend-commercial via a git insteadOf
 # rule; the GitHub token is supplied as a BuildKit secret (id=git_token) and
 # the git config is removed afterwards:
 #   docker build --secret id=git_token,env=GIT_TOKEN ...
 RUN --mount=type=secret,id=git_token \
   if [ -f /run/secrets/git_token ]; then \
-    git config --global url."https://x-access-token:$(cat /run/secrets/git_token)@github.com/Gewerber/gewerber-backend-commercial".insteadOf "https://github.com/Gewerber/gewerber-backend--stubs"; \
+    git config --global url."https://x-access-token:$(cat /run/secrets/git_token)@github.com/Gewerber/gewerber-backend-commercial".insteadOf "https://github.com/Gewerber/gewerber-backend-stubs"; \
     git config --global url."https://x-access-token:$(cat /run/secrets/git_token)@github.com/".insteadOf "https://github.com/"; \
   fi \
   && dart pub get \
