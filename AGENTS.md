@@ -24,7 +24,7 @@ gewerber_backend_server/lib/src/
     mail/                        # MailService (SMTP) + EmailTemplate
     sequence/                    # GoBD-safe number sequences
   modules/
-    business/                    # M1: Business + Membership + BusinessSettings
+    business/                    # M1: Business + Membership + Invitations + BusinessSettings
     invoicing/                   # M2: Customer, Invoice, templates, payments, reminders, PDF, recurring, export
     time_tracking/               # M3: Project, Task, TimeEntry (timer), rounding, reports, billing
     accounting/                  # M4: Income/expense transactions, receipts, P&L, CSV export

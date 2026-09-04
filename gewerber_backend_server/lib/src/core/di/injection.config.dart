@@ -73,10 +73,12 @@ import '../../modules/business/application/update_business_use_case.dart'
 import '../../modules/business/data/serverpod_business_gateway.dart' as _i8;
 import '../../modules/business/data/serverpod_business_settings_gateway.dart'
     as _i823;
+import '../../modules/business/data/serverpod_invitation_gateway.dart' as _i802;
 import '../../modules/business/data/serverpod_membership_gateway.dart' as _i257;
 import '../../modules/business/data/serverpod_tenant_resolver.dart' as _i707;
 import '../../modules/business/domain/business_gateway.dart' as _i647;
 import '../../modules/business/domain/business_settings_gateway.dart' as _i141;
+import '../../modules/business/domain/invitation_gateway.dart' as _i1056;
 import '../../modules/business/domain/membership_gateway.dart' as _i688;
 import '../../modules/dashboard/application/get_dashboard_summary_use_case.dart'
     as _i799;
@@ -312,6 +314,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i1065.TransactionGateway>(
       () => _i223.ServerpodTransactionGateway(),
+    );
+    gh.singleton<_i1056.InvitationGateway>(
+      () => _i802.ServerpodInvitationGateway(),
     );
     gh.singleton<_i664.EntitlementProvider>(
       () => _i398.AllFeaturesEntitlementProvider(),

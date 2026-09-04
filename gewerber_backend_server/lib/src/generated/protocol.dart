@@ -83,6 +83,8 @@ import 'modules/business/models/business_settings.dart' as _ixvagzl5;
 import 'modules/business/models/country.dart' as _i8xf36x2;
 import 'modules/business/models/create_business_request.dart' as _i1txccp7;
 import 'modules/business/models/currency.dart' as _i1srbh9z;
+import 'modules/business/models/invitation.dart' as _iq0b7m5k;
+import 'modules/business/models/invitation_status.dart' as _ir4590qc;
 import 'modules/business/models/legal_form.dart' as _i5egs7uv;
 import 'modules/business/models/locale.dart' as _ii0188h0;
 import 'modules/business/models/membership.dart' as _iu72qgm4;
@@ -195,6 +197,8 @@ export 'modules/business/models/business_settings.dart';
 export 'modules/business/models/country.dart';
 export 'modules/business/models/create_business_request.dart';
 export 'modules/business/models/currency.dart';
+export 'modules/business/models/invitation.dart';
+export 'modules/business/models/invitation_status.dart';
 export 'modules/business/models/legal_form.dart';
 export 'modules/business/models/locale.dart';
 export 'modules/business/models/membership.dart';
@@ -1030,6 +1034,136 @@ class Protocol extends _is.DatabaseSerializationManager {
             _isp.IndexElementDefinition(
               type: _isp.IndexElementDefinitionType.column,
               definition: 'topic',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: false,
+        ),
+      ],
+      managed: true,
+    ),
+    _isp.TableDefinition(
+      name: 'invitation',
+      dartName: 'Invitation',
+      schema: 'public',
+      module: 'gewerber_backend',
+      columns: [
+        _isp.ColumnDefinition(
+          name: 'id',
+          columnType: _isp.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'serial',
+        ),
+        _isp.ColumnDefinition(
+          name: 'businessId',
+          columnType: _isp.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _isp.ColumnDefinition(
+          name: 'email',
+          columnType: _isp.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _isp.ColumnDefinition(
+          name: 'role',
+          columnType: _isp.ColumnType.text,
+          isNullable: false,
+          dartType: 'protocol:MembershipRole',
+          columnDefault: '\'member\'',
+        ),
+        _isp.ColumnDefinition(
+          name: 'status',
+          columnType: _isp.ColumnType.text,
+          isNullable: false,
+          dartType: 'protocol:InvitationStatus',
+          columnDefault: '\'pending\'',
+        ),
+        _isp.ColumnDefinition(
+          name: 'invitedByUserId',
+          columnType: _isp.ColumnType.uuid,
+          isNullable: true,
+          dartType: 'UuidValue?',
+        ),
+        _isp.ColumnDefinition(
+          name: 'tokenHash',
+          columnType: _isp.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _isp.ColumnDefinition(
+          name: 'expiresAt',
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+        ),
+        _isp.ColumnDefinition(
+          name: 'acceptedAt',
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          isNullable: true,
+          dartType: 'DateTime?',
+        ),
+        _isp.ColumnDefinition(
+          name: 'createdAt',
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+          columnDefault: 'now',
+        ),
+      ],
+      foreignKeys: [
+        _isp.ForeignKeyDefinition(
+          constraintName: 'invitation_fk_0',
+          columns: ['businessId'],
+          referenceTable: 'business',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
+          matchType: null,
+        ),
+      ],
+      indexes: [
+        _isp.IndexDefinition(
+          indexName: 'invitation_business_idx',
+          tableSpace: null,
+          elements: [
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
+              definition: 'businessId',
+            ),
+          ],
+          type: 'btree',
+          isUnique: false,
+          isPrimary: false,
+        ),
+        _isp.IndexDefinition(
+          indexName: 'invitation_business_email_unique_idx',
+          tableSpace: null,
+          elements: [
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
+              definition: 'businessId',
+            ),
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
+              definition: 'email',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: false,
+        ),
+        _isp.IndexDefinition(
+          indexName: 'invitation_token_hash_unique_idx',
+          tableSpace: null,
+          elements: [
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
+              definition: 'tokenHash',
             ),
           ],
           type: 'btree',
@@ -2565,6 +2699,12 @@ class Protocol extends _is.DatabaseSerializationManager {
     if (t == _i1srbh9z.Currency) {
       return _i1srbh9z.Currency.fromJson(data) as T;
     }
+    if (t == _iq0b7m5k.Invitation) {
+      return _iq0b7m5k.Invitation.fromJson(data) as T;
+    }
+    if (t == _ir4590qc.InvitationStatus) {
+      return _ir4590qc.InvitationStatus.fromJson(data) as T;
+    }
     if (t == _i5egs7uv.LegalForm) {
       return _i5egs7uv.LegalForm.fromJson(data) as T;
     }
@@ -2919,6 +3059,13 @@ class Protocol extends _is.DatabaseSerializationManager {
     }
     if (t == _is.getType<_i1srbh9z.Currency?>()) {
       return (data != null ? _i1srbh9z.Currency.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_iq0b7m5k.Invitation?>()) {
+      return (data != null ? _iq0b7m5k.Invitation.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_ir4590qc.InvitationStatus?>()) {
+      return (data != null ? _ir4590qc.InvitationStatus.fromJson(data) : null)
+          as T;
     }
     if (t == _is.getType<_i5egs7uv.LegalForm?>()) {
       return (data != null ? _i5egs7uv.LegalForm.fromJson(data) : null) as T;
@@ -3490,6 +3637,8 @@ class Protocol extends _is.DatabaseSerializationManager {
       _i8xf36x2.Country => 'Country',
       _i1txccp7.CreateBusinessRequest => 'CreateBusinessRequest',
       _i1srbh9z.Currency => 'Currency',
+      _iq0b7m5k.Invitation => 'Invitation',
+      _ir4590qc.InvitationStatus => 'InvitationStatus',
       _i5egs7uv.LegalForm => 'LegalForm',
       _ii0188h0.Locale => 'Locale',
       _iu72qgm4.Membership => 'Membership',
@@ -3649,6 +3798,10 @@ class Protocol extends _is.DatabaseSerializationManager {
         return 'CreateBusinessRequest';
       case _i1srbh9z.Currency():
         return 'Currency';
+      case _iq0b7m5k.Invitation():
+        return 'Invitation';
+      case _ir4590qc.InvitationStatus():
+        return 'InvitationStatus';
       case _i5egs7uv.LegalForm():
         return 'LegalForm';
       case _ii0188h0.Locale():
@@ -3922,6 +4075,12 @@ class Protocol extends _is.DatabaseSerializationManager {
     }
     if (dataClassName == 'Currency') {
       return deserialize<_i1srbh9z.Currency>(data['data']);
+    }
+    if (dataClassName == 'Invitation') {
+      return deserialize<_iq0b7m5k.Invitation>(data['data']);
+    }
+    if (dataClassName == 'InvitationStatus') {
+      return deserialize<_ir4590qc.InvitationStatus>(data['data']);
     }
     if (dataClassName == 'LegalForm') {
       return deserialize<_i5egs7uv.LegalForm>(data['data']);
@@ -4203,6 +4362,8 @@ class Protocol extends _is.DatabaseSerializationManager {
         return _im9zvu8o.Business.t;
       case _ixvagzl5.BusinessSettings:
         return _ixvagzl5.BusinessSettings.t;
+      case _iq0b7m5k.Invitation:
+        return _iq0b7m5k.Invitation.t;
       case _iu72qgm4.Membership:
         return _iu72qgm4.Membership.t;
       case _i9jvbk51.Document:

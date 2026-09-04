@@ -1,0 +1,26 @@
+class: Invitation
+table: invitation
+fields:
+  ### Mirrors the membership business relation (cascade delete with business).
+  businessId: int, relation(parent=business, onDelete=Cascade)
+  email: String
+  role: MembershipRole, default=member
+  status: InvitationStatus, default=pending
+  ### Nullable: set to null when the account is deleted (GDPR Art. 17).
+  invitedByUserId: UuidValue?
+  ### sha256 hex of the invitation token; the raw token is never stored.
+  tokenHash: String
+  expiresAt: DateTime
+  acceptedAt: DateTime?
+  createdAt: DateTime, default=now
+indexes:
+  invitation_business_idx:
+    fields: businessId
+  ### Plain unique on (businessId, email): revoked invitations are DELETEd
+  ### (not marked revoked in place), so a revoked row never blocks re-inviting.
+  invitation_business_email_unique_idx:
+    fields: businessId, email
+    unique: true
+  invitation_token_hash_unique_idx:
+    fields: tokenHash
+    unique: true

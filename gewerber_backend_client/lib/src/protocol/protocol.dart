@@ -79,6 +79,8 @@ import 'modules/business/models/business_settings.dart' as _ixvagzl5;
 import 'modules/business/models/country.dart' as _i8xf36x2;
 import 'modules/business/models/create_business_request.dart' as _i1txccp7;
 import 'modules/business/models/currency.dart' as _i1srbh9z;
+import 'modules/business/models/invitation.dart' as _iq0b7m5k;
+import 'modules/business/models/invitation_status.dart' as _ir4590qc;
 import 'modules/business/models/legal_form.dart' as _i5egs7uv;
 import 'modules/business/models/locale.dart' as _ii0188h0;
 import 'modules/business/models/membership.dart' as _iu72qgm4;
@@ -187,6 +189,8 @@ export 'modules/business/models/business_settings.dart';
 export 'modules/business/models/country.dart';
 export 'modules/business/models/create_business_request.dart';
 export 'modules/business/models/currency.dart';
+export 'modules/business/models/invitation.dart';
+export 'modules/business/models/invitation_status.dart';
 export 'modules/business/models/legal_form.dart';
 export 'modules/business/models/locale.dart';
 export 'modules/business/models/membership.dart';
@@ -384,6 +388,12 @@ class Protocol extends _isc.SerializationManager {
     }
     if (t == _i1srbh9z.Currency) {
       return _i1srbh9z.Currency.fromJson(data) as T;
+    }
+    if (t == _iq0b7m5k.Invitation) {
+      return _iq0b7m5k.Invitation.fromJson(data) as T;
+    }
+    if (t == _ir4590qc.InvitationStatus) {
+      return _ir4590qc.InvitationStatus.fromJson(data) as T;
     }
     if (t == _i5egs7uv.LegalForm) {
       return _i5egs7uv.LegalForm.fromJson(data) as T;
@@ -727,6 +737,13 @@ class Protocol extends _isc.SerializationManager {
     }
     if (t == _isc.getType<_i1srbh9z.Currency?>()) {
       return (data != null ? _i1srbh9z.Currency.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_iq0b7m5k.Invitation?>()) {
+      return (data != null ? _iq0b7m5k.Invitation.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_ir4590qc.InvitationStatus?>()) {
+      return (data != null ? _ir4590qc.InvitationStatus.fromJson(data) : null)
+          as T;
     }
     if (t == _isc.getType<_i5egs7uv.LegalForm?>()) {
       return (data != null ? _i5egs7uv.LegalForm.fromJson(data) : null) as T;
@@ -1286,6 +1303,8 @@ class Protocol extends _isc.SerializationManager {
       _i8xf36x2.Country => 'Country',
       _i1txccp7.CreateBusinessRequest => 'CreateBusinessRequest',
       _i1srbh9z.Currency => 'Currency',
+      _iq0b7m5k.Invitation => 'Invitation',
+      _ir4590qc.InvitationStatus => 'InvitationStatus',
       _i5egs7uv.LegalForm => 'LegalForm',
       _ii0188h0.Locale => 'Locale',
       _iu72qgm4.Membership => 'Membership',
@@ -1438,6 +1457,10 @@ class Protocol extends _isc.SerializationManager {
         return 'CreateBusinessRequest';
       case _i1srbh9z.Currency():
         return 'Currency';
+      case _iq0b7m5k.Invitation():
+        return 'Invitation';
+      case _ir4590qc.InvitationStatus():
+        return 'InvitationStatus';
       case _i5egs7uv.LegalForm():
         return 'LegalForm';
       case _ii0188h0.Locale():
@@ -1696,6 +1719,12 @@ class Protocol extends _isc.SerializationManager {
     }
     if (dataClassName == 'Currency') {
       return deserialize<_i1srbh9z.Currency>(data['data']);
+    }
+    if (dataClassName == 'Invitation') {
+      return deserialize<_iq0b7m5k.Invitation>(data['data']);
+    }
+    if (dataClassName == 'InvitationStatus') {
+      return deserialize<_ir4590qc.InvitationStatus>(data['data']);
     }
     if (dataClassName == 'LegalForm') {
       return deserialize<_i5egs7uv.LegalForm>(data['data']);
