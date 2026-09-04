@@ -132,6 +132,50 @@ void main() {
       );
 
       test(
+        'when recording a payment on a cancelled invoice then ValidationException',
+        () async {
+          await endpoints.invoice.markSent(
+            authenticatedSession,
+            invoice.id!,
+            businessId: businessId,
+          );
+          await endpoints.invoice.cancel(
+            authenticatedSession,
+            invoice.id!,
+            businessId: businessId,
+          );
+
+          final result = await attemptRecord(5000);
+          expect(
+            result,
+            isA<ValidationException>().having(
+              (e) => e.message,
+              'message',
+              'Cannot record payment on a cancelled invoice.',
+            ),
+          );
+
+          // The rejected payment must not be persisted and must not flip the
+          // invoice status away from cancelled.
+          final status = await endpoints.payment.status(
+            authenticatedSession,
+            invoice.id!,
+            businessId: businessId,
+          );
+          expect(status.paidTotalCents, 0);
+          expect(status.payments, isEmpty);
+          expect(status.isPaid, false);
+
+          final fetched = await endpoints.invoice.get(
+            authenticatedSession,
+            invoice.id!,
+            businessId: businessId,
+          );
+          expect(fetched.status, InvoiceStatus.cancelled);
+        },
+      );
+
+      test(
         'when two payments race then only the fitting one is recorded',
         () async {
           // Each 6000-cent payment alone fits into the 11900 total, but both

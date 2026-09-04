@@ -13,6 +13,14 @@ class ServerpodTenantResolver implements TenantResolver {
 
   final MembershipGateway _memberships;
 
+  /// Resolves the tenant for the current request.
+  ///
+  /// With an explicit [businessId], the caller must hold a membership in that
+  /// business, otherwise a [ForbiddenException] is thrown.
+  ///
+  /// Without [businessId], the default business = membership with earliest
+  /// createdAt (deterministic); users without any membership get a
+  /// [NotFoundException].
   @override
   Future<TenantContext> resolve(Session session, {int? businessId}) async {
     final userId = session.authUserId;
