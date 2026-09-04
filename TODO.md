@@ -167,7 +167,10 @@
 - [ ] S3 storage adapter за существующим интерфейсом (спека обещает S3, факт — DatabaseStorage)
 - [ ] Multi-language писем/PDF/guidance (enum `Locale(de,en,ru,tr)` есть, контент захардкожен на de)
 - [ ] Rate limiting публичных эндпоинтов
-- [ ] Entitlement enforcement-точки в бизнес-логике (сейчас scaffold вызывается только из endpoint)
+- [x] Entitlement enforcement-точки в бизнес-логике ✅ 2026-09-04
+      (scaffold готов: `EntitlementGuard` +
+      `BusinessScopedEndpoint.requiredFeature`/`requireFeature`; enforced
+      точки подключаются в коммерческих модулях)
 
 ### Лидогенерация (связка с gewerber-website)
 - [ ] **Waitlist: атрибуция первого касания** — изменение в закрытом модуле

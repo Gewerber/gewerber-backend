@@ -241,6 +241,7 @@ import '../../modules/user/domain/user_profile_gateway.dart' as _i467;
 import '../admin/admin_role_resolver.dart' as _i62;
 import '../audit/audit_service.dart' as _i473;
 import '../entitlement/all_features_entitlement_provider.dart' as _i398;
+import '../entitlement/entitlement_guard.dart' as _i792;
 import '../entitlement/entitlement_provider.dart' as _i664;
 import '../mail/mail_service.dart' as _i1069;
 import '../sequence/data/serverpod_sequence_gateway.dart' as _i445;
@@ -255,6 +256,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.singleton<_i473.AuditService>(() => _i473.AuditService());
+    gh.singleton<_i792.EntitlementGuard>(() => _i792.EntitlementGuard());
     gh.singleton<_i1069.MailService>(() => _i1069.MailService());
     gh.singleton<_i993.GuidanceContentProvider>(
       () => _i993.GuidanceContentProvider(),

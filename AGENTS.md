@@ -20,7 +20,7 @@ gewerber_backend_server/lib/src/
     admin/                       # AdminUser allowlist (AdminRole), AdminRoleResolver, AdminContext
     errors/                      # Serializable exceptions (NotFound, Validation, Forbidden, Conflict)
     endpoints/                   # BusinessScopedEndpoint, AdminEndpoint base classes
-    entitlement/                 # Feature gating scaffold (all features enabled in OSS)
+    entitlement/                 # Feature gating scaffold (all features enabled in OSS) — EntitlementGuard + BusinessScopedEndpoint.requiredFeature for enforcement
     mail/                        # MailService (SMTP) + EmailTemplate
     sequence/                    # GoBD-safe number sequences
   modules/
