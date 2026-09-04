@@ -14,8 +14,10 @@ import '../domain/reminder_gateway.dart';
 /// Sends a payment reminder for a sent/partially paid/overdue invoice.
 ///
 /// The reminder level is derived from the number of reminders already sent
-/// for the invoice and is mirrored to `invoice.dunningLevel`. If SMTP is not
-/// configured the reminder is still recorded (useful for local development).
+/// for the invoice and is mirrored to `invoice.dunningLevel` — but only when
+/// the email was actually delivered or logged-only (no SMTP configured in
+/// dev). A reminder whose email delivery failed is recorded with
+/// `sent = false` and does not bump the dunning level.
 @singleton
 class SendPaymentReminderUseCase {
   SendPaymentReminderUseCase(
@@ -88,17 +90,7 @@ class SendPaymentReminderUseCase {
       );
     }
 
-    final reminder = await _reminders.create(
-      session,
-      Reminder(invoiceId: invoiceId, level: level),
-    );
-
-    await _invoices.update(
-      session,
-      invoice.copyWith(dunningLevel: level),
-    );
-
-    await _mail.sendPaymentReminder(
+    final status = await _mail.sendPaymentReminder(
       session,
       toEmail: email,
       customerName: customer!.companyName ?? customer.name,
@@ -112,12 +104,35 @@ class SendPaymentReminderUseCase {
       dueDate: invoice.dueDate ?? invoice.issueDate,
     );
 
+    // `sent` is true for a real delivery or the logged-only dev path — only
+    // a hard failure (MailSendStatus.failed) must not count as a dunning step.
+    final sent = status != MailSendStatus.failed;
+    if (!sent) {
+      session.log(
+        '[SendPaymentReminderUseCase] Mail delivery failed for invoice '
+        '${invoice.number} (level $level, $email) — dunning level not bumped.',
+        level: LogLevel.warning,
+      );
+    }
+
+    final reminder = await _reminders.create(
+      session,
+      Reminder(invoiceId: invoiceId, level: level, sent: sent),
+    );
+
+    if (sent) {
+      await _invoices.update(
+        session,
+        invoice.copyWith(dunningLevel: level),
+      );
+    }
+
     await _audit.log(
       session,
       action: 'reminder.send',
       entityType: 'Invoice',
       entityId: '$invoiceId',
-      changes: {'dunningLevel': '$level'},
+      changes: {'dunningLevel': '$level', 'sent': '$sent'},
       tenant: tenant,
     );
     return reminder;

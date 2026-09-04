@@ -19,13 +19,16 @@ abstract class Reminder
     this.id,
     required this.invoiceId,
     required this.level,
+    bool? sent,
     DateTime? sentAt,
-  }) : sentAt = sentAt ?? DateTime.now();
+  }) : sent = sent ?? false,
+       sentAt = sentAt ?? DateTime.now();
 
   factory Reminder({
     int? id,
     required int invoiceId,
     required int level,
+    bool? sent,
     DateTime? sentAt,
   }) = _ReminderImpl;
 
@@ -34,6 +37,9 @@ abstract class Reminder
       id: jsonSerialization['id'] as int?,
       invoiceId: jsonSerialization['invoiceId'] as int,
       level: jsonSerialization['level'] as int,
+      sent: jsonSerialization['sent'] == null
+          ? null
+          : _is.BoolJsonExtension.fromJson(jsonSerialization['sent']),
       sentAt: jsonSerialization['sentAt'] == null
           ? null
           : _is.DateTimeJsonExtension.fromJson(jsonSerialization['sentAt']),
@@ -51,6 +57,8 @@ abstract class Reminder
 
   int level;
 
+  bool sent;
+
   DateTime sentAt;
 
   @override
@@ -63,6 +71,7 @@ abstract class Reminder
     int? id,
     int? invoiceId,
     int? level,
+    bool? sent,
     DateTime? sentAt,
   });
   @override
@@ -72,6 +81,7 @@ abstract class Reminder
       if (id != null) 'id': id,
       'invoiceId': invoiceId,
       'level': level,
+      'sent': sent,
       'sentAt': sentAt.toJson(),
     };
   }
@@ -83,6 +93,7 @@ abstract class Reminder
       if (id != null) 'id': id,
       'invoiceId': invoiceId,
       'level': level,
+      'sent': sent,
       'sentAt': sentAt.toJson(),
     };
   }
@@ -122,11 +133,13 @@ class _ReminderImpl extends Reminder {
     int? id,
     required int invoiceId,
     required int level,
+    bool? sent,
     DateTime? sentAt,
   }) : super._(
          id: id,
          invoiceId: invoiceId,
          level: level,
+         sent: sent,
          sentAt: sentAt,
        );
 
@@ -138,12 +151,14 @@ class _ReminderImpl extends Reminder {
     Object? id = _Undefined,
     int? invoiceId,
     int? level,
+    bool? sent,
     DateTime? sentAt,
   }) {
     return Reminder(
       id: id is int? ? id : this.id,
       invoiceId: invoiceId ?? this.invoiceId,
       level: level ?? this.level,
+      sent: sent ?? this.sent,
       sentAt: sentAt ?? this.sentAt,
     );
   }
@@ -159,6 +174,11 @@ class ReminderUpdateTable extends _is.UpdateTable<ReminderTable> {
 
   _is.ColumnValue<int, int> level(int value) => _is.ColumnValue(
     table.level,
+    value,
+  );
+
+  _is.ColumnValue<bool, bool> sent(bool value) => _is.ColumnValue(
+    table.sent,
     value,
   );
 
@@ -179,6 +199,11 @@ class ReminderTable extends _is.Table<int?> {
       'level',
       this,
     );
+    sent = _is.ColumnBool(
+      'sent',
+      this,
+      hasDefault: true,
+    );
     sentAt = _is.ColumnDateTime(
       'sentAt',
       this,
@@ -192,6 +217,8 @@ class ReminderTable extends _is.Table<int?> {
 
   late final _is.ColumnInt level;
 
+  late final _is.ColumnBool sent;
+
   late final _is.ColumnDateTime sentAt;
 
   @override
@@ -199,6 +226,7 @@ class ReminderTable extends _is.Table<int?> {
     id,
     invoiceId,
     level,
+    sent,
     sentAt,
   ];
 }

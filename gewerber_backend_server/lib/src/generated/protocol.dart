@@ -1941,6 +1941,13 @@ class Protocol extends _is.DatabaseSerializationManager {
           dartType: 'int',
         ),
         _isp.ColumnDefinition(
+          name: 'sent',
+          columnType: _isp.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _isp.ColumnDefinition(
           name: 'sentAt',
           columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,

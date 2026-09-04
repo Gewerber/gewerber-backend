@@ -42,12 +42,18 @@ void run(List<String> args) async {
               required accountRequestId,
               required verificationCode,
               required transaction,
-            }) {
-              return getIt<MailService>().sendVerificationCode(
+            }) async {
+              final status = await getIt<MailService>().sendVerificationCode(
                 session,
                 email: email,
                 verificationCode: verificationCode,
                 template: EmailTemplate.registrationVerification,
+              );
+              _logFailedDelivery(
+                session,
+                template: EmailTemplate.registrationVerification,
+                email: email,
+                status: status,
               );
             },
         sendPasswordResetVerificationCode:
@@ -57,12 +63,18 @@ void run(List<String> args) async {
               required passwordResetRequestId,
               required verificationCode,
               required transaction,
-            }) {
-              return getIt<MailService>().sendVerificationCode(
+            }) async {
+              final status = await getIt<MailService>().sendVerificationCode(
                 session,
                 email: email,
                 verificationCode: verificationCode,
                 template: EmailTemplate.passwordResetVerification,
+              );
+              _logFailedDelivery(
+                session,
+                template: EmailTemplate.passwordResetVerification,
+                email: email,
+                status: status,
               );
             },
       ),
@@ -85,6 +97,23 @@ void run(List<String> args) async {
 /// length. The value is mirrored in `AppConstants.verificationCodeLength`
 /// in the app, but the two packages cannot share a Dart import.
 const int _verificationCodeLength = 8;
+
+/// Logs an error-level entry when a verification email could not be sent.
+/// Registration/password reset itself must not be interrupted — the user can
+/// simply request a new code.
+void _logFailedDelivery(
+  Session session, {
+  required EmailTemplate template,
+  required String email,
+  required MailSendStatus status,
+}) {
+  if (status != MailSendStatus.failed) return;
+  session.log(
+    '[MailService] Verification email delivery failed: '
+    'template=${template.name}, email=$email',
+    level: LogLevel.error,
+  );
+}
 
 /// Generates a numeric verification code of [_verificationCodeLength]
 /// digits. The code length is set here because the email IdP takes the
