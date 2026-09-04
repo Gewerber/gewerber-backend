@@ -10,13 +10,14 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
 abstract class ConflictException
     implements
-        _i1.SerializableException,
-        _i1.SerializableModel,
-        _i1.ProtocolSerialization {
+        _isc.SerializableException,
+        _isc.SerializableModel,
+        _isc.ProtocolSerialization {
   ConflictException._({required this.message});
 
   factory ConflictException({required String message}) = _ConflictExceptionImpl;
@@ -29,7 +30,7 @@ abstract class ConflictException
 
   /// Returns a shallow copy of this [ConflictException]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   ConflictException copyWith({String? message});
   @override
   Map<String, dynamic> toJson() {
@@ -58,7 +59,7 @@ class _ConflictExceptionImpl extends ConflictException {
 
   /// Returns a shallow copy of this [ConflictException]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   ConflictException copyWith({String? message}) {
     return ConflictException(message: message ?? this.message);

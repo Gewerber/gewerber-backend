@@ -10,13 +10,13 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
 
-enum AppTheme implements _i1.SerializableModel {
+import 'package:serverpod/serverpod.dart' as _is;
+
+enum AppTheme implements _is.SerializableModel {
   system,
   light,
-  dark,
-  ;
+  dark;
 
   static AppTheme fromJson(String name) {
     switch (name) {

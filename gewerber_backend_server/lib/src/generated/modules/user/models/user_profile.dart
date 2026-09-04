@@ -10,34 +10,35 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/business/models/locale.dart' as _i2;
-import '../../../modules/user/models/app_theme.dart' as _i3;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/business/models/locale.dart' as _ie5v8zdc;
+import '../../../modules/user/models/app_theme.dart' as _ipe4su3u;
 
 abstract class UserProfile
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   UserProfile._({
     this.id,
     required this.userId,
     this.displayName,
-    _i2.Locale? locale,
+    _ie5v8zdc.Locale? locale,
     this.timeZone,
-    _i3.AppTheme? themeMode,
+    _ipe4su3u.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
     this.deletedAt,
-  }) : locale = locale ?? _i2.Locale.de,
-       themeMode = themeMode ?? _i3.AppTheme.system,
+  }) : locale = locale ?? _ie5v8zdc.Locale.de,
+       themeMode = themeMode ?? _ipe4su3u.AppTheme.system,
        createdAt = createdAt ?? DateTime.now(),
        updatedAt = updatedAt ?? DateTime.now();
 
   factory UserProfile({
     int? id,
-    required _i1.UuidValue userId,
+    required _is.UuidValue userId,
     String? displayName,
-    _i2.Locale? locale,
+    _ie5v8zdc.Locale? locale,
     String? timeZone,
-    _i3.AppTheme? themeMode,
+    _ipe4su3u.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? deletedAt,
@@ -46,24 +47,26 @@ abstract class UserProfile
   factory UserProfile.fromJson(Map<String, dynamic> jsonSerialization) {
     return UserProfile(
       id: jsonSerialization['id'] as int?,
-      userId: _i1.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
+      userId: _is.UuidValueJsonExtension.fromJson(jsonSerialization['userId']),
       displayName: jsonSerialization['displayName'] as String?,
       locale: jsonSerialization['locale'] == null
           ? null
-          : _i2.Locale.fromJson((jsonSerialization['locale'] as String)),
+          : _ie5v8zdc.Locale.fromJson((jsonSerialization['locale'] as String)),
       timeZone: jsonSerialization['timeZone'] as String?,
       themeMode: jsonSerialization['themeMode'] == null
           ? null
-          : _i3.AppTheme.fromJson((jsonSerialization['themeMode'] as String)),
+          : _ipe4su3u.AppTheme.fromJson(
+              (jsonSerialization['themeMode'] as String),
+            ),
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
       deletedAt: jsonSerialization['deletedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['deletedAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['deletedAt']),
     );
   }
 
@@ -74,15 +77,15 @@ abstract class UserProfile
   @override
   int? id;
 
-  _i1.UuidValue userId;
+  _is.UuidValue userId;
 
   String? displayName;
 
-  _i2.Locale locale;
+  _ie5v8zdc.Locale locale;
 
   String? timeZone;
 
-  _i3.AppTheme themeMode;
+  _ipe4su3u.AppTheme themeMode;
 
   DateTime createdAt;
 
@@ -94,18 +97,18 @@ abstract class UserProfile
   DateTime? deletedAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [UserProfile]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   UserProfile copyWith({
     int? id,
-    _i1.UuidValue? userId,
+    _is.UuidValue? userId,
     String? displayName,
-    _i2.Locale? locale,
+    _ie5v8zdc.Locale? locale,
     String? timeZone,
-    _i3.AppTheme? themeMode,
+    _ipe4su3u.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? deletedAt,
@@ -147,11 +150,11 @@ abstract class UserProfile
   }
 
   static UserProfileIncludeList includeList({
-    _i1.WhereExpressionBuilder<UserProfileTable>? where,
+    _is.WhereExpressionBuilder<UserProfileTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<UserProfileTable>? orderBy,
-    _i1.OrderByListBuilder<UserProfileTable>? orderByList,
+    _is.OrderByBuilder<UserProfileTable>? orderBy,
+    _is.OrderByListBuilder<UserProfileTable>? orderByList,
     UserProfileInclude? include,
   }) {
     return UserProfileIncludeList._(
@@ -166,7 +169,7 @@ abstract class UserProfile
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -175,11 +178,11 @@ class _Undefined {}
 class _UserProfileImpl extends UserProfile {
   _UserProfileImpl({
     int? id,
-    required _i1.UuidValue userId,
+    required _is.UuidValue userId,
     String? displayName,
-    _i2.Locale? locale,
+    _ie5v8zdc.Locale? locale,
     String? timeZone,
-    _i3.AppTheme? themeMode,
+    _ipe4su3u.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? deletedAt,
@@ -197,15 +200,15 @@ class _UserProfileImpl extends UserProfile {
 
   /// Returns a shallow copy of this [UserProfile]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   UserProfile copyWith({
     Object? id = _Undefined,
-    _i1.UuidValue? userId,
+    _is.UuidValue? userId,
     Object? displayName = _Undefined,
-    _i2.Locale? locale,
+    _ie5v8zdc.Locale? locale,
     Object? timeZone = _Undefined,
-    _i3.AppTheme? themeMode,
+    _ipe4su3u.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
     Object? deletedAt = _Undefined,
@@ -224,94 +227,96 @@ class _UserProfileImpl extends UserProfile {
   }
 }
 
-class UserProfileUpdateTable extends _i1.UpdateTable<UserProfileTable> {
+class UserProfileUpdateTable extends _is.UpdateTable<UserProfileTable> {
   UserProfileUpdateTable(super.table);
 
-  _i1.ColumnValue<_i1.UuidValue, _i1.UuidValue> userId(_i1.UuidValue value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<_is.UuidValue, _is.UuidValue> userId(_is.UuidValue value) =>
+      _is.ColumnValue(
         table.userId,
         value,
       );
 
-  _i1.ColumnValue<String, String> displayName(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> displayName(String? value) => _is.ColumnValue(
     table.displayName,
     value,
   );
 
-  _i1.ColumnValue<_i2.Locale, _i2.Locale> locale(_i2.Locale value) =>
-      _i1.ColumnValue(
-        table.locale,
-        value,
-      );
+  _is.ColumnValue<_ie5v8zdc.Locale, _ie5v8zdc.Locale> locale(
+    _ie5v8zdc.Locale value,
+  ) => _is.ColumnValue(
+    table.locale,
+    value,
+  );
 
-  _i1.ColumnValue<String, String> timeZone(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> timeZone(String? value) => _is.ColumnValue(
     table.timeZone,
     value,
   );
 
-  _i1.ColumnValue<_i3.AppTheme, _i3.AppTheme> themeMode(_i3.AppTheme value) =>
-      _i1.ColumnValue(
-        table.themeMode,
-        value,
-      );
+  _is.ColumnValue<_ipe4su3u.AppTheme, _ipe4su3u.AppTheme> themeMode(
+    _ipe4su3u.AppTheme value,
+  ) => _is.ColumnValue(
+    table.themeMode,
+    value,
+  );
 
-  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _is.ColumnValue(
         table.createdAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
+      _is.ColumnValue(
         table.updatedAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> deletedAt(DateTime? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> deletedAt(DateTime? value) =>
+      _is.ColumnValue(
         table.deletedAt,
         value,
       );
 }
 
-class UserProfileTable extends _i1.Table<int?> {
+class UserProfileTable extends _is.Table<int?> {
   UserProfileTable({super.tableRelation}) : super(tableName: 'user_profile') {
     updateTable = UserProfileUpdateTable(this);
-    userId = _i1.ColumnUuid(
+    userId = _is.ColumnUuid(
       'userId',
       this,
     );
-    displayName = _i1.ColumnString(
+    displayName = _is.ColumnString(
       'displayName',
       this,
     );
-    locale = _i1.ColumnEnum(
+    locale = _is.ColumnEnum(
       'locale',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    timeZone = _i1.ColumnString(
+    timeZone = _is.ColumnString(
       'timeZone',
       this,
     );
-    themeMode = _i1.ColumnEnum(
+    themeMode = _is.ColumnEnum(
       'themeMode',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    createdAt = _i1.ColumnDateTime(
+    createdAt = _is.ColumnDateTime(
       'createdAt',
       this,
       hasDefault: true,
     );
-    updatedAt = _i1.ColumnDateTime(
+    updatedAt = _is.ColumnDateTime(
       'updatedAt',
       this,
       hasDefault: true,
     );
-    deletedAt = _i1.ColumnDateTime(
+    deletedAt = _is.ColumnDateTime(
       'deletedAt',
       this,
     );
@@ -319,27 +324,27 @@ class UserProfileTable extends _i1.Table<int?> {
 
   late final UserProfileUpdateTable updateTable;
 
-  late final _i1.ColumnUuid userId;
+  late final _is.ColumnUuid userId;
 
-  late final _i1.ColumnString displayName;
+  late final _is.ColumnString displayName;
 
-  late final _i1.ColumnEnum<_i2.Locale> locale;
+  late final _is.ColumnEnum<_ie5v8zdc.Locale> locale;
 
-  late final _i1.ColumnString timeZone;
+  late final _is.ColumnString timeZone;
 
-  late final _i1.ColumnEnum<_i3.AppTheme> themeMode;
+  late final _is.ColumnEnum<_ipe4su3u.AppTheme> themeMode;
 
-  late final _i1.ColumnDateTime createdAt;
+  late final _is.ColumnDateTime createdAt;
 
-  late final _i1.ColumnDateTime updatedAt;
+  late final _is.ColumnDateTime updatedAt;
 
   /// Set when the account was soft-deleted (GDPR Art. 17). Personal links in
   /// business tables are severed at the same moment; business data is kept
   /// (GoBD retention). A non-null value means the account must not be usable.
-  late final _i1.ColumnDateTime deletedAt;
+  late final _is.ColumnDateTime deletedAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     userId,
     displayName,
@@ -352,19 +357,19 @@ class UserProfileTable extends _i1.Table<int?> {
   ];
 }
 
-class UserProfileInclude extends _i1.IncludeObject {
+class UserProfileInclude extends _is.IncludeObject {
   UserProfileInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => UserProfile.t;
+  _is.Table<int?> get table => UserProfile.t;
 }
 
-class UserProfileIncludeList extends _i1.IncludeList {
+class UserProfileIncludeList extends _is.IncludeList {
   UserProfileIncludeList._({
-    _i1.WhereExpressionBuilder<UserProfileTable>? where,
+    _is.WhereExpressionBuilder<UserProfileTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -375,10 +380,10 @@ class UserProfileIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => UserProfile.t;
+  _is.Table<int?> get table => UserProfile.t;
 }
 
 class UserProfileRepository {
@@ -407,15 +412,15 @@ class UserProfileRepository {
   /// );
   /// ```
   Future<List<UserProfile>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<UserProfileTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<UserProfileTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<UserProfileTable>? orderBy,
-    _i1.OrderByListBuilder<UserProfileTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<UserProfileTable>? orderBy,
+    _is.OrderByListBuilder<UserProfileTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<UserProfile>(
       where: where?.call(UserProfile.t),
@@ -447,14 +452,14 @@ class UserProfileRepository {
   /// );
   /// ```
   Future<UserProfile?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<UserProfileTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<UserProfileTable>? where,
     int? offset,
-    _i1.OrderByBuilder<UserProfileTable>? orderBy,
-    _i1.OrderByListBuilder<UserProfileTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<UserProfileTable>? orderBy,
+    _is.OrderByListBuilder<UserProfileTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<UserProfile>(
       where: where?.call(UserProfile.t),
@@ -469,11 +474,11 @@ class UserProfileRepository {
 
   /// Finds a single [UserProfile] by its [id] or null if no such row exists.
   Future<UserProfile?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<UserProfile>(
       id,
@@ -498,9 +503,9 @@ class UserProfileRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<UserProfile>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<UserProfile> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -516,9 +521,9 @@ class UserProfileRepository {
   ///
   /// The returned [UserProfile] will have its `id` field set.
   Future<UserProfile> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     UserProfile row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<UserProfile>(
       row,
@@ -547,12 +552,12 @@ class UserProfileRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<UserProfile>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<UserProfile> rows, {
-    required _i1.ColumnSelections<UserProfileTable> conflictColumns,
-    _i1.ColumnSelections<UserProfileTable>? updateColumns,
-    _i1.WhereExpressionBuilder<UserProfileTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<UserProfileTable> conflictColumns,
+    _is.ColumnSelections<UserProfileTable>? updateColumns,
+    _is.WhereExpressionBuilder<UserProfileTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<UserProfile>(
@@ -579,12 +584,12 @@ class UserProfileRepository {
   ///
   /// The returned [UserProfile] will have its `id` field set.
   Future<UserProfile?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     UserProfile row, {
-    required _i1.ColumnSelections<UserProfileTable> conflictColumns,
-    _i1.ColumnSelections<UserProfileTable>? updateColumns,
-    _i1.WhereExpressionBuilder<UserProfileTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<UserProfileTable> conflictColumns,
+    _is.ColumnSelections<UserProfileTable>? updateColumns,
+    _is.WhereExpressionBuilder<UserProfileTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<UserProfile>(
       row,
@@ -605,10 +610,10 @@ class UserProfileRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<UserProfile>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<UserProfile> rows, {
-    _i1.ColumnSelections<UserProfileTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<UserProfileTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<UserProfile>(
@@ -623,10 +628,10 @@ class UserProfileRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<UserProfile> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     UserProfile row, {
-    _i1.ColumnSelections<UserProfileTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<UserProfileTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<UserProfile>(
       row,
@@ -638,10 +643,10 @@ class UserProfileRepository {
   /// Updates a single [UserProfile] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<UserProfile?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<UserProfileUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<UserProfileUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<UserProfile>(
       id,
@@ -657,14 +662,14 @@ class UserProfileRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<UserProfile>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<UserProfileUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<UserProfileTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<UserProfileUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<UserProfileTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<UserProfileTable>? orderBy,
-    _i1.OrderByListBuilder<UserProfileTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<UserProfileTable>? orderBy,
+    _is.OrderByListBuilder<UserProfileTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<UserProfile>(
@@ -691,11 +696,11 @@ class UserProfileRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<UserProfile>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<UserProfile> rows, {
-    _i1.OrderByBuilder<UserProfileTable>? orderBy,
-    _i1.OrderByListBuilder<UserProfileTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<UserProfileTable>? orderBy,
+    _is.OrderByListBuilder<UserProfileTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<UserProfile>(
@@ -709,9 +714,9 @@ class UserProfileRepository {
 
   /// Deletes a single [UserProfile].
   Future<UserProfile> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     UserProfile row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<UserProfile>(
       row,
@@ -728,11 +733,11 @@ class UserProfileRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<UserProfile>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<UserProfileTable> where,
-    _i1.OrderByBuilder<UserProfileTable>? orderBy,
-    _i1.OrderByListBuilder<UserProfileTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<UserProfileTable> where,
+    _is.OrderByBuilder<UserProfileTable>? orderBy,
+    _is.OrderByListBuilder<UserProfileTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<UserProfile>(
@@ -747,10 +752,10 @@ class UserProfileRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<UserProfileTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<UserProfileTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<UserProfile>(
       where: where?.call(UserProfile.t),
@@ -761,11 +766,11 @@ class UserProfileRepository {
 
   /// Acquires row-level locks on [UserProfile] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<UserProfileTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<UserProfileTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<UserProfile>(
       where: where(UserProfile.t),

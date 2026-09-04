@@ -10,26 +10,27 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/invoicing/models/invoice_item_unit.dart' as _i2;
-import '../../../modules/invoicing/models/vat_rate.dart' as _i3;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/invoicing/models/invoice_item_unit.dart' as _irh1ud1f;
+import '../../../modules/invoicing/models/vat_rate.dart' as _icqbpm4p;
 
 abstract class InvoiceItem
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   InvoiceItem._({
     this.id,
     required this.invoiceId,
     required this.position,
     required this.description,
     double? quantity,
-    _i2.InvoiceItemUnit? unit,
+    _irh1ud1f.InvoiceItemUnit? unit,
     int? unitPriceCents,
-    _i3.VatRate? vatRate,
+    _icqbpm4p.VatRate? vatRate,
     int? lineTotalCents,
   }) : quantity = quantity ?? 1.0,
-       unit = unit ?? _i2.InvoiceItemUnit.hour,
+       unit = unit ?? _irh1ud1f.InvoiceItemUnit.hour,
        unitPriceCents = unitPriceCents ?? 0,
-       vatRate = vatRate ?? _i3.VatRate.standard,
+       vatRate = vatRate ?? _icqbpm4p.VatRate.standard,
        lineTotalCents = lineTotalCents ?? 0;
 
   factory InvoiceItem({
@@ -38,9 +39,9 @@ abstract class InvoiceItem
     required int position,
     required String description,
     double? quantity,
-    _i2.InvoiceItemUnit? unit,
+    _irh1ud1f.InvoiceItemUnit? unit,
     int? unitPriceCents,
-    _i3.VatRate? vatRate,
+    _icqbpm4p.VatRate? vatRate,
     int? lineTotalCents,
   }) = _InvoiceItemImpl;
 
@@ -53,11 +54,15 @@ abstract class InvoiceItem
       quantity: (jsonSerialization['quantity'] as num?)?.toDouble(),
       unit: jsonSerialization['unit'] == null
           ? null
-          : _i2.InvoiceItemUnit.fromJson((jsonSerialization['unit'] as String)),
+          : _irh1ud1f.InvoiceItemUnit.fromJson(
+              (jsonSerialization['unit'] as String),
+            ),
       unitPriceCents: jsonSerialization['unitPriceCents'] as int?,
       vatRate: jsonSerialization['vatRate'] == null
           ? null
-          : _i3.VatRate.fromJson((jsonSerialization['vatRate'] as String)),
+          : _icqbpm4p.VatRate.fromJson(
+              (jsonSerialization['vatRate'] as String),
+            ),
       lineTotalCents: jsonSerialization['lineTotalCents'] as int?,
     );
   }
@@ -75,26 +80,26 @@ abstract class InvoiceItem
 
   double quantity;
 
-  _i2.InvoiceItemUnit unit;
+  _irh1ud1f.InvoiceItemUnit unit;
 
   int unitPriceCents;
 
-  _i3.VatRate vatRate;
+  _icqbpm4p.VatRate vatRate;
 
   int lineTotalCents;
 
   /// Returns a shallow copy of this [InvoiceItem]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   InvoiceItem copyWith({
     int? id,
     int? invoiceId,
     int? position,
     String? description,
     double? quantity,
-    _i2.InvoiceItemUnit? unit,
+    _irh1ud1f.InvoiceItemUnit? unit,
     int? unitPriceCents,
-    _i3.VatRate? vatRate,
+    _icqbpm4p.VatRate? vatRate,
     int? lineTotalCents,
   });
   @override
@@ -131,7 +136,7 @@ abstract class InvoiceItem
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -144,9 +149,9 @@ class _InvoiceItemImpl extends InvoiceItem {
     required int position,
     required String description,
     double? quantity,
-    _i2.InvoiceItemUnit? unit,
+    _irh1ud1f.InvoiceItemUnit? unit,
     int? unitPriceCents,
-    _i3.VatRate? vatRate,
+    _icqbpm4p.VatRate? vatRate,
     int? lineTotalCents,
   }) : super._(
          id: id,
@@ -162,7 +167,7 @@ class _InvoiceItemImpl extends InvoiceItem {
 
   /// Returns a shallow copy of this [InvoiceItem]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   InvoiceItem copyWith({
     Object? id = _Undefined,
@@ -170,9 +175,9 @@ class _InvoiceItemImpl extends InvoiceItem {
     int? position,
     String? description,
     double? quantity,
-    _i2.InvoiceItemUnit? unit,
+    _irh1ud1f.InvoiceItemUnit? unit,
     int? unitPriceCents,
-    _i3.VatRate? vatRate,
+    _icqbpm4p.VatRate? vatRate,
     int? lineTotalCents,
   }) {
     return InvoiceItem(

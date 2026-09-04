@@ -10,18 +10,22 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/invoicing/models/invoice_type.dart' as _i2;
-import '../../../modules/business/models/locale.dart' as _i3;
-import '../../../modules/business/models/currency.dart' as _i4;
-import '../../../modules/invoicing/models/recurrence_interval.dart' as _i5;
-import '../../../modules/invoicing/models/invoice_item_request.dart' as _i6;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i7;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/business/models/currency.dart' as _i80byysb;
+import '../../../modules/business/models/locale.dart' as _ie5v8zdc;
+import '../../../modules/invoicing/models/invoice_item_request.dart'
+    as _ife8od1f;
+import '../../../modules/invoicing/models/invoice_type.dart' as _i4s57tlu;
+import '../../../modules/invoicing/models/recurrence_interval.dart'
+    as _i2jlpxj3;
 
 abstract class CreateInvoiceRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   CreateInvoiceRequest._({
-    _i2.InvoiceType? type,
+    _i4s57tlu.InvoiceType? type,
     this.customerId,
     this.issueDate,
     this.dueDate,
@@ -37,10 +41,10 @@ abstract class CreateInvoiceRequest
     this.recurrenceEndDate,
     this.recurrenceMaxOccurrences,
     required this.items,
-  }) : type = type ?? _i2.InvoiceType.invoice;
+  }) : type = type ?? _i4s57tlu.InvoiceType.invoice;
 
   factory CreateInvoiceRequest({
-    _i2.InvoiceType? type,
+    _i4s57tlu.InvoiceType? type,
     int? customerId,
     DateTime? issueDate,
     DateTime? dueDate,
@@ -48,14 +52,14 @@ abstract class CreateInvoiceRequest
     DateTime? serviceDateTo,
     int? paymentTermsDays,
     int? templateId,
-    _i3.Locale? locale,
-    _i4.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     String? notes,
-    _i5.RecurrenceInterval? recurrenceInterval,
+    _i2jlpxj3.RecurrenceInterval? recurrenceInterval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
-    required List<_i6.InvoiceItemRequest> items,
+    required List<_ife8od1f.InvoiceItemRequest> items,
   }) = _CreateInvoiceRequestImpl;
 
   factory CreateInvoiceRequest.fromJson(
@@ -64,57 +68,62 @@ abstract class CreateInvoiceRequest
     return CreateInvoiceRequest(
       type: jsonSerialization['type'] == null
           ? null
-          : _i2.InvoiceType.fromJson((jsonSerialization['type'] as String)),
+          : _i4s57tlu.InvoiceType.fromJson(
+              (jsonSerialization['type'] as String),
+            ),
       customerId: jsonSerialization['customerId'] as int?,
       issueDate: jsonSerialization['issueDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['issueDate']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['issueDate']),
       dueDate: jsonSerialization['dueDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['dueDate']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['dueDate']),
       serviceDateFrom: jsonSerialization['serviceDateFrom'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['serviceDateFrom'],
             ),
       serviceDateTo: jsonSerialization['serviceDateTo'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['serviceDateTo'],
             ),
       paymentTermsDays: jsonSerialization['paymentTermsDays'] as int?,
       templateId: jsonSerialization['templateId'] as int?,
       locale: jsonSerialization['locale'] == null
           ? null
-          : _i3.Locale.fromJson((jsonSerialization['locale'] as String)),
+          : _ie5v8zdc.Locale.fromJson((jsonSerialization['locale'] as String)),
       currency: jsonSerialization['currency'] == null
           ? null
-          : _i4.Currency.fromJson((jsonSerialization['currency'] as String)),
+          : _i80byysb.Currency.fromJson(
+              (jsonSerialization['currency'] as String),
+            ),
       notes: jsonSerialization['notes'] as String?,
       recurrenceInterval: jsonSerialization['recurrenceInterval'] == null
           ? null
-          : _i5.RecurrenceInterval.fromJson(
+          : _i2jlpxj3.RecurrenceInterval.fromJson(
               (jsonSerialization['recurrenceInterval'] as String),
             ),
       nextRecurrenceDate: jsonSerialization['nextRecurrenceDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['nextRecurrenceDate'],
             ),
       recurrenceEndDate: jsonSerialization['recurrenceEndDate'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['recurrenceEndDate'],
             ),
       recurrenceMaxOccurrences:
           jsonSerialization['recurrenceMaxOccurrences'] as int?,
-      items: _i7.Protocol().deserialize<List<_i6.InvoiceItemRequest>>(
-        jsonSerialization['items'],
-      ),
+      items: _itzp2rm6.Protocol()
+          .deserialize<List<_ife8od1f.InvoiceItemRequest>>(
+            jsonSerialization['items'],
+          ),
     );
   }
 
-  _i2.InvoiceType type;
+  _i4s57tlu.InvoiceType type;
 
   int? customerId;
 
@@ -130,13 +139,13 @@ abstract class CreateInvoiceRequest
 
   int? templateId;
 
-  _i3.Locale? locale;
+  _ie5v8zdc.Locale? locale;
 
-  _i4.Currency? currency;
+  _i80byysb.Currency? currency;
 
   String? notes;
 
-  _i5.RecurrenceInterval? recurrenceInterval;
+  _i2jlpxj3.RecurrenceInterval? recurrenceInterval;
 
   DateTime? nextRecurrenceDate;
 
@@ -144,13 +153,13 @@ abstract class CreateInvoiceRequest
 
   int? recurrenceMaxOccurrences;
 
-  List<_i6.InvoiceItemRequest> items;
+  List<_ife8od1f.InvoiceItemRequest> items;
 
   /// Returns a shallow copy of this [CreateInvoiceRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   CreateInvoiceRequest copyWith({
-    _i2.InvoiceType? type,
+    _i4s57tlu.InvoiceType? type,
     int? customerId,
     DateTime? issueDate,
     DateTime? dueDate,
@@ -158,14 +167,14 @@ abstract class CreateInvoiceRequest
     DateTime? serviceDateTo,
     int? paymentTermsDays,
     int? templateId,
-    _i3.Locale? locale,
-    _i4.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     String? notes,
-    _i5.RecurrenceInterval? recurrenceInterval,
+    _i2jlpxj3.RecurrenceInterval? recurrenceInterval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
-    List<_i6.InvoiceItemRequest>? items,
+    List<_ife8od1f.InvoiceItemRequest>? items,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -223,7 +232,7 @@ abstract class CreateInvoiceRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -231,7 +240,7 @@ class _Undefined {}
 
 class _CreateInvoiceRequestImpl extends CreateInvoiceRequest {
   _CreateInvoiceRequestImpl({
-    _i2.InvoiceType? type,
+    _i4s57tlu.InvoiceType? type,
     int? customerId,
     DateTime? issueDate,
     DateTime? dueDate,
@@ -239,14 +248,14 @@ class _CreateInvoiceRequestImpl extends CreateInvoiceRequest {
     DateTime? serviceDateTo,
     int? paymentTermsDays,
     int? templateId,
-    _i3.Locale? locale,
-    _i4.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
     String? notes,
-    _i5.RecurrenceInterval? recurrenceInterval,
+    _i2jlpxj3.RecurrenceInterval? recurrenceInterval,
     DateTime? nextRecurrenceDate,
     DateTime? recurrenceEndDate,
     int? recurrenceMaxOccurrences,
-    required List<_i6.InvoiceItemRequest> items,
+    required List<_ife8od1f.InvoiceItemRequest> items,
   }) : super._(
          type: type,
          customerId: customerId,
@@ -268,10 +277,10 @@ class _CreateInvoiceRequestImpl extends CreateInvoiceRequest {
 
   /// Returns a shallow copy of this [CreateInvoiceRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   CreateInvoiceRequest copyWith({
-    _i2.InvoiceType? type,
+    _i4s57tlu.InvoiceType? type,
     Object? customerId = _Undefined,
     Object? issueDate = _Undefined,
     Object? dueDate = _Undefined,
@@ -286,7 +295,7 @@ class _CreateInvoiceRequestImpl extends CreateInvoiceRequest {
     Object? nextRecurrenceDate = _Undefined,
     Object? recurrenceEndDate = _Undefined,
     Object? recurrenceMaxOccurrences = _Undefined,
-    List<_i6.InvoiceItemRequest>? items,
+    List<_ife8od1f.InvoiceItemRequest>? items,
   }) {
     return CreateInvoiceRequest(
       type: type ?? this.type,
@@ -303,10 +312,10 @@ class _CreateInvoiceRequestImpl extends CreateInvoiceRequest {
           ? paymentTermsDays
           : this.paymentTermsDays,
       templateId: templateId is int? ? templateId : this.templateId,
-      locale: locale is _i3.Locale? ? locale : this.locale,
-      currency: currency is _i4.Currency? ? currency : this.currency,
+      locale: locale is _ie5v8zdc.Locale? ? locale : this.locale,
+      currency: currency is _i80byysb.Currency? ? currency : this.currency,
       notes: notes is String? ? notes : this.notes,
-      recurrenceInterval: recurrenceInterval is _i5.RecurrenceInterval?
+      recurrenceInterval: recurrenceInterval is _i2jlpxj3.RecurrenceInterval?
           ? recurrenceInterval
           : this.recurrenceInterval,
       nextRecurrenceDate: nextRecurrenceDate is DateTime?

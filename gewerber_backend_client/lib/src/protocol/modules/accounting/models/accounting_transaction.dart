@@ -10,12 +10,14 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/accounting/models/transaction_type.dart' as _i2;
-import '../../../modules/accounting/models/transaction_category.dart' as _i3;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/accounting/models/transaction_category.dart'
+    as _i1xoyxnt;
+import '../../../modules/accounting/models/transaction_type.dart' as _i74jrgmd;
 
 abstract class AccountingTransaction
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   AccountingTransaction._({
     this.id,
     required this.businessId,
@@ -34,8 +36,8 @@ abstract class AccountingTransaction
   factory AccountingTransaction({
     int? id,
     required int businessId,
-    required _i2.TransactionType type,
-    required _i3.TransactionCategory category,
+    required _i74jrgmd.TransactionType type,
+    required _i1xoyxnt.TransactionCategory category,
     String? description,
     required DateTime occurredAt,
     required int amountCents,
@@ -51,12 +53,14 @@ abstract class AccountingTransaction
     return AccountingTransaction(
       id: jsonSerialization['id'] as int?,
       businessId: jsonSerialization['businessId'] as int,
-      type: _i2.TransactionType.fromJson((jsonSerialization['type'] as String)),
-      category: _i3.TransactionCategory.fromJson(
+      type: _i74jrgmd.TransactionType.fromJson(
+        (jsonSerialization['type'] as String),
+      ),
+      category: _i1xoyxnt.TransactionCategory.fromJson(
         (jsonSerialization['category'] as String),
       ),
       description: jsonSerialization['description'] as String?,
-      occurredAt: _i1.DateTimeJsonExtension.fromJson(
+      occurredAt: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['occurredAt'],
       ),
       amountCents: jsonSerialization['amountCents'] as int,
@@ -64,10 +68,10 @@ abstract class AccountingTransaction
       relatedInvoiceId: jsonSerialization['relatedInvoiceId'] as int?,
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -78,9 +82,9 @@ abstract class AccountingTransaction
 
   int businessId;
 
-  _i2.TransactionType type;
+  _i74jrgmd.TransactionType type;
 
-  _i3.TransactionCategory category;
+  _i1xoyxnt.TransactionCategory category;
 
   String? description;
 
@@ -98,12 +102,12 @@ abstract class AccountingTransaction
 
   /// Returns a shallow copy of this [AccountingTransaction]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   AccountingTransaction copyWith({
     int? id,
     int? businessId,
-    _i2.TransactionType? type,
-    _i3.TransactionCategory? category,
+    _i74jrgmd.TransactionType? type,
+    _i1xoyxnt.TransactionCategory? category,
     String? description,
     DateTime? occurredAt,
     int? amountCents,
@@ -150,7 +154,7 @@ abstract class AccountingTransaction
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -160,8 +164,8 @@ class _AccountingTransactionImpl extends AccountingTransaction {
   _AccountingTransactionImpl({
     int? id,
     required int businessId,
-    required _i2.TransactionType type,
-    required _i3.TransactionCategory category,
+    required _i74jrgmd.TransactionType type,
+    required _i1xoyxnt.TransactionCategory category,
     String? description,
     required DateTime occurredAt,
     required int amountCents,
@@ -185,13 +189,13 @@ class _AccountingTransactionImpl extends AccountingTransaction {
 
   /// Returns a shallow copy of this [AccountingTransaction]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   AccountingTransaction copyWith({
     Object? id = _Undefined,
     int? businessId,
-    _i2.TransactionType? type,
-    _i3.TransactionCategory? category,
+    _i74jrgmd.TransactionType? type,
+    _i1xoyxnt.TransactionCategory? category,
     Object? description = _Undefined,
     DateTime? occurredAt,
     int? amountCents,

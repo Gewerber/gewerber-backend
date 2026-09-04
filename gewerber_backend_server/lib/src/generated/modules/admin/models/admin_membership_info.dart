@@ -10,40 +10,42 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/business/models/membership.dart' as _i2;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i3;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/business/models/membership.dart' as _ixb2a518;
 
 abstract class AdminMembershipInfo
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   AdminMembershipInfo._({
     required this.membership,
     required this.businessName,
   });
 
   factory AdminMembershipInfo({
-    required _i2.Membership membership,
+    required _ixb2a518.Membership membership,
     required String businessName,
   }) = _AdminMembershipInfoImpl;
 
   factory AdminMembershipInfo.fromJson(Map<String, dynamic> jsonSerialization) {
     return AdminMembershipInfo(
-      membership: _i3.Protocol().deserialize<_i2.Membership>(
+      membership: _itzp2rm6.Protocol().deserialize<_ixb2a518.Membership>(
         jsonSerialization['membership'],
       ),
       businessName: jsonSerialization['businessName'] as String,
     );
   }
 
-  _i2.Membership membership;
+  _ixb2a518.Membership membership;
 
   String businessName;
 
   /// Returns a shallow copy of this [AdminMembershipInfo]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   AdminMembershipInfo copyWith({
-    _i2.Membership? membership,
+    _ixb2a518.Membership? membership,
     String? businessName,
   });
   @override
@@ -66,13 +68,13 @@ abstract class AdminMembershipInfo
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
 class _AdminMembershipInfoImpl extends AdminMembershipInfo {
   _AdminMembershipInfoImpl({
-    required _i2.Membership membership,
+    required _ixb2a518.Membership membership,
     required String businessName,
   }) : super._(
          membership: membership,
@@ -81,10 +83,10 @@ class _AdminMembershipInfoImpl extends AdminMembershipInfo {
 
   /// Returns a shallow copy of this [AdminMembershipInfo]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   AdminMembershipInfo copyWith({
-    _i2.Membership? membership,
+    _ixb2a518.Membership? membership,
     String? businessName,
   }) {
     return AdminMembershipInfo(

@@ -10,20 +10,21 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/time_tracking/models/task_status.dart' as _i2;
 
-abstract class Task implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/time_tracking/models/task_status.dart' as _i7bsstnn;
+
+abstract class Task implements _is.TableRow<int?>, _is.ProtocolSerialization {
   Task._({
     this.id,
     required this.businessId,
     required this.projectId,
     required this.name,
-    _i2.TaskStatus? status,
+    _i7bsstnn.TaskStatus? status,
     this.hourlyRateCents,
     DateTime? createdAt,
     DateTime? updatedAt,
-  }) : status = status ?? _i2.TaskStatus.open,
+  }) : status = status ?? _i7bsstnn.TaskStatus.open,
        createdAt = createdAt ?? DateTime.now(),
        updatedAt = updatedAt ?? DateTime.now();
 
@@ -32,7 +33,7 @@ abstract class Task implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
     required int businessId,
     required int projectId,
     required String name,
-    _i2.TaskStatus? status,
+    _i7bsstnn.TaskStatus? status,
     int? hourlyRateCents,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -46,14 +47,16 @@ abstract class Task implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       name: jsonSerialization['name'] as String,
       status: jsonSerialization['status'] == null
           ? null
-          : _i2.TaskStatus.fromJson((jsonSerialization['status'] as String)),
+          : _i7bsstnn.TaskStatus.fromJson(
+              (jsonSerialization['status'] as String),
+            ),
       hourlyRateCents: jsonSerialization['hourlyRateCents'] as int?,
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -70,7 +73,7 @@ abstract class Task implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
 
   String name;
 
-  _i2.TaskStatus status;
+  _i7bsstnn.TaskStatus status;
 
   int? hourlyRateCents;
 
@@ -79,17 +82,17 @@ abstract class Task implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   DateTime updatedAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [Task]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   Task copyWith({
     int? id,
     int? businessId,
     int? projectId,
     String? name,
-    _i2.TaskStatus? status,
+    _i7bsstnn.TaskStatus? status,
     int? hourlyRateCents,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -129,11 +132,11 @@ abstract class Task implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   }
 
   static TaskIncludeList includeList({
-    _i1.WhereExpressionBuilder<TaskTable>? where,
+    _is.WhereExpressionBuilder<TaskTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<TaskTable>? orderBy,
-    _i1.OrderByListBuilder<TaskTable>? orderByList,
+    _is.OrderByBuilder<TaskTable>? orderBy,
+    _is.OrderByListBuilder<TaskTable>? orderByList,
     TaskInclude? include,
   }) {
     return TaskIncludeList._(
@@ -148,7 +151,7 @@ abstract class Task implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -160,7 +163,7 @@ class _TaskImpl extends Task {
     required int businessId,
     required int projectId,
     required String name,
-    _i2.TaskStatus? status,
+    _i7bsstnn.TaskStatus? status,
     int? hourlyRateCents,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -177,14 +180,14 @@ class _TaskImpl extends Task {
 
   /// Returns a shallow copy of this [Task]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   Task copyWith({
     Object? id = _Undefined,
     int? businessId,
     int? projectId,
     String? name,
-    _i2.TaskStatus? status,
+    _i7bsstnn.TaskStatus? status,
     Object? hourlyRateCents = _Undefined,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -204,80 +207,80 @@ class _TaskImpl extends Task {
   }
 }
 
-class TaskUpdateTable extends _i1.UpdateTable<TaskTable> {
+class TaskUpdateTable extends _is.UpdateTable<TaskTable> {
   TaskUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> businessId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> businessId(int value) => _is.ColumnValue(
     table.businessId,
     value,
   );
 
-  _i1.ColumnValue<int, int> projectId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> projectId(int value) => _is.ColumnValue(
     table.projectId,
     value,
   );
 
-  _i1.ColumnValue<String, String> name(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> name(String value) => _is.ColumnValue(
     table.name,
     value,
   );
 
-  _i1.ColumnValue<_i2.TaskStatus, _i2.TaskStatus> status(
-    _i2.TaskStatus value,
-  ) => _i1.ColumnValue(
+  _is.ColumnValue<_i7bsstnn.TaskStatus, _i7bsstnn.TaskStatus> status(
+    _i7bsstnn.TaskStatus value,
+  ) => _is.ColumnValue(
     table.status,
     value,
   );
 
-  _i1.ColumnValue<int, int> hourlyRateCents(int? value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> hourlyRateCents(int? value) => _is.ColumnValue(
     table.hourlyRateCents,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _is.ColumnValue(
         table.createdAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
+      _is.ColumnValue(
         table.updatedAt,
         value,
       );
 }
 
-class TaskTable extends _i1.Table<int?> {
+class TaskTable extends _is.Table<int?> {
   TaskTable({super.tableRelation}) : super(tableName: 'task') {
     updateTable = TaskUpdateTable(this);
-    businessId = _i1.ColumnInt(
+    businessId = _is.ColumnInt(
       'businessId',
       this,
     );
-    projectId = _i1.ColumnInt(
+    projectId = _is.ColumnInt(
       'projectId',
       this,
     );
-    name = _i1.ColumnString(
+    name = _is.ColumnString(
       'name',
       this,
     );
-    status = _i1.ColumnEnum(
+    status = _is.ColumnEnum(
       'status',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    hourlyRateCents = _i1.ColumnInt(
+    hourlyRateCents = _is.ColumnInt(
       'hourlyRateCents',
       this,
     );
-    createdAt = _i1.ColumnDateTime(
+    createdAt = _is.ColumnDateTime(
       'createdAt',
       this,
       hasDefault: true,
     );
-    updatedAt = _i1.ColumnDateTime(
+    updatedAt = _is.ColumnDateTime(
       'updatedAt',
       this,
       hasDefault: true,
@@ -286,22 +289,22 @@ class TaskTable extends _i1.Table<int?> {
 
   late final TaskUpdateTable updateTable;
 
-  late final _i1.ColumnInt businessId;
+  late final _is.ColumnInt businessId;
 
-  late final _i1.ColumnInt projectId;
+  late final _is.ColumnInt projectId;
 
-  late final _i1.ColumnString name;
+  late final _is.ColumnString name;
 
-  late final _i1.ColumnEnum<_i2.TaskStatus> status;
+  late final _is.ColumnEnum<_i7bsstnn.TaskStatus> status;
 
-  late final _i1.ColumnInt hourlyRateCents;
+  late final _is.ColumnInt hourlyRateCents;
 
-  late final _i1.ColumnDateTime createdAt;
+  late final _is.ColumnDateTime createdAt;
 
-  late final _i1.ColumnDateTime updatedAt;
+  late final _is.ColumnDateTime updatedAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     businessId,
     projectId,
@@ -313,19 +316,19 @@ class TaskTable extends _i1.Table<int?> {
   ];
 }
 
-class TaskInclude extends _i1.IncludeObject {
+class TaskInclude extends _is.IncludeObject {
   TaskInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => Task.t;
+  _is.Table<int?> get table => Task.t;
 }
 
-class TaskIncludeList extends _i1.IncludeList {
+class TaskIncludeList extends _is.IncludeList {
   TaskIncludeList._({
-    _i1.WhereExpressionBuilder<TaskTable>? where,
+    _is.WhereExpressionBuilder<TaskTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -336,10 +339,10 @@ class TaskIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => Task.t;
+  _is.Table<int?> get table => Task.t;
 }
 
 class TaskRepository {
@@ -368,15 +371,15 @@ class TaskRepository {
   /// );
   /// ```
   Future<List<Task>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<TaskTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<TaskTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<TaskTable>? orderBy,
-    _i1.OrderByListBuilder<TaskTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<TaskTable>? orderBy,
+    _is.OrderByListBuilder<TaskTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<Task>(
       where: where?.call(Task.t),
@@ -408,14 +411,14 @@ class TaskRepository {
   /// );
   /// ```
   Future<Task?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<TaskTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<TaskTable>? where,
     int? offset,
-    _i1.OrderByBuilder<TaskTable>? orderBy,
-    _i1.OrderByListBuilder<TaskTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<TaskTable>? orderBy,
+    _is.OrderByListBuilder<TaskTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<Task>(
       where: where?.call(Task.t),
@@ -430,11 +433,11 @@ class TaskRepository {
 
   /// Finds a single [Task] by its [id] or null if no such row exists.
   Future<Task?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<Task>(
       id,
@@ -459,9 +462,9 @@ class TaskRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Task>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Task> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -477,9 +480,9 @@ class TaskRepository {
   ///
   /// The returned [Task] will have its `id` field set.
   Future<Task> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Task row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<Task>(
       row,
@@ -508,12 +511,12 @@ class TaskRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Task>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Task> rows, {
-    required _i1.ColumnSelections<TaskTable> conflictColumns,
-    _i1.ColumnSelections<TaskTable>? updateColumns,
-    _i1.WhereExpressionBuilder<TaskTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<TaskTable> conflictColumns,
+    _is.ColumnSelections<TaskTable>? updateColumns,
+    _is.WhereExpressionBuilder<TaskTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<Task>(
@@ -540,12 +543,12 @@ class TaskRepository {
   ///
   /// The returned [Task] will have its `id` field set.
   Future<Task?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Task row, {
-    required _i1.ColumnSelections<TaskTable> conflictColumns,
-    _i1.ColumnSelections<TaskTable>? updateColumns,
-    _i1.WhereExpressionBuilder<TaskTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<TaskTable> conflictColumns,
+    _is.ColumnSelections<TaskTable>? updateColumns,
+    _is.WhereExpressionBuilder<TaskTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<Task>(
       row,
@@ -566,10 +569,10 @@ class TaskRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Task>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Task> rows, {
-    _i1.ColumnSelections<TaskTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<TaskTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<Task>(
@@ -584,10 +587,10 @@ class TaskRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<Task> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Task row, {
-    _i1.ColumnSelections<TaskTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<TaskTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<Task>(
       row,
@@ -599,10 +602,10 @@ class TaskRepository {
   /// Updates a single [Task] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<Task?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<TaskUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<TaskUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<Task>(
       id,
@@ -618,14 +621,14 @@ class TaskRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Task>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<TaskUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<TaskTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<TaskUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<TaskTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<TaskTable>? orderBy,
-    _i1.OrderByListBuilder<TaskTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<TaskTable>? orderBy,
+    _is.OrderByListBuilder<TaskTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<Task>(
@@ -652,11 +655,11 @@ class TaskRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Task>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Task> rows, {
-    _i1.OrderByBuilder<TaskTable>? orderBy,
-    _i1.OrderByListBuilder<TaskTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<TaskTable>? orderBy,
+    _is.OrderByListBuilder<TaskTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<Task>(
@@ -670,9 +673,9 @@ class TaskRepository {
 
   /// Deletes a single [Task].
   Future<Task> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Task row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<Task>(
       row,
@@ -689,11 +692,11 @@ class TaskRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Task>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<TaskTable> where,
-    _i1.OrderByBuilder<TaskTable>? orderBy,
-    _i1.OrderByListBuilder<TaskTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<TaskTable> where,
+    _is.OrderByBuilder<TaskTable>? orderBy,
+    _is.OrderByListBuilder<TaskTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<Task>(
@@ -708,10 +711,10 @@ class TaskRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<TaskTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<TaskTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<Task>(
       where: where?.call(Task.t),
@@ -722,11 +725,11 @@ class TaskRepository {
 
   /// Acquires row-level locks on [Task] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<TaskTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<TaskTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<Task>(
       where: where(Task.t),

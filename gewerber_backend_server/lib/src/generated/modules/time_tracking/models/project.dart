@@ -10,22 +10,23 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/time_tracking/models/project_status.dart' as _i2;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/time_tracking/models/project_status.dart' as _i1ujg7mu;
 
 abstract class Project
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   Project._({
     this.id,
     required this.businessId,
     required this.name,
-    _i2.ProjectStatus? status,
+    _i1ujg7mu.ProjectStatus? status,
     this.customerId,
     this.hourlyRateCents,
     this.notes,
     DateTime? createdAt,
     DateTime? updatedAt,
-  }) : status = status ?? _i2.ProjectStatus.active,
+  }) : status = status ?? _i1ujg7mu.ProjectStatus.active,
        createdAt = createdAt ?? DateTime.now(),
        updatedAt = updatedAt ?? DateTime.now();
 
@@ -33,7 +34,7 @@ abstract class Project
     int? id,
     required int businessId,
     required String name,
-    _i2.ProjectStatus? status,
+    _i1ujg7mu.ProjectStatus? status,
     int? customerId,
     int? hourlyRateCents,
     String? notes,
@@ -48,16 +49,18 @@ abstract class Project
       name: jsonSerialization['name'] as String,
       status: jsonSerialization['status'] == null
           ? null
-          : _i2.ProjectStatus.fromJson((jsonSerialization['status'] as String)),
+          : _i1ujg7mu.ProjectStatus.fromJson(
+              (jsonSerialization['status'] as String),
+            ),
       customerId: jsonSerialization['customerId'] as int?,
       hourlyRateCents: jsonSerialization['hourlyRateCents'] as int?,
       notes: jsonSerialization['notes'] as String?,
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -72,7 +75,7 @@ abstract class Project
 
   String name;
 
-  _i2.ProjectStatus status;
+  _i1ujg7mu.ProjectStatus status;
 
   int? customerId;
 
@@ -85,16 +88,16 @@ abstract class Project
   DateTime updatedAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [Project]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   Project copyWith({
     int? id,
     int? businessId,
     String? name,
-    _i2.ProjectStatus? status,
+    _i1ujg7mu.ProjectStatus? status,
     int? customerId,
     int? hourlyRateCents,
     String? notes,
@@ -138,11 +141,11 @@ abstract class Project
   }
 
   static ProjectIncludeList includeList({
-    _i1.WhereExpressionBuilder<ProjectTable>? where,
+    _is.WhereExpressionBuilder<ProjectTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<ProjectTable>? orderBy,
-    _i1.OrderByListBuilder<ProjectTable>? orderByList,
+    _is.OrderByBuilder<ProjectTable>? orderBy,
+    _is.OrderByListBuilder<ProjectTable>? orderByList,
     ProjectInclude? include,
   }) {
     return ProjectIncludeList._(
@@ -157,7 +160,7 @@ abstract class Project
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -168,7 +171,7 @@ class _ProjectImpl extends Project {
     int? id,
     required int businessId,
     required String name,
-    _i2.ProjectStatus? status,
+    _i1ujg7mu.ProjectStatus? status,
     int? customerId,
     int? hourlyRateCents,
     String? notes,
@@ -188,13 +191,13 @@ class _ProjectImpl extends Project {
 
   /// Returns a shallow copy of this [Project]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   Project copyWith({
     Object? id = _Undefined,
     int? businessId,
     String? name,
-    _i2.ProjectStatus? status,
+    _i1ujg7mu.ProjectStatus? status,
     Object? customerId = _Undefined,
     Object? hourlyRateCents = _Undefined,
     Object? notes = _Undefined,
@@ -217,89 +220,89 @@ class _ProjectImpl extends Project {
   }
 }
 
-class ProjectUpdateTable extends _i1.UpdateTable<ProjectTable> {
+class ProjectUpdateTable extends _is.UpdateTable<ProjectTable> {
   ProjectUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> businessId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> businessId(int value) => _is.ColumnValue(
     table.businessId,
     value,
   );
 
-  _i1.ColumnValue<String, String> name(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> name(String value) => _is.ColumnValue(
     table.name,
     value,
   );
 
-  _i1.ColumnValue<_i2.ProjectStatus, _i2.ProjectStatus> status(
-    _i2.ProjectStatus value,
-  ) => _i1.ColumnValue(
+  _is.ColumnValue<_i1ujg7mu.ProjectStatus, _i1ujg7mu.ProjectStatus> status(
+    _i1ujg7mu.ProjectStatus value,
+  ) => _is.ColumnValue(
     table.status,
     value,
   );
 
-  _i1.ColumnValue<int, int> customerId(int? value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> customerId(int? value) => _is.ColumnValue(
     table.customerId,
     value,
   );
 
-  _i1.ColumnValue<int, int> hourlyRateCents(int? value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> hourlyRateCents(int? value) => _is.ColumnValue(
     table.hourlyRateCents,
     value,
   );
 
-  _i1.ColumnValue<String, String> notes(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> notes(String? value) => _is.ColumnValue(
     table.notes,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _is.ColumnValue(
         table.createdAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
+      _is.ColumnValue(
         table.updatedAt,
         value,
       );
 }
 
-class ProjectTable extends _i1.Table<int?> {
+class ProjectTable extends _is.Table<int?> {
   ProjectTable({super.tableRelation}) : super(tableName: 'project') {
     updateTable = ProjectUpdateTable(this);
-    businessId = _i1.ColumnInt(
+    businessId = _is.ColumnInt(
       'businessId',
       this,
     );
-    name = _i1.ColumnString(
+    name = _is.ColumnString(
       'name',
       this,
     );
-    status = _i1.ColumnEnum(
+    status = _is.ColumnEnum(
       'status',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
       hasDefault: true,
     );
-    customerId = _i1.ColumnInt(
+    customerId = _is.ColumnInt(
       'customerId',
       this,
     );
-    hourlyRateCents = _i1.ColumnInt(
+    hourlyRateCents = _is.ColumnInt(
       'hourlyRateCents',
       this,
     );
-    notes = _i1.ColumnString(
+    notes = _is.ColumnString(
       'notes',
       this,
     );
-    createdAt = _i1.ColumnDateTime(
+    createdAt = _is.ColumnDateTime(
       'createdAt',
       this,
       hasDefault: true,
     );
-    updatedAt = _i1.ColumnDateTime(
+    updatedAt = _is.ColumnDateTime(
       'updatedAt',
       this,
       hasDefault: true,
@@ -308,24 +311,24 @@ class ProjectTable extends _i1.Table<int?> {
 
   late final ProjectUpdateTable updateTable;
 
-  late final _i1.ColumnInt businessId;
+  late final _is.ColumnInt businessId;
 
-  late final _i1.ColumnString name;
+  late final _is.ColumnString name;
 
-  late final _i1.ColumnEnum<_i2.ProjectStatus> status;
+  late final _is.ColumnEnum<_i1ujg7mu.ProjectStatus> status;
 
-  late final _i1.ColumnInt customerId;
+  late final _is.ColumnInt customerId;
 
-  late final _i1.ColumnInt hourlyRateCents;
+  late final _is.ColumnInt hourlyRateCents;
 
-  late final _i1.ColumnString notes;
+  late final _is.ColumnString notes;
 
-  late final _i1.ColumnDateTime createdAt;
+  late final _is.ColumnDateTime createdAt;
 
-  late final _i1.ColumnDateTime updatedAt;
+  late final _is.ColumnDateTime updatedAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     businessId,
     name,
@@ -338,19 +341,19 @@ class ProjectTable extends _i1.Table<int?> {
   ];
 }
 
-class ProjectInclude extends _i1.IncludeObject {
+class ProjectInclude extends _is.IncludeObject {
   ProjectInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => Project.t;
+  _is.Table<int?> get table => Project.t;
 }
 
-class ProjectIncludeList extends _i1.IncludeList {
+class ProjectIncludeList extends _is.IncludeList {
   ProjectIncludeList._({
-    _i1.WhereExpressionBuilder<ProjectTable>? where,
+    _is.WhereExpressionBuilder<ProjectTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -361,10 +364,10 @@ class ProjectIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => Project.t;
+  _is.Table<int?> get table => Project.t;
 }
 
 class ProjectRepository {
@@ -393,15 +396,15 @@ class ProjectRepository {
   /// );
   /// ```
   Future<List<Project>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<ProjectTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<ProjectTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<ProjectTable>? orderBy,
-    _i1.OrderByListBuilder<ProjectTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<ProjectTable>? orderBy,
+    _is.OrderByListBuilder<ProjectTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<Project>(
       where: where?.call(Project.t),
@@ -433,14 +436,14 @@ class ProjectRepository {
   /// );
   /// ```
   Future<Project?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<ProjectTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<ProjectTable>? where,
     int? offset,
-    _i1.OrderByBuilder<ProjectTable>? orderBy,
-    _i1.OrderByListBuilder<ProjectTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<ProjectTable>? orderBy,
+    _is.OrderByListBuilder<ProjectTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<Project>(
       where: where?.call(Project.t),
@@ -455,11 +458,11 @@ class ProjectRepository {
 
   /// Finds a single [Project] by its [id] or null if no such row exists.
   Future<Project?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<Project>(
       id,
@@ -484,9 +487,9 @@ class ProjectRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Project>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Project> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -502,9 +505,9 @@ class ProjectRepository {
   ///
   /// The returned [Project] will have its `id` field set.
   Future<Project> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Project row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<Project>(
       row,
@@ -533,12 +536,12 @@ class ProjectRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Project>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Project> rows, {
-    required _i1.ColumnSelections<ProjectTable> conflictColumns,
-    _i1.ColumnSelections<ProjectTable>? updateColumns,
-    _i1.WhereExpressionBuilder<ProjectTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<ProjectTable> conflictColumns,
+    _is.ColumnSelections<ProjectTable>? updateColumns,
+    _is.WhereExpressionBuilder<ProjectTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<Project>(
@@ -565,12 +568,12 @@ class ProjectRepository {
   ///
   /// The returned [Project] will have its `id` field set.
   Future<Project?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Project row, {
-    required _i1.ColumnSelections<ProjectTable> conflictColumns,
-    _i1.ColumnSelections<ProjectTable>? updateColumns,
-    _i1.WhereExpressionBuilder<ProjectTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<ProjectTable> conflictColumns,
+    _is.ColumnSelections<ProjectTable>? updateColumns,
+    _is.WhereExpressionBuilder<ProjectTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<Project>(
       row,
@@ -591,10 +594,10 @@ class ProjectRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Project>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Project> rows, {
-    _i1.ColumnSelections<ProjectTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<ProjectTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<Project>(
@@ -609,10 +612,10 @@ class ProjectRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<Project> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Project row, {
-    _i1.ColumnSelections<ProjectTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<ProjectTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<Project>(
       row,
@@ -624,10 +627,10 @@ class ProjectRepository {
   /// Updates a single [Project] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<Project?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<ProjectUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<ProjectUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<Project>(
       id,
@@ -643,14 +646,14 @@ class ProjectRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Project>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<ProjectUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<ProjectTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<ProjectUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<ProjectTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<ProjectTable>? orderBy,
-    _i1.OrderByListBuilder<ProjectTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<ProjectTable>? orderBy,
+    _is.OrderByListBuilder<ProjectTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<Project>(
@@ -677,11 +680,11 @@ class ProjectRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Project>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Project> rows, {
-    _i1.OrderByBuilder<ProjectTable>? orderBy,
-    _i1.OrderByListBuilder<ProjectTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<ProjectTable>? orderBy,
+    _is.OrderByListBuilder<ProjectTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<Project>(
@@ -695,9 +698,9 @@ class ProjectRepository {
 
   /// Deletes a single [Project].
   Future<Project> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Project row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<Project>(
       row,
@@ -714,11 +717,11 @@ class ProjectRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Project>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<ProjectTable> where,
-    _i1.OrderByBuilder<ProjectTable>? orderBy,
-    _i1.OrderByListBuilder<ProjectTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<ProjectTable> where,
+    _is.OrderByBuilder<ProjectTable>? orderBy,
+    _is.OrderByListBuilder<ProjectTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<Project>(
@@ -733,10 +736,10 @@ class ProjectRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<ProjectTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<ProjectTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<Project>(
       where: where?.call(Project.t),
@@ -747,11 +750,11 @@ class ProjectRepository {
 
   /// Acquires row-level locks on [Project] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<ProjectTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<ProjectTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<Project>(
       where: where(Project.t),

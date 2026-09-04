@@ -51,7 +51,7 @@ role (`moderator` = read-only, `admin` = mutations with `confirm: true`).
 ## Module endpoints
 
 Provided by the wired Serverpod modules (`serverpod_auth_idp`,
-`serverpod_auth_core`, `gewerber_commercial`):
+`serverpod_auth_core`, `gewerber_backend_commercial`):
 
 | Endpoint | Methods |
 |---|---|

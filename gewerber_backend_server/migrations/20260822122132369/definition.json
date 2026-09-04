@@ -2529,7 +2529,7 @@
       "__className__": "serverpod.TableDefinition",
       "name": "commercial_waitlist_entry",
       "dartName": "WaitlistEntry",
-      "module": "gewerber_commercial",
+      "module": "gewerber_backend_commercial",
       "schema": "public",
       "columns": [
         {
@@ -5659,7 +5659,7 @@
     },
     {
       "__className__": "serverpod.DatabaseMigrationVersion",
-      "module": "gewerber_commercial",
+      "module": "gewerber_backend_commercial",
       "version": "20260814083449413"
     },
     {

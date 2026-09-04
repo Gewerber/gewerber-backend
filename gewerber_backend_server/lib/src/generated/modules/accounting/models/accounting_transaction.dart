@@ -10,12 +10,14 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/accounting/models/transaction_type.dart' as _i2;
-import '../../../modules/accounting/models/transaction_category.dart' as _i3;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/accounting/models/transaction_category.dart'
+    as _i1xoyxnt;
+import '../../../modules/accounting/models/transaction_type.dart' as _i74jrgmd;
 
 abstract class AccountingTransaction
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   AccountingTransaction._({
     this.id,
     required this.businessId,
@@ -34,8 +36,8 @@ abstract class AccountingTransaction
   factory AccountingTransaction({
     int? id,
     required int businessId,
-    required _i2.TransactionType type,
-    required _i3.TransactionCategory category,
+    required _i74jrgmd.TransactionType type,
+    required _i1xoyxnt.TransactionCategory category,
     String? description,
     required DateTime occurredAt,
     required int amountCents,
@@ -51,12 +53,14 @@ abstract class AccountingTransaction
     return AccountingTransaction(
       id: jsonSerialization['id'] as int?,
       businessId: jsonSerialization['businessId'] as int,
-      type: _i2.TransactionType.fromJson((jsonSerialization['type'] as String)),
-      category: _i3.TransactionCategory.fromJson(
+      type: _i74jrgmd.TransactionType.fromJson(
+        (jsonSerialization['type'] as String),
+      ),
+      category: _i1xoyxnt.TransactionCategory.fromJson(
         (jsonSerialization['category'] as String),
       ),
       description: jsonSerialization['description'] as String?,
-      occurredAt: _i1.DateTimeJsonExtension.fromJson(
+      occurredAt: _is.DateTimeJsonExtension.fromJson(
         jsonSerialization['occurredAt'],
       ),
       amountCents: jsonSerialization['amountCents'] as int,
@@ -64,10 +68,10 @@ abstract class AccountingTransaction
       relatedInvoiceId: jsonSerialization['relatedInvoiceId'] as int?,
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -80,9 +84,9 @@ abstract class AccountingTransaction
 
   int businessId;
 
-  _i2.TransactionType type;
+  _i74jrgmd.TransactionType type;
 
-  _i3.TransactionCategory category;
+  _i1xoyxnt.TransactionCategory category;
 
   String? description;
 
@@ -99,16 +103,16 @@ abstract class AccountingTransaction
   DateTime updatedAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [AccountingTransaction]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   AccountingTransaction copyWith({
     int? id,
     int? businessId,
-    _i2.TransactionType? type,
-    _i3.TransactionCategory? category,
+    _i74jrgmd.TransactionType? type,
+    _i1xoyxnt.TransactionCategory? category,
     String? description,
     DateTime? occurredAt,
     int? amountCents,
@@ -158,11 +162,11 @@ abstract class AccountingTransaction
   }
 
   static AccountingTransactionIncludeList includeList({
-    _i1.WhereExpressionBuilder<AccountingTransactionTable>? where,
+    _is.WhereExpressionBuilder<AccountingTransactionTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AccountingTransactionTable>? orderBy,
-    _i1.OrderByListBuilder<AccountingTransactionTable>? orderByList,
+    _is.OrderByBuilder<AccountingTransactionTable>? orderBy,
+    _is.OrderByListBuilder<AccountingTransactionTable>? orderByList,
     AccountingTransactionInclude? include,
   }) {
     return AccountingTransactionIncludeList._(
@@ -177,7 +181,7 @@ abstract class AccountingTransaction
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -187,8 +191,8 @@ class _AccountingTransactionImpl extends AccountingTransaction {
   _AccountingTransactionImpl({
     int? id,
     required int businessId,
-    required _i2.TransactionType type,
-    required _i3.TransactionCategory category,
+    required _i74jrgmd.TransactionType type,
+    required _i1xoyxnt.TransactionCategory category,
     String? description,
     required DateTime occurredAt,
     required int amountCents,
@@ -212,13 +216,13 @@ class _AccountingTransactionImpl extends AccountingTransaction {
 
   /// Returns a shallow copy of this [AccountingTransaction]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   AccountingTransaction copyWith({
     Object? id = _Undefined,
     int? businessId,
-    _i2.TransactionType? type,
-    _i3.TransactionCategory? category,
+    _i74jrgmd.TransactionType? type,
+    _i1xoyxnt.TransactionCategory? category,
     Object? description = _Undefined,
     DateTime? occurredAt,
     int? amountCents,
@@ -248,111 +252,110 @@ class _AccountingTransactionImpl extends AccountingTransaction {
 }
 
 class AccountingTransactionUpdateTable
-    extends _i1.UpdateTable<AccountingTransactionTable> {
+    extends _is.UpdateTable<AccountingTransactionTable> {
   AccountingTransactionUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> businessId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> businessId(int value) => _is.ColumnValue(
     table.businessId,
     value,
   );
 
-  _i1.ColumnValue<_i2.TransactionType, _i2.TransactionType> type(
-    _i2.TransactionType value,
-  ) => _i1.ColumnValue(
+  _is.ColumnValue<_i74jrgmd.TransactionType, _i74jrgmd.TransactionType> type(
+    _i74jrgmd.TransactionType value,
+  ) => _is.ColumnValue(
     table.type,
     value,
   );
 
-  _i1.ColumnValue<_i3.TransactionCategory, _i3.TransactionCategory> category(
-    _i3.TransactionCategory value,
-  ) => _i1.ColumnValue(
+  _is.ColumnValue<_i1xoyxnt.TransactionCategory, _i1xoyxnt.TransactionCategory>
+  category(_i1xoyxnt.TransactionCategory value) => _is.ColumnValue(
     table.category,
     value,
   );
 
-  _i1.ColumnValue<String, String> description(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> description(String? value) => _is.ColumnValue(
     table.description,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> occurredAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> occurredAt(DateTime value) =>
+      _is.ColumnValue(
         table.occurredAt,
         value,
       );
 
-  _i1.ColumnValue<int, int> amountCents(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> amountCents(int value) => _is.ColumnValue(
     table.amountCents,
     value,
   );
 
-  _i1.ColumnValue<int, int> receiptDocumentId(int? value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> receiptDocumentId(int? value) => _is.ColumnValue(
     table.receiptDocumentId,
     value,
   );
 
-  _i1.ColumnValue<int, int> relatedInvoiceId(int? value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> relatedInvoiceId(int? value) => _is.ColumnValue(
     table.relatedInvoiceId,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _is.ColumnValue(
         table.createdAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
+      _is.ColumnValue(
         table.updatedAt,
         value,
       );
 }
 
-class AccountingTransactionTable extends _i1.Table<int?> {
+class AccountingTransactionTable extends _is.Table<int?> {
   AccountingTransactionTable({super.tableRelation})
     : super(tableName: 'accounting_transaction') {
     updateTable = AccountingTransactionUpdateTable(this);
-    businessId = _i1.ColumnInt(
+    businessId = _is.ColumnInt(
       'businessId',
       this,
     );
-    type = _i1.ColumnEnum(
+    type = _is.ColumnEnum(
       'type',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
     );
-    category = _i1.ColumnEnum(
+    category = _is.ColumnEnum(
       'category',
       this,
-      _i1.EnumSerialization.byName,
+      _is.EnumSerialization.byName,
     );
-    description = _i1.ColumnString(
+    description = _is.ColumnString(
       'description',
       this,
     );
-    occurredAt = _i1.ColumnDateTime(
+    occurredAt = _is.ColumnDateTime(
       'occurredAt',
       this,
     );
-    amountCents = _i1.ColumnInt(
+    amountCents = _is.ColumnInt(
       'amountCents',
       this,
     );
-    receiptDocumentId = _i1.ColumnInt(
+    receiptDocumentId = _is.ColumnInt(
       'receiptDocumentId',
       this,
     );
-    relatedInvoiceId = _i1.ColumnInt(
+    relatedInvoiceId = _is.ColumnInt(
       'relatedInvoiceId',
       this,
     );
-    createdAt = _i1.ColumnDateTime(
+    createdAt = _is.ColumnDateTime(
       'createdAt',
       this,
       hasDefault: true,
     );
-    updatedAt = _i1.ColumnDateTime(
+    updatedAt = _is.ColumnDateTime(
       'updatedAt',
       this,
       hasDefault: true,
@@ -361,28 +364,28 @@ class AccountingTransactionTable extends _i1.Table<int?> {
 
   late final AccountingTransactionUpdateTable updateTable;
 
-  late final _i1.ColumnInt businessId;
+  late final _is.ColumnInt businessId;
 
-  late final _i1.ColumnEnum<_i2.TransactionType> type;
+  late final _is.ColumnEnum<_i74jrgmd.TransactionType> type;
 
-  late final _i1.ColumnEnum<_i3.TransactionCategory> category;
+  late final _is.ColumnEnum<_i1xoyxnt.TransactionCategory> category;
 
-  late final _i1.ColumnString description;
+  late final _is.ColumnString description;
 
-  late final _i1.ColumnDateTime occurredAt;
+  late final _is.ColumnDateTime occurredAt;
 
-  late final _i1.ColumnInt amountCents;
+  late final _is.ColumnInt amountCents;
 
-  late final _i1.ColumnInt receiptDocumentId;
+  late final _is.ColumnInt receiptDocumentId;
 
-  late final _i1.ColumnInt relatedInvoiceId;
+  late final _is.ColumnInt relatedInvoiceId;
 
-  late final _i1.ColumnDateTime createdAt;
+  late final _is.ColumnDateTime createdAt;
 
-  late final _i1.ColumnDateTime updatedAt;
+  late final _is.ColumnDateTime updatedAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     businessId,
     type,
@@ -397,19 +400,19 @@ class AccountingTransactionTable extends _i1.Table<int?> {
   ];
 }
 
-class AccountingTransactionInclude extends _i1.IncludeObject {
+class AccountingTransactionInclude extends _is.IncludeObject {
   AccountingTransactionInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => AccountingTransaction.t;
+  _is.Table<int?> get table => AccountingTransaction.t;
 }
 
-class AccountingTransactionIncludeList extends _i1.IncludeList {
+class AccountingTransactionIncludeList extends _is.IncludeList {
   AccountingTransactionIncludeList._({
-    _i1.WhereExpressionBuilder<AccountingTransactionTable>? where,
+    _is.WhereExpressionBuilder<AccountingTransactionTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -420,10 +423,10 @@ class AccountingTransactionIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => AccountingTransaction.t;
+  _is.Table<int?> get table => AccountingTransaction.t;
 }
 
 class AccountingTransactionRepository {
@@ -452,15 +455,15 @@ class AccountingTransactionRepository {
   /// );
   /// ```
   Future<List<AccountingTransaction>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<AccountingTransactionTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<AccountingTransactionTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AccountingTransactionTable>? orderBy,
-    _i1.OrderByListBuilder<AccountingTransactionTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<AccountingTransactionTable>? orderBy,
+    _is.OrderByListBuilder<AccountingTransactionTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<AccountingTransaction>(
       where: where?.call(AccountingTransaction.t),
@@ -492,14 +495,14 @@ class AccountingTransactionRepository {
   /// );
   /// ```
   Future<AccountingTransaction?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<AccountingTransactionTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<AccountingTransactionTable>? where,
     int? offset,
-    _i1.OrderByBuilder<AccountingTransactionTable>? orderBy,
-    _i1.OrderByListBuilder<AccountingTransactionTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<AccountingTransactionTable>? orderBy,
+    _is.OrderByListBuilder<AccountingTransactionTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<AccountingTransaction>(
       where: where?.call(AccountingTransaction.t),
@@ -514,11 +517,11 @@ class AccountingTransactionRepository {
 
   /// Finds a single [AccountingTransaction] by its [id] or null if no such row exists.
   Future<AccountingTransaction?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<AccountingTransaction>(
       id,
@@ -543,9 +546,9 @@ class AccountingTransactionRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AccountingTransaction>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AccountingTransaction> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -561,9 +564,9 @@ class AccountingTransactionRepository {
   ///
   /// The returned [AccountingTransaction] will have its `id` field set.
   Future<AccountingTransaction> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AccountingTransaction row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<AccountingTransaction>(
       row,
@@ -592,12 +595,12 @@ class AccountingTransactionRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AccountingTransaction>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AccountingTransaction> rows, {
-    required _i1.ColumnSelections<AccountingTransactionTable> conflictColumns,
-    _i1.ColumnSelections<AccountingTransactionTable>? updateColumns,
-    _i1.WhereExpressionBuilder<AccountingTransactionTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<AccountingTransactionTable> conflictColumns,
+    _is.ColumnSelections<AccountingTransactionTable>? updateColumns,
+    _is.WhereExpressionBuilder<AccountingTransactionTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<AccountingTransaction>(
@@ -624,12 +627,12 @@ class AccountingTransactionRepository {
   ///
   /// The returned [AccountingTransaction] will have its `id` field set.
   Future<AccountingTransaction?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AccountingTransaction row, {
-    required _i1.ColumnSelections<AccountingTransactionTable> conflictColumns,
-    _i1.ColumnSelections<AccountingTransactionTable>? updateColumns,
-    _i1.WhereExpressionBuilder<AccountingTransactionTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<AccountingTransactionTable> conflictColumns,
+    _is.ColumnSelections<AccountingTransactionTable>? updateColumns,
+    _is.WhereExpressionBuilder<AccountingTransactionTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<AccountingTransaction>(
       row,
@@ -650,10 +653,10 @@ class AccountingTransactionRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AccountingTransaction>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AccountingTransaction> rows, {
-    _i1.ColumnSelections<AccountingTransactionTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<AccountingTransactionTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<AccountingTransaction>(
@@ -668,10 +671,10 @@ class AccountingTransactionRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<AccountingTransaction> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AccountingTransaction row, {
-    _i1.ColumnSelections<AccountingTransactionTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<AccountingTransactionTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<AccountingTransaction>(
       row,
@@ -683,11 +686,11 @@ class AccountingTransactionRepository {
   /// Updates a single [AccountingTransaction] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<AccountingTransaction?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<AccountingTransactionUpdateTable>
+    required _is.ColumnValueListBuilder<AccountingTransactionUpdateTable>
     columnValues,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<AccountingTransaction>(
       id,
@@ -703,15 +706,15 @@ class AccountingTransactionRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AccountingTransaction>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<AccountingTransactionUpdateTable>
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<AccountingTransactionUpdateTable>
     columnValues,
-    required _i1.WhereExpressionBuilder<AccountingTransactionTable> where,
+    required _is.WhereExpressionBuilder<AccountingTransactionTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AccountingTransactionTable>? orderBy,
-    _i1.OrderByListBuilder<AccountingTransactionTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<AccountingTransactionTable>? orderBy,
+    _is.OrderByListBuilder<AccountingTransactionTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<AccountingTransaction>(
@@ -738,11 +741,11 @@ class AccountingTransactionRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AccountingTransaction>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AccountingTransaction> rows, {
-    _i1.OrderByBuilder<AccountingTransactionTable>? orderBy,
-    _i1.OrderByListBuilder<AccountingTransactionTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<AccountingTransactionTable>? orderBy,
+    _is.OrderByListBuilder<AccountingTransactionTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<AccountingTransaction>(
@@ -756,9 +759,9 @@ class AccountingTransactionRepository {
 
   /// Deletes a single [AccountingTransaction].
   Future<AccountingTransaction> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AccountingTransaction row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<AccountingTransaction>(
       row,
@@ -775,11 +778,11 @@ class AccountingTransactionRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AccountingTransaction>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<AccountingTransactionTable> where,
-    _i1.OrderByBuilder<AccountingTransactionTable>? orderBy,
-    _i1.OrderByListBuilder<AccountingTransactionTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<AccountingTransactionTable> where,
+    _is.OrderByBuilder<AccountingTransactionTable>? orderBy,
+    _is.OrderByListBuilder<AccountingTransactionTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<AccountingTransaction>(
@@ -794,10 +797,10 @@ class AccountingTransactionRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<AccountingTransactionTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<AccountingTransactionTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<AccountingTransaction>(
       where: where?.call(AccountingTransaction.t),
@@ -808,11 +811,11 @@ class AccountingTransactionRepository {
 
   /// Acquires row-level locks on [AccountingTransaction] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<AccountingTransactionTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<AccountingTransactionTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<AccountingTransaction>(
       where: where(AccountingTransaction.t),

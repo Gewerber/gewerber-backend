@@ -10,12 +10,14 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/business/models/address.dart' as _i2;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i3;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/business/models/address.dart' as _iz28txwx;
 
 abstract class CreateCustomerRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   CreateCustomerRequest._({
     required this.name,
     this.companyName,
@@ -32,7 +34,7 @@ abstract class CreateCustomerRequest
     String? vatId,
     String? email,
     String? phone,
-    _i2.Address? address,
+    _iz28txwx.Address? address,
     String? notes,
   }) = _CreateCustomerRequestImpl;
 
@@ -47,7 +49,7 @@ abstract class CreateCustomerRequest
       phone: jsonSerialization['phone'] as String?,
       address: jsonSerialization['address'] == null
           ? null
-          : _i3.Protocol().deserialize<_i2.Address>(
+          : _itzp2rm6.Protocol().deserialize<_iz28txwx.Address>(
               jsonSerialization['address'],
             ),
       notes: jsonSerialization['notes'] as String?,
@@ -64,20 +66,20 @@ abstract class CreateCustomerRequest
 
   String? phone;
 
-  _i2.Address? address;
+  _iz28txwx.Address? address;
 
   String? notes;
 
   /// Returns a shallow copy of this [CreateCustomerRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   CreateCustomerRequest copyWith({
     String? name,
     String? companyName,
     String? vatId,
     String? email,
     String? phone,
-    _i2.Address? address,
+    _iz28txwx.Address? address,
     String? notes,
   });
   @override
@@ -110,7 +112,7 @@ abstract class CreateCustomerRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -123,7 +125,7 @@ class _CreateCustomerRequestImpl extends CreateCustomerRequest {
     String? vatId,
     String? email,
     String? phone,
-    _i2.Address? address,
+    _iz28txwx.Address? address,
     String? notes,
   }) : super._(
          name: name,
@@ -137,7 +139,7 @@ class _CreateCustomerRequestImpl extends CreateCustomerRequest {
 
   /// Returns a shallow copy of this [CreateCustomerRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   CreateCustomerRequest copyWith({
     String? name,
@@ -154,7 +156,9 @@ class _CreateCustomerRequestImpl extends CreateCustomerRequest {
       vatId: vatId is String? ? vatId : this.vatId,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
-      address: address is _i2.Address? ? address : this.address?.copyWith(),
+      address: address is _iz28txwx.Address?
+          ? address
+          : this.address?.copyWith(),
       notes: notes is String? ? notes : this.notes,
     );
   }

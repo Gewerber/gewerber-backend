@@ -10,12 +10,14 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/business/models/business.dart' as _i2;
-import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i3;
+
+import 'package:gewerber_backend_client/src/protocol/protocol.dart'
+    as _iipbhyvd;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/business/models/business.dart' as _i2ifapy5;
 
 abstract class AdminBusinessPage
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   AdminBusinessPage._({
     required this.items,
     this.nextCursor,
@@ -23,14 +25,14 @@ abstract class AdminBusinessPage
   });
 
   factory AdminBusinessPage({
-    required List<_i2.Business> items,
+    required List<_i2ifapy5.Business> items,
     String? nextCursor,
     required int limit,
   }) = _AdminBusinessPageImpl;
 
   factory AdminBusinessPage.fromJson(Map<String, dynamic> jsonSerialization) {
     return AdminBusinessPage(
-      items: _i3.Protocol().deserialize<List<_i2.Business>>(
+      items: _iipbhyvd.Protocol().deserialize<List<_i2ifapy5.Business>>(
         jsonSerialization['items'],
       ),
       nextCursor: jsonSerialization['nextCursor'] as String?,
@@ -38,7 +40,7 @@ abstract class AdminBusinessPage
     );
   }
 
-  List<_i2.Business> items;
+  List<_i2ifapy5.Business> items;
 
   String? nextCursor;
 
@@ -46,9 +48,9 @@ abstract class AdminBusinessPage
 
   /// Returns a shallow copy of this [AdminBusinessPage]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   AdminBusinessPage copyWith({
-    List<_i2.Business>? items,
+    List<_i2ifapy5.Business>? items,
     String? nextCursor,
     int? limit,
   });
@@ -74,7 +76,7 @@ abstract class AdminBusinessPage
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -82,7 +84,7 @@ class _Undefined {}
 
 class _AdminBusinessPageImpl extends AdminBusinessPage {
   _AdminBusinessPageImpl({
-    required List<_i2.Business> items,
+    required List<_i2ifapy5.Business> items,
     String? nextCursor,
     required int limit,
   }) : super._(
@@ -93,10 +95,10 @@ class _AdminBusinessPageImpl extends AdminBusinessPage {
 
   /// Returns a shallow copy of this [AdminBusinessPage]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   AdminBusinessPage copyWith({
-    List<_i2.Business>? items,
+    List<_i2ifapy5.Business>? items,
     Object? nextCursor = _Undefined,
     int? limit,
   }) {

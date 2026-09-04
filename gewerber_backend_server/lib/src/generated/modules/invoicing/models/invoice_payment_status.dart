@@ -10,12 +10,14 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/invoicing/models/payment_record.dart' as _i2;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i3;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/invoicing/models/payment_record.dart' as _in9an6e0;
 
 abstract class InvoicePaymentStatus
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   InvoicePaymentStatus._({
     required this.invoiceId,
     required this.paidTotalCents,
@@ -29,7 +31,7 @@ abstract class InvoicePaymentStatus
     required int paidTotalCents,
     required int remainingCents,
     required bool isPaid,
-    required List<_i2.PaymentRecord> payments,
+    required List<_in9an6e0.PaymentRecord> payments,
   }) = _InvoicePaymentStatusImpl;
 
   factory InvoicePaymentStatus.fromJson(
@@ -39,8 +41,8 @@ abstract class InvoicePaymentStatus
       invoiceId: jsonSerialization['invoiceId'] as int,
       paidTotalCents: jsonSerialization['paidTotalCents'] as int,
       remainingCents: jsonSerialization['remainingCents'] as int,
-      isPaid: _i1.BoolJsonExtension.fromJson(jsonSerialization['isPaid']),
-      payments: _i3.Protocol().deserialize<List<_i2.PaymentRecord>>(
+      isPaid: _is.BoolJsonExtension.fromJson(jsonSerialization['isPaid']),
+      payments: _itzp2rm6.Protocol().deserialize<List<_in9an6e0.PaymentRecord>>(
         jsonSerialization['payments'],
       ),
     );
@@ -54,17 +56,17 @@ abstract class InvoicePaymentStatus
 
   bool isPaid;
 
-  List<_i2.PaymentRecord> payments;
+  List<_in9an6e0.PaymentRecord> payments;
 
   /// Returns a shallow copy of this [InvoicePaymentStatus]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   InvoicePaymentStatus copyWith({
     int? invoiceId,
     int? paidTotalCents,
     int? remainingCents,
     bool? isPaid,
-    List<_i2.PaymentRecord>? payments,
+    List<_in9an6e0.PaymentRecord>? payments,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -92,7 +94,7 @@ abstract class InvoicePaymentStatus
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -102,7 +104,7 @@ class _InvoicePaymentStatusImpl extends InvoicePaymentStatus {
     required int paidTotalCents,
     required int remainingCents,
     required bool isPaid,
-    required List<_i2.PaymentRecord> payments,
+    required List<_in9an6e0.PaymentRecord> payments,
   }) : super._(
          invoiceId: invoiceId,
          paidTotalCents: paidTotalCents,
@@ -113,14 +115,14 @@ class _InvoicePaymentStatusImpl extends InvoicePaymentStatus {
 
   /// Returns a shallow copy of this [InvoicePaymentStatus]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   InvoicePaymentStatus copyWith({
     int? invoiceId,
     int? paidTotalCents,
     int? remainingCents,
     bool? isPaid,
-    List<_i2.PaymentRecord>? payments,
+    List<_in9an6e0.PaymentRecord>? payments,
   }) {
     return InvoicePaymentStatus(
       invoiceId: invoiceId ?? this.invoiceId,

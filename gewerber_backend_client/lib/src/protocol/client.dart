@@ -10,160 +10,161 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
-    as _i1;
-import 'package:serverpod_client/serverpod_client.dart' as _i2;
-import 'dart:async' as _i3;
-import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
-    as _i4;
+
+import 'dart:async' as _ida;
+import 'dart:typed_data' as _idt;
 import 'package:gewerber_backend_client/src/protocol/core/entitlement/feature.dart'
-    as _i5;
+    as _i6zpily8;
 import 'package:gewerber_backend_client/src/protocol/modules/accounting/models/accounting_transaction.dart'
-    as _i6;
+    as _in4p196h;
 import 'package:gewerber_backend_client/src/protocol/modules/accounting/models/create_transaction_request.dart'
-    as _i7;
-import 'package:gewerber_backend_client/src/protocol/modules/accounting/models/update_transaction_request.dart'
-    as _i8;
-import 'package:gewerber_backend_client/src/protocol/modules/accounting/models/transaction_type.dart'
-    as _i9;
-import 'package:gewerber_backend_client/src/protocol/modules/accounting/models/transaction_category.dart'
-    as _i10;
+    as _i940ddvz;
 import 'package:gewerber_backend_client/src/protocol/modules/accounting/models/profit_loss_report.dart'
-    as _i11;
+    as _idz9zlsq;
+import 'package:gewerber_backend_client/src/protocol/modules/accounting/models/transaction_category.dart'
+    as _ihmhz0vo;
+import 'package:gewerber_backend_client/src/protocol/modules/accounting/models/transaction_type.dart'
+    as _i7icww1r;
+import 'package:gewerber_backend_client/src/protocol/modules/accounting/models/update_transaction_request.dart'
+    as _ils99x0j;
 import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_audit_page.dart'
-    as _i12;
-import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_business_page.dart'
-    as _i13;
-import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_business_detail.dart'
-    as _i14;
-import 'package:gewerber_backend_client/src/protocol/modules/business/models/membership.dart'
-    as _i15;
-import 'package:gewerber_backend_client/src/protocol/modules/business/models/membership_role.dart'
-    as _i16;
-import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/guidance_tip.dart'
-    as _i17;
-import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_invoice_page.dart'
-    as _i18;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_status.dart'
-    as _i19;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice.dart'
-    as _i20;
-import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_stats_overview.dart'
-    as _i21;
-import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_user_summary_page.dart'
-    as _i22;
-import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_user_dossier.dart'
-    as _i23;
+    as _i8hgem5u;
 import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_auth_status.dart'
-    as _i24;
+    as _iq6he93g;
+import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_business_detail.dart'
+    as _iefuveyw;
+import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_business_page.dart'
+    as _iozqqwqx;
+import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_invoice_page.dart'
+    as _iy4ysctt;
+import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_stats_overview.dart'
+    as _ihntwe25;
+import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_user_dossier.dart'
+    as _iefzmp6g;
+import 'package:gewerber_backend_client/src/protocol/modules/admin/models/admin_user_summary_page.dart'
+    as _ix76f7cm;
 import 'package:gewerber_backend_client/src/protocol/modules/business/models/business.dart'
-    as _i25;
-import 'package:gewerber_backend_client/src/protocol/modules/business/models/create_business_request.dart'
-    as _i26;
-import 'package:gewerber_backend_client/src/protocol/modules/business/models/update_business_request.dart'
-    as _i27;
+    as _i0hkv0p3;
 import 'package:gewerber_backend_client/src/protocol/modules/business/models/business_settings.dart'
-    as _i28;
+    as _iczo4y4i;
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/create_business_request.dart'
+    as _i9fj2qpm;
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/membership.dart'
+    as _ix3g4cwq;
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/membership_role.dart'
+    as _ifttlrdp;
+import 'package:gewerber_backend_client/src/protocol/modules/business/models/update_business_request.dart'
+    as _i15sv7sl;
 import 'package:gewerber_backend_client/src/protocol/modules/business/models/update_business_settings_request.dart'
-    as _i29;
+    as _i0xs9eor;
 import 'package:gewerber_backend_client/src/protocol/modules/dashboard/models/dashboard_summary.dart'
-    as _i30;
+    as _i4pjqjso;
 import 'package:gewerber_backend_client/src/protocol/modules/documents/models/document.dart'
-    as _i31;
-import 'package:gewerber_backend_client/src/protocol/modules/documents/models/upload_document_request.dart'
-    as _i32;
+    as _i6dacf8x;
 import 'package:gewerber_backend_client/src/protocol/modules/documents/models/document_kind.dart'
-    as _i33;
-import 'dart:typed_data' as _i34;
+    as _iraft39b;
+import 'package:gewerber_backend_client/src/protocol/modules/documents/models/upload_document_request.dart'
+    as _ip7l1hs3;
 import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/checklist_definition.dart'
-    as _i35;
+    as _iijoyams;
+import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/guidance_tip.dart'
+    as _in4e0h8b;
 import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/user_guidance_progress.dart'
-    as _i36;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer.dart'
-    as _i37;
+    as _i965vnjh;
 import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_customer_request.dart'
-    as _i38;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_customer_request.dart'
-    as _i39;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer_status.dart'
-    as _i40;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer_list_page.dart'
-    as _i41;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer_cursor_page.dart'
-    as _i42;
+    as _ive2a5q8;
 import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_invoice_request.dart'
-    as _i43;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_item.dart'
-    as _i44;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_invoice_request.dart'
-    as _i45;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_list_page.dart'
-    as _i46;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_cursor_page.dart'
-    as _i47;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_template.dart'
-    as _i48;
+    as _ibk5pv65;
 import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_invoice_template_request.dart'
-    as _i49;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_invoice_template_request.dart'
-    as _i50;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/payment_record.dart'
-    as _i51;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/record_payment_request.dart'
-    as _i52;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_payment_status.dart'
-    as _i53;
+    as _ijqbp2o4;
 import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_recurring_schedule_request.dart'
-    as _i54;
-import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_recurring_schedule_request.dart'
-    as _i55;
+    as _i298ulq3;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer.dart'
+    as _inumhip7;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer_cursor_page.dart'
+    as _ibffosi1;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer_list_page.dart'
+    as _ih9ylpiu;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/customer_status.dart'
+    as _imwu3m17;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice.dart'
+    as _ijh06pcp;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_cursor_page.dart'
+    as _io7dgrjq;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_item.dart'
+    as _idltrgge;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_list_page.dart'
+    as _ic90por4;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_payment_status.dart'
+    as _ip6ughmw;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_status.dart'
+    as _i8f7xgzd;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/invoice_template.dart'
+    as _ir2z9rpn;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/payment_record.dart'
+    as _ivishbgw;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/record_payment_request.dart'
+    as _is9y4m2k;
 import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/reminder.dart'
-    as _i56;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/project.dart'
-    as _i57;
+    as _i89d689a;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_customer_request.dart'
+    as _i24zvgea;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_invoice_request.dart'
+    as _igq8e9wl;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_invoice_template_request.dart'
+    as _i3plvypu;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/update_recurring_schedule_request.dart'
+    as _i20dbxo9;
 import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/create_project_request.dart'
-    as _i58;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/task.dart'
-    as _i59;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/update_project_request.dart'
-    as _i60;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/project_status.dart'
-    as _i61;
+    as _i101c7e7;
 import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/create_task_request.dart'
-    as _i62;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/update_task_request.dart'
-    as _i63;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/task_status.dart'
-    as _i64;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/time_entry.dart'
-    as _i65;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/start_timer_request.dart'
-    as _i66;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/create_time_entry_request.dart'
-    as _i67;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/update_time_entry_request.dart'
-    as _i68;
-import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/time_report.dart'
-    as _i69;
+    as _ii3x130u;
 import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/create_time_entries_invoice_request.dart'
-    as _i70;
-import 'package:gewerber_backend_client/src/protocol/modules/user/models/user_profile.dart'
-    as _i71;
+    as _iogoveqd;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/create_time_entry_request.dart'
+    as _iokwn2fp;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/project.dart'
+    as _i8k415ln;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/project_status.dart'
+    as _i1hq5250;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/start_timer_request.dart'
+    as _itx5fhp8;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/task.dart'
+    as _ib31j0is;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/task_status.dart'
+    as _ib7wqxla;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/time_entry.dart'
+    as _iaj8oc9k;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/time_report.dart'
+    as _iibh7kuq;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/update_project_request.dart'
+    as _i7qhkd8r;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/update_task_request.dart'
+    as _i3pvx6a0;
+import 'package:gewerber_backend_client/src/protocol/modules/time_tracking/models/update_time_entry_request.dart'
+    as _i3pgmtrg;
 import 'package:gewerber_backend_client/src/protocol/modules/user/models/my_identity.dart'
-    as _i72;
+    as _ikafidhq;
 import 'package:gewerber_backend_client/src/protocol/modules/user/models/update_user_profile_request.dart'
-    as _i73;
-import 'package:gewerber_commercial_client/gewerber_commercial_client.dart'
-    as _i74;
-import 'package:http/http.dart' as _i75;
-import 'protocol.dart' as _i76;
+    as _ipnx8g03;
+import 'package:gewerber_backend_client/src/protocol/modules/user/models/user_profile.dart'
+    as _i4pr0x0j;
+import 'package:gewerber_backend_commercial_client/gewerber_backend_commercial_client.dart'
+    as _ix6v1tim;
+import 'package:http/http.dart' as _i85jenna;
+import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
+    as _iacc;
+import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
+    as _iaic;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'protocol.dart' as _il2as5qe;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
 /// are made available on the server and enable the corresponding sign-in widget
 /// on the client.
 /// {@category Endpoint}
-class EndpointEmailIdp extends _i1.EndpointEmailIdpBase {
-  EndpointEmailIdp(_i2.EndpointCaller caller) : super(caller);
+class EndpointEmailIdp extends _iaic.EndpointEmailIdpBase {
+  EndpointEmailIdp(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'emailIdp';
@@ -178,10 +179,10 @@ class EndpointEmailIdp extends _i1.EndpointEmailIdpBase {
   ///
   /// Throws an [AuthUserBlockedException] if the auth user is blocked.
   @override
-  _i3.Future<_i4.AuthSuccess> login({
+  _ida.Future<_iacc.AuthSuccess> login({
     required String email,
     required String password,
-  }) => caller.callServerEndpoint<_i4.AuthSuccess>(
+  }) => caller.callServerEndpoint<_iacc.AuthSuccess>(
     'emailIdp',
     'login',
     {
@@ -201,8 +202,8 @@ class EndpointEmailIdp extends _i1.EndpointEmailIdpBase {
   /// registration. If the email is already registered, the returned ID will not
   /// be valid.
   @override
-  _i3.Future<_i2.UuidValue> startRegistration({required String email}) =>
-      caller.callServerEndpoint<_i2.UuidValue>(
+  _ida.Future<_isc.UuidValue> startRegistration({required String email}) =>
+      caller.callServerEndpoint<_isc.UuidValue>(
         'emailIdp',
         'startRegistration',
         {'email': email},
@@ -219,8 +220,8 @@ class EndpointEmailIdp extends _i1.EndpointEmailIdpBase {
   /// - [EmailAccountRequestExceptionReason.invalid] if no request exists
   ///   for the given [accountRequestId] or [verificationCode] is invalid.
   @override
-  _i3.Future<String> verifyRegistrationCode({
-    required _i2.UuidValue accountRequestId,
+  _ida.Future<String> verifyRegistrationCode({
+    required _isc.UuidValue accountRequestId,
     required String verificationCode,
   }) => caller.callServerEndpoint<String>(
     'emailIdp',
@@ -246,10 +247,10 @@ class EndpointEmailIdp extends _i1.EndpointEmailIdpBase {
   ///
   /// Returns a session for the newly created user.
   @override
-  _i3.Future<_i4.AuthSuccess> finishRegistration({
+  _ida.Future<_iacc.AuthSuccess> finishRegistration({
     required String registrationToken,
     required String password,
-  }) => caller.callServerEndpoint<_i4.AuthSuccess>(
+  }) => caller.callServerEndpoint<_iacc.AuthSuccess>(
     'emailIdp',
     'finishRegistration',
     {
@@ -272,8 +273,8 @@ class EndpointEmailIdp extends _i1.EndpointEmailIdpBase {
   ///   made too many attempts trying to request a password reset.
   ///
   @override
-  _i3.Future<_i2.UuidValue> startPasswordReset({required String email}) =>
-      caller.callServerEndpoint<_i2.UuidValue>(
+  _ida.Future<_isc.UuidValue> startPasswordReset({required String email}) =>
+      caller.callServerEndpoint<_isc.UuidValue>(
         'emailIdp',
         'startPasswordReset',
         {'email': email},
@@ -294,8 +295,8 @@ class EndpointEmailIdp extends _i1.EndpointEmailIdpBase {
   /// should be overridden to return credentials for the next step instead
   /// of the credentials for setting the password.
   @override
-  _i3.Future<String> verifyPasswordResetCode({
-    required _i2.UuidValue passwordResetRequestId,
+  _ida.Future<String> verifyPasswordResetCode({
+    required _isc.UuidValue passwordResetRequestId,
     required String verificationCode,
   }) => caller.callServerEndpoint<String>(
     'emailIdp',
@@ -321,7 +322,7 @@ class EndpointEmailIdp extends _i1.EndpointEmailIdpBase {
   ///
   /// Throws an [AuthUserBlockedException] if the auth user is blocked.
   @override
-  _i3.Future<void> finishPasswordReset({
+  _ida.Future<void> finishPasswordReset({
     required String finishPasswordResetToken,
     required String newPassword,
   }) => caller.callServerEndpoint<void>(
@@ -334,7 +335,7 @@ class EndpointEmailIdp extends _i1.EndpointEmailIdpBase {
   );
 
   @override
-  _i3.Future<bool> hasAccount() => caller.callServerEndpoint<bool>(
+  _ida.Future<bool> hasAccount() => caller.callServerEndpoint<bool>(
     'emailIdp',
     'hasAccount',
     {},
@@ -344,13 +345,18 @@ class EndpointEmailIdp extends _i1.EndpointEmailIdpBase {
 /// By extending [RefreshJwtTokensEndpoint], the JWT token refresh endpoint
 /// is made available on the server and enables automatic token refresh on the client.
 /// {@category Endpoint}
-class EndpointJwtRefresh extends _i4.EndpointRefreshJwtTokens {
-  EndpointJwtRefresh(_i2.EndpointCaller caller) : super(caller);
+class EndpointJwtRefresh extends _iacc.EndpointRefreshJwtTokens {
+  EndpointJwtRefresh(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'jwtRefresh';
 
   /// Creates a new token pair for the given [refreshToken].
+  ///
+  /// If [refreshToken] is omitted, cookie-mode web clients fall back to the
+  /// configured HttpOnly refresh cookie. When neither source is present this
+  /// throws [RefreshTokenNotFoundException], the same public "no usable refresh
+  /// credential" exception used for unknown refresh tokens.
   ///
   /// Can throw the following exceptions:
   /// -[RefreshTokenMalformedException]: refresh token is malformed and could
@@ -369,14 +375,13 @@ class EndpointJwtRefresh extends _i4.EndpointRefreshJwtTokens {
   /// This endpoint is unauthenticated, meaning the client won't include any
   /// authentication information with the call.
   @override
-  _i3.Future<_i4.AuthSuccess> refreshAccessToken({
-    required String refreshToken,
-  }) => caller.callServerEndpoint<_i4.AuthSuccess>(
-    'jwtRefresh',
-    'refreshAccessToken',
-    {'refreshToken': refreshToken},
-    authenticated: false,
-  );
+  _ida.Future<_iacc.AuthSuccess> refreshAccessToken({String? refreshToken}) =>
+      caller.callServerEndpoint<_iacc.AuthSuccess>(
+        'jwtRefresh',
+        'refreshAccessToken',
+        {'refreshToken': refreshToken},
+        authenticated: false,
+      );
 }
 
 /// Base class for global-administration endpoints (`modules/admin`).
@@ -389,24 +394,24 @@ class EndpointJwtRefresh extends _i4.EndpointRefreshJwtTokens {
 /// Mutations must additionally write an `AuditEntry` via [AuditService] with
 /// the acting admin as actor.
 /// {@category Endpoint}
-abstract class EndpointAdmin extends _i2.EndpointRef {
-  EndpointAdmin(_i2.EndpointCaller caller) : super(caller);
+abstract class EndpointAdmin extends _isc.EndpointRef {
+  EndpointAdmin(_isc.EndpointCaller caller) : super(caller);
 }
 
 /// {@category Endpoint}
-abstract class EndpointBusinessScoped extends _i2.EndpointRef {
-  EndpointBusinessScoped(_i2.EndpointCaller caller) : super(caller);
+abstract class EndpointBusinessScoped extends _isc.EndpointRef {
+  EndpointBusinessScoped(_isc.EndpointCaller caller) : super(caller);
 }
 
 /// {@category Endpoint}
 class EndpointEntitlement extends EndpointBusinessScoped {
-  EndpointEntitlement(_i2.EndpointCaller caller) : super(caller);
+  EndpointEntitlement(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'entitlement';
 
-  _i3.Future<List<_i5.Feature>> list({int? businessId}) =>
-      caller.callServerEndpoint<List<_i5.Feature>>(
+  _ida.Future<List<_i6zpily8.Feature>> list({int? businessId}) =>
+      caller.callServerEndpoint<List<_i6zpily8.Feature>>(
         'entitlement',
         'list',
         {'businessId': businessId},
@@ -415,16 +420,16 @@ class EndpointEntitlement extends EndpointBusinessScoped {
 
 /// {@category Endpoint}
 class EndpointAccounting extends EndpointBusinessScoped {
-  EndpointAccounting(_i2.EndpointCaller caller) : super(caller);
+  EndpointAccounting(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'accounting';
 
   /// Records an income or expense transaction.
-  _i3.Future<_i6.AccountingTransaction> create(
-    _i7.CreateTransactionRequest request, {
+  _ida.Future<_in4p196h.AccountingTransaction> create(
+    _i940ddvz.CreateTransactionRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i6.AccountingTransaction>(
+  }) => caller.callServerEndpoint<_in4p196h.AccountingTransaction>(
     'accounting',
     'create',
     {
@@ -433,10 +438,10 @@ class EndpointAccounting extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i6.AccountingTransaction> get(
+  _ida.Future<_in4p196h.AccountingTransaction> get(
     int transactionId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i6.AccountingTransaction>(
+  }) => caller.callServerEndpoint<_in4p196h.AccountingTransaction>(
     'accounting',
     'get',
     {
@@ -445,10 +450,10 @@ class EndpointAccounting extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i6.AccountingTransaction> update(
-    _i8.UpdateTransactionRequest request, {
+  _ida.Future<_in4p196h.AccountingTransaction> update(
+    _ils99x0j.UpdateTransactionRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i6.AccountingTransaction>(
+  }) => caller.callServerEndpoint<_in4p196h.AccountingTransaction>(
     'accounting',
     'update',
     {
@@ -457,15 +462,15 @@ class EndpointAccounting extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i6.AccountingTransaction>> list({
-    _i9.TransactionType? type,
-    _i10.TransactionCategory? category,
+  _ida.Future<List<_in4p196h.AccountingTransaction>> list({
+    _i7icww1r.TransactionType? type,
+    _ihmhz0vo.TransactionCategory? category,
     DateTime? from,
     DateTime? to,
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i6.AccountingTransaction>>(
+  }) => caller.callServerEndpoint<List<_in4p196h.AccountingTransaction>>(
     'accounting',
     'list',
     {
@@ -479,7 +484,7 @@ class EndpointAccounting extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<void> delete(
+  _ida.Future<void> delete(
     int transactionId, {
     int? businessId,
   }) => caller.callServerEndpoint<void>(
@@ -492,11 +497,11 @@ class EndpointAccounting extends EndpointBusinessScoped {
   );
 
   /// Basic profit & loss (EÜR style) for the period.
-  _i3.Future<_i11.ProfitLossReport> profitLoss(
+  _ida.Future<_idz9zlsq.ProfitLossReport> profitLoss(
     DateTime from,
     DateTime to, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i11.ProfitLossReport>(
+  }) => caller.callServerEndpoint<_idz9zlsq.ProfitLossReport>(
     'accounting',
     'profitLoss',
     {
@@ -507,8 +512,8 @@ class EndpointAccounting extends EndpointBusinessScoped {
   );
 
   /// Exports transactions as CSV.
-  _i3.Future<String> exportCsv({
-    _i9.TransactionType? type,
+  _ida.Future<String> exportCsv({
+    _i7icww1r.TransactionType? type,
     DateTime? from,
     DateTime? to,
     int? businessId,
@@ -527,7 +532,7 @@ class EndpointAccounting extends EndpointBusinessScoped {
 /// Read access to the audit trail for moderators.
 /// {@category Endpoint}
 class EndpointAdminAudit extends EndpointAdmin {
-  EndpointAdminAudit(_i2.EndpointCaller caller) : super(caller);
+  EndpointAdminAudit(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'adminAudit';
@@ -535,12 +540,12 @@ class EndpointAdminAudit extends EndpointAdmin {
   /// Newest-first audit entries, optionally filtered by acting user, action
   /// (exact match) and lower time bound. Limited pages, no cursor — use
   /// `since` of the oldest returned entry to page further.
-  _i3.Future<_i12.AdminAuditPage> auditQuery({
-    _i2.UuidValue? actorUserId,
+  _ida.Future<_i8hgem5u.AdminAuditPage> auditQuery({
+    _isc.UuidValue? actorUserId,
     String? action,
     DateTime? since,
     int? limit,
-  }) => caller.callServerEndpoint<_i12.AdminAuditPage>(
+  }) => caller.callServerEndpoint<_i8hgem5u.AdminAuditPage>(
     'adminAudit',
     'auditQuery',
     {
@@ -556,17 +561,17 @@ class EndpointAdminAudit extends EndpointAdmin {
 /// to moderators; role changes require the `admin` role.
 /// {@category Endpoint}
 class EndpointAdminBusinesses extends EndpointAdmin {
-  EndpointAdminBusinesses(_i2.EndpointCaller caller) : super(caller);
+  EndpointAdminBusinesses(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'adminBusinesses';
 
   /// Keyset-paginated business search by name substring.
-  _i3.Future<_i13.AdminBusinessPage> businessesSearch({
+  _ida.Future<_iozqqwqx.AdminBusinessPage> businessesSearch({
     String? query,
     int? limit,
     String? cursor,
-  }) => caller.callServerEndpoint<_i13.AdminBusinessPage>(
+  }) => caller.callServerEndpoint<_iozqqwqx.AdminBusinessPage>(
     'adminBusinesses',
     'businessesSearch',
     {
@@ -577,8 +582,8 @@ class EndpointAdminBusinesses extends EndpointAdmin {
   );
 
   /// One business with all of its memberships.
-  _i3.Future<_i14.AdminBusinessDetail> businessesGet(int businessId) =>
-      caller.callServerEndpoint<_i14.AdminBusinessDetail>(
+  _ida.Future<_iefuveyw.AdminBusinessDetail> businessesGet(int businessId) =>
+      caller.callServerEndpoint<_iefuveyw.AdminBusinessDetail>(
         'adminBusinesses',
         'businessesGet',
         {'businessId': businessId},
@@ -586,11 +591,11 @@ class EndpointAdminBusinesses extends EndpointAdmin {
 
   /// Changes the tenant role of a membership. Refuses to demote the last
   /// owner of a business ([ConflictException]).
-  _i3.Future<_i15.Membership> membershipsSetRole({
+  _ida.Future<_ix3g4cwq.Membership> membershipsSetRole({
     required int membershipId,
-    required _i16.MembershipRole role,
+    required _ifttlrdp.MembershipRole role,
     required bool confirm,
-  }) => caller.callServerEndpoint<_i15.Membership>(
+  }) => caller.callServerEndpoint<_ix3g4cwq.Membership>(
     'adminBusinesses',
     'membershipsSetRole',
     {
@@ -605,14 +610,14 @@ class EndpointAdminBusinesses extends EndpointAdmin {
 /// in-code content merged with admin overrides), upsert overrides.
 /// {@category Endpoint}
 class EndpointAdminGuidance extends EndpointAdmin {
-  EndpointAdminGuidance(_i2.EndpointCaller caller) : super(caller);
+  EndpointAdminGuidance(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'adminGuidance';
 
   /// The effective tips as users see them in `guidance.tips`.
-  _i3.Future<List<_i17.GuidanceTip>> guidanceTipsList() =>
-      caller.callServerEndpoint<List<_i17.GuidanceTip>>(
+  _ida.Future<List<_in4e0h8b.GuidanceTip>> guidanceTipsList() =>
+      caller.callServerEndpoint<List<_in4e0h8b.GuidanceTip>>(
         'adminGuidance',
         'guidanceTipsList',
         {},
@@ -621,12 +626,12 @@ class EndpointAdminGuidance extends EndpointAdmin {
   /// Creates or replaces an admin-managed tip by its unique topic. A topic
   /// that matches a curated tip overrides it; other topics are appended as
   /// new tips.
-  _i3.Future<_i17.GuidanceTip> guidanceTipUpsert({
+  _ida.Future<_in4e0h8b.GuidanceTip> guidanceTipUpsert({
     required String topic,
     required String title,
     required String body,
     required bool confirm,
-  }) => caller.callServerEndpoint<_i17.GuidanceTip>(
+  }) => caller.callServerEndpoint<_in4e0h8b.GuidanceTip>(
     'adminGuidance',
     'guidanceTipUpsert',
     {
@@ -641,7 +646,7 @@ class EndpointAdminGuidance extends EndpointAdmin {
 /// Cross-tenant invoice reads for support plus admin-side cancellation.
 /// {@category Endpoint}
 class EndpointAdminInvoices extends EndpointAdmin {
-  EndpointAdminInvoices(_i2.EndpointCaller caller) : super(caller);
+  EndpointAdminInvoices(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'adminInvoices';
@@ -649,14 +654,14 @@ class EndpointAdminInvoices extends EndpointAdmin {
   /// Keyset-paginated invoice list ordered by `issueDate DESC`, optionally
   /// filtered by tenant, status and issue-date range (`from` inclusive,
   /// `to` inclusive).
-  _i3.Future<_i18.AdminInvoicePage> invoicesList({
+  _ida.Future<_iy4ysctt.AdminInvoicePage> invoicesList({
     int? businessId,
-    _i19.InvoiceStatus? status,
+    _i8f7xgzd.InvoiceStatus? status,
     DateTime? from,
     DateTime? to,
     int? limit,
     String? cursor,
-  }) => caller.callServerEndpoint<_i18.AdminInvoicePage>(
+  }) => caller.callServerEndpoint<_iy4ysctt.AdminInvoicePage>(
     'adminInvoices',
     'invoicesList',
     {
@@ -670,8 +675,8 @@ class EndpointAdminInvoices extends EndpointAdmin {
   );
 
   /// A single invoice across tenants.
-  _i3.Future<_i20.Invoice> invoicesGet(int invoiceId) =>
-      caller.callServerEndpoint<_i20.Invoice>(
+  _ida.Future<_ijh06pcp.Invoice> invoicesGet(int invoiceId) =>
+      caller.callServerEndpoint<_ijh06pcp.Invoice>(
         'adminInvoices',
         'invoicesGet',
         {'invoiceId': invoiceId},
@@ -680,11 +685,11 @@ class EndpointAdminInvoices extends EndpointAdmin {
   /// Cancels an invoice in an open state (`sent`, `partiallyPaid`,
   /// `overdue`). Drafts belong to their owners; paid invoices are immutable
   /// (GoBD) — both are rejected with [ConflictException].
-  _i3.Future<_i20.Invoice> invoiceCancelAdmin({
+  _ida.Future<_ijh06pcp.Invoice> invoiceCancelAdmin({
     required int invoiceId,
     required String reason,
     required bool confirm,
-  }) => caller.callServerEndpoint<_i20.Invoice>(
+  }) => caller.callServerEndpoint<_ijh06pcp.Invoice>(
     'adminInvoices',
     'invoiceCancelAdmin',
     {
@@ -698,15 +703,15 @@ class EndpointAdminInvoices extends EndpointAdmin {
 /// Platform-wide counters for the admin overview. Moderator and up.
 /// {@category Endpoint}
 class EndpointAdminStats extends EndpointAdmin {
-  EndpointAdminStats(_i2.EndpointCaller caller) : super(caller);
+  EndpointAdminStats(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'adminStats';
 
   /// User, business, invoice-status and running-timer counts across all
   /// tenants.
-  _i3.Future<_i21.AdminStatsOverview> statsOverview() =>
-      caller.callServerEndpoint<_i21.AdminStatsOverview>(
+  _ida.Future<_ihntwe25.AdminStatsOverview> statsOverview() =>
+      caller.callServerEndpoint<_ihntwe25.AdminStatsOverview>(
         'adminStats',
         'statsOverview',
         {},
@@ -719,17 +724,17 @@ class EndpointAdminStats extends EndpointAdmin {
 /// an explicit `confirm: true`.
 /// {@category Endpoint}
 class EndpointAdminUsers extends EndpointAdmin {
-  EndpointAdminUsers(_i2.EndpointCaller caller) : super(caller);
+  EndpointAdminUsers(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'adminUsers';
 
   /// Keyset-paginated search over all users by email substring.
-  _i3.Future<_i22.AdminUserSummaryPage> usersSearch({
+  _ida.Future<_ix76f7cm.AdminUserSummaryPage> usersSearch({
     String? query,
     int? limit,
     String? cursor,
-  }) => caller.callServerEndpoint<_i22.AdminUserSummaryPage>(
+  }) => caller.callServerEndpoint<_ix76f7cm.AdminUserSummaryPage>(
     'adminUsers',
     'usersSearch',
     {
@@ -741,8 +746,8 @@ class EndpointAdminUsers extends EndpointAdmin {
 
   /// Full dossier of one user: profile, memberships with business names and
   /// auth status.
-  _i3.Future<_i23.AdminUserDossier> usersGet(_i2.UuidValue userId) =>
-      caller.callServerEndpoint<_i23.AdminUserDossier>(
+  _ida.Future<_iefzmp6g.AdminUserDossier> usersGet(_isc.UuidValue userId) =>
+      caller.callServerEndpoint<_iefzmp6g.AdminUserDossier>(
         'adminUsers',
         'usersGet',
         {'userId': userId},
@@ -751,11 +756,11 @@ class EndpointAdminUsers extends EndpointAdmin {
   /// Blocks a user on the authentication level. `reason` is mandatory and
   /// stored in the audit trail; refresh tokens are invalidated immediately.
   /// No user data is deleted.
-  _i3.Future<_i23.AdminUserDossier> usersBan({
-    required _i2.UuidValue userId,
+  _ida.Future<_iefzmp6g.AdminUserDossier> usersBan({
+    required _isc.UuidValue userId,
     required String reason,
     required bool confirm,
-  }) => caller.callServerEndpoint<_i23.AdminUserDossier>(
+  }) => caller.callServerEndpoint<_iefzmp6g.AdminUserDossier>(
     'adminUsers',
     'usersBan',
     {
@@ -767,10 +772,10 @@ class EndpointAdminUsers extends EndpointAdmin {
 
   /// Lifts a ban. The user can sign in again; previously deleted refresh
   /// tokens are not restored.
-  _i3.Future<_i23.AdminUserDossier> usersUnban({
-    required _i2.UuidValue userId,
+  _ida.Future<_iefzmp6g.AdminUserDossier> usersUnban({
+    required _isc.UuidValue userId,
     required bool confirm,
-  }) => caller.callServerEndpoint<_i23.AdminUserDossier>(
+  }) => caller.callServerEndpoint<_iefzmp6g.AdminUserDossier>(
     'adminUsers',
     'usersUnban',
     {
@@ -784,9 +789,9 @@ class EndpointAdminUsers extends EndpointAdmin {
   /// account only exists once its verification code was confirmed, so there
   /// is no unverified state to flip. Throws [NotFoundException] for users
   /// without any email account.
-  _i3.Future<_i24.AdminAuthStatus> usersVerifyEmail({
-    required _i2.UuidValue userId,
-  }) => caller.callServerEndpoint<_i24.AdminAuthStatus>(
+  _ida.Future<_iq6he93g.AdminAuthStatus> usersVerifyEmail({
+    required _isc.UuidValue userId,
+  }) => caller.callServerEndpoint<_iq6he93g.AdminAuthStatus>(
     'adminUsers',
     'usersVerifyEmail',
     {'userId': userId},
@@ -795,34 +800,36 @@ class EndpointAdminUsers extends EndpointAdmin {
 
 /// {@category Endpoint}
 class EndpointBusiness extends EndpointBusinessScoped {
-  EndpointBusiness(_i2.EndpointCaller caller) : super(caller);
+  EndpointBusiness(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'business';
 
-  _i3.Future<_i25.Business> create(_i26.CreateBusinessRequest request) =>
-      caller.callServerEndpoint<_i25.Business>(
-        'business',
-        'create',
-        {'request': request},
-      );
+  _ida.Future<_i0hkv0p3.Business> create(
+    _i9fj2qpm.CreateBusinessRequest request,
+  ) => caller.callServerEndpoint<_i0hkv0p3.Business>(
+    'business',
+    'create',
+    {'request': request},
+  );
 
-  _i3.Future<_i25.Business> get({int? businessId}) =>
-      caller.callServerEndpoint<_i25.Business>(
+  _ida.Future<_i0hkv0p3.Business> get({int? businessId}) =>
+      caller.callServerEndpoint<_i0hkv0p3.Business>(
         'business',
         'get',
         {'businessId': businessId},
       );
 
-  _i3.Future<_i25.Business> update(_i27.UpdateBusinessRequest request) =>
-      caller.callServerEndpoint<_i25.Business>(
-        'business',
-        'update',
-        {'request': request},
-      );
+  _ida.Future<_i0hkv0p3.Business> update(
+    _i15sv7sl.UpdateBusinessRequest request,
+  ) => caller.callServerEndpoint<_i0hkv0p3.Business>(
+    'business',
+    'update',
+    {'request': request},
+  );
 
-  _i3.Future<List<_i25.Business>> listMine() =>
-      caller.callServerEndpoint<List<_i25.Business>>(
+  _ida.Future<List<_i0hkv0p3.Business>> listMine() =>
+      caller.callServerEndpoint<List<_i0hkv0p3.Business>>(
         'business',
         'listMine',
         {},
@@ -831,21 +838,21 @@ class EndpointBusiness extends EndpointBusinessScoped {
 
 /// {@category Endpoint}
 class EndpointBusinessSettings extends EndpointBusinessScoped {
-  EndpointBusinessSettings(_i2.EndpointCaller caller) : super(caller);
+  EndpointBusinessSettings(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'businessSettings';
 
-  _i3.Future<_i28.BusinessSettings> get({int? businessId}) =>
-      caller.callServerEndpoint<_i28.BusinessSettings>(
+  _ida.Future<_iczo4y4i.BusinessSettings> get({int? businessId}) =>
+      caller.callServerEndpoint<_iczo4y4i.BusinessSettings>(
         'businessSettings',
         'get',
         {'businessId': businessId},
       );
 
-  _i3.Future<_i28.BusinessSettings> update(
-    _i29.UpdateBusinessSettingsRequest request,
-  ) => caller.callServerEndpoint<_i28.BusinessSettings>(
+  _ida.Future<_iczo4y4i.BusinessSettings> update(
+    _i0xs9eor.UpdateBusinessSettingsRequest request,
+  ) => caller.callServerEndpoint<_iczo4y4i.BusinessSettings>(
     'businessSettings',
     'update',
     {'request': request},
@@ -854,7 +861,7 @@ class EndpointBusinessSettings extends EndpointBusinessScoped {
 
 /// {@category Endpoint}
 class EndpointDashboard extends EndpointBusinessScoped {
-  EndpointDashboard(_i2.EndpointCaller caller) : super(caller);
+  EndpointDashboard(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'dashboard';
@@ -862,14 +869,14 @@ class EndpointDashboard extends EndpointBusinessScoped {
   /// Aggregated dashboard summary of the tenant: current-month KPIs, monthly
   /// trend, recent activity feeds and open receivables. All list sizes are
   /// clamped server-side; [asOf] anchors every window (tests only).
-  _i3.Future<_i30.DashboardSummary> getSummary({
+  _ida.Future<_i4pjqjso.DashboardSummary> getSummary({
     int? trendMonths,
     int? recentLimit,
     int? overdueLimit,
     int? debtorLimit,
     DateTime? asOf,
     int? businessId,
-  }) => caller.callServerEndpoint<_i30.DashboardSummary>(
+  }) => caller.callServerEndpoint<_i4pjqjso.DashboardSummary>(
     'dashboard',
     'getSummary',
     {
@@ -885,26 +892,27 @@ class EndpointDashboard extends EndpointBusinessScoped {
 
 /// {@category Endpoint}
 class EndpointDocument extends EndpointBusinessScoped {
-  EndpointDocument(_i2.EndpointCaller caller) : super(caller);
+  EndpointDocument(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'document';
 
-  _i3.Future<_i31.Document> upload(_i32.UploadDocumentRequest request) =>
-      caller.callServerEndpoint<_i31.Document>(
-        'document',
-        'upload',
-        {'request': request},
-      );
+  _ida.Future<_i6dacf8x.Document> upload(
+    _ip7l1hs3.UploadDocumentRequest request,
+  ) => caller.callServerEndpoint<_i6dacf8x.Document>(
+    'document',
+    'upload',
+    {'request': request},
+  );
 
-  _i3.Future<List<_i31.Document>> list({
+  _ida.Future<List<_i6dacf8x.Document>> list({
     int? businessId,
-    _i33.DocumentKind? kind,
+    _iraft39b.DocumentKind? kind,
     String? relatedEntityType,
     String? relatedEntityId,
     int? limit,
     int? offset,
-  }) => caller.callServerEndpoint<List<_i31.Document>>(
+  }) => caller.callServerEndpoint<List<_i6dacf8x.Document>>(
     'document',
     'list',
     {
@@ -917,21 +925,21 @@ class EndpointDocument extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i31.Document> get(int documentId) =>
-      caller.callServerEndpoint<_i31.Document>(
+  _ida.Future<_i6dacf8x.Document> get(int documentId) =>
+      caller.callServerEndpoint<_i6dacf8x.Document>(
         'document',
         'get',
         {'documentId': documentId},
       );
 
-  _i3.Future<_i34.ByteData> download(int documentId) =>
-      caller.callServerEndpoint<_i34.ByteData>(
+  _ida.Future<_idt.ByteData> download(int documentId) =>
+      caller.callServerEndpoint<_idt.ByteData>(
         'document',
         'download',
         {'documentId': documentId},
       );
 
-  _i3.Future<void> delete(int documentId) => caller.callServerEndpoint<void>(
+  _ida.Future<void> delete(int documentId) => caller.callServerEndpoint<void>(
     'document',
     'delete',
     {'documentId': documentId},
@@ -941,48 +949,48 @@ class EndpointDocument extends EndpointBusinessScoped {
 /// Serves curated guidance content (tooltips, checklists, "What is this?"
 /// popups) and tracks per-user progress. User-scoped, requires login.
 /// {@category Endpoint}
-class EndpointGuidance extends _i2.EndpointRef {
-  EndpointGuidance(_i2.EndpointCaller caller) : super(caller);
+class EndpointGuidance extends _isc.EndpointRef {
+  EndpointGuidance(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'guidance';
 
   /// All contextual tooltips: curated in-code content with admin-managed
   /// overrides applied (see `adminGuidance.guidanceTipUpsert`).
-  _i3.Future<List<_i17.GuidanceTip>> tips() =>
-      caller.callServerEndpoint<List<_i17.GuidanceTip>>(
+  _ida.Future<List<_in4e0h8b.GuidanceTip>> tips() =>
+      caller.callServerEndpoint<List<_in4e0h8b.GuidanceTip>>(
         'guidance',
         'tips',
         {},
       );
 
   /// All checklists with their items.
-  _i3.Future<List<_i35.ChecklistDefinition>> checklists() =>
-      caller.callServerEndpoint<List<_i35.ChecklistDefinition>>(
+  _ida.Future<List<_iijoyams.ChecklistDefinition>> checklists() =>
+      caller.callServerEndpoint<List<_iijoyams.ChecklistDefinition>>(
         'guidance',
         'checklists',
         {},
       );
 
   /// The signed-in user's progress (completed/dismissed items).
-  _i3.Future<List<_i36.UserGuidanceProgress>> myProgress() =>
-      caller.callServerEndpoint<List<_i36.UserGuidanceProgress>>(
+  _ida.Future<List<_i965vnjh.UserGuidanceProgress>> myProgress() =>
+      caller.callServerEndpoint<List<_i965vnjh.UserGuidanceProgress>>(
         'guidance',
         'myProgress',
         {},
       );
 
   /// Marks a checklist item (or any guidance item key) as completed.
-  _i3.Future<_i36.UserGuidanceProgress> markCompleted(String itemKey) =>
-      caller.callServerEndpoint<_i36.UserGuidanceProgress>(
+  _ida.Future<_i965vnjh.UserGuidanceProgress> markCompleted(String itemKey) =>
+      caller.callServerEndpoint<_i965vnjh.UserGuidanceProgress>(
         'guidance',
         'markCompleted',
         {'itemKey': itemKey},
       );
 
   /// Dismisses a tooltip so it is not shown again.
-  _i3.Future<_i36.UserGuidanceProgress> dismissTip(String topic) =>
-      caller.callServerEndpoint<_i36.UserGuidanceProgress>(
+  _ida.Future<_i965vnjh.UserGuidanceProgress> dismissTip(String topic) =>
+      caller.callServerEndpoint<_i965vnjh.UserGuidanceProgress>(
         'guidance',
         'dismissTip',
         {'topic': topic},
@@ -991,15 +999,15 @@ class EndpointGuidance extends _i2.EndpointRef {
 
 /// {@category Endpoint}
 class EndpointCustomer extends EndpointBusinessScoped {
-  EndpointCustomer(_i2.EndpointCaller caller) : super(caller);
+  EndpointCustomer(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'customer';
 
-  _i3.Future<_i37.Customer> create(
-    _i38.CreateCustomerRequest request, {
+  _ida.Future<_inumhip7.Customer> create(
+    _ive2a5q8.CreateCustomerRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i37.Customer>(
+  }) => caller.callServerEndpoint<_inumhip7.Customer>(
     'customer',
     'create',
     {
@@ -1008,10 +1016,10 @@ class EndpointCustomer extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i37.Customer> get(
+  _ida.Future<_inumhip7.Customer> get(
     int customerId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i37.Customer>(
+  }) => caller.callServerEndpoint<_inumhip7.Customer>(
     'customer',
     'get',
     {
@@ -1020,10 +1028,10 @@ class EndpointCustomer extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i37.Customer> update(
-    _i39.UpdateCustomerRequest request, {
+  _ida.Future<_inumhip7.Customer> update(
+    _i24zvgea.UpdateCustomerRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i37.Customer>(
+  }) => caller.callServerEndpoint<_inumhip7.Customer>(
     'customer',
     'update',
     {
@@ -1032,12 +1040,12 @@ class EndpointCustomer extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i37.Customer>> list({
-    _i40.CustomerStatus? status,
+  _ida.Future<List<_inumhip7.Customer>> list({
+    _imwu3m17.CustomerStatus? status,
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i37.Customer>>(
+  }) => caller.callServerEndpoint<List<_inumhip7.Customer>>(
     'customer',
     'list',
     {
@@ -1050,12 +1058,12 @@ class EndpointCustomer extends EndpointBusinessScoped {
 
   /// Paged variant of [list] that additionally returns the total number of
   /// matching rows. The page size cap is applied as in [list].
-  _i3.Future<_i41.CustomerListPage> listPage({
-    _i40.CustomerStatus? status,
+  _ida.Future<_ih9ylpiu.CustomerListPage> listPage({
+    _imwu3m17.CustomerStatus? status,
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<_i41.CustomerListPage>(
+  }) => caller.callServerEndpoint<_ih9ylpiu.CustomerListPage>(
     'customer',
     'listPage',
     {
@@ -1073,12 +1081,12 @@ class EndpointCustomer extends EndpointBusinessScoped {
   /// minted for another business is rejected with a [ValidationException]
   /// (field `cursor`), just like a malformed or tampered cursor. The page
   /// size cap is applied as in [list]; no total count is computed.
-  _i3.Future<_i42.CustomerCursorPage> listCursorPage({
-    _i40.CustomerStatus? status,
+  _ida.Future<_ibffosi1.CustomerCursorPage> listCursorPage({
+    _imwu3m17.CustomerStatus? status,
     int? limit,
     String? cursor,
     int? businessId,
-  }) => caller.callServerEndpoint<_i42.CustomerCursorPage>(
+  }) => caller.callServerEndpoint<_ibffosi1.CustomerCursorPage>(
     'customer',
     'listCursorPage',
     {
@@ -1092,15 +1100,15 @@ class EndpointCustomer extends EndpointBusinessScoped {
 
 /// {@category Endpoint}
 class EndpointInvoice extends EndpointBusinessScoped {
-  EndpointInvoice(_i2.EndpointCaller caller) : super(caller);
+  EndpointInvoice(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'invoice';
 
-  _i3.Future<_i20.Invoice> create(
-    _i43.CreateInvoiceRequest request, {
+  _ida.Future<_ijh06pcp.Invoice> create(
+    _ibk5pv65.CreateInvoiceRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i20.Invoice>(
+  }) => caller.callServerEndpoint<_ijh06pcp.Invoice>(
     'invoice',
     'create',
     {
@@ -1109,10 +1117,10 @@ class EndpointInvoice extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i20.Invoice> get(
+  _ida.Future<_ijh06pcp.Invoice> get(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i20.Invoice>(
+  }) => caller.callServerEndpoint<_ijh06pcp.Invoice>(
     'invoice',
     'get',
     {
@@ -1121,10 +1129,10 @@ class EndpointInvoice extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i44.InvoiceItem>> getItems(
+  _ida.Future<List<_idltrgge.InvoiceItem>> getItems(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i44.InvoiceItem>>(
+  }) => caller.callServerEndpoint<List<_idltrgge.InvoiceItem>>(
     'invoice',
     'getItems',
     {
@@ -1133,10 +1141,10 @@ class EndpointInvoice extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i20.Invoice> update(
-    _i45.UpdateInvoiceRequest request, {
+  _ida.Future<_ijh06pcp.Invoice> update(
+    _igq8e9wl.UpdateInvoiceRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i20.Invoice>(
+  }) => caller.callServerEndpoint<_ijh06pcp.Invoice>(
     'invoice',
     'update',
     {
@@ -1145,12 +1153,12 @@ class EndpointInvoice extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i20.Invoice>> list({
-    _i19.InvoiceStatus? status,
+  _ida.Future<List<_ijh06pcp.Invoice>> list({
+    _i8f7xgzd.InvoiceStatus? status,
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i20.Invoice>>(
+  }) => caller.callServerEndpoint<List<_ijh06pcp.Invoice>>(
     'invoice',
     'list',
     {
@@ -1163,12 +1171,12 @@ class EndpointInvoice extends EndpointBusinessScoped {
 
   /// Paged variant of [list] that additionally returns the total number of
   /// matching rows. The page size cap is applied as in [list].
-  _i3.Future<_i46.InvoiceListPage> listPage({
-    _i19.InvoiceStatus? status,
+  _ida.Future<_ic90por4.InvoiceListPage> listPage({
+    _i8f7xgzd.InvoiceStatus? status,
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<_i46.InvoiceListPage>(
+  }) => caller.callServerEndpoint<_ic90por4.InvoiceListPage>(
     'invoice',
     'listPage',
     {
@@ -1186,12 +1194,12 @@ class EndpointInvoice extends EndpointBusinessScoped {
   /// minted for another business is rejected with a [ValidationException]
   /// (field `cursor`), just like a malformed or tampered cursor. The page
   /// size cap is applied as in [list]; no total count is computed.
-  _i3.Future<_i47.InvoiceCursorPage> listCursorPage({
-    _i19.InvoiceStatus? status,
+  _ida.Future<_io7dgrjq.InvoiceCursorPage> listCursorPage({
+    _i8f7xgzd.InvoiceStatus? status,
     int? limit,
     String? cursor,
     int? businessId,
-  }) => caller.callServerEndpoint<_i47.InvoiceCursorPage>(
+  }) => caller.callServerEndpoint<_io7dgrjq.InvoiceCursorPage>(
     'invoice',
     'listCursorPage',
     {
@@ -1202,7 +1210,7 @@ class EndpointInvoice extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<void> delete(
+  _ida.Future<void> delete(
     int invoiceId, {
     int? businessId,
   }) => caller.callServerEndpoint<void>(
@@ -1215,10 +1223,10 @@ class EndpointInvoice extends EndpointBusinessScoped {
   );
 
   /// Transitions a draft invoice to `sent`.
-  _i3.Future<_i20.Invoice> markSent(
+  _ida.Future<_ijh06pcp.Invoice> markSent(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i20.Invoice>(
+  }) => caller.callServerEndpoint<_ijh06pcp.Invoice>(
     'invoice',
     'markSent',
     {
@@ -1228,10 +1236,10 @@ class EndpointInvoice extends EndpointBusinessScoped {
   );
 
   /// Cancels an invoice that is not paid or already cancelled.
-  _i3.Future<_i20.Invoice> cancel(
+  _ida.Future<_ijh06pcp.Invoice> cancel(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i20.Invoice>(
+  }) => caller.callServerEndpoint<_ijh06pcp.Invoice>(
     'invoice',
     'cancel',
     {
@@ -1241,8 +1249,8 @@ class EndpointInvoice extends EndpointBusinessScoped {
   );
 
   /// Exports invoices as CSV (semicolon-separated, comma decimals).
-  _i3.Future<String> exportCsv({
-    _i19.InvoiceStatus? status,
+  _ida.Future<String> exportCsv({
+    _i8f7xgzd.InvoiceStatus? status,
     int? businessId,
   }) => caller.callServerEndpoint<String>(
     'invoice',
@@ -1254,8 +1262,8 @@ class EndpointInvoice extends EndpointBusinessScoped {
   );
 
   /// Exports invoices (with items) as a JSON string.
-  _i3.Future<String> exportJson({
-    _i19.InvoiceStatus? status,
+  _ida.Future<String> exportJson({
+    _i8f7xgzd.InvoiceStatus? status,
     int? businessId,
   }) => caller.callServerEndpoint<String>(
     'invoice',
@@ -1268,10 +1276,10 @@ class EndpointInvoice extends EndpointBusinessScoped {
 
   /// Generates the PDF for the invoice, stores it as a private document and
   /// returns the document metadata. Download via `document.download`.
-  _i3.Future<_i31.Document> generatePdf(
+  _ida.Future<_i6dacf8x.Document> generatePdf(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i31.Document>(
+  }) => caller.callServerEndpoint<_i6dacf8x.Document>(
     'invoice',
     'generatePdf',
     {
@@ -1283,15 +1291,15 @@ class EndpointInvoice extends EndpointBusinessScoped {
 
 /// {@category Endpoint}
 class EndpointInvoiceTemplate extends EndpointBusinessScoped {
-  EndpointInvoiceTemplate(_i2.EndpointCaller caller) : super(caller);
+  EndpointInvoiceTemplate(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'invoiceTemplate';
 
-  _i3.Future<_i48.InvoiceTemplate> create(
-    _i49.CreateInvoiceTemplateRequest request, {
+  _ida.Future<_ir2z9rpn.InvoiceTemplate> create(
+    _ijqbp2o4.CreateInvoiceTemplateRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i48.InvoiceTemplate>(
+  }) => caller.callServerEndpoint<_ir2z9rpn.InvoiceTemplate>(
     'invoiceTemplate',
     'create',
     {
@@ -1300,10 +1308,10 @@ class EndpointInvoiceTemplate extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i48.InvoiceTemplate> get(
+  _ida.Future<_ir2z9rpn.InvoiceTemplate> get(
     int templateId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i48.InvoiceTemplate>(
+  }) => caller.callServerEndpoint<_ir2z9rpn.InvoiceTemplate>(
     'invoiceTemplate',
     'get',
     {
@@ -1312,10 +1320,10 @@ class EndpointInvoiceTemplate extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i48.InvoiceTemplate> update(
-    _i50.UpdateInvoiceTemplateRequest request, {
+  _ida.Future<_ir2z9rpn.InvoiceTemplate> update(
+    _i3plvypu.UpdateInvoiceTemplateRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i48.InvoiceTemplate>(
+  }) => caller.callServerEndpoint<_ir2z9rpn.InvoiceTemplate>(
     'invoiceTemplate',
     'update',
     {
@@ -1324,11 +1332,11 @@ class EndpointInvoiceTemplate extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i48.InvoiceTemplate>> list({
+  _ida.Future<List<_ir2z9rpn.InvoiceTemplate>> list({
     int? businessId,
     int? limit,
     int? offset,
-  }) => caller.callServerEndpoint<List<_i48.InvoiceTemplate>>(
+  }) => caller.callServerEndpoint<List<_ir2z9rpn.InvoiceTemplate>>(
     'invoiceTemplate',
     'list',
     {
@@ -1341,15 +1349,15 @@ class EndpointInvoiceTemplate extends EndpointBusinessScoped {
 
 /// {@category Endpoint}
 class EndpointPayment extends EndpointBusinessScoped {
-  EndpointPayment(_i2.EndpointCaller caller) : super(caller);
+  EndpointPayment(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'payment';
 
-  _i3.Future<_i51.PaymentRecord> record(
-    _i52.RecordPaymentRequest request, {
+  _ida.Future<_ivishbgw.PaymentRecord> record(
+    _is9y4m2k.RecordPaymentRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i51.PaymentRecord>(
+  }) => caller.callServerEndpoint<_ivishbgw.PaymentRecord>(
     'payment',
     'record',
     {
@@ -1358,10 +1366,10 @@ class EndpointPayment extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i53.InvoicePaymentStatus> status(
+  _ida.Future<_ip6ughmw.InvoicePaymentStatus> status(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i53.InvoicePaymentStatus>(
+  }) => caller.callServerEndpoint<_ip6ughmw.InvoicePaymentStatus>(
     'payment',
     'status',
     {
@@ -1378,17 +1386,17 @@ class EndpointPayment extends EndpointBusinessScoped {
 /// `process-recurring-invoices` background job.
 /// {@category Endpoint}
 class EndpointRecurringSchedule extends EndpointBusinessScoped {
-  EndpointRecurringSchedule(_i2.EndpointCaller caller) : super(caller);
+  EndpointRecurringSchedule(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'recurringSchedule';
 
   /// Attaches a recurring schedule to an invoice. The next issue date is
   /// recalculated from the invoice's issue date when not given explicitly.
-  _i3.Future<_i20.Invoice> create(
-    _i54.CreateRecurringScheduleRequest request, {
+  _ida.Future<_ijh06pcp.Invoice> create(
+    _i298ulq3.CreateRecurringScheduleRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i20.Invoice>(
+  }) => caller.callServerEndpoint<_ijh06pcp.Invoice>(
     'recurringSchedule',
     'create',
     {
@@ -1399,10 +1407,10 @@ class EndpointRecurringSchedule extends EndpointBusinessScoped {
 
   /// Returns the schedule (i.e. its source invoice) or `NotFoundException`
   /// when it does not exist.
-  _i3.Future<_i20.Invoice> get(
+  _ida.Future<_ijh06pcp.Invoice> get(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i20.Invoice>(
+  }) => caller.callServerEndpoint<_ijh06pcp.Invoice>(
     'recurringSchedule',
     'get',
     {
@@ -1412,11 +1420,11 @@ class EndpointRecurringSchedule extends EndpointBusinessScoped {
   );
 
   /// Lists all schedules of the tenant, upcoming next issue first.
-  _i3.Future<List<_i20.Invoice>> list({
+  _ida.Future<List<_ijh06pcp.Invoice>> list({
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i20.Invoice>>(
+  }) => caller.callServerEndpoint<List<_ijh06pcp.Invoice>>(
     'recurringSchedule',
     'list',
     {
@@ -1427,10 +1435,10 @@ class EndpointRecurringSchedule extends EndpointBusinessScoped {
   );
 
   /// Updates schedule settings (`null` fields keep their current value).
-  _i3.Future<_i20.Invoice> update(
-    _i55.UpdateRecurringScheduleRequest request, {
+  _ida.Future<_ijh06pcp.Invoice> update(
+    _i20dbxo9.UpdateRecurringScheduleRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i20.Invoice>(
+  }) => caller.callServerEndpoint<_ijh06pcp.Invoice>(
     'recurringSchedule',
     'update',
     {
@@ -1440,10 +1448,10 @@ class EndpointRecurringSchedule extends EndpointBusinessScoped {
   );
 
   /// Cancels the schedule; already materialized invoices are kept.
-  _i3.Future<_i20.Invoice> cancel(
+  _ida.Future<_ijh06pcp.Invoice> cancel(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i20.Invoice>(
+  }) => caller.callServerEndpoint<_ijh06pcp.Invoice>(
     'recurringSchedule',
     'cancel',
     {
@@ -1455,16 +1463,16 @@ class EndpointRecurringSchedule extends EndpointBusinessScoped {
 
 /// {@category Endpoint}
 class EndpointReminder extends EndpointBusinessScoped {
-  EndpointReminder(_i2.EndpointCaller caller) : super(caller);
+  EndpointReminder(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'reminder';
 
   /// Lists all reminders sent for the invoice, ordered by send date.
-  _i3.Future<List<_i56.Reminder>> list(
+  _ida.Future<List<_i89d689a.Reminder>> list(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i56.Reminder>>(
+  }) => caller.callServerEndpoint<List<_i89d689a.Reminder>>(
     'reminder',
     'list',
     {
@@ -1476,10 +1484,10 @@ class EndpointReminder extends EndpointBusinessScoped {
   /// Sends a payment reminder to the customer and records it. The reminder
   /// level is incremented on every send and mirrored to the invoice's
   /// `dunningLevel`.
-  _i3.Future<_i56.Reminder> send(
+  _ida.Future<_i89d689a.Reminder> send(
     int invoiceId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i56.Reminder>(
+  }) => caller.callServerEndpoint<_i89d689a.Reminder>(
     'reminder',
     'send',
     {
@@ -1491,15 +1499,15 @@ class EndpointReminder extends EndpointBusinessScoped {
 
 /// {@category Endpoint}
 class EndpointProject extends EndpointBusinessScoped {
-  EndpointProject(_i2.EndpointCaller caller) : super(caller);
+  EndpointProject(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'project';
 
-  _i3.Future<_i57.Project> create(
-    _i58.CreateProjectRequest request, {
+  _ida.Future<_i8k415ln.Project> create(
+    _i101c7e7.CreateProjectRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i57.Project>(
+  }) => caller.callServerEndpoint<_i8k415ln.Project>(
     'project',
     'create',
     {
@@ -1508,10 +1516,10 @@ class EndpointProject extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i57.Project> get(
+  _ida.Future<_i8k415ln.Project> get(
     int projectId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i57.Project>(
+  }) => caller.callServerEndpoint<_i8k415ln.Project>(
     'project',
     'get',
     {
@@ -1520,10 +1528,10 @@ class EndpointProject extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i59.Task>> getTasks(
+  _ida.Future<List<_ib31j0is.Task>> getTasks(
     int projectId, {
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i59.Task>>(
+  }) => caller.callServerEndpoint<List<_ib31j0is.Task>>(
     'project',
     'getTasks',
     {
@@ -1532,10 +1540,10 @@ class EndpointProject extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i57.Project> update(
-    _i60.UpdateProjectRequest request, {
+  _ida.Future<_i8k415ln.Project> update(
+    _i7qhkd8r.UpdateProjectRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i57.Project>(
+  }) => caller.callServerEndpoint<_i8k415ln.Project>(
     'project',
     'update',
     {
@@ -1544,12 +1552,12 @@ class EndpointProject extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i57.Project>> list({
-    _i61.ProjectStatus? status,
+  _ida.Future<List<_i8k415ln.Project>> list({
+    _i1hq5250.ProjectStatus? status,
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i57.Project>>(
+  }) => caller.callServerEndpoint<List<_i8k415ln.Project>>(
     'project',
     'list',
     {
@@ -1560,7 +1568,7 @@ class EndpointProject extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<void> delete(
+  _ida.Future<void> delete(
     int projectId, {
     int? businessId,
   }) => caller.callServerEndpoint<void>(
@@ -1575,15 +1583,15 @@ class EndpointProject extends EndpointBusinessScoped {
 
 /// {@category Endpoint}
 class EndpointTask extends EndpointBusinessScoped {
-  EndpointTask(_i2.EndpointCaller caller) : super(caller);
+  EndpointTask(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'task';
 
-  _i3.Future<_i59.Task> create(
-    _i62.CreateTaskRequest request, {
+  _ida.Future<_ib31j0is.Task> create(
+    _ii3x130u.CreateTaskRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i59.Task>(
+  }) => caller.callServerEndpoint<_ib31j0is.Task>(
     'task',
     'create',
     {
@@ -1592,10 +1600,10 @@ class EndpointTask extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i59.Task> update(
-    _i63.UpdateTaskRequest request, {
+  _ida.Future<_ib31j0is.Task> update(
+    _i3pvx6a0.UpdateTaskRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i59.Task>(
+  }) => caller.callServerEndpoint<_ib31j0is.Task>(
     'task',
     'update',
     {
@@ -1604,13 +1612,13 @@ class EndpointTask extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i59.Task>> list({
+  _ida.Future<List<_ib31j0is.Task>> list({
     int? projectId,
-    _i64.TaskStatus? status,
+    _ib7wqxla.TaskStatus? status,
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i59.Task>>(
+  }) => caller.callServerEndpoint<List<_ib31j0is.Task>>(
     'task',
     'list',
     {
@@ -1625,16 +1633,16 @@ class EndpointTask extends EndpointBusinessScoped {
 
 /// {@category Endpoint}
 class EndpointTimeEntry extends EndpointBusinessScoped {
-  EndpointTimeEntry(_i2.EndpointCaller caller) : super(caller);
+  EndpointTimeEntry(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'timeEntry';
 
   /// Starts a timer. Only one timer may run per business.
-  _i3.Future<_i65.TimeEntry> startTimer(
-    _i66.StartTimerRequest request, {
+  _ida.Future<_iaj8oc9k.TimeEntry> startTimer(
+    _itx5fhp8.StartTimerRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i65.TimeEntry>(
+  }) => caller.callServerEndpoint<_iaj8oc9k.TimeEntry>(
     'timeEntry',
     'startTimer',
     {
@@ -1644,18 +1652,18 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
   );
 
   /// Stops the running timer and stores the (rounded) duration.
-  _i3.Future<_i65.TimeEntry> stopTimer({int? businessId}) =>
-      caller.callServerEndpoint<_i65.TimeEntry>(
+  _ida.Future<_iaj8oc9k.TimeEntry> stopTimer({int? businessId}) =>
+      caller.callServerEndpoint<_iaj8oc9k.TimeEntry>(
         'timeEntry',
         'stopTimer',
         {'businessId': businessId},
       );
 
   /// Creates a manual time entry.
-  _i3.Future<_i65.TimeEntry> create(
-    _i67.CreateTimeEntryRequest request, {
+  _ida.Future<_iaj8oc9k.TimeEntry> create(
+    _iokwn2fp.CreateTimeEntryRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i65.TimeEntry>(
+  }) => caller.callServerEndpoint<_iaj8oc9k.TimeEntry>(
     'timeEntry',
     'create',
     {
@@ -1664,10 +1672,10 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i65.TimeEntry> get(
+  _ida.Future<_iaj8oc9k.TimeEntry> get(
     int timeEntryId, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i65.TimeEntry>(
+  }) => caller.callServerEndpoint<_iaj8oc9k.TimeEntry>(
     'timeEntry',
     'get',
     {
@@ -1676,10 +1684,10 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<_i65.TimeEntry> update(
-    _i68.UpdateTimeEntryRequest request, {
+  _ida.Future<_iaj8oc9k.TimeEntry> update(
+    _i3pgmtrg.UpdateTimeEntryRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i65.TimeEntry>(
+  }) => caller.callServerEndpoint<_iaj8oc9k.TimeEntry>(
     'timeEntry',
     'update',
     {
@@ -1688,7 +1696,7 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<List<_i65.TimeEntry>> list({
+  _ida.Future<List<_iaj8oc9k.TimeEntry>> list({
     int? projectId,
     int? taskId,
     DateTime? from,
@@ -1697,7 +1705,7 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
     int? limit,
     int? offset,
     int? businessId,
-  }) => caller.callServerEndpoint<List<_i65.TimeEntry>>(
+  }) => caller.callServerEndpoint<List<_iaj8oc9k.TimeEntry>>(
     'timeEntry',
     'list',
     {
@@ -1712,7 +1720,7 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
     },
   );
 
-  _i3.Future<void> delete(
+  _ida.Future<void> delete(
     int timeEntryId, {
     int? businessId,
   }) => caller.callServerEndpoint<void>(
@@ -1725,12 +1733,12 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
   );
 
   /// Aggregates stopped time entries of the period into a report.
-  _i3.Future<_i69.TimeReport> report(
+  _ida.Future<_iibh7kuq.TimeReport> report(
     DateTime from,
     DateTime to, {
     int? projectId,
     int? businessId,
-  }) => caller.callServerEndpoint<_i69.TimeReport>(
+  }) => caller.callServerEndpoint<_iibh7kuq.TimeReport>(
     'timeEntry',
     'report',
     {
@@ -1743,10 +1751,10 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
 
   /// Converts billable, uninvoiced time entries of a project into a draft
   /// invoice.
-  _i3.Future<_i20.Invoice> createInvoice(
-    _i70.CreateTimeEntriesInvoiceRequest request, {
+  _ida.Future<_ijh06pcp.Invoice> createInvoice(
+    _iogoveqd.CreateTimeEntriesInvoiceRequest request, {
     int? businessId,
-  }) => caller.callServerEndpoint<_i20.Invoice>(
+  }) => caller.callServerEndpoint<_ijh06pcp.Invoice>(
     'timeEntry',
     'createInvoice',
     {
@@ -1757,14 +1765,14 @@ class EndpointTimeEntry extends EndpointBusinessScoped {
 }
 
 /// {@category Endpoint}
-class EndpointUserProfile extends _i2.EndpointRef {
-  EndpointUserProfile(_i2.EndpointCaller caller) : super(caller);
+class EndpointUserProfile extends _isc.EndpointRef {
+  EndpointUserProfile(_isc.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'userProfile';
 
-  _i3.Future<_i71.UserProfile> getMyProfile() =>
-      caller.callServerEndpoint<_i71.UserProfile>(
+  _ida.Future<_i4pr0x0j.UserProfile> getMyProfile() =>
+      caller.callServerEndpoint<_i4pr0x0j.UserProfile>(
         'userProfile',
         'getMyProfile',
         {},
@@ -1776,24 +1784,25 @@ class EndpointUserProfile extends _i2.EndpointRef {
   /// Clients use this to discover what they can access — notably the MCP
   /// integration tooling opened up to regular users. Only the caller's own
   /// data is read.
-  _i3.Future<_i72.MyIdentity> me() =>
-      caller.callServerEndpoint<_i72.MyIdentity>(
+  _ida.Future<_ikafidhq.MyIdentity> me() =>
+      caller.callServerEndpoint<_ikafidhq.MyIdentity>(
         'userProfile',
         'me',
         {},
       );
 
-  _i3.Future<_i71.UserProfile> update(_i73.UpdateUserProfileRequest request) =>
-      caller.callServerEndpoint<_i71.UserProfile>(
-        'userProfile',
-        'update',
-        {'request': request},
-      );
+  _ida.Future<_i4pr0x0j.UserProfile> update(
+    _ipnx8g03.UpdateUserProfileRequest request,
+  ) => caller.callServerEndpoint<_i4pr0x0j.UserProfile>(
+    'userProfile',
+    'update',
+    {'request': request},
+  );
 
   /// Soft-deletes the account of the logged-in user (GDPR Art. 17): sets a
   /// `deletedAt` marker and severs all personal links in retained business
   /// data (GoBD retention). Repeating the call throws [NotFoundException].
-  _i3.Future<void> deleteMyAccount() => caller.callServerEndpoint<void>(
+  _ida.Future<void> deleteMyAccount() => caller.callServerEndpoint<void>(
     'userProfile',
     'deleteMyAccount',
     {},
@@ -1804,8 +1813,8 @@ class EndpointUserProfile extends _i2.EndpointRef {
   /// a member of with its customers, invoices (+items), projects, tasks,
   /// time entries, transactions and documents. Foreign tenants are not
   /// included.
-  _i3.Future<_i34.ByteData> exportMyData() =>
-      caller.callServerEndpoint<_i34.ByteData>(
+  _ida.Future<_idt.ByteData> exportMyData() =>
+      caller.callServerEndpoint<_idt.ByteData>(
         'userProfile',
         'exportMyData',
         {},
@@ -1814,36 +1823,36 @@ class EndpointUserProfile extends _i2.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    commercial = _i74.Caller(client);
-    serverpod_auth_core = _i4.Caller(client);
-    serverpod_auth_idp = _i1.Caller(client);
+    commercial = _ix6v1tim.Caller(client);
+    serverpod_auth_core = _iacc.Caller(client);
+    serverpod_auth_idp = _iaic.Caller(client);
   }
 
-  late final _i74.Caller commercial;
+  late final _ix6v1tim.Caller commercial;
 
-  late final _i4.Caller serverpod_auth_core;
+  late final _iacc.Caller serverpod_auth_core;
 
-  late final _i1.Caller serverpod_auth_idp;
+  late final _iaic.Caller serverpod_auth_idp;
 }
 
-class Client extends _i2.ServerpodClientShared {
+class Client extends _isc.ServerpodClientShared {
   Client(
     String host, {
     dynamic securityContext,
     Duration? streamingConnectionTimeout,
     Duration? connectionTimeout,
     Function(
-      _i2.MethodCallContext,
+      _isc.MethodCallContext,
       Object,
       StackTrace,
     )?
     onFailedCall,
-    Function(_i2.MethodCallContext)? onSucceededCall,
+    Function(_isc.MethodCallContext)? onSucceededCall,
     bool? disconnectStreamsOnLostInternetConnection,
-    _i75.Client? httpClientOverride,
+    _i85jenna.Client? httpClientOverride,
   }) : super(
          host,
-         _i76.Protocol(),
+         _il2as5qe.Protocol(),
          securityContext: securityContext,
          streamingConnectionTimeout: streamingConnectionTimeout,
          connectionTimeout: connectionTimeout,
@@ -1934,7 +1943,7 @@ class Client extends _i2.ServerpodClientShared {
   late final Modules modules;
 
   @override
-  Map<String, _i2.EndpointRef> get endpointRefLookup => {
+  Map<String, _isc.EndpointRef> get endpointRefLookup => {
     'emailIdp': emailIdp,
     'jwtRefresh': jwtRefresh,
     'entitlement': entitlement,
@@ -1963,7 +1972,7 @@ class Client extends _i2.ServerpodClientShared {
   };
 
   @override
-  Map<String, _i2.ModuleEndpointCaller> get moduleLookup => {
+  Map<String, _isc.ModuleEndpointCaller> get moduleLookup => {
     'commercial': modules.commercial,
     'serverpod_auth_core': modules.serverpod_auth_core,
     'serverpod_auth_idp': modules.serverpod_auth_idp,

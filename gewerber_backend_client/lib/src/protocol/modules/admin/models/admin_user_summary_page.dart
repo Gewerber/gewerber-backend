@@ -10,12 +10,14 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/admin/models/admin_user_summary.dart' as _i2;
-import 'package:gewerber_backend_client/src/protocol/protocol.dart' as _i3;
+
+import 'package:gewerber_backend_client/src/protocol/protocol.dart'
+    as _iipbhyvd;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/admin/models/admin_user_summary.dart' as _icq7l3ts;
 
 abstract class AdminUserSummaryPage
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   AdminUserSummaryPage._({
     required this.items,
     this.nextCursor,
@@ -23,7 +25,7 @@ abstract class AdminUserSummaryPage
   });
 
   factory AdminUserSummaryPage({
-    required List<_i2.AdminUserSummary> items,
+    required List<_icq7l3ts.AdminUserSummary> items,
     String? nextCursor,
     required int limit,
   }) = _AdminUserSummaryPageImpl;
@@ -32,7 +34,7 @@ abstract class AdminUserSummaryPage
     Map<String, dynamic> jsonSerialization,
   ) {
     return AdminUserSummaryPage(
-      items: _i3.Protocol().deserialize<List<_i2.AdminUserSummary>>(
+      items: _iipbhyvd.Protocol().deserialize<List<_icq7l3ts.AdminUserSummary>>(
         jsonSerialization['items'],
       ),
       nextCursor: jsonSerialization['nextCursor'] as String?,
@@ -40,7 +42,7 @@ abstract class AdminUserSummaryPage
     );
   }
 
-  List<_i2.AdminUserSummary> items;
+  List<_icq7l3ts.AdminUserSummary> items;
 
   String? nextCursor;
 
@@ -48,9 +50,9 @@ abstract class AdminUserSummaryPage
 
   /// Returns a shallow copy of this [AdminUserSummaryPage]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   AdminUserSummaryPage copyWith({
-    List<_i2.AdminUserSummary>? items,
+    List<_icq7l3ts.AdminUserSummary>? items,
     String? nextCursor,
     int? limit,
   });
@@ -76,7 +78,7 @@ abstract class AdminUserSummaryPage
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -84,7 +86,7 @@ class _Undefined {}
 
 class _AdminUserSummaryPageImpl extends AdminUserSummaryPage {
   _AdminUserSummaryPageImpl({
-    required List<_i2.AdminUserSummary> items,
+    required List<_icq7l3ts.AdminUserSummary> items,
     String? nextCursor,
     required int limit,
   }) : super._(
@@ -95,10 +97,10 @@ class _AdminUserSummaryPageImpl extends AdminUserSummaryPage {
 
   /// Returns a shallow copy of this [AdminUserSummaryPage]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   AdminUserSummaryPage copyWith({
-    List<_i2.AdminUserSummary>? items,
+    List<_icq7l3ts.AdminUserSummary>? items,
     Object? nextCursor = _Undefined,
     int? limit,
   }) {

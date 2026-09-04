@@ -10,11 +10,12 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/time_tracking/models/project_status.dart' as _i2;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/time_tracking/models/project_status.dart' as _i1ujg7mu;
 
 abstract class UpdateProjectRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   UpdateProjectRequest._({
     required this.projectId,
     required this.name,
@@ -27,7 +28,7 @@ abstract class UpdateProjectRequest
   factory UpdateProjectRequest({
     required int projectId,
     required String name,
-    required _i2.ProjectStatus status,
+    required _i1ujg7mu.ProjectStatus status,
     int? customerId,
     int? hourlyRateCents,
     String? notes,
@@ -39,7 +40,7 @@ abstract class UpdateProjectRequest
     return UpdateProjectRequest(
       projectId: jsonSerialization['projectId'] as int,
       name: jsonSerialization['name'] as String,
-      status: _i2.ProjectStatus.fromJson(
+      status: _i1ujg7mu.ProjectStatus.fromJson(
         (jsonSerialization['status'] as String),
       ),
       customerId: jsonSerialization['customerId'] as int?,
@@ -52,7 +53,7 @@ abstract class UpdateProjectRequest
 
   String name;
 
-  _i2.ProjectStatus status;
+  _i1ujg7mu.ProjectStatus status;
 
   int? customerId;
 
@@ -62,11 +63,11 @@ abstract class UpdateProjectRequest
 
   /// Returns a shallow copy of this [UpdateProjectRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   UpdateProjectRequest copyWith({
     int? projectId,
     String? name,
-    _i2.ProjectStatus? status,
+    _i1ujg7mu.ProjectStatus? status,
     int? customerId,
     int? hourlyRateCents,
     String? notes,
@@ -99,7 +100,7 @@ abstract class UpdateProjectRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -109,7 +110,7 @@ class _UpdateProjectRequestImpl extends UpdateProjectRequest {
   _UpdateProjectRequestImpl({
     required int projectId,
     required String name,
-    required _i2.ProjectStatus status,
+    required _i1ujg7mu.ProjectStatus status,
     int? customerId,
     int? hourlyRateCents,
     String? notes,
@@ -124,12 +125,12 @@ class _UpdateProjectRequestImpl extends UpdateProjectRequest {
 
   /// Returns a shallow copy of this [UpdateProjectRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   UpdateProjectRequest copyWith({
     int? projectId,
     String? name,
-    _i2.ProjectStatus? status,
+    _i1ujg7mu.ProjectStatus? status,
     Object? customerId = _Undefined,
     Object? hourlyRateCents = _Undefined,
     Object? notes = _Undefined,

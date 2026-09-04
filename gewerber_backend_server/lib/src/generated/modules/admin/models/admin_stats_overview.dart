@@ -10,12 +10,14 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/admin/models/invoice_status_count.dart' as _i2;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i3;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/admin/models/invoice_status_count.dart' as _itsthq7z;
 
 abstract class AdminStatsOverview
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   AdminStatsOverview._({
     required this.usersTotal,
     required this.usersLast7Days,
@@ -30,7 +32,7 @@ abstract class AdminStatsOverview
     required int usersLast7Days,
     required int usersLast30Days,
     required int businessesTotal,
-    required List<_i2.InvoiceStatusCount> invoicesByStatus,
+    required List<_itsthq7z.InvoiceStatusCount> invoicesByStatus,
     required int activeTimers,
   }) = _AdminStatsOverviewImpl;
 
@@ -40,8 +42,8 @@ abstract class AdminStatsOverview
       usersLast7Days: jsonSerialization['usersLast7Days'] as int,
       usersLast30Days: jsonSerialization['usersLast30Days'] as int,
       businessesTotal: jsonSerialization['businessesTotal'] as int,
-      invoicesByStatus: _i3.Protocol()
-          .deserialize<List<_i2.InvoiceStatusCount>>(
+      invoicesByStatus: _itzp2rm6.Protocol()
+          .deserialize<List<_itsthq7z.InvoiceStatusCount>>(
             jsonSerialization['invoicesByStatus'],
           ),
       activeTimers: jsonSerialization['activeTimers'] as int,
@@ -56,20 +58,20 @@ abstract class AdminStatsOverview
 
   int businessesTotal;
 
-  List<_i2.InvoiceStatusCount> invoicesByStatus;
+  List<_itsthq7z.InvoiceStatusCount> invoicesByStatus;
 
   /// Time entries with a running (not yet stopped) timer across all tenants.
   int activeTimers;
 
   /// Returns a shallow copy of this [AdminStatsOverview]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   AdminStatsOverview copyWith({
     int? usersTotal,
     int? usersLast7Days,
     int? usersLast30Days,
     int? businessesTotal,
-    List<_i2.InvoiceStatusCount>? invoicesByStatus,
+    List<_itsthq7z.InvoiceStatusCount>? invoicesByStatus,
     int? activeTimers,
   });
   @override
@@ -104,7 +106,7 @@ abstract class AdminStatsOverview
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -114,7 +116,7 @@ class _AdminStatsOverviewImpl extends AdminStatsOverview {
     required int usersLast7Days,
     required int usersLast30Days,
     required int businessesTotal,
-    required List<_i2.InvoiceStatusCount> invoicesByStatus,
+    required List<_itsthq7z.InvoiceStatusCount> invoicesByStatus,
     required int activeTimers,
   }) : super._(
          usersTotal: usersTotal,
@@ -127,14 +129,14 @@ class _AdminStatsOverviewImpl extends AdminStatsOverview {
 
   /// Returns a shallow copy of this [AdminStatsOverview]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   AdminStatsOverview copyWith({
     int? usersTotal,
     int? usersLast7Days,
     int? usersLast30Days,
     int? businessesTotal,
-    List<_i2.InvoiceStatusCount>? invoicesByStatus,
+    List<_itsthq7z.InvoiceStatusCount>? invoicesByStatus,
     int? activeTimers,
   }) {
     return AdminStatsOverview(

@@ -10,9 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
 
-enum TransactionCategory implements _i1.SerializableModel {
+import 'package:serverpod/serverpod.dart' as _is;
+
+enum TransactionCategory implements _is.SerializableModel {
   salesRevenue,
   serviceRevenue,
   otherIncome,
@@ -28,8 +29,7 @@ enum TransactionCategory implements _i1.SerializableModel {
   consulting,
   feesAndDuties,
   tools,
-  otherExpense,
-  ;
+  otherExpense;
 
   static TransactionCategory fromJson(String name) {
     switch (name) {

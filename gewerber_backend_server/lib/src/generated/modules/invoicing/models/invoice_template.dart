@@ -10,10 +10,11 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
+
+import 'package:serverpod/serverpod.dart' as _is;
 
 abstract class InvoiceTemplate
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   InvoiceTemplate._({
     this.id,
     required this.businessId,
@@ -47,16 +48,16 @@ abstract class InvoiceTemplate
       name: jsonSerialization['name'] as String,
       isDefault: jsonSerialization['isDefault'] == null
           ? null
-          : _i1.BoolJsonExtension.fromJson(jsonSerialization['isDefault']),
+          : _is.BoolJsonExtension.fromJson(jsonSerialization['isDefault']),
       headerText: jsonSerialization['headerText'] as String?,
       footerText: jsonSerialization['footerText'] as String?,
       logoDocumentId: jsonSerialization['logoDocumentId'] as int?,
       createdAt: jsonSerialization['createdAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt: jsonSerialization['updatedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -84,11 +85,11 @@ abstract class InvoiceTemplate
   DateTime updatedAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [InvoiceTemplate]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   InvoiceTemplate copyWith({
     int? id,
     int? businessId,
@@ -137,11 +138,11 @@ abstract class InvoiceTemplate
   }
 
   static InvoiceTemplateIncludeList includeList({
-    _i1.WhereExpressionBuilder<InvoiceTemplateTable>? where,
+    _is.WhereExpressionBuilder<InvoiceTemplateTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<InvoiceTemplateTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
+    _is.OrderByBuilder<InvoiceTemplateTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
     InvoiceTemplateInclude? include,
   }) {
     return InvoiceTemplateIncludeList._(
@@ -156,7 +157,7 @@ abstract class InvoiceTemplate
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -187,7 +188,7 @@ class _InvoiceTemplateImpl extends InvoiceTemplate {
 
   /// Returns a shallow copy of this [InvoiceTemplate]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   InvoiceTemplate copyWith({
     Object? id = _Undefined,
@@ -216,87 +217,87 @@ class _InvoiceTemplateImpl extends InvoiceTemplate {
   }
 }
 
-class InvoiceTemplateUpdateTable extends _i1.UpdateTable<InvoiceTemplateTable> {
+class InvoiceTemplateUpdateTable extends _is.UpdateTable<InvoiceTemplateTable> {
   InvoiceTemplateUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> businessId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> businessId(int value) => _is.ColumnValue(
     table.businessId,
     value,
   );
 
-  _i1.ColumnValue<String, String> name(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> name(String value) => _is.ColumnValue(
     table.name,
     value,
   );
 
-  _i1.ColumnValue<bool, bool> isDefault(bool value) => _i1.ColumnValue(
+  _is.ColumnValue<bool, bool> isDefault(bool value) => _is.ColumnValue(
     table.isDefault,
     value,
   );
 
-  _i1.ColumnValue<String, String> headerText(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> headerText(String? value) => _is.ColumnValue(
     table.headerText,
     value,
   );
 
-  _i1.ColumnValue<String, String> footerText(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> footerText(String? value) => _is.ColumnValue(
     table.footerText,
     value,
   );
 
-  _i1.ColumnValue<int, int> logoDocumentId(int? value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> logoDocumentId(int? value) => _is.ColumnValue(
     table.logoDocumentId,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _is.ColumnValue(
         table.createdAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> updatedAt(DateTime value) =>
+      _is.ColumnValue(
         table.updatedAt,
         value,
       );
 }
 
-class InvoiceTemplateTable extends _i1.Table<int?> {
+class InvoiceTemplateTable extends _is.Table<int?> {
   InvoiceTemplateTable({super.tableRelation})
     : super(tableName: 'invoice_template') {
     updateTable = InvoiceTemplateUpdateTable(this);
-    businessId = _i1.ColumnInt(
+    businessId = _is.ColumnInt(
       'businessId',
       this,
     );
-    name = _i1.ColumnString(
+    name = _is.ColumnString(
       'name',
       this,
     );
-    isDefault = _i1.ColumnBool(
+    isDefault = _is.ColumnBool(
       'isDefault',
       this,
       hasDefault: true,
     );
-    headerText = _i1.ColumnString(
+    headerText = _is.ColumnString(
       'headerText',
       this,
     );
-    footerText = _i1.ColumnString(
+    footerText = _is.ColumnString(
       'footerText',
       this,
     );
-    logoDocumentId = _i1.ColumnInt(
+    logoDocumentId = _is.ColumnInt(
       'logoDocumentId',
       this,
     );
-    createdAt = _i1.ColumnDateTime(
+    createdAt = _is.ColumnDateTime(
       'createdAt',
       this,
       hasDefault: true,
     );
-    updatedAt = _i1.ColumnDateTime(
+    updatedAt = _is.ColumnDateTime(
       'updatedAt',
       this,
       hasDefault: true,
@@ -305,24 +306,24 @@ class InvoiceTemplateTable extends _i1.Table<int?> {
 
   late final InvoiceTemplateUpdateTable updateTable;
 
-  late final _i1.ColumnInt businessId;
+  late final _is.ColumnInt businessId;
 
-  late final _i1.ColumnString name;
+  late final _is.ColumnString name;
 
-  late final _i1.ColumnBool isDefault;
+  late final _is.ColumnBool isDefault;
 
-  late final _i1.ColumnString headerText;
+  late final _is.ColumnString headerText;
 
-  late final _i1.ColumnString footerText;
+  late final _is.ColumnString footerText;
 
-  late final _i1.ColumnInt logoDocumentId;
+  late final _is.ColumnInt logoDocumentId;
 
-  late final _i1.ColumnDateTime createdAt;
+  late final _is.ColumnDateTime createdAt;
 
-  late final _i1.ColumnDateTime updatedAt;
+  late final _is.ColumnDateTime updatedAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     businessId,
     name,
@@ -335,19 +336,19 @@ class InvoiceTemplateTable extends _i1.Table<int?> {
   ];
 }
 
-class InvoiceTemplateInclude extends _i1.IncludeObject {
+class InvoiceTemplateInclude extends _is.IncludeObject {
   InvoiceTemplateInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => InvoiceTemplate.t;
+  _is.Table<int?> get table => InvoiceTemplate.t;
 }
 
-class InvoiceTemplateIncludeList extends _i1.IncludeList {
+class InvoiceTemplateIncludeList extends _is.IncludeList {
   InvoiceTemplateIncludeList._({
-    _i1.WhereExpressionBuilder<InvoiceTemplateTable>? where,
+    _is.WhereExpressionBuilder<InvoiceTemplateTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -358,10 +359,10 @@ class InvoiceTemplateIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => InvoiceTemplate.t;
+  _is.Table<int?> get table => InvoiceTemplate.t;
 }
 
 class InvoiceTemplateRepository {
@@ -390,15 +391,15 @@ class InvoiceTemplateRepository {
   /// );
   /// ```
   Future<List<InvoiceTemplate>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<InvoiceTemplateTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<InvoiceTemplateTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<InvoiceTemplateTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<InvoiceTemplateTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<InvoiceTemplate>(
       where: where?.call(InvoiceTemplate.t),
@@ -430,14 +431,14 @@ class InvoiceTemplateRepository {
   /// );
   /// ```
   Future<InvoiceTemplate?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<InvoiceTemplateTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<InvoiceTemplateTable>? where,
     int? offset,
-    _i1.OrderByBuilder<InvoiceTemplateTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<InvoiceTemplateTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<InvoiceTemplate>(
       where: where?.call(InvoiceTemplate.t),
@@ -452,11 +453,11 @@ class InvoiceTemplateRepository {
 
   /// Finds a single [InvoiceTemplate] by its [id] or null if no such row exists.
   Future<InvoiceTemplate?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<InvoiceTemplate>(
       id,
@@ -481,9 +482,9 @@ class InvoiceTemplateRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<InvoiceTemplate>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<InvoiceTemplate> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -499,9 +500,9 @@ class InvoiceTemplateRepository {
   ///
   /// The returned [InvoiceTemplate] will have its `id` field set.
   Future<InvoiceTemplate> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     InvoiceTemplate row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<InvoiceTemplate>(
       row,
@@ -530,12 +531,12 @@ class InvoiceTemplateRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<InvoiceTemplate>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<InvoiceTemplate> rows, {
-    required _i1.ColumnSelections<InvoiceTemplateTable> conflictColumns,
-    _i1.ColumnSelections<InvoiceTemplateTable>? updateColumns,
-    _i1.WhereExpressionBuilder<InvoiceTemplateTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<InvoiceTemplateTable> conflictColumns,
+    _is.ColumnSelections<InvoiceTemplateTable>? updateColumns,
+    _is.WhereExpressionBuilder<InvoiceTemplateTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<InvoiceTemplate>(
@@ -562,12 +563,12 @@ class InvoiceTemplateRepository {
   ///
   /// The returned [InvoiceTemplate] will have its `id` field set.
   Future<InvoiceTemplate?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     InvoiceTemplate row, {
-    required _i1.ColumnSelections<InvoiceTemplateTable> conflictColumns,
-    _i1.ColumnSelections<InvoiceTemplateTable>? updateColumns,
-    _i1.WhereExpressionBuilder<InvoiceTemplateTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<InvoiceTemplateTable> conflictColumns,
+    _is.ColumnSelections<InvoiceTemplateTable>? updateColumns,
+    _is.WhereExpressionBuilder<InvoiceTemplateTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<InvoiceTemplate>(
       row,
@@ -588,10 +589,10 @@ class InvoiceTemplateRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<InvoiceTemplate>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<InvoiceTemplate> rows, {
-    _i1.ColumnSelections<InvoiceTemplateTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<InvoiceTemplateTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<InvoiceTemplate>(
@@ -606,10 +607,10 @@ class InvoiceTemplateRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<InvoiceTemplate> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     InvoiceTemplate row, {
-    _i1.ColumnSelections<InvoiceTemplateTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<InvoiceTemplateTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<InvoiceTemplate>(
       row,
@@ -621,11 +622,11 @@ class InvoiceTemplateRepository {
   /// Updates a single [InvoiceTemplate] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<InvoiceTemplate?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<InvoiceTemplateUpdateTable>
+    required _is.ColumnValueListBuilder<InvoiceTemplateUpdateTable>
     columnValues,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<InvoiceTemplate>(
       id,
@@ -641,15 +642,15 @@ class InvoiceTemplateRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<InvoiceTemplate>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<InvoiceTemplateUpdateTable>
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<InvoiceTemplateUpdateTable>
     columnValues,
-    required _i1.WhereExpressionBuilder<InvoiceTemplateTable> where,
+    required _is.WhereExpressionBuilder<InvoiceTemplateTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<InvoiceTemplateTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<InvoiceTemplateTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<InvoiceTemplate>(
@@ -676,11 +677,11 @@ class InvoiceTemplateRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<InvoiceTemplate>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<InvoiceTemplate> rows, {
-    _i1.OrderByBuilder<InvoiceTemplateTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<InvoiceTemplateTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<InvoiceTemplate>(
@@ -694,9 +695,9 @@ class InvoiceTemplateRepository {
 
   /// Deletes a single [InvoiceTemplate].
   Future<InvoiceTemplate> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     InvoiceTemplate row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<InvoiceTemplate>(
       row,
@@ -713,11 +714,11 @@ class InvoiceTemplateRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<InvoiceTemplate>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<InvoiceTemplateTable> where,
-    _i1.OrderByBuilder<InvoiceTemplateTable>? orderBy,
-    _i1.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<InvoiceTemplateTable> where,
+    _is.OrderByBuilder<InvoiceTemplateTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceTemplateTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<InvoiceTemplate>(
@@ -732,10 +733,10 @@ class InvoiceTemplateRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<InvoiceTemplateTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<InvoiceTemplateTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<InvoiceTemplate>(
       where: where?.call(InvoiceTemplate.t),
@@ -746,11 +747,11 @@ class InvoiceTemplateRepository {
 
   /// Acquires row-level locks on [InvoiceTemplate] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<InvoiceTemplateTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<InvoiceTemplateTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<InvoiceTemplate>(
       where: where(InvoiceTemplate.t),

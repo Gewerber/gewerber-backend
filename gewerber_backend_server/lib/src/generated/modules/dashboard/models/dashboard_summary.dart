@@ -10,17 +10,22 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/dashboard/models/dashboard_kpis.dart' as _i2;
-import '../../../modules/dashboard/models/monthly_trend_point.dart' as _i3;
-import '../../../modules/invoicing/models/invoice.dart' as _i4;
-import '../../../modules/accounting/models/accounting_transaction.dart' as _i5;
-import '../../../modules/dashboard/models/recent_time_entry.dart' as _i6;
-import '../../../modules/dashboard/models/receivables_summary.dart' as _i7;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i8;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/accounting/models/accounting_transaction.dart'
+    as _ildl58f5;
+import '../../../modules/dashboard/models/dashboard_kpis.dart' as _i2lowue0;
+import '../../../modules/dashboard/models/monthly_trend_point.dart'
+    as _i1ylv7to;
+import '../../../modules/dashboard/models/receivables_summary.dart'
+    as _isdy6e37;
+import '../../../modules/dashboard/models/recent_time_entry.dart' as _iflyllag;
+import '../../../modules/invoicing/models/invoice.dart' as _i2lykh97;
 
 abstract class DashboardSummary
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   DashboardSummary._({
     required this.generatedAt,
     required this.asOf,
@@ -39,43 +44,46 @@ abstract class DashboardSummary
     required DateTime asOf,
     required DateTime trendFrom,
     required DateTime trendTo,
-    required _i2.DashboardKpis kpis,
-    required List<_i3.MonthlyTrendPoint> monthlyTrend,
-    required List<_i4.Invoice> recentInvoices,
-    required List<_i5.AccountingTransaction> recentTransactions,
-    required List<_i6.RecentTimeEntry> recentTimeEntries,
-    required _i7.ReceivablesSummary receivables,
+    required _i2lowue0.DashboardKpis kpis,
+    required List<_i1ylv7to.MonthlyTrendPoint> monthlyTrend,
+    required List<_i2lykh97.Invoice> recentInvoices,
+    required List<_ildl58f5.AccountingTransaction> recentTransactions,
+    required List<_iflyllag.RecentTimeEntry> recentTimeEntries,
+    required _isdy6e37.ReceivablesSummary receivables,
   }) = _DashboardSummaryImpl;
 
   factory DashboardSummary.fromJson(Map<String, dynamic> jsonSerialization) {
     return DashboardSummary(
-      generatedAt: _i1.DateTimeJsonExtension.fromJson(
+      generatedAt: _is.DateTimeJsonExtension.fromJson(
         jsonSerialization['generatedAt'],
       ),
-      asOf: _i1.DateTimeJsonExtension.fromJson(jsonSerialization['asOf']),
-      trendFrom: _i1.DateTimeJsonExtension.fromJson(
+      asOf: _is.DateTimeJsonExtension.fromJson(jsonSerialization['asOf']),
+      trendFrom: _is.DateTimeJsonExtension.fromJson(
         jsonSerialization['trendFrom'],
       ),
-      trendTo: _i1.DateTimeJsonExtension.fromJson(jsonSerialization['trendTo']),
-      kpis: _i8.Protocol().deserialize<_i2.DashboardKpis>(
+      trendTo: _is.DateTimeJsonExtension.fromJson(jsonSerialization['trendTo']),
+      kpis: _itzp2rm6.Protocol().deserialize<_i2lowue0.DashboardKpis>(
         jsonSerialization['kpis'],
       ),
-      monthlyTrend: _i8.Protocol().deserialize<List<_i3.MonthlyTrendPoint>>(
-        jsonSerialization['monthlyTrend'],
-      ),
-      recentInvoices: _i8.Protocol().deserialize<List<_i4.Invoice>>(
+      monthlyTrend: _itzp2rm6.Protocol()
+          .deserialize<List<_i1ylv7to.MonthlyTrendPoint>>(
+            jsonSerialization['monthlyTrend'],
+          ),
+      recentInvoices: _itzp2rm6.Protocol().deserialize<List<_i2lykh97.Invoice>>(
         jsonSerialization['recentInvoices'],
       ),
-      recentTransactions: _i8.Protocol()
-          .deserialize<List<_i5.AccountingTransaction>>(
+      recentTransactions: _itzp2rm6.Protocol()
+          .deserialize<List<_ildl58f5.AccountingTransaction>>(
             jsonSerialization['recentTransactions'],
           ),
-      recentTimeEntries: _i8.Protocol().deserialize<List<_i6.RecentTimeEntry>>(
-        jsonSerialization['recentTimeEntries'],
-      ),
-      receivables: _i8.Protocol().deserialize<_i7.ReceivablesSummary>(
-        jsonSerialization['receivables'],
-      ),
+      recentTimeEntries: _itzp2rm6.Protocol()
+          .deserialize<List<_iflyllag.RecentTimeEntry>>(
+            jsonSerialization['recentTimeEntries'],
+          ),
+      receivables: _itzp2rm6.Protocol()
+          .deserialize<_isdy6e37.ReceivablesSummary>(
+            jsonSerialization['receivables'],
+          ),
     );
   }
 
@@ -87,32 +95,32 @@ abstract class DashboardSummary
 
   DateTime trendTo;
 
-  _i2.DashboardKpis kpis;
+  _i2lowue0.DashboardKpis kpis;
 
-  List<_i3.MonthlyTrendPoint> monthlyTrend;
+  List<_i1ylv7to.MonthlyTrendPoint> monthlyTrend;
 
-  List<_i4.Invoice> recentInvoices;
+  List<_i2lykh97.Invoice> recentInvoices;
 
-  List<_i5.AccountingTransaction> recentTransactions;
+  List<_ildl58f5.AccountingTransaction> recentTransactions;
 
-  List<_i6.RecentTimeEntry> recentTimeEntries;
+  List<_iflyllag.RecentTimeEntry> recentTimeEntries;
 
-  _i7.ReceivablesSummary receivables;
+  _isdy6e37.ReceivablesSummary receivables;
 
   /// Returns a shallow copy of this [DashboardSummary]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   DashboardSummary copyWith({
     DateTime? generatedAt,
     DateTime? asOf,
     DateTime? trendFrom,
     DateTime? trendTo,
-    _i2.DashboardKpis? kpis,
-    List<_i3.MonthlyTrendPoint>? monthlyTrend,
-    List<_i4.Invoice>? recentInvoices,
-    List<_i5.AccountingTransaction>? recentTransactions,
-    List<_i6.RecentTimeEntry>? recentTimeEntries,
-    _i7.ReceivablesSummary? receivables,
+    _i2lowue0.DashboardKpis? kpis,
+    List<_i1ylv7to.MonthlyTrendPoint>? monthlyTrend,
+    List<_i2lykh97.Invoice>? recentInvoices,
+    List<_ildl58f5.AccountingTransaction>? recentTransactions,
+    List<_iflyllag.RecentTimeEntry>? recentTimeEntries,
+    _isdy6e37.ReceivablesSummary? receivables,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -162,7 +170,7 @@ abstract class DashboardSummary
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -172,12 +180,12 @@ class _DashboardSummaryImpl extends DashboardSummary {
     required DateTime asOf,
     required DateTime trendFrom,
     required DateTime trendTo,
-    required _i2.DashboardKpis kpis,
-    required List<_i3.MonthlyTrendPoint> monthlyTrend,
-    required List<_i4.Invoice> recentInvoices,
-    required List<_i5.AccountingTransaction> recentTransactions,
-    required List<_i6.RecentTimeEntry> recentTimeEntries,
-    required _i7.ReceivablesSummary receivables,
+    required _i2lowue0.DashboardKpis kpis,
+    required List<_i1ylv7to.MonthlyTrendPoint> monthlyTrend,
+    required List<_i2lykh97.Invoice> recentInvoices,
+    required List<_ildl58f5.AccountingTransaction> recentTransactions,
+    required List<_iflyllag.RecentTimeEntry> recentTimeEntries,
+    required _isdy6e37.ReceivablesSummary receivables,
   }) : super._(
          generatedAt: generatedAt,
          asOf: asOf,
@@ -193,19 +201,19 @@ class _DashboardSummaryImpl extends DashboardSummary {
 
   /// Returns a shallow copy of this [DashboardSummary]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   DashboardSummary copyWith({
     DateTime? generatedAt,
     DateTime? asOf,
     DateTime? trendFrom,
     DateTime? trendTo,
-    _i2.DashboardKpis? kpis,
-    List<_i3.MonthlyTrendPoint>? monthlyTrend,
-    List<_i4.Invoice>? recentInvoices,
-    List<_i5.AccountingTransaction>? recentTransactions,
-    List<_i6.RecentTimeEntry>? recentTimeEntries,
-    _i7.ReceivablesSummary? receivables,
+    _i2lowue0.DashboardKpis? kpis,
+    List<_i1ylv7to.MonthlyTrendPoint>? monthlyTrend,
+    List<_i2lykh97.Invoice>? recentInvoices,
+    List<_ildl58f5.AccountingTransaction>? recentTransactions,
+    List<_iflyllag.RecentTimeEntry>? recentTimeEntries,
+    _isdy6e37.ReceivablesSummary? receivables,
   }) {
     return DashboardSummary(
       generatedAt: generatedAt ?? this.generatedAt,

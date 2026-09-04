@@ -10,10 +10,11 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
+
+import 'package:serverpod/serverpod.dart' as _is;
 
 abstract class Reminder
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   Reminder._({
     this.id,
     required this.invoiceId,
@@ -35,7 +36,7 @@ abstract class Reminder
       level: jsonSerialization['level'] as int,
       sentAt: jsonSerialization['sentAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['sentAt']),
+          : _is.DateTimeJsonExtension.fromJson(jsonSerialization['sentAt']),
     );
   }
 
@@ -53,11 +54,11 @@ abstract class Reminder
   DateTime sentAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [Reminder]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   Reminder copyWith({
     int? id,
     int? invoiceId,
@@ -91,11 +92,11 @@ abstract class Reminder
   }
 
   static ReminderIncludeList includeList({
-    _i1.WhereExpressionBuilder<ReminderTable>? where,
+    _is.WhereExpressionBuilder<ReminderTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<ReminderTable>? orderBy,
-    _i1.OrderByListBuilder<ReminderTable>? orderByList,
+    _is.OrderByBuilder<ReminderTable>? orderBy,
+    _is.OrderByListBuilder<ReminderTable>? orderByList,
     ReminderInclude? include,
   }) {
     return ReminderIncludeList._(
@@ -110,7 +111,7 @@ abstract class Reminder
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -131,7 +132,7 @@ class _ReminderImpl extends Reminder {
 
   /// Returns a shallow copy of this [Reminder]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   Reminder copyWith({
     Object? id = _Undefined,
@@ -148,37 +149,37 @@ class _ReminderImpl extends Reminder {
   }
 }
 
-class ReminderUpdateTable extends _i1.UpdateTable<ReminderTable> {
+class ReminderUpdateTable extends _is.UpdateTable<ReminderTable> {
   ReminderUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> invoiceId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> invoiceId(int value) => _is.ColumnValue(
     table.invoiceId,
     value,
   );
 
-  _i1.ColumnValue<int, int> level(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> level(int value) => _is.ColumnValue(
     table.level,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> sentAt(DateTime value) => _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> sentAt(DateTime value) => _is.ColumnValue(
     table.sentAt,
     value,
   );
 }
 
-class ReminderTable extends _i1.Table<int?> {
+class ReminderTable extends _is.Table<int?> {
   ReminderTable({super.tableRelation}) : super(tableName: 'reminder') {
     updateTable = ReminderUpdateTable(this);
-    invoiceId = _i1.ColumnInt(
+    invoiceId = _is.ColumnInt(
       'invoiceId',
       this,
     );
-    level = _i1.ColumnInt(
+    level = _is.ColumnInt(
       'level',
       this,
     );
-    sentAt = _i1.ColumnDateTime(
+    sentAt = _is.ColumnDateTime(
       'sentAt',
       this,
       hasDefault: true,
@@ -187,14 +188,14 @@ class ReminderTable extends _i1.Table<int?> {
 
   late final ReminderUpdateTable updateTable;
 
-  late final _i1.ColumnInt invoiceId;
+  late final _is.ColumnInt invoiceId;
 
-  late final _i1.ColumnInt level;
+  late final _is.ColumnInt level;
 
-  late final _i1.ColumnDateTime sentAt;
+  late final _is.ColumnDateTime sentAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     invoiceId,
     level,
@@ -202,19 +203,19 @@ class ReminderTable extends _i1.Table<int?> {
   ];
 }
 
-class ReminderInclude extends _i1.IncludeObject {
+class ReminderInclude extends _is.IncludeObject {
   ReminderInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => Reminder.t;
+  _is.Table<int?> get table => Reminder.t;
 }
 
-class ReminderIncludeList extends _i1.IncludeList {
+class ReminderIncludeList extends _is.IncludeList {
   ReminderIncludeList._({
-    _i1.WhereExpressionBuilder<ReminderTable>? where,
+    _is.WhereExpressionBuilder<ReminderTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -225,10 +226,10 @@ class ReminderIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => Reminder.t;
+  _is.Table<int?> get table => Reminder.t;
 }
 
 class ReminderRepository {
@@ -257,15 +258,15 @@ class ReminderRepository {
   /// );
   /// ```
   Future<List<Reminder>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<ReminderTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<ReminderTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<ReminderTable>? orderBy,
-    _i1.OrderByListBuilder<ReminderTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<ReminderTable>? orderBy,
+    _is.OrderByListBuilder<ReminderTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<Reminder>(
       where: where?.call(Reminder.t),
@@ -297,14 +298,14 @@ class ReminderRepository {
   /// );
   /// ```
   Future<Reminder?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<ReminderTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<ReminderTable>? where,
     int? offset,
-    _i1.OrderByBuilder<ReminderTable>? orderBy,
-    _i1.OrderByListBuilder<ReminderTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<ReminderTable>? orderBy,
+    _is.OrderByListBuilder<ReminderTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<Reminder>(
       where: where?.call(Reminder.t),
@@ -319,11 +320,11 @@ class ReminderRepository {
 
   /// Finds a single [Reminder] by its [id] or null if no such row exists.
   Future<Reminder?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<Reminder>(
       id,
@@ -348,9 +349,9 @@ class ReminderRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Reminder>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Reminder> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -366,9 +367,9 @@ class ReminderRepository {
   ///
   /// The returned [Reminder] will have its `id` field set.
   Future<Reminder> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Reminder row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<Reminder>(
       row,
@@ -397,12 +398,12 @@ class ReminderRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Reminder>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Reminder> rows, {
-    required _i1.ColumnSelections<ReminderTable> conflictColumns,
-    _i1.ColumnSelections<ReminderTable>? updateColumns,
-    _i1.WhereExpressionBuilder<ReminderTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<ReminderTable> conflictColumns,
+    _is.ColumnSelections<ReminderTable>? updateColumns,
+    _is.WhereExpressionBuilder<ReminderTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<Reminder>(
@@ -429,12 +430,12 @@ class ReminderRepository {
   ///
   /// The returned [Reminder] will have its `id` field set.
   Future<Reminder?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Reminder row, {
-    required _i1.ColumnSelections<ReminderTable> conflictColumns,
-    _i1.ColumnSelections<ReminderTable>? updateColumns,
-    _i1.WhereExpressionBuilder<ReminderTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<ReminderTable> conflictColumns,
+    _is.ColumnSelections<ReminderTable>? updateColumns,
+    _is.WhereExpressionBuilder<ReminderTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<Reminder>(
       row,
@@ -455,10 +456,10 @@ class ReminderRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Reminder>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Reminder> rows, {
-    _i1.ColumnSelections<ReminderTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<ReminderTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<Reminder>(
@@ -473,10 +474,10 @@ class ReminderRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<Reminder> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Reminder row, {
-    _i1.ColumnSelections<ReminderTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<ReminderTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<Reminder>(
       row,
@@ -488,10 +489,10 @@ class ReminderRepository {
   /// Updates a single [Reminder] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<Reminder?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<ReminderUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<ReminderUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<Reminder>(
       id,
@@ -507,14 +508,14 @@ class ReminderRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Reminder>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<ReminderUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<ReminderTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<ReminderUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<ReminderTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<ReminderTable>? orderBy,
-    _i1.OrderByListBuilder<ReminderTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<ReminderTable>? orderBy,
+    _is.OrderByListBuilder<ReminderTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<Reminder>(
@@ -541,11 +542,11 @@ class ReminderRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Reminder>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<Reminder> rows, {
-    _i1.OrderByBuilder<ReminderTable>? orderBy,
-    _i1.OrderByListBuilder<ReminderTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<ReminderTable>? orderBy,
+    _is.OrderByListBuilder<ReminderTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<Reminder>(
@@ -559,9 +560,9 @@ class ReminderRepository {
 
   /// Deletes a single [Reminder].
   Future<Reminder> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     Reminder row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<Reminder>(
       row,
@@ -578,11 +579,11 @@ class ReminderRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Reminder>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<ReminderTable> where,
-    _i1.OrderByBuilder<ReminderTable>? orderBy,
-    _i1.OrderByListBuilder<ReminderTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<ReminderTable> where,
+    _is.OrderByBuilder<ReminderTable>? orderBy,
+    _is.OrderByListBuilder<ReminderTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<Reminder>(
@@ -597,10 +598,10 @@ class ReminderRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<ReminderTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<ReminderTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<Reminder>(
       where: where?.call(Reminder.t),
@@ -611,11 +612,11 @@ class ReminderRepository {
 
   /// Acquires row-level locks on [Reminder] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<ReminderTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<ReminderTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<Reminder>(
       where: where(Reminder.t),

@@ -8,154 +8,159 @@
 // ignore_for_file: type_literal_in_constant_pattern
 // ignore_for_file: use_super_parameters
 // ignore_for_file: invalid_use_of_internal_member
-// ignore_for_file: dead_code, unnecessary_type_check
+// ignore_for_file: dead_code, no_leading_underscores_for_library_prefixes
+// ignore_for_file: unnecessary_type_check
 
-// ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import 'package:serverpod/protocol.dart' as _i2;
-import 'package:gewerber_commercial_server/gewerber_commercial_server.dart'
-    as _i3;
-import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
-    as _i4;
-import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
-    as _i5;
-import 'core/admin/admin_role.dart' as _i6;
-import 'core/admin/admin_user.dart' as _i7;
-import 'core/audit/audit_entry.dart' as _i8;
-import 'core/entitlement/feature.dart' as _i9;
-import 'core/errors/conflict_exception.dart' as _i10;
-import 'core/errors/forbidden_exception.dart' as _i11;
-import 'core/errors/not_found_exception.dart' as _i12;
-import 'core/errors/validation_exception.dart' as _i13;
-import 'core/sequence/sequence.dart' as _i14;
-import 'modules/accounting/models/accounting_transaction.dart' as _i15;
-import 'modules/accounting/models/create_transaction_request.dart' as _i16;
-import 'modules/accounting/models/profit_loss_line.dart' as _i17;
-import 'modules/accounting/models/profit_loss_report.dart' as _i18;
-import 'modules/accounting/models/transaction_category.dart' as _i19;
-import 'modules/accounting/models/transaction_type.dart' as _i20;
-import 'modules/accounting/models/update_transaction_request.dart' as _i21;
-import 'modules/admin/models/admin_audit_entry.dart' as _i22;
-import 'modules/admin/models/admin_audit_page.dart' as _i23;
-import 'modules/admin/models/admin_auth_status.dart' as _i24;
-import 'modules/admin/models/admin_business_detail.dart' as _i25;
-import 'modules/admin/models/admin_business_page.dart' as _i26;
-import 'modules/admin/models/admin_invoice_page.dart' as _i27;
-import 'modules/admin/models/admin_membership_info.dart' as _i28;
-import 'modules/admin/models/admin_stats_overview.dart' as _i29;
-import 'modules/admin/models/admin_user_dossier.dart' as _i30;
-import 'modules/admin/models/admin_user_summary.dart' as _i31;
-import 'modules/admin/models/admin_user_summary_page.dart' as _i32;
-import 'modules/admin/models/invoice_status_count.dart' as _i33;
-import 'modules/business/models/address.dart' as _i34;
-import 'modules/business/models/business.dart' as _i35;
-import 'modules/business/models/business_settings.dart' as _i36;
-import 'modules/business/models/country.dart' as _i37;
-import 'modules/business/models/create_business_request.dart' as _i38;
-import 'modules/business/models/currency.dart' as _i39;
-import 'modules/business/models/legal_form.dart' as _i40;
-import 'modules/business/models/locale.dart' as _i41;
-import 'modules/business/models/membership.dart' as _i42;
-import 'modules/business/models/membership_role.dart' as _i43;
-import 'modules/business/models/rounding_mode.dart' as _i44;
-import 'modules/business/models/update_business_request.dart' as _i45;
-import 'modules/business/models/update_business_settings_request.dart' as _i46;
-import 'modules/dashboard/models/dashboard_kpis.dart' as _i47;
-import 'modules/dashboard/models/dashboard_summary.dart' as _i48;
-import 'modules/dashboard/models/debtor_summary.dart' as _i49;
-import 'modules/dashboard/models/monthly_trend_point.dart' as _i50;
-import 'modules/dashboard/models/receivables_summary.dart' as _i51;
-import 'modules/dashboard/models/recent_time_entry.dart' as _i52;
-import 'modules/documents/models/document.dart' as _i53;
-import 'modules/documents/models/document_kind.dart' as _i54;
-import 'modules/documents/models/storage_location.dart' as _i55;
-import 'modules/documents/models/upload_document_request.dart' as _i56;
-import 'modules/guidance/models/checklist_definition.dart' as _i57;
-import 'modules/guidance/models/checklist_item_definition.dart' as _i58;
-import 'modules/guidance/models/guidance_tip.dart' as _i59;
-import 'modules/guidance/models/guidance_tip_override.dart' as _i60;
-import 'modules/guidance/models/user_guidance_progress.dart' as _i61;
-import 'modules/invoicing/models/create_customer_request.dart' as _i62;
-import 'modules/invoicing/models/create_invoice_request.dart' as _i63;
-import 'modules/invoicing/models/create_invoice_template_request.dart' as _i64;
-import 'modules/invoicing/models/create_recurring_schedule_request.dart'
-    as _i65;
-import 'modules/invoicing/models/customer.dart' as _i66;
-import 'modules/invoicing/models/customer_cursor_page.dart' as _i67;
-import 'modules/invoicing/models/customer_list_page.dart' as _i68;
-import 'modules/invoicing/models/customer_status.dart' as _i69;
-import 'modules/invoicing/models/invoice.dart' as _i70;
-import 'modules/invoicing/models/invoice_cursor_page.dart' as _i71;
-import 'modules/invoicing/models/invoice_item.dart' as _i72;
-import 'modules/invoicing/models/invoice_item_request.dart' as _i73;
-import 'modules/invoicing/models/invoice_item_unit.dart' as _i74;
-import 'modules/invoicing/models/invoice_list_page.dart' as _i75;
-import 'modules/invoicing/models/invoice_payment_status.dart' as _i76;
-import 'modules/invoicing/models/invoice_status.dart' as _i77;
-import 'modules/invoicing/models/invoice_template.dart' as _i78;
-import 'modules/invoicing/models/invoice_type.dart' as _i79;
-import 'modules/invoicing/models/payment_method.dart' as _i80;
-import 'modules/invoicing/models/payment_record.dart' as _i81;
-import 'modules/invoicing/models/record_payment_request.dart' as _i82;
-import 'modules/invoicing/models/recurrence_interval.dart' as _i83;
-import 'modules/invoicing/models/reminder.dart' as _i84;
-import 'modules/invoicing/models/update_customer_request.dart' as _i85;
-import 'modules/invoicing/models/update_invoice_request.dart' as _i86;
-import 'modules/invoicing/models/update_invoice_template_request.dart' as _i87;
-import 'modules/invoicing/models/update_recurring_schedule_request.dart'
-    as _i88;
-import 'modules/invoicing/models/vat_rate.dart' as _i89;
-import 'modules/time_tracking/models/create_project_request.dart' as _i90;
-import 'modules/time_tracking/models/create_task_request.dart' as _i91;
-import 'modules/time_tracking/models/create_time_entries_invoice_request.dart'
-    as _i92;
-import 'modules/time_tracking/models/create_time_entry_request.dart' as _i93;
-import 'modules/time_tracking/models/project.dart' as _i94;
-import 'modules/time_tracking/models/project_status.dart' as _i95;
-import 'modules/time_tracking/models/start_timer_request.dart' as _i96;
-import 'modules/time_tracking/models/task.dart' as _i97;
-import 'modules/time_tracking/models/task_status.dart' as _i98;
-import 'modules/time_tracking/models/time_entry.dart' as _i99;
-import 'modules/time_tracking/models/time_report.dart' as _i100;
-import 'modules/time_tracking/models/time_report_line.dart' as _i101;
-import 'modules/time_tracking/models/update_project_request.dart' as _i102;
-import 'modules/time_tracking/models/update_task_request.dart' as _i103;
-import 'modules/time_tracking/models/update_time_entry_request.dart' as _i104;
-import 'modules/user/models/app_theme.dart' as _i105;
-import 'modules/user/models/my_identity.dart' as _i106;
-import 'modules/user/models/my_membership_info.dart' as _i107;
-import 'modules/user/models/update_user_profile_request.dart' as _i108;
-import 'modules/user/models/user_profile.dart' as _i109;
+import 'package:gewerber_backend_commercial_server/gewerber_backend_commercial_server.dart'
+    as _if53ofrw;
 import 'package:gewerber_backend_server/src/generated/core/entitlement/feature.dart'
-    as _i110;
+    as _ipb0z0gh;
 import 'package:gewerber_backend_server/src/generated/modules/accounting/models/accounting_transaction.dart'
-    as _i111;
-import 'package:gewerber_backend_server/src/generated/modules/guidance/models/guidance_tip.dart'
-    as _i112;
+    as _ipjpfe96;
 import 'package:gewerber_backend_server/src/generated/modules/business/models/business.dart'
-    as _i113;
+    as _ipdla2qi;
 import 'package:gewerber_backend_server/src/generated/modules/documents/models/document.dart'
-    as _i114;
+    as _inbg4lrm;
 import 'package:gewerber_backend_server/src/generated/modules/guidance/models/checklist_definition.dart'
-    as _i115;
+    as _i3jq3nn0;
+import 'package:gewerber_backend_server/src/generated/modules/guidance/models/guidance_tip.dart'
+    as _imqtlho5;
 import 'package:gewerber_backend_server/src/generated/modules/guidance/models/user_guidance_progress.dart'
-    as _i116;
+    as _ivw4ui03;
 import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/customer.dart'
-    as _i117;
-import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_item.dart'
-    as _i118;
+    as _i120uj2v;
 import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice.dart'
-    as _i119;
+    as _icjfst50;
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_item.dart'
+    as _i6zkktsi;
 import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/invoice_template.dart'
-    as _i120;
+    as _ier3zpp5;
 import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/reminder.dart'
-    as _i121;
-import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/task.dart'
-    as _i122;
+    as _ilvs17xw;
 import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/project.dart'
-    as _i123;
+    as _ido2dfrq;
+import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/task.dart'
+    as _icr6zs8m;
 import 'package:gewerber_backend_server/src/generated/modules/time_tracking/models/time_entry.dart'
-    as _i124;
+    as _ict1xti5;
+import 'package:serverpod/protocol.dart' as _isp;
+import 'package:serverpod/serverpod.dart' as _is;
+import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
+    as _iacs;
+import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
+    as _iais;
+import 'core/admin/admin_role.dart' as _i409qkgd;
+import 'core/admin/admin_user.dart' as _ixu4yxcv;
+import 'core/audit/audit_entry.dart' as _iv98pmde;
+import 'core/entitlement/feature.dart' as _i0s5j3nj;
+import 'core/errors/conflict_exception.dart' as _i5epujyq;
+import 'core/errors/forbidden_exception.dart' as _io9vwtrc;
+import 'core/errors/not_found_exception.dart' as _ixeh2c1z;
+import 'core/errors/validation_exception.dart' as _io4t73gt;
+import 'core/sequence/sequence.dart' as _iwzk2tv7;
+import 'modules/accounting/models/accounting_transaction.dart' as _imcpe7lh;
+import 'modules/accounting/models/create_transaction_request.dart' as _ipamnsx8;
+import 'modules/accounting/models/profit_loss_line.dart' as _iixw78u5;
+import 'modules/accounting/models/profit_loss_report.dart' as _isurdgsv;
+import 'modules/accounting/models/transaction_category.dart' as _imo6tjrw;
+import 'modules/accounting/models/transaction_type.dart' as _ik9vnz0w;
+import 'modules/accounting/models/update_transaction_request.dart' as _iyj5tb39;
+import 'modules/admin/models/admin_audit_entry.dart' as _io6p5gfm;
+import 'modules/admin/models/admin_audit_page.dart' as _iaab9k46;
+import 'modules/admin/models/admin_auth_status.dart' as _ipsgq99z;
+import 'modules/admin/models/admin_business_detail.dart' as _i32iaxq2;
+import 'modules/admin/models/admin_business_page.dart' as _iytjl6p4;
+import 'modules/admin/models/admin_invoice_page.dart' as _ia380t04;
+import 'modules/admin/models/admin_membership_info.dart' as _igm2ntgz;
+import 'modules/admin/models/admin_stats_overview.dart' as _ihc64acz;
+import 'modules/admin/models/admin_user_dossier.dart' as _ibyotlfs;
+import 'modules/admin/models/admin_user_summary.dart' as _iwdjv467;
+import 'modules/admin/models/admin_user_summary_page.dart' as _i2f075pm;
+import 'modules/admin/models/invoice_status_count.dart' as _ikvugyyu;
+import 'modules/business/models/address.dart' as _izfx9e18;
+import 'modules/business/models/business.dart' as _im9zvu8o;
+import 'modules/business/models/business_settings.dart' as _ixvagzl5;
+import 'modules/business/models/country.dart' as _i8xf36x2;
+import 'modules/business/models/create_business_request.dart' as _i1txccp7;
+import 'modules/business/models/currency.dart' as _i1srbh9z;
+import 'modules/business/models/legal_form.dart' as _i5egs7uv;
+import 'modules/business/models/locale.dart' as _ii0188h0;
+import 'modules/business/models/membership.dart' as _iu72qgm4;
+import 'modules/business/models/membership_role.dart' as _iv0iprnk;
+import 'modules/business/models/rounding_mode.dart' as _iku7b3rb;
+import 'modules/business/models/update_business_request.dart' as _inkd6ewo;
+import 'modules/business/models/update_business_settings_request.dart'
+    as _ii46p08a;
+import 'modules/dashboard/models/dashboard_kpis.dart' as _i1j0w1sv;
+import 'modules/dashboard/models/dashboard_summary.dart' as _iw3j14uv;
+import 'modules/dashboard/models/debtor_summary.dart' as _ix33w5u6;
+import 'modules/dashboard/models/monthly_trend_point.dart' as _ixg6nsli;
+import 'modules/dashboard/models/receivables_summary.dart' as _ie3ro5gq;
+import 'modules/dashboard/models/recent_time_entry.dart' as _impe7ay9;
+import 'modules/documents/models/document.dart' as _i9jvbk51;
+import 'modules/documents/models/document_kind.dart' as _imaz1zqg;
+import 'modules/documents/models/storage_location.dart' as _i9qnixrl;
+import 'modules/documents/models/upload_document_request.dart' as _iz60udpo;
+import 'modules/guidance/models/checklist_definition.dart' as _i04z5hwj;
+import 'modules/guidance/models/checklist_item_definition.dart' as _i5jbvijx;
+import 'modules/guidance/models/guidance_tip.dart' as _irvclg1d;
+import 'modules/guidance/models/guidance_tip_override.dart' as _i3qwvpcu;
+import 'modules/guidance/models/user_guidance_progress.dart' as _ik05lx5a;
+import 'modules/invoicing/models/create_customer_request.dart' as _i90hzmg5;
+import 'modules/invoicing/models/create_invoice_request.dart' as _ia6btdit;
+import 'modules/invoicing/models/create_invoice_template_request.dart'
+    as _iyi9fugk;
+import 'modules/invoicing/models/create_recurring_schedule_request.dart'
+    as _i4j5ra9q;
+import 'modules/invoicing/models/customer.dart' as _ic8wp775;
+import 'modules/invoicing/models/customer_cursor_page.dart' as _if0yalhk;
+import 'modules/invoicing/models/customer_list_page.dart' as _iakrzq1i;
+import 'modules/invoicing/models/customer_status.dart' as _ibddqx0x;
+import 'modules/invoicing/models/invoice.dart' as _imguyn55;
+import 'modules/invoicing/models/invoice_cursor_page.dart' as _i2f30jh4;
+import 'modules/invoicing/models/invoice_item.dart' as _iu86qxr6;
+import 'modules/invoicing/models/invoice_item_request.dart' as _it1pcy1x;
+import 'modules/invoicing/models/invoice_item_unit.dart' as _ik22qf7o;
+import 'modules/invoicing/models/invoice_list_page.dart' as _i6mqpqud;
+import 'modules/invoicing/models/invoice_payment_status.dart' as _i6e3kqsf;
+import 'modules/invoicing/models/invoice_status.dart' as _i80dthru;
+import 'modules/invoicing/models/invoice_template.dart' as _isaqeos4;
+import 'modules/invoicing/models/invoice_type.dart' as _io5qrdfp;
+import 'modules/invoicing/models/payment_method.dart' as _i31hy3jj;
+import 'modules/invoicing/models/payment_record.dart' as _id8w36x8;
+import 'modules/invoicing/models/record_payment_request.dart' as _i2drsvke;
+import 'modules/invoicing/models/recurrence_interval.dart' as _it8iedui;
+import 'modules/invoicing/models/reminder.dart' as _i0xuine3;
+import 'modules/invoicing/models/update_customer_request.dart' as _icatwcwa;
+import 'modules/invoicing/models/update_invoice_request.dart' as _iteadt76;
+import 'modules/invoicing/models/update_invoice_template_request.dart'
+    as _ilpliwg4;
+import 'modules/invoicing/models/update_recurring_schedule_request.dart'
+    as _i037hdza;
+import 'modules/invoicing/models/vat_rate.dart' as _id7e2pr5;
+import 'modules/time_tracking/models/create_project_request.dart' as _i8rbvyvx;
+import 'modules/time_tracking/models/create_task_request.dart' as _iagq7u79;
+import 'modules/time_tracking/models/create_time_entries_invoice_request.dart'
+    as _i3b86gp3;
+import 'modules/time_tracking/models/create_time_entry_request.dart'
+    as _i85810i7;
+import 'modules/time_tracking/models/project.dart' as _i2wiwzxn;
+import 'modules/time_tracking/models/project_status.dart' as _i8h0tbjs;
+import 'modules/time_tracking/models/start_timer_request.dart' as _i2ishkic;
+import 'modules/time_tracking/models/task.dart' as _ihpxqi7u;
+import 'modules/time_tracking/models/task_status.dart' as _iieqkj38;
+import 'modules/time_tracking/models/time_entry.dart' as _ii8lft1t;
+import 'modules/time_tracking/models/time_report.dart' as _ilk96oxt;
+import 'modules/time_tracking/models/time_report_line.dart' as _iify20ly;
+import 'modules/time_tracking/models/update_project_request.dart' as _ilqqks6d;
+import 'modules/time_tracking/models/update_task_request.dart' as _i3iu7ffh;
+import 'modules/time_tracking/models/update_time_entry_request.dart'
+    as _iferwyg8;
+import 'modules/user/models/app_theme.dart' as _iy79t9m6;
+import 'modules/user/models/my_identity.dart' as _i1sqdvz3;
+import 'modules/user/models/my_membership_info.dart' as _in8pujw9;
+import 'modules/user/models/update_user_profile_request.dart' as _i5r0ss6k;
+import 'modules/user/models/user_profile.dart' as _iung9xmp;
 export 'core/admin/admin_role.dart';
 export 'core/admin/admin_user.dart';
 export 'core/audit/audit_entry.dart';
@@ -261,133 +266,133 @@ export 'modules/user/models/my_membership_info.dart';
 export 'modules/user/models/update_user_profile_request.dart';
 export 'modules/user/models/user_profile.dart';
 
-class Protocol extends _i1.DatabaseSerializationManager {
+class Protocol extends _is.DatabaseSerializationManager {
   Protocol._();
 
   factory Protocol() => _instance;
 
   static final Protocol _instance = Protocol._().._registerHostProtocols();
 
-  static List<_i2.TableDefinition> get targetTableDefinitions => [
-    _i2.TableDefinition(
+  static List<_isp.TableDefinition> get targetTableDefinitions => [
+    _isp.TableDefinition(
       name: 'accounting_transaction',
       dartName: 'AccountingTransaction',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'businessId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'type',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:TransactionType',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'category',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:TransactionCategory',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'description',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'occurredAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'amountCents',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'receiptDocumentId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'relatedInvoiceId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'updatedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
       ],
       foreignKeys: [
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'accounting_transaction_fk_0',
           columns: ['businessId'],
           referenceTable: 'business',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
           matchType: null,
         ),
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'accounting_transaction_fk_1',
           columns: ['receiptDocumentId'],
           referenceTable: 'document',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.setNull,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.setNull,
           matchType: null,
         ),
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'accounting_transaction_fk_2',
           columns: ['relatedInvoiceId'],
           referenceTable: 'invoice',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.setNull,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.setNull,
           matchType: null,
         ),
       ],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'accounting_transaction_business_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'occurredAt',
             ),
           ],
@@ -395,16 +400,16 @@ class Protocol extends _i1.DatabaseSerializationManager {
           isUnique: false,
           isPrimary: false,
         ),
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'accounting_transaction_category_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'category',
             ),
           ],
@@ -415,54 +420,54 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'admin_user',
       dartName: 'AdminUser',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'userId',
-          columnType: _i2.ColumnType.uuid,
+          columnType: _isp.ColumnType.uuid,
           isNullable: false,
           dartType: 'UuidValue',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'role',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:AdminRole',
           columnDefault: '\'moderator\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'createdBy',
-          columnType: _i2.ColumnType.uuid,
+          columnType: _isp.ColumnType.uuid,
           isNullable: true,
           dartType: 'UuidValue?',
         ),
       ],
       foreignKeys: [],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'admin_user_user_unique_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'userId',
             ),
           ],
@@ -473,58 +478,58 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'audit_entry',
       dartName: 'AuditEntry',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'businessId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'userId',
-          columnType: _i2.ColumnType.uuid,
+          columnType: _isp.ColumnType.uuid,
           isNullable: true,
           dartType: 'UuidValue?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'action',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'entityType',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'entityId',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'changes',
-          columnType: _i2.ColumnType.json,
+          columnType: _isp.ColumnType.json,
           isNullable: true,
           dartType: 'Map<String,String>?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
@@ -532,16 +537,16 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       foreignKeys: [],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'audit_entry_business_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'createdAt',
             ),
           ],
@@ -552,93 +557,93 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'business',
       dartName: 'Business',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'name',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'legalForm',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:LegalForm',
           columnDefault: '\'einzelunternehmen\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'isKleinunternehmer',
-          columnType: _i2.ColumnType.boolean,
+          columnType: _isp.ColumnType.boolean,
           isNullable: false,
           dartType: 'bool',
           columnDefault: 'false',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'vatId',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'taxNumber',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'email',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'phone',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'address',
-          columnType: _i2.ColumnType.json,
+          columnType: _isp.ColumnType.json,
           isNullable: true,
           dartType: 'protocol:Address?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'locale',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:Locale',
           columnDefault: '\'de\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'currency',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:Currency',
           columnDefault: '\'eur\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'updatedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
@@ -648,93 +653,93 @@ class Protocol extends _i1.DatabaseSerializationManager {
       indexes: [],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'business_settings',
       dartName: 'BusinessSettings',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'businessId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'paymentTermsDays',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
           columnDefault: '14',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'invoiceNumberPrefix',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'invoiceNumberIncludeYear',
-          columnType: _i2.ColumnType.boolean,
+          columnType: _isp.ColumnType.boolean,
           isNullable: false,
           dartType: 'bool',
           columnDefault: 'true',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'invoiceNumberMinDigits',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
           columnDefault: '4',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'roundingMode',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:RoundingMode',
           columnDefault: '\'none\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'roundingGranularityMinutes',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
           columnDefault: '1',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'updatedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
       ],
       foreignKeys: [
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'business_settings_fk_0',
           columns: ['businessId'],
           referenceTable: 'business',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
           matchType: null,
         ),
       ],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'business_settings_business_unique_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
           ],
@@ -745,112 +750,112 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'customer',
       dartName: 'Customer',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'businessId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'status',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:CustomerStatus',
           columnDefault: '\'active\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'name',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'companyName',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'vatId',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'email',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'phone',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'address',
-          columnType: _i2.ColumnType.json,
+          columnType: _isp.ColumnType.json,
           isNullable: true,
           dartType: 'protocol:Address?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'notes',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'updatedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
       ],
       foreignKeys: [
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'customer_fk_0',
           columns: ['businessId'],
           referenceTable: 'business',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
           matchType: null,
         ),
       ],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'customer_business_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'status',
             ),
           ],
@@ -861,112 +866,112 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'document',
       dartName: 'Document',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'businessId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'kind',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:DocumentKind',
           columnDefault: '\'attachment\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'fileName',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'mimeType',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'sizeBytes',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'storageLocation',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:StorageLocation',
           columnDefault: '\'private\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'storagePath',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'relatedEntityType',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'relatedEntityId',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'uploadedById',
-          columnType: _i2.ColumnType.uuid,
+          columnType: _isp.ColumnType.uuid,
           isNullable: true,
           dartType: 'UuidValue?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
       ],
       foreignKeys: [
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'document_fk_0',
           columns: ['businessId'],
           referenceTable: 'business',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
           matchType: null,
         ),
       ],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'document_business_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'createdAt',
             ),
           ],
@@ -977,40 +982,40 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'guidance_tip_override',
       dartName: 'GuidanceTipOverride',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'topic',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'title',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'body',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'updatedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
@@ -1018,12 +1023,12 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       foreignKeys: [],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'guidance_tip_override_topic_unique_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'topic',
             ),
           ],
@@ -1034,241 +1039,241 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'invoice',
       dartName: 'Invoice',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'businessId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'number',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'type',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:InvoiceType',
           columnDefault: '\'invoice\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'status',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:InvoiceStatus',
           columnDefault: '\'draft\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'customerId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'issueDate',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'dueDate',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: true,
           dartType: 'DateTime?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'serviceDateFrom',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: true,
           dartType: 'DateTime?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'serviceDateTo',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: true,
           dartType: 'DateTime?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'locale',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:Locale',
           columnDefault: '\'de\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'currency',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:Currency',
           columnDefault: '\'eur\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'subtotalCents',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
           columnDefault: '0',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'vatTotalCents',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
           columnDefault: '0',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'totalCents',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
           columnDefault: '0',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'paymentTermsDays',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
           columnDefault: '14',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'dunningLevel',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
           columnDefault: '0',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'notes',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'templateId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'pdfDocumentId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'recurrenceInterval',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'protocol:RecurrenceInterval?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'nextRecurrenceDate',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: true,
           dartType: 'DateTime?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'recurrenceEndDate',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: true,
           dartType: 'DateTime?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'recurrenceMaxOccurrences',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'recurrenceOccurrencesCreated',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
           columnDefault: '0',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'updatedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
       ],
       foreignKeys: [
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'invoice_fk_0',
           columns: ['businessId'],
           referenceTable: 'business',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
           matchType: null,
         ),
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'invoice_fk_1',
           columns: ['customerId'],
           referenceTable: 'customer',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.setNull,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.setNull,
           matchType: null,
         ),
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'invoice_fk_2',
           columns: ['templateId'],
           referenceTable: 'invoice_template',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.setNull,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.setNull,
           matchType: null,
         ),
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'invoice_fk_3',
           columns: ['pdfDocumentId'],
           referenceTable: 'document',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.setNull,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.setNull,
           matchType: null,
         ),
       ],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'invoice_business_number_unique_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'number',
             ),
           ],
@@ -1276,16 +1281,16 @@ class Protocol extends _i1.DatabaseSerializationManager {
           isUnique: true,
           isPrimary: false,
         ),
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'invoice_business_issue_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'issueDate',
             ),
           ],
@@ -1293,12 +1298,12 @@ class Protocol extends _i1.DatabaseSerializationManager {
           isUnique: false,
           isPrimary: false,
         ),
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'invoice_customer_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'customerId',
             ),
           ],
@@ -1306,16 +1311,16 @@ class Protocol extends _i1.DatabaseSerializationManager {
           isUnique: false,
           isPrimary: false,
         ),
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'invoice_recurrence_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'nextRecurrenceDate',
             ),
           ],
@@ -1323,20 +1328,20 @@ class Protocol extends _i1.DatabaseSerializationManager {
           isUnique: false,
           isPrimary: false,
         ),
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'invoice_business_status_due_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'status',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'dueDate',
             ),
           ],
@@ -1347,96 +1352,96 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'invoice_item',
       dartName: 'InvoiceItem',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'invoiceId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'position',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'description',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'quantity',
-          columnType: _i2.ColumnType.doublePrecision,
+          columnType: _isp.ColumnType.doublePrecision,
           isNullable: false,
           dartType: 'double',
           columnDefault: '1',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'unit',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:InvoiceItemUnit',
           columnDefault: '\'hour\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'unitPriceCents',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
           columnDefault: '0',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'vatRate',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:VatRate',
           columnDefault: '\'standard\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'lineTotalCents',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
           columnDefault: '0',
         ),
       ],
       foreignKeys: [
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'invoice_item_fk_0',
           columns: ['invoiceId'],
           referenceTable: 'invoice',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
           matchType: null,
         ),
       ],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'invoice_item_invoice_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'invoiceId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'position',
             ),
           ],
@@ -1447,100 +1452,100 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'invoice_template',
       dartName: 'InvoiceTemplate',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'businessId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'name',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'isDefault',
-          columnType: _i2.ColumnType.boolean,
+          columnType: _isp.ColumnType.boolean,
           isNullable: false,
           dartType: 'bool',
           columnDefault: 'false',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'headerText',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'footerText',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'logoDocumentId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'updatedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
       ],
       foreignKeys: [
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'invoice_template_fk_0',
           columns: ['businessId'],
           referenceTable: 'business',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
           matchType: null,
         ),
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'invoice_template_fk_1',
           columns: ['logoDocumentId'],
           referenceTable: 'document',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.setNull,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.setNull,
           matchType: null,
         ),
       ],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'invoice_template_business_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
           ],
@@ -1551,69 +1556,69 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'membership',
       dartName: 'Membership',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'userId',
-          columnType: _i2.ColumnType.uuid,
+          columnType: _isp.ColumnType.uuid,
           isNullable: true,
           dartType: 'UuidValue?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'businessId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'role',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:MembershipRole',
           columnDefault: '\'member\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
       ],
       foreignKeys: [
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'membership_fk_0',
           columns: ['businessId'],
           referenceTable: 'business',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
           matchType: null,
         ),
       ],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'membership_user_business_unique_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'userId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
           ],
@@ -1621,12 +1626,12 @@ class Protocol extends _i1.DatabaseSerializationManager {
           isUnique: true,
           isPrimary: false,
         ),
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'membership_business_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
           ],
@@ -1637,79 +1642,79 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'number_sequence',
       dartName: 'Sequence',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'businessId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'key',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'year',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'lastValue',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
           columnDefault: '0',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'updatedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
       ],
       foreignKeys: [
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'number_sequence_fk_0',
           columns: ['businessId'],
           referenceTable: 'business',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
           matchType: null,
         ),
       ],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'number_sequence_business_key_year_unique_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'key',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'year',
             ),
           ],
@@ -1720,78 +1725,78 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'payment_record',
       dartName: 'PaymentRecord',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'invoiceId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'paidAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'amountCents',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'method',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:PaymentMethod',
           columnDefault: '\'bankTransfer\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'reference',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
       ],
       foreignKeys: [
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'payment_record_fk_0',
           columns: ['invoiceId'],
           referenceTable: 'invoice',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
           matchType: null,
         ),
       ],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'payment_record_invoice_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'invoiceId',
             ),
           ],
@@ -1802,104 +1807,104 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'project',
       dartName: 'Project',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'businessId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'name',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'status',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:ProjectStatus',
           columnDefault: '\'active\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'customerId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'hourlyRateCents',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'notes',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'updatedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
       ],
       foreignKeys: [
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'project_fk_0',
           columns: ['businessId'],
           referenceTable: 'business',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
           matchType: null,
         ),
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'project_fk_1',
           columns: ['customerId'],
           referenceTable: 'customer',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.setNull,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.setNull,
           matchType: null,
         ),
       ],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'project_business_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'status',
             ),
           ],
@@ -1910,58 +1915,58 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'reminder',
       dartName: 'Reminder',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'invoiceId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'level',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'sentAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
       ],
       foreignKeys: [
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'reminder_fk_0',
           columns: ['invoiceId'],
           referenceTable: 'invoice',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
           matchType: null,
         ),
       ],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'reminder_invoice_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'invoiceId',
             ),
           ],
@@ -1972,98 +1977,98 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'task',
       dartName: 'Task',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'businessId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'projectId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'name',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'status',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:TaskStatus',
           columnDefault: '\'open\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'hourlyRateCents',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'updatedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
       ],
       foreignKeys: [
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'task_fk_0',
           columns: ['businessId'],
           referenceTable: 'business',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
           matchType: null,
         ),
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'task_fk_1',
           columns: ['projectId'],
           referenceTable: 'project',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
           matchType: null,
         ),
       ],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'task_business_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'status',
             ),
           ],
@@ -2071,12 +2076,12 @@ class Protocol extends _i1.DatabaseSerializationManager {
           isUnique: false,
           isPrimary: false,
         ),
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'task_project_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'projectId',
             ),
           ],
@@ -2087,132 +2092,132 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'time_entry',
       dartName: 'TimeEntry',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'businessId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'projectId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'taskId',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'description',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'startedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'stoppedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: true,
           dartType: 'DateTime?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'durationMinutes',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'billable',
-          columnType: _i2.ColumnType.boolean,
+          columnType: _isp.ColumnType.boolean,
           isNullable: false,
           dartType: 'bool',
           columnDefault: 'true',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'invoicedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: true,
           dartType: 'DateTime?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'updatedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
       ],
       foreignKeys: [
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'time_entry_fk_0',
           columns: ['businessId'],
           referenceTable: 'business',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.cascade,
           matchType: null,
         ),
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'time_entry_fk_1',
           columns: ['projectId'],
           referenceTable: 'project',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.setNull,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.setNull,
           matchType: null,
         ),
-        _i2.ForeignKeyDefinition(
+        _isp.ForeignKeyDefinition(
           constraintName: 'time_entry_fk_2',
           columns: ['taskId'],
           referenceTable: 'task',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.setNull,
+          onUpdate: _isp.ForeignKeyAction.noAction,
+          onDelete: _isp.ForeignKeyAction.setNull,
           matchType: null,
         ),
       ],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'time_entry_business_started_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'startedAt',
             ),
           ],
@@ -2220,12 +2225,12 @@ class Protocol extends _i1.DatabaseSerializationManager {
           isUnique: false,
           isPrimary: false,
         ),
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'time_entry_project_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'projectId',
             ),
           ],
@@ -2233,12 +2238,12 @@ class Protocol extends _i1.DatabaseSerializationManager {
           isUnique: false,
           isPrimary: false,
         ),
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'time_entry_task_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'taskId',
             ),
           ],
@@ -2246,16 +2251,16 @@ class Protocol extends _i1.DatabaseSerializationManager {
           isUnique: false,
           isPrimary: false,
         ),
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'time_entry_business_running_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'businessId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'stoppedAt',
             ),
           ],
@@ -2267,46 +2272,46 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'user_guidance_progress',
       dartName: 'UserGuidanceProgress',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'userId',
-          columnType: _i2.ColumnType.uuid,
+          columnType: _isp.ColumnType.uuid,
           isNullable: true,
           dartType: 'UuidValue?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'itemKey',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'completedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: true,
           dartType: 'DateTime?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'dismissedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: true,
           dartType: 'DateTime?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'updatedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
@@ -2314,16 +2319,16 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       foreignKeys: [],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'user_guidance_progress_unique_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'userId',
             ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'itemKey',
             ),
           ],
@@ -2334,80 +2339,80 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _i2.TableDefinition(
+    _isp.TableDefinition(
       name: 'user_profile',
       dartName: 'UserProfile',
       schema: 'public',
       module: 'gewerber_backend',
       columns: [
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'userId',
-          columnType: _i2.ColumnType.uuid,
+          columnType: _isp.ColumnType.uuid,
           isNullable: false,
           dartType: 'UuidValue',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'displayName',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'locale',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:Locale',
           columnDefault: '\'de\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'timeZone',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'themeMode',
-          columnType: _i2.ColumnType.text,
+          columnType: _isp.ColumnType.text,
           isNullable: false,
           dartType: 'protocol:AppTheme',
           columnDefault: '\'system\'',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'updatedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
           columnDefault: 'now',
         ),
-        _i2.ColumnDefinition(
+        _isp.ColumnDefinition(
           name: 'deletedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
           isNullable: true,
           dartType: 'DateTime?',
         ),
       ],
       foreignKeys: [],
       indexes: [
-        _i2.IndexDefinition(
+        _isp.IndexDefinition(
           indexName: 'user_profile_user_unique_idx',
           tableSpace: null,
           elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
               definition: 'userId',
             ),
           ],
@@ -2418,10 +2423,10 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    ..._i3.Protocol.targetTableDefinitions,
-    ..._i4.Protocol.targetTableDefinitions,
-    ..._i5.Protocol.targetTableDefinitions,
-    ..._i2.Protocol.targetTableDefinitions,
+    ..._if53ofrw.Protocol.targetTableDefinitions,
+    ..._iacs.Protocol.targetTableDefinitions,
+    ..._iais.Protocol.targetTableDefinitions,
+    ..._isp.Protocol.targetTableDefinitions,
   ];
 
   static String? getClassNameFromObjectJson(dynamic data) {
@@ -2451,687 +2456,767 @@ class Protocol extends _i1.DatabaseSerializationManager {
       }
     }
 
-    if (t == _i6.AdminRole) {
-      return _i6.AdminRole.fromJson(data) as T;
+    if (t == _i409qkgd.AdminRole) {
+      return _i409qkgd.AdminRole.fromJson(data) as T;
     }
-    if (t == _i7.AdminUser) {
-      return _i7.AdminUser.fromJson(data) as T;
+    if (t == _ixu4yxcv.AdminUser) {
+      return _ixu4yxcv.AdminUser.fromJson(data) as T;
     }
-    if (t == _i8.AuditEntry) {
-      return _i8.AuditEntry.fromJson(data) as T;
+    if (t == _iv98pmde.AuditEntry) {
+      return _iv98pmde.AuditEntry.fromJson(data) as T;
     }
-    if (t == _i9.Feature) {
-      return _i9.Feature.fromJson(data) as T;
+    if (t == _i0s5j3nj.Feature) {
+      return _i0s5j3nj.Feature.fromJson(data) as T;
     }
-    if (t == _i10.ConflictException) {
-      return _i10.ConflictException.fromJson(data) as T;
+    if (t == _i5epujyq.ConflictException) {
+      return _i5epujyq.ConflictException.fromJson(data) as T;
     }
-    if (t == _i11.ForbiddenException) {
-      return _i11.ForbiddenException.fromJson(data) as T;
+    if (t == _io9vwtrc.ForbiddenException) {
+      return _io9vwtrc.ForbiddenException.fromJson(data) as T;
     }
-    if (t == _i12.NotFoundException) {
-      return _i12.NotFoundException.fromJson(data) as T;
+    if (t == _ixeh2c1z.NotFoundException) {
+      return _ixeh2c1z.NotFoundException.fromJson(data) as T;
     }
-    if (t == _i13.ValidationException) {
-      return _i13.ValidationException.fromJson(data) as T;
+    if (t == _io4t73gt.ValidationException) {
+      return _io4t73gt.ValidationException.fromJson(data) as T;
     }
-    if (t == _i14.Sequence) {
-      return _i14.Sequence.fromJson(data) as T;
+    if (t == _iwzk2tv7.Sequence) {
+      return _iwzk2tv7.Sequence.fromJson(data) as T;
     }
-    if (t == _i15.AccountingTransaction) {
-      return _i15.AccountingTransaction.fromJson(data) as T;
+    if (t == _imcpe7lh.AccountingTransaction) {
+      return _imcpe7lh.AccountingTransaction.fromJson(data) as T;
     }
-    if (t == _i16.CreateTransactionRequest) {
-      return _i16.CreateTransactionRequest.fromJson(data) as T;
+    if (t == _ipamnsx8.CreateTransactionRequest) {
+      return _ipamnsx8.CreateTransactionRequest.fromJson(data) as T;
     }
-    if (t == _i17.ProfitLossLine) {
-      return _i17.ProfitLossLine.fromJson(data) as T;
+    if (t == _iixw78u5.ProfitLossLine) {
+      return _iixw78u5.ProfitLossLine.fromJson(data) as T;
     }
-    if (t == _i18.ProfitLossReport) {
-      return _i18.ProfitLossReport.fromJson(data) as T;
+    if (t == _isurdgsv.ProfitLossReport) {
+      return _isurdgsv.ProfitLossReport.fromJson(data) as T;
     }
-    if (t == _i19.TransactionCategory) {
-      return _i19.TransactionCategory.fromJson(data) as T;
+    if (t == _imo6tjrw.TransactionCategory) {
+      return _imo6tjrw.TransactionCategory.fromJson(data) as T;
     }
-    if (t == _i20.TransactionType) {
-      return _i20.TransactionType.fromJson(data) as T;
+    if (t == _ik9vnz0w.TransactionType) {
+      return _ik9vnz0w.TransactionType.fromJson(data) as T;
     }
-    if (t == _i21.UpdateTransactionRequest) {
-      return _i21.UpdateTransactionRequest.fromJson(data) as T;
+    if (t == _iyj5tb39.UpdateTransactionRequest) {
+      return _iyj5tb39.UpdateTransactionRequest.fromJson(data) as T;
     }
-    if (t == _i22.AdminAuditEntry) {
-      return _i22.AdminAuditEntry.fromJson(data) as T;
+    if (t == _io6p5gfm.AdminAuditEntry) {
+      return _io6p5gfm.AdminAuditEntry.fromJson(data) as T;
     }
-    if (t == _i23.AdminAuditPage) {
-      return _i23.AdminAuditPage.fromJson(data) as T;
+    if (t == _iaab9k46.AdminAuditPage) {
+      return _iaab9k46.AdminAuditPage.fromJson(data) as T;
     }
-    if (t == _i24.AdminAuthStatus) {
-      return _i24.AdminAuthStatus.fromJson(data) as T;
+    if (t == _ipsgq99z.AdminAuthStatus) {
+      return _ipsgq99z.AdminAuthStatus.fromJson(data) as T;
     }
-    if (t == _i25.AdminBusinessDetail) {
-      return _i25.AdminBusinessDetail.fromJson(data) as T;
+    if (t == _i32iaxq2.AdminBusinessDetail) {
+      return _i32iaxq2.AdminBusinessDetail.fromJson(data) as T;
     }
-    if (t == _i26.AdminBusinessPage) {
-      return _i26.AdminBusinessPage.fromJson(data) as T;
+    if (t == _iytjl6p4.AdminBusinessPage) {
+      return _iytjl6p4.AdminBusinessPage.fromJson(data) as T;
     }
-    if (t == _i27.AdminInvoicePage) {
-      return _i27.AdminInvoicePage.fromJson(data) as T;
+    if (t == _ia380t04.AdminInvoicePage) {
+      return _ia380t04.AdminInvoicePage.fromJson(data) as T;
     }
-    if (t == _i28.AdminMembershipInfo) {
-      return _i28.AdminMembershipInfo.fromJson(data) as T;
+    if (t == _igm2ntgz.AdminMembershipInfo) {
+      return _igm2ntgz.AdminMembershipInfo.fromJson(data) as T;
     }
-    if (t == _i29.AdminStatsOverview) {
-      return _i29.AdminStatsOverview.fromJson(data) as T;
+    if (t == _ihc64acz.AdminStatsOverview) {
+      return _ihc64acz.AdminStatsOverview.fromJson(data) as T;
     }
-    if (t == _i30.AdminUserDossier) {
-      return _i30.AdminUserDossier.fromJson(data) as T;
+    if (t == _ibyotlfs.AdminUserDossier) {
+      return _ibyotlfs.AdminUserDossier.fromJson(data) as T;
     }
-    if (t == _i31.AdminUserSummary) {
-      return _i31.AdminUserSummary.fromJson(data) as T;
+    if (t == _iwdjv467.AdminUserSummary) {
+      return _iwdjv467.AdminUserSummary.fromJson(data) as T;
     }
-    if (t == _i32.AdminUserSummaryPage) {
-      return _i32.AdminUserSummaryPage.fromJson(data) as T;
+    if (t == _i2f075pm.AdminUserSummaryPage) {
+      return _i2f075pm.AdminUserSummaryPage.fromJson(data) as T;
     }
-    if (t == _i33.InvoiceStatusCount) {
-      return _i33.InvoiceStatusCount.fromJson(data) as T;
+    if (t == _ikvugyyu.InvoiceStatusCount) {
+      return _ikvugyyu.InvoiceStatusCount.fromJson(data) as T;
     }
-    if (t == _i34.Address) {
-      return _i34.Address.fromJson(data) as T;
+    if (t == _izfx9e18.Address) {
+      return _izfx9e18.Address.fromJson(data) as T;
     }
-    if (t == _i35.Business) {
-      return _i35.Business.fromJson(data) as T;
+    if (t == _im9zvu8o.Business) {
+      return _im9zvu8o.Business.fromJson(data) as T;
     }
-    if (t == _i36.BusinessSettings) {
-      return _i36.BusinessSettings.fromJson(data) as T;
+    if (t == _ixvagzl5.BusinessSettings) {
+      return _ixvagzl5.BusinessSettings.fromJson(data) as T;
     }
-    if (t == _i37.Country) {
-      return _i37.Country.fromJson(data) as T;
+    if (t == _i8xf36x2.Country) {
+      return _i8xf36x2.Country.fromJson(data) as T;
     }
-    if (t == _i38.CreateBusinessRequest) {
-      return _i38.CreateBusinessRequest.fromJson(data) as T;
+    if (t == _i1txccp7.CreateBusinessRequest) {
+      return _i1txccp7.CreateBusinessRequest.fromJson(data) as T;
     }
-    if (t == _i39.Currency) {
-      return _i39.Currency.fromJson(data) as T;
+    if (t == _i1srbh9z.Currency) {
+      return _i1srbh9z.Currency.fromJson(data) as T;
     }
-    if (t == _i40.LegalForm) {
-      return _i40.LegalForm.fromJson(data) as T;
+    if (t == _i5egs7uv.LegalForm) {
+      return _i5egs7uv.LegalForm.fromJson(data) as T;
     }
-    if (t == _i41.Locale) {
-      return _i41.Locale.fromJson(data) as T;
+    if (t == _ii0188h0.Locale) {
+      return _ii0188h0.Locale.fromJson(data) as T;
     }
-    if (t == _i42.Membership) {
-      return _i42.Membership.fromJson(data) as T;
+    if (t == _iu72qgm4.Membership) {
+      return _iu72qgm4.Membership.fromJson(data) as T;
     }
-    if (t == _i43.MembershipRole) {
-      return _i43.MembershipRole.fromJson(data) as T;
+    if (t == _iv0iprnk.MembershipRole) {
+      return _iv0iprnk.MembershipRole.fromJson(data) as T;
     }
-    if (t == _i44.RoundingMode) {
-      return _i44.RoundingMode.fromJson(data) as T;
+    if (t == _iku7b3rb.RoundingMode) {
+      return _iku7b3rb.RoundingMode.fromJson(data) as T;
     }
-    if (t == _i45.UpdateBusinessRequest) {
-      return _i45.UpdateBusinessRequest.fromJson(data) as T;
+    if (t == _inkd6ewo.UpdateBusinessRequest) {
+      return _inkd6ewo.UpdateBusinessRequest.fromJson(data) as T;
     }
-    if (t == _i46.UpdateBusinessSettingsRequest) {
-      return _i46.UpdateBusinessSettingsRequest.fromJson(data) as T;
+    if (t == _ii46p08a.UpdateBusinessSettingsRequest) {
+      return _ii46p08a.UpdateBusinessSettingsRequest.fromJson(data) as T;
     }
-    if (t == _i47.DashboardKpis) {
-      return _i47.DashboardKpis.fromJson(data) as T;
+    if (t == _i1j0w1sv.DashboardKpis) {
+      return _i1j0w1sv.DashboardKpis.fromJson(data) as T;
     }
-    if (t == _i48.DashboardSummary) {
-      return _i48.DashboardSummary.fromJson(data) as T;
+    if (t == _iw3j14uv.DashboardSummary) {
+      return _iw3j14uv.DashboardSummary.fromJson(data) as T;
     }
-    if (t == _i49.DebtorSummary) {
-      return _i49.DebtorSummary.fromJson(data) as T;
+    if (t == _ix33w5u6.DebtorSummary) {
+      return _ix33w5u6.DebtorSummary.fromJson(data) as T;
     }
-    if (t == _i50.MonthlyTrendPoint) {
-      return _i50.MonthlyTrendPoint.fromJson(data) as T;
+    if (t == _ixg6nsli.MonthlyTrendPoint) {
+      return _ixg6nsli.MonthlyTrendPoint.fromJson(data) as T;
     }
-    if (t == _i51.ReceivablesSummary) {
-      return _i51.ReceivablesSummary.fromJson(data) as T;
+    if (t == _ie3ro5gq.ReceivablesSummary) {
+      return _ie3ro5gq.ReceivablesSummary.fromJson(data) as T;
     }
-    if (t == _i52.RecentTimeEntry) {
-      return _i52.RecentTimeEntry.fromJson(data) as T;
+    if (t == _impe7ay9.RecentTimeEntry) {
+      return _impe7ay9.RecentTimeEntry.fromJson(data) as T;
     }
-    if (t == _i53.Document) {
-      return _i53.Document.fromJson(data) as T;
+    if (t == _i9jvbk51.Document) {
+      return _i9jvbk51.Document.fromJson(data) as T;
     }
-    if (t == _i54.DocumentKind) {
-      return _i54.DocumentKind.fromJson(data) as T;
+    if (t == _imaz1zqg.DocumentKind) {
+      return _imaz1zqg.DocumentKind.fromJson(data) as T;
     }
-    if (t == _i55.StorageLocation) {
-      return _i55.StorageLocation.fromJson(data) as T;
+    if (t == _i9qnixrl.StorageLocation) {
+      return _i9qnixrl.StorageLocation.fromJson(data) as T;
     }
-    if (t == _i56.UploadDocumentRequest) {
-      return _i56.UploadDocumentRequest.fromJson(data) as T;
+    if (t == _iz60udpo.UploadDocumentRequest) {
+      return _iz60udpo.UploadDocumentRequest.fromJson(data) as T;
     }
-    if (t == _i57.ChecklistDefinition) {
-      return _i57.ChecklistDefinition.fromJson(data) as T;
+    if (t == _i04z5hwj.ChecklistDefinition) {
+      return _i04z5hwj.ChecklistDefinition.fromJson(data) as T;
     }
-    if (t == _i58.ChecklistItemDefinition) {
-      return _i58.ChecklistItemDefinition.fromJson(data) as T;
+    if (t == _i5jbvijx.ChecklistItemDefinition) {
+      return _i5jbvijx.ChecklistItemDefinition.fromJson(data) as T;
     }
-    if (t == _i59.GuidanceTip) {
-      return _i59.GuidanceTip.fromJson(data) as T;
+    if (t == _irvclg1d.GuidanceTip) {
+      return _irvclg1d.GuidanceTip.fromJson(data) as T;
     }
-    if (t == _i60.GuidanceTipOverride) {
-      return _i60.GuidanceTipOverride.fromJson(data) as T;
+    if (t == _i3qwvpcu.GuidanceTipOverride) {
+      return _i3qwvpcu.GuidanceTipOverride.fromJson(data) as T;
     }
-    if (t == _i61.UserGuidanceProgress) {
-      return _i61.UserGuidanceProgress.fromJson(data) as T;
+    if (t == _ik05lx5a.UserGuidanceProgress) {
+      return _ik05lx5a.UserGuidanceProgress.fromJson(data) as T;
     }
-    if (t == _i62.CreateCustomerRequest) {
-      return _i62.CreateCustomerRequest.fromJson(data) as T;
+    if (t == _i90hzmg5.CreateCustomerRequest) {
+      return _i90hzmg5.CreateCustomerRequest.fromJson(data) as T;
     }
-    if (t == _i63.CreateInvoiceRequest) {
-      return _i63.CreateInvoiceRequest.fromJson(data) as T;
+    if (t == _ia6btdit.CreateInvoiceRequest) {
+      return _ia6btdit.CreateInvoiceRequest.fromJson(data) as T;
     }
-    if (t == _i64.CreateInvoiceTemplateRequest) {
-      return _i64.CreateInvoiceTemplateRequest.fromJson(data) as T;
+    if (t == _iyi9fugk.CreateInvoiceTemplateRequest) {
+      return _iyi9fugk.CreateInvoiceTemplateRequest.fromJson(data) as T;
     }
-    if (t == _i65.CreateRecurringScheduleRequest) {
-      return _i65.CreateRecurringScheduleRequest.fromJson(data) as T;
+    if (t == _i4j5ra9q.CreateRecurringScheduleRequest) {
+      return _i4j5ra9q.CreateRecurringScheduleRequest.fromJson(data) as T;
     }
-    if (t == _i66.Customer) {
-      return _i66.Customer.fromJson(data) as T;
+    if (t == _ic8wp775.Customer) {
+      return _ic8wp775.Customer.fromJson(data) as T;
     }
-    if (t == _i67.CustomerCursorPage) {
-      return _i67.CustomerCursorPage.fromJson(data) as T;
+    if (t == _if0yalhk.CustomerCursorPage) {
+      return _if0yalhk.CustomerCursorPage.fromJson(data) as T;
     }
-    if (t == _i68.CustomerListPage) {
-      return _i68.CustomerListPage.fromJson(data) as T;
+    if (t == _iakrzq1i.CustomerListPage) {
+      return _iakrzq1i.CustomerListPage.fromJson(data) as T;
     }
-    if (t == _i69.CustomerStatus) {
-      return _i69.CustomerStatus.fromJson(data) as T;
+    if (t == _ibddqx0x.CustomerStatus) {
+      return _ibddqx0x.CustomerStatus.fromJson(data) as T;
     }
-    if (t == _i70.Invoice) {
-      return _i70.Invoice.fromJson(data) as T;
+    if (t == _imguyn55.Invoice) {
+      return _imguyn55.Invoice.fromJson(data) as T;
     }
-    if (t == _i71.InvoiceCursorPage) {
-      return _i71.InvoiceCursorPage.fromJson(data) as T;
+    if (t == _i2f30jh4.InvoiceCursorPage) {
+      return _i2f30jh4.InvoiceCursorPage.fromJson(data) as T;
     }
-    if (t == _i72.InvoiceItem) {
-      return _i72.InvoiceItem.fromJson(data) as T;
+    if (t == _iu86qxr6.InvoiceItem) {
+      return _iu86qxr6.InvoiceItem.fromJson(data) as T;
     }
-    if (t == _i73.InvoiceItemRequest) {
-      return _i73.InvoiceItemRequest.fromJson(data) as T;
+    if (t == _it1pcy1x.InvoiceItemRequest) {
+      return _it1pcy1x.InvoiceItemRequest.fromJson(data) as T;
     }
-    if (t == _i74.InvoiceItemUnit) {
-      return _i74.InvoiceItemUnit.fromJson(data) as T;
+    if (t == _ik22qf7o.InvoiceItemUnit) {
+      return _ik22qf7o.InvoiceItemUnit.fromJson(data) as T;
     }
-    if (t == _i75.InvoiceListPage) {
-      return _i75.InvoiceListPage.fromJson(data) as T;
+    if (t == _i6mqpqud.InvoiceListPage) {
+      return _i6mqpqud.InvoiceListPage.fromJson(data) as T;
     }
-    if (t == _i76.InvoicePaymentStatus) {
-      return _i76.InvoicePaymentStatus.fromJson(data) as T;
+    if (t == _i6e3kqsf.InvoicePaymentStatus) {
+      return _i6e3kqsf.InvoicePaymentStatus.fromJson(data) as T;
     }
-    if (t == _i77.InvoiceStatus) {
-      return _i77.InvoiceStatus.fromJson(data) as T;
+    if (t == _i80dthru.InvoiceStatus) {
+      return _i80dthru.InvoiceStatus.fromJson(data) as T;
     }
-    if (t == _i78.InvoiceTemplate) {
-      return _i78.InvoiceTemplate.fromJson(data) as T;
+    if (t == _isaqeos4.InvoiceTemplate) {
+      return _isaqeos4.InvoiceTemplate.fromJson(data) as T;
     }
-    if (t == _i79.InvoiceType) {
-      return _i79.InvoiceType.fromJson(data) as T;
+    if (t == _io5qrdfp.InvoiceType) {
+      return _io5qrdfp.InvoiceType.fromJson(data) as T;
     }
-    if (t == _i80.PaymentMethod) {
-      return _i80.PaymentMethod.fromJson(data) as T;
+    if (t == _i31hy3jj.PaymentMethod) {
+      return _i31hy3jj.PaymentMethod.fromJson(data) as T;
     }
-    if (t == _i81.PaymentRecord) {
-      return _i81.PaymentRecord.fromJson(data) as T;
+    if (t == _id8w36x8.PaymentRecord) {
+      return _id8w36x8.PaymentRecord.fromJson(data) as T;
     }
-    if (t == _i82.RecordPaymentRequest) {
-      return _i82.RecordPaymentRequest.fromJson(data) as T;
+    if (t == _i2drsvke.RecordPaymentRequest) {
+      return _i2drsvke.RecordPaymentRequest.fromJson(data) as T;
     }
-    if (t == _i83.RecurrenceInterval) {
-      return _i83.RecurrenceInterval.fromJson(data) as T;
+    if (t == _it8iedui.RecurrenceInterval) {
+      return _it8iedui.RecurrenceInterval.fromJson(data) as T;
     }
-    if (t == _i84.Reminder) {
-      return _i84.Reminder.fromJson(data) as T;
+    if (t == _i0xuine3.Reminder) {
+      return _i0xuine3.Reminder.fromJson(data) as T;
     }
-    if (t == _i85.UpdateCustomerRequest) {
-      return _i85.UpdateCustomerRequest.fromJson(data) as T;
+    if (t == _icatwcwa.UpdateCustomerRequest) {
+      return _icatwcwa.UpdateCustomerRequest.fromJson(data) as T;
     }
-    if (t == _i86.UpdateInvoiceRequest) {
-      return _i86.UpdateInvoiceRequest.fromJson(data) as T;
+    if (t == _iteadt76.UpdateInvoiceRequest) {
+      return _iteadt76.UpdateInvoiceRequest.fromJson(data) as T;
     }
-    if (t == _i87.UpdateInvoiceTemplateRequest) {
-      return _i87.UpdateInvoiceTemplateRequest.fromJson(data) as T;
+    if (t == _ilpliwg4.UpdateInvoiceTemplateRequest) {
+      return _ilpliwg4.UpdateInvoiceTemplateRequest.fromJson(data) as T;
     }
-    if (t == _i88.UpdateRecurringScheduleRequest) {
-      return _i88.UpdateRecurringScheduleRequest.fromJson(data) as T;
+    if (t == _i037hdza.UpdateRecurringScheduleRequest) {
+      return _i037hdza.UpdateRecurringScheduleRequest.fromJson(data) as T;
     }
-    if (t == _i89.VatRate) {
-      return _i89.VatRate.fromJson(data) as T;
+    if (t == _id7e2pr5.VatRate) {
+      return _id7e2pr5.VatRate.fromJson(data) as T;
     }
-    if (t == _i90.CreateProjectRequest) {
-      return _i90.CreateProjectRequest.fromJson(data) as T;
+    if (t == _i8rbvyvx.CreateProjectRequest) {
+      return _i8rbvyvx.CreateProjectRequest.fromJson(data) as T;
     }
-    if (t == _i91.CreateTaskRequest) {
-      return _i91.CreateTaskRequest.fromJson(data) as T;
+    if (t == _iagq7u79.CreateTaskRequest) {
+      return _iagq7u79.CreateTaskRequest.fromJson(data) as T;
     }
-    if (t == _i92.CreateTimeEntriesInvoiceRequest) {
-      return _i92.CreateTimeEntriesInvoiceRequest.fromJson(data) as T;
+    if (t == _i3b86gp3.CreateTimeEntriesInvoiceRequest) {
+      return _i3b86gp3.CreateTimeEntriesInvoiceRequest.fromJson(data) as T;
     }
-    if (t == _i93.CreateTimeEntryRequest) {
-      return _i93.CreateTimeEntryRequest.fromJson(data) as T;
+    if (t == _i85810i7.CreateTimeEntryRequest) {
+      return _i85810i7.CreateTimeEntryRequest.fromJson(data) as T;
     }
-    if (t == _i94.Project) {
-      return _i94.Project.fromJson(data) as T;
+    if (t == _i2wiwzxn.Project) {
+      return _i2wiwzxn.Project.fromJson(data) as T;
     }
-    if (t == _i95.ProjectStatus) {
-      return _i95.ProjectStatus.fromJson(data) as T;
+    if (t == _i8h0tbjs.ProjectStatus) {
+      return _i8h0tbjs.ProjectStatus.fromJson(data) as T;
     }
-    if (t == _i96.StartTimerRequest) {
-      return _i96.StartTimerRequest.fromJson(data) as T;
+    if (t == _i2ishkic.StartTimerRequest) {
+      return _i2ishkic.StartTimerRequest.fromJson(data) as T;
     }
-    if (t == _i97.Task) {
-      return _i97.Task.fromJson(data) as T;
+    if (t == _ihpxqi7u.Task) {
+      return _ihpxqi7u.Task.fromJson(data) as T;
     }
-    if (t == _i98.TaskStatus) {
-      return _i98.TaskStatus.fromJson(data) as T;
+    if (t == _iieqkj38.TaskStatus) {
+      return _iieqkj38.TaskStatus.fromJson(data) as T;
     }
-    if (t == _i99.TimeEntry) {
-      return _i99.TimeEntry.fromJson(data) as T;
+    if (t == _ii8lft1t.TimeEntry) {
+      return _ii8lft1t.TimeEntry.fromJson(data) as T;
     }
-    if (t == _i100.TimeReport) {
-      return _i100.TimeReport.fromJson(data) as T;
+    if (t == _ilk96oxt.TimeReport) {
+      return _ilk96oxt.TimeReport.fromJson(data) as T;
     }
-    if (t == _i101.TimeReportLine) {
-      return _i101.TimeReportLine.fromJson(data) as T;
+    if (t == _iify20ly.TimeReportLine) {
+      return _iify20ly.TimeReportLine.fromJson(data) as T;
     }
-    if (t == _i102.UpdateProjectRequest) {
-      return _i102.UpdateProjectRequest.fromJson(data) as T;
+    if (t == _ilqqks6d.UpdateProjectRequest) {
+      return _ilqqks6d.UpdateProjectRequest.fromJson(data) as T;
     }
-    if (t == _i103.UpdateTaskRequest) {
-      return _i103.UpdateTaskRequest.fromJson(data) as T;
+    if (t == _i3iu7ffh.UpdateTaskRequest) {
+      return _i3iu7ffh.UpdateTaskRequest.fromJson(data) as T;
     }
-    if (t == _i104.UpdateTimeEntryRequest) {
-      return _i104.UpdateTimeEntryRequest.fromJson(data) as T;
+    if (t == _iferwyg8.UpdateTimeEntryRequest) {
+      return _iferwyg8.UpdateTimeEntryRequest.fromJson(data) as T;
     }
-    if (t == _i105.AppTheme) {
-      return _i105.AppTheme.fromJson(data) as T;
+    if (t == _iy79t9m6.AppTheme) {
+      return _iy79t9m6.AppTheme.fromJson(data) as T;
     }
-    if (t == _i106.MyIdentity) {
-      return _i106.MyIdentity.fromJson(data) as T;
+    if (t == _i1sqdvz3.MyIdentity) {
+      return _i1sqdvz3.MyIdentity.fromJson(data) as T;
     }
-    if (t == _i107.MyMembershipInfo) {
-      return _i107.MyMembershipInfo.fromJson(data) as T;
+    if (t == _in8pujw9.MyMembershipInfo) {
+      return _in8pujw9.MyMembershipInfo.fromJson(data) as T;
     }
-    if (t == _i108.UpdateUserProfileRequest) {
-      return _i108.UpdateUserProfileRequest.fromJson(data) as T;
+    if (t == _i5r0ss6k.UpdateUserProfileRequest) {
+      return _i5r0ss6k.UpdateUserProfileRequest.fromJson(data) as T;
     }
-    if (t == _i109.UserProfile) {
-      return _i109.UserProfile.fromJson(data) as T;
+    if (t == _iung9xmp.UserProfile) {
+      return _iung9xmp.UserProfile.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i6.AdminRole?>()) {
-      return (data != null ? _i6.AdminRole.fromJson(data) : null) as T;
+    if (t == _is.getType<_i409qkgd.AdminRole?>()) {
+      return (data != null ? _i409qkgd.AdminRole.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i7.AdminUser?>()) {
-      return (data != null ? _i7.AdminUser.fromJson(data) : null) as T;
+    if (t == _is.getType<_ixu4yxcv.AdminUser?>()) {
+      return (data != null ? _ixu4yxcv.AdminUser.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i8.AuditEntry?>()) {
-      return (data != null ? _i8.AuditEntry.fromJson(data) : null) as T;
+    if (t == _is.getType<_iv98pmde.AuditEntry?>()) {
+      return (data != null ? _iv98pmde.AuditEntry.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.Feature?>()) {
-      return (data != null ? _i9.Feature.fromJson(data) : null) as T;
+    if (t == _is.getType<_i0s5j3nj.Feature?>()) {
+      return (data != null ? _i0s5j3nj.Feature.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i10.ConflictException?>()) {
-      return (data != null ? _i10.ConflictException.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i11.ForbiddenException?>()) {
-      return (data != null ? _i11.ForbiddenException.fromJson(data) : null)
+    if (t == _is.getType<_i5epujyq.ConflictException?>()) {
+      return (data != null ? _i5epujyq.ConflictException.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i12.NotFoundException?>()) {
-      return (data != null ? _i12.NotFoundException.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i13.ValidationException?>()) {
-      return (data != null ? _i13.ValidationException.fromJson(data) : null)
+    if (t == _is.getType<_io9vwtrc.ForbiddenException?>()) {
+      return (data != null ? _io9vwtrc.ForbiddenException.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i14.Sequence?>()) {
-      return (data != null ? _i14.Sequence.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i15.AccountingTransaction?>()) {
-      return (data != null ? _i15.AccountingTransaction.fromJson(data) : null)
+    if (t == _is.getType<_ixeh2c1z.NotFoundException?>()) {
+      return (data != null ? _ixeh2c1z.NotFoundException.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i16.CreateTransactionRequest?>()) {
+    if (t == _is.getType<_io4t73gt.ValidationException?>()) {
       return (data != null
-              ? _i16.CreateTransactionRequest.fromJson(data)
+              ? _io4t73gt.ValidationException.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i17.ProfitLossLine?>()) {
-      return (data != null ? _i17.ProfitLossLine.fromJson(data) : null) as T;
+    if (t == _is.getType<_iwzk2tv7.Sequence?>()) {
+      return (data != null ? _iwzk2tv7.Sequence.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i18.ProfitLossReport?>()) {
-      return (data != null ? _i18.ProfitLossReport.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i19.TransactionCategory?>()) {
-      return (data != null ? _i19.TransactionCategory.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i20.TransactionType?>()) {
-      return (data != null ? _i20.TransactionType.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i21.UpdateTransactionRequest?>()) {
+    if (t == _is.getType<_imcpe7lh.AccountingTransaction?>()) {
       return (data != null
-              ? _i21.UpdateTransactionRequest.fromJson(data)
+              ? _imcpe7lh.AccountingTransaction.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i22.AdminAuditEntry?>()) {
-      return (data != null ? _i22.AdminAuditEntry.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i23.AdminAuditPage?>()) {
-      return (data != null ? _i23.AdminAuditPage.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i24.AdminAuthStatus?>()) {
-      return (data != null ? _i24.AdminAuthStatus.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i25.AdminBusinessDetail?>()) {
-      return (data != null ? _i25.AdminBusinessDetail.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i26.AdminBusinessPage?>()) {
-      return (data != null ? _i26.AdminBusinessPage.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i27.AdminInvoicePage?>()) {
-      return (data != null ? _i27.AdminInvoicePage.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i28.AdminMembershipInfo?>()) {
-      return (data != null ? _i28.AdminMembershipInfo.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i29.AdminStatsOverview?>()) {
-      return (data != null ? _i29.AdminStatsOverview.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i30.AdminUserDossier?>()) {
-      return (data != null ? _i30.AdminUserDossier.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i31.AdminUserSummary?>()) {
-      return (data != null ? _i31.AdminUserSummary.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i32.AdminUserSummaryPage?>()) {
-      return (data != null ? _i32.AdminUserSummaryPage.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i33.InvoiceStatusCount?>()) {
-      return (data != null ? _i33.InvoiceStatusCount.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i34.Address?>()) {
-      return (data != null ? _i34.Address.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i35.Business?>()) {
-      return (data != null ? _i35.Business.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i36.BusinessSettings?>()) {
-      return (data != null ? _i36.BusinessSettings.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i37.Country?>()) {
-      return (data != null ? _i37.Country.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i38.CreateBusinessRequest?>()) {
-      return (data != null ? _i38.CreateBusinessRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i39.Currency?>()) {
-      return (data != null ? _i39.Currency.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i40.LegalForm?>()) {
-      return (data != null ? _i40.LegalForm.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i41.Locale?>()) {
-      return (data != null ? _i41.Locale.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i42.Membership?>()) {
-      return (data != null ? _i42.Membership.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i43.MembershipRole?>()) {
-      return (data != null ? _i43.MembershipRole.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i44.RoundingMode?>()) {
-      return (data != null ? _i44.RoundingMode.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i45.UpdateBusinessRequest?>()) {
-      return (data != null ? _i45.UpdateBusinessRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i46.UpdateBusinessSettingsRequest?>()) {
+    if (t == _is.getType<_ipamnsx8.CreateTransactionRequest?>()) {
       return (data != null
-              ? _i46.UpdateBusinessSettingsRequest.fromJson(data)
+              ? _ipamnsx8.CreateTransactionRequest.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i47.DashboardKpis?>()) {
-      return (data != null ? _i47.DashboardKpis.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i48.DashboardSummary?>()) {
-      return (data != null ? _i48.DashboardSummary.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i49.DebtorSummary?>()) {
-      return (data != null ? _i49.DebtorSummary.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i50.MonthlyTrendPoint?>()) {
-      return (data != null ? _i50.MonthlyTrendPoint.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i51.ReceivablesSummary?>()) {
-      return (data != null ? _i51.ReceivablesSummary.fromJson(data) : null)
+    if (t == _is.getType<_iixw78u5.ProfitLossLine?>()) {
+      return (data != null ? _iixw78u5.ProfitLossLine.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i52.RecentTimeEntry?>()) {
-      return (data != null ? _i52.RecentTimeEntry.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i53.Document?>()) {
-      return (data != null ? _i53.Document.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i54.DocumentKind?>()) {
-      return (data != null ? _i54.DocumentKind.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i55.StorageLocation?>()) {
-      return (data != null ? _i55.StorageLocation.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i56.UploadDocumentRequest?>()) {
-      return (data != null ? _i56.UploadDocumentRequest.fromJson(data) : null)
+    if (t == _is.getType<_isurdgsv.ProfitLossReport?>()) {
+      return (data != null ? _isurdgsv.ProfitLossReport.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i57.ChecklistDefinition?>()) {
-      return (data != null ? _i57.ChecklistDefinition.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i58.ChecklistItemDefinition?>()) {
-      return (data != null ? _i58.ChecklistItemDefinition.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i59.GuidanceTip?>()) {
-      return (data != null ? _i59.GuidanceTip.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i60.GuidanceTipOverride?>()) {
-      return (data != null ? _i60.GuidanceTipOverride.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i61.UserGuidanceProgress?>()) {
-      return (data != null ? _i61.UserGuidanceProgress.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i62.CreateCustomerRequest?>()) {
-      return (data != null ? _i62.CreateCustomerRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i63.CreateInvoiceRequest?>()) {
-      return (data != null ? _i63.CreateInvoiceRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i64.CreateInvoiceTemplateRequest?>()) {
+    if (t == _is.getType<_imo6tjrw.TransactionCategory?>()) {
       return (data != null
-              ? _i64.CreateInvoiceTemplateRequest.fromJson(data)
+              ? _imo6tjrw.TransactionCategory.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i65.CreateRecurringScheduleRequest?>()) {
+    if (t == _is.getType<_ik9vnz0w.TransactionType?>()) {
+      return (data != null ? _ik9vnz0w.TransactionType.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_iyj5tb39.UpdateTransactionRequest?>()) {
       return (data != null
-              ? _i65.CreateRecurringScheduleRequest.fromJson(data)
+              ? _iyj5tb39.UpdateTransactionRequest.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i66.Customer?>()) {
-      return (data != null ? _i66.Customer.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i67.CustomerCursorPage?>()) {
-      return (data != null ? _i67.CustomerCursorPage.fromJson(data) : null)
+    if (t == _is.getType<_io6p5gfm.AdminAuditEntry?>()) {
+      return (data != null ? _io6p5gfm.AdminAuditEntry.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i68.CustomerListPage?>()) {
-      return (data != null ? _i68.CustomerListPage.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i69.CustomerStatus?>()) {
-      return (data != null ? _i69.CustomerStatus.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i70.Invoice?>()) {
-      return (data != null ? _i70.Invoice.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i71.InvoiceCursorPage?>()) {
-      return (data != null ? _i71.InvoiceCursorPage.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i72.InvoiceItem?>()) {
-      return (data != null ? _i72.InvoiceItem.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i73.InvoiceItemRequest?>()) {
-      return (data != null ? _i73.InvoiceItemRequest.fromJson(data) : null)
+    if (t == _is.getType<_iaab9k46.AdminAuditPage?>()) {
+      return (data != null ? _iaab9k46.AdminAuditPage.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i74.InvoiceItemUnit?>()) {
-      return (data != null ? _i74.InvoiceItemUnit.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i75.InvoiceListPage?>()) {
-      return (data != null ? _i75.InvoiceListPage.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i76.InvoicePaymentStatus?>()) {
-      return (data != null ? _i76.InvoicePaymentStatus.fromJson(data) : null)
+    if (t == _is.getType<_ipsgq99z.AdminAuthStatus?>()) {
+      return (data != null ? _ipsgq99z.AdminAuthStatus.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i77.InvoiceStatus?>()) {
-      return (data != null ? _i77.InvoiceStatus.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i78.InvoiceTemplate?>()) {
-      return (data != null ? _i78.InvoiceTemplate.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i79.InvoiceType?>()) {
-      return (data != null ? _i79.InvoiceType.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i80.PaymentMethod?>()) {
-      return (data != null ? _i80.PaymentMethod.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i81.PaymentRecord?>()) {
-      return (data != null ? _i81.PaymentRecord.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i82.RecordPaymentRequest?>()) {
-      return (data != null ? _i82.RecordPaymentRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i83.RecurrenceInterval?>()) {
-      return (data != null ? _i83.RecurrenceInterval.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i84.Reminder?>()) {
-      return (data != null ? _i84.Reminder.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i85.UpdateCustomerRequest?>()) {
-      return (data != null ? _i85.UpdateCustomerRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i86.UpdateInvoiceRequest?>()) {
-      return (data != null ? _i86.UpdateInvoiceRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i87.UpdateInvoiceTemplateRequest?>()) {
+    if (t == _is.getType<_i32iaxq2.AdminBusinessDetail?>()) {
       return (data != null
-              ? _i87.UpdateInvoiceTemplateRequest.fromJson(data)
+              ? _i32iaxq2.AdminBusinessDetail.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i88.UpdateRecurringScheduleRequest?>()) {
+    if (t == _is.getType<_iytjl6p4.AdminBusinessPage?>()) {
+      return (data != null ? _iytjl6p4.AdminBusinessPage.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_ia380t04.AdminInvoicePage?>()) {
+      return (data != null ? _ia380t04.AdminInvoicePage.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_igm2ntgz.AdminMembershipInfo?>()) {
       return (data != null
-              ? _i88.UpdateRecurringScheduleRequest.fromJson(data)
+              ? _igm2ntgz.AdminMembershipInfo.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i89.VatRate?>()) {
-      return (data != null ? _i89.VatRate.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i90.CreateProjectRequest?>()) {
-      return (data != null ? _i90.CreateProjectRequest.fromJson(data) : null)
+    if (t == _is.getType<_ihc64acz.AdminStatsOverview?>()) {
+      return (data != null ? _ihc64acz.AdminStatsOverview.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i91.CreateTaskRequest?>()) {
-      return (data != null ? _i91.CreateTaskRequest.fromJson(data) : null) as T;
+    if (t == _is.getType<_ibyotlfs.AdminUserDossier?>()) {
+      return (data != null ? _ibyotlfs.AdminUserDossier.fromJson(data) : null)
+          as T;
     }
-    if (t == _i1.getType<_i92.CreateTimeEntriesInvoiceRequest?>()) {
+    if (t == _is.getType<_iwdjv467.AdminUserSummary?>()) {
+      return (data != null ? _iwdjv467.AdminUserSummary.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_i2f075pm.AdminUserSummaryPage?>()) {
       return (data != null
-              ? _i92.CreateTimeEntriesInvoiceRequest.fromJson(data)
+              ? _i2f075pm.AdminUserSummaryPage.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i93.CreateTimeEntryRequest?>()) {
-      return (data != null ? _i93.CreateTimeEntryRequest.fromJson(data) : null)
+    if (t == _is.getType<_ikvugyyu.InvoiceStatusCount?>()) {
+      return (data != null ? _ikvugyyu.InvoiceStatusCount.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i94.Project?>()) {
-      return (data != null ? _i94.Project.fromJson(data) : null) as T;
+    if (t == _is.getType<_izfx9e18.Address?>()) {
+      return (data != null ? _izfx9e18.Address.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i95.ProjectStatus?>()) {
-      return (data != null ? _i95.ProjectStatus.fromJson(data) : null) as T;
+    if (t == _is.getType<_im9zvu8o.Business?>()) {
+      return (data != null ? _im9zvu8o.Business.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i96.StartTimerRequest?>()) {
-      return (data != null ? _i96.StartTimerRequest.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i97.Task?>()) {
-      return (data != null ? _i97.Task.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i98.TaskStatus?>()) {
-      return (data != null ? _i98.TaskStatus.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i99.TimeEntry?>()) {
-      return (data != null ? _i99.TimeEntry.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i100.TimeReport?>()) {
-      return (data != null ? _i100.TimeReport.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i101.TimeReportLine?>()) {
-      return (data != null ? _i101.TimeReportLine.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i102.UpdateProjectRequest?>()) {
-      return (data != null ? _i102.UpdateProjectRequest.fromJson(data) : null)
+    if (t == _is.getType<_ixvagzl5.BusinessSettings?>()) {
+      return (data != null ? _ixvagzl5.BusinessSettings.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i103.UpdateTaskRequest?>()) {
-      return (data != null ? _i103.UpdateTaskRequest.fromJson(data) : null)
-          as T;
+    if (t == _is.getType<_i8xf36x2.Country?>()) {
+      return (data != null ? _i8xf36x2.Country.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i104.UpdateTimeEntryRequest?>()) {
-      return (data != null ? _i104.UpdateTimeEntryRequest.fromJson(data) : null)
-          as T;
-    }
-    if (t == _i1.getType<_i105.AppTheme?>()) {
-      return (data != null ? _i105.AppTheme.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i106.MyIdentity?>()) {
-      return (data != null ? _i106.MyIdentity.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i107.MyMembershipInfo?>()) {
-      return (data != null ? _i107.MyMembershipInfo.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i108.UpdateUserProfileRequest?>()) {
+    if (t == _is.getType<_i1txccp7.CreateBusinessRequest?>()) {
       return (data != null
-              ? _i108.UpdateUserProfileRequest.fromJson(data)
+              ? _i1txccp7.CreateBusinessRequest.fromJson(data)
               : null)
           as T;
     }
-    if (t == _i1.getType<_i109.UserProfile?>()) {
-      return (data != null ? _i109.UserProfile.fromJson(data) : null) as T;
+    if (t == _is.getType<_i1srbh9z.Currency?>()) {
+      return (data != null ? _i1srbh9z.Currency.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_i5egs7uv.LegalForm?>()) {
+      return (data != null ? _i5egs7uv.LegalForm.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_ii0188h0.Locale?>()) {
+      return (data != null ? _ii0188h0.Locale.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_iu72qgm4.Membership?>()) {
+      return (data != null ? _iu72qgm4.Membership.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_iv0iprnk.MembershipRole?>()) {
+      return (data != null ? _iv0iprnk.MembershipRole.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_iku7b3rb.RoundingMode?>()) {
+      return (data != null ? _iku7b3rb.RoundingMode.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_inkd6ewo.UpdateBusinessRequest?>()) {
+      return (data != null
+              ? _inkd6ewo.UpdateBusinessRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_ii46p08a.UpdateBusinessSettingsRequest?>()) {
+      return (data != null
+              ? _ii46p08a.UpdateBusinessSettingsRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_i1j0w1sv.DashboardKpis?>()) {
+      return (data != null ? _i1j0w1sv.DashboardKpis.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_iw3j14uv.DashboardSummary?>()) {
+      return (data != null ? _iw3j14uv.DashboardSummary.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_ix33w5u6.DebtorSummary?>()) {
+      return (data != null ? _ix33w5u6.DebtorSummary.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_ixg6nsli.MonthlyTrendPoint?>()) {
+      return (data != null ? _ixg6nsli.MonthlyTrendPoint.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_ie3ro5gq.ReceivablesSummary?>()) {
+      return (data != null ? _ie3ro5gq.ReceivablesSummary.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_impe7ay9.RecentTimeEntry?>()) {
+      return (data != null ? _impe7ay9.RecentTimeEntry.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_i9jvbk51.Document?>()) {
+      return (data != null ? _i9jvbk51.Document.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_imaz1zqg.DocumentKind?>()) {
+      return (data != null ? _imaz1zqg.DocumentKind.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_i9qnixrl.StorageLocation?>()) {
+      return (data != null ? _i9qnixrl.StorageLocation.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_iz60udpo.UploadDocumentRequest?>()) {
+      return (data != null
+              ? _iz60udpo.UploadDocumentRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_i04z5hwj.ChecklistDefinition?>()) {
+      return (data != null
+              ? _i04z5hwj.ChecklistDefinition.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_i5jbvijx.ChecklistItemDefinition?>()) {
+      return (data != null
+              ? _i5jbvijx.ChecklistItemDefinition.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_irvclg1d.GuidanceTip?>()) {
+      return (data != null ? _irvclg1d.GuidanceTip.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_i3qwvpcu.GuidanceTipOverride?>()) {
+      return (data != null
+              ? _i3qwvpcu.GuidanceTipOverride.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_ik05lx5a.UserGuidanceProgress?>()) {
+      return (data != null
+              ? _ik05lx5a.UserGuidanceProgress.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_i90hzmg5.CreateCustomerRequest?>()) {
+      return (data != null
+              ? _i90hzmg5.CreateCustomerRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_ia6btdit.CreateInvoiceRequest?>()) {
+      return (data != null
+              ? _ia6btdit.CreateInvoiceRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_iyi9fugk.CreateInvoiceTemplateRequest?>()) {
+      return (data != null
+              ? _iyi9fugk.CreateInvoiceTemplateRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_i4j5ra9q.CreateRecurringScheduleRequest?>()) {
+      return (data != null
+              ? _i4j5ra9q.CreateRecurringScheduleRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_ic8wp775.Customer?>()) {
+      return (data != null ? _ic8wp775.Customer.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_if0yalhk.CustomerCursorPage?>()) {
+      return (data != null ? _if0yalhk.CustomerCursorPage.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_iakrzq1i.CustomerListPage?>()) {
+      return (data != null ? _iakrzq1i.CustomerListPage.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_ibddqx0x.CustomerStatus?>()) {
+      return (data != null ? _ibddqx0x.CustomerStatus.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_imguyn55.Invoice?>()) {
+      return (data != null ? _imguyn55.Invoice.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_i2f30jh4.InvoiceCursorPage?>()) {
+      return (data != null ? _i2f30jh4.InvoiceCursorPage.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_iu86qxr6.InvoiceItem?>()) {
+      return (data != null ? _iu86qxr6.InvoiceItem.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_it1pcy1x.InvoiceItemRequest?>()) {
+      return (data != null ? _it1pcy1x.InvoiceItemRequest.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_ik22qf7o.InvoiceItemUnit?>()) {
+      return (data != null ? _ik22qf7o.InvoiceItemUnit.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_i6mqpqud.InvoiceListPage?>()) {
+      return (data != null ? _i6mqpqud.InvoiceListPage.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_i6e3kqsf.InvoicePaymentStatus?>()) {
+      return (data != null
+              ? _i6e3kqsf.InvoicePaymentStatus.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_i80dthru.InvoiceStatus?>()) {
+      return (data != null ? _i80dthru.InvoiceStatus.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_isaqeos4.InvoiceTemplate?>()) {
+      return (data != null ? _isaqeos4.InvoiceTemplate.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_io5qrdfp.InvoiceType?>()) {
+      return (data != null ? _io5qrdfp.InvoiceType.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_i31hy3jj.PaymentMethod?>()) {
+      return (data != null ? _i31hy3jj.PaymentMethod.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_id8w36x8.PaymentRecord?>()) {
+      return (data != null ? _id8w36x8.PaymentRecord.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_i2drsvke.RecordPaymentRequest?>()) {
+      return (data != null
+              ? _i2drsvke.RecordPaymentRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_it8iedui.RecurrenceInterval?>()) {
+      return (data != null ? _it8iedui.RecurrenceInterval.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_i0xuine3.Reminder?>()) {
+      return (data != null ? _i0xuine3.Reminder.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_icatwcwa.UpdateCustomerRequest?>()) {
+      return (data != null
+              ? _icatwcwa.UpdateCustomerRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_iteadt76.UpdateInvoiceRequest?>()) {
+      return (data != null
+              ? _iteadt76.UpdateInvoiceRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_ilpliwg4.UpdateInvoiceTemplateRequest?>()) {
+      return (data != null
+              ? _ilpliwg4.UpdateInvoiceTemplateRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_i037hdza.UpdateRecurringScheduleRequest?>()) {
+      return (data != null
+              ? _i037hdza.UpdateRecurringScheduleRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_id7e2pr5.VatRate?>()) {
+      return (data != null ? _id7e2pr5.VatRate.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_i8rbvyvx.CreateProjectRequest?>()) {
+      return (data != null
+              ? _i8rbvyvx.CreateProjectRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_iagq7u79.CreateTaskRequest?>()) {
+      return (data != null ? _iagq7u79.CreateTaskRequest.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_i3b86gp3.CreateTimeEntriesInvoiceRequest?>()) {
+      return (data != null
+              ? _i3b86gp3.CreateTimeEntriesInvoiceRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_i85810i7.CreateTimeEntryRequest?>()) {
+      return (data != null
+              ? _i85810i7.CreateTimeEntryRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_i2wiwzxn.Project?>()) {
+      return (data != null ? _i2wiwzxn.Project.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_i8h0tbjs.ProjectStatus?>()) {
+      return (data != null ? _i8h0tbjs.ProjectStatus.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_i2ishkic.StartTimerRequest?>()) {
+      return (data != null ? _i2ishkic.StartTimerRequest.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_ihpxqi7u.Task?>()) {
+      return (data != null ? _ihpxqi7u.Task.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_iieqkj38.TaskStatus?>()) {
+      return (data != null ? _iieqkj38.TaskStatus.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_ii8lft1t.TimeEntry?>()) {
+      return (data != null ? _ii8lft1t.TimeEntry.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_ilk96oxt.TimeReport?>()) {
+      return (data != null ? _ilk96oxt.TimeReport.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_iify20ly.TimeReportLine?>()) {
+      return (data != null ? _iify20ly.TimeReportLine.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_ilqqks6d.UpdateProjectRequest?>()) {
+      return (data != null
+              ? _ilqqks6d.UpdateProjectRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_i3iu7ffh.UpdateTaskRequest?>()) {
+      return (data != null ? _i3iu7ffh.UpdateTaskRequest.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_iferwyg8.UpdateTimeEntryRequest?>()) {
+      return (data != null
+              ? _iferwyg8.UpdateTimeEntryRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_iy79t9m6.AppTheme?>()) {
+      return (data != null ? _iy79t9m6.AppTheme.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_i1sqdvz3.MyIdentity?>()) {
+      return (data != null ? _i1sqdvz3.MyIdentity.fromJson(data) : null) as T;
+    }
+    if (t == _is.getType<_in8pujw9.MyMembershipInfo?>()) {
+      return (data != null ? _in8pujw9.MyMembershipInfo.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_i5r0ss6k.UpdateUserProfileRequest?>()) {
+      return (data != null
+              ? _i5r0ss6k.UpdateUserProfileRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _is.getType<_iung9xmp.UserProfile?>()) {
+      return (data != null ? _iung9xmp.UserProfile.fromJson(data) : null) as T;
     }
     if (t == Map<String, String>) {
       return (data as Map).map(
@@ -3139,7 +3224,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           )
           as T;
     }
-    if (t == _i1.getType<Map<String, String>?>()) {
+    if (t == _is.getType<Map<String, String>?>()) {
       return (data != null
               ? (data as Map).map(
                   (k, v) =>
@@ -3148,304 +3233,330 @@ class Protocol extends _i1.DatabaseSerializationManager {
               : null)
           as T;
     }
-    if (t == List<_i17.ProfitLossLine>) {
+    if (t == List<_iixw78u5.ProfitLossLine>) {
       return (data as List)
-              .map((e) => deserialize<_i17.ProfitLossLine>(e))
+              .map((e) => deserialize<_iixw78u5.ProfitLossLine>(e))
               .toList()
           as T;
     }
-    if (t == List<_i22.AdminAuditEntry>) {
+    if (t == List<_io6p5gfm.AdminAuditEntry>) {
       return (data as List)
-              .map((e) => deserialize<_i22.AdminAuditEntry>(e))
+              .map((e) => deserialize<_io6p5gfm.AdminAuditEntry>(e))
               .toList()
           as T;
     }
-    if (t == List<_i28.AdminMembershipInfo>) {
+    if (t == List<_igm2ntgz.AdminMembershipInfo>) {
       return (data as List)
-              .map((e) => deserialize<_i28.AdminMembershipInfo>(e))
+              .map((e) => deserialize<_igm2ntgz.AdminMembershipInfo>(e))
               .toList()
           as T;
     }
-    if (t == List<_i35.Business>) {
-      return (data as List).map((e) => deserialize<_i35.Business>(e)).toList()
-          as T;
-    }
-    if (t == List<_i70.Invoice>) {
-      return (data as List).map((e) => deserialize<_i70.Invoice>(e)).toList()
-          as T;
-    }
-    if (t == List<_i33.InvoiceStatusCount>) {
+    if (t == List<_im9zvu8o.Business>) {
       return (data as List)
-              .map((e) => deserialize<_i33.InvoiceStatusCount>(e))
+              .map((e) => deserialize<_im9zvu8o.Business>(e))
               .toList()
           as T;
     }
-    if (t == List<_i31.AdminUserSummary>) {
+    if (t == List<_imguyn55.Invoice>) {
       return (data as List)
-              .map((e) => deserialize<_i31.AdminUserSummary>(e))
+              .map((e) => deserialize<_imguyn55.Invoice>(e))
               .toList()
           as T;
     }
-    if (t == List<_i50.MonthlyTrendPoint>) {
+    if (t == List<_ikvugyyu.InvoiceStatusCount>) {
       return (data as List)
-              .map((e) => deserialize<_i50.MonthlyTrendPoint>(e))
+              .map((e) => deserialize<_ikvugyyu.InvoiceStatusCount>(e))
               .toList()
           as T;
     }
-    if (t == List<_i15.AccountingTransaction>) {
+    if (t == List<_iwdjv467.AdminUserSummary>) {
       return (data as List)
-              .map((e) => deserialize<_i15.AccountingTransaction>(e))
+              .map((e) => deserialize<_iwdjv467.AdminUserSummary>(e))
               .toList()
           as T;
     }
-    if (t == List<_i52.RecentTimeEntry>) {
+    if (t == List<_ixg6nsli.MonthlyTrendPoint>) {
       return (data as List)
-              .map((e) => deserialize<_i52.RecentTimeEntry>(e))
+              .map((e) => deserialize<_ixg6nsli.MonthlyTrendPoint>(e))
               .toList()
           as T;
     }
-    if (t == List<_i49.DebtorSummary>) {
+    if (t == List<_imcpe7lh.AccountingTransaction>) {
       return (data as List)
-              .map((e) => deserialize<_i49.DebtorSummary>(e))
+              .map((e) => deserialize<_imcpe7lh.AccountingTransaction>(e))
               .toList()
           as T;
     }
-    if (t == List<_i58.ChecklistItemDefinition>) {
+    if (t == List<_impe7ay9.RecentTimeEntry>) {
       return (data as List)
-              .map((e) => deserialize<_i58.ChecklistItemDefinition>(e))
+              .map((e) => deserialize<_impe7ay9.RecentTimeEntry>(e))
               .toList()
           as T;
     }
-    if (t == List<_i73.InvoiceItemRequest>) {
+    if (t == List<_ix33w5u6.DebtorSummary>) {
       return (data as List)
-              .map((e) => deserialize<_i73.InvoiceItemRequest>(e))
+              .map((e) => deserialize<_ix33w5u6.DebtorSummary>(e))
               .toList()
           as T;
     }
-    if (t == List<_i66.Customer>) {
-      return (data as List).map((e) => deserialize<_i66.Customer>(e)).toList()
+    if (t == List<_i5jbvijx.ChecklistItemDefinition>) {
+      return (data as List)
+              .map((e) => deserialize<_i5jbvijx.ChecklistItemDefinition>(e))
+              .toList()
           as T;
     }
-    if (t == List<_i81.PaymentRecord>) {
+    if (t == List<_it1pcy1x.InvoiceItemRequest>) {
       return (data as List)
-              .map((e) => deserialize<_i81.PaymentRecord>(e))
+              .map((e) => deserialize<_it1pcy1x.InvoiceItemRequest>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_ic8wp775.Customer>) {
+      return (data as List)
+              .map((e) => deserialize<_ic8wp775.Customer>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_id8w36x8.PaymentRecord>) {
+      return (data as List)
+              .map((e) => deserialize<_id8w36x8.PaymentRecord>(e))
               .toList()
           as T;
     }
     if (t == List<int>) {
       return (data as List).map((e) => deserialize<int>(e)).toList() as T;
     }
-    if (t == _i1.getType<List<int>?>()) {
+    if (t == _is.getType<List<int>?>()) {
       return (data != null
               ? (data as List).map((e) => deserialize<int>(e)).toList()
               : null)
           as T;
     }
-    if (t == List<_i101.TimeReportLine>) {
+    if (t == List<_iify20ly.TimeReportLine>) {
       return (data as List)
-              .map((e) => deserialize<_i101.TimeReportLine>(e))
+              .map((e) => deserialize<_iify20ly.TimeReportLine>(e))
               .toList()
           as T;
     }
-    if (t == List<_i107.MyMembershipInfo>) {
+    if (t == List<_in8pujw9.MyMembershipInfo>) {
       return (data as List)
-              .map((e) => deserialize<_i107.MyMembershipInfo>(e))
+              .map((e) => deserialize<_in8pujw9.MyMembershipInfo>(e))
               .toList()
           as T;
     }
-    if (t == List<_i110.Feature>) {
-      return (data as List).map((e) => deserialize<_i110.Feature>(e)).toList()
-          as T;
-    }
-    if (t == List<_i111.AccountingTransaction>) {
+    if (t == List<_ipb0z0gh.Feature>) {
       return (data as List)
-              .map((e) => deserialize<_i111.AccountingTransaction>(e))
+              .map((e) => deserialize<_ipb0z0gh.Feature>(e))
               .toList()
           as T;
     }
-    if (t == List<_i112.GuidanceTip>) {
+    if (t == List<_ipjpfe96.AccountingTransaction>) {
       return (data as List)
-              .map((e) => deserialize<_i112.GuidanceTip>(e))
+              .map((e) => deserialize<_ipjpfe96.AccountingTransaction>(e))
               .toList()
           as T;
     }
-    if (t == List<_i113.Business>) {
-      return (data as List).map((e) => deserialize<_i113.Business>(e)).toList()
-          as T;
-    }
-    if (t == List<_i114.Document>) {
-      return (data as List).map((e) => deserialize<_i114.Document>(e)).toList()
-          as T;
-    }
-    if (t == List<_i115.ChecklistDefinition>) {
+    if (t == List<_imqtlho5.GuidanceTip>) {
       return (data as List)
-              .map((e) => deserialize<_i115.ChecklistDefinition>(e))
+              .map((e) => deserialize<_imqtlho5.GuidanceTip>(e))
               .toList()
           as T;
     }
-    if (t == List<_i116.UserGuidanceProgress>) {
+    if (t == List<_ipdla2qi.Business>) {
       return (data as List)
-              .map((e) => deserialize<_i116.UserGuidanceProgress>(e))
+              .map((e) => deserialize<_ipdla2qi.Business>(e))
               .toList()
           as T;
     }
-    if (t == List<_i117.Customer>) {
-      return (data as List).map((e) => deserialize<_i117.Customer>(e)).toList()
-          as T;
-    }
-    if (t == List<_i118.InvoiceItem>) {
+    if (t == List<_inbg4lrm.Document>) {
       return (data as List)
-              .map((e) => deserialize<_i118.InvoiceItem>(e))
+              .map((e) => deserialize<_inbg4lrm.Document>(e))
               .toList()
           as T;
     }
-    if (t == List<_i119.Invoice>) {
-      return (data as List).map((e) => deserialize<_i119.Invoice>(e)).toList()
-          as T;
-    }
-    if (t == List<_i120.InvoiceTemplate>) {
+    if (t == List<_i3jq3nn0.ChecklistDefinition>) {
       return (data as List)
-              .map((e) => deserialize<_i120.InvoiceTemplate>(e))
+              .map((e) => deserialize<_i3jq3nn0.ChecklistDefinition>(e))
               .toList()
           as T;
     }
-    if (t == List<_i121.Reminder>) {
-      return (data as List).map((e) => deserialize<_i121.Reminder>(e)).toList()
+    if (t == List<_ivw4ui03.UserGuidanceProgress>) {
+      return (data as List)
+              .map((e) => deserialize<_ivw4ui03.UserGuidanceProgress>(e))
+              .toList()
           as T;
     }
-    if (t == List<_i122.Task>) {
-      return (data as List).map((e) => deserialize<_i122.Task>(e)).toList()
+    if (t == List<_i120uj2v.Customer>) {
+      return (data as List)
+              .map((e) => deserialize<_i120uj2v.Customer>(e))
+              .toList()
           as T;
     }
-    if (t == List<_i123.Project>) {
-      return (data as List).map((e) => deserialize<_i123.Project>(e)).toList()
+    if (t == List<_i6zkktsi.InvoiceItem>) {
+      return (data as List)
+              .map((e) => deserialize<_i6zkktsi.InvoiceItem>(e))
+              .toList()
           as T;
     }
-    if (t == List<_i124.TimeEntry>) {
-      return (data as List).map((e) => deserialize<_i124.TimeEntry>(e)).toList()
+    if (t == List<_icjfst50.Invoice>) {
+      return (data as List)
+              .map((e) => deserialize<_icjfst50.Invoice>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_ier3zpp5.InvoiceTemplate>) {
+      return (data as List)
+              .map((e) => deserialize<_ier3zpp5.InvoiceTemplate>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_ilvs17xw.Reminder>) {
+      return (data as List)
+              .map((e) => deserialize<_ilvs17xw.Reminder>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_icr6zs8m.Task>) {
+      return (data as List).map((e) => deserialize<_icr6zs8m.Task>(e)).toList()
+          as T;
+    }
+    if (t == List<_ido2dfrq.Project>) {
+      return (data as List)
+              .map((e) => deserialize<_ido2dfrq.Project>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_ict1xti5.TimeEntry>) {
+      return (data as List)
+              .map((e) => deserialize<_ict1xti5.TimeEntry>(e))
+              .toList()
           as T;
     }
     try {
-      return _i3.Protocol().deserialize<T>(data, t);
-    } on _i1.DeserializationTypeNotFoundException catch (_) {}
+      return _if53ofrw.Protocol().deserialize<T>(data, t);
+    } on _is.DeserializationTypeNotFoundException catch (_) {}
     try {
-      return _i4.Protocol().deserialize<T>(data, t);
-    } on _i1.DeserializationTypeNotFoundException catch (_) {}
+      return _iacs.Protocol().deserialize<T>(data, t);
+    } on _is.DeserializationTypeNotFoundException catch (_) {}
     try {
-      return _i5.Protocol().deserialize<T>(data, t);
-    } on _i1.DeserializationTypeNotFoundException catch (_) {}
+      return _iais.Protocol().deserialize<T>(data, t);
+    } on _is.DeserializationTypeNotFoundException catch (_) {}
     try {
-      return _i2.Protocol().deserialize<T>(data, t);
-    } on _i1.DeserializationTypeNotFoundException catch (_) {}
+      return _isp.Protocol().deserialize<T>(data, t);
+    } on _is.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
-      _i6.AdminRole => 'AdminRole',
-      _i7.AdminUser => 'AdminUser',
-      _i8.AuditEntry => 'AuditEntry',
-      _i9.Feature => 'Feature',
-      _i10.ConflictException => 'ConflictException',
-      _i11.ForbiddenException => 'ForbiddenException',
-      _i12.NotFoundException => 'NotFoundException',
-      _i13.ValidationException => 'ValidationException',
-      _i14.Sequence => 'Sequence',
-      _i15.AccountingTransaction => 'AccountingTransaction',
-      _i16.CreateTransactionRequest => 'CreateTransactionRequest',
-      _i17.ProfitLossLine => 'ProfitLossLine',
-      _i18.ProfitLossReport => 'ProfitLossReport',
-      _i19.TransactionCategory => 'TransactionCategory',
-      _i20.TransactionType => 'TransactionType',
-      _i21.UpdateTransactionRequest => 'UpdateTransactionRequest',
-      _i22.AdminAuditEntry => 'AdminAuditEntry',
-      _i23.AdminAuditPage => 'AdminAuditPage',
-      _i24.AdminAuthStatus => 'AdminAuthStatus',
-      _i25.AdminBusinessDetail => 'AdminBusinessDetail',
-      _i26.AdminBusinessPage => 'AdminBusinessPage',
-      _i27.AdminInvoicePage => 'AdminInvoicePage',
-      _i28.AdminMembershipInfo => 'AdminMembershipInfo',
-      _i29.AdminStatsOverview => 'AdminStatsOverview',
-      _i30.AdminUserDossier => 'AdminUserDossier',
-      _i31.AdminUserSummary => 'AdminUserSummary',
-      _i32.AdminUserSummaryPage => 'AdminUserSummaryPage',
-      _i33.InvoiceStatusCount => 'InvoiceStatusCount',
-      _i34.Address => 'Address',
-      _i35.Business => 'Business',
-      _i36.BusinessSettings => 'BusinessSettings',
-      _i37.Country => 'Country',
-      _i38.CreateBusinessRequest => 'CreateBusinessRequest',
-      _i39.Currency => 'Currency',
-      _i40.LegalForm => 'LegalForm',
-      _i41.Locale => 'Locale',
-      _i42.Membership => 'Membership',
-      _i43.MembershipRole => 'MembershipRole',
-      _i44.RoundingMode => 'RoundingMode',
-      _i45.UpdateBusinessRequest => 'UpdateBusinessRequest',
-      _i46.UpdateBusinessSettingsRequest => 'UpdateBusinessSettingsRequest',
-      _i47.DashboardKpis => 'DashboardKpis',
-      _i48.DashboardSummary => 'DashboardSummary',
-      _i49.DebtorSummary => 'DebtorSummary',
-      _i50.MonthlyTrendPoint => 'MonthlyTrendPoint',
-      _i51.ReceivablesSummary => 'ReceivablesSummary',
-      _i52.RecentTimeEntry => 'RecentTimeEntry',
-      _i53.Document => 'Document',
-      _i54.DocumentKind => 'DocumentKind',
-      _i55.StorageLocation => 'StorageLocation',
-      _i56.UploadDocumentRequest => 'UploadDocumentRequest',
-      _i57.ChecklistDefinition => 'ChecklistDefinition',
-      _i58.ChecklistItemDefinition => 'ChecklistItemDefinition',
-      _i59.GuidanceTip => 'GuidanceTip',
-      _i60.GuidanceTipOverride => 'GuidanceTipOverride',
-      _i61.UserGuidanceProgress => 'UserGuidanceProgress',
-      _i62.CreateCustomerRequest => 'CreateCustomerRequest',
-      _i63.CreateInvoiceRequest => 'CreateInvoiceRequest',
-      _i64.CreateInvoiceTemplateRequest => 'CreateInvoiceTemplateRequest',
-      _i65.CreateRecurringScheduleRequest => 'CreateRecurringScheduleRequest',
-      _i66.Customer => 'Customer',
-      _i67.CustomerCursorPage => 'CustomerCursorPage',
-      _i68.CustomerListPage => 'CustomerListPage',
-      _i69.CustomerStatus => 'CustomerStatus',
-      _i70.Invoice => 'Invoice',
-      _i71.InvoiceCursorPage => 'InvoiceCursorPage',
-      _i72.InvoiceItem => 'InvoiceItem',
-      _i73.InvoiceItemRequest => 'InvoiceItemRequest',
-      _i74.InvoiceItemUnit => 'InvoiceItemUnit',
-      _i75.InvoiceListPage => 'InvoiceListPage',
-      _i76.InvoicePaymentStatus => 'InvoicePaymentStatus',
-      _i77.InvoiceStatus => 'InvoiceStatus',
-      _i78.InvoiceTemplate => 'InvoiceTemplate',
-      _i79.InvoiceType => 'InvoiceType',
-      _i80.PaymentMethod => 'PaymentMethod',
-      _i81.PaymentRecord => 'PaymentRecord',
-      _i82.RecordPaymentRequest => 'RecordPaymentRequest',
-      _i83.RecurrenceInterval => 'RecurrenceInterval',
-      _i84.Reminder => 'Reminder',
-      _i85.UpdateCustomerRequest => 'UpdateCustomerRequest',
-      _i86.UpdateInvoiceRequest => 'UpdateInvoiceRequest',
-      _i87.UpdateInvoiceTemplateRequest => 'UpdateInvoiceTemplateRequest',
-      _i88.UpdateRecurringScheduleRequest => 'UpdateRecurringScheduleRequest',
-      _i89.VatRate => 'VatRate',
-      _i90.CreateProjectRequest => 'CreateProjectRequest',
-      _i91.CreateTaskRequest => 'CreateTaskRequest',
-      _i92.CreateTimeEntriesInvoiceRequest => 'CreateTimeEntriesInvoiceRequest',
-      _i93.CreateTimeEntryRequest => 'CreateTimeEntryRequest',
-      _i94.Project => 'Project',
-      _i95.ProjectStatus => 'ProjectStatus',
-      _i96.StartTimerRequest => 'StartTimerRequest',
-      _i97.Task => 'Task',
-      _i98.TaskStatus => 'TaskStatus',
-      _i99.TimeEntry => 'TimeEntry',
-      _i100.TimeReport => 'TimeReport',
-      _i101.TimeReportLine => 'TimeReportLine',
-      _i102.UpdateProjectRequest => 'UpdateProjectRequest',
-      _i103.UpdateTaskRequest => 'UpdateTaskRequest',
-      _i104.UpdateTimeEntryRequest => 'UpdateTimeEntryRequest',
-      _i105.AppTheme => 'AppTheme',
-      _i106.MyIdentity => 'MyIdentity',
-      _i107.MyMembershipInfo => 'MyMembershipInfo',
-      _i108.UpdateUserProfileRequest => 'UpdateUserProfileRequest',
-      _i109.UserProfile => 'UserProfile',
+      _i409qkgd.AdminRole => 'AdminRole',
+      _ixu4yxcv.AdminUser => 'AdminUser',
+      _iv98pmde.AuditEntry => 'AuditEntry',
+      _i0s5j3nj.Feature => 'Feature',
+      _i5epujyq.ConflictException => 'ConflictException',
+      _io9vwtrc.ForbiddenException => 'ForbiddenException',
+      _ixeh2c1z.NotFoundException => 'NotFoundException',
+      _io4t73gt.ValidationException => 'ValidationException',
+      _iwzk2tv7.Sequence => 'Sequence',
+      _imcpe7lh.AccountingTransaction => 'AccountingTransaction',
+      _ipamnsx8.CreateTransactionRequest => 'CreateTransactionRequest',
+      _iixw78u5.ProfitLossLine => 'ProfitLossLine',
+      _isurdgsv.ProfitLossReport => 'ProfitLossReport',
+      _imo6tjrw.TransactionCategory => 'TransactionCategory',
+      _ik9vnz0w.TransactionType => 'TransactionType',
+      _iyj5tb39.UpdateTransactionRequest => 'UpdateTransactionRequest',
+      _io6p5gfm.AdminAuditEntry => 'AdminAuditEntry',
+      _iaab9k46.AdminAuditPage => 'AdminAuditPage',
+      _ipsgq99z.AdminAuthStatus => 'AdminAuthStatus',
+      _i32iaxq2.AdminBusinessDetail => 'AdminBusinessDetail',
+      _iytjl6p4.AdminBusinessPage => 'AdminBusinessPage',
+      _ia380t04.AdminInvoicePage => 'AdminInvoicePage',
+      _igm2ntgz.AdminMembershipInfo => 'AdminMembershipInfo',
+      _ihc64acz.AdminStatsOverview => 'AdminStatsOverview',
+      _ibyotlfs.AdminUserDossier => 'AdminUserDossier',
+      _iwdjv467.AdminUserSummary => 'AdminUserSummary',
+      _i2f075pm.AdminUserSummaryPage => 'AdminUserSummaryPage',
+      _ikvugyyu.InvoiceStatusCount => 'InvoiceStatusCount',
+      _izfx9e18.Address => 'Address',
+      _im9zvu8o.Business => 'Business',
+      _ixvagzl5.BusinessSettings => 'BusinessSettings',
+      _i8xf36x2.Country => 'Country',
+      _i1txccp7.CreateBusinessRequest => 'CreateBusinessRequest',
+      _i1srbh9z.Currency => 'Currency',
+      _i5egs7uv.LegalForm => 'LegalForm',
+      _ii0188h0.Locale => 'Locale',
+      _iu72qgm4.Membership => 'Membership',
+      _iv0iprnk.MembershipRole => 'MembershipRole',
+      _iku7b3rb.RoundingMode => 'RoundingMode',
+      _inkd6ewo.UpdateBusinessRequest => 'UpdateBusinessRequest',
+      _ii46p08a.UpdateBusinessSettingsRequest =>
+        'UpdateBusinessSettingsRequest',
+      _i1j0w1sv.DashboardKpis => 'DashboardKpis',
+      _iw3j14uv.DashboardSummary => 'DashboardSummary',
+      _ix33w5u6.DebtorSummary => 'DebtorSummary',
+      _ixg6nsli.MonthlyTrendPoint => 'MonthlyTrendPoint',
+      _ie3ro5gq.ReceivablesSummary => 'ReceivablesSummary',
+      _impe7ay9.RecentTimeEntry => 'RecentTimeEntry',
+      _i9jvbk51.Document => 'Document',
+      _imaz1zqg.DocumentKind => 'DocumentKind',
+      _i9qnixrl.StorageLocation => 'StorageLocation',
+      _iz60udpo.UploadDocumentRequest => 'UploadDocumentRequest',
+      _i04z5hwj.ChecklistDefinition => 'ChecklistDefinition',
+      _i5jbvijx.ChecklistItemDefinition => 'ChecklistItemDefinition',
+      _irvclg1d.GuidanceTip => 'GuidanceTip',
+      _i3qwvpcu.GuidanceTipOverride => 'GuidanceTipOverride',
+      _ik05lx5a.UserGuidanceProgress => 'UserGuidanceProgress',
+      _i90hzmg5.CreateCustomerRequest => 'CreateCustomerRequest',
+      _ia6btdit.CreateInvoiceRequest => 'CreateInvoiceRequest',
+      _iyi9fugk.CreateInvoiceTemplateRequest => 'CreateInvoiceTemplateRequest',
+      _i4j5ra9q.CreateRecurringScheduleRequest =>
+        'CreateRecurringScheduleRequest',
+      _ic8wp775.Customer => 'Customer',
+      _if0yalhk.CustomerCursorPage => 'CustomerCursorPage',
+      _iakrzq1i.CustomerListPage => 'CustomerListPage',
+      _ibddqx0x.CustomerStatus => 'CustomerStatus',
+      _imguyn55.Invoice => 'Invoice',
+      _i2f30jh4.InvoiceCursorPage => 'InvoiceCursorPage',
+      _iu86qxr6.InvoiceItem => 'InvoiceItem',
+      _it1pcy1x.InvoiceItemRequest => 'InvoiceItemRequest',
+      _ik22qf7o.InvoiceItemUnit => 'InvoiceItemUnit',
+      _i6mqpqud.InvoiceListPage => 'InvoiceListPage',
+      _i6e3kqsf.InvoicePaymentStatus => 'InvoicePaymentStatus',
+      _i80dthru.InvoiceStatus => 'InvoiceStatus',
+      _isaqeos4.InvoiceTemplate => 'InvoiceTemplate',
+      _io5qrdfp.InvoiceType => 'InvoiceType',
+      _i31hy3jj.PaymentMethod => 'PaymentMethod',
+      _id8w36x8.PaymentRecord => 'PaymentRecord',
+      _i2drsvke.RecordPaymentRequest => 'RecordPaymentRequest',
+      _it8iedui.RecurrenceInterval => 'RecurrenceInterval',
+      _i0xuine3.Reminder => 'Reminder',
+      _icatwcwa.UpdateCustomerRequest => 'UpdateCustomerRequest',
+      _iteadt76.UpdateInvoiceRequest => 'UpdateInvoiceRequest',
+      _ilpliwg4.UpdateInvoiceTemplateRequest => 'UpdateInvoiceTemplateRequest',
+      _i037hdza.UpdateRecurringScheduleRequest =>
+        'UpdateRecurringScheduleRequest',
+      _id7e2pr5.VatRate => 'VatRate',
+      _i8rbvyvx.CreateProjectRequest => 'CreateProjectRequest',
+      _iagq7u79.CreateTaskRequest => 'CreateTaskRequest',
+      _i3b86gp3.CreateTimeEntriesInvoiceRequest =>
+        'CreateTimeEntriesInvoiceRequest',
+      _i85810i7.CreateTimeEntryRequest => 'CreateTimeEntryRequest',
+      _i2wiwzxn.Project => 'Project',
+      _i8h0tbjs.ProjectStatus => 'ProjectStatus',
+      _i2ishkic.StartTimerRequest => 'StartTimerRequest',
+      _ihpxqi7u.Task => 'Task',
+      _iieqkj38.TaskStatus => 'TaskStatus',
+      _ii8lft1t.TimeEntry => 'TimeEntry',
+      _ilk96oxt.TimeReport => 'TimeReport',
+      _iify20ly.TimeReportLine => 'TimeReportLine',
+      _ilqqks6d.UpdateProjectRequest => 'UpdateProjectRequest',
+      _i3iu7ffh.UpdateTaskRequest => 'UpdateTaskRequest',
+      _iferwyg8.UpdateTimeEntryRequest => 'UpdateTimeEntryRequest',
+      _iy79t9m6.AppTheme => 'AppTheme',
+      _i1sqdvz3.MyIdentity => 'MyIdentity',
+      _in8pujw9.MyMembershipInfo => 'MyMembershipInfo',
+      _i5r0ss6k.UpdateUserProfileRequest => 'UpdateUserProfileRequest',
+      _iung9xmp.UserProfile => 'UserProfile',
       _ => null,
     };
   }
@@ -3463,234 +3574,234 @@ class Protocol extends _i1.DatabaseSerializationManager {
     }
 
     switch (data) {
-      case _i6.AdminRole():
+      case _i409qkgd.AdminRole():
         return 'AdminRole';
-      case _i7.AdminUser():
+      case _ixu4yxcv.AdminUser():
         return 'AdminUser';
-      case _i8.AuditEntry():
+      case _iv98pmde.AuditEntry():
         return 'AuditEntry';
-      case _i9.Feature():
+      case _i0s5j3nj.Feature():
         return 'Feature';
-      case _i10.ConflictException():
+      case _i5epujyq.ConflictException():
         return 'ConflictException';
-      case _i11.ForbiddenException():
+      case _io9vwtrc.ForbiddenException():
         return 'ForbiddenException';
-      case _i12.NotFoundException():
+      case _ixeh2c1z.NotFoundException():
         return 'NotFoundException';
-      case _i13.ValidationException():
+      case _io4t73gt.ValidationException():
         return 'ValidationException';
-      case _i14.Sequence():
+      case _iwzk2tv7.Sequence():
         return 'Sequence';
-      case _i15.AccountingTransaction():
+      case _imcpe7lh.AccountingTransaction():
         return 'AccountingTransaction';
-      case _i16.CreateTransactionRequest():
+      case _ipamnsx8.CreateTransactionRequest():
         return 'CreateTransactionRequest';
-      case _i17.ProfitLossLine():
+      case _iixw78u5.ProfitLossLine():
         return 'ProfitLossLine';
-      case _i18.ProfitLossReport():
+      case _isurdgsv.ProfitLossReport():
         return 'ProfitLossReport';
-      case _i19.TransactionCategory():
+      case _imo6tjrw.TransactionCategory():
         return 'TransactionCategory';
-      case _i20.TransactionType():
+      case _ik9vnz0w.TransactionType():
         return 'TransactionType';
-      case _i21.UpdateTransactionRequest():
+      case _iyj5tb39.UpdateTransactionRequest():
         return 'UpdateTransactionRequest';
-      case _i22.AdminAuditEntry():
+      case _io6p5gfm.AdminAuditEntry():
         return 'AdminAuditEntry';
-      case _i23.AdminAuditPage():
+      case _iaab9k46.AdminAuditPage():
         return 'AdminAuditPage';
-      case _i24.AdminAuthStatus():
+      case _ipsgq99z.AdminAuthStatus():
         return 'AdminAuthStatus';
-      case _i25.AdminBusinessDetail():
+      case _i32iaxq2.AdminBusinessDetail():
         return 'AdminBusinessDetail';
-      case _i26.AdminBusinessPage():
+      case _iytjl6p4.AdminBusinessPage():
         return 'AdminBusinessPage';
-      case _i27.AdminInvoicePage():
+      case _ia380t04.AdminInvoicePage():
         return 'AdminInvoicePage';
-      case _i28.AdminMembershipInfo():
+      case _igm2ntgz.AdminMembershipInfo():
         return 'AdminMembershipInfo';
-      case _i29.AdminStatsOverview():
+      case _ihc64acz.AdminStatsOverview():
         return 'AdminStatsOverview';
-      case _i30.AdminUserDossier():
+      case _ibyotlfs.AdminUserDossier():
         return 'AdminUserDossier';
-      case _i31.AdminUserSummary():
+      case _iwdjv467.AdminUserSummary():
         return 'AdminUserSummary';
-      case _i32.AdminUserSummaryPage():
+      case _i2f075pm.AdminUserSummaryPage():
         return 'AdminUserSummaryPage';
-      case _i33.InvoiceStatusCount():
+      case _ikvugyyu.InvoiceStatusCount():
         return 'InvoiceStatusCount';
-      case _i34.Address():
+      case _izfx9e18.Address():
         return 'Address';
-      case _i35.Business():
+      case _im9zvu8o.Business():
         return 'Business';
-      case _i36.BusinessSettings():
+      case _ixvagzl5.BusinessSettings():
         return 'BusinessSettings';
-      case _i37.Country():
+      case _i8xf36x2.Country():
         return 'Country';
-      case _i38.CreateBusinessRequest():
+      case _i1txccp7.CreateBusinessRequest():
         return 'CreateBusinessRequest';
-      case _i39.Currency():
+      case _i1srbh9z.Currency():
         return 'Currency';
-      case _i40.LegalForm():
+      case _i5egs7uv.LegalForm():
         return 'LegalForm';
-      case _i41.Locale():
+      case _ii0188h0.Locale():
         return 'Locale';
-      case _i42.Membership():
+      case _iu72qgm4.Membership():
         return 'Membership';
-      case _i43.MembershipRole():
+      case _iv0iprnk.MembershipRole():
         return 'MembershipRole';
-      case _i44.RoundingMode():
+      case _iku7b3rb.RoundingMode():
         return 'RoundingMode';
-      case _i45.UpdateBusinessRequest():
+      case _inkd6ewo.UpdateBusinessRequest():
         return 'UpdateBusinessRequest';
-      case _i46.UpdateBusinessSettingsRequest():
+      case _ii46p08a.UpdateBusinessSettingsRequest():
         return 'UpdateBusinessSettingsRequest';
-      case _i47.DashboardKpis():
+      case _i1j0w1sv.DashboardKpis():
         return 'DashboardKpis';
-      case _i48.DashboardSummary():
+      case _iw3j14uv.DashboardSummary():
         return 'DashboardSummary';
-      case _i49.DebtorSummary():
+      case _ix33w5u6.DebtorSummary():
         return 'DebtorSummary';
-      case _i50.MonthlyTrendPoint():
+      case _ixg6nsli.MonthlyTrendPoint():
         return 'MonthlyTrendPoint';
-      case _i51.ReceivablesSummary():
+      case _ie3ro5gq.ReceivablesSummary():
         return 'ReceivablesSummary';
-      case _i52.RecentTimeEntry():
+      case _impe7ay9.RecentTimeEntry():
         return 'RecentTimeEntry';
-      case _i53.Document():
+      case _i9jvbk51.Document():
         return 'Document';
-      case _i54.DocumentKind():
+      case _imaz1zqg.DocumentKind():
         return 'DocumentKind';
-      case _i55.StorageLocation():
+      case _i9qnixrl.StorageLocation():
         return 'StorageLocation';
-      case _i56.UploadDocumentRequest():
+      case _iz60udpo.UploadDocumentRequest():
         return 'UploadDocumentRequest';
-      case _i57.ChecklistDefinition():
+      case _i04z5hwj.ChecklistDefinition():
         return 'ChecklistDefinition';
-      case _i58.ChecklistItemDefinition():
+      case _i5jbvijx.ChecklistItemDefinition():
         return 'ChecklistItemDefinition';
-      case _i59.GuidanceTip():
+      case _irvclg1d.GuidanceTip():
         return 'GuidanceTip';
-      case _i60.GuidanceTipOverride():
+      case _i3qwvpcu.GuidanceTipOverride():
         return 'GuidanceTipOverride';
-      case _i61.UserGuidanceProgress():
+      case _ik05lx5a.UserGuidanceProgress():
         return 'UserGuidanceProgress';
-      case _i62.CreateCustomerRequest():
+      case _i90hzmg5.CreateCustomerRequest():
         return 'CreateCustomerRequest';
-      case _i63.CreateInvoiceRequest():
+      case _ia6btdit.CreateInvoiceRequest():
         return 'CreateInvoiceRequest';
-      case _i64.CreateInvoiceTemplateRequest():
+      case _iyi9fugk.CreateInvoiceTemplateRequest():
         return 'CreateInvoiceTemplateRequest';
-      case _i65.CreateRecurringScheduleRequest():
+      case _i4j5ra9q.CreateRecurringScheduleRequest():
         return 'CreateRecurringScheduleRequest';
-      case _i66.Customer():
+      case _ic8wp775.Customer():
         return 'Customer';
-      case _i67.CustomerCursorPage():
+      case _if0yalhk.CustomerCursorPage():
         return 'CustomerCursorPage';
-      case _i68.CustomerListPage():
+      case _iakrzq1i.CustomerListPage():
         return 'CustomerListPage';
-      case _i69.CustomerStatus():
+      case _ibddqx0x.CustomerStatus():
         return 'CustomerStatus';
-      case _i70.Invoice():
+      case _imguyn55.Invoice():
         return 'Invoice';
-      case _i71.InvoiceCursorPage():
+      case _i2f30jh4.InvoiceCursorPage():
         return 'InvoiceCursorPage';
-      case _i72.InvoiceItem():
+      case _iu86qxr6.InvoiceItem():
         return 'InvoiceItem';
-      case _i73.InvoiceItemRequest():
+      case _it1pcy1x.InvoiceItemRequest():
         return 'InvoiceItemRequest';
-      case _i74.InvoiceItemUnit():
+      case _ik22qf7o.InvoiceItemUnit():
         return 'InvoiceItemUnit';
-      case _i75.InvoiceListPage():
+      case _i6mqpqud.InvoiceListPage():
         return 'InvoiceListPage';
-      case _i76.InvoicePaymentStatus():
+      case _i6e3kqsf.InvoicePaymentStatus():
         return 'InvoicePaymentStatus';
-      case _i77.InvoiceStatus():
+      case _i80dthru.InvoiceStatus():
         return 'InvoiceStatus';
-      case _i78.InvoiceTemplate():
+      case _isaqeos4.InvoiceTemplate():
         return 'InvoiceTemplate';
-      case _i79.InvoiceType():
+      case _io5qrdfp.InvoiceType():
         return 'InvoiceType';
-      case _i80.PaymentMethod():
+      case _i31hy3jj.PaymentMethod():
         return 'PaymentMethod';
-      case _i81.PaymentRecord():
+      case _id8w36x8.PaymentRecord():
         return 'PaymentRecord';
-      case _i82.RecordPaymentRequest():
+      case _i2drsvke.RecordPaymentRequest():
         return 'RecordPaymentRequest';
-      case _i83.RecurrenceInterval():
+      case _it8iedui.RecurrenceInterval():
         return 'RecurrenceInterval';
-      case _i84.Reminder():
+      case _i0xuine3.Reminder():
         return 'Reminder';
-      case _i85.UpdateCustomerRequest():
+      case _icatwcwa.UpdateCustomerRequest():
         return 'UpdateCustomerRequest';
-      case _i86.UpdateInvoiceRequest():
+      case _iteadt76.UpdateInvoiceRequest():
         return 'UpdateInvoiceRequest';
-      case _i87.UpdateInvoiceTemplateRequest():
+      case _ilpliwg4.UpdateInvoiceTemplateRequest():
         return 'UpdateInvoiceTemplateRequest';
-      case _i88.UpdateRecurringScheduleRequest():
+      case _i037hdza.UpdateRecurringScheduleRequest():
         return 'UpdateRecurringScheduleRequest';
-      case _i89.VatRate():
+      case _id7e2pr5.VatRate():
         return 'VatRate';
-      case _i90.CreateProjectRequest():
+      case _i8rbvyvx.CreateProjectRequest():
         return 'CreateProjectRequest';
-      case _i91.CreateTaskRequest():
+      case _iagq7u79.CreateTaskRequest():
         return 'CreateTaskRequest';
-      case _i92.CreateTimeEntriesInvoiceRequest():
+      case _i3b86gp3.CreateTimeEntriesInvoiceRequest():
         return 'CreateTimeEntriesInvoiceRequest';
-      case _i93.CreateTimeEntryRequest():
+      case _i85810i7.CreateTimeEntryRequest():
         return 'CreateTimeEntryRequest';
-      case _i94.Project():
+      case _i2wiwzxn.Project():
         return 'Project';
-      case _i95.ProjectStatus():
+      case _i8h0tbjs.ProjectStatus():
         return 'ProjectStatus';
-      case _i96.StartTimerRequest():
+      case _i2ishkic.StartTimerRequest():
         return 'StartTimerRequest';
-      case _i97.Task():
+      case _ihpxqi7u.Task():
         return 'Task';
-      case _i98.TaskStatus():
+      case _iieqkj38.TaskStatus():
         return 'TaskStatus';
-      case _i99.TimeEntry():
+      case _ii8lft1t.TimeEntry():
         return 'TimeEntry';
-      case _i100.TimeReport():
+      case _ilk96oxt.TimeReport():
         return 'TimeReport';
-      case _i101.TimeReportLine():
+      case _iify20ly.TimeReportLine():
         return 'TimeReportLine';
-      case _i102.UpdateProjectRequest():
+      case _ilqqks6d.UpdateProjectRequest():
         return 'UpdateProjectRequest';
-      case _i103.UpdateTaskRequest():
+      case _i3iu7ffh.UpdateTaskRequest():
         return 'UpdateTaskRequest';
-      case _i104.UpdateTimeEntryRequest():
+      case _iferwyg8.UpdateTimeEntryRequest():
         return 'UpdateTimeEntryRequest';
-      case _i105.AppTheme():
+      case _iy79t9m6.AppTheme():
         return 'AppTheme';
-      case _i106.MyIdentity():
+      case _i1sqdvz3.MyIdentity():
         return 'MyIdentity';
-      case _i107.MyMembershipInfo():
+      case _in8pujw9.MyMembershipInfo():
         return 'MyMembershipInfo';
-      case _i108.UpdateUserProfileRequest():
+      case _i5r0ss6k.UpdateUserProfileRequest():
         return 'UpdateUserProfileRequest';
-      case _i109.UserProfile():
+      case _iung9xmp.UserProfile():
         return 'UserProfile';
     }
-    className = _i3.Protocol().getClassNameForObject(data);
+    className = _if53ofrw.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
-          : 'gewerber_commercial.$className';
+          : 'gewerber_backend_commercial.$className';
     }
-    className = _i4.Protocol().getClassNameForObject(data);
+    className = _iacs.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
           : 'serverpod_auth_core.$className';
     }
-    className = _i5.Protocol().getClassNameForObject(data);
+    className = _iais.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
           : 'serverpod_auth_idp.$className';
     }
-    className = _i2.Protocol().getClassNameForObject(data);
+    className = _isp.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.') ? className : 'serverpod.$className';
     }
@@ -3704,415 +3815,421 @@ class Protocol extends _i1.DatabaseSerializationManager {
       return super.deserializeByClassName(data);
     }
     if (dataClassName == 'AdminRole') {
-      return deserialize<_i6.AdminRole>(data['data']);
+      return deserialize<_i409qkgd.AdminRole>(data['data']);
     }
     if (dataClassName == 'AdminUser') {
-      return deserialize<_i7.AdminUser>(data['data']);
+      return deserialize<_ixu4yxcv.AdminUser>(data['data']);
     }
     if (dataClassName == 'AuditEntry') {
-      return deserialize<_i8.AuditEntry>(data['data']);
+      return deserialize<_iv98pmde.AuditEntry>(data['data']);
     }
     if (dataClassName == 'Feature') {
-      return deserialize<_i9.Feature>(data['data']);
+      return deserialize<_i0s5j3nj.Feature>(data['data']);
     }
     if (dataClassName == 'ConflictException') {
-      return deserialize<_i10.ConflictException>(data['data']);
+      return deserialize<_i5epujyq.ConflictException>(data['data']);
     }
     if (dataClassName == 'ForbiddenException') {
-      return deserialize<_i11.ForbiddenException>(data['data']);
+      return deserialize<_io9vwtrc.ForbiddenException>(data['data']);
     }
     if (dataClassName == 'NotFoundException') {
-      return deserialize<_i12.NotFoundException>(data['data']);
+      return deserialize<_ixeh2c1z.NotFoundException>(data['data']);
     }
     if (dataClassName == 'ValidationException') {
-      return deserialize<_i13.ValidationException>(data['data']);
+      return deserialize<_io4t73gt.ValidationException>(data['data']);
     }
     if (dataClassName == 'Sequence') {
-      return deserialize<_i14.Sequence>(data['data']);
+      return deserialize<_iwzk2tv7.Sequence>(data['data']);
     }
     if (dataClassName == 'AccountingTransaction') {
-      return deserialize<_i15.AccountingTransaction>(data['data']);
+      return deserialize<_imcpe7lh.AccountingTransaction>(data['data']);
     }
     if (dataClassName == 'CreateTransactionRequest') {
-      return deserialize<_i16.CreateTransactionRequest>(data['data']);
+      return deserialize<_ipamnsx8.CreateTransactionRequest>(data['data']);
     }
     if (dataClassName == 'ProfitLossLine') {
-      return deserialize<_i17.ProfitLossLine>(data['data']);
+      return deserialize<_iixw78u5.ProfitLossLine>(data['data']);
     }
     if (dataClassName == 'ProfitLossReport') {
-      return deserialize<_i18.ProfitLossReport>(data['data']);
+      return deserialize<_isurdgsv.ProfitLossReport>(data['data']);
     }
     if (dataClassName == 'TransactionCategory') {
-      return deserialize<_i19.TransactionCategory>(data['data']);
+      return deserialize<_imo6tjrw.TransactionCategory>(data['data']);
     }
     if (dataClassName == 'TransactionType') {
-      return deserialize<_i20.TransactionType>(data['data']);
+      return deserialize<_ik9vnz0w.TransactionType>(data['data']);
     }
     if (dataClassName == 'UpdateTransactionRequest') {
-      return deserialize<_i21.UpdateTransactionRequest>(data['data']);
+      return deserialize<_iyj5tb39.UpdateTransactionRequest>(data['data']);
     }
     if (dataClassName == 'AdminAuditEntry') {
-      return deserialize<_i22.AdminAuditEntry>(data['data']);
+      return deserialize<_io6p5gfm.AdminAuditEntry>(data['data']);
     }
     if (dataClassName == 'AdminAuditPage') {
-      return deserialize<_i23.AdminAuditPage>(data['data']);
+      return deserialize<_iaab9k46.AdminAuditPage>(data['data']);
     }
     if (dataClassName == 'AdminAuthStatus') {
-      return deserialize<_i24.AdminAuthStatus>(data['data']);
+      return deserialize<_ipsgq99z.AdminAuthStatus>(data['data']);
     }
     if (dataClassName == 'AdminBusinessDetail') {
-      return deserialize<_i25.AdminBusinessDetail>(data['data']);
+      return deserialize<_i32iaxq2.AdminBusinessDetail>(data['data']);
     }
     if (dataClassName == 'AdminBusinessPage') {
-      return deserialize<_i26.AdminBusinessPage>(data['data']);
+      return deserialize<_iytjl6p4.AdminBusinessPage>(data['data']);
     }
     if (dataClassName == 'AdminInvoicePage') {
-      return deserialize<_i27.AdminInvoicePage>(data['data']);
+      return deserialize<_ia380t04.AdminInvoicePage>(data['data']);
     }
     if (dataClassName == 'AdminMembershipInfo') {
-      return deserialize<_i28.AdminMembershipInfo>(data['data']);
+      return deserialize<_igm2ntgz.AdminMembershipInfo>(data['data']);
     }
     if (dataClassName == 'AdminStatsOverview') {
-      return deserialize<_i29.AdminStatsOverview>(data['data']);
+      return deserialize<_ihc64acz.AdminStatsOverview>(data['data']);
     }
     if (dataClassName == 'AdminUserDossier') {
-      return deserialize<_i30.AdminUserDossier>(data['data']);
+      return deserialize<_ibyotlfs.AdminUserDossier>(data['data']);
     }
     if (dataClassName == 'AdminUserSummary') {
-      return deserialize<_i31.AdminUserSummary>(data['data']);
+      return deserialize<_iwdjv467.AdminUserSummary>(data['data']);
     }
     if (dataClassName == 'AdminUserSummaryPage') {
-      return deserialize<_i32.AdminUserSummaryPage>(data['data']);
+      return deserialize<_i2f075pm.AdminUserSummaryPage>(data['data']);
     }
     if (dataClassName == 'InvoiceStatusCount') {
-      return deserialize<_i33.InvoiceStatusCount>(data['data']);
+      return deserialize<_ikvugyyu.InvoiceStatusCount>(data['data']);
     }
     if (dataClassName == 'Address') {
-      return deserialize<_i34.Address>(data['data']);
+      return deserialize<_izfx9e18.Address>(data['data']);
     }
     if (dataClassName == 'Business') {
-      return deserialize<_i35.Business>(data['data']);
+      return deserialize<_im9zvu8o.Business>(data['data']);
     }
     if (dataClassName == 'BusinessSettings') {
-      return deserialize<_i36.BusinessSettings>(data['data']);
+      return deserialize<_ixvagzl5.BusinessSettings>(data['data']);
     }
     if (dataClassName == 'Country') {
-      return deserialize<_i37.Country>(data['data']);
+      return deserialize<_i8xf36x2.Country>(data['data']);
     }
     if (dataClassName == 'CreateBusinessRequest') {
-      return deserialize<_i38.CreateBusinessRequest>(data['data']);
+      return deserialize<_i1txccp7.CreateBusinessRequest>(data['data']);
     }
     if (dataClassName == 'Currency') {
-      return deserialize<_i39.Currency>(data['data']);
+      return deserialize<_i1srbh9z.Currency>(data['data']);
     }
     if (dataClassName == 'LegalForm') {
-      return deserialize<_i40.LegalForm>(data['data']);
+      return deserialize<_i5egs7uv.LegalForm>(data['data']);
     }
     if (dataClassName == 'Locale') {
-      return deserialize<_i41.Locale>(data['data']);
+      return deserialize<_ii0188h0.Locale>(data['data']);
     }
     if (dataClassName == 'Membership') {
-      return deserialize<_i42.Membership>(data['data']);
+      return deserialize<_iu72qgm4.Membership>(data['data']);
     }
     if (dataClassName == 'MembershipRole') {
-      return deserialize<_i43.MembershipRole>(data['data']);
+      return deserialize<_iv0iprnk.MembershipRole>(data['data']);
     }
     if (dataClassName == 'RoundingMode') {
-      return deserialize<_i44.RoundingMode>(data['data']);
+      return deserialize<_iku7b3rb.RoundingMode>(data['data']);
     }
     if (dataClassName == 'UpdateBusinessRequest') {
-      return deserialize<_i45.UpdateBusinessRequest>(data['data']);
+      return deserialize<_inkd6ewo.UpdateBusinessRequest>(data['data']);
     }
     if (dataClassName == 'UpdateBusinessSettingsRequest') {
-      return deserialize<_i46.UpdateBusinessSettingsRequest>(data['data']);
+      return deserialize<_ii46p08a.UpdateBusinessSettingsRequest>(data['data']);
     }
     if (dataClassName == 'DashboardKpis') {
-      return deserialize<_i47.DashboardKpis>(data['data']);
+      return deserialize<_i1j0w1sv.DashboardKpis>(data['data']);
     }
     if (dataClassName == 'DashboardSummary') {
-      return deserialize<_i48.DashboardSummary>(data['data']);
+      return deserialize<_iw3j14uv.DashboardSummary>(data['data']);
     }
     if (dataClassName == 'DebtorSummary') {
-      return deserialize<_i49.DebtorSummary>(data['data']);
+      return deserialize<_ix33w5u6.DebtorSummary>(data['data']);
     }
     if (dataClassName == 'MonthlyTrendPoint') {
-      return deserialize<_i50.MonthlyTrendPoint>(data['data']);
+      return deserialize<_ixg6nsli.MonthlyTrendPoint>(data['data']);
     }
     if (dataClassName == 'ReceivablesSummary') {
-      return deserialize<_i51.ReceivablesSummary>(data['data']);
+      return deserialize<_ie3ro5gq.ReceivablesSummary>(data['data']);
     }
     if (dataClassName == 'RecentTimeEntry') {
-      return deserialize<_i52.RecentTimeEntry>(data['data']);
+      return deserialize<_impe7ay9.RecentTimeEntry>(data['data']);
     }
     if (dataClassName == 'Document') {
-      return deserialize<_i53.Document>(data['data']);
+      return deserialize<_i9jvbk51.Document>(data['data']);
     }
     if (dataClassName == 'DocumentKind') {
-      return deserialize<_i54.DocumentKind>(data['data']);
+      return deserialize<_imaz1zqg.DocumentKind>(data['data']);
     }
     if (dataClassName == 'StorageLocation') {
-      return deserialize<_i55.StorageLocation>(data['data']);
+      return deserialize<_i9qnixrl.StorageLocation>(data['data']);
     }
     if (dataClassName == 'UploadDocumentRequest') {
-      return deserialize<_i56.UploadDocumentRequest>(data['data']);
+      return deserialize<_iz60udpo.UploadDocumentRequest>(data['data']);
     }
     if (dataClassName == 'ChecklistDefinition') {
-      return deserialize<_i57.ChecklistDefinition>(data['data']);
+      return deserialize<_i04z5hwj.ChecklistDefinition>(data['data']);
     }
     if (dataClassName == 'ChecklistItemDefinition') {
-      return deserialize<_i58.ChecklistItemDefinition>(data['data']);
+      return deserialize<_i5jbvijx.ChecklistItemDefinition>(data['data']);
     }
     if (dataClassName == 'GuidanceTip') {
-      return deserialize<_i59.GuidanceTip>(data['data']);
+      return deserialize<_irvclg1d.GuidanceTip>(data['data']);
     }
     if (dataClassName == 'GuidanceTipOverride') {
-      return deserialize<_i60.GuidanceTipOverride>(data['data']);
+      return deserialize<_i3qwvpcu.GuidanceTipOverride>(data['data']);
     }
     if (dataClassName == 'UserGuidanceProgress') {
-      return deserialize<_i61.UserGuidanceProgress>(data['data']);
+      return deserialize<_ik05lx5a.UserGuidanceProgress>(data['data']);
     }
     if (dataClassName == 'CreateCustomerRequest') {
-      return deserialize<_i62.CreateCustomerRequest>(data['data']);
+      return deserialize<_i90hzmg5.CreateCustomerRequest>(data['data']);
     }
     if (dataClassName == 'CreateInvoiceRequest') {
-      return deserialize<_i63.CreateInvoiceRequest>(data['data']);
+      return deserialize<_ia6btdit.CreateInvoiceRequest>(data['data']);
     }
     if (dataClassName == 'CreateInvoiceTemplateRequest') {
-      return deserialize<_i64.CreateInvoiceTemplateRequest>(data['data']);
+      return deserialize<_iyi9fugk.CreateInvoiceTemplateRequest>(data['data']);
     }
     if (dataClassName == 'CreateRecurringScheduleRequest') {
-      return deserialize<_i65.CreateRecurringScheduleRequest>(data['data']);
+      return deserialize<_i4j5ra9q.CreateRecurringScheduleRequest>(
+        data['data'],
+      );
     }
     if (dataClassName == 'Customer') {
-      return deserialize<_i66.Customer>(data['data']);
+      return deserialize<_ic8wp775.Customer>(data['data']);
     }
     if (dataClassName == 'CustomerCursorPage') {
-      return deserialize<_i67.CustomerCursorPage>(data['data']);
+      return deserialize<_if0yalhk.CustomerCursorPage>(data['data']);
     }
     if (dataClassName == 'CustomerListPage') {
-      return deserialize<_i68.CustomerListPage>(data['data']);
+      return deserialize<_iakrzq1i.CustomerListPage>(data['data']);
     }
     if (dataClassName == 'CustomerStatus') {
-      return deserialize<_i69.CustomerStatus>(data['data']);
+      return deserialize<_ibddqx0x.CustomerStatus>(data['data']);
     }
     if (dataClassName == 'Invoice') {
-      return deserialize<_i70.Invoice>(data['data']);
+      return deserialize<_imguyn55.Invoice>(data['data']);
     }
     if (dataClassName == 'InvoiceCursorPage') {
-      return deserialize<_i71.InvoiceCursorPage>(data['data']);
+      return deserialize<_i2f30jh4.InvoiceCursorPage>(data['data']);
     }
     if (dataClassName == 'InvoiceItem') {
-      return deserialize<_i72.InvoiceItem>(data['data']);
+      return deserialize<_iu86qxr6.InvoiceItem>(data['data']);
     }
     if (dataClassName == 'InvoiceItemRequest') {
-      return deserialize<_i73.InvoiceItemRequest>(data['data']);
+      return deserialize<_it1pcy1x.InvoiceItemRequest>(data['data']);
     }
     if (dataClassName == 'InvoiceItemUnit') {
-      return deserialize<_i74.InvoiceItemUnit>(data['data']);
+      return deserialize<_ik22qf7o.InvoiceItemUnit>(data['data']);
     }
     if (dataClassName == 'InvoiceListPage') {
-      return deserialize<_i75.InvoiceListPage>(data['data']);
+      return deserialize<_i6mqpqud.InvoiceListPage>(data['data']);
     }
     if (dataClassName == 'InvoicePaymentStatus') {
-      return deserialize<_i76.InvoicePaymentStatus>(data['data']);
+      return deserialize<_i6e3kqsf.InvoicePaymentStatus>(data['data']);
     }
     if (dataClassName == 'InvoiceStatus') {
-      return deserialize<_i77.InvoiceStatus>(data['data']);
+      return deserialize<_i80dthru.InvoiceStatus>(data['data']);
     }
     if (dataClassName == 'InvoiceTemplate') {
-      return deserialize<_i78.InvoiceTemplate>(data['data']);
+      return deserialize<_isaqeos4.InvoiceTemplate>(data['data']);
     }
     if (dataClassName == 'InvoiceType') {
-      return deserialize<_i79.InvoiceType>(data['data']);
+      return deserialize<_io5qrdfp.InvoiceType>(data['data']);
     }
     if (dataClassName == 'PaymentMethod') {
-      return deserialize<_i80.PaymentMethod>(data['data']);
+      return deserialize<_i31hy3jj.PaymentMethod>(data['data']);
     }
     if (dataClassName == 'PaymentRecord') {
-      return deserialize<_i81.PaymentRecord>(data['data']);
+      return deserialize<_id8w36x8.PaymentRecord>(data['data']);
     }
     if (dataClassName == 'RecordPaymentRequest') {
-      return deserialize<_i82.RecordPaymentRequest>(data['data']);
+      return deserialize<_i2drsvke.RecordPaymentRequest>(data['data']);
     }
     if (dataClassName == 'RecurrenceInterval') {
-      return deserialize<_i83.RecurrenceInterval>(data['data']);
+      return deserialize<_it8iedui.RecurrenceInterval>(data['data']);
     }
     if (dataClassName == 'Reminder') {
-      return deserialize<_i84.Reminder>(data['data']);
+      return deserialize<_i0xuine3.Reminder>(data['data']);
     }
     if (dataClassName == 'UpdateCustomerRequest') {
-      return deserialize<_i85.UpdateCustomerRequest>(data['data']);
+      return deserialize<_icatwcwa.UpdateCustomerRequest>(data['data']);
     }
     if (dataClassName == 'UpdateInvoiceRequest') {
-      return deserialize<_i86.UpdateInvoiceRequest>(data['data']);
+      return deserialize<_iteadt76.UpdateInvoiceRequest>(data['data']);
     }
     if (dataClassName == 'UpdateInvoiceTemplateRequest') {
-      return deserialize<_i87.UpdateInvoiceTemplateRequest>(data['data']);
+      return deserialize<_ilpliwg4.UpdateInvoiceTemplateRequest>(data['data']);
     }
     if (dataClassName == 'UpdateRecurringScheduleRequest') {
-      return deserialize<_i88.UpdateRecurringScheduleRequest>(data['data']);
+      return deserialize<_i037hdza.UpdateRecurringScheduleRequest>(
+        data['data'],
+      );
     }
     if (dataClassName == 'VatRate') {
-      return deserialize<_i89.VatRate>(data['data']);
+      return deserialize<_id7e2pr5.VatRate>(data['data']);
     }
     if (dataClassName == 'CreateProjectRequest') {
-      return deserialize<_i90.CreateProjectRequest>(data['data']);
+      return deserialize<_i8rbvyvx.CreateProjectRequest>(data['data']);
     }
     if (dataClassName == 'CreateTaskRequest') {
-      return deserialize<_i91.CreateTaskRequest>(data['data']);
+      return deserialize<_iagq7u79.CreateTaskRequest>(data['data']);
     }
     if (dataClassName == 'CreateTimeEntriesInvoiceRequest') {
-      return deserialize<_i92.CreateTimeEntriesInvoiceRequest>(data['data']);
+      return deserialize<_i3b86gp3.CreateTimeEntriesInvoiceRequest>(
+        data['data'],
+      );
     }
     if (dataClassName == 'CreateTimeEntryRequest') {
-      return deserialize<_i93.CreateTimeEntryRequest>(data['data']);
+      return deserialize<_i85810i7.CreateTimeEntryRequest>(data['data']);
     }
     if (dataClassName == 'Project') {
-      return deserialize<_i94.Project>(data['data']);
+      return deserialize<_i2wiwzxn.Project>(data['data']);
     }
     if (dataClassName == 'ProjectStatus') {
-      return deserialize<_i95.ProjectStatus>(data['data']);
+      return deserialize<_i8h0tbjs.ProjectStatus>(data['data']);
     }
     if (dataClassName == 'StartTimerRequest') {
-      return deserialize<_i96.StartTimerRequest>(data['data']);
+      return deserialize<_i2ishkic.StartTimerRequest>(data['data']);
     }
     if (dataClassName == 'Task') {
-      return deserialize<_i97.Task>(data['data']);
+      return deserialize<_ihpxqi7u.Task>(data['data']);
     }
     if (dataClassName == 'TaskStatus') {
-      return deserialize<_i98.TaskStatus>(data['data']);
+      return deserialize<_iieqkj38.TaskStatus>(data['data']);
     }
     if (dataClassName == 'TimeEntry') {
-      return deserialize<_i99.TimeEntry>(data['data']);
+      return deserialize<_ii8lft1t.TimeEntry>(data['data']);
     }
     if (dataClassName == 'TimeReport') {
-      return deserialize<_i100.TimeReport>(data['data']);
+      return deserialize<_ilk96oxt.TimeReport>(data['data']);
     }
     if (dataClassName == 'TimeReportLine') {
-      return deserialize<_i101.TimeReportLine>(data['data']);
+      return deserialize<_iify20ly.TimeReportLine>(data['data']);
     }
     if (dataClassName == 'UpdateProjectRequest') {
-      return deserialize<_i102.UpdateProjectRequest>(data['data']);
+      return deserialize<_ilqqks6d.UpdateProjectRequest>(data['data']);
     }
     if (dataClassName == 'UpdateTaskRequest') {
-      return deserialize<_i103.UpdateTaskRequest>(data['data']);
+      return deserialize<_i3iu7ffh.UpdateTaskRequest>(data['data']);
     }
     if (dataClassName == 'UpdateTimeEntryRequest') {
-      return deserialize<_i104.UpdateTimeEntryRequest>(data['data']);
+      return deserialize<_iferwyg8.UpdateTimeEntryRequest>(data['data']);
     }
     if (dataClassName == 'AppTheme') {
-      return deserialize<_i105.AppTheme>(data['data']);
+      return deserialize<_iy79t9m6.AppTheme>(data['data']);
     }
     if (dataClassName == 'MyIdentity') {
-      return deserialize<_i106.MyIdentity>(data['data']);
+      return deserialize<_i1sqdvz3.MyIdentity>(data['data']);
     }
     if (dataClassName == 'MyMembershipInfo') {
-      return deserialize<_i107.MyMembershipInfo>(data['data']);
+      return deserialize<_in8pujw9.MyMembershipInfo>(data['data']);
     }
     if (dataClassName == 'UpdateUserProfileRequest') {
-      return deserialize<_i108.UpdateUserProfileRequest>(data['data']);
+      return deserialize<_i5r0ss6k.UpdateUserProfileRequest>(data['data']);
     }
     if (dataClassName == 'UserProfile') {
-      return deserialize<_i109.UserProfile>(data['data']);
+      return deserialize<_iung9xmp.UserProfile>(data['data']);
     }
-    if (dataClassName.startsWith('gewerber_commercial.')) {
-      data['className'] = dataClassName.substring(20);
-      return _i3.Protocol().deserializeByClassName(data);
+    if (dataClassName.startsWith('gewerber_backend_commercial.')) {
+      data['className'] = dataClassName.substring(28);
+      return _if53ofrw.Protocol().deserializeByClassName(data);
     }
     if (dataClassName.startsWith('serverpod_auth_core.')) {
       data['className'] = dataClassName.substring(20);
-      return _i4.Protocol().deserializeByClassName(data);
+      return _iacs.Protocol().deserializeByClassName(data);
     }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);
-      return _i5.Protocol().deserializeByClassName(data);
+      return _iais.Protocol().deserializeByClassName(data);
     }
     if (dataClassName.startsWith('serverpod.')) {
       data['className'] = dataClassName.substring(10);
-      return _i2.Protocol().deserializeByClassName(data);
+      return _isp.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }
 
   void _registerHostProtocols() {
-    _i3.Protocol().registerHostProtocol('gewerber_backend', this);
-    _i4.Protocol().registerHostProtocol('gewerber_backend', this);
-    _i5.Protocol().registerHostProtocol('gewerber_backend', this);
+    _if53ofrw.Protocol().registerHostProtocol('gewerber_backend', this);
+    _iacs.Protocol().registerHostProtocol('gewerber_backend', this);
+    _iais.Protocol().registerHostProtocol('gewerber_backend', this);
   }
 
   @override
-  _i1.Table? getTableForType(Type t) {
+  _is.Table? getTableForType(Type t) {
     {
-      var table = _i3.Protocol().getTableForType(t);
+      var table = _if53ofrw.Protocol().getTableForType(t);
       if (table != null) {
         return table;
       }
     }
     {
-      var table = _i4.Protocol().getTableForType(t);
+      var table = _iacs.Protocol().getTableForType(t);
       if (table != null) {
         return table;
       }
     }
     {
-      var table = _i5.Protocol().getTableForType(t);
+      var table = _iais.Protocol().getTableForType(t);
       if (table != null) {
         return table;
       }
     }
     {
-      var table = _i2.Protocol().getTableForType(t);
+      var table = _isp.Protocol().getTableForType(t);
       if (table != null) {
         return table;
       }
     }
     switch (t) {
-      case _i7.AdminUser:
-        return _i7.AdminUser.t;
-      case _i8.AuditEntry:
-        return _i8.AuditEntry.t;
-      case _i14.Sequence:
-        return _i14.Sequence.t;
-      case _i15.AccountingTransaction:
-        return _i15.AccountingTransaction.t;
-      case _i35.Business:
-        return _i35.Business.t;
-      case _i36.BusinessSettings:
-        return _i36.BusinessSettings.t;
-      case _i42.Membership:
-        return _i42.Membership.t;
-      case _i53.Document:
-        return _i53.Document.t;
-      case _i60.GuidanceTipOverride:
-        return _i60.GuidanceTipOverride.t;
-      case _i61.UserGuidanceProgress:
-        return _i61.UserGuidanceProgress.t;
-      case _i66.Customer:
-        return _i66.Customer.t;
-      case _i70.Invoice:
-        return _i70.Invoice.t;
-      case _i72.InvoiceItem:
-        return _i72.InvoiceItem.t;
-      case _i78.InvoiceTemplate:
-        return _i78.InvoiceTemplate.t;
-      case _i81.PaymentRecord:
-        return _i81.PaymentRecord.t;
-      case _i84.Reminder:
-        return _i84.Reminder.t;
-      case _i94.Project:
-        return _i94.Project.t;
-      case _i97.Task:
-        return _i97.Task.t;
-      case _i99.TimeEntry:
-        return _i99.TimeEntry.t;
-      case _i109.UserProfile:
-        return _i109.UserProfile.t;
+      case _ixu4yxcv.AdminUser:
+        return _ixu4yxcv.AdminUser.t;
+      case _iv98pmde.AuditEntry:
+        return _iv98pmde.AuditEntry.t;
+      case _iwzk2tv7.Sequence:
+        return _iwzk2tv7.Sequence.t;
+      case _imcpe7lh.AccountingTransaction:
+        return _imcpe7lh.AccountingTransaction.t;
+      case _im9zvu8o.Business:
+        return _im9zvu8o.Business.t;
+      case _ixvagzl5.BusinessSettings:
+        return _ixvagzl5.BusinessSettings.t;
+      case _iu72qgm4.Membership:
+        return _iu72qgm4.Membership.t;
+      case _i9jvbk51.Document:
+        return _i9jvbk51.Document.t;
+      case _i3qwvpcu.GuidanceTipOverride:
+        return _i3qwvpcu.GuidanceTipOverride.t;
+      case _ik05lx5a.UserGuidanceProgress:
+        return _ik05lx5a.UserGuidanceProgress.t;
+      case _ic8wp775.Customer:
+        return _ic8wp775.Customer.t;
+      case _imguyn55.Invoice:
+        return _imguyn55.Invoice.t;
+      case _iu86qxr6.InvoiceItem:
+        return _iu86qxr6.InvoiceItem.t;
+      case _isaqeos4.InvoiceTemplate:
+        return _isaqeos4.InvoiceTemplate.t;
+      case _id8w36x8.PaymentRecord:
+        return _id8w36x8.PaymentRecord.t;
+      case _i0xuine3.Reminder:
+        return _i0xuine3.Reminder.t;
+      case _i2wiwzxn.Project:
+        return _i2wiwzxn.Project.t;
+      case _ihpxqi7u.Task:
+        return _ihpxqi7u.Task.t;
+      case _ii8lft1t.TimeEntry:
+        return _ii8lft1t.TimeEntry.t;
+      case _iung9xmp.UserProfile:
+        return _iung9xmp.UserProfile.t;
     }
     return null;
   }
 
   @override
-  List<_i2.TableDefinition> getTargetTableDefinitions() =>
+  List<_isp.TableDefinition> getTargetTableDefinitions() =>
       targetTableDefinitions;
 
   @override
@@ -4128,13 +4245,13 @@ class Protocol extends _i1.DatabaseSerializationManager {
       return null;
     }
     try {
-      return _i3.Protocol().mapRecordToJson(record);
+      return _if53ofrw.Protocol().mapRecordToJson(record);
     } catch (_) {}
     try {
-      return _i4.Protocol().mapRecordToJson(record);
+      return _iacs.Protocol().mapRecordToJson(record);
     } catch (_) {}
     try {
-      return _i5.Protocol().mapRecordToJson(record);
+      return _iais.Protocol().mapRecordToJson(record);
     } catch (_) {}
     throw Exception('Unsupported record type ${record.runtimeType}');
   }

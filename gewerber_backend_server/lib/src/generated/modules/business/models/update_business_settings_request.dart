@@ -10,11 +10,12 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/business/models/rounding_mode.dart' as _i2;
+
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/business/models/rounding_mode.dart' as _ib9gbuqh;
 
 abstract class UpdateBusinessSettingsRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   UpdateBusinessSettingsRequest._({
     required this.businessId,
     required this.paymentTermsDays,
@@ -31,7 +32,7 @@ abstract class UpdateBusinessSettingsRequest
     String? invoiceNumberPrefix,
     required bool invoiceNumberIncludeYear,
     required int invoiceNumberMinDigits,
-    required _i2.RoundingMode roundingMode,
+    required _ib9gbuqh.RoundingMode roundingMode,
     required int roundingGranularityMinutes,
   }) = _UpdateBusinessSettingsRequestImpl;
 
@@ -42,12 +43,12 @@ abstract class UpdateBusinessSettingsRequest
       businessId: jsonSerialization['businessId'] as int,
       paymentTermsDays: jsonSerialization['paymentTermsDays'] as int,
       invoiceNumberPrefix: jsonSerialization['invoiceNumberPrefix'] as String?,
-      invoiceNumberIncludeYear: _i1.BoolJsonExtension.fromJson(
+      invoiceNumberIncludeYear: _is.BoolJsonExtension.fromJson(
         jsonSerialization['invoiceNumberIncludeYear'],
       ),
       invoiceNumberMinDigits:
           jsonSerialization['invoiceNumberMinDigits'] as int,
-      roundingMode: _i2.RoundingMode.fromJson(
+      roundingMode: _ib9gbuqh.RoundingMode.fromJson(
         (jsonSerialization['roundingMode'] as String),
       ),
       roundingGranularityMinutes:
@@ -65,20 +66,20 @@ abstract class UpdateBusinessSettingsRequest
 
   int invoiceNumberMinDigits;
 
-  _i2.RoundingMode roundingMode;
+  _ib9gbuqh.RoundingMode roundingMode;
 
   int roundingGranularityMinutes;
 
   /// Returns a shallow copy of this [UpdateBusinessSettingsRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   UpdateBusinessSettingsRequest copyWith({
     int? businessId,
     int? paymentTermsDays,
     String? invoiceNumberPrefix,
     bool? invoiceNumberIncludeYear,
     int? invoiceNumberMinDigits,
-    _i2.RoundingMode? roundingMode,
+    _ib9gbuqh.RoundingMode? roundingMode,
     int? roundingGranularityMinutes,
   });
   @override
@@ -113,7 +114,7 @@ abstract class UpdateBusinessSettingsRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -126,7 +127,7 @@ class _UpdateBusinessSettingsRequestImpl extends UpdateBusinessSettingsRequest {
     String? invoiceNumberPrefix,
     required bool invoiceNumberIncludeYear,
     required int invoiceNumberMinDigits,
-    required _i2.RoundingMode roundingMode,
+    required _ib9gbuqh.RoundingMode roundingMode,
     required int roundingGranularityMinutes,
   }) : super._(
          businessId: businessId,
@@ -140,7 +141,7 @@ class _UpdateBusinessSettingsRequestImpl extends UpdateBusinessSettingsRequest {
 
   /// Returns a shallow copy of this [UpdateBusinessSettingsRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   UpdateBusinessSettingsRequest copyWith({
     int? businessId,
@@ -148,7 +149,7 @@ class _UpdateBusinessSettingsRequestImpl extends UpdateBusinessSettingsRequest {
     Object? invoiceNumberPrefix = _Undefined,
     bool? invoiceNumberIncludeYear,
     int? invoiceNumberMinDigits,
-    _i2.RoundingMode? roundingMode,
+    _ib9gbuqh.RoundingMode? roundingMode,
     int? roundingGranularityMinutes,
   }) {
     return UpdateBusinessSettingsRequest(

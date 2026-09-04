@@ -10,42 +10,44 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import '../../../modules/business/models/legal_form.dart' as _i2;
-import '../../../modules/business/models/locale.dart' as _i3;
-import '../../../modules/business/models/currency.dart' as _i4;
-import '../../../modules/business/models/address.dart' as _i5;
-import 'package:gewerber_backend_server/src/generated/protocol.dart' as _i6;
+
+import 'package:gewerber_backend_server/src/generated/protocol.dart'
+    as _itzp2rm6;
+import 'package:serverpod/serverpod.dart' as _is;
+import '../../../modules/business/models/address.dart' as _iz28txwx;
+import '../../../modules/business/models/currency.dart' as _i80byysb;
+import '../../../modules/business/models/legal_form.dart' as _ibbkzk4j;
+import '../../../modules/business/models/locale.dart' as _ie5v8zdc;
 
 abstract class CreateBusinessRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _is.SerializableModel, _is.ProtocolSerialization {
   CreateBusinessRequest._({
     required this.name,
-    _i2.LegalForm? legalForm,
+    _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     this.vatId,
     this.taxNumber,
     this.email,
     this.phone,
     this.address,
-    _i3.Locale? locale,
-    _i4.Currency? currency,
-  }) : legalForm = legalForm ?? _i2.LegalForm.einzelunternehmen,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
+  }) : legalForm = legalForm ?? _ibbkzk4j.LegalForm.einzelunternehmen,
        isKleinunternehmer = isKleinunternehmer ?? false,
-       locale = locale ?? _i3.Locale.de,
-       currency = currency ?? _i4.Currency.eur;
+       locale = locale ?? _ie5v8zdc.Locale.de,
+       currency = currency ?? _i80byysb.Currency.eur;
 
   factory CreateBusinessRequest({
     required String name,
-    _i2.LegalForm? legalForm,
+    _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     String? vatId,
     String? taxNumber,
     String? email,
     String? phone,
-    _i5.Address? address,
-    _i3.Locale? locale,
-    _i4.Currency? currency,
+    _iz28txwx.Address? address,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
   }) = _CreateBusinessRequestImpl;
 
   factory CreateBusinessRequest.fromJson(
@@ -55,10 +57,12 @@ abstract class CreateBusinessRequest
       name: jsonSerialization['name'] as String,
       legalForm: jsonSerialization['legalForm'] == null
           ? null
-          : _i2.LegalForm.fromJson((jsonSerialization['legalForm'] as String)),
+          : _ibbkzk4j.LegalForm.fromJson(
+              (jsonSerialization['legalForm'] as String),
+            ),
       isKleinunternehmer: jsonSerialization['isKleinunternehmer'] == null
           ? null
-          : _i1.BoolJsonExtension.fromJson(
+          : _is.BoolJsonExtension.fromJson(
               jsonSerialization['isKleinunternehmer'],
             ),
       vatId: jsonSerialization['vatId'] as String?,
@@ -67,21 +71,23 @@ abstract class CreateBusinessRequest
       phone: jsonSerialization['phone'] as String?,
       address: jsonSerialization['address'] == null
           ? null
-          : _i6.Protocol().deserialize<_i5.Address>(
+          : _itzp2rm6.Protocol().deserialize<_iz28txwx.Address>(
               jsonSerialization['address'],
             ),
       locale: jsonSerialization['locale'] == null
           ? null
-          : _i3.Locale.fromJson((jsonSerialization['locale'] as String)),
+          : _ie5v8zdc.Locale.fromJson((jsonSerialization['locale'] as String)),
       currency: jsonSerialization['currency'] == null
           ? null
-          : _i4.Currency.fromJson((jsonSerialization['currency'] as String)),
+          : _i80byysb.Currency.fromJson(
+              (jsonSerialization['currency'] as String),
+            ),
     );
   }
 
   String name;
 
-  _i2.LegalForm legalForm;
+  _ibbkzk4j.LegalForm legalForm;
 
   bool isKleinunternehmer;
 
@@ -93,26 +99,26 @@ abstract class CreateBusinessRequest
 
   String? phone;
 
-  _i5.Address? address;
+  _iz28txwx.Address? address;
 
-  _i3.Locale locale;
+  _ie5v8zdc.Locale locale;
 
-  _i4.Currency currency;
+  _i80byysb.Currency currency;
 
   /// Returns a shallow copy of this [CreateBusinessRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   CreateBusinessRequest copyWith({
     String? name,
-    _i2.LegalForm? legalForm,
+    _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     String? vatId,
     String? taxNumber,
     String? email,
     String? phone,
-    _i5.Address? address,
-    _i3.Locale? locale,
-    _i4.Currency? currency,
+    _iz28txwx.Address? address,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -150,7 +156,7 @@ abstract class CreateBusinessRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -159,15 +165,15 @@ class _Undefined {}
 class _CreateBusinessRequestImpl extends CreateBusinessRequest {
   _CreateBusinessRequestImpl({
     required String name,
-    _i2.LegalForm? legalForm,
+    _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     String? vatId,
     String? taxNumber,
     String? email,
     String? phone,
-    _i5.Address? address,
-    _i3.Locale? locale,
-    _i4.Currency? currency,
+    _iz28txwx.Address? address,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
   }) : super._(
          name: name,
          legalForm: legalForm,
@@ -183,19 +189,19 @@ class _CreateBusinessRequestImpl extends CreateBusinessRequest {
 
   /// Returns a shallow copy of this [CreateBusinessRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   CreateBusinessRequest copyWith({
     String? name,
-    _i2.LegalForm? legalForm,
+    _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     Object? vatId = _Undefined,
     Object? taxNumber = _Undefined,
     Object? email = _Undefined,
     Object? phone = _Undefined,
     Object? address = _Undefined,
-    _i3.Locale? locale,
-    _i4.Currency? currency,
+    _ie5v8zdc.Locale? locale,
+    _i80byysb.Currency? currency,
   }) {
     return CreateBusinessRequest(
       name: name ?? this.name,
@@ -205,7 +211,9 @@ class _CreateBusinessRequestImpl extends CreateBusinessRequest {
       taxNumber: taxNumber is String? ? taxNumber : this.taxNumber,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
-      address: address is _i5.Address? ? address : this.address?.copyWith(),
+      address: address is _iz28txwx.Address?
+          ? address
+          : this.address?.copyWith(),
       locale: locale ?? this.locale,
       currency: currency ?? this.currency,
     );

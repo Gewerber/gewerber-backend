@@ -10,29 +10,30 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../../../modules/invoicing/models/invoice_item_unit.dart' as _i2;
-import '../../../modules/invoicing/models/vat_rate.dart' as _i3;
+
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import '../../../modules/invoicing/models/invoice_item_unit.dart' as _irh1ud1f;
+import '../../../modules/invoicing/models/vat_rate.dart' as _icqbpm4p;
 
 abstract class InvoiceItemRequest
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   InvoiceItemRequest._({
     required this.description,
     double? quantity,
-    _i2.InvoiceItemUnit? unit,
+    _irh1ud1f.InvoiceItemUnit? unit,
     int? unitPriceCents,
-    _i3.VatRate? vatRate,
+    _icqbpm4p.VatRate? vatRate,
   }) : quantity = quantity ?? 1.0,
-       unit = unit ?? _i2.InvoiceItemUnit.hour,
+       unit = unit ?? _irh1ud1f.InvoiceItemUnit.hour,
        unitPriceCents = unitPriceCents ?? 0,
-       vatRate = vatRate ?? _i3.VatRate.standard;
+       vatRate = vatRate ?? _icqbpm4p.VatRate.standard;
 
   factory InvoiceItemRequest({
     required String description,
     double? quantity,
-    _i2.InvoiceItemUnit? unit,
+    _irh1ud1f.InvoiceItemUnit? unit,
     int? unitPriceCents,
-    _i3.VatRate? vatRate,
+    _icqbpm4p.VatRate? vatRate,
   }) = _InvoiceItemRequestImpl;
 
   factory InvoiceItemRequest.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -41,11 +42,15 @@ abstract class InvoiceItemRequest
       quantity: (jsonSerialization['quantity'] as num?)?.toDouble(),
       unit: jsonSerialization['unit'] == null
           ? null
-          : _i2.InvoiceItemUnit.fromJson((jsonSerialization['unit'] as String)),
+          : _irh1ud1f.InvoiceItemUnit.fromJson(
+              (jsonSerialization['unit'] as String),
+            ),
       unitPriceCents: jsonSerialization['unitPriceCents'] as int?,
       vatRate: jsonSerialization['vatRate'] == null
           ? null
-          : _i3.VatRate.fromJson((jsonSerialization['vatRate'] as String)),
+          : _icqbpm4p.VatRate.fromJson(
+              (jsonSerialization['vatRate'] as String),
+            ),
     );
   }
 
@@ -53,21 +58,21 @@ abstract class InvoiceItemRequest
 
   double quantity;
 
-  _i2.InvoiceItemUnit unit;
+  _irh1ud1f.InvoiceItemUnit unit;
 
   int unitPriceCents;
 
-  _i3.VatRate vatRate;
+  _icqbpm4p.VatRate vatRate;
 
   /// Returns a shallow copy of this [InvoiceItemRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   InvoiceItemRequest copyWith({
     String? description,
     double? quantity,
-    _i2.InvoiceItemUnit? unit,
+    _irh1ud1f.InvoiceItemUnit? unit,
     int? unitPriceCents,
-    _i3.VatRate? vatRate,
+    _icqbpm4p.VatRate? vatRate,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -95,7 +100,7 @@ abstract class InvoiceItemRequest
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -103,9 +108,9 @@ class _InvoiceItemRequestImpl extends InvoiceItemRequest {
   _InvoiceItemRequestImpl({
     required String description,
     double? quantity,
-    _i2.InvoiceItemUnit? unit,
+    _irh1ud1f.InvoiceItemUnit? unit,
     int? unitPriceCents,
-    _i3.VatRate? vatRate,
+    _icqbpm4p.VatRate? vatRate,
   }) : super._(
          description: description,
          quantity: quantity,
@@ -116,14 +121,14 @@ class _InvoiceItemRequestImpl extends InvoiceItemRequest {
 
   /// Returns a shallow copy of this [InvoiceItemRequest]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   InvoiceItemRequest copyWith({
     String? description,
     double? quantity,
-    _i2.InvoiceItemUnit? unit,
+    _irh1ud1f.InvoiceItemUnit? unit,
     int? unitPriceCents,
-    _i3.VatRate? vatRate,
+    _icqbpm4p.VatRate? vatRate,
   }) {
     return InvoiceItemRequest(
       description: description ?? this.description,
