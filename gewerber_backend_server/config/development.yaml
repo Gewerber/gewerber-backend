@@ -42,6 +42,10 @@ sessionLogs:
 
 # futureCallExecutionEnabled: true # Defaults to true
 
+# WebSocket / cookie origin allow-list (uncomment to restrict):
+# allowedOrigins:
+#   - http://localhost:8080
+
 #futureCall:
 #  concurrencyLimit: 1 # Defaults to 1, a negative or null value removes the limit
 #  scanInterval: 5000 # Unit in milliseconds, defaults to 5000

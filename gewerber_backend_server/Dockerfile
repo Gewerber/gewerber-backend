@@ -39,7 +39,7 @@ RUN dart build cli --target bin/main.dart --output build
 RUN mv build/bundle/bin/main build/bundle/bin/server
 
 # Add a fallback for the copy of possibly missing directories.
-RUN mkdir -p config web migrations
+RUN mkdir -p config migrations
 
 # Final stage
 FROM alpine:latest
@@ -59,7 +59,6 @@ COPY --from=build /app/gewerber_backend_server/build/bundle/ ./
 
 # Copy configuration files and resources
 COPY --from=build /app/gewerber_backend_server/config/ config/
-COPY --from=build /app/gewerber_backend_server/web/ web/
 COPY --from=build /app/gewerber_backend_server/migrations/ migrations/
 
 # This file is required to enable the endpoint log filter in Insights.

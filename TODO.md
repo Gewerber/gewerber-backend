@@ -196,7 +196,7 @@
 ---
 
 ## Техдолг / заметки
-- EventBus (`core/events/`) зарегистрирован в DI, но никем не используется — либо применить, либо удалить
+- [x] EventBus (`core/events/`) зарегистрирован в DI, но никем не используется — удалён 2026-09-04 (аудит); вернуть при необходимости Streams в Phase 3
 - `memberships.first` без сортировки в TenantResolver — произвольный дефолтный бизнес при мультитенантности
 - Ролевая модель: зафиксировать матрицу прав owner/admin/member документацией
 - [x] §19-маппинг дублировался в create/update/recurring use cases — извлечён в `TaxRuleEngine.applyKleinunternehmerOverride` ✅ 2026-08-22 (батч C1)

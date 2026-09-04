@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -241,8 +242,6 @@ import '../admin/admin_role_resolver.dart' as _i62;
 import '../audit/audit_service.dart' as _i473;
 import '../entitlement/all_features_entitlement_provider.dart' as _i398;
 import '../entitlement/entitlement_provider.dart' as _i664;
-import '../events/event_bus.dart' as _i557;
-import '../events/message_central_event_bus.dart' as _i991;
 import '../mail/mail_service.dart' as _i1069;
 import '../sequence/data/serverpod_sequence_gateway.dart' as _i445;
 import '../sequence/domain/sequence_gateway.dart' as _i559;
@@ -339,7 +338,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i417.TimeEntryGateway>(
       () => _i132.ServerpodTimeEntryGateway(),
     );
-    gh.singleton<_i557.EventBus>(() => _i991.MessageCentralEventBus());
     gh.singleton<_i643.DocumentGateway>(() => _i249.ServerpodDocumentGateway());
     gh.singleton<_i141.BusinessSettingsGateway>(
       () => _i823.ServerpodBusinessSettingsGateway(),

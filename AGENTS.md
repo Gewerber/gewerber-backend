@@ -18,7 +18,6 @@ gewerber_backend_server/lib/src/
     tenant/                      # TenantContext, TenantResolver, Session.authUserId
     audit/                       # AuditEntry model + AuditService
     admin/                       # AdminUser allowlist (AdminRole), AdminRoleResolver, AdminContext
-    events/                      # EventBus (MessageCentral wrapper)
     errors/                      # Serializable exceptions (NotFound, Validation, Forbidden, Conflict)
     endpoints/                   # BusinessScopedEndpoint, AdminEndpoint base classes
     entitlement/                 # Feature gating scaffold (all features enabled in OSS)
@@ -76,7 +75,8 @@ gewerber_backend_server/lib/src/
 | `adminAudit` | auditQuery | moderator |
 | `adminGuidance` | guidanceTipsList / guidanceTipUpsert | moderator read / admin write + `confirm` |
 | auth (module) | email login/register, JWT refresh | per serverpod_auth |
-| `waitlist` (commercial module) | join | public |
+| `waitlist` (commercial module) | join (throws UnimplementedError in OSS stub builds) | public |
+| `commercial` (stub) | status | public — UnimplementedError in OSS stub builds; real implementation in gewerber-backend-commercial |
 
 ## Admin API (`modules/admin`, used by `gewerber-mcp`)
 

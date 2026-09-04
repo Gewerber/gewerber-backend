@@ -38,10 +38,17 @@ redis:
 
 maxRequestSize: 524288 # The maximum size of requests allowed in bytes
 
+# WebSocket / cookie origin allow-list: only these browser origins may open
+# WebSocket connections and receive auth cookies.
+allowedOrigins:
+  - https://app.gewerber.de
+
 sessionLogs:
   persistentEnabled: true
   consoleEnabled: true
   consoleLogFormat: text
+  retentionPeriod: 30d
+  cleanupInterval: 1h
 
 # futureCallExecutionEnabled: true # Defaults to true
 

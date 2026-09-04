@@ -124,12 +124,20 @@ PostgreSQL:
 Without cleanup these tables grow unboundedly (they are written on every API
 call), slow Insights down and inflate backups.
 
+**Serverpod 4 now cleans up automatically**: since `config/production.yaml`
+and `config/staging.yaml` set `sessionLogs.retentionPeriod: 30d` with
+`cleanupInterval: 1h`, the server prunes session logs older than 30 days
+every hour on its own. The SQL/cron recipe below is kept as a fallback (e.g.
+for older self-hosted deployments without the explicit retention settings)
+and as a dev tool for ad-hoc pruning.
+
 **Option A — turn persistence off** (console-only logging): set
 `sessionLogs.persistentEnabled: false` in the relevant
 `gewerber_backend_server/config/<runmode>.yaml`. You lose the Insights
 history but stop the growth entirely. Reasonable for staging.
 
-**Option B — keep persistence, prune regularly** (recommended for prod):
+**Option B — keep persistence, prune regularly** (fallback for deployments
+without the explicit retention settings, e.g. older self-hosted ones):
 delete sessions older than N days (30 is a sensible default); child tables
 are cleaned first, parent second:
 
@@ -188,8 +196,9 @@ which is the first hint that it is optional today.
 Audited 2026-08: application code uses **none** of the Redis-backed features.
 
 - No `session.caches` usage anywhere in `gewerber_backend_server/lib/src`.
-- The `EventBus` wrapper around MessageCentral (`core/events/`) is registered
-  in DI but has no producers or consumers yet (see TODO «Техдолг»).
+- The `EventBus` wrapper around MessageCentral (`core/events/`) was removed
+  in the 2026-09 audit (registered in DI but never used — see TODO
+  «Техдолг»); MessageCentral itself stays available via `session.messages`.
 - Background jobs are FutureCalls stored in PostgreSQL; auth state lives in
   PostgreSQL.
 
