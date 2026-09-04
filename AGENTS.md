@@ -141,6 +141,12 @@ dart format .               # required before PR
 dart test                   # integration tests (needs postgres_test)
 ```
 
+CI (`.github/workflows/ci.yml`) additionally enforces `dart format` and
+migration drift (`serverpod create-migration` must produce no changes — if it
+does, run it locally and commit the new revision). Branch protection with the
+required check **Analyze & test** must be enabled manually (Settings →
+Branches).
+
 ## Deployment
 
 Same pipeline as `gewerber-website`: GitHub Actions → GHCR → VPS → docker compose behind Traefik.

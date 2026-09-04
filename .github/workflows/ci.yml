@@ -1,7 +1,10 @@
 # Continuous integration for the open-source backend.
 #
 #   - `dart analyze` over the whole Dart workspace
+#   - `dart format` check over the whole Dart workspace
 #   - `dart test` (integration tests) against a disposable PostgreSQL
+#   - migration drift check: `serverpod create-migration` must produce no
+#     changes under migrations/ (models and migrations are in sync)
 #
 # Triggers on every PR and on pushes to main/develop. Make this check
 # required in branch protection so merges always pass analyze + tests.
@@ -90,6 +93,26 @@ jobs:
       - name: Analyze
         run: dart analyze
 
+      - name: Check formatting
+        run: dart format --output=none --set-exit-if-changed .
+
       - name: Run tests
         run: dart test
         working-directory: gewerber_backend_server
+
+      # Models must be fully migrated: running `serverpod create-migration`
+      # on an in-sync project exits 0 without touching migrations/. If a
+      # .spy.yaml change is missing its migration, a new revision directory
+      # (and a migration_registry.txt line) appears here and fails the step.
+      # This needs no database connection and requires the serverpod CLI to
+      # match the pinned Serverpod version.
+      - name: Check migration drift
+        working-directory: gewerber_backend_server
+        run: |
+          dart pub global activate serverpod_cli 4.0.0-rc.1
+          serverpod create-migration
+          if [ -n "$(git status --porcelain -- migrations/)" ]; then
+            echo '::error::Model changes without a migration detected. Run `serverpod create-migration` and commit the new revision under gewerber_backend_server/migrations/.'
+            git status --porcelain -- migrations/
+            exit 1
+          fi
