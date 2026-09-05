@@ -165,7 +165,15 @@
 - [ ] **E-Rechnung MVP ⭐**: экспорт XRechnung (XML) — обязанность приёма B2B уже действует,
       выставления — с 2027–2028; killer-feature в границах open-core
 - [ ] S3 storage adapter за существующим интерфейсом (спека обещает S3, факт — DatabaseStorage)
-- [ ] Multi-language писем/PDF/guidance (enum `Locale(de,en,ru,tr)` есть, контент захардкожен на de)
+- [ ] **Мультиязычные guidance-типсы ⭐** (решение владельца 2026-09-05, из
+      field-hints работы в gewerber-app: подсказки полей форм deep-link'ятся в
+      `guidance.tips`, а типсы пока только на de — юзер ru/tr/en видит немецкий
+      контент). Модель: локализованные title/body (JSONB `{locale: text}` или
+      дочерняя таблица `guidance_tip_text`; enum `Locale(de,en,ru,tr)` уже есть,
+      конвенция «enums first»); `adminGuidance.guidanceTipUpsert` принимает
+      локализованный payload; backfill: de-текст как дефолт при отсутствии
+      локали. Письма/PDF — отдельным шагом (см. след. пункт).
+- [ ] Multi-language писем/PDF (enum `Locale(de,en,ru,tr)` есть, контент захардкожен на de)
 - [ ] Rate limiting публичных эндпоинтов
 - [ ] Entitlement enforcement-точки в бизнес-логике (сейчас scaffold вызывается только из endpoint)
 
