@@ -256,11 +256,19 @@ class ExportMyDataUseCase {
     if (id == null || (document.sizeBytes ?? 0) > maxDocumentBytes) {
       return null;
     }
-    final data = await session.storage.retrieveFile(
-      storageId: document.storageLocation.name,
-      path: document.storagePath,
-    );
-    if (data == null || data.lengthInBytes > maxDocumentBytes) {
+    // Serverpod 4 storage throws CloudStorageFileNotFoundException when the
+    // blob is gone; the export degrades gracefully — the document's metadata
+    // stays in documents.json without its content.
+    final ByteData data;
+    try {
+      data = await session.storage.retrieveFile(
+        storageId: document.storageLocation.name,
+        path: document.storagePath,
+      );
+    } on CloudStorageFileNotFoundException {
+      return null;
+    }
+    if (data.lengthInBytes > maxDocumentBytes) {
       return null;
     }
     final fileName = '$prefix/documents/files/$id-${document.fileName}';
