@@ -27,6 +27,7 @@ abstract class Business
     _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     this.vatId,
+    this.taxNumber,
     this.email,
     this.phone,
     this.address,
@@ -47,6 +48,7 @@ abstract class Business
     _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     String? vatId,
+    String? taxNumber,
     String? email,
     String? phone,
     _iz28txwx.Address? address,
@@ -71,6 +73,7 @@ abstract class Business
               jsonSerialization['isKleinunternehmer'],
             ),
       vatId: jsonSerialization['vatId'] as String?,
+      taxNumber: jsonSerialization['taxNumber'] as String?,
       email: jsonSerialization['email'] as String?,
       phone: jsonSerialization['phone'] as String?,
       address: jsonSerialization['address'] == null
@@ -108,6 +111,8 @@ abstract class Business
 
   String? vatId;
 
+  String? taxNumber;
+
   String? email;
 
   String? phone;
@@ -131,6 +136,7 @@ abstract class Business
     _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     String? vatId,
+    String? taxNumber,
     String? email,
     String? phone,
     _iz28txwx.Address? address,
@@ -148,6 +154,7 @@ abstract class Business
       'legalForm': legalForm.toJson(),
       'isKleinunternehmer': isKleinunternehmer,
       if (vatId != null) 'vatId': vatId,
+      if (taxNumber != null) 'taxNumber': taxNumber,
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address?.toJson(),
@@ -167,6 +174,7 @@ abstract class Business
       'legalForm': legalForm.toJson(),
       'isKleinunternehmer': isKleinunternehmer,
       if (vatId != null) 'vatId': vatId,
+      if (taxNumber != null) 'taxNumber': taxNumber,
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address?.toJsonForProtocol(),
@@ -192,6 +200,7 @@ class _BusinessImpl extends Business {
     _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     String? vatId,
+    String? taxNumber,
     String? email,
     String? phone,
     _iz28txwx.Address? address,
@@ -205,6 +214,7 @@ class _BusinessImpl extends Business {
          legalForm: legalForm,
          isKleinunternehmer: isKleinunternehmer,
          vatId: vatId,
+         taxNumber: taxNumber,
          email: email,
          phone: phone,
          address: address,
@@ -224,6 +234,7 @@ class _BusinessImpl extends Business {
     _ibbkzk4j.LegalForm? legalForm,
     bool? isKleinunternehmer,
     Object? vatId = _Undefined,
+    Object? taxNumber = _Undefined,
     Object? email = _Undefined,
     Object? phone = _Undefined,
     Object? address = _Undefined,
@@ -238,6 +249,7 @@ class _BusinessImpl extends Business {
       legalForm: legalForm ?? this.legalForm,
       isKleinunternehmer: isKleinunternehmer ?? this.isKleinunternehmer,
       vatId: vatId is String? ? vatId : this.vatId,
+      taxNumber: taxNumber is String? ? taxNumber : this.taxNumber,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
       address: address is _iz28txwx.Address?
