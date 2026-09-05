@@ -272,7 +272,9 @@ class ExportMyDataUseCase {
       return null;
     }
     final fileName = '$prefix/documents/files/$id-${document.fileName}';
-    archive.add(ArchiveFile.bytes(fileName, data.buffer.asUint8List()));
+    // sublistView respects offsetInBytes/lengthInBytes; buffer.asUint8List()
+    // would copy the WHOLE backing buffer and embed garbage into the archive.
+    archive.add(ArchiveFile.bytes(fileName, Uint8List.sublistView(data)));
     return {
       'documentId': id,
       'fileName': document.fileName,
