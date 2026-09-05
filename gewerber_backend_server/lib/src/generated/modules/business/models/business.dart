@@ -179,6 +179,7 @@ abstract class Business
       'legalForm': legalForm.toJson(),
       'isKleinunternehmer': isKleinunternehmer,
       if (vatId != null) 'vatId': vatId,
+      if (taxNumber != null) 'taxNumber': taxNumber,
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address?.toJsonForProtocol(),
