@@ -35,6 +35,16 @@ class _FakeEntitlementSource implements CommercialEntitlementSource {
   }
 }
 
+class _ThrowingEntitlementSource implements CommercialEntitlementSource {
+  @override
+  Future<Set<String>> featuresFor({
+    required UuidValue userId,
+    int? businessId,
+  }) async {
+    throw StateError('commercial DB unreachable');
+  }
+}
+
 void main() {
   const userId = 'a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d';
 
@@ -164,6 +174,19 @@ void main() {
         final features = await provider.featuresFor(_FakeSession(), tenant);
 
         expect(features, equals({Feature.banking}));
+      },
+    );
+
+    test(
+      'fails open to all features when the source throws',
+      () async {
+        final provider = CommercialEntitlementProvider(
+          sourceFactory: (_) => _ThrowingEntitlementSource(),
+        );
+
+        final features = await provider.featuresFor(_FakeSession(), tenant);
+
+        expect(features, equals(Feature.values.toSet()));
       },
     );
   });

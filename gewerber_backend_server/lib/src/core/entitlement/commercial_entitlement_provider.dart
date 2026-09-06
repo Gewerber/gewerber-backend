@@ -39,6 +39,17 @@ import 'entitlement_provider.dart';
 /// concepts: they are skipped — logged once per key, never thrown. The OSS
 /// enum is deliberately not extended here; gating those extras happens inside
 /// the commercial module.
+///
+/// ### Fail-open on source errors
+///
+/// If the [CommercialEntitlementSource] itself throws (e.g. the commercial
+/// subscription DB is unreachable), [featuresFor] logs a warning and returns
+/// the same feature set as the OSS default [AllFeaturesEntitlementProvider]
+/// (all [Feature] values) instead of propagating the error. Rationale: an
+/// outage of commercial infrastructure must never take down the entitlement
+/// endpoint for SaaS users or degrade them below what a self-hosted OSS
+/// deployment gets by default; entitlements are a convenience gate, not a
+/// security boundary.
 class CommercialEntitlementProvider implements EntitlementProvider {
   /// Creates the provider.
   ///
@@ -77,10 +88,26 @@ class CommercialEntitlementProvider implements EntitlementProvider {
     TenantContext tenant,
   ) async {
     final source = sourceFactory(session);
-    final keys = await source.featuresFor(
-      userId: tenant.userId,
-      businessId: tenant.businessId,
-    );
+    final Set<String> keys;
+    try {
+      keys = await source.featuresFor(
+        userId: tenant.userId,
+        businessId: tenant.businessId,
+      );
+    } catch (error, stackTrace) {
+      // Fail-open: a commercial-infra outage (e.g. the subscription DB is
+      // down) must never 500 the entitlement endpoint or degrade users below
+      // the OSS baseline, so we log a warning and grant the same feature set
+      // the default [AllFeaturesEntitlementProvider] would (all features).
+      session.log(
+        '[CommercialEntitlementProvider] Commercial entitlement source '
+        'failed; failing open to the OSS default (all features enabled).',
+        level: LogLevel.warning,
+        exception: error,
+        stackTrace: stackTrace,
+      );
+      return Feature.values.toSet();
+    }
     return mapFeatureKeys(
       keys,
       onUnknownKey: (key) => session.log(
