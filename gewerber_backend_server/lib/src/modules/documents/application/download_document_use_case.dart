@@ -14,11 +14,15 @@ class DownloadDocumentUseCase {
 
   Future<ByteData> call(Session session, int documentId) async {
     final document = await _getDocument.call(session, documentId);
-    final data = await session.storage.retrieveFile(
-      storageId: document.storageLocation.name,
-      path: document.storagePath,
-    );
-    if (data == null) {
+    // Serverpod 4 storage throws CloudStorageFileNotFoundException when the
+    // blob is gone; translate it into the API's NotFoundException.
+    final ByteData data;
+    try {
+      data = await session.storage.retrieveFile(
+        storageId: document.storageLocation.name,
+        path: document.storagePath,
+      );
+    } on CloudStorageFileNotFoundException {
       throw NotFoundException(entityType: 'Document', entityId: '$documentId');
     }
     return data;

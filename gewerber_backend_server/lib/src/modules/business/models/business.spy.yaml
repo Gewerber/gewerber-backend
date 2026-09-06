@@ -5,7 +5,7 @@ fields:
   legalForm: LegalForm, default=einzelunternehmen
   isKleinunternehmer: bool, default=false
   vatId: String?
-  taxNumber: String?, scope=serverOnly
+  taxNumber: String?
   email: String?
   phone: String?
   address: Address?

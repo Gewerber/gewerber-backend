@@ -5,6 +5,261 @@
   "tables": [
     {
       "__className__": "serverpod.TableDefinition",
+      "name": "accounting_transaction",
+      "dartName": "AccountingTransaction",
+      "module": "gewerber_backend",
+      "schema": "public",
+      "columns": [
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "id",
+          "fieldName": "id",
+          "columnType": 6,
+          "isNullable": false,
+          "columnDefault": "serial",
+          "dartType": "int?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "businessId",
+          "fieldName": "businessId",
+          "columnType": 6,
+          "isNullable": false,
+          "dartType": "int"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "type",
+          "fieldName": "type",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "protocol:TransactionType"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "category",
+          "fieldName": "category",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "protocol:TransactionCategory"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "description",
+          "fieldName": "description",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "occurredAt",
+          "fieldName": "occurredAt",
+          "columnType": 4,
+          "isNullable": false,
+          "dartType": "DateTime"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "amountCents",
+          "fieldName": "amountCents",
+          "columnType": 6,
+          "isNullable": false,
+          "dartType": "int"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "receiptDocumentId",
+          "fieldName": "receiptDocumentId",
+          "columnType": 6,
+          "isNullable": true,
+          "dartType": "int?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "relatedInvoiceId",
+          "fieldName": "relatedInvoiceId",
+          "columnType": 6,
+          "isNullable": true,
+          "dartType": "int?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "createdAt",
+          "fieldName": "createdAt",
+          "columnType": 4,
+          "isNullable": false,
+          "columnDefault": "now",
+          "dartType": "DateTime"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "updatedAt",
+          "fieldName": "updatedAt",
+          "columnType": 4,
+          "isNullable": false,
+          "columnDefault": "now",
+          "dartType": "DateTime"
+        }
+      ],
+      "foreignKeys": [
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "accounting_transaction_fk_0",
+          "columns": [
+            "businessId"
+          ],
+          "referenceTable": "business",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        },
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "accounting_transaction_fk_1",
+          "columns": [
+            "receiptDocumentId"
+          ],
+          "referenceTable": "document",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 0
+        },
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "accounting_transaction_fk_2",
+          "columns": [
+            "relatedInvoiceId"
+          ],
+          "referenceTable": "invoice",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 0
+        }
+      ],
+      "indexes": [
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "accounting_transaction_business_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "businessId"
+            },
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "occurredAt"
+            }
+          ],
+          "type": "btree",
+          "isUnique": false,
+          "isPrimary": false
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "accounting_transaction_category_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "businessId"
+            },
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "category"
+            }
+          ],
+          "type": "btree",
+          "isUnique": false,
+          "isPrimary": false
+        }
+      ],
+      "managed": true
+    },
+    {
+      "__className__": "serverpod.TableDefinition",
+      "name": "admin_user",
+      "dartName": "AdminUser",
+      "module": "gewerber_backend",
+      "schema": "public",
+      "columns": [
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "id",
+          "fieldName": "id",
+          "columnType": 6,
+          "isNullable": false,
+          "columnDefault": "serial",
+          "dartType": "int?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "userId",
+          "fieldName": "userId",
+          "columnType": 7,
+          "isNullable": false,
+          "dartType": "UuidValue"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "role",
+          "fieldName": "role",
+          "columnType": 0,
+          "isNullable": false,
+          "columnDefault": "'moderator'",
+          "dartType": "protocol:AdminRole"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "createdAt",
+          "fieldName": "createdAt",
+          "columnType": 4,
+          "isNullable": false,
+          "columnDefault": "now",
+          "dartType": "DateTime"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "createdBy",
+          "fieldName": "createdBy",
+          "columnType": 7,
+          "isNullable": true,
+          "dartType": "UuidValue?"
+        }
+      ],
+      "foreignKeys": [],
+      "indexes": [
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "admin_user_user_unique_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "userId"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false
+        }
+      ],
+      "managed": true
+    },
+    {
+      "__className__": "serverpod.TableDefinition",
       "name": "audit_entry",
       "dartName": "AuditEntry",
       "module": "gewerber_backend",
@@ -641,6 +896,75 @@
     },
     {
       "__className__": "serverpod.TableDefinition",
+      "name": "guidance_tip_override",
+      "dartName": "GuidanceTipOverride",
+      "module": "gewerber_backend",
+      "schema": "public",
+      "columns": [
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "id",
+          "fieldName": "id",
+          "columnType": 6,
+          "isNullable": false,
+          "columnDefault": "serial",
+          "dartType": "int?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "topic",
+          "fieldName": "topic",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "title",
+          "fieldName": "title",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "body",
+          "fieldName": "body",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "updatedAt",
+          "fieldName": "updatedAt",
+          "columnType": 4,
+          "isNullable": false,
+          "columnDefault": "now",
+          "dartType": "DateTime"
+        }
+      ],
+      "foreignKeys": [],
+      "indexes": [
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "guidance_tip_override_topic_unique_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "topic"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false
+        }
+      ],
+      "managed": true
+    },
+    {
+      "__className__": "serverpod.TableDefinition",
       "name": "invoice",
       "dartName": "Invoice",
       "module": "gewerber_backend",
@@ -1005,6 +1329,30 @@
           "type": "btree",
           "isUnique": false,
           "isPrimary": false
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "invoice_business_status_due_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "businessId"
+            },
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "status"
+            },
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "dueDate"
+            }
+          ],
+          "type": "btree",
+          "isUnique": false,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -1287,8 +1635,8 @@
           "name": "userId",
           "fieldName": "userId",
           "columnType": 7,
-          "isNullable": false,
-          "dartType": "UuidValue"
+          "isNullable": true,
+          "dartType": "UuidValue?"
         },
         {
           "__className__": "serverpod.ColumnDefinition",
@@ -2130,6 +2478,108 @@
           "type": "btree",
           "isUnique": false,
           "isPrimary": false
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "time_entry_business_running_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "businessId"
+            },
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "stoppedAt"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false,
+          "nullsDistinct": false
+        }
+      ],
+      "managed": true
+    },
+    {
+      "__className__": "serverpod.TableDefinition",
+      "name": "user_guidance_progress",
+      "dartName": "UserGuidanceProgress",
+      "module": "gewerber_backend",
+      "schema": "public",
+      "columns": [
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "id",
+          "fieldName": "id",
+          "columnType": 6,
+          "isNullable": false,
+          "columnDefault": "serial",
+          "dartType": "int?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "userId",
+          "fieldName": "userId",
+          "columnType": 7,
+          "isNullable": true,
+          "dartType": "UuidValue?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "itemKey",
+          "fieldName": "itemKey",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "completedAt",
+          "fieldName": "completedAt",
+          "columnType": 4,
+          "isNullable": true,
+          "dartType": "DateTime?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "dismissedAt",
+          "fieldName": "dismissedAt",
+          "columnType": 4,
+          "isNullable": true,
+          "dartType": "DateTime?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "updatedAt",
+          "fieldName": "updatedAt",
+          "columnType": 4,
+          "isNullable": false,
+          "columnDefault": "now",
+          "dartType": "DateTime"
+        }
+      ],
+      "foreignKeys": [],
+      "indexes": [
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "user_guidance_progress_unique_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "userId"
+            },
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "itemKey"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -2209,6 +2659,14 @@
           "isNullable": false,
           "columnDefault": "now",
           "dartType": "DateTime"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "deletedAt",
+          "fieldName": "deletedAt",
+          "columnType": 4,
+          "isNullable": true,
+          "dartType": "DateTime?"
         }
       ],
       "foreignKeys": [],
@@ -2421,6 +2879,46 @@
           "columnType": 1,
           "isNullable": false,
           "dartType": "bool"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "contentType",
+          "fieldName": "contentType",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "cacheControl",
+          "fieldName": "cacheControl",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "contentDisposition",
+          "fieldName": "contentDisposition",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "contentEncoding",
+          "fieldName": "contentEncoding",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "customMetadata",
+          "fieldName": "customMetadata",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
         }
       ],
       "foreignKeys": [],
@@ -2447,6 +2945,104 @@
         {
           "__className__": "serverpod.IndexDefinition",
           "indexName": "serverpod_cloud_storage_expiration",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "expiration"
+            }
+          ],
+          "type": "btree",
+          "isUnique": false,
+          "isPrimary": false
+        }
+      ],
+      "managed": true
+    },
+    {
+      "__className__": "serverpod.TableDefinition",
+      "name": "serverpod_cloud_storage_direct_download",
+      "dartName": "CloudStorageDirectDownloadEntry",
+      "module": "serverpod",
+      "schema": "public",
+      "columns": [
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "id",
+          "fieldName": "id",
+          "columnType": 6,
+          "isNullable": false,
+          "columnDefault": "serial",
+          "dartType": "int?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "storageId",
+          "fieldName": "storageId",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "path",
+          "fieldName": "path",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "expiration",
+          "fieldName": "expiration",
+          "columnType": 4,
+          "isNullable": false,
+          "dartType": "DateTime"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "authKey",
+          "fieldName": "authKey",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "downloadFileName",
+          "fieldName": "downloadFileName",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "contentType",
+          "fieldName": "contentType",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        }
+      ],
+      "foreignKeys": [],
+      "indexes": [
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "serverpod_cloud_storage_direct_download_auth_key",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "authKey"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "serverpod_cloud_storage_direct_download_expiration",
           "elements": [
             {
               "__className__": "serverpod.IndexElementDefinition",
@@ -2508,6 +3104,72 @@
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "maxFileSize",
+          "fieldName": "maxFileSize",
+          "columnType": 6,
+          "isNullable": false,
+          "columnDefault": "10485760",
+          "dartType": "int"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "contentLength",
+          "fieldName": "contentLength",
+          "columnType": 6,
+          "isNullable": true,
+          "dartType": "int?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "preventOverwrite",
+          "fieldName": "preventOverwrite",
+          "columnType": 1,
+          "isNullable": false,
+          "columnDefault": "false",
+          "dartType": "bool"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "contentType",
+          "fieldName": "contentType",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "cacheControl",
+          "fieldName": "cacheControl",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "contentDisposition",
+          "fieldName": "contentDisposition",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "contentEncoding",
+          "fieldName": "contentEncoding",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "customMetadata",
+          "fieldName": "customMetadata",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
         }
       ],
       "foreignKeys": [],
@@ -3705,6 +4367,469 @@
     },
     {
       "__className__": "serverpod.TableDefinition",
+      "name": "serverpod_auth_core_jwt_refresh_token",
+      "dartName": "RefreshToken",
+      "module": "serverpod_auth_core",
+      "schema": "public",
+      "columns": [
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "id",
+          "fieldName": "id",
+          "columnType": 7,
+          "isNullable": false,
+          "columnDefault": "random_v7",
+          "dartType": "UuidValue?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "authUserId",
+          "fieldName": "authUserId",
+          "columnType": 7,
+          "isNullable": false,
+          "dartType": "UuidValue"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "scopeNames",
+          "fieldName": "scopeNames",
+          "columnType": 8,
+          "isNullable": false,
+          "dartType": "Set<String>"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "extraClaims",
+          "fieldName": "extraClaims",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "method",
+          "fieldName": "method",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "fixedSecret",
+          "fieldName": "fixedSecret",
+          "columnType": 5,
+          "isNullable": false,
+          "dartType": "dart:typed_data:ByteData"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "rotatingSecretHash",
+          "fieldName": "rotatingSecretHash",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "lastUpdatedAt",
+          "fieldName": "lastUpdatedAt",
+          "columnType": 4,
+          "isNullable": false,
+          "columnDefault": "now",
+          "dartType": "DateTime"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "createdAt",
+          "fieldName": "createdAt",
+          "columnType": 4,
+          "isNullable": false,
+          "columnDefault": "now",
+          "dartType": "DateTime"
+        }
+      ],
+      "foreignKeys": [
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "serverpod_auth_core_jwt_refresh_token_fk_0",
+          "columns": [
+            "authUserId"
+          ],
+          "referenceTable": "serverpod_auth_core_user",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        }
+      ],
+      "indexes": [
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "serverpod_auth_core_jwt_refresh_token_last_updated_at",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "lastUpdatedAt"
+            }
+          ],
+          "type": "btree",
+          "isUnique": false,
+          "isPrimary": false
+        }
+      ],
+      "managed": true
+    },
+    {
+      "__className__": "serverpod.TableDefinition",
+      "name": "serverpod_auth_core_profile",
+      "dartName": "UserProfile",
+      "module": "serverpod_auth_core",
+      "schema": "public",
+      "columns": [
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "id",
+          "fieldName": "id",
+          "columnType": 7,
+          "isNullable": false,
+          "columnDefault": "random_v7",
+          "dartType": "UuidValue?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "authUserId",
+          "fieldName": "authUserId",
+          "columnType": 7,
+          "isNullable": false,
+          "dartType": "UuidValue"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "userName",
+          "fieldName": "userName",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "fullName",
+          "fieldName": "fullName",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "email",
+          "fieldName": "email",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "createdAt",
+          "fieldName": "createdAt",
+          "columnType": 4,
+          "isNullable": false,
+          "columnDefault": "now",
+          "dartType": "DateTime"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "imageId",
+          "fieldName": "imageId",
+          "columnType": 7,
+          "isNullable": true,
+          "dartType": "UuidValue?"
+        }
+      ],
+      "foreignKeys": [
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "serverpod_auth_core_profile_fk_0",
+          "columns": [
+            "authUserId"
+          ],
+          "referenceTable": "serverpod_auth_core_user",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        },
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "serverpod_auth_core_profile_fk_1",
+          "columns": [
+            "imageId"
+          ],
+          "referenceTable": "serverpod_auth_core_profile_image",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 3
+        }
+      ],
+      "indexes": [
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "serverpod_auth_profile_user_profile_email_auth_user_id",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "authUserId"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false
+        }
+      ],
+      "managed": true
+    },
+    {
+      "__className__": "serverpod.TableDefinition",
+      "name": "serverpod_auth_core_profile_image",
+      "dartName": "UserProfileImage",
+      "module": "serverpod_auth_core",
+      "schema": "public",
+      "columns": [
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "id",
+          "fieldName": "id",
+          "columnType": 7,
+          "isNullable": false,
+          "columnDefault": "random_v7",
+          "dartType": "UuidValue?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "userProfileId",
+          "fieldName": "userProfileId",
+          "columnType": 7,
+          "isNullable": false,
+          "dartType": "UuidValue"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "createdAt",
+          "fieldName": "createdAt",
+          "columnType": 4,
+          "isNullable": false,
+          "columnDefault": "now",
+          "dartType": "DateTime"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "storageId",
+          "fieldName": "storageId",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "path",
+          "fieldName": "path",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "url",
+          "fieldName": "url",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "Uri"
+        }
+      ],
+      "foreignKeys": [
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "serverpod_auth_core_profile_image_fk_0",
+          "columns": [
+            "userProfileId"
+          ],
+          "referenceTable": "serverpod_auth_core_profile",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        }
+      ],
+      "indexes": [],
+      "managed": true
+    },
+    {
+      "__className__": "serverpod.TableDefinition",
+      "name": "serverpod_auth_core_session",
+      "dartName": "ServerSideSession",
+      "module": "serverpod_auth_core",
+      "schema": "public",
+      "columns": [
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "id",
+          "fieldName": "id",
+          "columnType": 7,
+          "isNullable": false,
+          "columnDefault": "random_v7",
+          "dartType": "UuidValue?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "authUserId",
+          "fieldName": "authUserId",
+          "columnType": 7,
+          "isNullable": false,
+          "dartType": "UuidValue"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "scopeNames",
+          "fieldName": "scopeNames",
+          "columnType": 8,
+          "isNullable": false,
+          "dartType": "Set<String>"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "createdAt",
+          "fieldName": "createdAt",
+          "columnType": 4,
+          "isNullable": false,
+          "columnDefault": "now",
+          "dartType": "DateTime"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "lastUsedAt",
+          "fieldName": "lastUsedAt",
+          "columnType": 4,
+          "isNullable": false,
+          "columnDefault": "now",
+          "dartType": "DateTime"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "expiresAt",
+          "fieldName": "expiresAt",
+          "columnType": 4,
+          "isNullable": true,
+          "dartType": "DateTime?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "expireAfterUnusedFor",
+          "fieldName": "expireAfterUnusedFor",
+          "columnType": 6,
+          "isNullable": true,
+          "dartType": "Duration?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "sessionKeyHash",
+          "fieldName": "sessionKeyHash",
+          "columnType": 5,
+          "isNullable": false,
+          "dartType": "dart:typed_data:ByteData"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "sessionKeySalt",
+          "fieldName": "sessionKeySalt",
+          "columnType": 5,
+          "isNullable": false,
+          "dartType": "dart:typed_data:ByteData"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "method",
+          "fieldName": "method",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        }
+      ],
+      "foreignKeys": [
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "serverpod_auth_core_session_fk_0",
+          "columns": [
+            "authUserId"
+          ],
+          "referenceTable": "serverpod_auth_core_user",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        }
+      ],
+      "indexes": [],
+      "managed": true
+    },
+    {
+      "__className__": "serverpod.TableDefinition",
+      "name": "serverpod_auth_core_user",
+      "dartName": "AuthUser",
+      "module": "serverpod_auth_core",
+      "schema": "public",
+      "columns": [
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "id",
+          "fieldName": "id",
+          "columnType": 7,
+          "isNullable": false,
+          "columnDefault": "random_v7",
+          "dartType": "UuidValue?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "createdAt",
+          "fieldName": "createdAt",
+          "columnType": 4,
+          "isNullable": false,
+          "dartType": "DateTime"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "scopeNames",
+          "fieldName": "scopeNames",
+          "columnType": 8,
+          "isNullable": false,
+          "dartType": "Set<String>"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "blocked",
+          "fieldName": "blocked",
+          "columnType": 1,
+          "isNullable": false,
+          "dartType": "bool"
+        }
+      ],
+      "foreignKeys": [],
+      "indexes": [],
+      "managed": true
+    },
+    {
+      "__className__": "serverpod.TableDefinition",
       "name": "serverpod_auth_idp_anonymous_account",
       "dartName": "AnonymousAccount",
       "module": "serverpod_auth_idp",
@@ -4891,476 +6016,13 @@
       "foreignKeys": [],
       "indexes": [],
       "managed": true
-    },
-    {
-      "__className__": "serverpod.TableDefinition",
-      "name": "serverpod_auth_core_jwt_refresh_token",
-      "dartName": "RefreshToken",
-      "module": "serverpod_auth_core",
-      "schema": "public",
-      "columns": [
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "id",
-          "fieldName": "id",
-          "columnType": 7,
-          "isNullable": false,
-          "columnDefault": "random_v7",
-          "dartType": "UuidValue?"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "authUserId",
-          "fieldName": "authUserId",
-          "columnType": 7,
-          "isNullable": false,
-          "dartType": "UuidValue"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "scopeNames",
-          "fieldName": "scopeNames",
-          "columnType": 8,
-          "isNullable": false,
-          "dartType": "Set<String>"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "extraClaims",
-          "fieldName": "extraClaims",
-          "columnType": 0,
-          "isNullable": true,
-          "dartType": "String?"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "method",
-          "fieldName": "method",
-          "columnType": 0,
-          "isNullable": false,
-          "dartType": "String"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "fixedSecret",
-          "fieldName": "fixedSecret",
-          "columnType": 5,
-          "isNullable": false,
-          "dartType": "dart:typed_data:ByteData"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "rotatingSecretHash",
-          "fieldName": "rotatingSecretHash",
-          "columnType": 0,
-          "isNullable": false,
-          "dartType": "String"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "lastUpdatedAt",
-          "fieldName": "lastUpdatedAt",
-          "columnType": 4,
-          "isNullable": false,
-          "columnDefault": "now",
-          "dartType": "DateTime"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "createdAt",
-          "fieldName": "createdAt",
-          "columnType": 4,
-          "isNullable": false,
-          "columnDefault": "now",
-          "dartType": "DateTime"
-        }
-      ],
-      "foreignKeys": [
-        {
-          "__className__": "serverpod.ForeignKeyDefinition",
-          "constraintName": "serverpod_auth_core_jwt_refresh_token_fk_0",
-          "columns": [
-            "authUserId"
-          ],
-          "referenceTable": "serverpod_auth_core_user",
-          "referenceTableSchema": "public",
-          "referenceColumns": [
-            "id"
-          ],
-          "onUpdate": 3,
-          "onDelete": 4
-        }
-      ],
-      "indexes": [
-        {
-          "__className__": "serverpod.IndexDefinition",
-          "indexName": "serverpod_auth_core_jwt_refresh_token_last_updated_at",
-          "elements": [
-            {
-              "__className__": "serverpod.IndexElementDefinition",
-              "type": 0,
-              "definition": "lastUpdatedAt"
-            }
-          ],
-          "type": "btree",
-          "isUnique": false,
-          "isPrimary": false
-        }
-      ],
-      "managed": true
-    },
-    {
-      "__className__": "serverpod.TableDefinition",
-      "name": "serverpod_auth_core_profile",
-      "dartName": "UserProfile",
-      "module": "serverpod_auth_core",
-      "schema": "public",
-      "columns": [
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "id",
-          "fieldName": "id",
-          "columnType": 7,
-          "isNullable": false,
-          "columnDefault": "random_v7",
-          "dartType": "UuidValue?"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "authUserId",
-          "fieldName": "authUserId",
-          "columnType": 7,
-          "isNullable": false,
-          "dartType": "UuidValue"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "userName",
-          "fieldName": "userName",
-          "columnType": 0,
-          "isNullable": true,
-          "dartType": "String?"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "fullName",
-          "fieldName": "fullName",
-          "columnType": 0,
-          "isNullable": true,
-          "dartType": "String?"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "email",
-          "fieldName": "email",
-          "columnType": 0,
-          "isNullable": true,
-          "dartType": "String?"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "createdAt",
-          "fieldName": "createdAt",
-          "columnType": 4,
-          "isNullable": false,
-          "columnDefault": "now",
-          "dartType": "DateTime"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "imageId",
-          "fieldName": "imageId",
-          "columnType": 7,
-          "isNullable": true,
-          "dartType": "UuidValue?"
-        }
-      ],
-      "foreignKeys": [
-        {
-          "__className__": "serverpod.ForeignKeyDefinition",
-          "constraintName": "serverpod_auth_core_profile_fk_0",
-          "columns": [
-            "authUserId"
-          ],
-          "referenceTable": "serverpod_auth_core_user",
-          "referenceTableSchema": "public",
-          "referenceColumns": [
-            "id"
-          ],
-          "onUpdate": 3,
-          "onDelete": 4
-        },
-        {
-          "__className__": "serverpod.ForeignKeyDefinition",
-          "constraintName": "serverpod_auth_core_profile_fk_1",
-          "columns": [
-            "imageId"
-          ],
-          "referenceTable": "serverpod_auth_core_profile_image",
-          "referenceTableSchema": "public",
-          "referenceColumns": [
-            "id"
-          ],
-          "onUpdate": 3,
-          "onDelete": 3
-        }
-      ],
-      "indexes": [
-        {
-          "__className__": "serverpod.IndexDefinition",
-          "indexName": "serverpod_auth_profile_user_profile_email_auth_user_id",
-          "elements": [
-            {
-              "__className__": "serverpod.IndexElementDefinition",
-              "type": 0,
-              "definition": "authUserId"
-            }
-          ],
-          "type": "btree",
-          "isUnique": true,
-          "isPrimary": false
-        }
-      ],
-      "managed": true
-    },
-    {
-      "__className__": "serverpod.TableDefinition",
-      "name": "serverpod_auth_core_profile_image",
-      "dartName": "UserProfileImage",
-      "module": "serverpod_auth_core",
-      "schema": "public",
-      "columns": [
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "id",
-          "fieldName": "id",
-          "columnType": 7,
-          "isNullable": false,
-          "columnDefault": "random_v7",
-          "dartType": "UuidValue?"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "userProfileId",
-          "fieldName": "userProfileId",
-          "columnType": 7,
-          "isNullable": false,
-          "dartType": "UuidValue"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "createdAt",
-          "fieldName": "createdAt",
-          "columnType": 4,
-          "isNullable": false,
-          "columnDefault": "now",
-          "dartType": "DateTime"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "storageId",
-          "fieldName": "storageId",
-          "columnType": 0,
-          "isNullable": false,
-          "dartType": "String"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "path",
-          "fieldName": "path",
-          "columnType": 0,
-          "isNullable": false,
-          "dartType": "String"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "url",
-          "fieldName": "url",
-          "columnType": 0,
-          "isNullable": false,
-          "dartType": "Uri"
-        }
-      ],
-      "foreignKeys": [
-        {
-          "__className__": "serverpod.ForeignKeyDefinition",
-          "constraintName": "serverpod_auth_core_profile_image_fk_0",
-          "columns": [
-            "userProfileId"
-          ],
-          "referenceTable": "serverpod_auth_core_profile",
-          "referenceTableSchema": "public",
-          "referenceColumns": [
-            "id"
-          ],
-          "onUpdate": 3,
-          "onDelete": 4
-        }
-      ],
-      "indexes": [],
-      "managed": true
-    },
-    {
-      "__className__": "serverpod.TableDefinition",
-      "name": "serverpod_auth_core_session",
-      "dartName": "ServerSideSession",
-      "module": "serverpod_auth_core",
-      "schema": "public",
-      "columns": [
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "id",
-          "fieldName": "id",
-          "columnType": 7,
-          "isNullable": false,
-          "columnDefault": "random_v7",
-          "dartType": "UuidValue?"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "authUserId",
-          "fieldName": "authUserId",
-          "columnType": 7,
-          "isNullable": false,
-          "dartType": "UuidValue"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "scopeNames",
-          "fieldName": "scopeNames",
-          "columnType": 8,
-          "isNullable": false,
-          "dartType": "Set<String>"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "createdAt",
-          "fieldName": "createdAt",
-          "columnType": 4,
-          "isNullable": false,
-          "columnDefault": "now",
-          "dartType": "DateTime"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "lastUsedAt",
-          "fieldName": "lastUsedAt",
-          "columnType": 4,
-          "isNullable": false,
-          "columnDefault": "now",
-          "dartType": "DateTime"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "expiresAt",
-          "fieldName": "expiresAt",
-          "columnType": 4,
-          "isNullable": true,
-          "dartType": "DateTime?"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "expireAfterUnusedFor",
-          "fieldName": "expireAfterUnusedFor",
-          "columnType": 6,
-          "isNullable": true,
-          "dartType": "Duration?"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "sessionKeyHash",
-          "fieldName": "sessionKeyHash",
-          "columnType": 5,
-          "isNullable": false,
-          "dartType": "dart:typed_data:ByteData"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "sessionKeySalt",
-          "fieldName": "sessionKeySalt",
-          "columnType": 5,
-          "isNullable": false,
-          "dartType": "dart:typed_data:ByteData"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "method",
-          "fieldName": "method",
-          "columnType": 0,
-          "isNullable": false,
-          "dartType": "String"
-        }
-      ],
-      "foreignKeys": [
-        {
-          "__className__": "serverpod.ForeignKeyDefinition",
-          "constraintName": "serverpod_auth_core_session_fk_0",
-          "columns": [
-            "authUserId"
-          ],
-          "referenceTable": "serverpod_auth_core_user",
-          "referenceTableSchema": "public",
-          "referenceColumns": [
-            "id"
-          ],
-          "onUpdate": 3,
-          "onDelete": 4
-        }
-      ],
-      "indexes": [],
-      "managed": true
-    },
-    {
-      "__className__": "serverpod.TableDefinition",
-      "name": "serverpod_auth_core_user",
-      "dartName": "AuthUser",
-      "module": "serverpod_auth_core",
-      "schema": "public",
-      "columns": [
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "id",
-          "fieldName": "id",
-          "columnType": 7,
-          "isNullable": false,
-          "columnDefault": "random_v7",
-          "dartType": "UuidValue?"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "createdAt",
-          "fieldName": "createdAt",
-          "columnType": 4,
-          "isNullable": false,
-          "dartType": "DateTime"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "scopeNames",
-          "fieldName": "scopeNames",
-          "columnType": 8,
-          "isNullable": false,
-          "dartType": "Set<String>"
-        },
-        {
-          "__className__": "serverpod.ColumnDefinition",
-          "name": "blocked",
-          "fieldName": "blocked",
-          "columnType": 1,
-          "isNullable": false,
-          "dartType": "bool"
-        }
-      ],
-      "foreignKeys": [],
-      "indexes": [],
-      "managed": true
     }
   ],
   "installedModules": [
     {
       "__className__": "serverpod.DatabaseMigrationVersionModel",
       "module": "gewerber_backend",
-      "version": "20260822023736942"
+      "version": "20260905122814391"
     },
     {
       "__className__": "serverpod.DatabaseMigrationVersion",
@@ -5370,17 +6032,17 @@
     {
       "__className__": "serverpod.DatabaseMigrationVersion",
       "module": "serverpod",
-      "version": "20260416151914983-insights-perf"
-    },
-    {
-      "__className__": "serverpod.DatabaseMigrationVersion",
-      "module": "serverpod_auth_idp",
-      "version": "20260417182309198"
+      "version": "20260824182259319"
     },
     {
       "__className__": "serverpod.DatabaseMigrationVersion",
       "module": "serverpod_auth_core",
-      "version": "20260417182253191"
+      "version": "20260824182354731"
+    },
+    {
+      "__className__": "serverpod.DatabaseMigrationVersion",
+      "module": "serverpod_auth_idp",
+      "version": "20260824182405944"
     }
   ],
   "migrationApiVersion": 1

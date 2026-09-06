@@ -31,6 +31,7 @@ void main() {
         name: 'Mein Gewerbe',
         legalForm: LegalForm.einzelunternehmen,
         isKleinunternehmer: true,
+        taxNumber: '14/815/0815',
         email: 'owner@example.com',
         address: Address(street: 'Hauptstr. 1', zip: '10115', city: 'Berlin'),
       );
@@ -50,6 +51,8 @@ void main() {
       final fetched = await endpoints.business.get(authenticatedSession);
       expect(fetched.id, business.id);
       expect(fetched.name, 'Mein Gewerbe');
+      // Steuernummer is tenant-scoped owner data: the owner gets it back.
+      expect(fetched.taxNumber, '14/815/0815');
 
       final mine = await endpoints.business.listMine(authenticatedSession);
       expect(mine.length, 1);
@@ -78,6 +81,8 @@ void main() {
           name: 'Updated Name',
           legalForm: created.legalForm,
           isKleinunternehmer: false,
+          vatId: 'DE123456789',
+          taxNumber: '21/815/0001',
           locale: created.locale,
           currency: created.currency,
         );
@@ -89,6 +94,8 @@ void main() {
 
         expect(updated.name, 'Updated Name');
         expect(updated.isKleinunternehmer, false);
+        expect(updated.vatId, 'DE123456789');
+        expect(updated.taxNumber, '21/815/0001');
         expect(updated.updatedAt.isAfter(created.updatedAt), true);
       },
     );
