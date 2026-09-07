@@ -121,6 +121,7 @@ import 'modules/invoicing/models/invoice_cursor_page.dart' as _i2f30jh4;
 import 'modules/invoicing/models/invoice_item.dart' as _iu86qxr6;
 import 'modules/invoicing/models/invoice_item_request.dart' as _it1pcy1x;
 import 'modules/invoicing/models/invoice_item_unit.dart' as _ik22qf7o;
+import 'modules/invoicing/models/invoice_limit_reached.dart' as _ixkgbq8y;
 import 'modules/invoicing/models/invoice_list_page.dart' as _i6mqpqud;
 import 'modules/invoicing/models/invoice_payment_status.dart' as _i6e3kqsf;
 import 'modules/invoicing/models/invoice_status.dart' as _i80dthru;
@@ -230,6 +231,7 @@ export 'modules/invoicing/models/invoice_cursor_page.dart';
 export 'modules/invoicing/models/invoice_item.dart';
 export 'modules/invoicing/models/invoice_item_request.dart';
 export 'modules/invoicing/models/invoice_item_unit.dart';
+export 'modules/invoicing/models/invoice_limit_reached.dart';
 export 'modules/invoicing/models/invoice_list_page.dart';
 export 'modules/invoicing/models/invoice_payment_status.dart';
 export 'modules/invoicing/models/invoice_status.dart';
@@ -2663,6 +2665,9 @@ class Protocol extends _is.DatabaseSerializationManager {
     if (t == _ik22qf7o.InvoiceItemUnit) {
       return _ik22qf7o.InvoiceItemUnit.fromJson(data) as T;
     }
+    if (t == _ixkgbq8y.InvoiceLimitReachedException) {
+      return _ixkgbq8y.InvoiceLimitReachedException.fromJson(data) as T;
+    }
     if (t == _i6mqpqud.InvoiceListPage) {
       return _i6mqpqud.InvoiceListPage.fromJson(data) as T;
     }
@@ -3063,6 +3068,12 @@ class Protocol extends _is.DatabaseSerializationManager {
     }
     if (t == _is.getType<_ik22qf7o.InvoiceItemUnit?>()) {
       return (data != null ? _ik22qf7o.InvoiceItemUnit.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_ixkgbq8y.InvoiceLimitReachedException?>()) {
+      return (data != null
+              ? _ixkgbq8y.InvoiceLimitReachedException.fromJson(data)
+              : null)
           as T;
     }
     if (t == _is.getType<_i6mqpqud.InvoiceListPage?>()) {
@@ -3520,6 +3531,7 @@ class Protocol extends _is.DatabaseSerializationManager {
       _iu86qxr6.InvoiceItem => 'InvoiceItem',
       _it1pcy1x.InvoiceItemRequest => 'InvoiceItemRequest',
       _ik22qf7o.InvoiceItemUnit => 'InvoiceItemUnit',
+      _ixkgbq8y.InvoiceLimitReachedException => 'InvoiceLimitReachedException',
       _i6mqpqud.InvoiceListPage => 'InvoiceListPage',
       _i6e3kqsf.InvoicePaymentStatus => 'InvoicePaymentStatus',
       _i80dthru.InvoiceStatus => 'InvoiceStatus',
@@ -3712,6 +3724,8 @@ class Protocol extends _is.DatabaseSerializationManager {
         return 'InvoiceItemRequest';
       case _ik22qf7o.InvoiceItemUnit():
         return 'InvoiceItemUnit';
+      case _ixkgbq8y.InvoiceLimitReachedException():
+        return 'InvoiceLimitReachedException';
       case _i6mqpqud.InvoiceListPage():
         return 'InvoiceListPage';
       case _i6e3kqsf.InvoicePaymentStatus():
@@ -4022,6 +4036,9 @@ class Protocol extends _is.DatabaseSerializationManager {
     }
     if (dataClassName == 'InvoiceItemUnit') {
       return deserialize<_ik22qf7o.InvoiceItemUnit>(data['data']);
+    }
+    if (dataClassName == 'InvoiceLimitReachedException') {
+      return deserialize<_ixkgbq8y.InvoiceLimitReachedException>(data['data']);
     }
     if (dataClassName == 'InvoiceListPage') {
       return deserialize<_i6mqpqud.InvoiceListPage>(data['data']);

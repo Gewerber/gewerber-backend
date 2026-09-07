@@ -15,4 +15,15 @@ class AllFeaturesEntitlementProvider implements EntitlementProvider {
   ) async {
     return Feature.values.toSet();
   }
+
+  @override
+  Future<bool> hasCapability(
+    Session session, {
+    required String capability,
+    required UuidValue userId,
+    int? businessId,
+  }) async {
+    // The OSS build is fully unlocked: every capability is granted.
+    return true;
+  }
 }

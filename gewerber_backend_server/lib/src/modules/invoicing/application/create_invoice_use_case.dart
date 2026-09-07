@@ -2,6 +2,8 @@ import 'package:injectable/injectable.dart';
 import 'package:serverpod/serverpod.dart';
 
 import '../../../core/audit/audit_service.dart';
+import '../../../core/entitlement/invoice_quota_policy.dart';
+import '../../../core/tenant/tenant_context.dart';
 import '../../../core/tenant/tenant_resolver.dart';
 import '../../../generated/protocol.dart';
 import '../../business/domain/business_gateway.dart';
@@ -28,6 +30,7 @@ class CreateInvoiceUseCase {
     this._numbers,
     this._taxRules,
     this._audit,
+    this._quotaPolicy,
   );
 
   final TenantResolver _tenantResolver;
@@ -40,6 +43,7 @@ class CreateInvoiceUseCase {
   final InvoiceNumberService _numbers;
   final TaxRuleEngine _taxRules;
   final AuditService _audit;
+  final InvoiceQuotaPolicy _quotaPolicy;
 
   Future<Invoice> call(
     Session session,
@@ -56,6 +60,17 @@ class CreateInvoiceUseCase {
         field: 'items',
       );
     }
+
+    // Free-tier monthly quota. Enforced on CREATE, not on issuance
+    // (`markSent`): every created invoice — even a draft — immediately
+    // consumes a GoBD-safe sequential number from the invoice number
+    // sequence, and creation is the single choke point for all user-facing
+    // invoice generation (manual create, time-entry billing; the background
+    // recurring-materialization job writes through its own path and is not
+    // quota-gated here). Gating issuance instead would let a free account
+    // hoard unlimited numbered drafts. All statuses count (cancelled rows
+    // keep their number for GoBD continuity).
+    await _enforceMonthlyQuota(session, tenant);
 
     if (request.customerId != null) {
       final customer = await _customers.findById(session, request.customerId!);
@@ -157,5 +172,43 @@ class CreateInvoiceUseCase {
     });
 
     return invoice;
+  }
+
+  /// Runs the free-tier monthly quota check for [tenant].
+  ///
+  /// Zero-cost when the commercial entitlements flag is off (the OSS
+  /// default): no capability lookup, no count query, no behavior change.
+  Future<void> _enforceMonthlyQuota(
+    Session session,
+    TenantContext tenant,
+  ) async {
+    if (!_quotaPolicy.enforcementEnabled) return;
+
+    final limit = await _quotaPolicy.monthlyInvoiceLimit(
+      session,
+      userId: tenant.userId,
+      businessId: tenant.businessId,
+    );
+    if (limit == null) return; // Unlimited capability granted.
+
+    // Current UTC calendar month; `createdAt` is stored as a timestamp and
+    // the window is half-open so the boundary day is counted exactly once.
+    final now = DateTime.now().toUtc();
+    final monthStart = DateTime.utc(now.year, now.month);
+    final nextMonthStart = DateTime.utc(now.year, now.month + 1);
+
+    final createdThisMonth = await _invoices.countCreatedBetween(
+      session,
+      businessId: tenant.businessId,
+      createdAfter: monthStart,
+      createdBefore: nextMonthStart,
+    );
+    if (createdThisMonth >= limit) {
+      throw InvoiceLimitReachedException(
+        message:
+            'Monthly invoice limit of $limit reached for the current plan.',
+        limit: limit,
+      );
+    }
   }
 }
