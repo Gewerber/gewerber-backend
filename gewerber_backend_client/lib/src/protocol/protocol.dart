@@ -116,7 +116,10 @@ import 'modules/invoicing/models/invoice_cursor_page.dart' as _i2f30jh4;
 import 'modules/invoicing/models/invoice_item.dart' as _iu86qxr6;
 import 'modules/invoicing/models/invoice_item_request.dart' as _it1pcy1x;
 import 'modules/invoicing/models/invoice_item_unit.dart' as _ik22qf7o;
+<<<<<<< HEAD
 import 'modules/invoicing/models/invoice_limit_reached.dart' as _ixkgbq8y;
+=======
+>>>>>>> origin/main
 import 'modules/invoicing/models/invoice_list_page.dart' as _i6mqpqud;
 import 'modules/invoicing/models/invoice_payment_status.dart' as _i6e3kqsf;
 import 'modules/invoicing/models/invoice_status.dart' as _i80dthru;
@@ -489,6 +492,7 @@ class Protocol extends _isc.SerializationManager {
     if (t == _ik22qf7o.InvoiceItemUnit) {
       return _ik22qf7o.InvoiceItemUnit.fromJson(data) as T;
     }
+<<<<<<< HEAD
     if (t == _ixkgbq8y.InvoiceLimitReachedException) {
       return _ixkgbq8y.InvoiceLimitReachedException.fromJson(data) as T;
     }
@@ -603,6 +607,119 @@ class Protocol extends _isc.SerializationManager {
     if (t == _isc.getType<_i0s5j3nj.Feature?>()) {
       return (data != null ? _i0s5j3nj.Feature.fromJson(data) : null) as T;
     }
+=======
+    if (t == _i6mqpqud.InvoiceListPage) {
+      return _i6mqpqud.InvoiceListPage.fromJson(data) as T;
+    }
+    if (t == _i6e3kqsf.InvoicePaymentStatus) {
+      return _i6e3kqsf.InvoicePaymentStatus.fromJson(data) as T;
+    }
+    if (t == _i80dthru.InvoiceStatus) {
+      return _i80dthru.InvoiceStatus.fromJson(data) as T;
+    }
+    if (t == _isaqeos4.InvoiceTemplate) {
+      return _isaqeos4.InvoiceTemplate.fromJson(data) as T;
+    }
+    if (t == _io5qrdfp.InvoiceType) {
+      return _io5qrdfp.InvoiceType.fromJson(data) as T;
+    }
+    if (t == _i31hy3jj.PaymentMethod) {
+      return _i31hy3jj.PaymentMethod.fromJson(data) as T;
+    }
+    if (t == _id8w36x8.PaymentRecord) {
+      return _id8w36x8.PaymentRecord.fromJson(data) as T;
+    }
+    if (t == _i2drsvke.RecordPaymentRequest) {
+      return _i2drsvke.RecordPaymentRequest.fromJson(data) as T;
+    }
+    if (t == _it8iedui.RecurrenceInterval) {
+      return _it8iedui.RecurrenceInterval.fromJson(data) as T;
+    }
+    if (t == _i0xuine3.Reminder) {
+      return _i0xuine3.Reminder.fromJson(data) as T;
+    }
+    if (t == _icatwcwa.UpdateCustomerRequest) {
+      return _icatwcwa.UpdateCustomerRequest.fromJson(data) as T;
+    }
+    if (t == _iteadt76.UpdateInvoiceRequest) {
+      return _iteadt76.UpdateInvoiceRequest.fromJson(data) as T;
+    }
+    if (t == _ilpliwg4.UpdateInvoiceTemplateRequest) {
+      return _ilpliwg4.UpdateInvoiceTemplateRequest.fromJson(data) as T;
+    }
+    if (t == _i037hdza.UpdateRecurringScheduleRequest) {
+      return _i037hdza.UpdateRecurringScheduleRequest.fromJson(data) as T;
+    }
+    if (t == _id7e2pr5.VatRate) {
+      return _id7e2pr5.VatRate.fromJson(data) as T;
+    }
+    if (t == _i8rbvyvx.CreateProjectRequest) {
+      return _i8rbvyvx.CreateProjectRequest.fromJson(data) as T;
+    }
+    if (t == _iagq7u79.CreateTaskRequest) {
+      return _iagq7u79.CreateTaskRequest.fromJson(data) as T;
+    }
+    if (t == _i3b86gp3.CreateTimeEntriesInvoiceRequest) {
+      return _i3b86gp3.CreateTimeEntriesInvoiceRequest.fromJson(data) as T;
+    }
+    if (t == _i85810i7.CreateTimeEntryRequest) {
+      return _i85810i7.CreateTimeEntryRequest.fromJson(data) as T;
+    }
+    if (t == _i2wiwzxn.Project) {
+      return _i2wiwzxn.Project.fromJson(data) as T;
+    }
+    if (t == _i8h0tbjs.ProjectStatus) {
+      return _i8h0tbjs.ProjectStatus.fromJson(data) as T;
+    }
+    if (t == _i2ishkic.StartTimerRequest) {
+      return _i2ishkic.StartTimerRequest.fromJson(data) as T;
+    }
+    if (t == _ihpxqi7u.Task) {
+      return _ihpxqi7u.Task.fromJson(data) as T;
+    }
+    if (t == _iieqkj38.TaskStatus) {
+      return _iieqkj38.TaskStatus.fromJson(data) as T;
+    }
+    if (t == _ii8lft1t.TimeEntry) {
+      return _ii8lft1t.TimeEntry.fromJson(data) as T;
+    }
+    if (t == _ilk96oxt.TimeReport) {
+      return _ilk96oxt.TimeReport.fromJson(data) as T;
+    }
+    if (t == _iify20ly.TimeReportLine) {
+      return _iify20ly.TimeReportLine.fromJson(data) as T;
+    }
+    if (t == _ilqqks6d.UpdateProjectRequest) {
+      return _ilqqks6d.UpdateProjectRequest.fromJson(data) as T;
+    }
+    if (t == _i3iu7ffh.UpdateTaskRequest) {
+      return _i3iu7ffh.UpdateTaskRequest.fromJson(data) as T;
+    }
+    if (t == _iferwyg8.UpdateTimeEntryRequest) {
+      return _iferwyg8.UpdateTimeEntryRequest.fromJson(data) as T;
+    }
+    if (t == _iy79t9m6.AppTheme) {
+      return _iy79t9m6.AppTheme.fromJson(data) as T;
+    }
+    if (t == _i1sqdvz3.MyIdentity) {
+      return _i1sqdvz3.MyIdentity.fromJson(data) as T;
+    }
+    if (t == _in8pujw9.MyMembershipInfo) {
+      return _in8pujw9.MyMembershipInfo.fromJson(data) as T;
+    }
+    if (t == _i5r0ss6k.UpdateUserProfileRequest) {
+      return _i5r0ss6k.UpdateUserProfileRequest.fromJson(data) as T;
+    }
+    if (t == _iung9xmp.UserProfile) {
+      return _iung9xmp.UserProfile.fromJson(data) as T;
+    }
+    if (t == _isc.getType<_i409qkgd.AdminRole?>()) {
+      return (data != null ? _i409qkgd.AdminRole.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_i0s5j3nj.Feature?>()) {
+      return (data != null ? _i0s5j3nj.Feature.fromJson(data) : null) as T;
+    }
+>>>>>>> origin/main
     if (t == _isc.getType<_i5epujyq.ConflictException?>()) {
       return (data != null ? _i5epujyq.ConflictException.fromJson(data) : null)
           as T;
@@ -879,12 +996,15 @@ class Protocol extends _isc.SerializationManager {
       return (data != null ? _ik22qf7o.InvoiceItemUnit.fromJson(data) : null)
           as T;
     }
+<<<<<<< HEAD
     if (t == _isc.getType<_ixkgbq8y.InvoiceLimitReachedException?>()) {
       return (data != null
               ? _ixkgbq8y.InvoiceLimitReachedException.fromJson(data)
               : null)
           as T;
     }
+=======
+>>>>>>> origin/main
     if (t == _isc.getType<_i6mqpqud.InvoiceListPage?>()) {
       return (data != null ? _i6mqpqud.InvoiceListPage.fromJson(data) : null)
           as T;
@@ -1333,7 +1453,10 @@ class Protocol extends _isc.SerializationManager {
       _iu86qxr6.InvoiceItem => 'InvoiceItem',
       _it1pcy1x.InvoiceItemRequest => 'InvoiceItemRequest',
       _ik22qf7o.InvoiceItemUnit => 'InvoiceItemUnit',
+<<<<<<< HEAD
       _ixkgbq8y.InvoiceLimitReachedException => 'InvoiceLimitReachedException',
+=======
+>>>>>>> origin/main
       _i6mqpqud.InvoiceListPage => 'InvoiceListPage',
       _i6e3kqsf.InvoicePaymentStatus => 'InvoicePaymentStatus',
       _i80dthru.InvoiceStatus => 'InvoiceStatus',
@@ -1518,8 +1641,11 @@ class Protocol extends _isc.SerializationManager {
         return 'InvoiceItemRequest';
       case _ik22qf7o.InvoiceItemUnit():
         return 'InvoiceItemUnit';
+<<<<<<< HEAD
       case _ixkgbq8y.InvoiceLimitReachedException():
         return 'InvoiceLimitReachedException';
+=======
+>>>>>>> origin/main
       case _i6mqpqud.InvoiceListPage():
         return 'InvoiceListPage';
       case _i6e3kqsf.InvoicePaymentStatus():
@@ -1814,9 +1940,12 @@ class Protocol extends _isc.SerializationManager {
     }
     if (dataClassName == 'InvoiceItemUnit') {
       return deserialize<_ik22qf7o.InvoiceItemUnit>(data['data']);
+<<<<<<< HEAD
     }
     if (dataClassName == 'InvoiceLimitReachedException') {
       return deserialize<_ixkgbq8y.InvoiceLimitReachedException>(data['data']);
+=======
+>>>>>>> origin/main
     }
     if (dataClassName == 'InvoiceListPage') {
       return deserialize<_i6mqpqud.InvoiceListPage>(data['data']);
