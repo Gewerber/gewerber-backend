@@ -22,6 +22,15 @@ import 'service_locator.dart';
 const String commercialEntitlementsFlagEnvVar =
     'GEWERBER_COMMERCIAL_ENTITLEMENTS';
 
+/// Whether the deployment opted into commercial entitlements via
+/// [commercialEntitlementsFlagEnvVar] (exact value `true`).
+///
+/// Single source of truth for the flag: used by the DI swap below *and* by
+/// runtime feature gates (e.g. `InvoiceQuotaPolicy`) so both always agree.
+bool commercialEntitlementsEnabled([Map<String, String>? environment]) =>
+    (environment ?? Platform.environment)[commercialEntitlementsFlagEnvVar] ==
+    'true';
+
 @InjectableInit(
   initializerName: 'init',
   preferRelativeImports: true,
@@ -36,7 +45,7 @@ Future<void> configureDependencies() async {
 /// opts into commercial entitlements. No-op (OSS default preserved) whenever
 /// [commercialEntitlementsFlagEnvVar] is not exactly `true`.
 void _registerCommercialEntitlementsIfEnabled() {
-  if (Platform.environment[commercialEntitlementsFlagEnvVar] != 'true') return;
+  if (!commercialEntitlementsEnabled()) return;
   getIt.unregister<EntitlementProvider>();
   getIt.registerSingleton<EntitlementProvider>(
     CommercialEntitlementProvider(),

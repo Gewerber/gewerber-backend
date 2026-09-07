@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -241,6 +242,7 @@ import '../admin/admin_role_resolver.dart' as _i62;
 import '../audit/audit_service.dart' as _i473;
 import '../entitlement/all_features_entitlement_provider.dart' as _i398;
 import '../entitlement/entitlement_provider.dart' as _i664;
+import '../entitlement/invoice_quota_policy.dart' as _i615;
 import '../events/event_bus.dart' as _i557;
 import '../events/message_central_event_bus.dart' as _i991;
 import '../mail/mail_service.dart' as _i1069;
@@ -256,6 +258,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.singleton<_i473.AuditService>(() => _i473.AuditService());
+    gh.singleton<_i615.InvoiceQuotaPolicy>(() => _i615.InvoiceQuotaPolicy());
     gh.singleton<_i1069.MailService>(() => _i1069.MailService());
     gh.singleton<_i993.GuidanceContentProvider>(
       () => _i993.GuidanceContentProvider(),
@@ -733,20 +736,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
-    gh.singleton<_i1013.CreateInvoiceUseCase>(
-      () => _i1013.CreateInvoiceUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i20.InvoiceItemGateway>(),
-        gh<_i647.BusinessGateway>(),
-        gh<_i141.BusinessSettingsGateway>(),
-        gh<_i696.CustomerGateway>(),
-        gh<_i331.InvoiceTemplateGateway>(),
-        gh<_i988.InvoiceNumberService>(),
-        gh<_i755.TaxRuleEngine>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
     gh.singleton<_i674.ListRemindersUseCase>(
       () => _i674.ListRemindersUseCase(
         gh<_i343.TenantResolver>(),
@@ -793,6 +782,21 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i517.InvoiceGateway>(),
         gh<_i1025.PaymentRecordGateway>(),
         gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i1013.CreateInvoiceUseCase>(
+      () => _i1013.CreateInvoiceUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i20.InvoiceItemGateway>(),
+        gh<_i647.BusinessGateway>(),
+        gh<_i141.BusinessSettingsGateway>(),
+        gh<_i696.CustomerGateway>(),
+        gh<_i331.InvoiceTemplateGateway>(),
+        gh<_i988.InvoiceNumberService>(),
+        gh<_i755.TaxRuleEngine>(),
+        gh<_i473.AuditService>(),
+        gh<_i615.InvoiceQuotaPolicy>(),
       ),
     );
     gh.singleton<_i747.GetTimeEntryUseCase>(

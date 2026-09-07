@@ -85,6 +85,16 @@ abstract interface class InvoiceGateway {
     InvoiceStatus? status,
   });
 
+  /// Counts invoices of [businessId] whose `createdAt` falls into the
+  /// half-open window [`createdAfter`, `createdBefore`). Used by the
+  /// free-tier monthly quota check (calendar-month window).
+  Future<int> countCreatedBetween(
+    Session session, {
+    required int businessId,
+    required DateTime createdAfter,
+    required DateTime createdBefore,
+  });
+
   Future<Invoice> delete(
     Session session,
     Invoice invoice, {

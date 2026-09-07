@@ -190,4 +190,55 @@ void main() {
       },
     );
   });
+
+  group('CommercialEntitlementProvider.hasCapability', () {
+    test(
+      'grants a raw commercial key with no OSS Feature equivalent',
+      () async {
+        final source = _FakeEntitlementSource({'unlimited_invoices'});
+        final provider = CommercialEntitlementProvider(
+          sourceFactory: (_) => source,
+        );
+
+        final granted = await provider.hasCapability(
+          _FakeSession(),
+          capability: 'unlimited_invoices',
+          userId: UuidValue.fromString(userId),
+          businessId: 42,
+        );
+
+        expect(granted, isTrue);
+        expect(source.lastUserId, equals(UuidValue.fromString(userId)));
+        expect(source.lastBusinessId, 42);
+      },
+    );
+
+    test('denies a capability the source does not grant', () async {
+      final provider = CommercialEntitlementProvider(
+        sourceFactory: (_) => _FakeEntitlementSource({'invoicing'}),
+      );
+
+      final granted = await provider.hasCapability(
+        _FakeSession(),
+        capability: 'unlimited_invoices',
+        userId: UuidValue.fromString(userId),
+      );
+
+      expect(granted, isFalse);
+    });
+
+    test('fails open (grants) when the source throws', () async {
+      final provider = CommercialEntitlementProvider(
+        sourceFactory: (_) => _ThrowingEntitlementSource(),
+      );
+
+      final granted = await provider.hasCapability(
+        _FakeSession(),
+        capability: 'unlimited_invoices',
+        userId: UuidValue.fromString(userId),
+      );
+
+      expect(granted, isTrue);
+    });
+  });
 }
