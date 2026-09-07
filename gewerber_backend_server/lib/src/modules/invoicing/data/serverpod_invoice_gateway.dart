@@ -199,6 +199,22 @@ class ServerpodInvoiceGateway implements InvoiceGateway {
   }
 
   @override
+  Future<int> countCreatedBetween(
+    Session session, {
+    required int businessId,
+    required DateTime createdAfter,
+    required DateTime createdBefore,
+  }) {
+    return Invoice.db.count(
+      session,
+      where: (t) =>
+          t.businessId.equals(businessId) &
+          (t.createdAt >= createdAfter) &
+          (t.createdAt < createdBefore),
+    );
+  }
+
+  @override
   Future<Invoice> delete(
     Session session,
     Invoice invoice, {

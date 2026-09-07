@@ -83,6 +83,39 @@ class CommercialEntitlementProvider implements EntitlementProvider {
   static final Set<String> loggedUnknownKeys = <String>{};
 
   @override
+  Future<bool> hasCapability(
+    Session session, {
+    required String capability,
+    required UuidValue userId,
+    int? businessId,
+  }) async {
+    final source = sourceFactory(session);
+    try {
+      // Checks the *raw* commercial key set (before the [Feature] mapping), so
+      // commercial-only capabilities like `unlimited_invoices` — which have no
+      // OSS enum equivalent and are skipped by [featuresFor] — remain queryable
+      // without extending the OSS vocabulary.
+      final keys = await source.featuresFor(
+        userId: userId,
+        businessId: businessId,
+      );
+      return keys.contains(capability);
+    } catch (error, stackTrace) {
+      // Fail-open, mirroring [featuresFor]: an outage of commercial
+      // infrastructure must never degrade users below the OSS baseline (where
+      // every capability is granted).
+      session.log(
+        '[CommercialEntitlementProvider] Commercial entitlement source '
+        'failed; failing open for capability "$capability".',
+        level: LogLevel.warning,
+        exception: error,
+        stackTrace: stackTrace,
+      );
+      return true;
+    }
+  }
+
+  @override
   Future<Set<Feature>> featuresFor(
     Session session,
     TenantContext tenant,

@@ -1,0 +1,8 @@
+# Thrown when a quota-limited (free-tier) user tries to create another
+# invoice in the current calendar month. Only ever raised when commercial
+# entitlements are enabled (`GEWERBER_COMMERCIAL_ENTITLEMENTS=true`); OSS
+# self-hosted builds have no quota.
+exception: InvoiceLimitReachedException
+fields:
+  message: String
+  limit: int
