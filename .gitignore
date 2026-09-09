@@ -19,3 +19,6 @@ pubspec_overrides.yaml
 .scloud/
 pubspec.lock
 .env
+
+# Local task tracker (not versioned)
+/TODO.md
