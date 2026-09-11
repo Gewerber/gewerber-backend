@@ -2,13 +2,15 @@ import 'dart:math';
 
 // The commercial module's public barrel. Prefixed because the barrel
 // re-exports module-level names (e.g. the generated `Protocol`/`Endpoints`
-// classes) that collide with the host's. The generated
-// `ServerpodFutureCallsGetter` extension is hidden because its name collides
-// with the host-generated extension of the same name (affects
-// `pod.futureCalls`); the host's copy must win.
+// classes) that collide with the host's. Note: a prefixed import still
+// brings the module's generated `ServerpodFutureCallsGetter` extension into
+// implicit scope (same name as the host-generated one), so no implicit
+// `pod.<extension member>` access may be used — `pod.futureCalls` below is
+// applied via the host extension explicitly instead. A `hide` clause is not
+// an option either: the slimmed public stubs do not export that name, which
+// would make `dart analyze` fail there.
 import 'package:gewerber_backend_commercial_server/gewerber_backend_commercial_server.dart'
-    as commercial
-    hide ServerpodFutureCallsGetter;
+    as commercial;
 import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_idp_server/core.dart';
 import 'package:serverpod_auth_idp_server/providers/email.dart';
@@ -18,6 +20,12 @@ import 'src/core/di/service_locator.dart';
 import 'src/core/mail/email_template.dart';
 import 'src/core/mail/mail_service.dart';
 import 'src/generated/endpoints.dart';
+// Prefixed: the commercial module's barrel brings a same-named extension into
+// scope, so the host's copy must be referenced explicitly (see the
+// `ensureScheduled` call below).
+import 'src/generated/future_calls.dart'
+    as host_calls
+    show ServerpodFutureCallsGetter;
 import 'src/generated/protocol.dart';
 import 'src/modules/invoicing/jobs/invoicing_job_scheduler.dart';
 
@@ -89,8 +97,13 @@ void run(List<String> args) async {
   await pod.start();
 
   // Background jobs: materialize due recurring invoices and mark overdue
-  // invoices periodically.
-  await const InvoicingJobScheduler().ensureScheduled(pod.futureCalls);
+  // invoices periodically. The future-calls getter is applied explicitly via
+  // the host-generated extension (prefixed import): the commercial module's
+  // barrel brings a same-named extension into scope, which would make the
+  // implicit `pod.futureCalls` access ambiguous.
+  await const InvoicingJobScheduler().ensureScheduled(
+    host_calls.ServerpodFutureCallsGetter(pod).futureCalls,
+  );
 }
 
 /// Length of the email verification codes (registration + password reset).

@@ -6,9 +6,10 @@ import '../tenant/tenant_context.dart';
 /// Contract for feature gating.
 ///
 /// The OSS core ships [AllFeaturesEntitlementProvider] which allows every
-/// feature. Commercial deployments (SaaS) replace the DI binding with
-/// [CommercialEntitlementProvider], an implementation backed by subscription
-/// data (gewerber-payments). The swap is opt-in via the
+/// feature. Commercial deployments (SaaS) replace the DI binding with the
+/// commercial module's subscription-backed provider, installed via the
+/// host-registered `CommercialEntitlementInstaller` (see
+/// `commercial_entitlement_installer.dart`). The swap is opt-in via the
 /// `GEWERBER_COMMERCIAL_ENTITLEMENTS=true` environment variable (see
 /// `core/di/injection.dart`); it stays off — and this default binding stays
 /// active — for all self-hosted OSS deployments.
@@ -24,10 +25,10 @@ abstract interface class EntitlementProvider {
   /// such keys without mapping them into [Feature]:
   ///
   /// - [AllFeaturesEntitlementProvider] (OSS default) always returns `true` —
-  ///   in the open-source build every capability is free.
-  ///   [CommercialEntitlementProvider] checks the raw key set returned by its
-  ///   commercial entitlement source (fail-open on source errors, mirroring
-  ///   [featuresFor]).
+  ///   in the open-source build every capability is free. The commercial
+  ///   module's provider (installed via `commercial_entitlement_installer.dart`)
+  ///   checks the raw key set against its subscription data (fail-open on
+  ///   source errors, mirroring [featuresFor]).
   Future<bool> hasCapability(
     Session session, {
     required String capability,

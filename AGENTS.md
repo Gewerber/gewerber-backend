@@ -21,7 +21,7 @@ gewerber_backend_server/lib/src/
     events/                      # EventBus (MessageCentral wrapper)
     errors/                      # Serializable exceptions (NotFound, Validation, Forbidden, Conflict)
     endpoints/                   # BusinessScopedEndpoint, AdminEndpoint base classes
-    entitlement/                 # Feature gating scaffold (all features enabled in OSS)
+    entitlement/                 # Feature gating scaffold (all features enabled in OSS; host installer bridge swaps in the commercial module's provider when GEWERBER_COMMERCIAL_ENTITLEMENTS=true)
     mail/                        # MailService (SMTP) + EmailTemplate
     sequence/                    # GoBD-safe number sequences
   modules/
@@ -124,7 +124,10 @@ lives inside the module behind its public entrypoint
 `wireCommercialBilling(Serverpod)` (exported from the module barrel; the OSS
 stubs ship an identical no-op). The host `server.dart` calls it unconditionally
 before `pod.start()` — it self-gates on `GEWERBER_COMMERCIAL_ENTITLEMENTS=true`
-and imports only the module's public barrel, no `src/` paths.
+and imports only the module's public barrel, no `src/` paths. When the flag is
+on, `wireCommercialBilling` also swaps the host `EntitlementProvider` via the
+host-registered `CommercialEntitlementInstaller`
+(`core/entitlement/commercial_entitlement_installer.dart`).
 
 ## Phases
 
