@@ -2,7 +2,7 @@
 # docker build -f gewerber_backend_server/Dockerfile .
 
 # Build stage
-FROM dart:3.12.2 AS build
+FROM dart:3.13.3 AS build
 
 # git is needed to fetch the commercial module packages during `dart pub get`.
 RUN apt-get update \
