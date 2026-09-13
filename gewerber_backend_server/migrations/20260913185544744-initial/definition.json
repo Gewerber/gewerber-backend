@@ -6062,7 +6062,7 @@
     {
       "__className__": "serverpod.DatabaseMigrationVersionModel",
       "module": "gewerber_backend",
-      "version": "20260913102108938-waitlist-attribution"
+      "version": "20260913185544744-initial"
     },
     {
       "__className__": "serverpod.DatabaseMigrationVersion",
