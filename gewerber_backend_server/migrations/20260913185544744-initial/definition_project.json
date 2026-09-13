@@ -2693,7 +2693,7 @@
     {
       "__className__": "serverpod.DatabaseMigrationVersion",
       "module": "gewerber_backend_commercial",
-      "version": "20260814083449413"
+      "version": "20260911152358295"
     },
     {
       "__className__": "serverpod.DatabaseMigrationVersion",

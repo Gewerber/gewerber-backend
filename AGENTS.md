@@ -116,8 +116,38 @@ private repo override it via `pubspec_overrides.yaml` (gitignored,
 to the real module with a git `insteadOf` rule using the
 `COMMERCIAL_REPO_TOKEN` BuildKit secret (see `Dockerfile`). Its tables are
 prefixed `commercial_*` and migrate together with the server
-(`SERVERPOD_APPLY_MIGRATIONS=true`). When endpoints or models of the module
-change, mirror the public API surface into `gewerber-backend-stubs`.
+(`SERVERPOD_APPLY_MIGRATIONS=true`).
+
+**The stubs are the public contract, not a mirror.** They deliberately ship
+*only* the module's public surface — the `commercial` health endpoint and
+`waitlist` — plus the `wireCommercialBilling` / entitlement-installer
+entrypoints, and a clean-slate migration containing nothing but
+`commercial_waitlist_entry`. Do **not** mirror the module's subscription,
+plan, promo, payments or admin surface into `gewerber-backend-stubs`; the
+contract is defined by `CONTRACT.md` in the private module repo, so when it
+changes, update the stubs to match *the contract* and never to match the
+implementation. The generated client SDK depends on
+`gewerber_backend_commercial_client` (the stub client) because the generated
+protocol embeds the module caller — that dependency is what keeps
+`client.modules.commercial` limited to the public endpoints.
+
+`.github/workflows/ci.yml`'s `privacy-guard` job enforces the boundary: no
+`gewerber_backend_commercial_server/src` imports, no
+`modules.commercial.<x>` caller outside the allow-list, no non-contract
+`commercial_*` table in the committed migrations, plus a check that the
+generated artifacts and the module schema version recorded in the latest
+migration still match the resolved stub package. Extend its allow-lists (and
+this section) together with any deliberate change to the contract.
+
+**Module migrations are merged into the project chain.** `serverpod
+create-migration` folds each module's latest migration into the *project's*
+migration and stamps the module's version into `serverpod_migrations`; at
+runtime only the project chain is applied, so a module's own migration files
+are never run by this server. That means a module model change requires a new
+project migration here, or the committed SQL stays a stale copy of the module
+schema and inserts fail on the missing columns (the startup integrity check
+makes that fatal in `development` run mode, warning-only in
+staging/production).
 
 Commercial billing wiring (PayPal webhook route, hourly reconciliation sweep)
 lives inside the module behind its public entrypoint

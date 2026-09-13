@@ -2764,6 +2764,46 @@
         },
         {
           "__className__": "serverpod.ColumnDefinition",
+          "name": "utmTerm",
+          "fieldName": "utmTerm",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "utmContent",
+          "fieldName": "utmContent",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "gclid",
+          "fieldName": "gclid",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "fbclid",
+          "fieldName": "fbclid",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "landingPage",
+          "fieldName": "landingPage",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
           "name": "businessType",
           "fieldName": "businessType",
           "columnType": 0,
@@ -6022,12 +6062,12 @@
     {
       "__className__": "serverpod.DatabaseMigrationVersionModel",
       "module": "gewerber_backend",
-      "version": "20260905122814391"
+      "version": "20260913185544744-initial"
     },
     {
       "__className__": "serverpod.DatabaseMigrationVersion",
       "module": "gewerber_backend_commercial",
-      "version": "20260814083449413"
+      "version": "20260911152358295"
     },
     {
       "__className__": "serverpod.DatabaseMigrationVersion",
