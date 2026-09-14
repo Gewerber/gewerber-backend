@@ -25,8 +25,18 @@ RUN printf '%s\n' \
 # rule; the GitHub token is supplied as a BuildKit secret (id=git_token) and
 # the git config is removed afterwards:
 #   docker build --secret id=git_token,env=GIT_TOKEN ...
+#
+# GEWERBER_DEP_REF: branch deploys pass the branch they build (develop →
+# staging) so the commercial module dependency is consumed from that branch
+# of gewerber-backend-commercial (via the stubs URL), end-to-end testable on
+# staging before release. Default main keeps the committed refs — production
+# and plain builds are unchanged.
+ARG GEWERBER_DEP_REF=main
 RUN --mount=type=secret,id=git_token \
-  if [ -f /run/secrets/git_token ]; then \
+  if [ "$GEWERBER_DEP_REF" != "main" ]; then \
+    sh gewerber_backend_server/tool/retarget_gewerber_refs.sh "$GEWERBER_DEP_REF"; \
+  fi \
+  && if [ -f /run/secrets/git_token ]; then \
     git config --global url."https://x-access-token:$(cat /run/secrets/git_token)@github.com/Gewerber/gewerber-backend-commercial".insteadOf "https://github.com/Gewerber/gewerber-backend-stubs"; \
     git config --global url."https://x-access-token:$(cat /run/secrets/git_token)@github.com/".insteadOf "https://github.com/"; \
   fi \
