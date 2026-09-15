@@ -414,6 +414,11 @@ CREATE TABLE "commercial_waitlist_entry" (
     "utmSource" text,
     "utmMedium" text,
     "utmCampaign" text,
+    "utmTerm" text,
+    "utmContent" text,
+    "gclid" text,
+    "fbclid" text,
+    "landingPage" text,
     "businessType" text,
     "status" text NOT NULL DEFAULT 'pending'::text,
     "createdAt" timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1361,17 +1366,17 @@ ALTER TABLE ONLY "serverpod_auth_idp_passkey_account"
 -- MIGRATION VERSION FOR gewerber_backend
 --
 INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
-    VALUES ('gewerber_backend', '20260905122814391', now())
+    VALUES ('gewerber_backend', '20260913185544744-initial', now())
     ON CONFLICT ("module")
-    DO UPDATE SET "version" = '20260905122814391', "timestamp" = now();
+    DO UPDATE SET "version" = '20260913185544744-initial', "timestamp" = now();
 
 --
 -- MIGRATION VERSION FOR gewerber_backend_commercial
 --
 INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
-    VALUES ('gewerber_backend_commercial', '20260814083449413', now())
+    VALUES ('gewerber_backend_commercial', '20260911152358295', now())
     ON CONFLICT ("module")
-    DO UPDATE SET "version" = '20260814083449413', "timestamp" = now();
+    DO UPDATE SET "version" = '20260911152358295', "timestamp" = now();
 
 --
 -- MIGRATION VERSION FOR serverpod

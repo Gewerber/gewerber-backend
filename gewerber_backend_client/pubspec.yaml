@@ -10,10 +10,21 @@ topics:
   - sdk
 
 environment:
-  sdk: '^3.12.0'
+  sdk: '^3.13.3'
 
 resolution: workspace
 
 dependencies:
-  serverpod_auth_idp_client: 4.0.0-rc.1
-  serverpod_client: 4.0.0-rc.1
+  # The generated protocol embeds the `commercial` module caller
+  # (lib/src/protocol/client.dart), so the module's client package is a real
+  # compile-time dependency of this SDK. It is resolved against the public stub
+  # package so that OSS consumers need no private access; release builds rewrite
+  # the stubs URL to the real module via the git `insteadOf` rule (see the
+  # server Dockerfile).
+  gewerber_backend_commercial_client:
+    git:
+      url: https://github.com/Gewerber/gewerber-backend-stubs.git
+      ref: main
+      path: gewerber_backend_commercial_client
+  serverpod_auth_idp_client: 4.0.0-rc.2
+  serverpod_client: 4.0.0-rc.2

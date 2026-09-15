@@ -2,6 +2,7 @@
 #
 #   - `dart analyze` over the whole Dart workspace
 #   - `dart test` (integration tests) against a disposable PostgreSQL
+#   - an open-core privacy guard (see the `privacy-guard` job)
 #
 # Triggers on every PR and on pushes to main/develop. Make this check
 # required in branch protection so merges always pass analyze + tests.
@@ -59,7 +60,15 @@ jobs:
       - name: Set up Dart
         uses: dart-lang/setup-dart@v1
         with:
-          sdk: stable
+          sdk: '3.13.3'
+
+      # While the stubs rc-bump sits in their develop (not yet released to
+      # main), pair this build with the stubs `develop` so the pinned
+      # Serverpod version matches (release-train sync, see stubs#26). main
+      # builds keep ref: main.
+      - name: Inter-repo deps follow the target branch
+        if: github.ref_name == 'develop' || github.base_ref == 'develop'
+        run: sh gewerber_backend_server/tool/retarget_gewerber_refs.sh develop
 
       - name: Install dependencies
         run: dart pub get
@@ -93,3 +102,140 @@ jobs:
       - name: Run tests
         run: dart test
         working-directory: gewerber_backend_server
+
+  # Open-core privacy guard.
+  #
+  # The closed-source module is compiled into OSS builds through the public
+  # stub packages in gewerber-backend-stubs. The stubs define the public
+  # contract; this job asserts that this repository (source, generated code,
+  # and committed migrations) never reaches past it, so the private module's
+  # shape cannot leak back in through a merge or a stale artifact.
+  #
+  # Checks are deliberately anchored to *package-qualified* names rather than
+  # bare keywords: the OSS core legitimately owns a `payment` endpoint, a
+  # `PaymentMethod.paypal` value and a `Feature.subscriptions` capability
+  # flag, so a naive `grep -E 'plan|subscription|paypal'` would fail on
+  # public code. When the public contract changes, update the allow-lists here
+  # together with AGENTS.md.
+  privacy-guard:
+    name: Open-core privacy guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      # Module-owned tables an OSS build may reference. Anything else under
+      # `commercial_*` belongs to the private module and must not appear in
+      # generated protocol or committed migrations.
+      MODULE_TABLE_ALLOWLIST: commercial_waitlist_entry
+      # Endpoints reachable as `client.modules.commercial.<name>`.
+      MODULE_ENDPOINT_ALLOWLIST: commercial waitlist
+      # Exact Serverpod CLI version pinned by the workspace; the guard must
+      # regenerate with the same code generator that produced the artifacts.
+      SERVERPOD_VERSION: 4.0.0-rc.2
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: '3.13.3'
+
+      # While the stubs rc-bump sits in their develop (not yet released to
+      # main), pair this build with the stubs `develop` so the pinned
+      # Serverpod version matches (release-train sync, see stubs#26). main
+      # builds keep ref: main.
+      - name: Inter-repo deps follow the target branch
+        if: github.ref_name == 'develop' || github.base_ref == 'develop'
+        run: sh gewerber_backend_server/tool/retarget_gewerber_refs.sh develop
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Reject deep imports into the module's private src/ tree
+        run: |
+          if grep -rn --include='*.dart' \
+              'gewerber_backend_commercial_server/src' \
+              gewerber_backend_server/lib \
+              gewerber_backend_server/test \
+              gewerber_backend_client/lib; then
+            echo '::error::OSS code must import the commercial module through its public barrel, never through a src/ path.'
+            exit 1
+          fi
+
+      - name: Reject module callers outside the public contract
+        run: |
+          matches="$(grep -rhoE --include='*.dart' \
+            '(client\.commercial|modules\.commercial)\.[A-Za-z0-9_]+' \
+            gewerber_backend_server/lib \
+            gewerber_backend_server/test \
+            gewerber_backend_server/bin \
+            gewerber_backend_client/lib || true)"
+          offender=''
+          for match in $matches; do
+            name="${match##*.}"
+            case " $MODULE_ENDPOINT_ALLOWLIST " in
+              *" $name "*) ;;
+              *) offender="$offender$match"$'\n' ;;
+            esac
+          done
+          if [ -n "$offender" ]; then
+            printf '%s' "$offender"
+            echo "::error::OSS code references commercial module callers outside the public contract (allowed: $MODULE_ENDPOINT_ALLOWLIST)."
+            exit 1
+          fi
+
+      - name: Reject private module tables in committed migrations
+        run: |
+          tables="$(grep -rhoE 'CREATE TABLE "commercial_[A-Za-z0-9_]+"' \
+            gewerber_backend_server/migrations | sed -E 's/.*"(.*)".*/\1/' | sort -u || true)"
+          offender=''
+          for table in $tables; do
+            case " $MODULE_TABLE_ALLOWLIST " in
+              *" $table "*) ;;
+              *) offender="$offender$table"$'\n' ;;
+            esac
+          done
+          if [ -n "$offender" ]; then
+            printf '%s' "$offender"
+            echo "::error::OSS migrations create commercial module tables outside the public contract (allowed: $MODULE_TABLE_ALLOWLIST)."
+            exit 1
+          fi
+
+      - name: Reject stale module schema versions in the migration chain
+        run: |
+          # Serverpod merges a module's migrations into the project chain when
+          # `serverpod create-migration` runs, then stamps the module's version
+          # into `serverpod_migrations` at apply time. If the recorded version
+          # is not one the resolved module ships, the project chain holds a
+          # *stale copy* of the module schema: the generated model declares
+          # columns the committed SQL never creates, and inserts fail at
+          # runtime with an undefined_column error. Regenerate the migration
+          # (`serverpod create-migration`) after any module update.
+          python3 tool/check_module_schema_versions.py \
+            gewerber_backend_server/migrations \
+            .dart_tool/package_config.json \
+            gewerber_backend_commercial_server
+
+      # Regenerating with the pinned CLI must reproduce the committed artifacts
+      # byte for byte. This catches hand-edited generated files and drift
+      # against the stub packages (the class of bug that let merge-conflict
+      # markers into `client.dart` once before).
+      - name: Install Serverpod CLI
+        run: dart pub global activate serverpod_cli "$SERVERPOD_VERSION"
+
+      - name: Verify generated artifacts are up to date
+        run: |
+          export PATH="$PATH:$HOME/.pub-cache/bin"
+          (cd gewerber_backend_server && serverpod generate --force)
+          if ! git diff --exit-code -- \
+              gewerber_backend_server/lib/src/generated \
+              gewerber_backend_server/migrations/migration_registry.txt \
+              gewerber_backend_client/lib/src/protocol; then
+            git diff --stat -- \
+              gewerber_backend_server/lib/src/generated \
+              gewerber_backend_client/lib/src/protocol
+            echo '::error::generated protocol/endpoints are out of sync with the models and the resolved module. Run `serverpod generate` and commit the result.'
+            exit 1
+          fi
