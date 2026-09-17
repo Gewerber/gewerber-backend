@@ -226,12 +226,7 @@ class XrechnungExportUseCase {
   }
 
   String _currencyCode(Currency currency) {
-    switch (currency) {
-      case Currency.eur:
-        return 'EUR';
-      default:
-        return 'EUR';
-    }
+    return 'EUR';
   }
 
   String _formatCentsXrechnung(int cents) {

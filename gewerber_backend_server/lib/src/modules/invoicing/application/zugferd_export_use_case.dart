@@ -5,7 +5,6 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:serverpod/serverpod.dart';
 
-import '../../../core/tenant/tenant_resolver.dart';
 import '../../../generated/protocol.dart';
 import '../domain/invoice_gateway.dart';
 import '../domain/invoice_item_gateway.dart';
@@ -18,10 +17,6 @@ import '../domain/customer_gateway.dart';
 /// Standards) profile based on EN 16931.
 @singleton
 class ZugferdExportUseCase {
-  /// The tenant resolver for multi-tenancy support.
-  final TenantResolver _tenantResolver;
-
-  /// Gateway for invoice database operations.
   final InvoiceGateway _invoices;
 
   /// Gateway for invoice item database operations.
@@ -31,12 +26,10 @@ class ZugferdExportUseCase {
   final CustomerGateway _customers;
 
   ZugferdExportUseCase(
-    TenantResolver tenantResolver,
     InvoiceGateway invoices,
     InvoiceItemGateway items,
     CustomerGateway customers,
-  ) : _tenantResolver = tenantResolver,
-      _invoices = invoices,
+  ) : _invoices = invoices,
       _items = items,
       _customers = customers;
 
@@ -217,11 +210,6 @@ class ZugferdExportUseCase {
     return '${d.day.toString().padLeft(2, '0')}.${d.month.toString().padLeft(2, '0')}.${d.year}';
   }
 
-  String _formatTime(DateTime date) {
-    final d = date.toLocal();
-    return '${d.hour.toString().padLeft(2, '0')}:${d.minute.toString().padLeft(2, '0')}:${d.second.toString().padLeft(2, '0')}';
-  }
-
   String _formatQuantity(double quantity) {
     if (quantity == quantity.truncateToDouble()) {
       return quantity.truncate().toString();
@@ -239,12 +227,7 @@ class ZugferdExportUseCase {
   }
 
   String _currencyCode(Currency currency) {
-    switch (currency) {
-      case Currency.eur:
-        return 'EUR';
-      default:
-        return 'EUR';
-    }
+    return 'EUR';
   }
 
   String _formatCentsCius(int cents) {
