@@ -165,6 +165,10 @@ import '../../modules/invoicing/application/update_invoice_use_case.dart'
     as _i421;
 import '../../modules/invoicing/application/update_recurring_schedule_use_case.dart'
     as _i521;
+import '../../modules/invoicing/application/xrechnung_export_use_case.dart'
+    as _i1054;
+import '../../modules/invoicing/application/zugferd_export_use_case.dart'
+    as _i418;
 import '../../modules/invoicing/data/pdf_invoice_generator.dart' as _i1030;
 import '../../modules/invoicing/data/serverpod_customer_gateway.dart' as _i356;
 import '../../modules/invoicing/data/serverpod_invoice_gateway.dart' as _i109;
@@ -443,6 +447,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
+    gh.singleton<_i418.ZugferdExportUseCase>(
+      () => _i418.ZugferdExportUseCase(
+        gh<_i517.InvoiceGateway>(),
+        gh<_i20.InvoiceItemGateway>(),
+        gh<_i696.CustomerGateway>(),
+      ),
+    );
     gh.singleton<_i230.BanUserUseCase>(
       () => _i230.BanUserUseCase(
         gh<_i711.AdminAuthGateway>(),
@@ -601,6 +612,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i1065.TransactionGateway>(),
         gh<_i394.TransactionReferenceValidator>(),
         gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i1054.XrechnungExportUseCase>(
+      () => _i1054.XrechnungExportUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i20.InvoiceItemGateway>(),
+        gh<_i696.CustomerGateway>(),
+        gh<_i647.BusinessGateway>(),
       ),
     );
     gh.singleton<_i421.UpdateInvoiceUseCase>(
