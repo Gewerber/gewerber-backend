@@ -1286,6 +1286,19 @@ class EndpointInvoice extends EndpointBusinessScoped {
       'businessId': businessId,
     },
   );
+
+  /// Exports the invoice as an XRechnung XML document (EN 16931 / CII).
+  _ida.Future<String> exportXrechnung(
+    int invoiceId, {
+    int? businessId,
+  }) => caller.callServerEndpoint<String>(
+    'invoice',
+    'exportXrechnung',
+    {
+      'invoiceId': invoiceId,
+      'businessId': businessId,
+    },
+  );
 }
 
 /// {@category Endpoint}

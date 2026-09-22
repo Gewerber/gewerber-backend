@@ -14,6 +14,7 @@ import '../application/list_invoices_page_use_case.dart';
 import '../application/list_invoices_use_case.dart';
 import '../application/mark_invoice_sent_use_case.dart';
 import '../application/update_invoice_use_case.dart';
+import '../application/xrechnung_export_use_case.dart';
 
 class InvoiceEndpoint extends BusinessScopedEndpoint {
   Future<Invoice> create(
@@ -177,6 +178,19 @@ class InvoiceEndpoint extends BusinessScopedEndpoint {
     int? businessId,
   }) {
     return getIt<GenerateInvoicePdfUseCase>().call(
+      session,
+      invoiceId,
+      businessId: businessId,
+    );
+  }
+
+  /// Exports the invoice as an XRechnung XML document (EN 16931 / CII).
+  Future<String> exportXrechnung(
+    Session session,
+    int invoiceId, {
+    int? businessId,
+  }) {
+    return getIt<XrechnungExportUseCase>().exportXrechnung(
       session,
       invoiceId,
       businessId: businessId,

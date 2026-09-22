@@ -2132,6 +2132,31 @@ class Endpoints extends _is.EndpointDispatch {
                     businessId: params['businessId'],
                   ),
         ),
+        'exportXrechnung': _is.MethodConnector(
+          name: 'exportXrechnung',
+          params: {
+            'invoiceId': _is.ParameterDescription(
+              name: 'invoiceId',
+              type: _is.getType<int>(),
+              nullable: false,
+            ),
+            'businessId': _is.ParameterDescription(
+              name: 'businessId',
+              type: _is.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['invoice'] as _ihd954jk.InvoiceEndpoint)
+                  .exportXrechnung(
+                    session,
+                    params['invoiceId'],
+                    businessId: params['businessId'],
+                  ),
+        ),
       },
     );
     connectors['invoiceTemplate'] = _is.EndpointConnector(

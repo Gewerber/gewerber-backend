@@ -83,6 +83,7 @@ invoice:
   - exportCsv:
   - exportJson:
   - generatePdf:
+  - exportXrechnung:
 invoiceTemplate:
   - create:
   - get:
