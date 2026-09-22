@@ -192,7 +192,7 @@ class XrechnungSerializer {
     w.writeln('  <rsm:SupplyChainTradeTransaction>');
 
     for (final item in items) {
-      _writeLineItem(w, item);
+      _writeLineItem(w, item, isKleinunternehmer: isKleinunternehmer);
     }
 
     _writeHeaderTradeAgreement(w, business, customer);
@@ -319,12 +319,20 @@ class XrechnungSerializer {
 
   // --- line items ------------------------------------------------------------
 
-  void _writeLineItem(StringBuffer w, InvoiceItem item) {
+  void _writeLineItem(
+    StringBuffer w,
+    InvoiceItem item, {
+    required bool isKleinunternehmer,
+  }) {
     final unitCode = _unitCode(item.unit);
     final quantity = _formatQuantity(item.quantity);
     final netPrice = _formatAmount(item.unitPriceCents);
     final lineTotal = _formatAmount(item.lineTotalCents);
-    final percent = _percent(item.vatRate);
+    // Under the Kleinunternehmer rule (§19 UStG) no VAT may be shown on any
+    // line, regardless of the stored rate — keep the line-level tax category
+    // consistent with the document-level breakdown.
+    final effectiveRate = isKleinunternehmer ? VatRate.none : item.vatRate;
+    final percent = _percent(effectiveRate);
 
     w.writeln('    <ram:IncludedSupplyChainTradeLineItem>');
     w.writeln('      <ram:AssociatedDocumentLineDocument>');
@@ -350,7 +358,7 @@ class XrechnungSerializer {
     w.writeln('        <ram:ApplicableTradeTax>');
     w.writeln('          <ram:TypeCode>VAT</ram:TypeCode>');
     w.writeln(
-      '          <ram:CategoryCode>${_categoryCode(item.vatRate)}</ram:CategoryCode>',
+      '          <ram:CategoryCode>${_categoryCode(effectiveRate)}</ram:CategoryCode>',
     );
     w.writeln(
       '          <ram:RateApplicablePercent>${_formatPercent(percent)}</ram:RateApplicablePercent>',

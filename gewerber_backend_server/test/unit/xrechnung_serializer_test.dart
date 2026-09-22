@@ -258,6 +258,18 @@ void main() {
           '<ram:TaxTotalAmount currencyID="EUR">0.00</ram:TaxTotalAmount>',
         ),
       );
+
+      // Line-level VAT must be overridden to exempt too: the stored item rate
+      // is `standard`, but §19 forbids showing VAT on any line.
+      expect(xml, isNot(contains('<ram:CategoryCode>S</ram:CategoryCode>')));
+      expect(
+        xml,
+        isNot(
+          contains(
+            '<ram:RateApplicablePercent>19.00</ram:RateApplicablePercent>',
+          ),
+        ),
+      );
     });
   });
 
