@@ -15,7 +15,7 @@ COPY gewerber_backend_server gewerber_backend_server
 RUN printf '%s\n' \
   'name: _' \
   'environment:' \
-  '  sdk: ^3.10.3' \
+  '  sdk: ^3.13.3' \
   'workspace:' \
   '  - gewerber_backend_server' \
   > pubspec.yaml
@@ -26,16 +26,15 @@ RUN printf '%s\n' \
 # the git config is removed afterwards:
 #   docker build --secret id=git_token,env=GIT_TOKEN ...
 #
-# GEWERBER_DEP_REF: branch deploys pass the branch they build (develop →
+# GEWERBER_DEP_REF: default develop is the compatible OSS/staging train;
+# deploy main explicitly retargets main. Incompatible targets must fail rather
+# than fall back. Branch deploys pass the branch they build (develop →
 # staging) so the commercial module dependency is consumed from that branch
 # of gewerber-backend-commercial (via the stubs URL), end-to-end testable on
-# staging before release. Default main keeps the committed refs — production
-# and plain builds are unchanged.
-ARG GEWERBER_DEP_REF=main
+# staging before release.
+ARG GEWERBER_DEP_REF=develop
 RUN --mount=type=secret,id=git_token \
-  if [ "$GEWERBER_DEP_REF" != "main" ]; then \
-    sh gewerber_backend_server/tool/retarget_gewerber_refs.sh "$GEWERBER_DEP_REF"; \
-  fi \
+  sh gewerber_backend_server/tool/retarget_gewerber_refs.sh "$GEWERBER_DEP_REF" \
   && if [ -f /run/secrets/git_token ]; then \
     git config --global url."https://x-access-token:$(cat /run/secrets/git_token)@github.com/Gewerber/gewerber-backend-commercial".insteadOf "https://github.com/Gewerber/gewerber-backend-stubs"; \
     git config --global url."https://x-access-token:$(cat /run/secrets/git_token)@github.com/".insteadOf "https://github.com/"; \

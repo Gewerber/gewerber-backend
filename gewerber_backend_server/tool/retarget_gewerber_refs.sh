@@ -7,10 +7,9 @@
 # Other dependencies, `repository:` metadata and all remaining content are
 # untouched.
 #
-# Used by the branch deploys (Dockerfile ARG GEWERBER_DEP_REF) so that a
-# deployment of `develop` consumes the `develop` branches of the other
-# Gewerber repositories end-to-end; `main` deployments keep the committed
-# `ref: main` (the Dockerfile does not call this script for them).
+# Callers always select the target ref explicitly: Docker defaults to
+# `develop`, while main deployments explicitly select `main`. This script always
+# performs the rewrite and does not retain the committed ref.
 #
 # Usage: retarget_gewerber_refs.sh <git-ref>   (run from the build root)
 set -eu

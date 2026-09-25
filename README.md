@@ -13,7 +13,7 @@ Part of the [Gewerber GitHub organization](https://github.com/Gewerber). This is
 
 ## 🧱 Stack
 
-- **Serverpod** `4.x` — backend framework
+- **Serverpod** `4.0.2` — backend framework
 - **PostgreSQL** — database
 - **Dart SDK** `^3.13.3`
 
@@ -35,11 +35,11 @@ This is a Dart **workspace** with two packages:
 ### Requirements
 
 - Dart SDK
-- Serverpod CLI
+- Serverpod CLI `4.0.2`
 - Docker (for PostgreSQL), or a local PostgreSQL
 
 ```bash
-dart pub global activate serverpod_cli
+dart pub global activate serverpod_cli 4.0.2
 ```
 
 ### Run the server

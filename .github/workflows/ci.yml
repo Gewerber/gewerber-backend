@@ -62,13 +62,17 @@ jobs:
         with:
           sdk: '3.13.3'
 
-      # While the stubs rc-bump sits in their develop (not yet released to
-      # main), pair this build with the stubs `develop` so the pinned
-      # Serverpod version matches (release-train sync, see stubs#26). main
-      # builds keep ref: main.
+      # Select the public stub ref explicitly for the CI target branch. The
+      # retarget script fails closed when that ref is incompatible with this
+      # repository's pinned Serverpod/tooling, rather than silently using an
+      # unrelated ref (release-train sync, see stubs#26).
       - name: Inter-repo deps follow the target branch
         if: github.ref_name == 'develop' || github.base_ref == 'develop'
         run: sh gewerber_backend_server/tool/retarget_gewerber_refs.sh develop
+
+      - name: Inter-repo deps follow the main target branch
+        if: github.ref_name == 'main' || github.base_ref == 'main'
+        run: sh gewerber_backend_server/tool/retarget_gewerber_refs.sh main
 
       - name: Install dependencies
         run: dart pub get
@@ -131,7 +135,7 @@ jobs:
       MODULE_ENDPOINT_ALLOWLIST: commercial waitlist
       # Exact Serverpod CLI version pinned by the workspace; the guard must
       # regenerate with the same code generator that produced the artifacts.
-      SERVERPOD_VERSION: 4.0.0-rc.2
+      SERVERPOD_VERSION: 4.0.2
 
     steps:
       - name: Checkout
@@ -142,13 +146,17 @@ jobs:
         with:
           sdk: '3.13.3'
 
-      # While the stubs rc-bump sits in their develop (not yet released to
-      # main), pair this build with the stubs `develop` so the pinned
-      # Serverpod version matches (release-train sync, see stubs#26). main
-      # builds keep ref: main.
+      # Select the public stub ref explicitly for the CI target branch. The
+      # retarget script fails closed when that ref is incompatible with this
+      # repository's pinned Serverpod/tooling, rather than silently using an
+      # unrelated ref (release-train sync, see stubs#26).
       - name: Inter-repo deps follow the target branch
         if: github.ref_name == 'develop' || github.base_ref == 'develop'
         run: sh gewerber_backend_server/tool/retarget_gewerber_refs.sh develop
+
+      - name: Inter-repo deps follow the main target branch
+        if: github.ref_name == 'main' || github.base_ref == 'main'
+        run: sh gewerber_backend_server/tool/retarget_gewerber_refs.sh main
 
       - name: Install dependencies
         run: dart pub get
@@ -232,10 +240,19 @@ jobs:
           if ! git diff --exit-code -- \
               gewerber_backend_server/lib/src/generated \
               gewerber_backend_server/migrations/migration_registry.txt \
+              gewerber_backend_server/test/integration/test_tools/serverpod_test_tools.dart \
               gewerber_backend_client/lib/src/protocol; then
             git diff --stat -- \
               gewerber_backend_server/lib/src/generated \
               gewerber_backend_client/lib/src/protocol
+            echo '::error::generated protocol/endpoints are out of sync with the models and the resolved module. Run `serverpod generate` and commit the result.'
+            exit 1
+          fi
+          if ! (generated_status="$(git status --porcelain --untracked-files=all -- \
+              gewerber_backend_server/lib/src/generated \
+              gewerber_backend_server/migrations/migration_registry.txt \
+              gewerber_backend_server/test/integration/test_tools/serverpod_test_tools.dart \
+              gewerber_backend_client/lib/src/protocol)" && [ -z "$generated_status" ]); then
             echo '::error::generated protocol/endpoints are out of sync with the models and the resolved module. Run `serverpod generate` and commit the result.'
             exit 1
           fi
