@@ -74,6 +74,8 @@ import 'package:gewerber_backend_server/src/generated/modules/guidance/models/gu
     as _imqtlho5;
 import 'package:gewerber_backend_server/src/generated/modules/guidance/models/user_guidance_progress.dart'
     as _ivw4ui03;
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_credit_note_request.dart'
+    as _ioz0y90n;
 import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_customer_request.dart'
     as _i94n0ggq;
 import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_invoice_request.dart'
@@ -2537,6 +2539,41 @@ class _InvoiceEndpoint {
           createSessionCallback: (_) => _localUniqueSession,
           endpointPath: 'invoice',
           methodName: 'create',
+          parameters: _ist.testObjectToJson({
+            'request': request,
+            'businessId': businessId,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_icjfst50.Invoice>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _ida.Future<_icjfst50.Invoice> createCreditNote(
+    _ist.TestSessionBuilder sessionBuilder,
+    _ioz0y90n.CreateCreditNoteRequest request, {
+    int? businessId,
+  }) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'invoice',
+            method: 'createCreditNote',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'invoice',
+          methodName: 'createCreditNote',
           parameters: _ist.testObjectToJson({
             'request': request,
             'businessId': businessId,

@@ -56,7 +56,7 @@ gewerber_backend_server/lib/src/
 | `businessSettings` | get, update | requireLogin |
 | `userProfile` | getMyProfile, me (own identity: global role + memberships), update, deleteMyAccount, exportMyData | requireLogin |
 | `customer` | create, get, update, list, listPage, listCursorPage | requireLogin |
-| `invoice` | create, get, getItems, update, list, listPage, listCursorPage, delete, markSent, cancel, generatePdf, exportCsv, exportJson | requireLogin |
+| `invoice` | create, createCreditNote, get, getItems, update, list, listPage, listCursorPage, delete, markSent, cancel, generatePdf, exportCsv, exportJson | requireLogin |
 | `invoiceTemplate` | create, get, update, list | requireLogin |
 | `payment` | record, status | requireLogin |
 | `recurringSchedule` | create, get, list, update, cancel | requireLogin |
@@ -77,6 +77,40 @@ gewerber_backend_server/lib/src/
 | `adminGuidance` | guidanceTipsList / guidanceTipUpsert | moderator read / admin write + `confirm` |
 | auth (module) | email login/register, JWT refresh | per serverpod_auth |
 | `waitlist` (commercial module) | join | public |
+
+## Correction invoices (Storno / Gutschrift, §14 UStG)
+
+`invoice.createCreditNote` is the **only** way to create a credit note; the
+generic `invoice.create` path rejects `type: creditNote`, and ordinary invoice
+items reject negative/non-finite values so a client cannot forge a negative
+invoice.
+
+- The client supplies only `originalInvoiceId`, optional `issueDate` and
+  optional `reason`. The server clones customer, currency, service period,
+  lines, quantities, units and the **stored** VAT rates of the original.
+- The credit note is created as a `draft` with the exact signed inverse of the
+  original's net, VAT and gross totals, and becomes legally effective only via
+  the existing `invoice.markSent` (issuance boundary). Multiple drafts are
+  allowed; at most one **issued** credit note per original is accepted, enforced
+  under an original row lock.
+- Credit notes draw the next number from the same GoBD-safe invoice sequence
+  (`'invoice'`) as ordinary invoices — the sequence is shared, the literal
+  number is never reused. The legal link is `invoice.originalInvoiceId`.
+- VAT is reversed from the original's persisted values. The tax rule engine is
+  deliberately not re-evaluated, so a later change of §19/Kleinunternehmer or
+  customer VAT status cannot rewrite the storno. No accounting transaction,
+  payment record or refund payable is created.
+- Issued credit notes are immutable: no edit, cancel, payment, payment status,
+  reminder or recurrence. They also block new payments/reminders/overdue
+  marking on the original.
+- PDF/XRechnung render a Gutschrift (type code `381`, negative amounts,
+  original-invoice reference). Dashboard receivables compensate each original
+  by its explicit link and floor the balance at zero; credits never offset a
+  different customer or create a negative receivable.
+
+A numberless *Berichtigung* under §31(5) UStDV is deliberately out of scope:
+it cannot reuse the unique `(businessId, number)` invoice identity. Track any
+future work separately from this flow.
 
 ## Admin API (`modules/admin`, used by `gewerber-mcp`)
 

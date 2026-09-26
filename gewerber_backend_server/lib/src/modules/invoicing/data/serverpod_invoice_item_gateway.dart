@@ -18,12 +18,14 @@ class ServerpodInvoiceItemGateway implements InvoiceItemGateway {
   @override
   Future<List<InvoiceItem>> findByInvoiceId(
     Session session,
-    int invoiceId,
-  ) {
+    int invoiceId, {
+    Transaction? transaction,
+  }) {
     return InvoiceItem.db.find(
       session,
       where: (t) => t.invoiceId.equals(invoiceId),
       orderBy: (t) => t.position,
+      transaction: transaction,
     );
   }
 

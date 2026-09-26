@@ -45,6 +45,22 @@ class UpdateRecurringScheduleUseCase {
         entityId: '${request.invoiceId}',
       );
     }
+    if (invoice.type != InvoiceType.invoice) {
+      throw ConflictException(
+        message: 'Recurring schedules can only be attached to invoices.',
+      );
+    }
+    final issuedCredits = await _invoices.findIssuedLinkedCreditNotes(
+      session,
+      invoice.id!,
+    );
+    if (issuedCredits.isNotEmpty) {
+      throw ConflictException(
+        message:
+            'Invoice ${invoice.number} has been credited and cannot recur.',
+      );
+    }
+
     final currentInterval = invoice.recurrenceInterval;
     if (currentInterval == null) {
       throw NotFoundException(

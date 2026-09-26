@@ -53,11 +53,24 @@ class XrechnungExportUseCase {
       );
     }
 
+    final original = invoice.originalInvoiceId == null
+        ? null
+        : await _invoices.findById(session, invoice.originalInvoiceId!);
+    if (invoice.originalInvoiceId != null &&
+        (original == null || original.businessId != tenant.businessId)) {
+      throw ConflictException(
+        message:
+            'Credit note ${invoice.number} references an original invoice that '
+            'no longer exists.',
+      );
+    }
+
     return const XrechnungSerializer().serialize(
       invoice: invoice,
       items: items,
       business: business,
       customer: customer,
+      originalInvoiceNumber: original?.number,
     );
   }
 }

@@ -51,7 +51,9 @@ class ProcessRecurringInvoicesUseCase {
 
     for (final source in due) {
       final interval = source.recurrenceInterval;
-      if (interval == null || source.nextRecurrenceDate == null) {
+      if (source.type != InvoiceType.invoice ||
+          interval == null ||
+          source.nextRecurrenceDate == null) {
         continue;
       }
       final next = source.nextRecurrenceDate!;
@@ -150,33 +152,10 @@ class ProcessRecurringInvoicesUseCase {
                 occurrences >= source.recurrenceMaxOccurrences!);
         await _invoices.update(
           session,
-          Invoice(
-            id: source.id,
-            businessId: source.businessId,
-            number: source.number,
-            type: source.type,
-            status: source.status,
-            customerId: source.customerId,
-            issueDate: source.issueDate,
-            dueDate: source.dueDate,
-            serviceDateFrom: source.serviceDateFrom,
-            serviceDateTo: source.serviceDateTo,
-            locale: source.locale,
-            currency: source.currency,
-            subtotalCents: source.subtotalCents,
-            vatTotalCents: source.vatTotalCents,
-            totalCents: source.totalCents,
-            paymentTermsDays: source.paymentTermsDays,
-            dunningLevel: source.dunningLevel,
-            notes: source.notes,
-            templateId: source.templateId,
-            pdfDocumentId: source.pdfDocumentId,
-            recurrenceInterval: source.recurrenceInterval,
+          source.copyWith(
             nextRecurrenceDate: finished ? null : nextDate,
-            recurrenceEndDate: source.recurrenceEndDate,
-            recurrenceMaxOccurrences: source.recurrenceMaxOccurrences,
             recurrenceOccurrencesCreated: occurrences,
-            createdAt: source.createdAt,
+            updatedAt: DateTime.now().toUtc(),
           ),
           transaction: transaction,
         );

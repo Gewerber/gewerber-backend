@@ -70,6 +70,8 @@ import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/gui
     as _in4e0h8b;
 import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/user_guidance_progress.dart'
     as _i965vnjh;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_credit_note_request.dart'
+    as _ir97jm60;
 import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_customer_request.dart'
     as _ive2a5q8;
 import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_invoice_request.dart'
@@ -1110,6 +1112,23 @@ class EndpointInvoice extends EndpointBusinessScoped {
   }) => caller.callServerEndpoint<_ijh06pcp.Invoice>(
     'invoice',
     'create',
+    {
+      'request': request,
+      'businessId': businessId,
+    },
+  );
+
+  /// Creates a server-cloned storno draft for an issued original invoice.
+  ///
+  /// Returns a `draft` credit note. The document is legally issued through
+  /// [markSent]; its own number comes from the shared invoice sequence and it
+  /// keeps a mandatory reference to the original invoice.
+  _ida.Future<_ijh06pcp.Invoice> createCreditNote(
+    _ir97jm60.CreateCreditNoteRequest request, {
+    int? businessId,
+  }) => caller.callServerEndpoint<_ijh06pcp.Invoice>(
+    'invoice',
+    'createCreditNote',
     {
       'request': request,
       'businessId': businessId,

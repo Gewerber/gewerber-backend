@@ -1,6 +1,6 @@
 # 🧩 Gewerber Backend
 
-![Serverpod](https://img.shields.io/badge/Serverpod-4.x-blue.svg?style=flat-square)
+![Serverpod](https://img.shields.io/badge/Serverpod-4.0.2-blue.svg?style=flat-square)
 ![Dart](https://img.shields.io/badge/Dart-%5E3.13.3-0175C2.svg?logo=dart&logoColor=white&style=flat-square)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791.svg?logo=postgresql&logoColor=white&style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)

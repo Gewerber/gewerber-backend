@@ -33,7 +33,7 @@ import '../../modules/accounting/domain/transaction_gateway.dart' as _i1065;
 import '../../modules/accounting/domain/transaction_reference_validator.dart'
     as _i394;
 import '../../modules/admin/application/cancel_invoice_as_admin_use_case.dart'
-    as _i282;
+    as _i283;
 import '../../modules/admin/application/get_admin_stats_use_case.dart' as _i893;
 import '../../modules/admin/application/guidance_admin_use_cases.dart' as _i136;
 import '../../modules/admin/application/query_audit_entries_use_case.dart'
@@ -106,6 +106,8 @@ import '../../modules/invoicing/application/cancel_invoice_use_case.dart'
     as _i6;
 import '../../modules/invoicing/application/cancel_recurring_schedule_use_case.dart'
     as _i162;
+import '../../modules/invoicing/application/create_credit_note_use_case.dart'
+    as _i3;
 import '../../modules/invoicing/application/create_customer_use_case.dart'
     as _i795;
 import '../../modules/invoicing/application/create_invoice_template_use_case.dart'
@@ -129,6 +131,8 @@ import '../../modules/invoicing/application/get_payment_status_use_case.dart'
     as _i236;
 import '../../modules/invoicing/application/get_recurring_schedule_use_case.dart'
     as _i382;
+import '../../modules/invoicing/application/invoice_creation_quota_guard.dart'
+    as _i716;
 import '../../modules/invoicing/application/list_customers_cursor_page_use_case.dart'
     as _i907;
 import '../../modules/invoicing/application/list_customers_page_use_case.dart'
@@ -236,7 +240,7 @@ import '../../modules/user/application/export_my_data_use_case.dart' as _i435;
 import '../../modules/user/application/get_my_identity_use_case.dart' as _i311;
 import '../../modules/user/application/get_my_profile_use_case.dart' as _i325;
 import '../../modules/user/application/update_user_profile_use_case.dart'
-    as _i283;
+    as _i282;
 import '../../modules/user/data/serverpod_account_anonymization_gateway.dart'
     as _i1024;
 import '../../modules/user/data/serverpod_user_profile_gateway.dart' as _i693;
@@ -313,9 +317,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i688.MembershipGateway>(
       () => _i257.ServerpodMembershipGateway(),
     );
-    gh.singleton<_i282.CancelInvoiceAsAdminUseCase>(
-      () => _i282.CancelInvoiceAsAdminUseCase(gh<_i473.AuditService>()),
-    );
     gh.singleton<_i1065.TransactionGateway>(
       () => _i223.ServerpodTransactionGateway(),
     );
@@ -355,8 +356,8 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i1012.ServerpodInvoiceItemGateway(),
     );
     gh.singleton<_i788.ReminderGateway>(() => _i754.ServerpodReminderGateway());
-    gh.singleton<_i283.UpdateUserProfileUseCase>(
-      () => _i283.UpdateUserProfileUseCase(
+    gh.singleton<_i282.UpdateUserProfileUseCase>(
+      () => _i282.UpdateUserProfileUseCase(
         gh<_i467.UserProfileGateway>(),
         gh<_i473.AuditService>(),
       ),
@@ -433,11 +434,23 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i534.GuidanceTipOverrideGateway>(),
       ),
     );
+    gh.singleton<_i716.InvoiceCreationQuotaGuard>(
+      () => _i716.InvoiceCreationQuotaGuard(
+        gh<_i517.InvoiceGateway>(),
+        gh<_i615.InvoiceQuotaPolicy>(),
+      ),
+    );
     gh.singleton<_i1059.CreateBusinessUseCase>(
       () => _i1059.CreateBusinessUseCase(
         gh<_i647.BusinessGateway>(),
         gh<_i688.MembershipGateway>(),
         gh<_i467.UserProfileGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i283.CancelInvoiceAsAdminUseCase>(
+      () => _i283.CancelInvoiceAsAdminUseCase(
+        gh<_i517.InvoiceGateway>(),
         gh<_i473.AuditService>(),
       ),
     );
@@ -804,21 +817,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
-    gh.singleton<_i1013.CreateInvoiceUseCase>(
-      () => _i1013.CreateInvoiceUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i20.InvoiceItemGateway>(),
-        gh<_i647.BusinessGateway>(),
-        gh<_i141.BusinessSettingsGateway>(),
-        gh<_i696.CustomerGateway>(),
-        gh<_i331.InvoiceTemplateGateway>(),
-        gh<_i988.InvoiceNumberService>(),
-        gh<_i755.TaxRuleEngine>(),
-        gh<_i473.AuditService>(),
-        gh<_i615.InvoiceQuotaPolicy>(),
-      ),
-    );
     gh.singleton<_i747.GetTimeEntryUseCase>(
       () => _i747.GetTimeEntryUseCase(
         gh<_i343.TenantResolver>(),
@@ -855,6 +853,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
+    gh.singleton<_i3.CreateCreditNoteUseCase>(
+      () => _i3.CreateCreditNoteUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i20.InvoiceItemGateway>(),
+        gh<_i141.BusinessSettingsGateway>(),
+        gh<_i988.InvoiceNumberService>(),
+        gh<_i473.AuditService>(),
+        gh<_i716.InvoiceCreationQuotaGuard>(),
+      ),
+    );
     gh.singleton<_i799.GetDashboardSummaryUseCase>(
       () => _i799.GetDashboardSummaryUseCase(
         gh<_i343.TenantResolver>(),
@@ -886,6 +895,21 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i343.TenantResolver>(),
         gh<_i141.BusinessSettingsGateway>(),
         gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i1013.CreateInvoiceUseCase>(
+      () => _i1013.CreateInvoiceUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i20.InvoiceItemGateway>(),
+        gh<_i647.BusinessGateway>(),
+        gh<_i141.BusinessSettingsGateway>(),
+        gh<_i696.CustomerGateway>(),
+        gh<_i331.InvoiceTemplateGateway>(),
+        gh<_i988.InvoiceNumberService>(),
+        gh<_i755.TaxRuleEngine>(),
+        gh<_i473.AuditService>(),
+        gh<_i716.InvoiceCreationQuotaGuard>(),
       ),
     );
     gh.singleton<_i227.ListProjectsUseCase>(
