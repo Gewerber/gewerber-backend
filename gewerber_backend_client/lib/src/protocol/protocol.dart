@@ -54,6 +54,7 @@ import 'core/errors/conflict_exception.dart' as _i5epujyq;
 import 'core/errors/forbidden_exception.dart' as _io9vwtrc;
 import 'core/errors/not_found_exception.dart' as _ixeh2c1z;
 import 'core/errors/validation_exception.dart' as _io4t73gt;
+import 'core/rate_limit/rate_limit_exception.dart' as _i6q7c9y6;
 import 'modules/accounting/models/accounting_transaction.dart' as _imcpe7lh;
 import 'modules/accounting/models/create_transaction_request.dart' as _ipamnsx8;
 import 'modules/accounting/models/profit_loss_line.dart' as _iixw78u5;
@@ -164,6 +165,7 @@ export 'core/errors/conflict_exception.dart';
 export 'core/errors/forbidden_exception.dart';
 export 'core/errors/not_found_exception.dart';
 export 'core/errors/validation_exception.dart';
+export 'core/rate_limit/rate_limit_exception.dart';
 export 'modules/accounting/models/accounting_transaction.dart';
 export 'modules/accounting/models/create_transaction_request.dart';
 export 'modules/accounting/models/profit_loss_line.dart';
@@ -313,6 +315,9 @@ class Protocol extends _isc.SerializationManager {
     }
     if (t == _io4t73gt.ValidationException) {
       return _io4t73gt.ValidationException.fromJson(data) as T;
+    }
+    if (t == _i6q7c9y6.RateLimitException) {
+      return _i6q7c9y6.RateLimitException.fromJson(data) as T;
     }
     if (t == _imcpe7lh.AccountingTransaction) {
       return _imcpe7lh.AccountingTransaction.fromJson(data) as T;
@@ -624,6 +629,10 @@ class Protocol extends _isc.SerializationManager {
       return (data != null
               ? _io4t73gt.ValidationException.fromJson(data)
               : null)
+          as T;
+    }
+    if (t == _isc.getType<_i6q7c9y6.RateLimitException?>()) {
+      return (data != null ? _i6q7c9y6.RateLimitException.fromJson(data) : null)
           as T;
     }
     if (t == _isc.getType<_imcpe7lh.AccountingTransaction?>()) {
@@ -1283,6 +1292,7 @@ class Protocol extends _isc.SerializationManager {
       _io9vwtrc.ForbiddenException => 'ForbiddenException',
       _ixeh2c1z.NotFoundException => 'NotFoundException',
       _io4t73gt.ValidationException => 'ValidationException',
+      _i6q7c9y6.RateLimitException => 'RateLimitException',
       _imcpe7lh.AccountingTransaction => 'AccountingTransaction',
       _ipamnsx8.CreateTransactionRequest => 'CreateTransactionRequest',
       _iixw78u5.ProfitLossLine => 'ProfitLossLine',
@@ -1412,6 +1422,8 @@ class Protocol extends _isc.SerializationManager {
         return 'NotFoundException';
       case _io4t73gt.ValidationException():
         return 'ValidationException';
+      case _i6q7c9y6.RateLimitException():
+        return 'RateLimitException';
       case _imcpe7lh.AccountingTransaction():
         return 'AccountingTransaction';
       case _ipamnsx8.CreateTransactionRequest():
@@ -1649,6 +1661,9 @@ class Protocol extends _isc.SerializationManager {
     }
     if (dataClassName == 'ValidationException') {
       return deserialize<_io4t73gt.ValidationException>(data['data']);
+    }
+    if (dataClassName == 'RateLimitException') {
+      return deserialize<_i6q7c9y6.RateLimitException>(data['data']);
     }
     if (dataClassName == 'AccountingTransaction') {
       return deserialize<_imcpe7lh.AccountingTransaction>(data['data']);
