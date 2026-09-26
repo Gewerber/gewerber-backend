@@ -135,7 +135,7 @@ jobs:
       MODULE_ENDPOINT_ALLOWLIST: commercial waitlist
       # Exact Serverpod CLI version pinned by the workspace; the guard must
       # regenerate with the same code generator that produced the artifacts.
-      SERVERPOD_VERSION: 4.0.2
+      SERVERPOD_VERSION: 4.0.3
 
     steps:
       - name: Checkout

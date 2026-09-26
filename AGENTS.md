@@ -4,7 +4,7 @@ Gewerber open-core backend — multi-tenant SaaS for solo Gewerbe owners in Germ
 
 ## Stack
 
-- Serverpod 4.0.2 stable backend (server + generated client)
+- Serverpod 4.0.3 stable backend (server + generated client)
 - Auth: serverpod_auth (JWT + email IdP)
 - DI: get_it + injectable
 - Architecture: Clean Architecture per module
