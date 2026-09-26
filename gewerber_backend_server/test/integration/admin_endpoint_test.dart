@@ -553,6 +553,61 @@ void main() {
           );
         },
       );
+      test(
+        'when an invoice has a linked credit note then admin cancel is blocked',
+        () async {
+          final original = (await Invoice.db.findById(rawSession, invoiceId))!;
+          await Invoice.db.insertRow(
+            rawSession,
+            Invoice(
+              businessId: original.businessId,
+              number: 'ADM-CREDIT-DRAFT-1',
+              type: InvoiceType.creditNote,
+              status: InvoiceStatus.draft,
+              originalInvoiceId: invoiceId,
+              issueDate: DateTime.utc(2026, 8, 2),
+            ),
+          );
+
+          await expectLater(
+            () => endpoints.adminInvoices.invoiceCancelAdmin(
+              adminSession,
+              invoiceId: invoiceId,
+              reason: 'duplicate',
+              confirm: true,
+            ),
+            throwsA(isA<ConflictException>()),
+          );
+        },
+      );
+
+      test(
+        'when the target is a credit note then admin cancel is blocked',
+        () async {
+          final original = (await Invoice.db.findById(rawSession, invoiceId))!;
+          final credit = await Invoice.db.insertRow(
+            rawSession,
+            Invoice(
+              businessId: original.businessId,
+              number: 'ADM-CREDIT-SENT-1',
+              type: InvoiceType.creditNote,
+              status: InvoiceStatus.sent,
+              originalInvoiceId: invoiceId,
+              issueDate: DateTime.utc(2026, 8, 2),
+            ),
+          );
+
+          await expectLater(
+            () => endpoints.adminInvoices.invoiceCancelAdmin(
+              adminSession,
+              invoiceId: credit.id!,
+              reason: 'not a credit note operation',
+              confirm: true,
+            ),
+            throwsA(isA<ConflictException>()),
+          );
+        },
+      );
     });
 
     group('guidance tips', () {

@@ -1023,6 +1023,14 @@
         },
         {
           "__className__": "serverpod.ColumnDefinition",
+          "name": "originalInvoiceId",
+          "fieldName": "originalInvoiceId",
+          "columnType": 6,
+          "isNullable": true,
+          "dartType": "int?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
           "name": "issueDate",
           "fieldName": "issueDate",
           "columnType": 4,
@@ -1233,6 +1241,20 @@
           "__className__": "serverpod.ForeignKeyDefinition",
           "constraintName": "invoice_fk_2",
           "columns": [
+            "originalInvoiceId"
+          ],
+          "referenceTable": "invoice",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 3
+        },
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "invoice_fk_3",
+          "columns": [
             "templateId"
           ],
           "referenceTable": "invoice_template",
@@ -1245,7 +1267,7 @@
         },
         {
           "__className__": "serverpod.ForeignKeyDefinition",
-          "constraintName": "invoice_fk_3",
+          "constraintName": "invoice_fk_4",
           "columns": [
             "pdfDocumentId"
           ],
@@ -1305,6 +1327,20 @@
               "__className__": "serverpod.IndexElementDefinition",
               "type": 0,
               "definition": "customerId"
+            }
+          ],
+          "type": "btree",
+          "isUnique": false,
+          "isPrimary": false
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "invoice_original_invoice_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "originalInvoiceId"
             }
           ],
           "type": "btree",
@@ -2758,6 +2794,46 @@
           "__className__": "serverpod.ColumnDefinition",
           "name": "utmCampaign",
           "fieldName": "utmCampaign",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "utmTerm",
+          "fieldName": "utmTerm",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "utmContent",
+          "fieldName": "utmContent",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "gclid",
+          "fieldName": "gclid",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "fbclid",
+          "fieldName": "fbclid",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "__className__": "serverpod.ColumnDefinition",
+          "name": "landingPage",
+          "fieldName": "landingPage",
           "columnType": 0,
           "isNullable": true,
           "dartType": "String?"
@@ -5923,8 +5999,8 @@
         },
         {
           "__className__": "serverpod.ColumnDefinition",
-          "name": "nonce",
-          "fieldName": "nonce",
+          "name": "key",
+          "fieldName": "key",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -5973,7 +6049,7 @@
             {
               "__className__": "serverpod.IndexElementDefinition",
               "type": 0,
-              "definition": "nonce"
+              "definition": "key"
             },
             {
               "__className__": "serverpod.IndexElementDefinition",
@@ -6022,12 +6098,12 @@
     {
       "__className__": "serverpod.DatabaseMigrationVersionModel",
       "module": "gewerber_backend",
-      "version": "20260905122814391"
+      "version": "20260925121717395"
     },
     {
       "__className__": "serverpod.DatabaseMigrationVersion",
       "module": "gewerber_backend_commercial",
-      "version": "20260814083449413"
+      "version": "20260911152358295"
     },
     {
       "__className__": "serverpod.DatabaseMigrationVersion",
@@ -6042,7 +6118,7 @@
     {
       "__className__": "serverpod.DatabaseMigrationVersion",
       "module": "serverpod_auth_idp",
-      "version": "20260824182405944"
+      "version": "20260910193913364-string-rate-limit-keys"
     }
   ],
   "migrationApiVersion": 1

@@ -74,7 +74,9 @@ class ServerpodInvoiceGateway implements InvoiceGateway {
     return Invoice.db.find(
       session,
       where: (t) =>
-          t.nextRecurrenceDate.notEquals(null) & (t.nextRecurrenceDate <= now),
+          t.type.equals(InvoiceType.invoice) &
+          t.nextRecurrenceDate.notEquals(null) &
+          (t.nextRecurrenceDate <= now),
       limit: 100,
     );
   }
@@ -100,13 +102,71 @@ class ServerpodInvoiceGateway implements InvoiceGateway {
   }
 
   @override
+  Future<List<Invoice>> findLinkedCreditNotes(
+    Session session,
+    int originalInvoiceId, {
+    Transaction? transaction,
+  }) {
+    return Invoice.db.find(
+      session,
+      where: (t) =>
+          t.type.equals(InvoiceType.creditNote) &
+          t.originalInvoiceId.equals(originalInvoiceId),
+      orderByList: (t) => [t.id.asc()],
+      transaction: transaction,
+    );
+  }
+
+  @override
+  Future<List<Invoice>> findIssuedLinkedCreditNotes(
+    Session session,
+    int originalInvoiceId, {
+    Transaction? transaction,
+  }) {
+    return Invoice.db.find(
+      session,
+      where: (t) =>
+          t.type.equals(InvoiceType.creditNote) &
+          t.originalInvoiceId.equals(originalInvoiceId) &
+          (t.status.equals(InvoiceStatus.sent) |
+              t.status.equals(InvoiceStatus.partiallyPaid) |
+              t.status.equals(InvoiceStatus.overdue) |
+              t.status.equals(InvoiceStatus.paid)),
+      orderByList: (t) => [t.id.asc()],
+      transaction: transaction,
+    );
+  }
+
+  @override
+  Future<List<Invoice>> findIssuedLinkedCreditNotesForOriginals(
+    Session session, {
+    required int businessId,
+    required Set<int> originalInvoiceIds,
+  }) {
+    if (originalInvoiceIds.isEmpty) return Future.value(const []);
+    return Invoice.db.find(
+      session,
+      where: (t) =>
+          t.businessId.equals(businessId) &
+          t.type.equals(InvoiceType.creditNote) &
+          t.originalInvoiceId.inSet(originalInvoiceIds) &
+          (t.status.equals(InvoiceStatus.sent) |
+              t.status.equals(InvoiceStatus.partiallyPaid) |
+              t.status.equals(InvoiceStatus.overdue) |
+              t.status.equals(InvoiceStatus.paid)),
+      orderByList: (t) => [t.id.asc()],
+    );
+  }
+
+  @override
   Future<List<Invoice>> findOpenOrderedByDueDate(
     Session session, {
     required int businessId,
     required int limit,
   }) {
-    // Follow-up: credit notes are not compensated server-side yet — they are
-    // excluded from open receivables here until a netting strategy exists.
+    // Credit notes are excluded from the base open-receivable set; the
+    // dashboard compensates each original separately through its explicit
+    // `originalInvoiceId` link.
     return Invoice.db.find(
       session,
       where: (t) =>
@@ -160,18 +220,45 @@ class ServerpodInvoiceGateway implements InvoiceGateway {
     // updated as before, just seeked per tenant. The per-business counts let
     // the caller audit the system event with a filled businessId.
     final businesses = await Business.db.find(session);
+
+    // A fully stornoed original must never transition into a new dunning
+    // state. Read the issued linked credit notes once and exclude their
+    // originals from the per-business UPDATE; this keeps the indexed,
+    // count-based update contract without an N+1 check.
+    final issuedCreditNotes = await Invoice.db.find(
+      session,
+      where: (t) =>
+          t.type.equals(InvoiceType.creditNote) &
+          t.originalInvoiceId.notEquals(null) &
+          (t.status.equals(InvoiceStatus.sent) |
+              t.status.equals(InvoiceStatus.partiallyPaid) |
+              t.status.equals(InvoiceStatus.overdue) |
+              t.status.equals(InvoiceStatus.paid)),
+    );
+    final creditedOriginalIds = issuedCreditNotes
+        .map((invoice) => invoice.originalInvoiceId)
+        .whereType<int>()
+        .toSet();
+
     final updatedByBusiness = <int, int>{};
     for (final business in businesses) {
       final businessId = business.id;
       if (businessId == null) continue;
       final updated = await Invoice.db.updateWhere(
         session,
-        where: (t) =>
-            t.businessId.equals(businessId) &
-            (t.status.equals(InvoiceStatus.sent) |
-                t.status.equals(InvoiceStatus.partiallyPaid)) &
-            t.dueDate.notEquals(null) &
-            (t.dueDate < now),
+        where: (t) {
+          var expression =
+              t.businessId.equals(businessId) &
+              t.type.equals(InvoiceType.invoice) &
+              (t.status.equals(InvoiceStatus.sent) |
+                  t.status.equals(InvoiceStatus.partiallyPaid)) &
+              t.dueDate.notEquals(null) &
+              (t.dueDate < now);
+          if (creditedOriginalIds.isNotEmpty) {
+            expression = expression & t.id.notInSet(creditedOriginalIds);
+          }
+          return expression;
+        },
         columnValues: (t) => [
           t.status(InvoiceStatus.overdue),
           t.updatedAt(DateTime.now()),

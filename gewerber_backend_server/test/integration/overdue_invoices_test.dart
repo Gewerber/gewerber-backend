@@ -188,6 +188,42 @@ void main() {
     );
 
     test(
+      'when an original is fully credited then it is not marked overdue',
+      () async {
+        final invoice = await createInvoice(dueDate: pastDue, sent: true);
+        final credit = await endpoints.invoice.createCreditNote(
+          authenticatedSession,
+          CreateCreditNoteRequest(originalInvoiceId: invoice.id!),
+          businessId: businessId,
+        );
+        await endpoints.invoice.markSent(
+          authenticatedSession,
+          credit.id!,
+          businessId: businessId,
+        );
+
+        final updated = await getIt<MarkOverdueInvoicesUseCase>().call(
+          authenticatedSession.build(),
+          now: reference,
+        );
+        expect(updated, 0);
+
+        final fetched = await endpoints.invoice.get(
+          authenticatedSession,
+          invoice.id!,
+          businessId: businessId,
+        );
+        expect(fetched.status, InvoiceStatus.sent);
+        final creditAfter = await endpoints.invoice.get(
+          authenticatedSession,
+          credit.id!,
+          businessId: businessId,
+        );
+        expect(creditAfter.status, InvoiceStatus.sent);
+      },
+    );
+
+    test(
       'when several businesses have candidates then exactly their '
       'sent/partially-paid past-due rows are updated',
       () async {

@@ -8,9 +8,9 @@
 // ignore_for_file: type_literal_in_constant_pattern
 // ignore_for_file: use_super_parameters
 // ignore_for_file: invalid_use_of_internal_member
-// ignore_for_file: no_leading_underscores_for_library_prefixes
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _ida;
 import 'dart:io' as _idi;
 import 'dart:typed_data' as _idt;
@@ -74,6 +74,8 @@ import 'package:gewerber_backend_server/src/generated/modules/guidance/models/gu
     as _imqtlho5;
 import 'package:gewerber_backend_server/src/generated/modules/guidance/models/user_guidance_progress.dart'
     as _ivw4ui03;
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_credit_note_request.dart'
+    as _ioz0y90n;
 import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_customer_request.dart'
     as _i94n0ggq;
 import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_invoice_request.dart'
@@ -179,6 +181,9 @@ export 'package:serverpod_test/serverpod_test_public_exports.dart';
 ///
 /// [enableSessionLogging] Whether session logging should be enabled. Defaults to `false`
 ///
+/// [ephemeralDatabase] Whether this group gets its own empty database, created when the group starts and dropped when it finishes. Defaults to `true`.
+/// Set this to `false` to use the database configured for [runMode], including a previously seeded database. [configOverride] can still replace that database. The configured database is not created or dropped, so groups that share it cannot run in parallel. [rollbackDatabase] still controls whether writes inside the group are rolled back.
+///
 /// [rollbackDatabase] Options for when to rollback the database during the test lifecycle.
 /// By default `withServerpod` does all database operations inside a transaction that is rolled back after each `test` case.
 /// Just like the following enum describes, the behavior of the automatic rollbacks can be configured:
@@ -248,6 +253,7 @@ void withServerpod(
   _is.ServerpodConfig Function(_is.ServerpodConfig)? configOverride,
   _is.DatabaseInterceptor? databaseInterceptor,
   bool? enableSessionLogging,
+  bool? ephemeralDatabase,
   _is.ExperimentalFeatures? experimentalFeatures,
   _ist.RollbackDatabase? rollbackDatabase,
   String? runMode,
@@ -266,6 +272,7 @@ void withServerpod(
       serializationManager: Protocol(),
       runMode: runMode,
       applyMigrations: applyMigrations,
+      ephemeralDatabase: ephemeralDatabase,
       isDatabaseEnabled: true,
       serverpodLoggingMode: serverpodLoggingMode,
       testServerOutputMode: testServerOutputMode,
@@ -2556,6 +2563,41 @@ class _InvoiceEndpoint {
     });
   }
 
+  _ida.Future<_icjfst50.Invoice> createCreditNote(
+    _ist.TestSessionBuilder sessionBuilder,
+    _ioz0y90n.CreateCreditNoteRequest request, {
+    int? businessId,
+  }) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'invoice',
+            method: 'createCreditNote',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'invoice',
+          methodName: 'createCreditNote',
+          parameters: _ist.testObjectToJson({
+            'request': request,
+            'businessId': businessId,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_icjfst50.Invoice>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
   _ida.Future<_icjfst50.Invoice> get(
     _ist.TestSessionBuilder sessionBuilder,
     int invoiceId, {
@@ -2981,6 +3023,41 @@ class _InvoiceEndpoint {
                   _localCallContext.arguments,
                 )
                 as _ida.Future<_inbg4lrm.Document>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _ida.Future<String> exportXrechnung(
+    _ist.TestSessionBuilder sessionBuilder,
+    int invoiceId, {
+    int? businessId,
+  }) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'invoice',
+            method: 'exportXrechnung',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'invoice',
+          methodName: 'exportXrechnung',
+          parameters: _ist.testObjectToJson({
+            'invoiceId': invoiceId,
+            'businessId': businessId,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<String>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();

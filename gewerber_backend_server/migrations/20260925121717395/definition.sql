@@ -184,6 +184,7 @@ CREATE TABLE "invoice" (
     "type" text NOT NULL DEFAULT 'invoice'::text,
     "status" text NOT NULL DEFAULT 'draft'::text,
     "customerId" bigint,
+    "originalInvoiceId" bigint,
     "issueDate" timestamp without time zone NOT NULL,
     "dueDate" timestamp without time zone,
     "serviceDateFrom" timestamp without time zone,
@@ -211,6 +212,7 @@ CREATE TABLE "invoice" (
 CREATE UNIQUE INDEX "invoice_business_number_unique_idx" ON "invoice" USING btree ("businessId", "number");
 CREATE INDEX "invoice_business_issue_idx" ON "invoice" USING btree ("businessId", "issueDate");
 CREATE INDEX "invoice_customer_idx" ON "invoice" USING btree ("customerId");
+CREATE INDEX "invoice_original_invoice_idx" ON "invoice" USING btree ("originalInvoiceId");
 CREATE INDEX "invoice_recurrence_idx" ON "invoice" USING btree ("businessId", "nextRecurrenceDate");
 CREATE INDEX "invoice_business_status_due_idx" ON "invoice" USING btree ("businessId", "status", "dueDate");
 
@@ -414,6 +416,11 @@ CREATE TABLE "commercial_waitlist_entry" (
     "utmSource" text,
     "utmMedium" text,
     "utmCampaign" text,
+    "utmTerm" text,
+    "utmContent" text,
+    "gclid" text,
+    "fbclid" text,
+    "landingPage" text,
     "businessType" text,
     "status" text NOT NULL DEFAULT 'pending'::text,
     "createdAt" timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -925,14 +932,14 @@ CREATE TABLE "serverpod_auth_idp_rate_limited_request_attempt" (
     "id" uuid PRIMARY KEY DEFAULT gen_random_uuid_v7(),
     "domain" text NOT NULL,
     "source" text NOT NULL,
-    "nonce" text NOT NULL,
+    "key" text NOT NULL,
     "ipAddress" text,
     "attemptedAt" timestamp without time zone NOT NULL,
     "extraData" json
 );
 
 -- Indexes
-CREATE INDEX "serverpod_auth_idp_rate_limited_request_attempt_composite" ON "serverpod_auth_idp_rate_limited_request_attempt" USING btree ("domain", "source", "nonce", "attemptedAt");
+CREATE INDEX "serverpod_auth_idp_rate_limited_request_attempt_composite" ON "serverpod_auth_idp_rate_limited_request_attempt" USING btree ("domain", "source", "key", "attemptedAt");
 
 --
 -- Class SecretChallenge as table serverpod_auth_idp_secret_challenge
@@ -1011,12 +1018,18 @@ ALTER TABLE ONLY "invoice"
     ON UPDATE NO ACTION;
 ALTER TABLE ONLY "invoice"
     ADD CONSTRAINT "invoice_fk_2"
+    FOREIGN KEY("originalInvoiceId")
+    REFERENCES "invoice"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+ALTER TABLE ONLY "invoice"
+    ADD CONSTRAINT "invoice_fk_3"
     FOREIGN KEY("templateId")
     REFERENCES "invoice_template"("id")
     ON DELETE SET NULL
     ON UPDATE NO ACTION;
 ALTER TABLE ONLY "invoice"
-    ADD CONSTRAINT "invoice_fk_3"
+    ADD CONSTRAINT "invoice_fk_4"
     FOREIGN KEY("pdfDocumentId")
     REFERENCES "document"("id")
     ON DELETE SET NULL
@@ -1361,17 +1374,17 @@ ALTER TABLE ONLY "serverpod_auth_idp_passkey_account"
 -- MIGRATION VERSION FOR gewerber_backend
 --
 INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
-    VALUES ('gewerber_backend', '20260905122814391', now())
+    VALUES ('gewerber_backend', '20260925121717395', now())
     ON CONFLICT ("module")
-    DO UPDATE SET "version" = '20260905122814391', "timestamp" = now();
+    DO UPDATE SET "version" = '20260925121717395', "timestamp" = now();
 
 --
 -- MIGRATION VERSION FOR gewerber_backend_commercial
 --
 INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
-    VALUES ('gewerber_backend_commercial', '20260814083449413', now())
+    VALUES ('gewerber_backend_commercial', '20260911152358295', now())
     ON CONFLICT ("module")
-    DO UPDATE SET "version" = '20260814083449413', "timestamp" = now();
+    DO UPDATE SET "version" = '20260911152358295', "timestamp" = now();
 
 --
 -- MIGRATION VERSION FOR serverpod
@@ -1393,9 +1406,9 @@ INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
 -- MIGRATION VERSION FOR serverpod_auth_idp
 --
 INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
-    VALUES ('serverpod_auth_idp', '20260824182405944', now())
+    VALUES ('serverpod_auth_idp', '20260910193913364-string-rate-limit-keys', now())
     ON CONFLICT ("module")
-    DO UPDATE SET "version" = '20260824182405944', "timestamp" = now();
+    DO UPDATE SET "version" = '20260910193913364-string-rate-limit-keys', "timestamp" = now();
 
 
 COMMIT;

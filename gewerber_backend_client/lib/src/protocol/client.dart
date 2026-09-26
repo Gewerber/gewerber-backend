@@ -10,7 +10,6 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-
 import 'dart:async' as _ida;
 import 'dart:typed_data' as _idt;
 import 'package:gewerber_backend_client/src/protocol/core/entitlement/feature.dart'
@@ -71,6 +70,8 @@ import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/gui
     as _in4e0h8b;
 import 'package:gewerber_backend_client/src/protocol/modules/guidance/models/user_guidance_progress.dart'
     as _i965vnjh;
+import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_credit_note_request.dart'
+    as _ir97jm60;
 import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_customer_request.dart'
     as _ive2a5q8;
 import 'package:gewerber_backend_client/src/protocol/modules/invoicing/models/create_invoice_request.dart'
@@ -1117,6 +1118,23 @@ class EndpointInvoice extends EndpointBusinessScoped {
     },
   );
 
+  /// Creates a server-cloned storno draft for an issued original invoice.
+  ///
+  /// Returns a `draft` credit note. The document is legally issued through
+  /// [markSent]; its own number comes from the shared invoice sequence and it
+  /// keeps a mandatory reference to the original invoice.
+  _ida.Future<_ijh06pcp.Invoice> createCreditNote(
+    _ir97jm60.CreateCreditNoteRequest request, {
+    int? businessId,
+  }) => caller.callServerEndpoint<_ijh06pcp.Invoice>(
+    'invoice',
+    'createCreditNote',
+    {
+      'request': request,
+      'businessId': businessId,
+    },
+  );
+
   _ida.Future<_ijh06pcp.Invoice> get(
     int invoiceId, {
     int? businessId,
@@ -1282,6 +1300,19 @@ class EndpointInvoice extends EndpointBusinessScoped {
   }) => caller.callServerEndpoint<_i6dacf8x.Document>(
     'invoice',
     'generatePdf',
+    {
+      'invoiceId': invoiceId,
+      'businessId': businessId,
+    },
+  );
+
+  /// Exports the invoice as an XRechnung XML document (EN 16931 / CII).
+  _ida.Future<String> exportXrechnung(
+    int invoiceId, {
+    int? businessId,
+  }) => caller.callServerEndpoint<String>(
+    'invoice',
+    'exportXrechnung',
     {
       'invoiceId': invoiceId,
       'businessId': businessId,

@@ -74,7 +74,20 @@ class GenerateInvoicePdfUseCase {
     final template = invoice.templateId == null
         ? null
         : await _templates.findById(session, invoice.templateId!);
+    final original = invoice.originalInvoiceId == null
+        ? null
+        : await _invoices.findById(session, invoice.originalInvoiceId!);
+    if (invoice.originalInvoiceId != null &&
+        (original == null || original.businessId != tenant.businessId)) {
+      throw ConflictException(
+        message:
+            'Credit note ${invoice.number} references an original invoice that '
+            'no longer exists.',
+      );
+    }
 
+    final isCreditNote = invoice.type == InvoiceType.creditNote;
+    final documentPrefix = isCreditNote ? 'gutschrift' : 'rechnung';
     final pdfBytes = await _pdfGenerator.generate(
       InvoicePdfData(
         business: business,
@@ -82,13 +95,14 @@ class GenerateInvoicePdfUseCase {
         items: items,
         customer: customer,
         template: template,
+        originalInvoiceNumber: original?.number,
       ),
     );
 
     final extension = '.pdf';
     final path =
         'business/${tenant.businessId}/${DocumentKind.invoicePdf.name}/'
-        'invoice-${invoice.number.replaceAll('/', '_')}'
+        '$documentPrefix-${invoice.number.replaceAll('/', '_')}'
         '-${Uuid().toString()}$extension';
 
     await session.storage.storeFile(
@@ -102,7 +116,7 @@ class GenerateInvoicePdfUseCase {
       Document(
         businessId: tenant.businessId,
         kind: DocumentKind.invoicePdf,
-        fileName: 'rechnung-${invoice.number}.pdf',
+        fileName: '$documentPrefix-${invoice.number}.pdf',
         mimeType: 'application/pdf',
         sizeBytes: pdfBytes.length,
         storageLocation: StorageLocation.private,

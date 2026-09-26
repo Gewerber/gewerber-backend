@@ -4,6 +4,7 @@ import '../../../core/di/service_locator.dart';
 import '../../../core/endpoints/business_scoped_endpoint.dart';
 import '../../../generated/protocol.dart';
 import '../application/cancel_invoice_use_case.dart';
+import '../application/create_credit_note_use_case.dart';
 import '../application/create_invoice_use_case.dart';
 import '../application/delete_invoice_use_case.dart';
 import '../application/export_invoices_use_case.dart';
@@ -14,6 +15,7 @@ import '../application/list_invoices_page_use_case.dart';
 import '../application/list_invoices_use_case.dart';
 import '../application/mark_invoice_sent_use_case.dart';
 import '../application/update_invoice_use_case.dart';
+import '../application/xrechnung_export_use_case.dart';
 
 class InvoiceEndpoint extends BusinessScopedEndpoint {
   Future<Invoice> create(
@@ -22,6 +24,23 @@ class InvoiceEndpoint extends BusinessScopedEndpoint {
     int? businessId,
   }) {
     return getIt<CreateInvoiceUseCase>().call(
+      session,
+      request,
+      businessId: businessId,
+    );
+  }
+
+  /// Creates a server-cloned storno draft for an issued original invoice.
+  ///
+  /// Returns a `draft` credit note. The document is legally issued through
+  /// [markSent]; its own number comes from the shared invoice sequence and it
+  /// keeps a mandatory reference to the original invoice.
+  Future<Invoice> createCreditNote(
+    Session session,
+    CreateCreditNoteRequest request, {
+    int? businessId,
+  }) {
+    return getIt<CreateCreditNoteUseCase>().call(
       session,
       request,
       businessId: businessId,
@@ -177,6 +196,19 @@ class InvoiceEndpoint extends BusinessScopedEndpoint {
     int? businessId,
   }) {
     return getIt<GenerateInvoicePdfUseCase>().call(
+      session,
+      invoiceId,
+      businessId: businessId,
+    );
+  }
+
+  /// Exports the invoice as an XRechnung XML document (EN 16931 / CII).
+  Future<String> exportXrechnung(
+    Session session,
+    int invoiceId, {
+    int? businessId,
+  }) {
+    return getIt<XrechnungExportUseCase>().exportXrechnung(
       session,
       invoiceId,
       businessId: businessId,

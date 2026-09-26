@@ -65,6 +65,22 @@ class SendPaymentReminderUseCase {
             'invoices.',
       );
     }
+    if (invoice.type == InvoiceType.creditNote) {
+      throw ConflictException(
+        message: 'Payment reminders cannot be sent for credit notes.',
+      );
+    }
+    final issuedCredits = await _invoices.findIssuedLinkedCreditNotes(
+      session,
+      invoice.id!,
+    );
+    if (issuedCredits.isNotEmpty) {
+      throw ConflictException(
+        message:
+            'Invoice ${invoice.number} has been credited; no further payment '
+            'reminders can be sent.',
+      );
+    }
 
     final customer = invoice.customerId == null
         ? null

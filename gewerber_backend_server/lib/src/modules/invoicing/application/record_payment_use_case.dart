@@ -53,9 +53,28 @@ class RecordPaymentUseCase {
           entityId: '${request.invoiceId}',
         );
       }
+      if (invoice.type == InvoiceType.creditNote) {
+        throw ValidationException(
+          message: 'Payments cannot be recorded against a credit note.',
+          field: 'invoiceId',
+        );
+      }
       if (invoice.status == InvoiceStatus.cancelled) {
         throw ValidationException(
           message: 'Cannot record payment on a cancelled invoice.',
+          field: 'invoiceId',
+        );
+      }
+      final issuedCredits = await _invoices.findIssuedLinkedCreditNotes(
+        session,
+        invoice.id!,
+        transaction: transaction,
+      );
+      if (issuedCredits.isNotEmpty) {
+        throw ValidationException(
+          message:
+              'Invoice ${invoice.number} has been credited and cannot accept '
+              'new payments.',
           field: 'invoiceId',
         );
       }
@@ -94,33 +113,9 @@ class RecordPaymentUseCase {
           : InvoiceStatus.partiallyPaid;
       await _invoices.update(
         session,
-        Invoice(
-          id: invoice.id,
-          businessId: invoice.businessId,
-          number: invoice.number,
-          type: invoice.type,
+        invoice.copyWith(
           status: status,
-          customerId: invoice.customerId,
-          issueDate: invoice.issueDate,
-          dueDate: invoice.dueDate,
-          serviceDateFrom: invoice.serviceDateFrom,
-          serviceDateTo: invoice.serviceDateTo,
-          locale: invoice.locale,
-          currency: invoice.currency,
-          subtotalCents: invoice.subtotalCents,
-          vatTotalCents: invoice.vatTotalCents,
-          totalCents: invoice.totalCents,
-          paymentTermsDays: invoice.paymentTermsDays,
-          dunningLevel: invoice.dunningLevel,
-          notes: invoice.notes,
-          templateId: invoice.templateId,
-          pdfDocumentId: invoice.pdfDocumentId,
-          recurrenceInterval: invoice.recurrenceInterval,
-          nextRecurrenceDate: invoice.nextRecurrenceDate,
-          recurrenceEndDate: invoice.recurrenceEndDate,
-          recurrenceMaxOccurrences: invoice.recurrenceMaxOccurrences,
-          recurrenceOccurrencesCreated: invoice.recurrenceOccurrencesCreated,
-          createdAt: invoice.createdAt,
+          updatedAt: DateTime.now().toUtc(),
         ),
         transaction: transaction,
       );
