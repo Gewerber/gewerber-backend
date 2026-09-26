@@ -1,6 +1,6 @@
 # 🧩 Gewerber Backend
 
-![Serverpod](https://img.shields.io/badge/Serverpod-4.x-blue.svg?style=flat-square)
+![Serverpod](https://img.shields.io/badge/Serverpod-4.0.2-blue.svg?style=flat-square)
 ![Dart](https://img.shields.io/badge/Dart-%5E3.13.3-0175C2.svg?logo=dart&logoColor=white&style=flat-square)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791.svg?logo=postgresql&logoColor=white&style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)
@@ -13,7 +13,7 @@ Part of the [Gewerber GitHub organization](https://github.com/Gewerber). This is
 
 ## 🧱 Stack
 
-- **Serverpod** `4.x` — backend framework
+- **Serverpod** `4.0.2` — backend framework
 - **PostgreSQL** — database
 - **Dart SDK** `^3.13.3`
 
@@ -35,11 +35,11 @@ This is a Dart **workspace** with two packages:
 ### Requirements
 
 - Dart SDK
-- Serverpod CLI
+- Serverpod CLI `4.0.2`
 - Docker (for PostgreSQL), or a local PostgreSQL
 
 ```bash
-dart pub global activate serverpod_cli
+dart pub global activate serverpod_cli 4.0.2
 ```
 
 ### Run the server

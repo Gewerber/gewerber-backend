@@ -71,6 +71,44 @@ void main() {
     ),
   ];
 
+  Invoice creditNote() => Invoice(
+    id: 2,
+    businessId: 1,
+    number: 'RE-2026-0002',
+    type: InvoiceType.creditNote,
+    status: InvoiceStatus.sent,
+    customerId: 1,
+    originalInvoiceId: 1,
+    issueDate: DateTime(2026, 9, 20),
+    currency: Currency.eur,
+    subtotalCents: -15000,
+    vatTotalCents: -2250,
+    totalCents: -17250,
+  );
+
+  List<InvoiceItem> creditItems() => [
+    InvoiceItem(
+      invoiceId: 2,
+      position: 1,
+      description: 'Webdesign',
+      quantity: 2,
+      unit: InvoiceItemUnit.piece,
+      unitPriceCents: -5000,
+      vatRate: VatRate.standard,
+      lineTotalCents: -10000,
+    ),
+    InvoiceItem(
+      invoiceId: 2,
+      position: 2,
+      description: 'Lektorat',
+      quantity: 1,
+      unit: InvoiceItemUnit.hour,
+      unitPriceCents: -5000,
+      vatRate: VatRate.reduced,
+      lineTotalCents: -5000,
+    ),
+  ];
+
   group('document structure', () {
     test('emits the CII root with EN 16931 namespaces and guideline', () {
       final xml = serializer.serialize(
@@ -122,6 +160,70 @@ void main() {
 
       expect(xml, contains('<ram:TypeCode>381</ram:TypeCode>'));
     });
+
+    test('credit note references the original and negates all amounts', () {
+      final xml = serializer.serialize(
+        invoice: creditNote(),
+        items: creditItems(),
+        business: seller(),
+        customer: buyer(),
+        originalInvoiceNumber: 'RE-2026-0001',
+      );
+
+      expect(xml, contains('<ram:TypeCode>381</ram:TypeCode>'));
+      expect(xml, contains('<ram:InvoiceReferencedDocument>'));
+      expect(
+        xml,
+        contains('<ram:ID>RE-2026-0001</ram:ID>'),
+      );
+      expect(xml, contains('<ram:ChargeAmount>-50.00</ram:ChargeAmount>'));
+      expect(
+        xml,
+        contains(
+          '<ram:BilledQuantity unitCode="C62">2</ram:BilledQuantity>',
+        ),
+      );
+      expect(
+        xml,
+        contains('<ram:LineTotalAmount>-150.00</ram:LineTotalAmount>'),
+      );
+      expect(
+        xml,
+        contains(
+          '<ram:TaxTotalAmount currencyID="EUR">-22.50</ram:TaxTotalAmount>',
+        ),
+      );
+      expect(
+        xml,
+        contains('<ram:GrandTotalAmount>-172.50</ram:GrandTotalAmount>'),
+      );
+      expect(
+        xml,
+        contains('<ram:DuePayableAmount>-172.50</ram:DuePayableAmount>'),
+      );
+    });
+
+    test(
+      'credit note keeps stored VAT even if business is now Kleinunternehmer',
+      () {
+        final xml = serializer.serialize(
+          invoice: creditNote(),
+          items: creditItems(),
+          business: seller(kleinunternehmer: true),
+          customer: buyer(),
+          originalInvoiceNumber: 'RE-2026-0001',
+        );
+
+        expect(xml, contains('<ram:CategoryCode>S</ram:CategoryCode>'));
+        expect(
+          xml,
+          contains(
+            '<ram:RateApplicablePercent>19.00</ram:RateApplicablePercent>',
+          ),
+        );
+        expect(xml, isNot(contains('<ram:CategoryCode>E</ram:CategoryCode>')));
+      },
+    );
   });
 
   group('trade parties', () {

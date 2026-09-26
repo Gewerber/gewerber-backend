@@ -162,14 +162,18 @@ class XrechnungSerializer {
     required List<InvoiceItem> items,
     required Business business,
     Customer? customer,
+    String? originalInvoiceNumber,
   }) {
     final currency = _currencyCode(invoice.currency);
-    final typeCode = invoice.type == InvoiceType.creditNote ? '381' : '380';
-    final isKleinunternehmer = business.isKleinunternehmer;
+    final isCreditNote = invoice.type == InvoiceType.creditNote;
+    final typeCode = isCreditNote ? '381' : '380';
+    // A credit note reverses the original's stored VAT. The business's
+    // current §19 status must not reclassify those lines.
+    final applyKleinunternehmer = !isCreditNote && business.isKleinunternehmer;
 
     final breakdown = _breakdown(
       items: items,
-      isKleinunternehmer: isKleinunternehmer,
+      isKleinunternehmer: applyKleinunternehmer,
       fallbackNetCents: invoice.subtotalCents,
       fallbackTaxCents: invoice.vatTotalCents,
     );
@@ -192,10 +196,19 @@ class XrechnungSerializer {
     w.writeln('  <rsm:SupplyChainTradeTransaction>');
 
     for (final item in items) {
-      _writeLineItem(w, item, isKleinunternehmer: isKleinunternehmer);
+      _writeLineItem(
+        w,
+        item,
+        isKleinunternehmer: applyKleinunternehmer,
+      );
     }
 
-    _writeHeaderTradeAgreement(w, business, customer);
+    _writeHeaderTradeAgreement(
+      w,
+      business,
+      customer,
+      originalInvoiceNumber: originalInvoiceNumber,
+    );
 
     w.writeln('    <ram:ApplicableHeaderTradeSettlement>');
     w.writeln(
@@ -251,9 +264,18 @@ class XrechnungSerializer {
   void _writeHeaderTradeAgreement(
     StringBuffer w,
     Business business,
-    Customer? customer,
-  ) {
+    Customer? customer, {
+    String? originalInvoiceNumber,
+  }) {
     w.writeln('    <ram:ApplicableHeaderTradeAgreement>');
+    if (originalInvoiceNumber != null &&
+        originalInvoiceNumber.trim().isNotEmpty) {
+      w.writeln('      <ram:InvoiceReferencedDocument>');
+      w.writeln(
+        '        <ram:ID>${_escape(originalInvoiceNumber.trim())}</ram:ID>',
+      );
+      w.writeln('      </ram:InvoiceReferencedDocument>');
+    }
     _writeTradeParty(
       w,
       'SellerTradeParty',
@@ -452,8 +474,8 @@ class XrechnungSerializer {
     }
 
     if (items.isEmpty) {
-      final category = fallbackTaxCents > 0 ? 'S' : 'Z';
-      final ratePercent = fallbackTaxCents > 0 ? 19 : 0;
+      final category = fallbackTaxCents != 0 ? 'S' : 'Z';
+      final ratePercent = fallbackTaxCents != 0 ? 19 : 0;
       return [
         _TaxBreakdown(
           category: category,

@@ -19,12 +19,18 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
 
   static const _baseStyleFontSize = 9.0;
 
+  static bool _isCreditNote(InvoicePdfData data) =>
+      data.invoice.type == InvoiceType.creditNote;
+
+  static String _documentLabel(InvoicePdfData data) =>
+      _isCreditNote(data) ? 'Gutschrift' : 'Rechnung';
+
   @override
   Future<Uint8List> generate(InvoicePdfData data) async {
     final document = pw.Document(
       author: data.business.name,
-      title: 'Rechnung ${data.invoice.number}',
-      subject: 'Invoice ${data.invoice.number}',
+      title: '${_documentLabel(data)} ${data.invoice.number}',
+      subject: '${_documentLabel(data)} ${data.invoice.number}',
       creator: 'Gewerber',
     );
 
@@ -104,6 +110,7 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
   pw.Widget _recipientAndMeta(InvoicePdfData data) {
     final customer = data.customer;
     final invoice = data.invoice;
+    final isCreditNote = _isCreditNote(data);
     return pw.Row(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
@@ -111,7 +118,10 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
           child: pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
-              pw.Text('Rechnungsempfänger', style: _label()),
+              pw.Text(
+                isCreditNote ? 'Gutschriftsempfänger' : 'Rechnungsempfänger',
+                style: _label(),
+              ),
               pw.SizedBox(height: 4),
               if (customer == null)
                 pw.Text('–', style: _base())
@@ -136,9 +146,17 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
         pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: [
-            _kv('Rechnungsnummer', invoice.number),
-            _kv('Rechnungsdatum', _formatDate(invoice.issueDate)),
-            if (invoice.dueDate != null)
+            _kv(
+              isCreditNote ? 'Gutschriftsnummer' : 'Rechnungsnummer',
+              invoice.number,
+            ),
+            _kv(
+              isCreditNote ? 'Gutschriftsdatum' : 'Rechnungsdatum',
+              _formatDate(invoice.issueDate),
+            ),
+            if (data.originalInvoiceNumber != null)
+              _kv('Stornierte Rechnung', data.originalInvoiceNumber!),
+            if (!isCreditNote && invoice.dueDate != null)
               _kv('Fällig am', _formatDate(invoice.dueDate!)),
             if (invoice.serviceDateFrom != null)
               _kv(
@@ -155,6 +173,28 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
   }
 
   pw.Widget _title(InvoicePdfData data) {
+    if (_isCreditNote(data)) {
+      return pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          pw.Text(
+            'Stornorechnung / Gutschrift',
+            style: pw.TextStyle(
+              fontSize: 14,
+              fontWeight: pw.FontWeight.bold,
+            ),
+          ),
+          if (data.originalInvoiceNumber != null) ...[
+            pw.SizedBox(height: 3),
+            pw.Text(
+              'Korrekturrechnung zu Rechnung ${data.originalInvoiceNumber}',
+              style: _base(),
+            ),
+          ],
+        ],
+      );
+    }
+
     final headerText = data.template?.headerText;
     final title = (headerText != null && headerText.trim().isNotEmpty)
         ? headerText.trim()
@@ -230,7 +270,11 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
   pw.Widget _totals(InvoicePdfData data) {
     final invoice = data.invoice;
     final currency = invoice.currency;
-    final isKleinunternehmer = data.business.isKleinunternehmer;
+    // A credit note must display the original's stored VAT. The business's
+    // current §19 status is deliberately ignored for credits so a change
+    // after issuance cannot rewrite the reversal document.
+    final isKleinunternehmer =
+        !_isCreditNote(data) && data.business.isKleinunternehmer;
 
     final rows = <List<String>>[
       [
@@ -304,7 +348,7 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
   }
 
   String? _taxNoticeText(InvoicePdfData data) {
-    if (data.business.isKleinunternehmer) {
+    if (!_isCreditNote(data) && data.business.isKleinunternehmer) {
       return 'Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.';
     }
     final rates = data.items.map((i) => i.vatRate).toSet();
@@ -333,20 +377,37 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
       );
     }
 
-    blocks.add(
-      pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: [
-          pw.Text('Zahlungsbedingungen', style: _label()),
-          pw.SizedBox(height: 2),
-          pw.Text(
-            'Zahlbar innerhalb von ${invoice.paymentTermsDays} Tagen '
-            'nach Rechnungsdatum ohne Abzug.',
-            style: _base(),
-          ),
-        ],
-      ),
-    );
+    if (_isCreditNote(data)) {
+      blocks.add(
+        pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text('Verrechnung', style: _label()),
+            pw.SizedBox(height: 2),
+            pw.Text(
+              'Der stornierte Rechnungsbetrag wird mit offenen Forderungen '
+              'verrechnet. Eine Zahlung ist nicht erforderlich.',
+              style: _base(),
+            ),
+          ],
+        ),
+      );
+    } else {
+      blocks.add(
+        pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text('Zahlungsbedingungen', style: _label()),
+            pw.SizedBox(height: 2),
+            pw.Text(
+              'Zahlbar innerhalb von ${invoice.paymentTermsDays} Tagen '
+              'nach Rechnungsdatum ohne Abzug.',
+              style: _base(),
+            ),
+          ],
+        ),
+      );
+    }
 
     if (footerText != null && footerText.trim().isNotEmpty) {
       blocks.add(pw.Text(footerText.trim(), style: _small()));
@@ -376,7 +437,8 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           pw.Text(
-            '${business.name} · Rechnung ${data.invoice.number}',
+            '${business.name} · ${_documentLabel(data)} '
+            '${data.invoice.number}',
             style: pw.TextStyle(fontSize: 7, color: PdfColors.grey700),
           ),
           pw.Text(

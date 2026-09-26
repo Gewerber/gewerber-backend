@@ -71,6 +71,7 @@ customer:
   - listCursorPage:
 invoice:
   - create:
+  - createCreditNote:
   - get:
   - getItems:
   - update:

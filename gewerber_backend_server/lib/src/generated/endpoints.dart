@@ -34,6 +34,8 @@ import 'package:gewerber_backend_server/src/generated/modules/documents/models/d
     as _ihaxsvej;
 import 'package:gewerber_backend_server/src/generated/modules/documents/models/upload_document_request.dart'
     as _i2nxphic;
+import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_credit_note_request.dart'
+    as _ioz0y90n;
 import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_customer_request.dart'
     as _i94n0ggq;
 import 'package:gewerber_backend_server/src/generated/modules/invoicing/models/create_invoice_request.dart'
@@ -1791,6 +1793,31 @@ class Endpoints extends _is.EndpointDispatch {
                 Map<String, dynamic> params,
               ) async =>
                   (endpoints['invoice'] as _ihd954jk.InvoiceEndpoint).create(
+                    session,
+                    params['request'],
+                    businessId: params['businessId'],
+                  ),
+        ),
+        'createCreditNote': _is.MethodConnector(
+          name: 'createCreditNote',
+          params: {
+            'request': _is.ParameterDescription(
+              name: 'request',
+              type: _is.getType<_ioz0y90n.CreateCreditNoteRequest>(),
+              nullable: false,
+            ),
+            'businessId': _is.ParameterDescription(
+              name: 'businessId',
+              type: _is.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['invoice'] as _ihd954jk.InvoiceEndpoint)
+                  .createCreditNote(
                     session,
                     params['request'],
                     businessId: params['businessId'],

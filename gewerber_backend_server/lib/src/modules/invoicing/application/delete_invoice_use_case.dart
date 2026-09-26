@@ -23,27 +23,48 @@ class DeleteInvoiceUseCase {
       session,
       businessId: businessId,
     );
-    final invoice = await _invoices.findById(session, invoiceId);
-    if (invoice == null || invoice.businessId != tenant.businessId) {
-      throw NotFoundException(
+
+    await session.db.transaction((transaction) async {
+      final invoice = await _invoices.findByIdForUpdate(
+        session,
+        invoiceId,
+        transaction: transaction,
+      );
+      if (invoice == null || invoice.businessId != tenant.businessId) {
+        throw NotFoundException(
+          entityType: 'Invoice',
+          entityId: '$invoiceId',
+        );
+      }
+      if (invoice.status != InvoiceStatus.draft &&
+          invoice.status != InvoiceStatus.cancelled) {
+        throw ConflictException(
+          message: 'Only draft or cancelled invoices can be deleted.',
+        );
+      }
+
+      final linked = await _invoices.findLinkedCreditNotes(
+        session,
+        invoice.id!,
+        transaction: transaction,
+      );
+      if (linked.isNotEmpty) {
+        throw ConflictException(
+          message:
+              'Invoice ${invoice.number} is referenced by a credit note and '
+              'cannot be deleted.',
+        );
+      }
+
+      await _invoices.delete(session, invoice, transaction: transaction);
+      await _audit.log(
+        session,
+        action: 'invoice.delete',
         entityType: 'Invoice',
         entityId: '$invoiceId',
+        tenant: tenant,
+        transaction: transaction,
       );
-    }
-    if (invoice.status != InvoiceStatus.draft &&
-        invoice.status != InvoiceStatus.cancelled) {
-      throw ConflictException(
-        message: 'Only draft or cancelled invoices can be deleted.',
-      );
-    }
-
-    await _invoices.delete(session, invoice);
-    await _audit.log(
-      session,
-      action: 'invoice.delete',
-      entityType: 'Invoice',
-      entityId: '$invoiceId',
-      tenant: tenant,
-    );
+    });
   }
 }

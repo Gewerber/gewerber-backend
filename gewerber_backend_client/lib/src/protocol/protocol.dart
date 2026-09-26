@@ -101,6 +101,7 @@ import 'modules/guidance/models/checklist_definition.dart' as _i04z5hwj;
 import 'modules/guidance/models/checklist_item_definition.dart' as _i5jbvijx;
 import 'modules/guidance/models/guidance_tip.dart' as _irvclg1d;
 import 'modules/guidance/models/user_guidance_progress.dart' as _ik05lx5a;
+import 'modules/invoicing/models/create_credit_note_request.dart' as _is55cdqf;
 import 'modules/invoicing/models/create_customer_request.dart' as _i90hzmg5;
 import 'modules/invoicing/models/create_invoice_request.dart' as _ia6btdit;
 import 'modules/invoicing/models/create_invoice_template_request.dart'
@@ -209,6 +210,7 @@ export 'modules/guidance/models/checklist_definition.dart';
 export 'modules/guidance/models/checklist_item_definition.dart';
 export 'modules/guidance/models/guidance_tip.dart';
 export 'modules/guidance/models/user_guidance_progress.dart';
+export 'modules/invoicing/models/create_credit_note_request.dart';
 export 'modules/invoicing/models/create_customer_request.dart';
 export 'modules/invoicing/models/create_invoice_request.dart';
 export 'modules/invoicing/models/create_invoice_template_request.dart';
@@ -449,6 +451,9 @@ class Protocol extends _isc.SerializationManager {
     }
     if (t == _ik05lx5a.UserGuidanceProgress) {
       return _ik05lx5a.UserGuidanceProgress.fromJson(data) as T;
+    }
+    if (t == _is55cdqf.CreateCreditNoteRequest) {
+      return _is55cdqf.CreateCreditNoteRequest.fromJson(data) as T;
     }
     if (t == _i90hzmg5.CreateCustomerRequest) {
       return _i90hzmg5.CreateCustomerRequest.fromJson(data) as T;
@@ -819,6 +824,12 @@ class Protocol extends _isc.SerializationManager {
     if (t == _isc.getType<_ik05lx5a.UserGuidanceProgress?>()) {
       return (data != null
               ? _ik05lx5a.UserGuidanceProgress.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_is55cdqf.CreateCreditNoteRequest?>()) {
+      return (data != null
+              ? _is55cdqf.CreateCreditNoteRequest.fromJson(data)
               : null)
           as T;
     }
@@ -1319,6 +1330,7 @@ class Protocol extends _isc.SerializationManager {
       _i5jbvijx.ChecklistItemDefinition => 'ChecklistItemDefinition',
       _irvclg1d.GuidanceTip => 'GuidanceTip',
       _ik05lx5a.UserGuidanceProgress => 'UserGuidanceProgress',
+      _is55cdqf.CreateCreditNoteRequest => 'CreateCreditNoteRequest',
       _i90hzmg5.CreateCustomerRequest => 'CreateCustomerRequest',
       _ia6btdit.CreateInvoiceRequest => 'CreateInvoiceRequest',
       _iyi9fugk.CreateInvoiceTemplateRequest => 'CreateInvoiceTemplateRequest',
@@ -1492,6 +1504,8 @@ class Protocol extends _isc.SerializationManager {
         return 'GuidanceTip';
       case _ik05lx5a.UserGuidanceProgress():
         return 'UserGuidanceProgress';
+      case _is55cdqf.CreateCreditNoteRequest():
+        return 'CreateCreditNoteRequest';
       case _i90hzmg5.CreateCustomerRequest():
         return 'CreateCustomerRequest';
       case _ia6btdit.CreateInvoiceRequest():
@@ -1773,6 +1787,9 @@ class Protocol extends _isc.SerializationManager {
     }
     if (dataClassName == 'UserGuidanceProgress') {
       return deserialize<_ik05lx5a.UserGuidanceProgress>(data['data']);
+    }
+    if (dataClassName == 'CreateCreditNoteRequest') {
+      return deserialize<_is55cdqf.CreateCreditNoteRequest>(data['data']);
     }
     if (dataClassName == 'CreateCustomerRequest') {
       return deserialize<_i90hzmg5.CreateCustomerRequest>(data['data']);

@@ -35,6 +35,15 @@ class GetPaymentStatusUseCase {
       );
     }
 
+    if (invoice.type == InvoiceType.creditNote) {
+      throw ValidationException(
+        message:
+            'Credit notes do not carry payments; inspect the original invoice '
+            'instead.',
+        field: 'invoiceId',
+      );
+    }
+
     final payments = await _payments.findByInvoiceId(session, invoiceId);
     final paidTotal = payments.fold(0, (sum, p) => sum + p.amountCents);
     final remaining = (invoice.totalCents - paidTotal) < 0

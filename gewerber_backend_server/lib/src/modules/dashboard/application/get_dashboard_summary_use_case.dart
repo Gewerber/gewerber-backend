@@ -23,9 +23,10 @@ import '../domain/month_bucketing.dart';
 ///   locale-aware month boundaries are deliberately out of scope for v1.
 /// - [asOf] is an escape hatch for deterministic tests; production callers
 ///   omit it so everything anchors at "now".
-/// - Receivables consider **sales invoices only** (`type == invoice`);
-///   credit notes are not compensated server-side yet, so they neither reduce
-///   open totals nor appear in receivables (follow-up issue pending).
+/// - Receivables consider **sales invoices only** (`type == invoice`); an
+///   issued credit note compensates only the original invoice it explicitly
+///   references, never a customer-wide or global pool. Per-invoice balances
+///   are floored at zero — a credit never creates a refund payable.
 /// - v1 limitation: open-receivable totals/count are derived from at most
 ///   [_maxOpenInvoices] oldest-due invoices; a business exceeding that cap
 ///   under-reports its receivables.
@@ -148,18 +149,34 @@ class GetDashboardSummaryUseCase {
     );
 
     // 4. Open receivables: sales invoices with outstanding money, oldest due
-    //    first. Credit notes are excluded on purpose (see class doc).
+    //    first. Credit notes are excluded from the base set; issued linked
+    //    credits are fetched below and applied strictly per original.
     final openInvoices = await _invoices.findOpenOrderedByDueDate(
       session,
       businessId: tenant.businessId,
       limit: _maxOpenInvoices,
     );
 
-    // 5. One batched payments lookup for every open invoice.
+    // 5. One batched payments lookup plus one batched credit-note lookup for
+    //    every open invoice — no N+1.
     final paymentsByInvoice = await _loadPayments(session, openInvoices);
+    final creditTotalsByOriginal = await _loadIssuedCreditTotals(
+      session,
+      businessId: tenant.businessId,
+      invoices: openInvoices,
+    );
+    final netRemainingByInvoice = <int, int>{
+      for (final invoice in openInvoices)
+        invoice.id!: _netRemainingCents(
+          invoice,
+          paymentsByInvoice,
+          creditTotalsByOriginal[invoice.id] ?? 0,
+        ),
+    };
 
     // Batched name lookups (single query each, regardless of feed size).
     final debtorIds = openInvoices
+        .where((invoice) => (netRemainingByInvoice[invoice.id] ?? 0) > 0)
         .map((invoice) => invoice.customerId)
         .whereType<int>()
         .toSet();
@@ -255,7 +272,7 @@ class GetDashboardSummaryUseCase {
       ],
       receivables: _buildReceivables(
         openInvoices: openInvoices,
-        paymentsByInvoice: paymentsByInvoice,
+        netRemainingByInvoice: netRemainingByInvoice,
         customersById: customersById,
         asOf: now,
         overdueCap: overdueCap,
@@ -278,10 +295,42 @@ class GetDashboardSummaryUseCase {
     return byInvoice;
   }
 
-  /// Remaining amount per invoice: `totalCents − paid`, never below zero.
-  static int _remainingCents(
+  /// Compensates each open invoice with the magnitude of its issued linked
+  /// credit notes. `abs` keeps legacy positive credit rows compatible with
+  /// the new signed-negative documents; allocation remains strictly by
+  /// `originalInvoiceId`.
+  Future<Map<int, int>> _loadIssuedCreditTotals(
+    Session session, {
+    required int businessId,
+    required List<Invoice> invoices,
+  }) async {
+    final originalIds = invoices.map((invoice) => invoice.id!).toSet();
+    if (originalIds.isEmpty) return const {};
+
+    final credits = await _invoices.findIssuedLinkedCreditNotesForOriginals(
+      session,
+      businessId: businessId,
+      originalInvoiceIds: originalIds,
+    );
+    final totals = <int, int>{};
+    for (final credit in credits) {
+      final originalId = credit.originalInvoiceId;
+      if (originalId == null) continue;
+      totals.update(
+        originalId,
+        (current) => current + credit.totalCents.abs(),
+        ifAbsent: () => credit.totalCents.abs(),
+      );
+    }
+    return totals;
+  }
+
+  /// Net receivable per invoice: `max(0, total − paid − issued credits)`.
+  /// The floor prevents a credit from surfacing as a refund payable.
+  static int _netRemainingCents(
     Invoice invoice,
     Map<int, List<PaymentRecord>> paymentsByInvoice,
+    int issuedCreditCents,
   ) {
     final paid =
         paymentsByInvoice[invoice.id]?.fold<int>(
@@ -289,7 +338,8 @@ class GetDashboardSummaryUseCase {
           (sum, record) => sum + record.amountCents,
         ) ??
         0;
-    return math.max(0, invoice.totalCents - paid);
+    final gross = math.max(0, invoice.totalCents - paid);
+    return math.max(0, gross - issuedCreditCents);
   }
 
   /// Customer display name: personal name before company name. `null` means
@@ -310,7 +360,7 @@ class GetDashboardSummaryUseCase {
 
   ReceivablesSummary _buildReceivables({
     required List<Invoice> openInvoices,
-    required Map<int, List<PaymentRecord>> paymentsByInvoice,
+    required Map<int, int> netRemainingByInvoice,
     required Map<int, Customer> customersById,
     required DateTime asOf,
     required int overdueCap,
@@ -320,11 +370,15 @@ class GetDashboardSummaryUseCase {
         invoice.dueDate != null && invoice.dueDate!.isBefore(asOf);
 
     final overduePairs = <(Invoice, int)>[];
+    var openCount = 0;
     var openTotalCents = 0;
     final debtorsById = <int?, _DebtorAccumulator>{};
 
     for (final invoice in openInvoices) {
-      final remaining = _remainingCents(invoice, paymentsByInvoice);
+      final remaining = netRemainingByInvoice[invoice.id] ?? 0;
+      // Fully credited invoices disappear from every receivable aggregate.
+      if (remaining <= 0) continue;
+      openCount += 1;
       openTotalCents += remaining;
       if (isOverdue(invoice)) {
         overduePairs.add((invoice, remaining));
@@ -369,7 +423,7 @@ class GetDashboardSummaryUseCase {
         });
 
     return ReceivablesSummary(
-      openInvoicesCount: openInvoices.length,
+      openInvoicesCount: openCount,
       openTotalCents: openTotalCents,
       overdueCount: overduePairs.length,
       overdueTotalCents: overduePairs.fold<int>(
