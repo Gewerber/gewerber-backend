@@ -254,6 +254,7 @@ import '../entitlement/invoice_quota_policy.dart' as _i615;
 import '../events/event_bus.dart' as _i557;
 import '../events/message_central_event_bus.dart' as _i991;
 import '../mail/mail_service.dart' as _i1069;
+import '../rate_limit/api_rate_limiter.dart' as _i656;
 import '../sequence/data/serverpod_sequence_gateway.dart' as _i445;
 import '../sequence/domain/sequence_gateway.dart' as _i559;
 import '../tenant/tenant_resolver.dart' as _i343;
@@ -268,6 +269,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i473.AuditService>(() => _i473.AuditService());
     gh.singleton<_i615.InvoiceQuotaPolicy>(() => _i615.InvoiceQuotaPolicy());
     gh.singleton<_i1069.MailService>(() => _i1069.MailService());
+    gh.singleton<_i656.ApiRateLimiter>(() => _i656.ApiRateLimiter());
     gh.singleton<_i993.GuidanceContentProvider>(
       () => _i993.GuidanceContentProvider(),
     );

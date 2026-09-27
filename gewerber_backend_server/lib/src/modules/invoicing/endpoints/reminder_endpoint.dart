@@ -2,6 +2,7 @@ import 'package:serverpod/serverpod.dart';
 
 import '../../../core/di/service_locator.dart';
 import '../../../core/endpoints/business_scoped_endpoint.dart';
+import '../../../core/rate_limit/api_rate_limiter.dart';
 import '../../../generated/protocol.dart';
 import '../application/list_reminders_use_case.dart';
 import '../application/send_payment_reminder_use_case.dart';
@@ -27,7 +28,11 @@ class ReminderEndpoint extends BusinessScopedEndpoint {
     Session session,
     int invoiceId, {
     int? businessId,
-  }) {
+  }) async {
+    await getIt<ApiRateLimiter>().check(
+      session,
+      RateLimitedOperation.reminderSend,
+    );
     return getIt<SendPaymentReminderUseCase>().call(
       session,
       invoiceId,

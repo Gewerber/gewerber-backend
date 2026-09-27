@@ -2,6 +2,7 @@ import 'package:serverpod/serverpod.dart';
 
 import '../../../core/di/service_locator.dart';
 import '../../../core/endpoints/business_scoped_endpoint.dart';
+import '../../../core/rate_limit/api_rate_limiter.dart';
 import '../../../generated/protocol.dart';
 import '../application/cancel_invoice_use_case.dart';
 import '../application/create_credit_note_use_case.dart';
@@ -167,7 +168,11 @@ class InvoiceEndpoint extends BusinessScopedEndpoint {
     Session session, {
     InvoiceStatus? status,
     int? businessId,
-  }) {
+  }) async {
+    await getIt<ApiRateLimiter>().check(
+      session,
+      RateLimitedOperation.invoiceExport,
+    );
     return getIt<ExportInvoicesUseCase>().csv(
       session,
       status: status,
@@ -180,7 +185,11 @@ class InvoiceEndpoint extends BusinessScopedEndpoint {
     Session session, {
     InvoiceStatus? status,
     int? businessId,
-  }) {
+  }) async {
+    await getIt<ApiRateLimiter>().check(
+      session,
+      RateLimitedOperation.invoiceExport,
+    );
     return getIt<ExportInvoicesUseCase>().json(
       session,
       status: status,
@@ -194,7 +203,11 @@ class InvoiceEndpoint extends BusinessScopedEndpoint {
     Session session,
     int invoiceId, {
     int? businessId,
-  }) {
+  }) async {
+    await getIt<ApiRateLimiter>().check(
+      session,
+      RateLimitedOperation.invoicePdf,
+    );
     return getIt<GenerateInvoicePdfUseCase>().call(
       session,
       invoiceId,
@@ -207,7 +220,11 @@ class InvoiceEndpoint extends BusinessScopedEndpoint {
     Session session,
     int invoiceId, {
     int? businessId,
-  }) {
+  }) async {
+    await getIt<ApiRateLimiter>().check(
+      session,
+      RateLimitedOperation.xrechnungExport,
+    );
     return getIt<XrechnungExportUseCase>().exportXrechnung(
       session,
       invoiceId,
