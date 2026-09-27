@@ -185,4 +185,162 @@ abstract final class Messages {
 
   /// Unit "Sonst." — anything else.
   static const String pdfUnitOther = 'pdf.unit.other';
+
+  // --- Invoice PDF: country names ------------------------------------------
+  // Rendered as the country line of the business and customer address blocks.
+  // Keyed by the ISO 3166-1 alpha-3 code so the key matches the `Country` enum
+  // value it translates, which keeps the exhaustive switch in the PDF generator
+  // readable and forces a decision if a country is ever added to the enum.
+  //
+  // Before issue #57 these lived as a 30-arm `switch` with a `_ => country.name`
+  // fallback, so 19 countries — Norway, Canada, Australia, Japan, Turkey, the
+  // UAE and others — printed their raw enum code (`nor`, `are`) on the invoice
+  // instead of a country name.
+
+  /// Country name for `Country.deu`.
+  static const String pdfCountryDeu = 'pdf.country.deu';
+
+  /// Country name for `Country.aut`.
+  static const String pdfCountryAut = 'pdf.country.aut';
+
+  /// Country name for `Country.bel`.
+  static const String pdfCountryBel = 'pdf.country.bel';
+
+  /// Country name for `Country.bgr`.
+  static const String pdfCountryBgr = 'pdf.country.bgr';
+
+  /// Country name for `Country.hrv`.
+  static const String pdfCountryHrv = 'pdf.country.hrv';
+
+  /// Country name for `Country.cyp`.
+  static const String pdfCountryCyp = 'pdf.country.cyp';
+
+  /// Country name for `Country.cze`.
+  static const String pdfCountryCze = 'pdf.country.cze';
+
+  /// Country name for `Country.dnk`.
+  static const String pdfCountryDnk = 'pdf.country.dnk';
+
+  /// Country name for `Country.est`.
+  static const String pdfCountryEst = 'pdf.country.est';
+
+  /// Country name for `Country.fin`.
+  static const String pdfCountryFin = 'pdf.country.fin';
+
+  /// Country name for `Country.fra`.
+  static const String pdfCountryFra = 'pdf.country.fra';
+
+  /// Country name for `Country.grc`.
+  static const String pdfCountryGrc = 'pdf.country.grc';
+
+  /// Country name for `Country.hun`.
+  static const String pdfCountryHun = 'pdf.country.hun';
+
+  /// Country name for `Country.irl`.
+  static const String pdfCountryIrl = 'pdf.country.irl';
+
+  /// Country name for `Country.ita`.
+  static const String pdfCountryIta = 'pdf.country.ita';
+
+  /// Country name for `Country.lva`.
+  static const String pdfCountryLva = 'pdf.country.lva';
+
+  /// Country name for `Country.ltu`.
+  static const String pdfCountryLtu = 'pdf.country.ltu';
+
+  /// Country name for `Country.lux`.
+  static const String pdfCountryLux = 'pdf.country.lux';
+
+  /// Country name for `Country.mlt`.
+  static const String pdfCountryMlt = 'pdf.country.mlt';
+
+  /// Country name for `Country.nld`.
+  static const String pdfCountryNld = 'pdf.country.nld';
+
+  /// Country name for `Country.pol`.
+  static const String pdfCountryPol = 'pdf.country.pol';
+
+  /// Country name for `Country.prt`.
+  static const String pdfCountryPrt = 'pdf.country.prt';
+
+  /// Country name for `Country.rou`.
+  static const String pdfCountryRou = 'pdf.country.rou';
+
+  /// Country name for `Country.svk`.
+  static const String pdfCountrySvk = 'pdf.country.svk';
+
+  /// Country name for `Country.svn`.
+  static const String pdfCountrySvn = 'pdf.country.svn';
+
+  /// Country name for `Country.esp`.
+  static const String pdfCountryEsp = 'pdf.country.esp';
+
+  /// Country name for `Country.swe`.
+  static const String pdfCountrySwe = 'pdf.country.swe';
+
+  /// Country name for `Country.che`.
+  static const String pdfCountryChe = 'pdf.country.che';
+
+  /// Country name for `Country.gbr`.
+  static const String pdfCountryGbr = 'pdf.country.gbr';
+
+  /// Country name for `Country.nor`.
+  static const String pdfCountryNor = 'pdf.country.nor';
+
+  /// Country name for `Country.isl`.
+  static const String pdfCountryIsl = 'pdf.country.isl';
+
+  /// Country name for `Country.lie`.
+  static const String pdfCountryLie = 'pdf.country.lie';
+
+  /// Country name for `Country.usa`.
+  static const String pdfCountryUsa = 'pdf.country.usa';
+
+  /// Country name for `Country.can`.
+  static const String pdfCountryCan = 'pdf.country.can';
+
+  /// Country name for `Country.aus`.
+  static const String pdfCountryAus = 'pdf.country.aus';
+
+  /// Country name for `Country.nzl`.
+  static const String pdfCountryNzl = 'pdf.country.nzl';
+
+  /// Country name for `Country.jpn`.
+  static const String pdfCountryJpn = 'pdf.country.jpn';
+
+  /// Country name for `Country.chn`.
+  static const String pdfCountryChn = 'pdf.country.chn';
+
+  /// Country name for `Country.ind`.
+  static const String pdfCountryInd = 'pdf.country.ind';
+
+  /// Country name for `Country.tur`.
+  static const String pdfCountryTur = 'pdf.country.tur';
+
+  /// Country name for `Country.ukr`.
+  static const String pdfCountryUkr = 'pdf.country.ukr';
+
+  /// Country name for `Country.are`.
+  static const String pdfCountryAre = 'pdf.country.are';
+
+  /// Country name for `Country.sau`.
+  static const String pdfCountrySau = 'pdf.country.sau';
+
+  /// Country name for `Country.bra`.
+  static const String pdfCountryBra = 'pdf.country.bra';
+
+  /// Country name for `Country.mex`.
+  static const String pdfCountryMex = 'pdf.country.mex';
+
+  /// Country name for `Country.zaf`.
+  static const String pdfCountryZaf = 'pdf.country.zaf';
+
+  /// Country name for `Country.kor`.
+  static const String pdfCountryKor = 'pdf.country.kor';
+
+  /// Country name for `Country.sgp`.
+  static const String pdfCountrySgp = 'pdf.country.sgp';
+
+  /// Country name for `Country.isr`.
+  static const String pdfCountryIsr = 'pdf.country.isr';
 }

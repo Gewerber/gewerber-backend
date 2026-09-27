@@ -291,9 +291,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i711.AdminAuthGateway>(
       () => _i446.ServerpodAdminAuthGateway(),
     );
-    gh.singleton<_i668.InvoicePdfGenerator>(
-      () => const _i1030.PdfInvoiceGenerator(),
-    );
     gh.singleton<_i647.BusinessGateway>(() => _i8.ServerpodBusinessGateway());
     gh.singleton<_i655.AccountAnonymizationGateway>(
       () => _i1024.ServerpodAccountAnonymizationGateway(),
@@ -348,6 +345,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i690.AdminStatsGateway>(
       () => const _i744.ServerpodAdminStatsGateway(),
+    );
+    gh.singleton<_i668.InvoicePdfGenerator>(
+      () => _i1030.PdfInvoiceGenerator(gh<_i221.MessageCatalog>()),
     );
     gh.singleton<_i417.TimeEntryGateway>(
       () => _i132.ServerpodTimeEntryGateway(),

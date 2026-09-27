@@ -1,3 +1,4 @@
+import 'package:gewerber_backend_server/src/core/i18n/country_names.dart';
 import 'package:gewerber_backend_server/src/core/i18n/locale_message_catalog.dart';
 import 'package:gewerber_backend_server/src/core/i18n/message_catalog.dart';
 import 'package:gewerber_backend_server/src/core/i18n/messages.dart';
@@ -83,6 +84,55 @@ void main() {
         Messages.pdfUnitMonth,
         Messages.pdfUnitProject,
         Messages.pdfUnitOther,
+        Messages.pdfCountryDeu,
+        Messages.pdfCountryAut,
+        Messages.pdfCountryBel,
+        Messages.pdfCountryBgr,
+        Messages.pdfCountryHrv,
+        Messages.pdfCountryCyp,
+        Messages.pdfCountryCze,
+        Messages.pdfCountryDnk,
+        Messages.pdfCountryEst,
+        Messages.pdfCountryFin,
+        Messages.pdfCountryFra,
+        Messages.pdfCountryGrc,
+        Messages.pdfCountryHun,
+        Messages.pdfCountryIrl,
+        Messages.pdfCountryIta,
+        Messages.pdfCountryLva,
+        Messages.pdfCountryLtu,
+        Messages.pdfCountryLux,
+        Messages.pdfCountryMlt,
+        Messages.pdfCountryNld,
+        Messages.pdfCountryPol,
+        Messages.pdfCountryPrt,
+        Messages.pdfCountryRou,
+        Messages.pdfCountrySvk,
+        Messages.pdfCountrySvn,
+        Messages.pdfCountryEsp,
+        Messages.pdfCountrySwe,
+        Messages.pdfCountryChe,
+        Messages.pdfCountryGbr,
+        Messages.pdfCountryNor,
+        Messages.pdfCountryIsl,
+        Messages.pdfCountryLie,
+        Messages.pdfCountryUsa,
+        Messages.pdfCountryCan,
+        Messages.pdfCountryAus,
+        Messages.pdfCountryNzl,
+        Messages.pdfCountryJpn,
+        Messages.pdfCountryChn,
+        Messages.pdfCountryInd,
+        Messages.pdfCountryTur,
+        Messages.pdfCountryUkr,
+        Messages.pdfCountryAre,
+        Messages.pdfCountrySau,
+        Messages.pdfCountryBra,
+        Messages.pdfCountryMex,
+        Messages.pdfCountryZaf,
+        Messages.pdfCountryKor,
+        Messages.pdfCountrySgp,
+        Messages.pdfCountryIsr,
       ];
 
       for (final key in allKeys) {
@@ -205,6 +255,46 @@ void main() {
           'Rechnung',
         );
       }
+    });
+  });
+
+  group('country names', () {
+    const catalog = LocaleMessageCatalog();
+
+    test('every Country resolves to a translated name in every locale', () {
+      for (final country in Country.values) {
+        final key = countryKey(country);
+        for (final locale in [Locale.de, Locale.en]) {
+          final name = catalog.text(key, locale: locale);
+          expect(
+            name,
+            isNot(key),
+            reason: '${country.name} has no $locale country name',
+          );
+          expect(name.trim(), isNotEmpty);
+        }
+      }
+    });
+
+    test('no country renders as its raw enum code', () {
+      // The pre-i18n PDF generator had a `_ => country.name` fallback, so 19 of
+      // the 49 values printed `nor`, `are`, `jpn` and so on onto the invoice.
+      for (final country in Country.values) {
+        for (final locale in [Locale.de, Locale.en]) {
+          expect(
+            catalog.text(countryKey(country), locale: locale),
+            isNot(country.name),
+            reason: '${country.name} leaks its enum code in $locale',
+          );
+        }
+      }
+    });
+
+    test('covers all 49 Country values', () {
+      // A tripwire for a new country being added to the enum without a
+      // corresponding catalog entry; `countryKey` being exhaustive means this
+      // only fails on the missing translation, at the point it is added.
+      expect(Country.values, hasLength(49));
     });
   });
 
