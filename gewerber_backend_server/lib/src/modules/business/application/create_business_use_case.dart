@@ -75,6 +75,10 @@ class CreateBusinessUseCase {
           userId: userId,
           businessId: created.id!,
           role: MembershipRole.owner,
+          // The language the owner just chose for this new business, rather
+          // than a re-read of their profile: this audit entry describes the
+          // business they have just configured.
+          locale: created.locale,
         ),
         transaction: transaction,
       );

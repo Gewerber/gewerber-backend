@@ -23,6 +23,7 @@ gewerber_backend_server/lib/src/
     endpoints/                   # BusinessScopedEndpoint, AdminEndpoint base classes
     entitlement/                 # Feature gating scaffold (all features enabled in OSS; host installer bridge swaps in the commercial module's provider when GEWERBER_COMMERCIAL_ENTITLEMENTS=true)
     mail/                        # MailService (SMTP) + EmailTemplate
+    i18n/                        # MessageCatalog + per-locale maps, LocaleResolver precedence
     sequence/                    # GoBD-safe number sequences
   modules/
     business/                    # M1: Business + Membership + BusinessSettings
@@ -46,6 +47,7 @@ gewerber_backend_server/lib/src/
 - **Enums first**: for any closed value set (country, locale/language, currency, statuses, types, units) prefer an enum over a free-form `String`. In `.spy.yaml` always use `serialized: byName`; values are lowercase (e.g. `de`, `eur`, `paid`). Adding values is safe, renaming is breaking.
 - **String defaults**: must be quoted (`default='de'`).
 - **Exceptions**: use generated `.spy.yaml` exceptions — they're thrown on the server and caught on the client by type.
+- **User-facing text**: no hardcoded literals that a user can read. Add a key to `core/i18n/messages.dart` and a value to every `core/i18n/messages_*.dart` map, then resolve it with `MessageCatalog` (from `getIt`) or `LocaleResolver` for the locale. Keys are namespaced by surface, never renamed, and `{placeholder}` tokens are substituted from an `args` map. `de` is the fallback locale; `ru`/`tr` have no catalog yet and render `de` until translated.
 - **Tests**: integration tests via `withServerpod` with test postgres (docker compose `postgres_test`). Call `configureDependencies()` in `setUpAll`.
 
 ## Endpoints

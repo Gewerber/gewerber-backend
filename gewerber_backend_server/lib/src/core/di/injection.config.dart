@@ -14,7 +14,7 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../../modules/accounting/application/create_transaction_use_case.dart'
-    as _i196;
+    as _i198;
 import '../../modules/accounting/application/delete_transaction_use_case.dart'
     as _i108;
 import '../../modules/accounting/application/export_transactions_use_case.dart'
@@ -215,7 +215,7 @@ import '../../modules/time_tracking/application/list_projects_use_case.dart'
 import '../../modules/time_tracking/application/list_tasks_use_case.dart'
     as _i137;
 import '../../modules/time_tracking/application/list_time_entries_use_case.dart'
-    as _i198;
+    as _i196;
 import '../../modules/time_tracking/application/start_timer_use_case.dart'
     as _i796;
 import '../../modules/time_tracking/application/stop_timer_use_case.dart'
@@ -253,6 +253,8 @@ import '../entitlement/entitlement_provider.dart' as _i664;
 import '../entitlement/invoice_quota_policy.dart' as _i615;
 import '../events/event_bus.dart' as _i557;
 import '../events/message_central_event_bus.dart' as _i991;
+import '../i18n/locale_message_catalog.dart' as _i550;
+import '../i18n/message_catalog.dart' as _i221;
 import '../mail/mail_service.dart' as _i1069;
 import '../rate_limit/api_rate_limiter.dart' as _i656;
 import '../sequence/data/serverpod_sequence_gateway.dart' as _i445;
@@ -291,9 +293,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i711.AdminAuthGateway>(
       () => _i446.ServerpodAdminAuthGateway(),
     );
-    gh.singleton<_i668.InvoicePdfGenerator>(
-      () => const _i1030.PdfInvoiceGenerator(),
-    );
     gh.singleton<_i647.BusinessGateway>(() => _i8.ServerpodBusinessGateway());
     gh.singleton<_i655.AccountAnonymizationGateway>(
       () => _i1024.ServerpodAccountAnonymizationGateway(),
@@ -307,6 +306,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i696.CustomerGateway>(() => _i356.ServerpodCustomerGateway());
     gh.singleton<_i1025.PaymentRecordGateway>(
       () => _i438.ServerpodPaymentRecordGateway(),
+    );
+    gh.singleton<_i221.MessageCatalog>(
+      () => const _i550.LocaleMessageCatalog(),
     );
     gh.singleton<_i18.TaskGateway>(() => _i810.ServerpodTaskGateway());
     gh.singleton<_i331.InvoiceTemplateGateway>(
@@ -346,6 +348,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i690.AdminStatsGateway>(
       () => const _i744.ServerpodAdminStatsGateway(),
     );
+    gh.singleton<_i668.InvoicePdfGenerator>(
+      () => _i1030.PdfInvoiceGenerator(gh<_i221.MessageCatalog>()),
+    );
     gh.singleton<_i417.TimeEntryGateway>(
       () => _i132.ServerpodTimeEntryGateway(),
     );
@@ -358,9 +363,38 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i1012.ServerpodInvoiceItemGateway(),
     );
     gh.singleton<_i788.ReminderGateway>(() => _i754.ServerpodReminderGateway());
+    gh.singleton<_i343.TenantResolver>(
+      () => _i707.ServerpodTenantResolver(
+        gh<_i688.MembershipGateway>(),
+        gh<_i647.BusinessGateway>(),
+        gh<_i467.UserProfileGateway>(),
+        gh<_i221.MessageCatalog>(),
+      ),
+    );
+    gh.singleton<_i1054.XrechnungExportUseCase>(
+      () => _i1054.XrechnungExportUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i20.InvoiceItemGateway>(),
+        gh<_i696.CustomerGateway>(),
+        gh<_i647.BusinessGateway>(),
+      ),
+    );
     gh.singleton<_i282.UpdateUserProfileUseCase>(
       () => _i282.UpdateUserProfileUseCase(
         gh<_i467.UserProfileGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i421.UpdateInvoiceUseCase>(
+      () => _i421.UpdateInvoiceUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i20.InvoiceItemGateway>(),
+        gh<_i647.BusinessGateway>(),
+        gh<_i696.CustomerGateway>(),
+        gh<_i331.InvoiceTemplateGateway>(),
+        gh<_i755.TaxRuleEngine>(),
         gh<_i473.AuditService>(),
       ),
     );
@@ -388,11 +422,158 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i783.UserGuidanceProgressGateway>(),
       ),
     );
+    gh.singleton<_i344.GetInvoiceUseCase>(
+      () => _i344.GetInvoiceUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i20.InvoiceItemGateway>(),
+      ),
+    );
+    gh.singleton<_i748.UpdateBusinessUseCase>(
+      () => _i748.UpdateBusinessUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i647.BusinessGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i108.DeleteTransactionUseCase>(
+      () => _i108.DeleteTransactionUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i1065.TransactionGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i238.GetInvoiceTemplateUseCase>(
+      () => _i238.GetInvoiceTemplateUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i331.InvoiceTemplateGateway>(),
+      ),
+    );
+    gh.singleton<_i558.ListInvoiceTemplatesUseCase>(
+      () => _i558.ListInvoiceTemplatesUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i331.InvoiceTemplateGateway>(),
+      ),
+    );
+    gh.singleton<_i1027.DeleteTimeEntryUseCase>(
+      () => _i1027.DeleteTimeEntryUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i417.TimeEntryGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i6.CancelInvoiceUseCase>(
+      () => _i6.CancelInvoiceUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i162.CancelRecurringScheduleUseCase>(
+      () => _i162.CancelRecurringScheduleUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i185.CreateRecurringScheduleUseCase>(
+      () => _i185.CreateRecurringScheduleUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i439.DeleteInvoiceUseCase>(
+      () => _i439.DeleteInvoiceUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i706.MarkInvoiceSentUseCase>(
+      () => _i706.MarkInvoiceSentUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i521.UpdateRecurringScheduleUseCase>(
+      () => _i521.UpdateRecurringScheduleUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i562.SendPaymentReminderUseCase>(
+      () => _i562.SendPaymentReminderUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i696.CustomerGateway>(),
+        gh<_i647.BusinessGateway>(),
+        gh<_i788.ReminderGateway>(),
+        gh<_i1069.MailService>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i795.CreateCustomerUseCase>(
+      () => _i795.CreateCustomerUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i696.CustomerGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i472.UpdateCustomerUseCase>(
+      () => _i472.UpdateCustomerUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i696.CustomerGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i674.ListRemindersUseCase>(
+      () => _i674.ListRemindersUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i788.ReminderGateway>(),
+      ),
+    );
+    gh.singleton<_i388.GetTimeReportUseCase>(
+      () => _i388.GetTimeReportUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i417.TimeEntryGateway>(),
+        gh<_i974.ProjectGateway>(),
+        gh<_i18.TaskGateway>(),
+        gh<_i141.BusinessSettingsGateway>(),
+      ),
+    );
     gh.singleton<_i311.GetMyIdentityUseCase>(
       () => _i311.GetMyIdentityUseCase(
         gh<_i62.AdminRoleResolver>(),
         gh<_i688.MembershipGateway>(),
         gh<_i647.BusinessGateway>(),
+      ),
+    );
+    gh.singleton<_i661.ExportTransactionsUseCase>(
+      () => _i661.ExportTransactionsUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i1065.TransactionGateway>(),
+      ),
+    );
+    gh.singleton<_i872.GetTransactionUseCase>(
+      () => _i872.GetTransactionUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i1065.TransactionGateway>(),
+      ),
+    );
+    gh.singleton<_i91.ListTransactionsUseCase>(
+      () => _i91.ListTransactionsUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i1065.TransactionGateway>(),
+      ),
+    );
+    gh.singleton<_i151.ProfitLossUseCase>(
+      () => _i151.ProfitLossUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i1065.TransactionGateway>(),
       ),
     );
     gh.singleton<_i556.ProcessRecurringInvoicesUseCase>(
@@ -406,10 +587,87 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
+    gh.singleton<_i197.RecordPaymentUseCase>(
+      () => _i197.RecordPaymentUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i1025.PaymentRecordGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i747.GetTimeEntryUseCase>(
+      () => _i747.GetTimeEntryUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i417.TimeEntryGateway>(),
+      ),
+    );
+    gh.singleton<_i196.ListTimeEntriesUseCase>(
+      () => _i196.ListTimeEntriesUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i417.TimeEntryGateway>(),
+      ),
+    );
+    gh.singleton<_i308.ExportInvoicesUseCase>(
+      () => _i308.ExportInvoicesUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i20.InvoiceItemGateway>(),
+        gh<_i696.CustomerGateway>(),
+      ),
+    );
+    gh.singleton<_i756.StopTimerUseCase>(
+      () => _i756.StopTimerUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i417.TimeEntryGateway>(),
+        gh<_i141.BusinessSettingsGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
     gh.singleton<_i260.AdminDirectoryGateway>(
       () => _i581.ServerpodAdminDirectoryGateway(
         gh<_i467.UserProfileGateway>(),
         gh<_i62.AdminRoleResolver>(),
+      ),
+    );
+    gh.singleton<_i640.CreateTaskUseCase>(
+      () => _i640.CreateTaskUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i974.ProjectGateway>(),
+        gh<_i18.TaskGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i799.GetDashboardSummaryUseCase>(
+      () => _i799.GetDashboardSummaryUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i141.BusinessSettingsGateway>(),
+        gh<_i1065.TransactionGateway>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i1025.PaymentRecordGateway>(),
+        gh<_i696.CustomerGateway>(),
+        gh<_i417.TimeEntryGateway>(),
+        gh<_i974.ProjectGateway>(),
+        gh<_i18.TaskGateway>(),
+      ),
+    );
+    gh.singleton<_i236.GetPaymentStatusUseCase>(
+      () => _i236.GetPaymentStatusUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i1025.PaymentRecordGateway>(),
+      ),
+    );
+    gh.singleton<_i910.GetBusinessUseCase>(
+      () => _i910.GetBusinessUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i647.BusinessGateway>(),
+      ),
+    );
+    gh.singleton<_i130.UpdateBusinessSettingsUseCase>(
+      () => _i130.UpdateBusinessSettingsUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i141.BusinessSettingsGateway>(),
+        gh<_i473.AuditService>(),
       ),
     );
     gh.singleton<_i172.ListAdminInvoicesUseCase>(
@@ -418,11 +676,54 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i172.GetAdminInvoiceUseCase>(
       () => _i172.GetAdminInvoiceUseCase(gh<_i852.AdminInvoiceGateway>()),
     );
+    gh.singleton<_i227.ListProjectsUseCase>(
+      () => _i227.ListProjectsUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i974.ProjectGateway>(),
+      ),
+    );
     gh.singleton<_i172.GetUserDossierUseCase>(
       () => _i172.GetUserDossierUseCase(gh<_i260.AdminDirectoryGateway>()),
     );
     gh.singleton<_i402.SearchAdminUsersUseCase>(
       () => _i402.SearchAdminUsersUseCase(gh<_i260.AdminDirectoryGateway>()),
+    );
+    gh.singleton<_i131.UploadDocumentUseCase>(
+      () => _i131.UploadDocumentUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i643.DocumentGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i873.GetProjectUseCase>(
+      () => _i873.GetProjectUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i974.ProjectGateway>(),
+        gh<_i18.TaskGateway>(),
+      ),
+    );
+    gh.singleton<_i137.ListTasksUseCase>(
+      () => _i137.ListTasksUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i974.ProjectGateway>(),
+        gh<_i18.TaskGateway>(),
+      ),
+    );
+    gh.singleton<_i1032.CreateInvoiceTemplateUseCase>(
+      () => _i1032.CreateInvoiceTemplateUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i331.InvoiceTemplateGateway>(),
+        gh<_i643.DocumentGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i833.UpdateInvoiceTemplateUseCase>(
+      () => _i833.UpdateInvoiceTemplateUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i331.InvoiceTemplateGateway>(),
+        gh<_i643.DocumentGateway>(),
+        gh<_i473.AuditService>(),
+      ),
     );
     gh.singleton<_i230.VerifyUserEmailUseCase>(
       () => _i230.VerifyUserEmailUseCase(
@@ -440,6 +741,13 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i716.InvoiceCreationQuotaGuard(
         gh<_i517.InvoiceGateway>(),
         gh<_i615.InvoiceQuotaPolicy>(),
+      ),
+    );
+    gh.singleton<_i401.DeleteProjectUseCase>(
+      () => _i401.DeleteProjectUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i974.ProjectGateway>(),
+        gh<_i473.AuditService>(),
       ),
     );
     gh.singleton<_i1059.CreateBusinessUseCase>(
@@ -483,14 +791,47 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
+    gh.singleton<_i789.UpdateTaskUseCase>(
+      () => _i789.UpdateTaskUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i18.TaskGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i315.CreateProjectUseCase>(
+      () => _i315.CreateProjectUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i974.ProjectGateway>(),
+        gh<_i696.CustomerGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
+    gh.singleton<_i98.UpdateProjectUseCase>(
+      () => _i98.UpdateProjectUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i974.ProjectGateway>(),
+        gh<_i696.CustomerGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
     gh.singleton<_i394.TransactionReferenceValidator>(
       () => _i394.TransactionReferenceValidator(
         gh<_i643.DocumentGateway>(),
         gh<_i517.InvoiceGateway>(),
       ),
     );
-    gh.singleton<_i343.TenantResolver>(
-      () => _i707.ServerpodTenantResolver(gh<_i688.MembershipGateway>()),
+    gh.singleton<_i425.GenerateInvoicePdfUseCase>(
+      () => _i425.GenerateInvoicePdfUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i20.InvoiceItemGateway>(),
+        gh<_i696.CustomerGateway>(),
+        gh<_i647.BusinessGateway>(),
+        gh<_i331.InvoiceTemplateGateway>(),
+        gh<_i643.DocumentGateway>(),
+        gh<_i668.InvoicePdfGenerator>(),
+        gh<_i473.AuditService>(),
+      ),
     );
     gh.singleton<_i893.GetAdminStatsUseCase>(
       () => _i893.GetAdminStatsUseCase(gh<_i690.AdminStatsGateway>()),
@@ -613,8 +954,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
-    gh.singleton<_i196.CreateTransactionUseCase>(
-      () => _i196.CreateTransactionUseCase(
+    gh.singleton<_i198.CreateTransactionUseCase>(
+      () => _i198.CreateTransactionUseCase(
         gh<_i343.TenantResolver>(),
         gh<_i1065.TransactionGateway>(),
         gh<_i394.TransactionReferenceValidator>(),
@@ -626,109 +967,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i343.TenantResolver>(),
         gh<_i1065.TransactionGateway>(),
         gh<_i394.TransactionReferenceValidator>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i1054.XrechnungExportUseCase>(
-      () => _i1054.XrechnungExportUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i20.InvoiceItemGateway>(),
-        gh<_i696.CustomerGateway>(),
-        gh<_i647.BusinessGateway>(),
-      ),
-    );
-    gh.singleton<_i421.UpdateInvoiceUseCase>(
-      () => _i421.UpdateInvoiceUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i20.InvoiceItemGateway>(),
-        gh<_i647.BusinessGateway>(),
-        gh<_i696.CustomerGateway>(),
-        gh<_i331.InvoiceTemplateGateway>(),
-        gh<_i755.TaxRuleEngine>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i344.GetInvoiceUseCase>(
-      () => _i344.GetInvoiceUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i20.InvoiceItemGateway>(),
-      ),
-    );
-    gh.singleton<_i748.UpdateBusinessUseCase>(
-      () => _i748.UpdateBusinessUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i647.BusinessGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i108.DeleteTransactionUseCase>(
-      () => _i108.DeleteTransactionUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i1065.TransactionGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i238.GetInvoiceTemplateUseCase>(
-      () => _i238.GetInvoiceTemplateUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i331.InvoiceTemplateGateway>(),
-      ),
-    );
-    gh.singleton<_i558.ListInvoiceTemplatesUseCase>(
-      () => _i558.ListInvoiceTemplatesUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i331.InvoiceTemplateGateway>(),
-      ),
-    );
-    gh.singleton<_i1027.DeleteTimeEntryUseCase>(
-      () => _i1027.DeleteTimeEntryUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i417.TimeEntryGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i6.CancelInvoiceUseCase>(
-      () => _i6.CancelInvoiceUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i162.CancelRecurringScheduleUseCase>(
-      () => _i162.CancelRecurringScheduleUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i185.CreateRecurringScheduleUseCase>(
-      () => _i185.CreateRecurringScheduleUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i439.DeleteInvoiceUseCase>(
-      () => _i439.DeleteInvoiceUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i706.MarkInvoiceSentUseCase>(
-      () => _i706.MarkInvoiceSentUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i521.UpdateRecurringScheduleUseCase>(
-      () => _i521.UpdateRecurringScheduleUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
         gh<_i473.AuditService>(),
       ),
     );
@@ -746,115 +984,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
-    gh.singleton<_i562.SendPaymentReminderUseCase>(
-      () => _i562.SendPaymentReminderUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i696.CustomerGateway>(),
-        gh<_i647.BusinessGateway>(),
-        gh<_i788.ReminderGateway>(),
-        gh<_i1069.MailService>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i795.CreateCustomerUseCase>(
-      () => _i795.CreateCustomerUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i696.CustomerGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i472.UpdateCustomerUseCase>(
-      () => _i472.UpdateCustomerUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i696.CustomerGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i674.ListRemindersUseCase>(
-      () => _i674.ListRemindersUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i788.ReminderGateway>(),
-      ),
-    );
-    gh.singleton<_i388.GetTimeReportUseCase>(
-      () => _i388.GetTimeReportUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i417.TimeEntryGateway>(),
-        gh<_i974.ProjectGateway>(),
-        gh<_i18.TaskGateway>(),
-        gh<_i141.BusinessSettingsGateway>(),
-      ),
-    );
-    gh.singleton<_i661.ExportTransactionsUseCase>(
-      () => _i661.ExportTransactionsUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i1065.TransactionGateway>(),
-      ),
-    );
-    gh.singleton<_i872.GetTransactionUseCase>(
-      () => _i872.GetTransactionUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i1065.TransactionGateway>(),
-      ),
-    );
-    gh.singleton<_i91.ListTransactionsUseCase>(
-      () => _i91.ListTransactionsUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i1065.TransactionGateway>(),
-      ),
-    );
-    gh.singleton<_i151.ProfitLossUseCase>(
-      () => _i151.ProfitLossUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i1065.TransactionGateway>(),
-      ),
-    );
-    gh.singleton<_i197.RecordPaymentUseCase>(
-      () => _i197.RecordPaymentUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i1025.PaymentRecordGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i747.GetTimeEntryUseCase>(
-      () => _i747.GetTimeEntryUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i417.TimeEntryGateway>(),
-      ),
-    );
-    gh.singleton<_i198.ListTimeEntriesUseCase>(
-      () => _i198.ListTimeEntriesUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i417.TimeEntryGateway>(),
-      ),
-    );
-    gh.singleton<_i308.ExportInvoicesUseCase>(
-      () => _i308.ExportInvoicesUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i20.InvoiceItemGateway>(),
-        gh<_i696.CustomerGateway>(),
-      ),
-    );
-    gh.singleton<_i756.StopTimerUseCase>(
-      () => _i756.StopTimerUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i417.TimeEntryGateway>(),
-        gh<_i141.BusinessSettingsGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i640.CreateTaskUseCase>(
-      () => _i640.CreateTaskUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i974.ProjectGateway>(),
-        gh<_i18.TaskGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
     gh.singleton<_i3.CreateCreditNoteUseCase>(
       () => _i3.CreateCreditNoteUseCase(
         gh<_i343.TenantResolver>(),
@@ -864,39 +993,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i988.InvoiceNumberService>(),
         gh<_i473.AuditService>(),
         gh<_i716.InvoiceCreationQuotaGuard>(),
-      ),
-    );
-    gh.singleton<_i799.GetDashboardSummaryUseCase>(
-      () => _i799.GetDashboardSummaryUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i141.BusinessSettingsGateway>(),
-        gh<_i1065.TransactionGateway>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i1025.PaymentRecordGateway>(),
-        gh<_i696.CustomerGateway>(),
-        gh<_i417.TimeEntryGateway>(),
-        gh<_i974.ProjectGateway>(),
-        gh<_i18.TaskGateway>(),
-      ),
-    );
-    gh.singleton<_i236.GetPaymentStatusUseCase>(
-      () => _i236.GetPaymentStatusUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i1025.PaymentRecordGateway>(),
-      ),
-    );
-    gh.singleton<_i910.GetBusinessUseCase>(
-      () => _i910.GetBusinessUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i647.BusinessGateway>(),
-      ),
-    );
-    gh.singleton<_i130.UpdateBusinessSettingsUseCase>(
-      () => _i130.UpdateBusinessSettingsUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i141.BusinessSettingsGateway>(),
-        gh<_i473.AuditService>(),
       ),
     );
     gh.singleton<_i1013.CreateInvoiceUseCase>(
@@ -914,49 +1010,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i716.InvoiceCreationQuotaGuard>(),
       ),
     );
-    gh.singleton<_i227.ListProjectsUseCase>(
-      () => _i227.ListProjectsUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i974.ProjectGateway>(),
-      ),
-    );
-    gh.singleton<_i131.UploadDocumentUseCase>(
-      () => _i131.UploadDocumentUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i643.DocumentGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i873.GetProjectUseCase>(
-      () => _i873.GetProjectUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i974.ProjectGateway>(),
-        gh<_i18.TaskGateway>(),
-      ),
-    );
-    gh.singleton<_i137.ListTasksUseCase>(
-      () => _i137.ListTasksUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i974.ProjectGateway>(),
-        gh<_i18.TaskGateway>(),
-      ),
-    );
-    gh.singleton<_i1032.CreateInvoiceTemplateUseCase>(
-      () => _i1032.CreateInvoiceTemplateUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i331.InvoiceTemplateGateway>(),
-        gh<_i643.DocumentGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i833.UpdateInvoiceTemplateUseCase>(
-      () => _i833.UpdateInvoiceTemplateUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i331.InvoiceTemplateGateway>(),
-        gh<_i643.DocumentGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
     gh.singleton<_i950.CreateTimeEntriesInvoiceUseCase>(
       () => _i950.CreateTimeEntriesInvoiceUseCase(
         gh<_i343.TenantResolver>(),
@@ -970,54 +1023,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i1004.DownloadDocumentUseCase>(
       () => _i1004.DownloadDocumentUseCase(gh<_i166.GetDocumentUseCase>()),
     );
-    gh.singleton<_i401.DeleteProjectUseCase>(
-      () => _i401.DeleteProjectUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i974.ProjectGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
     gh.singleton<_i877.DeleteDocumentUseCase>(
       () => _i877.DeleteDocumentUseCase(
         gh<_i343.TenantResolver>(),
         gh<_i166.GetDocumentUseCase>(),
         gh<_i643.DocumentGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i789.UpdateTaskUseCase>(
-      () => _i789.UpdateTaskUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i18.TaskGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i315.CreateProjectUseCase>(
-      () => _i315.CreateProjectUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i974.ProjectGateway>(),
-        gh<_i696.CustomerGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i98.UpdateProjectUseCase>(
-      () => _i98.UpdateProjectUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i974.ProjectGateway>(),
-        gh<_i696.CustomerGateway>(),
-        gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i425.GenerateInvoicePdfUseCase>(
-      () => _i425.GenerateInvoicePdfUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i20.InvoiceItemGateway>(),
-        gh<_i696.CustomerGateway>(),
-        gh<_i647.BusinessGateway>(),
-        gh<_i331.InvoiceTemplateGateway>(),
-        gh<_i643.DocumentGateway>(),
-        gh<_i668.InvoicePdfGenerator>(),
         gh<_i473.AuditService>(),
       ),
     );
