@@ -253,6 +253,8 @@ import '../entitlement/entitlement_provider.dart' as _i664;
 import '../entitlement/invoice_quota_policy.dart' as _i615;
 import '../events/event_bus.dart' as _i557;
 import '../events/message_central_event_bus.dart' as _i991;
+import '../i18n/locale_message_catalog.dart' as _i550;
+import '../i18n/message_catalog.dart' as _i221;
 import '../mail/mail_service.dart' as _i1069;
 import '../sequence/data/serverpod_sequence_gateway.dart' as _i445;
 import '../sequence/domain/sequence_gateway.dart' as _i559;
@@ -305,6 +307,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i696.CustomerGateway>(() => _i356.ServerpodCustomerGateway());
     gh.singleton<_i1025.PaymentRecordGateway>(
       () => _i438.ServerpodPaymentRecordGateway(),
+    );
+    gh.singleton<_i221.MessageCatalog>(
+      () => const _i550.LocaleMessageCatalog(),
     );
     gh.singleton<_i18.TaskGateway>(() => _i810.ServerpodTaskGateway());
     gh.singleton<_i331.InvoiceTemplateGateway>(
