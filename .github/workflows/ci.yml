@@ -135,7 +135,13 @@ jobs:
       MODULE_ENDPOINT_ALLOWLIST: commercial waitlist
       # Exact Serverpod CLI version pinned by the workspace; the guard must
       # regenerate with the same code generator that produced the artifacts.
-      SERVERPOD_VERSION: 4.0.3
+      #
+      # This is deliberately NOT a literal. It used to be `SERVERPOD_VERSION:
+      # 4.0.3` hardcoded here, which is precisely how the train drifted: the
+      # packages were bumped three times and this line was forgotten, so the
+      # guard regenerated with a CLI that no longer matched the packages (see
+      # #73). It is now derived from pubspec.lock in the "Install Serverpod
+      # CLI" step below, which cannot drift from what pub resolved.
 
     steps:
       - name: Checkout
@@ -230,8 +236,26 @@ jobs:
       # byte for byte. This catches hand-edited generated files and drift
       # against the stub packages (the class of bug that let merge-conflict
       # markers into `client.dart` once before).
+      #
+      # The CLI version is read from pubspec.lock -- the version pub actually
+      # resolved -- rather than from a literal or from the pubspec constraint.
+      # The constraint is a caret range, and activating the CLI with a range
+      # would install whatever the newest 4.x was at run time, so a newer CLI
+      # could emit artifacts the committed ones do not match. `dart pub get`
+      # has already run above, so the lockfile is current.
       - name: Install Serverpod CLI
-        run: dart pub global activate serverpod_cli "$SERVERPOD_VERSION"
+        run: |
+          version="$(awk '
+            /^  serverpod:$/ { hit = 1; next }
+            hit && /^    version:/ { gsub(/"/, "", $2); print $2; exit }
+            hit && /^  [a-zA-Z_]/ { exit }
+          ' pubspec.lock)"
+          if [ -z "$version" ]; then
+            echo "::error::could not read the resolved serverpod version from pubspec.lock"
+            exit 1
+          fi
+          echo "Activating serverpod_cli $version (resolved from pubspec.lock)"
+          dart pub global activate serverpod_cli "$version"
 
       - name: Verify generated artifacts are up to date
         run: |
