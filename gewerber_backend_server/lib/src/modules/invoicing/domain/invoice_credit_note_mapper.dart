@@ -32,6 +32,9 @@ class InvoiceCreditNoteMapper {
       customerId: original.customerId,
       originalInvoiceId: originalId,
       issueDate: issueDate,
+      // A credit note has no payment obligation of its own, so BR-CO-25 is
+      // satisfied for it by BT-20 payment terms rather than a due date: the
+      // original's terms are carried over (see `paymentTermsDays` below).
       dueDate: null,
       serviceDateFrom: original.serviceDateFrom,
       serviceDateTo: original.serviceDateTo,
@@ -40,7 +43,7 @@ class InvoiceCreditNoteMapper {
       subtotalCents: -original.subtotalCents,
       vatTotalCents: -original.vatTotalCents,
       totalCents: -original.totalCents,
-      paymentTermsDays: 0,
+      paymentTermsDays: original.paymentTermsDays,
       notes: notes == null || notes.isEmpty ? null : notes,
       templateId: original.templateId,
     );

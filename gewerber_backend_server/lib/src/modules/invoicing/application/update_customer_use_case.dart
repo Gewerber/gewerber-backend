@@ -46,6 +46,7 @@ class UpdateCustomerUseCase {
         name: request.name.trim(),
         companyName: request.companyName,
         vatId: request.vatId,
+        buyerReference: request.buyerReference,
         email: request.email,
         phone: request.phone,
         address: request.address,

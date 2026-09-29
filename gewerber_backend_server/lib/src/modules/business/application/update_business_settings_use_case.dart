@@ -40,6 +40,9 @@ class UpdateBusinessSettingsUseCase {
       invoiceNumberMinDigits: request.invoiceNumberMinDigits,
       roundingMode: request.roundingMode,
       roundingGranularityMinutes: request.roundingGranularityMinutes,
+      iban: request.iban,
+      bic: request.bic,
+      accountHolder: request.accountHolder,
       updatedAt: DateTime.now().toUtc(),
     );
     final saved = existing == null
