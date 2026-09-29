@@ -280,3 +280,63 @@ jobs:
             echo '::error::generated protocol/endpoints are out of sync with the models and the resolved module. Run `serverpod generate` and commit the result.'
             exit 1
           fi
+
+  # XRechnung / EN 16931 spec conformance.
+  #
+  # The unit tests assert the serializer against *its own* expectations, which
+  # catches regressions but not spec violations. This job runs the committed
+  # fixtures through the official KoSIT validator with the official
+  # XRechnung 3.0.2 configuration, which is the only thing that can back the
+  # "valid XRechnung" claim (see #76).
+  #
+  # It is deliberately independent of the Dart/Postgres jobs: it needs neither
+  # the Dart toolchain nor a database, because it validates the *committed*
+  # fixtures. The fixtures themselves are pinned byte-for-byte by the golden
+  # test in the `test` job, so the two together mean "the committed output is
+  # unchanged AND unchanged output passes the official validator".
+  #
+  # No repository secrets are required: both artifacts are public downloads
+  # pinned by sha256 inside tool/validate_xrechnung.sh, which fails closed on a
+  # hash mismatch rather than validating an unverified artifact.
+  xrechnung-validation:
+    name: XRechnung / EN 16931 validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      # Persisted across runs by actions/cache below; the script verifies the
+      # pinned sha256 on every run, not only on download.
+      XR_VALIDATOR_CACHE: ${{ github.workspace }}/.xrechnung-validator-cache
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      # The validator jar (10 MB) and the XRechnung configuration zip are
+      # immutable, versioned artifacts; caching them keeps the job off Maven
+      # Central / the GitHub release CDN on every run.
+      - name: Cache KoSIT validator artifacts
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.XR_VALIDATOR_CACHE }}
+          key: kosit-validator-1.6.3-xrechnung-3.0.2-v2026-08-31
+
+      - name: Validate XRechnung fixtures
+        run: bash gewerber_backend_server/tool/validate_xrechnung.sh
+
+      # Keep the full reports when the job fails: the script prints the failing
+      # rule ids and messages to the log, but the report XML carries the line
+      # numbers and the document context needed to fix a new violation.
+      - name: Upload validation reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xrechnung-validation-reports
+          path: ${{ env.XR_VALIDATOR_CACHE }}/reports
+          if-no-files-found: ignore

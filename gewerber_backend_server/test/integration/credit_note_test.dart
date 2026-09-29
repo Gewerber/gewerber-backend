@@ -29,9 +29,21 @@ void main() {
       sessionB = sessionBuilder.copyWith(
         authentication: AuthenticationOverride.authenticationInfo(userBId, {}),
       );
+      // Business A carries the XRechnung-mandatory seller data (BT-34 e-mail,
+      // BG-6 contact, BR-8/BR-9 seller address) so the export gate accepts it.
       final businessA = await endpoints.business.create(
         sessionA,
-        CreateBusinessRequest(name: 'Gewerbe A'),
+        CreateBusinessRequest(
+          name: 'Gewerbe A',
+          email: 'kontakt@example.test',
+          phone: '+49 30 1234567',
+          address: Address(
+            street: 'Hauptstr. 1',
+            zip: '10115',
+            city: 'Berlin',
+            country: Country.deu,
+          ),
+        ),
       );
       businessAId = businessA.id!;
       final businessB = await endpoints.business.create(
@@ -48,6 +60,38 @@ void main() {
         businessId: businessAId,
       );
       customerAId = customer.id!;
+      // BT-10 (`buyerReference`, required by BR-DE-15 for the export gate) is
+      // not a field on `CreateCustomerRequest`, so it is set through the
+      // update endpoint with the request's other mandatory fields echoed.
+      await endpoints.customer.update(
+        sessionA,
+        UpdateCustomerRequest(
+          customerId: customerAId,
+          status: CustomerStatus.active,
+          name: 'Kunde A',
+          email: 'kunde-a@example.test',
+          buyerReference: '04011000-12345-34',
+        ),
+        businessId: businessAId,
+      );
+      // BG-16 payment account for the export gate (BR-DE-1): this creates the
+      // business-settings row for business A with an IBAN. Every other field
+      // mirrors the model defaults, so numbering, payment terms and rounding
+      // behave exactly as with a missing settings row.
+      await endpoints.businessSettings.update(
+        sessionA,
+        UpdateBusinessSettingsRequest(
+          businessId: businessAId,
+          paymentTermsDays: 14,
+          iban: 'DE02120300000000202051',
+          bic: 'BYLADEM1001',
+          accountHolder: 'Gewerbe A',
+          invoiceNumberIncludeYear: true,
+          invoiceNumberMinDigits: 4,
+          roundingMode: RoundingMode.none,
+          roundingGranularityMinutes: 1,
+        ),
+      );
     });
 
     List<InvoiceItemRequest> mixedItems() => [
@@ -126,7 +170,9 @@ void main() {
         expect(credit.vatTotalCents, -original.vatTotalCents);
         expect(credit.totalCents, -original.totalCents);
         expect(credit.dueDate, isNull);
-        expect(credit.paymentTermsDays, 0);
+        // Inherited from the original: a credit note has no payment
+        // obligation of its own, so BR-CO-25 is satisfied by payment terms.
+        expect(credit.paymentTermsDays, original.paymentTermsDays);
         expect(credit.notes, 'Falsch');
 
         final items = await endpoints.invoice.getItems(
@@ -434,6 +480,10 @@ void main() {
           businessId: businessAId,
         );
 
+        // No due-date seeding is needed: the credit note carries the
+        // original's payment terms (`paymentTermsDays`), which satisfies
+        // BR-CO-25 for a document that has no payment obligation of its own.
+
         final xml = await endpoints.invoice.exportXrechnung(
           sessionA,
           credit.id!,
@@ -442,8 +492,21 @@ void main() {
 
         expect(xml, contains('<ram:TypeCode>381</ram:TypeCode>'));
         expect(xml, contains('<ram:InvoiceReferencedDocument>'));
-        expect(xml, contains('<ram:ID>${original.number}</ram:ID>'));
-        final grandTotal = (credit.totalCents / 100).toStringAsFixed(2);
+        // The original-invoice reference is emitted as `IssuerAssignedID`
+        // (BT-25): the CII `ReferencedDocumentType` XSD has no `ID` child.
+        expect(
+          xml,
+          contains(
+            '<ram:IssuerAssignedID>${original.number}</ram:IssuerAssignedID>',
+          ),
+        );
+        // Credit notes restate amounts POSITIVELY: Peppol BIS Billing 3.0
+        // §5.6.1 / EN 16931 BR-27 — document type 381 conveys the credit,
+        // and BR-27 forbids a negative line net price, so negative XML would
+        // fail the KoSIT validator. The stored `credit.totalCents` stays
+        // negative; the export shows its absolute value. Do not "fix" this
+        // assertion back to `credit.totalCents`.
+        final grandTotal = (credit.totalCents.abs() / 100).toStringAsFixed(2);
         expect(
           xml,
           contains('<ram:GrandTotalAmount>$grandTotal</ram:GrandTotalAmount>'),

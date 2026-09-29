@@ -63,7 +63,9 @@ void main() {
     expect(credit.subtotalCents, -15000);
     expect(credit.vatTotalCents, -2850);
     expect(credit.totalCents, -17850);
-    expect(credit.paymentTermsDays, 0);
+    // The credit note has no payment obligation of its own, so it inherits
+    // the original's terms (BR-CO-25 is satisfied by BT-20 rather than BT-9).
+    expect(credit.paymentTermsDays, 14);
     expect(credit.dueDate, isNull);
     expect(credit.recurrenceInterval, isNull);
     expect(credit.pdfDocumentId, isNull);

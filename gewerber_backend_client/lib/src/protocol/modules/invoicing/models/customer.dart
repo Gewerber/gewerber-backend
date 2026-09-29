@@ -25,6 +25,7 @@ abstract class Customer
     required this.name,
     this.companyName,
     this.vatId,
+    this.buyerReference,
     this.email,
     this.phone,
     this.address,
@@ -42,6 +43,7 @@ abstract class Customer
     required String name,
     String? companyName,
     String? vatId,
+    String? buyerReference,
     String? email,
     String? phone,
     _iz28txwx.Address? address,
@@ -62,6 +64,7 @@ abstract class Customer
       name: jsonSerialization['name'] as String,
       companyName: jsonSerialization['companyName'] as String?,
       vatId: jsonSerialization['vatId'] as String?,
+      buyerReference: jsonSerialization['buyerReference'] as String?,
       email: jsonSerialization['email'] as String?,
       phone: jsonSerialization['phone'] as String?,
       address: jsonSerialization['address'] == null
@@ -94,6 +97,9 @@ abstract class Customer
 
   String? vatId;
 
+  /// BT-10 "Buyer reference" required by BR-DE-15 in the XRechnung export; buyer-assigned, e.g. Leitweg-ID for public clients.
+  String? buyerReference;
+
   String? email;
 
   String? phone;
@@ -116,6 +122,7 @@ abstract class Customer
     String? name,
     String? companyName,
     String? vatId,
+    String? buyerReference,
     String? email,
     String? phone,
     _iz28txwx.Address? address,
@@ -133,6 +140,7 @@ abstract class Customer
       'name': name,
       if (companyName != null) 'companyName': companyName,
       if (vatId != null) 'vatId': vatId,
+      if (buyerReference != null) 'buyerReference': buyerReference,
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address?.toJson(),
@@ -152,6 +160,7 @@ abstract class Customer
       'name': name,
       if (companyName != null) 'companyName': companyName,
       if (vatId != null) 'vatId': vatId,
+      if (buyerReference != null) 'buyerReference': buyerReference,
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address?.toJsonForProtocol(),
@@ -177,6 +186,7 @@ class _CustomerImpl extends Customer {
     required String name,
     String? companyName,
     String? vatId,
+    String? buyerReference,
     String? email,
     String? phone,
     _iz28txwx.Address? address,
@@ -190,6 +200,7 @@ class _CustomerImpl extends Customer {
          name: name,
          companyName: companyName,
          vatId: vatId,
+         buyerReference: buyerReference,
          email: email,
          phone: phone,
          address: address,
@@ -209,6 +220,7 @@ class _CustomerImpl extends Customer {
     String? name,
     Object? companyName = _Undefined,
     Object? vatId = _Undefined,
+    Object? buyerReference = _Undefined,
     Object? email = _Undefined,
     Object? phone = _Undefined,
     Object? address = _Undefined,
@@ -223,6 +235,9 @@ class _CustomerImpl extends Customer {
       name: name ?? this.name,
       companyName: companyName is String? ? companyName : this.companyName,
       vatId: vatId is String? ? vatId : this.vatId,
+      buyerReference: buyerReference is String?
+          ? buyerReference
+          : this.buyerReference,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
       address: address is _iz28txwx.Address?

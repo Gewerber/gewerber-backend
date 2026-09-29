@@ -3,6 +3,12 @@ table: business_settings
 fields:
   businessId: int, relation(parent=business, onDelete=Cascade)
   paymentTermsDays: int, default=14
+  ### Payment instructions (BG-16) for the XRechnung export: BT-84 IBAN,
+  ### BT-86 BIC, BT-85 account holder. Nullable because these columns are
+  ### added to an existing table.
+  iban: String?
+  bic: String?
+  accountHolder: String?
   invoiceNumberPrefix: String?
   invoiceNumberIncludeYear: bool, default=true
   invoiceNumberMinDigits: int, default=4
