@@ -13,6 +13,7 @@ import '../../../generated/protocol.dart';
 import '../domain/invoice_pdf_generator.dart';
 import '../domain/money_formatter.dart';
 import '../domain/tax_rule_engine.dart';
+import 'invoice_pdf_font.dart';
 
 /// Renders an invoice PDF whose labels follow the invoice's own locale.
 ///
@@ -27,11 +28,16 @@ import '../domain/tax_rule_engine.dart';
 ///
 /// ## Font
 ///
-/// Uses the built-in Helvetica font (WinAnsi encoding), which covers Latin-1
-/// plus the euro sign — enough for the German and English catalogs — without
-/// embedding external font files. WinAnsi has **no Cyrillic coverage**, so
-/// `ru` and `tr` cannot be rendered with this font at all. They are blocked
-/// rather than silently mangled: see [_assertRenderable].
+/// The built-in Helvetica fonts (WinAnsi encoding, U+0000–U+00FF only) stay
+/// the base fonts, so existing Latin text keeps its current appearance and
+/// metrics. A vendored Roboto (Apache-2.0, `assets/fonts/Roboto-Regular.ttf`)
+/// is registered as a Unicode `fontFallback` in the document theme: glyphs
+/// outside WinAnsi — the euro sign `€` (U+20AC), the en dash `–` (U+2013),
+/// Cyrillic and Turkish — are drawn from Roboto per glyph instead of failing
+/// (issue #70). The path can be overridden with the
+/// `GEWERBER_INVOICE_FONT_PATH` environment variable. When the font cannot be
+/// loaded the document is built without a theme, reproducing the old
+/// Helvetica-only behaviour on a misconfigured deployment.
 ///
 /// ## Legal wording
 ///
@@ -48,16 +54,18 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
 
   static const _baseStyleFontSize = 9.0;
 
-  /// Locales the built-in WinAnsi font cannot render.
-  static const _unsupportedFontLocales = <Locale>{
-    Locale.ru,
-    Locale.tr,
-  };
+  /// The vendored Unicode fallback font, read from disk at most once.
+  ///
+  /// [InvoicePdfFont.load] never throws and returns `null` when the font file
+  /// is missing or unreadable; [_unicodeFallbackLoaded] makes `null` a
+  /// permanent outcome for this generator instead of re-reading the file (and
+  /// re-warning on `stderr`) for every invoice.
+  pw.Font? _unicodeFallback;
+  bool _unicodeFallbackLoaded = false;
 
   @override
   Future<Uint8List> generate(InvoicePdfData data) async {
     final locale = _localeOf(data);
-    _assertRenderable(locale);
     final documentLabel = _documentLabel(data, locale);
 
     final document = pw.Document(
@@ -65,6 +73,10 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
       title: '$documentLabel ${data.invoice.number}',
       subject: '$documentLabel ${data.invoice.number}',
       creator: 'Gewerber',
+      // `null` when the fallback font is unavailable: the document is then
+      // built with the pdf package's default theme, exactly as before the
+      // fallback was wired in.
+      theme: _themeWithFontFallback(),
     );
 
     document.addPage(
@@ -103,6 +115,12 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
   /// generator produced for every user before issue #57. Gating on
   /// `translatedLocales` rather than on the enum is what keeps this a no-op
   /// instead of a new failure for those two locales.
+  ///
+  /// Since issue #70 the font is no longer a constraint: the Unicode fallback
+  /// registered by [_themeWithFontFallback] is glyph-renderable for Cyrillic
+  /// and Turkish, so `ru` and `tr` can render as soon as issue #57 adds their
+  /// message catalogs; until then they keep rendering German through the
+  /// fallback locale.
   Locale _localeOf(InvoicePdfData data) {
     final resolved = LocaleResolver.forInvoice(
       invoice: data.invoice.locale,
@@ -113,20 +131,30 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
         : fallbackLocale;
   }
 
-  /// Fails loudly rather than emitting a PDF full of replacement glyphs.
+  /// The document theme: built-in Helvetica plus a per-glyph Unicode fallback.
   ///
-  /// Dormant today: [translatedLocales] only holds `de` and `en`, both of which
-  /// the built-in font covers. It exists so that the day someone adds a `ru`
-  /// or `tr` catalog, the failure is an explicit error at generation time
-  /// instead of a document full of mojibake that a customer receives.
-  void _assertRenderable(Locale locale) {
-    if (_unsupportedFontLocales.contains(locale)) {
-      throw UnsupportedError(
-        'The invoice PDF uses the built-in WinAnsi font, which cannot render '
-        '"$locale". Embed a Unicode TTF before adding that locale to the '
-        'message catalog.',
-      );
+  /// Returns `null` — leaving the pdf package's default Helvetica-only theme
+  /// in effect — when [InvoicePdfFont] cannot be loaded, so a misconfigured
+  /// deployment keeps generating invoices exactly as before issue #70 instead
+  /// of failing. Otherwise the vendored Roboto is registered as
+  /// `fontFallback` only: `base` stays unset, so all existing Latin text
+  /// keeps its current font, appearance and layout, while `€`, `–` and
+  /// Cyrillic/Turkish glyphs are drawn from Roboto.
+  pw.ThemeData? _themeWithFontFallback() {
+    final font = _unicodeFallbackFont();
+    return font == null ? null : pw.ThemeData.withFont(fontFallback: [font]);
+  }
+
+  /// Loads the fallback font at most once per generator instance.
+  ///
+  /// The production generator is a `@Singleton`, so the font file is read
+  /// from disk a single time per process.
+  pw.Font? _unicodeFallbackFont() {
+    if (!_unicodeFallbackLoaded) {
+      _unicodeFallbackLoaded = true;
+      _unicodeFallback = InvoicePdfFont.load();
     }
+    return _unicodeFallback;
   }
 
   bool _isCreditNote(InvoicePdfData data) =>

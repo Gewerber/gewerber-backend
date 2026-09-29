@@ -70,6 +70,9 @@ COPY --from=build /app/gewerber_backend_server/build/bundle/ ./
 COPY --from=build /app/gewerber_backend_server/config/ config/
 COPY --from=build /app/gewerber_backend_server/web/ web/
 COPY --from=build /app/gewerber_backend_server/migrations/ migrations/
+# Invoice PDF fallback font (issue #70): lands at /app/assets/fonts/Roboto-Regular.ttf,
+# matching the loader's default CWD-relative path (see invoice_pdf_font.dart).
+COPY --from=build /app/gewerber_backend_server/assets/ assets/
 
 # This file is required to enable the endpoint log filter in Insights.
 COPY --from=build /app/gewerber_backend_server/lib/src/generated/protocol.yaml lib/src/generated/protocol.yaml
