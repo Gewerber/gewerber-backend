@@ -76,6 +76,11 @@ COPY --from=build /app/gewerber_backend_server/web/ web/
 COPY --from=build /app/gewerber_backend_server/migrations/ migrations/
 # Invoice PDF fallback font (issue #70): lands at /app/assets/fonts/Roboto-Regular.ttf,
 # matching the loader's default CWD-relative path (see invoice_pdf_font.dart).
+# Because that default is relative to the working directory, changing WORKDIR or
+# mounting a volume over /app hides the file and silently degrades invoice PDFs
+# to the built-in Helvetica, which cannot draw € or –. The path actually resolved
+# (and used) is logged on every successful load (issue #88); set
+# GEWERBER_INVOICE_FONT_PATH to point at an absolute font location instead.
 COPY --from=build /app/gewerber_backend_server/assets/ assets/
 
 # This file is required to enable the endpoint log filter in Insights.
