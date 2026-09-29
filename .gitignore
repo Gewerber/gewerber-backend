@@ -5,15 +5,17 @@
 # Pubspec overrides
 pubspec_overrides.yaml
 
-# Agents
+# Editors and agents
 .dart_skills/
 .agents/
 .claude/
 .gemini/
 .cursor/
-.vscode/mcp.json
 .codex/
 .mcp.json
+# Editor-local settings and launch configs. The dev launch config used to carry
+# a hardcoded database password, so the whole folder stays untracked.
+.vscode/
 
 # Serverpod Cloud CLI
 .scloud/
