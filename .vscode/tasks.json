@@ -7,10 +7,9 @@
       "command": "serverpod",
       "args": ["start"],
       "options": {
-        "cwd": "${workspaceFolder}/gewerber_backend_server",
-        "env": {
-          "SERVERPOD_PASSWORD_database": "QssopZPIRV4EXk6QFAARoezDsmcyjM7Z"
-        }
+        // No SERVERPOD_PASSWORD_database override here: the dev database
+        // password is supplied by the gitignored config/passwords.yaml.
+        "cwd": "${workspaceFolder}/gewerber_backend_server"
       },
       "isBackground": true,
       "presentation": {
