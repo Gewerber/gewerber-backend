@@ -7,16 +7,19 @@
 # Triggers on every PR and on pushes to main/develop. Make this check
 # required in branch protection so merges always pass analyze + tests.
 #
-# No repository secrets are required: the commercial module dependency
-# resolves against the public gewerber-backend-stubs repository. Developers
-# with access to the private module resolve it locally via a gitignored
-# pubspec_overrides.yaml.
+# Repository secrets: `TEST_DATABASE_PASSWORD` is required. It is the
+# password of the disposable PostgreSQL service container below and no
+# longer mirrors the local dev/test passwords from
+# gewerber_backend_server/docker-compose.yaml (those live in the gitignored
+# .env now). Any strong value works; the database is discarded after each
+# run. The commercial module dependency still resolves against the public
+# gewerber-backend-stubs repository. Developers with access to the private
+# module resolve it locally via a gitignored pubspec_overrides.yaml.
 #
 # The test database mirrors gewerber_backend_server/docker-compose.yaml
 # (`postgres_test`) and config/test.yaml: port 9090, user postgres,
-# database gewerber_backend_test. The password is a throwaway test-only
-# credential (identical to the local docker compose setup); it must match
-# the `test.database` entry written into config/passwords.yaml below.
+# database gewerber_backend_test. TEST_DATABASE_PASSWORD must match the
+# `test.database` entry written into config/passwords.yaml below.
 
 name: CI
 
@@ -41,7 +44,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_DB: gewerber_backend_test
-          POSTGRES_PASSWORD: -090vJlpK146u7T0YCGz9xnT6JOxJg4x
+          POSTGRES_PASSWORD: ${{ secrets.TEST_DATABASE_PASSWORD }}
         ports:
           - 9090:5432
         options: >-
@@ -51,7 +54,7 @@ jobs:
           --health-retries 5
 
     env:
-      TEST_DATABASE_PASSWORD: -090vJlpK146u7T0YCGz9xnT6JOxJg4x
+      TEST_DATABASE_PASSWORD: ${{ secrets.TEST_DATABASE_PASSWORD }}
 
     steps:
       - name: Checkout
