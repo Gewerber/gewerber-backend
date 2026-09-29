@@ -1,20 +1,34 @@
 import '../../../generated/protocol.dart';
 
 /// Serializes an invoice (with its line items, the seller [Business] and the
-/// buyer [Customer]) into a minimal XRechnung document.
+/// buyer [Customer]) into an XRechnung 3.0.2 document — the German CIUS of
+/// EN 16931 in CII D16B (`CrossIndustryInvoice`) syntax.
 ///
-/// XRechnung is the German e-invoice profile of the EN 16931 / CII D16B
-/// (`CrossIndustryInvoice`) syntax. This serializer emits a structurally valid
-/// CII document: the guideline context, the exchanged document header, the
-/// seller/buyer trade parties, per-line items and a per-category VAT
-/// breakdown with a self-consistent monetary summation.
+/// "Valid" is concrete here: the emitted document matches the XRechnung
+/// scenario of the official KoSIT validator (1.6.3) against the XRechnung
+/// 3.0.2 validator configuration release `v2026-08-31`
+/// (`itplr-kosit/validator-configuration-xrechnung`), CII scenario
+/// "EN16931 XRechnung (CII)". The committed fixtures under
+/// `test/fixtures/xrechnung/` are run through `tool/validate_xrechnung.sh`
+/// by the `xrechnung-validation` CI job.
+///
+/// Deliberate omissions: no document-level or line-level allowances/charges
+/// are emitted (so `TaxBasisTotalAmount` equals `LineTotalAmount`), and the
+/// payment means is hardcoded to code 58 (SEPA credit transfer) because no
+/// payment-means field exists yet. Mandatory XRechnung fields are enforced
+/// upstream by `XrechnungExportUseCase`, which fails fast listing what is
+/// missing instead of letting an invalid document be emitted.
 ///
 /// Pure function: no session, no I/O — unit-testable in isolation.
 class XrechnungSerializer {
   const XrechnungSerializer();
 
-  /// EN 16931 guideline identifier that marks the document as XRechnung.
-  static const String _guideline = 'urn:cen.eu:en16931:2017';
+  /// XRechnung 3.0.2 CII guideline identifier. The `#compliant#urn:xeinkauf.de:kosit:xrechnung_3.0`
+  /// suffix is mandatory: the `kosit:` infix is what marks the document as
+  /// XRechnung 3.0.2. Without it the document validates as plain EN 16931,
+  /// not as XRechnung.
+  static const String _guideline =
+      'urn:cen.eu:en16931:2017#compliant#urn:xeinkauf.de:kosit:xrechnung_3.0';
 
   /// Maps a closed VAT rate to the EN 16931 category code.
   String _categoryCode(VatRate rate) {
@@ -157,11 +171,15 @@ class XrechnungSerializer {
     };
   }
 
+  /// [settings] supplies the BG-16 payment-account fields (IBAN, BIC,
+  /// account holder) for the seller business; the export use case enforces
+  /// their presence before calling.
   String serialize({
     required Invoice invoice,
     required List<InvoiceItem> items,
     required Business business,
     Customer? customer,
+    BusinessSettings? settings,
     String? originalInvoiceNumber,
   }) {
     final currency = _currencyCode(invoice.currency);
@@ -170,6 +188,17 @@ class XrechnungSerializer {
     // A credit note reverses the original's stored VAT. The business's
     // current §19 status must not reclassify those lines.
     final applyKleinunternehmer = !isCreditNote && business.isKleinunternehmer;
+    // Credit-note signs: credit notes store the signed inverse of the
+    // original's amounts, but Peppol BIS Billing 3.0 §5.6.1 states that "the
+    // function of crediting or debiting is controlled merely by the business
+    // document type (e.g. 380 or 381) while the representation of the amount,
+    // including its sign, is not affected". The document type already conveys
+    // the credit direction, so the XML must restate the original's amounts as
+    // positive values; negating them too would double-negate. EN 16931 BR-27
+    // (BT-146 item net price shall NOT be negative) and BR-28 (BT-147 gross
+    // price) are hard validation failures, so every monetary and quantity
+    // field is emitted through `_signed`/`_signedQuantity` below. Do not
+    // "restore" the negation here — it breaks the KoSIT XRechnung validator.
 
     final breakdown = _breakdown(
       items: items,
@@ -200,30 +229,38 @@ class XrechnungSerializer {
         w,
         item,
         isKleinunternehmer: applyKleinunternehmer,
+        isCreditNote: isCreditNote,
       );
     }
 
-    _writeHeaderTradeAgreement(
-      w,
-      business,
-      customer,
-      originalInvoiceNumber: originalInvoiceNumber,
-    );
+    _writeHeaderTradeAgreement(w, business, customer);
+
+    // Mandatory child of the SupplyChainTradeTransaction XSD sequence
+    // (IncludedSupplyChainTradeLineItem*, ApplicableHeaderTradeAgreement,
+    // ApplicableHeaderTradeDelivery, ApplicableHeaderTradeSettlement).
+    w.writeln('    <ram:ApplicableHeaderTradeDelivery/>');
 
     w.writeln('    <ram:ApplicableHeaderTradeSettlement>');
     w.writeln(
       '      <ram:InvoiceCurrencyCode>$currency</ram:InvoiceCurrencyCode>',
     );
+    // BG-16 (BR-DE-1): in the HeaderTradeSettlementType XSD sequence
+    // SpecifiedTradeSettlementPaymentMeans sits after the currency codes and
+    // before the ApplicableTradeTax elements.
+    _writePaymentMeans(w, settings, sellerName: business.name);
     for (final b in breakdown) {
-      _writeHeaderTradeTax(w, b, currency);
+      _writeHeaderTradeTax(w, b, currency, isCreditNote: isCreditNote);
     }
+    _writePaymentTerms(w, invoice.dueDate, invoice.paymentTermsDays);
     _writeMonetarySummation(
       w,
       currency: currency,
       lineTotal: lineTotal,
       taxTotal: taxTotal,
       grandTotal: grandTotal,
+      isCreditNote: isCreditNote,
     );
+    _writeInvoiceReferencedDocument(w, originalInvoiceNumber);
     w.writeln('    </ram:ApplicableHeaderTradeSettlement>');
 
     w.writeln('  </rsm:SupplyChainTradeTransaction>');
@@ -236,6 +273,16 @@ class XrechnungSerializer {
 
   void _writeExchangedDocumentContext(StringBuffer w) {
     w.writeln('  <rsm:ExchangedDocumentContext>');
+    // BT-23 business process type (PEPPOL-EN16931-R001): the Peppol BIS
+    // Billing 3.0 profile id convention `urn:fdc:peppol.eu:2017:poacc:
+    // billing:01:1.0`. In the CII ExchangedDocumentContextType XSD sequence
+    // BusinessProcessSpecifiedDocumentContextParameter comes BEFORE
+    // GuidelineSpecifiedDocumentContextParameter — do not reorder.
+    w.writeln('    <ram:BusinessProcessSpecifiedDocumentContextParameter>');
+    w.writeln(
+      '      <ram:ID>urn:fdc:peppol.eu:2017:poacc:billing:01:1.0</ram:ID>',
+    );
+    w.writeln('    </ram:BusinessProcessSpecifiedDocumentContextParameter>');
     w.writeln('    <ram:GuidelineSpecifiedDocumentContextParameter>');
     w.writeln('      <ram:ID>$_guideline</ram:ID>');
     w.writeln('    </ram:GuidelineSpecifiedDocumentContextParameter>');
@@ -264,18 +311,21 @@ class XrechnungSerializer {
   void _writeHeaderTradeAgreement(
     StringBuffer w,
     Business business,
-    Customer? customer, {
-    String? originalInvoiceNumber,
-  }) {
+    Customer? customer,
+  ) {
     w.writeln('    <ram:ApplicableHeaderTradeAgreement>');
-    if (originalInvoiceNumber != null &&
-        originalInvoiceNumber.trim().isNotEmpty) {
-      w.writeln('      <ram:InvoiceReferencedDocument>');
+    // BT-10 buyer reference / Leitweg-ID (BR-DE-15): in the CII
+    // HeaderTradeAgreementType XSD sequence BuyerReference is the first
+    // child (Reference?, BuyerReference, SellerTradeParty, ...). Emitted
+    // only when present — the export use case enforces it, the serializer
+    // stays a pure emit-if-present function.
+    if (_nonBlank(customer?.buyerReference)) {
       w.writeln(
-        '        <ram:ID>${_escape(originalInvoiceNumber.trim())}</ram:ID>',
+        '      <ram:BuyerReference>${_escape(customer!.buyerReference!.trim())}</ram:BuyerReference>',
       );
-      w.writeln('      </ram:InvoiceReferencedDocument>');
     }
+    // BG-6 seller contact (BR-DE-2) and BT-34 seller electronic address:
+    // contactPhone/contactEmail are passed for the seller only.
     _writeTradeParty(
       w,
       'SellerTradeParty',
@@ -283,8 +333,12 @@ class XrechnungSerializer {
       business.address,
       business.vatId,
       business.taxNumber,
+      electronicMail: business.email,
+      contactPhone: business.phone,
+      contactEmail: business.email,
     );
     if (customer != null) {
+      // BT-49 buyer electronic address.
       _writeTradeParty(
         w,
         'BuyerTradeParty',
@@ -292,21 +346,56 @@ class XrechnungSerializer {
         customer.address,
         customer.vatId,
         null,
+        electronicMail: customer.email,
       );
     }
     w.writeln('    </ram:ApplicableHeaderTradeAgreement>');
   }
 
+  /// Emits one trade party. Optional named parameters carry the XRechnung
+  /// / Peppol additions: [electronicMail] (BT-34 seller / BT-49 buyer
+  /// electronic address) and [contactPhone]/[contactEmail] (BG-6 seller
+  /// contact, passed by the caller for the seller only). Child order is
+  /// fixed by the CII D16B XSD `TradePartyType` sequence (ID, GlobalID,
+  /// Name, RoleCode, Description, SpecifiedLegalOrganization,
+  /// DefinedTradeContact, PostalTradeAddress, URIUniversalCommunication,
+  /// SpecifiedTaxRegistration) — do not reorder.
   void _writeTradeParty(
     StringBuffer w,
     String element,
     String name,
     Address? address,
     String? vatId,
-    String? taxNumber,
-  ) {
+    String? taxNumber, {
+    String? electronicMail,
+    String? contactPhone,
+    String? contactEmail,
+  }) {
     w.writeln('      <ram:$element>');
     w.writeln('        <ram:Name>${_escape(name)}</ram:Name>');
+    // BG-6 (BR-DE-2): emitted only when the seller has at least one of
+    // phone/email; the empty sub-elements are skipped, never emitted blank.
+    final hasContactPhone = _nonBlank(contactPhone);
+    final hasContactEmail = _nonBlank(contactEmail);
+    if (hasContactPhone || hasContactEmail) {
+      w.writeln('        <ram:DefinedTradeContact>');
+      w.writeln('          <ram:PersonName>${_escape(name)}</ram:PersonName>');
+      if (hasContactPhone) {
+        w.writeln('          <ram:TelephoneUniversalCommunication>');
+        w.writeln(
+          '            <ram:CompleteNumber>${_escape(contactPhone!.trim())}</ram:CompleteNumber>',
+        );
+        w.writeln('          </ram:TelephoneUniversalCommunication>');
+      }
+      if (hasContactEmail) {
+        w.writeln('          <ram:EmailURIUniversalCommunication>');
+        w.writeln(
+          '            <ram:URIID>${_escape(contactEmail!.trim())}</ram:URIID>',
+        );
+        w.writeln('          </ram:EmailURIUniversalCommunication>');
+      }
+      w.writeln('        </ram:DefinedTradeContact>');
+    }
     if (address != null) {
       w.writeln('        <ram:PostalTradeAddress>');
       w.writeln(
@@ -322,6 +411,16 @@ class XrechnungSerializer {
         '          <ram:CountryID>${_countryCode(address.country)}</ram:CountryID>',
       );
       w.writeln('        </ram:PostalTradeAddress>');
+    }
+    // BT-34 / BT-49 electronic address (PEPPOL-EN16931-R020 / R010). The
+    // EAS code "EM" designates electronic mail (0204 is the Leitweg-ID —
+    // a different scheme, not used here).
+    if (_nonBlank(electronicMail)) {
+      w.writeln('        <ram:URIUniversalCommunication>');
+      w.writeln(
+        '          <ram:URIID schemeID="EM">${_escape(electronicMail!.trim())}</ram:URIID>',
+      );
+      w.writeln('        </ram:URIUniversalCommunication>');
     }
     if (vatId != null && vatId.trim().isNotEmpty) {
       w.writeln('        <ram:SpecifiedTaxRegistration>');
@@ -345,11 +444,14 @@ class XrechnungSerializer {
     StringBuffer w,
     InvoiceItem item, {
     required bool isKleinunternehmer,
+    required bool isCreditNote,
   }) {
     final unitCode = _unitCode(item.unit);
-    final quantity = _formatQuantity(item.quantity);
-    final netPrice = _formatAmount(item.unitPriceCents);
-    final lineTotal = _formatAmount(item.lineTotalCents);
+    final quantity = _formatQuantity(
+      _signedQuantity(item.quantity, isCreditNote),
+    );
+    final netPrice = _formatAmount(_signed(item.unitPriceCents, isCreditNote));
+    final lineTotal = _formatAmount(_signed(item.lineTotalCents, isCreditNote));
     // Under the Kleinunternehmer rule (§19 UStG) no VAT may be shown on any
     // line, regardless of the stored rate — keep the line-level tax category
     // consistent with the document-level breakdown.
@@ -397,28 +499,88 @@ class XrechnungSerializer {
 
   // --- header VAT + totals ---------------------------------------------------
 
-  void _writeHeaderTradeTax(StringBuffer w, _TaxBreakdown b, String currency) {
+  void _writeHeaderTradeTax(
+    StringBuffer w,
+    _TaxBreakdown b,
+    String currency, {
+    required bool isCreditNote,
+  }) {
+    // Child order is fixed by the CII D16B XSD TradeTaxType sequence
+    // (CalculatedAmount, TypeCode, ExemptionReason, BasisAmount, CategoryCode,
+    // ExemptionReasonCode, RateApplicablePercent) — do not "tidy" it up.
+    // BT-120/BT-121: required for exempt (E, §19 UStG) and reverse-charge
+    // (AE, BR-AE-10, §13b UStG) categories.
+    final exemption = switch (b.category) {
+      'E' => (
+        reason: 'Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.',
+        code: 'VATEX-EU-132',
+      ),
+      'AE' => (
+        reason:
+            'Steuerschuldnerschaft des Leistungsempfängers gemäß § 13b UStG.',
+        code: 'VATEX-EU-AE',
+      ),
+      _ => null,
+    };
     w.writeln('      <ram:ApplicableTradeTax>');
     w.writeln(
-      '        <ram:CalculatedAmount>${_formatAmount(b.taxCents)}</ram:CalculatedAmount>',
+      '        <ram:CalculatedAmount>${_formatAmount(_signed(b.taxCents, isCreditNote))}</ram:CalculatedAmount>',
     );
     w.writeln('        <ram:TypeCode>VAT</ram:TypeCode>');
-    if (b.category == 'E') {
+    if (exemption != null) {
       w.writeln(
-        '        <ram:ExemptionReason>Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.</ram:ExemptionReason>',
-      );
-      w.writeln(
-        '        <ram:ExemptionReasonCode>VATEX-EU-132</ram:ExemptionReasonCode>',
+        '        <ram:ExemptionReason>${_escape(exemption.reason)}</ram:ExemptionReason>',
       );
     }
     w.writeln(
-      '        <ram:BasisAmount>${_formatAmount(b.basisCents)}</ram:BasisAmount>',
+      '        <ram:BasisAmount>${_formatAmount(_signed(b.basisCents, isCreditNote))}</ram:BasisAmount>',
     );
     w.writeln('        <ram:CategoryCode>${b.category}</ram:CategoryCode>');
+    if (exemption != null) {
+      w.writeln(
+        '        <ram:ExemptionReasonCode>${exemption.code}</ram:ExemptionReasonCode>',
+      );
+    }
     w.writeln(
       '        <ram:RateApplicablePercent>${_formatPercent(b.ratePercent)}</ram:RateApplicablePercent>',
     );
     w.writeln('      </ram:ApplicableTradeTax>');
+  }
+
+  /// BG-16 payment instructions (BR-DE-1): BT-81 `TypeCode` is fixed to 58
+  /// (SEPA credit transfer — no payment-mean field exists yet); BT-84 IBAN
+  /// from [settings], BT-85 account holder falling back to the seller
+  /// [sellerName] (always present), optional BT-86 BIC. Child order follows
+  /// the CII `TradeSettlementPaymentMeansType` XSD sequence (TypeCode,
+  /// PayeePartyCreditorFinancialAccount [IBANID, AccountName],
+  /// PayeeSpecifiedCreditorFinancialInstitution [BICID]). Emitted only when
+  /// an IBAN is present — the export use case enforces it.
+  void _writePaymentMeans(
+    StringBuffer w,
+    BusinessSettings? settings, {
+    required String sellerName,
+  }) {
+    if (!_nonBlank(settings?.iban)) return;
+    final bic = settings!.bic?.trim();
+    final accountName = _nonBlank(settings.accountHolder)
+        ? settings.accountHolder!.trim()
+        : sellerName;
+    w.writeln('      <ram:SpecifiedTradeSettlementPaymentMeans>');
+    w.writeln('        <ram:TypeCode>58</ram:TypeCode>');
+    w.writeln('        <ram:PayeePartyCreditorFinancialAccount>');
+    w.writeln(
+      '          <ram:IBANID>${_escape(settings.iban!.trim())}</ram:IBANID>',
+    );
+    w.writeln(
+      '          <ram:AccountName>${_escape(accountName)}</ram:AccountName>',
+    );
+    w.writeln('        </ram:PayeePartyCreditorFinancialAccount>');
+    if (bic != null && bic.isNotEmpty) {
+      w.writeln('        <ram:PayeeSpecifiedCreditorFinancialInstitution>');
+      w.writeln('          <ram:BICID>${_escape(bic)}</ram:BICID>');
+      w.writeln('        </ram:PayeeSpecifiedCreditorFinancialInstitution>');
+    }
+    w.writeln('      </ram:SpecifiedTradeSettlementPaymentMeans>');
   }
 
   void _writeMonetarySummation(
@@ -427,28 +589,76 @@ class XrechnungSerializer {
     required int lineTotal,
     required int taxTotal,
     required int grandTotal,
+    required bool isCreditNote,
   }) {
     w.writeln(
       '      <ram:SpecifiedTradeSettlementHeaderMonetarySummation>',
     );
     w.writeln(
-      '        <ram:LineTotalAmount>${_formatAmount(lineTotal)}</ram:LineTotalAmount>',
+      '        <ram:LineTotalAmount>${_formatAmount(_signed(lineTotal, isCreditNote))}</ram:LineTotalAmount>',
     );
     w.writeln(
-      '        <ram:TaxBasisTotalAmount>${_formatAmount(lineTotal)}</ram:TaxBasisTotalAmount>',
+      '        <ram:TaxBasisTotalAmount>${_formatAmount(_signed(lineTotal, isCreditNote))}</ram:TaxBasisTotalAmount>',
     );
     w.writeln(
-      '        <ram:TaxTotalAmount currencyID="$currency">${_formatAmount(taxTotal)}</ram:TaxTotalAmount>',
+      '        <ram:TaxTotalAmount currencyID="$currency">${_formatAmount(_signed(taxTotal, isCreditNote))}</ram:TaxTotalAmount>',
     );
     w.writeln(
-      '        <ram:GrandTotalAmount>${_formatAmount(grandTotal)}</ram:GrandTotalAmount>',
+      '        <ram:GrandTotalAmount>${_formatAmount(_signed(grandTotal, isCreditNote))}</ram:GrandTotalAmount>',
     );
     w.writeln(
-      '        <ram:DuePayableAmount>${_formatAmount(grandTotal)}</ram:DuePayableAmount>',
+      '        <ram:DuePayableAmount>${_formatAmount(_signed(grandTotal, isCreditNote))}</ram:DuePayableAmount>',
     );
     w.writeln(
       '      </ram:SpecifiedTradeSettlementHeaderMonetarySummation>',
     );
+  }
+
+  /// BT-9 (due date) and/or BT-20 (payment terms). BR-CO-25 requires an
+  /// invoice to carry a due date or payment terms; a credit note has no
+  /// payment obligation of its own, so it states the original's payment terms
+  /// instead. The `HeaderTradeSettlementType` XSD sequence places
+  /// `SpecifiedTradePaymentTerms` after the `ApplicableTradeTax` elements and
+  /// before `SpecifiedTradeSettlementHeaderMonetarySummation`.
+  void _writePaymentTerms(StringBuffer w, DateTime? dueDate, int termsDays) {
+    if (dueDate == null && termsDays <= 0) return;
+    w.writeln('      <ram:SpecifiedTradePaymentTerms>');
+    // Child order is fixed by the CII D16B XSD TradePaymentTermsType sequence
+    // (ID, FromEventCode, SettlementPeriodMeasure, Description,
+    // DueDateDateTime, TypeCode, ...) — Description precedes DueDateDateTime.
+    if (termsDays > 0) {
+      w.writeln(
+        '        <ram:Description>Zahlbar innerhalb von $termsDays Tagen.</ram:Description>',
+      );
+    }
+    if (dueDate != null) {
+      w.writeln('        <ram:DueDateDateTime>');
+      w.writeln(
+        '          <udt:DateTimeString format="102">${_formatDate(dueDate)}</udt:DateTimeString>',
+      );
+      w.writeln('        </ram:DueDateDateTime>');
+    }
+    w.writeln('      </ram:SpecifiedTradePaymentTerms>');
+  }
+
+  /// Reference to the original invoice (credit notes). In the CII D16B XSD
+  /// this element belongs to `HeaderTradeSettlementType`, directly after
+  /// `SpecifiedTradeSettlementHeaderMonetarySummation` — not to the trade
+  /// agreement, which has no such child.
+  void _writeInvoiceReferencedDocument(
+    StringBuffer w,
+    String? originalInvoiceNumber,
+  ) {
+    if (originalInvoiceNumber == null || originalInvoiceNumber.trim().isEmpty) {
+      return;
+    }
+    w.writeln('      <ram:InvoiceReferencedDocument>');
+    // The CII ReferencedDocumentType XSD has no `ID` child — the identifier
+    // element is `IssuerAssignedID` (BT-25 / credit-note original number).
+    w.writeln(
+      '        <ram:IssuerAssignedID>${_escape(originalInvoiceNumber.trim())}</ram:IssuerAssignedID>',
+    );
+    w.writeln('      </ram:InvoiceReferencedDocument>');
   }
 
   // --- VAT breakdown ---------------------------------------------------------
@@ -516,6 +726,26 @@ class XrechnungSerializer {
 
   // --- formatting helpers ----------------------------------------------------
 
+  /// Sign normaliser for credit notes (see the note in [serialize]).
+  ///
+  /// Peppol BIS Billing 3.0 §5.6.1: the document type (`381` for a credit
+  /// note), not the amount sign, conveys the credit direction. EN 16931
+  /// BR-27 / BR-28 additionally forbid negative item prices. Credit notes
+  /// therefore restate the original invoice's amounts as positive values.
+  ///
+  /// A no-op for ordinary invoices, so their output stays byte-identical.
+  int _signed(int cents, bool isCreditNote) {
+    return isCreditNote ? cents.abs() : cents;
+  }
+
+  /// Quantity counterpart of [_signed]: BR-CO-11 / the Peppol amount
+  /// representation rule apply to `BasisQuantity` and `BilledQuantity` too,
+  /// so a credit note states the original's positive quantity.
+  double? _signedQuantity(double? quantity, bool isCreditNote) {
+    if (!isCreditNote || quantity == null) return quantity;
+    return quantity.abs();
+  }
+
   String _formatDate(DateTime date) {
     final d = date.toLocal();
     final y = d.year.toString().padLeft(4, '0');
@@ -538,7 +768,18 @@ class XrechnungSerializer {
     if (q == q.roundToDouble()) {
       return q.round().toString();
     }
-    return q.toStringAsFixed(4).replaceFirst(RegExp(r'0+$'), '');
+    // Trim trailing zeros, but never leave a bare trailing separator: the
+    // 4-dp form of a value smaller than the 4th decimal (e.g. 1.00001) is
+    // "1.0000", which trims to "1." — not a valid xs:decimal, and invalid
+    // XML Schema content fails the whole document.
+    final trimmed = q.toStringAsFixed(4).replaceFirst(RegExp(r'0+$'), '');
+    return trimmed.endsWith('.') ? '${trimmed}0' : trimmed;
+  }
+
+  /// True when [value] carries non-blank content. Used to guarantee no XML
+  /// element is ever emitted with empty text (skip instead).
+  bool _nonBlank(String? value) {
+    return value != null && value.trim().isNotEmpty;
   }
 
   String _escape(String value) {
