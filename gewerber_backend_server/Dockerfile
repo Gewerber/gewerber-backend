@@ -54,11 +54,15 @@ RUN mkdir -p config web migrations
 FROM alpine:latest
 WORKDIR /app
 
-# Environment variables
-ENV runmode=production
-ENV serverid=default
-ENV logging=normal
-ENV role=monolith
+# Runtime configuration. Serverpod reads the uppercase SERVERPOD_* environment
+# variables documented at
+# https://docs.serverpod.dev/concepts/lookups/configuration-reference. The
+# lowercase names (`runmode`, `serverid`, `logging`, `role`) previously set here
+# were only ever consumed by the old shell-form ENTRYPOINT expansion and are not
+# read by the framework at all. The run mode keeps its image default of
+# `production` — exactly as before — and is overridden per environment through
+# SERVERPOD_RUN_MODE (see deploy/docker-compose.yml).
+ENV SERVERPOD_RUN_MODE=production
 
 # Copy runtime dependencies
 COPY --from=build /runtime/ /
@@ -82,5 +86,10 @@ EXPOSE 8080
 EXPOSE 8081
 EXPOSE 8082
 
-# Define the entrypoint command
-ENTRYPOINT ./bin/server --mode=$runmode --server-id=$serverid --logging=$logging --role=$role
+# Define the entrypoint command (exec form: no /bin/sh wrapper as PID 1, so
+# SIGTERM from Docker reaches the server directly and `JSONArgsRecommended` is
+# satisfied). The three constant arguments match the Serverpod defaults; the run
+# mode is taken from SERVERPOD_RUN_MODE above instead of a `--mode` argument,
+# because exec form cannot expand shell variables.
+ENTRYPOINT ["/app/bin/server", "--server-id=default", "--logging=normal", "--role=monolith"]
+
