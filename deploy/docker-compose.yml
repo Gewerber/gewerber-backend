@@ -1,8 +1,8 @@
 # Deploys the Gewerber Serverpod backend behind an existing Traefik reverse
 # proxy. The same file serves both environments:
 #
-#   production : api.gewerber.de      gwb       gewerber-backend       (runmode=production)
-#   staging    : api.test.gewerber.de gwb-test  gewerber-backend-test  (runmode=staging)
+#   production : api.gewerber.de      gwb       gewerber-backend       (RUNMODE=production)
+#   staging    : api.test.gewerber.de gwb-test  gewerber-backend-test  (RUNMODE=staging)
 #
 # Stack per environment: Serverpod API server + PostgreSQL + Redis. Only the
 # API server (port 8080) is exposed through Traefik; the Insights server
@@ -25,9 +25,11 @@ services:
     container_name: ${CONTAINER_NAME:-gewerber-backend}
     restart: unless-stopped
     environment:
-      # Serverpod run mode: production | staging (selects config/<runmode>.yaml
-      # and the matching passwords section).
-      runmode: ${RUNMODE:-production}
+      # Serverpod run mode: production | staging. Selects config/<run-mode>.yaml
+      # and the matching passwords.yaml section. The image defaults this to
+      # production; RUNMODE comes from the per-environment .env written by
+      # deploy.sh (SERVERPOD_RUN_MODE is the env var Serverpod actually reads).
+      SERVERPOD_RUN_MODE: ${RUNMODE:-production}
       # Apply pending database migrations on startup.
       SERVERPOD_APPLY_MIGRATIONS: "true"
     volumes:
