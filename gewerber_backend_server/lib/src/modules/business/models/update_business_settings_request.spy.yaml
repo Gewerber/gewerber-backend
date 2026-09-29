@@ -2,6 +2,9 @@ class: UpdateBusinessSettingsRequest
 fields:
   businessId: int
   paymentTermsDays: int
+  iban: String?
+  bic: String?
+  accountHolder: String?
   invoiceNumberPrefix: String?
   invoiceNumberIncludeYear: bool
   invoiceNumberMinDigits: int

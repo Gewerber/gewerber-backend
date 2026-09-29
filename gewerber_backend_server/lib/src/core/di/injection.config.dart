@@ -371,15 +371,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i221.MessageCatalog>(),
       ),
     );
-    gh.singleton<_i1054.XrechnungExportUseCase>(
-      () => _i1054.XrechnungExportUseCase(
-        gh<_i343.TenantResolver>(),
-        gh<_i517.InvoiceGateway>(),
-        gh<_i20.InvoiceItemGateway>(),
-        gh<_i696.CustomerGateway>(),
-        gh<_i647.BusinessGateway>(),
-      ),
-    );
     gh.singleton<_i282.UpdateUserProfileUseCase>(
       () => _i282.UpdateUserProfileUseCase(
         gh<_i467.UserProfileGateway>(),
@@ -661,6 +652,16 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i910.GetBusinessUseCase(
         gh<_i343.TenantResolver>(),
         gh<_i647.BusinessGateway>(),
+      ),
+    );
+    gh.singleton<_i1054.XrechnungExportUseCase>(
+      () => _i1054.XrechnungExportUseCase(
+        gh<_i343.TenantResolver>(),
+        gh<_i517.InvoiceGateway>(),
+        gh<_i20.InvoiceItemGateway>(),
+        gh<_i696.CustomerGateway>(),
+        gh<_i647.BusinessGateway>(),
+        gh<_i141.BusinessSettingsGateway>(),
       ),
     );
     gh.singleton<_i130.UpdateBusinessSettingsUseCase>(

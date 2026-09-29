@@ -6,6 +6,8 @@ fields:
   name: String
   companyName: String?
   vatId: String?
+  ### BT-10 "Buyer reference" required by BR-DE-15 in the XRechnung export; buyer-assigned, e.g. Leitweg-ID for public clients.
+  buyerReference: String?
   email: String?
   phone: String?
   address: Address?

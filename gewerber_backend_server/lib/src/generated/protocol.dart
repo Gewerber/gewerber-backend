@@ -686,6 +686,24 @@ class Protocol extends _is.DatabaseSerializationManager {
           columnDefault: '14',
         ),
         _isp.ColumnDefinition(
+          name: 'iban',
+          columnType: _isp.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _isp.ColumnDefinition(
+          name: 'bic',
+          columnType: _isp.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _isp.ColumnDefinition(
+          name: 'accountHolder',
+          columnType: _isp.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _isp.ColumnDefinition(
           name: 'invoiceNumberPrefix',
           columnType: _isp.ColumnType.text,
           isNullable: true,
@@ -796,6 +814,12 @@ class Protocol extends _is.DatabaseSerializationManager {
         ),
         _isp.ColumnDefinition(
           name: 'vatId',
+          columnType: _isp.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _isp.ColumnDefinition(
+          name: 'buyerReference',
           columnType: _isp.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
