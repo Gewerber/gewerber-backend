@@ -25,7 +25,7 @@ services:
     container_name: ${CONTAINER_NAME:-gewerber-backend}
     restart: unless-stopped
     environment:
-      # Serverpod run mode: production | staging. Selects config/<run-mode>.yaml
+      # Serverpod run mode: production | staging. Selects config/<mode>.yaml
       # and the matching passwords.yaml section. The image defaults this to
       # production; RUNMODE comes from the per-environment .env written by
       # deploy.sh (SERVERPOD_RUN_MODE is the env var Serverpod actually reads).

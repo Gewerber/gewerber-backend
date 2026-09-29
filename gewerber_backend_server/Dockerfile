@@ -97,4 +97,3 @@ EXPOSE 8082
 # mode is taken from SERVERPOD_RUN_MODE above instead of a `--mode` argument,
 # because exec form cannot expand shell variables.
 ENTRYPOINT ["/app/bin/server", "--server-id=default", "--logging=normal", "--role=monolith"]
-
