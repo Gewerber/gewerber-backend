@@ -119,6 +119,45 @@ void main() {
     });
   });
 
+  group('font fallback wiring', () {
+    test('the rendered PDF embeds the Unicode fallback font', () async {
+      // Regression guard for issue #70 at the *wiring* level:
+      // invoice_pdf_font_test.dart proves the vendored TTF has the glyphs,
+      // this proves the generator actually registers it. The EUR fixture
+      // renders `€` through MoneyFormatter.formatCents — a codepoint the
+      // built-in Helvetica (WinAnsi, U+0000–U+00FF) cannot draw — so only
+      // the document theme's `fontFallback` can put Roboto into the
+      // output. The pdf package writes the font dictionary and descriptor
+      // as plain (uncompressed) indirect objects — verified empirically,
+      // no /ObjStm is emitted — so the subset name `Roboto-Regular`
+      // (Type0 /BaseFont and CIDFont /FontName) and the /FontFile2 stream
+      // holding the embedded TTF program are reliably locatable in the
+      // raw bytes. Drop the `theme:` argument from pw.Document in
+      // PdfInvoiceGenerator.generate and every one of these expectations
+      // fails — that is the point.
+      //
+      // No skip guard on purpose: when assets/fonts/Roboto-Regular.ttf is
+      // missing, InvoicePdfFont.load() yields null, the document is built
+      // without the fallback and this test fails loudly — the desired
+      // canary for a broken deployment.
+      final pdf = await _render(_data());
+      expect(
+        pdf,
+        contains('Roboto-Regular'),
+        reason:
+            'the € in the amounts must be drawn from the vendored '
+            'fallback font, which requires the theme wiring',
+      );
+      expect(
+        pdf,
+        contains('/FontFile2'),
+        reason:
+            'the fallback TTF program must actually be embedded, not '
+            'just named (built-in fonts are never /FontFile2-embedded)',
+      );
+    });
+  });
+
   group('locales without a translated catalog', () {
     test('an ru invoice still renders German instead of failing', () async {
       // ru is a valid persisted Locale with no catalog yet. It must resolve to
