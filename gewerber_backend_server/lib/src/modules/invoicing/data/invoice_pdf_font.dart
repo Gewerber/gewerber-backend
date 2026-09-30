@@ -21,8 +21,13 @@ const String defaultInvoiceFontPath = 'assets/fonts/Roboto-Regular.ttf';
 /// needs (issue #70). Roboto is vendored under `assets/fonts/` as the
 /// fallback; [load] reads it once per call and never throws: a misconfigured
 /// deployment must still be able to generate invoices, just with the old
-/// glyph-limited font. Failures are loud in the logs (`stderr`) and graceful
-/// in behaviour.
+/// glyph-limited font. Failures are loud in the logs and graceful in behaviour.
+///
+/// Both outcomes are logged through [load]'s injectable `logSink` (issue #88):
+/// a successful load writes an `INFO` line naming the resolved path — the
+/// default is CWD-relative, so an unexpected working directory or a volume
+/// mounted over the app directory silently degrades rendering — and a failure
+/// writes the `WARNING` that explains the Helvetica fallback.
 class InvoicePdfFont {
   InvoicePdfFont._();
 
@@ -46,13 +51,24 @@ class InvoicePdfFont {
   ///
   /// `null` is a supported outcome, not an error: the caller keeps using the
   /// built-in Helvetica. This method never throws — a missing, unreadable or
-  /// unparseable font file only produces a warning on `stderr`.
-  static pw.Font? load({Map<String, String>? environment}) {
+  /// unparseable font file only produces a warning on [logSink].
+  ///
+  /// [logSink] defaults to [stderr] and mirrors the injectable `environment`
+  /// of [resolvePath]: the caller (or a test) decides where the observability
+  /// lines go. A successful load writes an `INFO` line with the resolved path,
+  /// because the default is CWD-relative (`assets/fonts/Roboto-Regular.ttf`)
+  /// and a wrong working directory or a volume mounted over the app directory
+  /// otherwise degrades PDFs without any visible error (issue #88).
+  static pw.Font? load({
+    Map<String, String>? environment,
+    StringSink? logSink,
+  }) {
+    final sink = logSink ?? stderr;
     final path = resolvePath(environment: environment);
     try {
       final file = File(path);
       if (!file.existsSync()) {
-        stderr.writeln(
+        sink.writeln(
           'WARNING: invoice PDF font not found at "$path" (resolved from '
           '$invoiceFontPathEnvVar or the default); invoices will render with '
           'the built-in Helvetica, which cannot draw € or –. '
@@ -60,9 +76,15 @@ class InvoicePdfFont {
         );
         return null;
       }
-      return pw.Font.ttf(file.readAsBytesSync().buffer.asByteData());
+      final font = pw.Font.ttf(file.readAsBytesSync().buffer.asByteData());
+      sink.writeln(
+        'INFO: invoice PDF font loaded from "$path" (set '
+        '$invoiceFontPathEnvVar to override the CWD-relative default; see '
+        'https://github.com/Gewerber/gewerber-backend/issues/88)',
+      );
+      return font;
     } catch (error) {
-      stderr.writeln(
+      sink.writeln(
         'WARNING: could not load invoice PDF font "$path" ($error); invoices '
         'will render with the built-in Helvetica, which cannot draw € or –. '
         'Check that $invoiceFontPathEnvVar points to a readable TrueType '

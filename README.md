@@ -99,6 +99,13 @@ The container expects a Serverpod `config/passwords.yaml` mounted at
 `/app/config/passwords.yaml` (keys: `database`, `serviceSecret`, `redis`,
 `emailSecretHashPepper`, `jwtHmacSha512PrivateKey`, `jwtRefreshTokenHashPepper`).
 
+Invoice PDFs use a fallback font shipped in the image at the CWD-relative path
+`assets/fonts/Roboto-Regular.ttf`. Keep `WORKDIR /app` and do not mount a volume
+over `/app`, or the font is hidden and invoices silently fall back to Helvetica
+(no `€` or `–`); set `GEWERBER_INVOICE_FONT_PATH` to point somewhere else. The
+resolved path is logged when the font is first loaded (once per process, on the
+first generated invoice).
+
 ---
 
 ## 🧭 Related

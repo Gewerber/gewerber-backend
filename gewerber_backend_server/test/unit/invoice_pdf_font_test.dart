@@ -104,18 +104,35 @@ void main() {
   });
 
   group('load', () {
+    test('a successful load logs the resolved path to the injected sink', () {
+      // Observability for issue #88: the default path is CWD-relative, so an
+      // operator must be able to see which file was actually loaded. The
+      // vendored font resolves from the package working directory the test
+      // suite runs in (the same assumption the glyph coverage group makes).
+      final log = StringBuffer();
+      final font = InvoicePdfFont.load(logSink: log);
+      expect(font, isA<pw.TtfFont>());
+      final output = log.toString();
+      expect(output, contains('INFO'));
+      expect(output, contains(InvoicePdfFont.resolvePath()));
+    });
+
     test('a missing font file degrades to null without throwing', () {
-      // The deployment contract: a misconfigured path warns on stderr and the
-      // generator keeps using Helvetica; it must never fail invoice creation.
+      // The deployment contract: a misconfigured path warns on the log sink and
+      // the generator keeps using Helvetica; it must never fail invoice creation.
       // A throw here would surface as this test failing, not as a 500.
+      final log = StringBuffer();
+      const path = 'test/assets/this-font-does-not-exist.ttf';
       expect(
         InvoicePdfFont.load(
-          environment: {
-            invoiceFontPathEnvVar: 'test/assets/this-font-does-not-exist.ttf',
-          },
+          environment: {invoiceFontPathEnvVar: path},
+          logSink: log,
         ),
         isNull,
       );
+      final output = log.toString();
+      expect(output, contains('WARNING'));
+      expect(output, contains(path));
     });
   });
 }
