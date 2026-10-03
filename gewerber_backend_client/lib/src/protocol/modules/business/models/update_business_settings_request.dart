@@ -10,7 +10,6 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
 import '../../../modules/business/models/rounding_mode.dart' as _ib9gbuqh;
 
@@ -19,6 +18,9 @@ abstract class UpdateBusinessSettingsRequest
   UpdateBusinessSettingsRequest._({
     required this.businessId,
     required this.paymentTermsDays,
+    this.iban,
+    this.bic,
+    this.accountHolder,
     this.invoiceNumberPrefix,
     required this.invoiceNumberIncludeYear,
     required this.invoiceNumberMinDigits,
@@ -29,6 +31,9 @@ abstract class UpdateBusinessSettingsRequest
   factory UpdateBusinessSettingsRequest({
     required int businessId,
     required int paymentTermsDays,
+    String? iban,
+    String? bic,
+    String? accountHolder,
     String? invoiceNumberPrefix,
     required bool invoiceNumberIncludeYear,
     required int invoiceNumberMinDigits,
@@ -42,6 +47,9 @@ abstract class UpdateBusinessSettingsRequest
     return UpdateBusinessSettingsRequest(
       businessId: jsonSerialization['businessId'] as int,
       paymentTermsDays: jsonSerialization['paymentTermsDays'] as int,
+      iban: jsonSerialization['iban'] as String?,
+      bic: jsonSerialization['bic'] as String?,
+      accountHolder: jsonSerialization['accountHolder'] as String?,
       invoiceNumberPrefix: jsonSerialization['invoiceNumberPrefix'] as String?,
       invoiceNumberIncludeYear: _isc.BoolJsonExtension.fromJson(
         jsonSerialization['invoiceNumberIncludeYear'],
@@ -60,6 +68,12 @@ abstract class UpdateBusinessSettingsRequest
 
   int paymentTermsDays;
 
+  String? iban;
+
+  String? bic;
+
+  String? accountHolder;
+
   String? invoiceNumberPrefix;
 
   bool invoiceNumberIncludeYear;
@@ -76,6 +90,9 @@ abstract class UpdateBusinessSettingsRequest
   UpdateBusinessSettingsRequest copyWith({
     int? businessId,
     int? paymentTermsDays,
+    String? iban,
+    String? bic,
+    String? accountHolder,
     String? invoiceNumberPrefix,
     bool? invoiceNumberIncludeYear,
     int? invoiceNumberMinDigits,
@@ -88,6 +105,9 @@ abstract class UpdateBusinessSettingsRequest
       '__className__': 'UpdateBusinessSettingsRequest',
       'businessId': businessId,
       'paymentTermsDays': paymentTermsDays,
+      if (iban != null) 'iban': iban,
+      if (bic != null) 'bic': bic,
+      if (accountHolder != null) 'accountHolder': accountHolder,
       if (invoiceNumberPrefix != null)
         'invoiceNumberPrefix': invoiceNumberPrefix,
       'invoiceNumberIncludeYear': invoiceNumberIncludeYear,
@@ -103,6 +123,9 @@ abstract class UpdateBusinessSettingsRequest
       '__className__': 'UpdateBusinessSettingsRequest',
       'businessId': businessId,
       'paymentTermsDays': paymentTermsDays,
+      if (iban != null) 'iban': iban,
+      if (bic != null) 'bic': bic,
+      if (accountHolder != null) 'accountHolder': accountHolder,
       if (invoiceNumberPrefix != null)
         'invoiceNumberPrefix': invoiceNumberPrefix,
       'invoiceNumberIncludeYear': invoiceNumberIncludeYear,
@@ -124,6 +147,9 @@ class _UpdateBusinessSettingsRequestImpl extends UpdateBusinessSettingsRequest {
   _UpdateBusinessSettingsRequestImpl({
     required int businessId,
     required int paymentTermsDays,
+    String? iban,
+    String? bic,
+    String? accountHolder,
     String? invoiceNumberPrefix,
     required bool invoiceNumberIncludeYear,
     required int invoiceNumberMinDigits,
@@ -132,6 +158,9 @@ class _UpdateBusinessSettingsRequestImpl extends UpdateBusinessSettingsRequest {
   }) : super._(
          businessId: businessId,
          paymentTermsDays: paymentTermsDays,
+         iban: iban,
+         bic: bic,
+         accountHolder: accountHolder,
          invoiceNumberPrefix: invoiceNumberPrefix,
          invoiceNumberIncludeYear: invoiceNumberIncludeYear,
          invoiceNumberMinDigits: invoiceNumberMinDigits,
@@ -146,6 +175,9 @@ class _UpdateBusinessSettingsRequestImpl extends UpdateBusinessSettingsRequest {
   UpdateBusinessSettingsRequest copyWith({
     int? businessId,
     int? paymentTermsDays,
+    Object? iban = _Undefined,
+    Object? bic = _Undefined,
+    Object? accountHolder = _Undefined,
     Object? invoiceNumberPrefix = _Undefined,
     bool? invoiceNumberIncludeYear,
     int? invoiceNumberMinDigits,
@@ -155,6 +187,11 @@ class _UpdateBusinessSettingsRequestImpl extends UpdateBusinessSettingsRequest {
     return UpdateBusinessSettingsRequest(
       businessId: businessId ?? this.businessId,
       paymentTermsDays: paymentTermsDays ?? this.paymentTermsDays,
+      iban: iban is String? ? iban : this.iban,
+      bic: bic is String? ? bic : this.bic,
+      accountHolder: accountHolder is String?
+          ? accountHolder
+          : this.accountHolder,
       invoiceNumberPrefix: invoiceNumberPrefix is String?
           ? invoiceNumberPrefix
           : this.invoiceNumberPrefix,

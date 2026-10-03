@@ -10,7 +10,6 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-
 import 'package:serverpod/serverpod.dart' as _is;
 import '../../../modules/invoicing/models/invoice_item_unit.dart' as _irh1ud1f;
 import '../../../modules/invoicing/models/vat_rate.dart' as _icqbpm4p;

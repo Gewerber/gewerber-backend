@@ -5,6 +5,7 @@ fields:
   name: String
   companyName: String?
   vatId: String?
+  buyerReference: String?
   email: String?
   phone: String?
   address: Address?

@@ -160,6 +160,50 @@ void main() {
       },
     );
 
+    test(
+      'when creating an invoice with a negative price then ValidationException',
+      () async {
+        await expectLater(
+          () => endpoints.invoice.create(
+            sessionA,
+            CreateInvoiceRequest(
+              items: [
+                InvoiceItemRequest(
+                  description: 'A',
+                  quantity: 1,
+                  unitPriceCents: -100,
+                ),
+              ],
+            ),
+            businessId: businessAId,
+          ),
+          throwsA(isA<ValidationException>()),
+        );
+      },
+    );
+
+    test(
+      'when creating an invoice with a negative quantity then ValidationException',
+      () async {
+        await expectLater(
+          () => endpoints.invoice.create(
+            sessionA,
+            CreateInvoiceRequest(
+              items: [
+                InvoiceItemRequest(
+                  description: 'A',
+                  quantity: -1,
+                  unitPriceCents: 100,
+                ),
+              ],
+            ),
+            businessId: businessAId,
+          ),
+          throwsA(isA<ValidationException>()),
+        );
+      },
+    );
+
     test('when editing a sent invoice then ConflictException', () async {
       final invoice = await createDraftInvoice(sessionA, businessAId);
       await endpoints.invoice.markSent(

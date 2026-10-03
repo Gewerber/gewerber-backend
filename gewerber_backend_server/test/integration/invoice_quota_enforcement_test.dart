@@ -11,6 +11,8 @@ import 'package:gewerber_backend_server/src/core/tenant/tenant_resolver.dart';
 import 'package:gewerber_backend_server/src/generated/protocol.dart';
 import 'package:gewerber_backend_server/src/modules/business/domain/business_gateway.dart';
 import 'package:gewerber_backend_server/src/modules/business/domain/business_settings_gateway.dart';
+import 'package:gewerber_backend_server/src/modules/invoicing/application/invoice_creation_quota_guard.dart';
+import 'package:gewerber_backend_server/src/modules/invoicing/application/create_credit_note_use_case.dart';
 import 'package:gewerber_backend_server/src/modules/invoicing/application/create_invoice_use_case.dart';
 import 'package:gewerber_backend_server/src/modules/invoicing/domain/customer_gateway.dart';
 import 'package:gewerber_backend_server/src/modules/invoicing/domain/invoice_gateway.dart';
@@ -72,6 +74,8 @@ void main() {
     // captured the real (flag-off) policy during `configureDependencies()`.
     // Rebuild it against the test policy so the endpoint exercises the
     // enforcement path.
+    final guard = InvoiceCreationQuotaGuard(getIt<InvoiceGateway>(), policy);
+    getIt.registerSingleton<InvoiceCreationQuotaGuard>(guard);
     getIt.registerSingleton<CreateInvoiceUseCase>(
       CreateInvoiceUseCase(
         getIt<TenantResolver>(),
@@ -84,7 +88,18 @@ void main() {
         getIt<InvoiceNumberService>(),
         getIt<TaxRuleEngine>(),
         getIt<AuditService>(),
-        policy,
+        guard,
+      ),
+    );
+    getIt.registerSingleton<CreateCreditNoteUseCase>(
+      CreateCreditNoteUseCase(
+        getIt<TenantResolver>(),
+        getIt<InvoiceGateway>(),
+        getIt<InvoiceItemGateway>(),
+        getIt<BusinessSettingsGateway>(),
+        getIt<InvoiceNumberService>(),
+        getIt<AuditService>(),
+        guard,
       ),
     );
   });
@@ -165,6 +180,37 @@ void main() {
 
         await expectLater(
           createInvoice,
+          throwsA(
+            isA<InvoiceLimitReachedException>().having(
+              (e) => e.limit,
+              'limit',
+              3,
+            ),
+          ),
+        );
+      },
+    );
+
+    test(
+      'when a numbered credit note is created then it consumes the quota',
+      () async {
+        env[commercialEntitlementsFlagEnvVar] = 'true';
+
+        final original = await createInvoice();
+        await endpoints.invoice.markSent(
+          auth,
+          original.id!,
+          businessId: businessId,
+        );
+        await createInvoice();
+        await createInvoice();
+
+        await expectLater(
+          () => endpoints.invoice.createCreditNote(
+            auth,
+            CreateCreditNoteRequest(originalInvoiceId: original.id!),
+            businessId: businessId,
+          ),
           throwsA(
             isA<InvoiceLimitReachedException>().having(
               (e) => e.limit,

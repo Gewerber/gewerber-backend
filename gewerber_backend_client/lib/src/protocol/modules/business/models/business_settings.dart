@@ -10,7 +10,6 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
 import '../../../modules/business/models/rounding_mode.dart' as _ib9gbuqh;
 
@@ -20,6 +19,9 @@ abstract class BusinessSettings
     this.id,
     required this.businessId,
     int? paymentTermsDays,
+    this.iban,
+    this.bic,
+    this.accountHolder,
     this.invoiceNumberPrefix,
     bool? invoiceNumberIncludeYear,
     int? invoiceNumberMinDigits,
@@ -37,6 +39,9 @@ abstract class BusinessSettings
     int? id,
     required int businessId,
     int? paymentTermsDays,
+    String? iban,
+    String? bic,
+    String? accountHolder,
     String? invoiceNumberPrefix,
     bool? invoiceNumberIncludeYear,
     int? invoiceNumberMinDigits,
@@ -50,6 +55,9 @@ abstract class BusinessSettings
       id: jsonSerialization['id'] as int?,
       businessId: jsonSerialization['businessId'] as int,
       paymentTermsDays: jsonSerialization['paymentTermsDays'] as int?,
+      iban: jsonSerialization['iban'] as String?,
+      bic: jsonSerialization['bic'] as String?,
+      accountHolder: jsonSerialization['accountHolder'] as String?,
       invoiceNumberPrefix: jsonSerialization['invoiceNumberPrefix'] as String?,
       invoiceNumberIncludeYear:
           jsonSerialization['invoiceNumberIncludeYear'] == null
@@ -81,6 +89,15 @@ abstract class BusinessSettings
 
   int paymentTermsDays;
 
+  /// Payment instructions (BG-16) for the XRechnung export: BT-84 IBAN,
+  /// BT-86 BIC, BT-85 account holder. Nullable because these columns are
+  /// added to an existing table.
+  String? iban;
+
+  String? bic;
+
+  String? accountHolder;
+
   String? invoiceNumberPrefix;
 
   bool invoiceNumberIncludeYear;
@@ -100,6 +117,9 @@ abstract class BusinessSettings
     int? id,
     int? businessId,
     int? paymentTermsDays,
+    String? iban,
+    String? bic,
+    String? accountHolder,
     String? invoiceNumberPrefix,
     bool? invoiceNumberIncludeYear,
     int? invoiceNumberMinDigits,
@@ -114,6 +134,9 @@ abstract class BusinessSettings
       if (id != null) 'id': id,
       'businessId': businessId,
       'paymentTermsDays': paymentTermsDays,
+      if (iban != null) 'iban': iban,
+      if (bic != null) 'bic': bic,
+      if (accountHolder != null) 'accountHolder': accountHolder,
       if (invoiceNumberPrefix != null)
         'invoiceNumberPrefix': invoiceNumberPrefix,
       'invoiceNumberIncludeYear': invoiceNumberIncludeYear,
@@ -131,6 +154,9 @@ abstract class BusinessSettings
       if (id != null) 'id': id,
       'businessId': businessId,
       'paymentTermsDays': paymentTermsDays,
+      if (iban != null) 'iban': iban,
+      if (bic != null) 'bic': bic,
+      if (accountHolder != null) 'accountHolder': accountHolder,
       if (invoiceNumberPrefix != null)
         'invoiceNumberPrefix': invoiceNumberPrefix,
       'invoiceNumberIncludeYear': invoiceNumberIncludeYear,
@@ -154,6 +180,9 @@ class _BusinessSettingsImpl extends BusinessSettings {
     int? id,
     required int businessId,
     int? paymentTermsDays,
+    String? iban,
+    String? bic,
+    String? accountHolder,
     String? invoiceNumberPrefix,
     bool? invoiceNumberIncludeYear,
     int? invoiceNumberMinDigits,
@@ -164,6 +193,9 @@ class _BusinessSettingsImpl extends BusinessSettings {
          id: id,
          businessId: businessId,
          paymentTermsDays: paymentTermsDays,
+         iban: iban,
+         bic: bic,
+         accountHolder: accountHolder,
          invoiceNumberPrefix: invoiceNumberPrefix,
          invoiceNumberIncludeYear: invoiceNumberIncludeYear,
          invoiceNumberMinDigits: invoiceNumberMinDigits,
@@ -180,6 +212,9 @@ class _BusinessSettingsImpl extends BusinessSettings {
     Object? id = _Undefined,
     int? businessId,
     int? paymentTermsDays,
+    Object? iban = _Undefined,
+    Object? bic = _Undefined,
+    Object? accountHolder = _Undefined,
     Object? invoiceNumberPrefix = _Undefined,
     bool? invoiceNumberIncludeYear,
     int? invoiceNumberMinDigits,
@@ -191,6 +226,11 @@ class _BusinessSettingsImpl extends BusinessSettings {
       id: id is int? ? id : this.id,
       businessId: businessId ?? this.businessId,
       paymentTermsDays: paymentTermsDays ?? this.paymentTermsDays,
+      iban: iban is String? ? iban : this.iban,
+      bic: bic is String? ? bic : this.bic,
+      accountHolder: accountHolder is String?
+          ? accountHolder
+          : this.accountHolder,
       invoiceNumberPrefix: invoiceNumberPrefix is String?
           ? invoiceNumberPrefix
           : this.invoiceNumberPrefix,

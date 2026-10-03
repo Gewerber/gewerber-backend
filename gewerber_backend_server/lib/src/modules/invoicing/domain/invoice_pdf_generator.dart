@@ -10,6 +10,7 @@ class InvoicePdfData {
     required this.items,
     this.customer,
     this.template,
+    this.originalInvoiceNumber,
   });
 
   final Business business;
@@ -17,6 +18,9 @@ class InvoicePdfData {
   final List<InvoiceItem> items;
   final Customer? customer;
   final InvoiceTemplate? template;
+
+  /// Number of the original invoice referenced by a credit note.
+  final String? originalInvoiceNumber;
 }
 
 /// Renders an invoice as a PDF document.

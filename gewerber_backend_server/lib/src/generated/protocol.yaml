@@ -71,6 +71,7 @@ customer:
   - listCursorPage:
 invoice:
   - create:
+  - createCreditNote:
   - get:
   - getItems:
   - update:
@@ -83,6 +84,7 @@ invoice:
   - exportCsv:
   - exportJson:
   - generatePdf:
+  - exportXrechnung:
 invoiceTemplate:
   - create:
   - get:

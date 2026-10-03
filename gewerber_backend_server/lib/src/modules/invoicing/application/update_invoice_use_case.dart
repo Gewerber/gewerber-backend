@@ -9,6 +9,7 @@ import '../domain/customer_gateway.dart';
 import '../domain/invoice_calculator.dart';
 import '../domain/invoice_gateway.dart';
 import '../domain/invoice_item_gateway.dart';
+import '../domain/invoice_item_request_validator.dart';
 import '../domain/invoice_mapper.dart';
 import '../domain/invoice_template_gateway.dart';
 import '../domain/tax_rule_engine.dart';
@@ -51,6 +52,13 @@ class UpdateInvoiceUseCase {
         entityId: '${request.invoiceId}',
       );
     }
+    if (existing.type == InvoiceType.creditNote) {
+      throw ConflictException(
+        message:
+            'Credit notes are exact server-side copies of the original '
+            'invoice and cannot be edited.',
+      );
+    }
     if (existing.status != InvoiceStatus.draft) {
       throw ConflictException(
         message: 'Only draft invoices can be edited.',
@@ -62,6 +70,7 @@ class UpdateInvoiceUseCase {
         field: 'items',
       );
     }
+    InvoiceItemRequestValidator.validateAll(request.items);
     if (request.customerId != null) {
       final customer = await _customers.findById(session, request.customerId!);
       if (customer == null || customer.businessId != tenant.businessId) {
@@ -101,33 +110,23 @@ class UpdateInvoiceUseCase {
     final updated = await session.db.transaction((transaction) async {
       final invoice = await _invoices.update(
         session,
-        Invoice(
-          id: existing.id,
-          businessId: existing.businessId,
-          number: existing.number,
-          type: existing.type,
-          status: existing.status,
+        existing.copyWith(
           customerId: request.customerId,
           issueDate: request.issueDate,
           dueDate: request.dueDate,
           serviceDateFrom: request.serviceDateFrom,
           serviceDateTo: request.serviceDateTo,
-          locale: existing.locale,
-          currency: existing.currency,
           subtotalCents: totals.subtotalCents,
           vatTotalCents: totals.vatTotalCents,
           totalCents: totals.totalCents,
           paymentTermsDays: request.paymentTermsDays,
-          dunningLevel: existing.dunningLevel,
           notes: request.notes,
           templateId: request.templateId,
-          pdfDocumentId: existing.pdfDocumentId,
           recurrenceInterval: request.recurrenceInterval,
           nextRecurrenceDate: request.nextRecurrenceDate,
           recurrenceEndDate: request.recurrenceEndDate,
           recurrenceMaxOccurrences: request.recurrenceMaxOccurrences,
-          recurrenceOccurrencesCreated: existing.recurrenceOccurrencesCreated,
-          createdAt: existing.createdAt,
+          updatedAt: DateTime.now().toUtc(),
         ),
         transaction: transaction,
       );

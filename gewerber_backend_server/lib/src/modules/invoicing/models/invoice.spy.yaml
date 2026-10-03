@@ -6,6 +6,7 @@ fields:
   type: InvoiceType, default=invoice
   status: InvoiceStatus, default=draft
   customerId: int?, relation(parent=customer, onDelete=SetNull)
+  originalInvoiceId: int?, relation(parent=invoice, onDelete=NoAction)
   issueDate: DateTime
   dueDate: DateTime?
   serviceDateFrom: DateTime?
@@ -35,6 +36,8 @@ indexes:
     fields: businessId, issueDate
   invoice_customer_idx:
     fields: customerId
+  invoice_original_invoice_idx:
+    fields: originalInvoiceId
   invoice_recurrence_idx:
     fields: businessId, nextRecurrenceDate
   # Serves the hourly mark-overdue job and tenant-wide status listings that

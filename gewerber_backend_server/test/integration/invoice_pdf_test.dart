@@ -141,6 +141,39 @@ void main() {
       expect(bytes.lengthInBytes, document.sizeBytes);
     });
 
+    test(
+      'when generating a credit note PDF then it is a Gutschrift document',
+      () async {
+        final original = await createInvoice();
+        final sentOriginal = await endpoints.invoice.markSent(
+          authenticatedSession,
+          original.id!,
+          businessId: businessId,
+        );
+        final credit = await endpoints.invoice.createCreditNote(
+          authenticatedSession,
+          CreateCreditNoteRequest(originalInvoiceId: sentOriginal.id!),
+          businessId: businessId,
+        );
+        final issuedCredit = await endpoints.invoice.markSent(
+          authenticatedSession,
+          credit.id!,
+          businessId: businessId,
+        );
+
+        final document = await endpoints.invoice.generatePdf(
+          authenticatedSession,
+          issuedCredit.id!,
+          businessId: businessId,
+        );
+
+        expect(document.kind, DocumentKind.invoicePdf);
+        expect(document.fileName, 'gutschrift-${issuedCredit.number}.pdf');
+        expect(document.sizeBytes, greaterThan(0));
+        expect(document.relatedEntityId, '${issuedCredit.id}');
+      },
+    );
+
     test('when generating twice then a new document is created', () async {
       final invoice = await createInvoice();
 

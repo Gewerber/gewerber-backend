@@ -4,28 +4,79 @@ import 'package:injectable/injectable.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../../../core/i18n/country_names.dart';
+import '../../../core/i18n/locale_format.dart';
+import '../../../core/i18n/locale_resolver.dart';
+import '../../../core/i18n/message_catalog.dart';
+import '../../../core/i18n/messages.dart';
 import '../../../generated/protocol.dart';
 import '../domain/invoice_pdf_generator.dart';
 import '../domain/money_formatter.dart';
 import '../domain/tax_rule_engine.dart';
+import 'invoice_pdf_font.dart';
 
-/// Renders an invoice PDF with a German §14 UStG compliant layout.
+/// Renders an invoice PDF whose labels follow the invoice's own locale.
 ///
-/// Uses the built-in Helvetica font (WinAnsi encoding), which covers the
-/// German umlauts and the euro sign without embedding external font files.
+/// ## Locale
+///
+/// Every visible label is resolved through [MessageCatalog] in the locale
+/// returned by [LocaleResolver.forInvoice], i.e. the `locale` snapshotted on
+/// the `Invoice` record at issue time, with the `Business` locale as the
+/// fallback for records that predate it. Because the document language is a
+/// property of the stored invoice rather than of the request or the current
+/// user, re-rendering the same invoice always produces the same document.
+///
+/// ## Font
+///
+/// The built-in Helvetica fonts (WinAnsi encoding, U+0000–U+00FF only) stay
+/// the base fonts, so existing Latin text keeps its current appearance and
+/// metrics. A vendored Roboto (Apache-2.0, `assets/fonts/Roboto-Regular.ttf`)
+/// is registered as a Unicode `fontFallback` in the document theme: glyphs
+/// outside WinAnsi — the euro sign `€` (U+20AC), the en dash `–` (U+2013),
+/// Cyrillic and Turkish — are drawn from Roboto per glyph instead of failing
+/// (issue #70). The path can be overridden with the
+/// `GEWERBER_INVOICE_FONT_PATH` environment variable. When the font cannot be
+/// loaded the document is built without a theme, reproducing the old
+/// Helvetica-only behaviour on a misconfigured deployment.
+///
+/// ## Legal wording
+///
+/// A number of labels here (`Rechnungsnummer`, `Rechnungsdatum`, `Fällig am`,
+/// the §19 UStG note) may be prescribed wording on a German domestic invoice
+/// and therefore possibly non-translatable. If legal review says so, the
+/// affected keys must be pinned to the German string in every catalog — see the
+/// note in `core/i18n/messages_de.dart` and issue #57.
 @Singleton(as: InvoicePdfGenerator)
 class PdfInvoiceGenerator implements InvoicePdfGenerator {
-  const PdfInvoiceGenerator();
+  PdfInvoiceGenerator(this._messages);
+
+  final MessageCatalog _messages;
 
   static const _baseStyleFontSize = 9.0;
 
+  /// The vendored Unicode fallback font, read from disk at most once.
+  ///
+  /// [InvoicePdfFont.load] never throws and returns `null` when the font file
+  /// is missing or unreadable; [_unicodeFallbackLoaded] makes `null` a
+  /// permanent outcome for this generator instead of re-reading the file (and
+  /// re-warning on `stderr`) for every invoice.
+  pw.Font? _unicodeFallback;
+  bool _unicodeFallbackLoaded = false;
+
   @override
   Future<Uint8List> generate(InvoicePdfData data) async {
+    final locale = _localeOf(data);
+    final documentLabel = _documentLabel(data, locale);
+
     final document = pw.Document(
       author: data.business.name,
-      title: 'Rechnung ${data.invoice.number}',
-      subject: 'Invoice ${data.invoice.number}',
+      title: '$documentLabel ${data.invoice.number}',
+      subject: '$documentLabel ${data.invoice.number}',
       creator: 'Gewerber',
+      // `null` when the fallback font is unavailable: the document is then
+      // built with the pdf package's default theme, exactly as before the
+      // fallback was wired in.
+      theme: _themeWithFontFallback(),
     );
 
     document.addPage(
@@ -33,29 +84,90 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
         pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.fromLTRB(48, 40, 48, 40),
         build: (context) => [
-          _header(data),
+          _header(data, locale),
           pw.SizedBox(height: 16),
-          _recipientAndMeta(data),
+          _recipientAndMeta(data, locale),
           pw.SizedBox(height: 20),
-          _title(data),
+          _title(data, locale),
           pw.SizedBox(height: 12),
-          _itemsTable(data),
+          _itemsTable(data, locale),
           pw.SizedBox(height: 12),
-          _totals(data),
+          _totals(data, locale),
           pw.SizedBox(height: 16),
-          _taxNotice(data),
+          _taxNotice(data, locale),
           pw.SizedBox(height: 12),
-          _notes(data),
+          _notes(data, locale),
         ],
         footer: (context) =>
-            _footer(data, context.pageNumber, context.pagesCount),
+            _footer(data, locale, context.pageNumber, context.pagesCount),
       ),
     );
 
     return document.save();
   }
 
-  pw.Widget _header(InvoicePdfData data) {
+  /// The document's own language: the locale stored on the invoice, falling
+  /// back to the business, then to the catalog fallback locale.
+  ///
+  /// A locale is only used if the catalog actually has content for it. `ru`
+  /// and `tr` are valid, persisted locales, but have no catalog yet, so they
+  /// resolve to [fallbackLocale] and render German — exactly what the
+  /// generator produced for every user before issue #57. Gating on
+  /// `translatedLocales` rather than on the enum is what keeps this a no-op
+  /// instead of a new failure for those two locales.
+  ///
+  /// Since issue #70 the font is no longer a constraint: the Unicode fallback
+  /// registered by [_themeWithFontFallback] is glyph-renderable for Cyrillic
+  /// and Turkish, so `ru` and `tr` can render as soon as issue #57 adds their
+  /// message catalogs; until then they keep rendering German through the
+  /// fallback locale.
+  Locale _localeOf(InvoicePdfData data) {
+    final resolved = LocaleResolver.forInvoice(
+      invoice: data.invoice.locale,
+      business: data.business.locale,
+    );
+    return _messages.translatedLocales.contains(resolved)
+        ? resolved
+        : fallbackLocale;
+  }
+
+  /// The document theme: built-in Helvetica plus a per-glyph Unicode fallback.
+  ///
+  /// Returns `null` — leaving the pdf package's default Helvetica-only theme
+  /// in effect — when [InvoicePdfFont] cannot be loaded, so a misconfigured
+  /// deployment keeps generating invoices exactly as before issue #70 instead
+  /// of failing. Otherwise the vendored Roboto is registered as
+  /// `fontFallback` only: `base` stays unset, so all existing Latin text
+  /// keeps its current font, appearance and layout, while `€`, `–` and
+  /// Cyrillic/Turkish glyphs are drawn from Roboto.
+  pw.ThemeData? _themeWithFontFallback() {
+    final font = _unicodeFallbackFont();
+    return font == null ? null : pw.ThemeData.withFont(fontFallback: [font]);
+  }
+
+  /// Loads the fallback font at most once per generator instance.
+  ///
+  /// The production generator is a `@Singleton`, so the font file is read
+  /// from disk a single time per process.
+  pw.Font? _unicodeFallbackFont() {
+    if (!_unicodeFallbackLoaded) {
+      _unicodeFallbackLoaded = true;
+      _unicodeFallback = InvoicePdfFont.load();
+    }
+    return _unicodeFallback;
+  }
+
+  bool _isCreditNote(InvoicePdfData data) =>
+      data.invoice.type == InvoiceType.creditNote;
+
+  String _documentLabel(InvoicePdfData data, Locale locale) =>
+      _isCreditNote(
+        data,
+      )
+      ? _messages.text(Messages.pdfDocumentCreditNote, locale: locale)
+      : _messages.text(Messages.pdfDocumentInvoice, locale: locale);
+
+  pw.Widget _header(InvoicePdfData data, Locale locale) {
     final business = data.business;
     return pw.Row(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -72,7 +184,8 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
                 ),
               ),
               pw.SizedBox(height: 4),
-              if (business.address != null) ..._addressLines(business.address!),
+              if (business.address != null)
+                ..._addressLines(business.address!, locale),
             ],
           ),
         ),
@@ -80,30 +193,43 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
           crossAxisAlignment: pw.CrossAxisAlignment.end,
           children: [
             if (business.vatId != null && business.vatId!.isNotEmpty)
-              _kv('USt-IdNr.', business.vatId!),
+              _kv(
+                _messages.text(Messages.pdfFieldVatId, locale: locale),
+                business.vatId!,
+              ),
             if (business.taxNumber != null && business.taxNumber!.isNotEmpty)
-              _kv('Steuernummer', business.taxNumber!),
+              _kv(
+                _messages.text(Messages.pdfFieldTaxNumber, locale: locale),
+                business.taxNumber!,
+              ),
             if (business.email != null && business.email!.isNotEmpty)
-              _kv('E-Mail', business.email!),
+              _kv(
+                _messages.text(Messages.pdfFieldEmail, locale: locale),
+                business.email!,
+              ),
             if (business.phone != null && business.phone!.isNotEmpty)
-              _kv('Telefon', business.phone!),
+              _kv(
+                _messages.text(Messages.pdfFieldPhone, locale: locale),
+                business.phone!,
+              ),
           ],
         ),
       ],
     );
   }
 
-  List<pw.Widget> _addressLines(Address address) {
+  List<pw.Widget> _addressLines(Address address, Locale locale) {
     return [
       pw.Text(address.street, style: _small()),
       pw.Text('${address.zip} ${address.city}', style: _small()),
-      pw.Text(_countryName(address.country), style: _small()),
+      pw.Text(_countryName(address.country, locale), style: _small()),
     ];
   }
 
-  pw.Widget _recipientAndMeta(InvoicePdfData data) {
+  pw.Widget _recipientAndMeta(InvoicePdfData data, Locale locale) {
     final customer = data.customer;
     final invoice = data.invoice;
+    final isCreditNote = _isCreditNote(data);
     return pw.Row(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
@@ -111,7 +237,18 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
           child: pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
-              pw.Text('Rechnungsempfänger', style: _label()),
+              pw.Text(
+                isCreditNote
+                    ? _messages.text(
+                        Messages.pdfFieldCreditNoteRecipient,
+                        locale: locale,
+                      )
+                    : _messages.text(
+                        Messages.pdfFieldInvoiceRecipient,
+                        locale: locale,
+                      ),
+                style: _label(),
+              ),
               pw.SizedBox(height: 4),
               if (customer == null)
                 pw.Text('–', style: _base())
@@ -123,11 +260,17 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
                 if (customer.companyName != null)
                   pw.Text(customer.name, style: _base()),
                 if (customer.address != null)
-                  ..._addressLines(customer.address!),
+                  ..._addressLines(customer.address!, locale),
                 if (customer.vatId != null && customer.vatId!.isNotEmpty)
                   pw.SizedBox(height: 4),
                 if (customer.vatId != null && customer.vatId!.isNotEmpty)
-                  _kv('USt-IdNr.', customer.vatId!),
+                  _kv(
+                    _messages.text(
+                      Messages.pdfFieldCustomerVatId,
+                      locale: locale,
+                    ),
+                    customer.vatId!,
+                  ),
               ],
             ],
           ),
@@ -136,17 +279,50 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
         pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: [
-            _kv('Rechnungsnummer', invoice.number),
-            _kv('Rechnungsdatum', _formatDate(invoice.issueDate)),
-            if (invoice.dueDate != null)
-              _kv('Fällig am', _formatDate(invoice.dueDate!)),
+            _kv(
+              isCreditNote
+                  ? _messages.text(
+                      Messages.pdfFieldCreditNoteNumber,
+                      locale: locale,
+                    )
+                  : _messages.text(
+                      Messages.pdfFieldInvoiceNumber,
+                      locale: locale,
+                    ),
+              invoice.number,
+            ),
+            _kv(
+              isCreditNote
+                  ? _messages.text(
+                      Messages.pdfFieldCreditNoteDate,
+                      locale: locale,
+                    )
+                  : _messages.text(
+                      Messages.pdfFieldInvoiceDate,
+                      locale: locale,
+                    ),
+              _formatDate(invoice.issueDate, locale),
+            ),
+            if (data.originalInvoiceNumber != null)
+              _kv(
+                _messages.text(
+                  Messages.pdfFieldCancelledInvoice,
+                  locale: locale,
+                ),
+                data.originalInvoiceNumber!,
+              ),
+            if (!isCreditNote && invoice.dueDate != null)
+              _kv(
+                _messages.text(Messages.pdfFieldDueDate, locale: locale),
+                _formatDate(invoice.dueDate!, locale),
+              ),
             if (invoice.serviceDateFrom != null)
               _kv(
-                'Leistungszeitraum',
+                _messages.text(Messages.pdfFieldServicePeriod, locale: locale),
                 invoice.serviceDateTo != null
-                    ? '${_formatDate(invoice.serviceDateFrom!)} – '
-                          '${_formatDate(invoice.serviceDateTo!)}'
-                    : _formatDate(invoice.serviceDateFrom!),
+                    ? '${_formatDate(invoice.serviceDateFrom!, locale)} – '
+                          '${_formatDate(invoice.serviceDateTo!, locale)}'
+                    : _formatDate(invoice.serviceDateFrom!, locale),
               ),
           ],
         ),
@@ -154,37 +330,66 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
     );
   }
 
-  pw.Widget _title(InvoicePdfData data) {
+  pw.Widget _title(InvoicePdfData data, Locale locale) {
+    if (_isCreditNote(data)) {
+      return pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          pw.Text(
+            _messages.text(
+              Messages.pdfDocumentCancellationNotice,
+              locale: locale,
+            ),
+            style: pw.TextStyle(
+              fontSize: 14,
+              fontWeight: pw.FontWeight.bold,
+            ),
+          ),
+          if (data.originalInvoiceNumber != null) ...[
+            pw.SizedBox(height: 3),
+            pw.Text(
+              _messages.text(
+                Messages.pdfDocumentCorrectionNote,
+                locale: locale,
+                args: {'number': data.originalInvoiceNumber},
+              ),
+              style: _base(),
+            ),
+          ],
+        ],
+      );
+    }
+
     final headerText = data.template?.headerText;
     final title = (headerText != null && headerText.trim().isNotEmpty)
         ? headerText.trim()
-        : 'Rechnung';
+        : _messages.text(Messages.pdfDocumentInvoice, locale: locale);
     return pw.Text(
       title,
       style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold),
     );
   }
 
-  pw.Widget _itemsTable(InvoicePdfData data) {
+  pw.Widget _itemsTable(InvoicePdfData data, Locale locale) {
     final header = [
-      'Pos.',
-      'Leistung',
-      'Menge',
-      'Einheit',
-      'Einzelpreis',
-      'USt.',
-      'Gesamt',
+      _messages.text(Messages.pdfTablePosition, locale: locale),
+      _messages.text(Messages.pdfTableDescription, locale: locale),
+      _messages.text(Messages.pdfTableQuantity, locale: locale),
+      _messages.text(Messages.pdfTableUnit, locale: locale),
+      _messages.text(Messages.pdfTableUnitPrice, locale: locale),
+      _messages.text(Messages.pdfTableVatRate, locale: locale),
+      _messages.text(Messages.pdfTableLineTotal, locale: locale),
     ];
     final rows = data.items
         .map(
           (item) => [
             '${item.position}',
             item.description,
-            _formatQuantity(item.quantity),
-            _unitName(item.unit),
-            _formatCents(item.unitPriceCents, data.invoice.currency),
+            _formatQuantity(item.quantity, locale),
+            _unitName(item.unit, locale),
+            _formatCents(item.unitPriceCents, data.invoice.currency, locale),
             _vatLabel(item.vatRate),
-            _formatCents(item.lineTotalCents, data.invoice.currency),
+            _formatCents(item.lineTotalCents, data.invoice.currency, locale),
           ],
         )
         .toList();
@@ -227,22 +432,26 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
     );
   }
 
-  pw.Widget _totals(InvoicePdfData data) {
+  pw.Widget _totals(InvoicePdfData data, Locale locale) {
     final invoice = data.invoice;
     final currency = invoice.currency;
-    final isKleinunternehmer = data.business.isKleinunternehmer;
+    // A credit note must display the original's stored VAT. The business's
+    // current §19 status is deliberately ignored for credits so a change
+    // after issuance cannot rewrite the reversal document.
+    final isKleinunternehmer =
+        !_isCreditNote(data) && data.business.isKleinunternehmer;
 
     final rows = <List<String>>[
       [
-        'Zwischensumme (netto)',
-        _formatCents(invoice.subtotalCents, currency),
+        _messages.text(Messages.pdfTotalNetSubtotal, locale: locale),
+        _formatCents(invoice.subtotalCents, currency, locale),
       ],
     ];
 
     if (!isKleinunternehmer && invoice.vatTotalCents != 0) {
       rows.add([
-        'Umsatzsteuer',
-        _formatCents(invoice.vatTotalCents, currency),
+        _messages.text(Messages.pdfTotalVat, locale: locale),
+        _formatCents(invoice.vatTotalCents, currency, locale),
       ]);
     }
 
@@ -268,14 +477,14 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           pw.Text(
-            'Gesamtbetrag',
+            _messages.text(Messages.pdfTotalGrandTotal, locale: locale),
             style: pw.TextStyle(
               fontWeight: pw.FontWeight.bold,
               fontSize: _baseStyleFontSize + 1,
             ),
           ),
           pw.Text(
-            _formatCents(invoice.totalCents, currency),
+            _formatCents(invoice.totalCents, currency, locale),
             style: pw.TextStyle(
               fontWeight: pw.FontWeight.bold,
               fontSize: _baseStyleFontSize + 1,
@@ -291,8 +500,8 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
     );
   }
 
-  pw.Widget _taxNotice(InvoicePdfData data) {
-    final notice = _taxNoticeText(data);
+  pw.Widget _taxNotice(InvoicePdfData data, Locale locale) {
+    final notice = _taxNoticeText(data, locale);
     if (notice == null) return pw.SizedBox();
     return pw.Container(
       padding: const pw.EdgeInsets.all(8),
@@ -303,19 +512,21 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
     );
   }
 
-  String? _taxNoticeText(InvoicePdfData data) {
-    if (data.business.isKleinunternehmer) {
-      return 'Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.';
+  String? _taxNoticeText(InvoicePdfData data, Locale locale) {
+    if (!_isCreditNote(data) && data.business.isKleinunternehmer) {
+      return _messages.text(
+        Messages.pdfNoteKleinunternehmer,
+        locale: locale,
+      );
     }
     final rates = data.items.map((i) => i.vatRate).toSet();
     if (rates.contains(VatRate.reverseCharge)) {
-      return 'Steuerschuldnerschaft des Leistungsempfängers (Reverse Charge). '
-          'Die Umsatzsteuer geht auf den Leistungsempfänger über.';
+      return _messages.text(Messages.pdfNoteReverseCharge, locale: locale);
     }
     return null;
   }
 
-  pw.Widget _notes(InvoicePdfData data) {
+  pw.Widget _notes(InvoicePdfData data, Locale locale) {
     final invoice = data.invoice;
     final footerText = data.template?.footerText;
     final blocks = <pw.Widget>[];
@@ -325,7 +536,10 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
         pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: [
-            pw.Text('Anmerkungen', style: _label()),
+            pw.Text(
+              _messages.text(Messages.pdfSectionNotes, locale: locale),
+              style: _label(),
+            ),
             pw.SizedBox(height: 2),
             pw.Text(invoice.notes!.trim(), style: _base()),
           ],
@@ -333,20 +547,45 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
       );
     }
 
-    blocks.add(
-      pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: [
-          pw.Text('Zahlungsbedingungen', style: _label()),
-          pw.SizedBox(height: 2),
-          pw.Text(
-            'Zahlbar innerhalb von ${invoice.paymentTermsDays} Tagen '
-            'nach Rechnungsdatum ohne Abzug.',
-            style: _base(),
-          ),
-        ],
-      ),
-    );
+    if (_isCreditNote(data)) {
+      blocks.add(
+        pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text(
+              _messages.text(Messages.pdfSectionOffset, locale: locale),
+              style: _label(),
+            ),
+            pw.SizedBox(height: 2),
+            pw.Text(
+              _messages.text(Messages.pdfTextOffsetExplanation, locale: locale),
+              style: _base(),
+            ),
+          ],
+        ),
+      );
+    } else {
+      blocks.add(
+        pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text(
+              _messages.text(Messages.pdfSectionPaymentTerms, locale: locale),
+              style: _label(),
+            ),
+            pw.SizedBox(height: 2),
+            pw.Text(
+              _messages.text(
+                Messages.pdfTextPaymentTerms,
+                locale: locale,
+                args: {'days': invoice.paymentTermsDays},
+              ),
+              style: _base(),
+            ),
+          ],
+        ),
+      );
+    }
 
     if (footerText != null && footerText.trim().isNotEmpty) {
       blocks.add(pw.Text(footerText.trim(), style: _small()));
@@ -363,7 +602,12 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
     );
   }
 
-  pw.Widget _footer(InvoicePdfData data, int pageNumber, int pagesCount) {
+  pw.Widget _footer(
+    InvoicePdfData data,
+    Locale locale,
+    int pageNumber,
+    int pagesCount,
+  ) {
     final business = data.business;
     return pw.Container(
       padding: const pw.EdgeInsets.only(top: 8),
@@ -376,11 +620,16 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           pw.Text(
-            '${business.name} · Rechnung ${data.invoice.number}',
+            '${business.name} · ${_documentLabel(data, locale)} '
+            '${data.invoice.number}',
             style: pw.TextStyle(fontSize: 7, color: PdfColors.grey700),
           ),
           pw.Text(
-            'Seite $pageNumber von $pagesCount',
+            _messages.text(
+              Messages.pdfFooterPage,
+              locale: locale,
+              args: {'page': pageNumber, 'pages': pagesCount},
+            ),
             style: pw.TextStyle(fontSize: 7, color: PdfColors.grey700),
           ),
         ],
@@ -409,6 +658,12 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
 
   pw.TextStyle _label() => pw.TextStyle(fontSize: 8, color: PdfColors.grey700);
 
+  /// VAT rate column.
+  ///
+  /// `RC` and `–` are notation rather than prose and stay as-is in every
+  /// locale; the reverse-charge explanation is carried by the tax notice block,
+  /// which is translated. The German spacing of `19 %` is kept deliberately —
+  /// it is typographic, not a translation, and not worth a per-locale branch.
   String _vatLabel(VatRate rate) {
     return switch (rate) {
       VatRate.standard => '${TaxRuleEngine.standardPercent} %',
@@ -419,67 +674,27 @@ class PdfInvoiceGenerator implements InvoicePdfGenerator {
     };
   }
 
-  String _unitName(InvoiceItemUnit unit) {
-    return switch (unit) {
-      InvoiceItemUnit.piece => 'Stk.',
-      InvoiceItemUnit.hour => 'Std.',
-      InvoiceItemUnit.day => 'Tag',
-      InvoiceItemUnit.month => 'Monat',
-      InvoiceItemUnit.project => 'Projekt',
-      InvoiceItemUnit.other => 'Sonst.',
+  String _unitName(InvoiceItemUnit unit, Locale locale) {
+    final key = switch (unit) {
+      InvoiceItemUnit.piece => Messages.pdfUnitPiece,
+      InvoiceItemUnit.hour => Messages.pdfUnitHour,
+      InvoiceItemUnit.day => Messages.pdfUnitDay,
+      InvoiceItemUnit.month => Messages.pdfUnitMonth,
+      InvoiceItemUnit.project => Messages.pdfUnitProject,
+      InvoiceItemUnit.other => Messages.pdfUnitOther,
     };
+    return _messages.text(key, locale: locale);
   }
 
-  String _countryName(Country country) {
-    return switch (country) {
-      Country.deu => 'Deutschland',
-      Country.aut => 'Österreich',
-      Country.bel => 'Belgien',
-      Country.bgr => 'Bulgarien',
-      Country.hrv => 'Kroatien',
-      Country.cyp => 'Zypern',
-      Country.cze => 'Tschechien',
-      Country.dnk => 'Dänemark',
-      Country.est => 'Estland',
-      Country.fin => 'Finnland',
-      Country.fra => 'Frankreich',
-      Country.grc => 'Griechenland',
-      Country.hun => 'Ungarn',
-      Country.irl => 'Irland',
-      Country.ita => 'Italien',
-      Country.lva => 'Lettland',
-      Country.ltu => 'Litauen',
-      Country.lux => 'Luxemburg',
-      Country.mlt => 'Malta',
-      Country.nld => 'Niederlande',
-      Country.pol => 'Polen',
-      Country.prt => 'Portugal',
-      Country.rou => 'Rumänien',
-      Country.svk => 'Slowakei',
-      Country.svn => 'Slowenien',
-      Country.esp => 'Spanien',
-      Country.swe => 'Schweden',
-      Country.che => 'Schweiz',
-      Country.gbr => 'Vereinigtes Königreich',
-      Country.usa => 'USA',
-      _ => country.name,
-    };
-  }
+  String _countryName(Country country, Locale locale) =>
+      _messages.text(countryKey(country), locale: locale);
 
-  String _formatDate(DateTime dateTime) {
-    final d = dateTime.toLocal();
-    final day = d.day.toString().padLeft(2, '0');
-    final month = d.month.toString().padLeft(2, '0');
-    return '$day.$month.${d.year}';
-  }
+  String _formatDate(DateTime dateTime, Locale locale) =>
+      LocaleFormat.date(dateTime, locale: locale);
 
-  String _formatQuantity(double quantity) {
-    if (quantity == quantity.truncateToDouble()) {
-      return quantity.truncate().toString();
-    }
-    return quantity.toStringAsFixed(2).replaceAll('.', ',');
-  }
+  String _formatQuantity(double quantity, Locale locale) =>
+      LocaleFormat.quantity(quantity, locale: locale);
 
-  String _formatCents(int cents, Currency currency) =>
-      MoneyFormatter.formatCents(cents, currency);
+  String _formatCents(int cents, Currency currency, Locale locale) =>
+      MoneyFormatter.formatCents(cents, currency, locale: locale);
 }

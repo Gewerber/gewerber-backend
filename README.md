@@ -1,7 +1,7 @@
 # 🧩 Gewerber Backend
 
-![Serverpod](https://img.shields.io/badge/Serverpod-4.x-blue.svg?style=flat-square)
-![Dart](https://img.shields.io/badge/Dart-%5E3.12.0-0175C2.svg?logo=dart&logoColor=white&style=flat-square)
+![Serverpod](https://img.shields.io/badge/Serverpod-4.0.3-blue.svg?style=flat-square)
+![Dart](https://img.shields.io/badge/Dart-%5E3.13.3-0175C2.svg?logo=dart&logoColor=white&style=flat-square)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791.svg?logo=postgresql&logoColor=white&style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)
 
@@ -13,9 +13,9 @@ Part of the [Gewerber GitHub organization](https://github.com/Gewerber). This is
 
 ## 🧱 Stack
 
-- **Serverpod** `4.x` — backend framework
+- **Serverpod** `4.0.3` — backend framework
 - **PostgreSQL** — database
-- **Dart SDK** `^3.12.0`
+- **Dart SDK** `^3.13.3`
 
 ---
 
@@ -35,11 +35,11 @@ This is a Dart **workspace** with two packages:
 ### Requirements
 
 - Dart SDK
-- Serverpod CLI
+- Serverpod CLI `4.0.3`
 - Docker (for PostgreSQL), or a local PostgreSQL
 
 ```bash
-dart pub global activate serverpod_cli
+dart pub global activate serverpod_cli 4.0.3
 ```
 
 ### Run the server
@@ -49,6 +49,11 @@ From `gewerber_backend_server/`:
 ```bash
 serverpod start
 ```
+
+The dev/test PostgreSQL services (`gewerber_backend_server/docker-compose.yaml`) read their
+passwords from a local `.env`: run `cp .env.example .env` in `gewerber_backend_server/` before
+`docker compose up -d postgres_test`, and keep the `test:` block `database:` value in the
+gitignored `config/passwords.yaml` equal to `POSTGRES_TEST_PASSWORD`.
 
 See [`AGENTS.md`](AGENTS.md) for the MCP-driven development workflow used in this repository.
 
@@ -98,6 +103,13 @@ docker compose up -d --build
 The container expects a Serverpod `config/passwords.yaml` mounted at
 `/app/config/passwords.yaml` (keys: `database`, `serviceSecret`, `redis`,
 `emailSecretHashPepper`, `jwtHmacSha512PrivateKey`, `jwtRefreshTokenHashPepper`).
+
+Invoice PDFs use a fallback font shipped in the image at the CWD-relative path
+`assets/fonts/Roboto-Regular.ttf`. Keep `WORKDIR /app` and do not mount a volume
+over `/app`, or the font is hidden and invoices silently fall back to Helvetica
+(no `€` or `–`); set `GEWERBER_INVOICE_FONT_PATH` to point somewhere else. The
+resolved path is logged when the font is first loaded (once per process, on the
+first generated invoice).
 
 ---
 

@@ -9,7 +9,11 @@ abstract interface class InvoiceItemGateway {
     Transaction? transaction,
   });
 
-  Future<List<InvoiceItem>> findByInvoiceId(Session session, int invoiceId);
+  Future<List<InvoiceItem>> findByInvoiceId(
+    Session session,
+    int invoiceId, {
+    Transaction? transaction,
+  });
 
   /// Loads items of many invoices in one query, ordered by invoice, then
   /// position, then id.

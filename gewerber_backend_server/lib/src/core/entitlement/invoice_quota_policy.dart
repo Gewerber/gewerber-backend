@@ -16,11 +16,12 @@ import 'entitlement_provider.dart';
 ///
 /// Everything here is inert unless the deployment opted into commercial
 /// entitlements via [commercialEntitlementsEnabled] (env var
-/// `GEWERBER_COMMERCIAL_ENTITLEMENTS=true`, the same flag that swaps the
-/// [EntitlementProvider] DI binding). With the flag off — the default for
-/// every self-hosted OSS build — [enforcementEnabled] is `false` and callers
-/// must skip the quota check entirely (no extra queries, behavior identical
-/// to pre-quota releases).
+/// `GEWERBER_COMMERCIAL_ENTITLEMENTS=true`, the same flag that gates the
+/// commercial module's `EntitlementProvider` swap — see
+/// `commercial_entitlement_installer.dart`). With the flag off — the default
+/// for every self-hosted OSS build — [enforcementEnabled] is `false` and
+/// callers must skip the quota check entirely (no extra queries, behavior
+/// identical to pre-quota releases).
 @singleton
 class InvoiceQuotaPolicy {
   /// Production constructor: reads the process environment and applies the
@@ -72,8 +73,9 @@ class InvoiceQuotaPolicy {
   );
 
   /// Whether quota enforcement is active for this process — the exact same
-  /// flag that swaps in the [CommercialEntitlementProvider] (see
-  /// `core/di/injection.dart`). Callers must check this *before* any quota
+  /// flag that gates the commercial module's provider swap via the host
+  /// `CommercialEntitlementInstaller` (see `core/di/injection.dart`).
+  /// Callers must check this *before* any quota
   /// work so that OSS builds run zero extra queries.
   bool get enforcementEnabled => commercialEntitlementsEnabled(_environment);
 

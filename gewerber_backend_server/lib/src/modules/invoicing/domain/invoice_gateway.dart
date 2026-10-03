@@ -53,6 +53,33 @@ abstract interface class InvoiceGateway {
   /// invoices per business id — callers use it for system-event auditing.
   Future<Map<int, int>> markOverdue(Session session, DateTime now);
 
+  /// All credit notes that reference [originalInvoiceId] as their original,
+  /// regardless of status. [transaction] keeps the check atomic with the
+  /// surrounding row lock (e.g. cancellation vs. issuance).
+  Future<List<Invoice>> findLinkedCreditNotes(
+    Session session,
+    int originalInvoiceId, {
+    Transaction? transaction,
+  });
+
+  /// Issued (non-draft, non-cancelled) credit notes linked to
+  /// [originalInvoiceId]. Issuance uses this under the original row lock to
+  /// enforce at most one issued storno per original.
+  Future<List<Invoice>> findIssuedLinkedCreditNotes(
+    Session session,
+    int originalInvoiceId, {
+    Transaction? transaction,
+  });
+
+  /// Bounded batch used by dashboard receivables: issued credit notes of
+  /// [businessId] whose `originalInvoiceId` is in [originalInvoiceIds].
+  /// Unlinked legacy credit notes are deliberately excluded.
+  Future<List<Invoice>> findIssuedLinkedCreditNotesForOriginals(
+    Session session, {
+    required int businessId,
+    required Set<int> originalInvoiceIds,
+  });
+
   /// Open (unsettled) sales invoices of a business — `type == invoice` with
   /// status `sent`, `partiallyPaid` or `overdue` — ordered by due date
   /// ascending (NULLs last), id as tiebreak. Credit notes are excluded.

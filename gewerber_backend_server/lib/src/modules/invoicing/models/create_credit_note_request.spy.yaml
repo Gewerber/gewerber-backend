@@ -1,0 +1,5 @@
+class: CreateCreditNoteRequest
+fields:
+  originalInvoiceId: int
+  issueDate: DateTime?
+  reason: String?

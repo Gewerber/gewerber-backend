@@ -10,7 +10,6 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-
 import 'package:gewerber_backend_server/src/generated/protocol.dart'
     as _itzp2rm6;
 import 'package:serverpod/serverpod.dart' as _is;
@@ -25,6 +24,7 @@ abstract class UpdateCustomerRequest
     required this.name,
     this.companyName,
     this.vatId,
+    this.buyerReference,
     this.email,
     this.phone,
     this.address,
@@ -37,6 +37,7 @@ abstract class UpdateCustomerRequest
     required String name,
     String? companyName,
     String? vatId,
+    String? buyerReference,
     String? email,
     String? phone,
     _iz28txwx.Address? address,
@@ -54,6 +55,7 @@ abstract class UpdateCustomerRequest
       name: jsonSerialization['name'] as String,
       companyName: jsonSerialization['companyName'] as String?,
       vatId: jsonSerialization['vatId'] as String?,
+      buyerReference: jsonSerialization['buyerReference'] as String?,
       email: jsonSerialization['email'] as String?,
       phone: jsonSerialization['phone'] as String?,
       address: jsonSerialization['address'] == null
@@ -75,6 +77,8 @@ abstract class UpdateCustomerRequest
 
   String? vatId;
 
+  String? buyerReference;
+
   String? email;
 
   String? phone;
@@ -92,6 +96,7 @@ abstract class UpdateCustomerRequest
     String? name,
     String? companyName,
     String? vatId,
+    String? buyerReference,
     String? email,
     String? phone,
     _iz28txwx.Address? address,
@@ -106,6 +111,7 @@ abstract class UpdateCustomerRequest
       'name': name,
       if (companyName != null) 'companyName': companyName,
       if (vatId != null) 'vatId': vatId,
+      if (buyerReference != null) 'buyerReference': buyerReference,
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address?.toJson(),
@@ -122,6 +128,7 @@ abstract class UpdateCustomerRequest
       'name': name,
       if (companyName != null) 'companyName': companyName,
       if (vatId != null) 'vatId': vatId,
+      if (buyerReference != null) 'buyerReference': buyerReference,
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address?.toJsonForProtocol(),
@@ -144,6 +151,7 @@ class _UpdateCustomerRequestImpl extends UpdateCustomerRequest {
     required String name,
     String? companyName,
     String? vatId,
+    String? buyerReference,
     String? email,
     String? phone,
     _iz28txwx.Address? address,
@@ -154,6 +162,7 @@ class _UpdateCustomerRequestImpl extends UpdateCustomerRequest {
          name: name,
          companyName: companyName,
          vatId: vatId,
+         buyerReference: buyerReference,
          email: email,
          phone: phone,
          address: address,
@@ -170,6 +179,7 @@ class _UpdateCustomerRequestImpl extends UpdateCustomerRequest {
     String? name,
     Object? companyName = _Undefined,
     Object? vatId = _Undefined,
+    Object? buyerReference = _Undefined,
     Object? email = _Undefined,
     Object? phone = _Undefined,
     Object? address = _Undefined,
@@ -181,6 +191,9 @@ class _UpdateCustomerRequestImpl extends UpdateCustomerRequest {
       name: name ?? this.name,
       companyName: companyName is String? ? companyName : this.companyName,
       vatId: vatId is String? ? vatId : this.vatId,
+      buyerReference: buyerReference is String?
+          ? buyerReference
+          : this.buyerReference,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
       address: address is _iz28txwx.Address?

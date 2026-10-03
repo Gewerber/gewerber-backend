@@ -5,7 +5,7 @@ repository: https://github.com/Gewerber/gewerber-backend
 issue_tracker: https://github.com/Gewerber/gewerber-backend/issues
 
 environment:
-  sdk: '^3.12.0'
+  sdk: '^3.13.3'
 
 workspace:
   - gewerber_backend_client

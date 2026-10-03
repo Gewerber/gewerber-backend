@@ -10,7 +10,6 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
 import '../../../modules/business/models/currency.dart' as _i80byysb;
 import '../../../modules/business/models/locale.dart' as _ie5v8zdc;
@@ -28,6 +27,7 @@ abstract class Invoice
     _i4s57tlu.InvoiceType? type,
     _ib459vd4.InvoiceStatus? status,
     this.customerId,
+    this.originalInvoiceId,
     required this.issueDate,
     this.dueDate,
     this.serviceDateFrom,
@@ -69,6 +69,7 @@ abstract class Invoice
     _i4s57tlu.InvoiceType? type,
     _ib459vd4.InvoiceStatus? status,
     int? customerId,
+    int? originalInvoiceId,
     required DateTime issueDate,
     DateTime? dueDate,
     DateTime? serviceDateFrom,
@@ -108,6 +109,7 @@ abstract class Invoice
               (jsonSerialization['status'] as String),
             ),
       customerId: jsonSerialization['customerId'] as int?,
+      originalInvoiceId: jsonSerialization['originalInvoiceId'] as int?,
       issueDate: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['issueDate'],
       ),
@@ -183,6 +185,8 @@ abstract class Invoice
 
   int? customerId;
 
+  int? originalInvoiceId;
+
   DateTime issueDate;
 
   DateTime? dueDate;
@@ -235,6 +239,7 @@ abstract class Invoice
     _i4s57tlu.InvoiceType? type,
     _ib459vd4.InvoiceStatus? status,
     int? customerId,
+    int? originalInvoiceId,
     DateTime? issueDate,
     DateTime? dueDate,
     DateTime? serviceDateFrom,
@@ -267,6 +272,7 @@ abstract class Invoice
       'type': type.toJson(),
       'status': status.toJson(),
       if (customerId != null) 'customerId': customerId,
+      if (originalInvoiceId != null) 'originalInvoiceId': originalInvoiceId,
       'issueDate': issueDate.toJson(),
       if (dueDate != null) 'dueDate': dueDate?.toJson(),
       if (serviceDateFrom != null) 'serviceDateFrom': serviceDateFrom?.toJson(),
@@ -305,6 +311,7 @@ abstract class Invoice
       'type': type.toJson(),
       'status': status.toJson(),
       if (customerId != null) 'customerId': customerId,
+      if (originalInvoiceId != null) 'originalInvoiceId': originalInvoiceId,
       'issueDate': issueDate.toJson(),
       if (dueDate != null) 'dueDate': dueDate?.toJson(),
       if (serviceDateFrom != null) 'serviceDateFrom': serviceDateFrom?.toJson(),
@@ -349,6 +356,7 @@ class _InvoiceImpl extends Invoice {
     _i4s57tlu.InvoiceType? type,
     _ib459vd4.InvoiceStatus? status,
     int? customerId,
+    int? originalInvoiceId,
     required DateTime issueDate,
     DateTime? dueDate,
     DateTime? serviceDateFrom,
@@ -377,6 +385,7 @@ class _InvoiceImpl extends Invoice {
          type: type,
          status: status,
          customerId: customerId,
+         originalInvoiceId: originalInvoiceId,
          issueDate: issueDate,
          dueDate: dueDate,
          serviceDateFrom: serviceDateFrom,
@@ -411,6 +420,7 @@ class _InvoiceImpl extends Invoice {
     _i4s57tlu.InvoiceType? type,
     _ib459vd4.InvoiceStatus? status,
     Object? customerId = _Undefined,
+    Object? originalInvoiceId = _Undefined,
     DateTime? issueDate,
     Object? dueDate = _Undefined,
     Object? serviceDateFrom = _Undefined,
@@ -440,6 +450,9 @@ class _InvoiceImpl extends Invoice {
       type: type ?? this.type,
       status: status ?? this.status,
       customerId: customerId is int? ? customerId : this.customerId,
+      originalInvoiceId: originalInvoiceId is int?
+          ? originalInvoiceId
+          : this.originalInvoiceId,
       issueDate: issueDate ?? this.issueDate,
       dueDate: dueDate is DateTime? ? dueDate : this.dueDate,
       serviceDateFrom: serviceDateFrom is DateTime?

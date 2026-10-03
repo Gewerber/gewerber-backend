@@ -34,7 +34,6 @@ void main() {
     });
 
     Future<Invoice> seedInvoice({
-      InvoiceType type = InvoiceType.invoice,
       DateTime? issueDate,
       DateTime? dueDate,
       int unitPriceCents = 10000,
@@ -44,7 +43,6 @@ void main() {
       final invoice = await endpoints.invoice.create(
         sessionA,
         CreateInvoiceRequest(
-          type: type,
           customerId: customerId,
           issueDate: issueDate ?? DateTime.utc(2026, 7, 1),
           dueDate: dueDate,
@@ -66,6 +64,19 @@ void main() {
         );
       }
       return invoice;
+    }
+
+    Future<Invoice> issueFullCredit(Invoice original) async {
+      final credit = await endpoints.invoice.createCreditNote(
+        sessionA,
+        CreateCreditNoteRequest(originalInvoiceId: original.id!),
+        businessId: businessId,
+      );
+      return endpoints.invoice.markSent(
+        sessionA,
+        credit.id!,
+        businessId: businessId,
+      );
     }
 
     Future<AccountingTransaction> seedTransaction({
@@ -589,12 +600,49 @@ void main() {
     );
 
     test(
-      'when only a credit note exists then receivables stay empty',
+      'when a full credit note is issued then the original leaves receivables',
       () async {
-        await seedInvoice(
-          type: InvoiceType.creditNote,
+        final customer = await endpoints.customer.create(
+          sessionA,
+          CreateCustomerRequest(name: 'Kunde mit Storno'),
+          businessId: businessId,
+        );
+        final original = await seedInvoice(
+          dueDate: DateTime.utc(2026, 7, 1),
+          customerId: customer.id,
+          markSent: true,
+        );
+        final credit = await issueFullCredit(original);
+
+        expect(credit.originalInvoiceId, original.id);
+        expect(credit.totalCents, -original.totalCents);
+
+        final summary = await endpoints.dashboard.getSummary(
+          sessionA,
+          asOf: asOf,
+          businessId: businessId,
+        );
+
+        expect(summary.receivables.openInvoicesCount, 0);
+        expect(summary.receivables.openTotalCents, 0);
+        expect(summary.receivables.overdueCount, 0);
+        expect(summary.receivables.overdueTotalCents, 0);
+        expect(summary.receivables.overdueInvoices, isEmpty);
+        expect(summary.receivables.debtors, isEmpty);
+      },
+    );
+
+    test(
+      'when a credit note is only draft then receivables are unchanged',
+      () async {
+        final original = await seedInvoice(
           dueDate: DateTime.utc(2026, 7, 1),
           markSent: true,
+        );
+        await endpoints.invoice.createCreditNote(
+          sessionA,
+          CreateCreditNoteRequest(originalInvoiceId: original.id!),
+          businessId: businessId,
         );
 
         final summary = await endpoints.dashboard.getSummary(
@@ -603,11 +651,38 @@ void main() {
           businessId: businessId,
         );
 
-        // Follow-up: credit notes are not compensated server-side yet — they
-        // must never inflate receivables until netting exists.
-        expect(summary.receivables.openInvoicesCount, 0);
-        expect(summary.receivables.openTotalCents, 0);
-        expect(summary.receivables.debtors, isEmpty);
+        expect(summary.receivables.openInvoicesCount, 1);
+        expect(summary.receivables.openTotalCents, original.totalCents);
+      },
+    );
+
+    test(
+      'when a legacy unlinked credit note exists then it does not offset',
+      () async {
+        final original = await seedInvoice(
+          dueDate: DateTime.utc(2026, 7, 1),
+          markSent: true,
+        );
+        await Invoice.db.insertRow(
+          sessionA.build(),
+          Invoice(
+            businessId: businessId,
+            number: 'LEGACY-CREDIT-1',
+            type: InvoiceType.creditNote,
+            status: InvoiceStatus.sent,
+            issueDate: DateTime.utc(2026, 7, 2),
+            totalCents: -original.totalCents,
+          ),
+        );
+
+        final summary = await endpoints.dashboard.getSummary(
+          sessionA,
+          asOf: asOf,
+          businessId: businessId,
+        );
+
+        expect(summary.receivables.openInvoicesCount, 1);
+        expect(summary.receivables.openTotalCents, original.totalCents);
       },
     );
 

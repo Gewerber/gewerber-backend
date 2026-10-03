@@ -501,20 +501,18 @@ void main() {
         final documentsFile = names.singleWhere(
           (name) => name.endsWith('/documents.json'),
         );
-        final documents =
-            jsonDecode(
-                  utf8.decode(
-                    Uint8List.fromList(
-                      decoded.files
-                              .firstWhere(
-                                (f) => f.name == documentsFile,
-                              )
-                              .content
-                          as List<int>,
-                    ),
-                  ),
-                )
-                as Map;
+        final documents = jsonDecode(
+          utf8.decode(
+            Uint8List.fromList(
+              decoded.files
+                      .firstWhere(
+                        (f) => f.name == documentsFile,
+                      )
+                      .content
+                  as List<int>,
+            ),
+          ),
+        ) as Map;
         expect(documents['count'], 1);
         expect(documents['filesIncluded'], 0);
         expect(names, everyElement(isNot(endsWith('huge.bin'))));
