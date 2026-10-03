@@ -213,8 +213,18 @@ serverpod generate          # regenerate models/endpoints after changing .spy.ya
 serverpod create-migration  # create DB migration (after table changes)
 dart run build_runner build # regenerate injectable DI config
 dart analyze                # required before PR
-dart format .               # required before PR
 dart test                   # integration tests (needs postgres_test)
+
+# Never `dart format .` — dart format does not read the analyzer.exclude list
+# in analysis_options.yaml and has no exclude flag, so it rewrites the
+# Serverpod-generated trees that the privacy-guard job pins byte-for-byte
+# (issue #71). Enumerate tracked files and subtract those trees instead
+# (required before PR; CI runs the same list read-only):
+git ls-files -z -- '*.dart' \
+  ':(exclude)gewerber_backend_server/lib/src/generated/**' \
+  ':(exclude)gewerber_backend_client/lib/src/protocol/**' \
+  ':(exclude)gewerber_backend_server/test/integration/test_tools/**' \
+  | xargs -0 -r dart format
 ```
 
 ## Deployment
@@ -231,7 +241,7 @@ Same pipeline as `gewerber-website`: GitHub Actions → GHCR → VPS → docker 
 ## Checklist after doing changes
 
 1. `dart analyze` (CLI)
-2. `dart format` (CLI)
+2. Format with the scoped `dart format` pipeline in [Commands](#commands) — never `dart format .` (CLI, generated trees are excluded, issue #71)
 3. `serverpod create-migration` (CLI — only if models changed)
 4. Do `serverpod` MCP `hot_restart` if required
 5. Run tests (`dart test` — needs `docker compose up -d postgres_test`)
