@@ -7,10 +7,24 @@
 #                               unit tests. No service containers, no secrets, so
 #                               it runs on every event including Dependabot and
 #                               pull requests from forks.
-#   - `integration-tests`    -- the 34 `withServerpod` suites against a disposable
+#   - `integration-tests`    -- the `withServerpod` suites against a disposable
 #                               PostgreSQL. Job-level `if` gate, see below.
 #   - `privacy-guard`        -- the open-core boundary check (see its own comment).
 #   - `xrechnung-validation` -- the official KoSIT validator over committed fixtures.
+#
+# Merge gate. Ruleset "Base branch rules" (id 21196406) requires status checks
+# on `main` and `develop`, and the context it matches is the job's `name:` --
+# not the job's key. So renaming, adding or removing a job breaks the merge
+# gate until the ruleset is updated, and it breaks *silently*: the legacy
+# `branches/<name>/protection` endpoint 404s with "Branch not protected"
+# because the rule actually lives in a ruleset. Editing a ruleset is an
+# operator action; agents must not do it. Re-check this list whenever a job
+# `name:` changes:
+#
+#   - `Analyze, format & unit tests`
+#   - `Integration tests (Postgres)`
+#   - `Open-core privacy guard`
+#   - `XRechnung / EN 16931 validation`
 #
 # Why the split (issue #96): GitHub does not pass repository secrets to
 # workflows triggered by Dependabot events, nor to pull requests from forks.
@@ -20,14 +34,18 @@
 # died in `Initialize containers` before a single step ran -- taking `dart
 # analyze` down with it, so Dependabot PRs could never go green.
 #
-# The gate. Service containers are job-scoped, so a secret-backed database can
-# only be made optional by gating the *job*. `secrets` is not available in a
-# job-level `if:`, so the gate is expressed through the `github` context: any
-# non-`pull_request` event runs, and a `pull_request` runs only when its head
-# repository is this repository and the actor is not `dependabot[bot]`. The
-# `analyze` job carries the exact logical negation of that predicate as the
-# condition of a notice step, so a skipped run explains itself in the log
-# instead of silently rendering a grey check. Keep the two expressions in sync.
+# The gate. Making the service container optional means gating the *job*, not
+# the steps: GitHub provisions service containers for a whole job, before any
+# step runs, so a step-level condition cannot help. `secrets` is not available
+# in a job-level `if:`, so the gate is expressed through the `github` context:
+# any non-`pull_request` event runs, and a `pull_request` runs only when its
+# head repository is this repository and the actor is not `dependabot[bot]`.
+# The `analyze` job carries the logical negation of that predicate (ANDed with
+# `!cancelled()`, so it does not print on a cancelled run) as the condition of
+# a notice step, so a skipped run explains itself in the log instead of
+# silently rendering a grey check. Keep the two expressions in sync -- they
+# are duplicated deliberately, and `!cancelled()` is load-bearing: it is what
+# stops the notice firing when the job it is announcing was merely cancelled.
 #
 # The gate is a heuristic: it cannot detect a secret that exists but is EMPTY,
 # which still fails in `Initialize containers` with a confusing message. A
@@ -70,6 +88,24 @@ jobs:
     timeout-minutes: 15
 
     steps:
+      # First, deliberately. A skipped job cannot print anything, so the
+      # explanation has to come from the job that DOES run -- and it has to be
+      # reachable even when a later step fails, or a red Dependabot run would
+      # show a grey skipped check with no account of why. Being first also
+      # keeps the claim made below independent of what the rest of the job
+      # ends up doing.
+      #
+      # The condition is the logical negation of the `integration-tests`
+      # job-level `if`, ANDed with `!cancelled()` -- keep the two in sync.
+      - name: Explain the skipped DB-backed job
+        if: >-
+          !cancelled() &&
+          github.event_name == 'pull_request' &&
+          (github.event.pull_request.head.repo.full_name != github.repository ||
+          github.actor == 'dependabot[bot]')
+        run: |
+          echo "::notice title=Integration tests skipped::GitHub does not pass repository secrets to Dependabot events or to pull requests from forks, so the DB-backed \`integration-tests\` job was skipped for this run. This job still covers \`dart analyze\`, formatting and the DB-free unit tests under test/unit; the \`withServerpod\` integration suites did not run. Tracked in #96."
+
       - name: Checkout
         uses: actions/checkout@v7
 
@@ -115,25 +151,14 @@ jobs:
             ':(exclude)gewerber_backend_server/test/integration/test_tools/**' \
             | xargs -0 -r dart format --output=none --set-exit-if-changed
 
-      # The 16 suites under test/unit import neither serverpod_test nor the
+      # The suites under test/unit import neither serverpod_test nor the
       # generated integration harness, so they need no database and no
-      # config/passwords.yaml. The 34 withServerpod suites under
-      # test/integration do -- they live in `integration-tests`.
+      # config/passwords.yaml. That is precisely what lets this job run on
+      # secret-less events. The withServerpod suites under test/integration do
+      # need a database -- they live in `integration-tests`.
       - name: Run unit tests
         run: dart test test/unit
         working-directory: gewerber_backend_server
-
-      # A skipped job cannot print anything, so the explanation lives here.
-      # This condition is the exact logical negation of the
-      # `integration-tests` job-level `if` below -- keep the two in sync.
-      - name: Explain the skipped DB-backed job
-        if: >-
-          !cancelled() &&
-          github.event_name == 'pull_request' &&
-          (github.event.pull_request.head.repo.full_name != github.repository ||
-           github.actor == 'dependabot[bot]')
-        run: |
-          echo "::notice title=Integration tests skipped::GitHub does not pass repository secrets to Dependabot events or to pull requests from forks, so the DB-backed \`integration-tests\` job was skipped for this run. Analyze, the format check and the 168 unit tests above still ran; the 34 withServerpod integration suites did not. Tracked in #96."
 
   integration-tests:
     name: Integration tests (Postgres)
@@ -145,6 +170,18 @@ jobs:
     # pull_request from a branch of this repository opened by someone other
     # than Dependabot, is guaranteed to have the password. Keep this in sync
     # with the negation in the `analyze` job's notice step above.
+    #
+    # `github.actor`, not `github.triggering_actor`, and that is deliberate.
+    # On a re-run the two differ: `actor` stays the *original* event's actor
+    # (`dependabot[bot]`) while `triggering_actor` is whoever clicked re-run.
+    # Secret availability is a property of the event, not of the person who
+    # re-triggered it, so a maintainer re-running a Dependabot PR must still
+    # get the skip. Do not "fix" this to `triggering_actor`.
+    #
+    # The gate keys on one actor string, so a bot that is not Dependabot
+    # (`github-actions[bot]`, a future Renovate, the old `dependabot-preview`)
+    # would still fail in `Initialize containers` with the empty secret. That
+    # is a CI outage, not a leak; widen the exclusion if such a bot is adopted.
     if: >-
       github.event_name != 'pull_request' ||
       (github.event.pull_request.head.repo.full_name == github.repository
@@ -177,6 +214,17 @@ jobs:
         with:
           sdk: '3.13.3'
 
+      # Select the public stub ref explicitly for the CI target branch. The
+      # retarget script fails closed when that ref is incompatible with this
+      # repository's pinned Serverpod/tooling, rather than silently using an
+      # unrelated ref (release-train sync, see stubs#26).
+      #
+      # This setup block is duplicated verbatim across `analyze`,
+      # `integration-tests` and `privacy-guard` rather than factored into a
+      # composite action: the guard predates the split and cannot be refactored
+      # safely in one go, so a composite action would leave two shapes in play
+      # instead of three. When you change anything here, change it in all
+      # three copies -- the `sdk:` literal is the only thing that can drift.
       - name: Inter-repo deps follow the target branch
         if: github.ref_name == 'develop' || github.base_ref == 'develop'
         run: sh gewerber_backend_server/tool/retarget_gewerber_refs.sh develop
@@ -212,8 +260,10 @@ jobs:
           EOF
 
       # Unchanged from the old `test` job: still the whole suite, so the DB
-      # path stays byte-identical to what runs today (the 168 unit tests repeat
-      # here for ~5 s; that is the price of not changing the proven command).
+      # path stays byte-identical to what runs today. The test/unit suites
+      # therefore run twice per push -- once here without a database and once
+      # as part of the full suite. That redundancy is the price of not
+      # changing the proven command; it costs a few seconds.
       - name: Run tests
         run: dart test
         working-directory: gewerber_backend_server
