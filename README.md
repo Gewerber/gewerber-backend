@@ -50,6 +50,11 @@ From `gewerber_backend_server/`:
 serverpod start
 ```
 
+The dev/test PostgreSQL services (`gewerber_backend_server/docker-compose.yaml`) read their
+passwords from a local `.env`: run `cp .env.example .env` in `gewerber_backend_server/` before
+`docker compose up -d postgres_test`, and keep the `test:` block `database:` value in the
+gitignored `config/passwords.yaml` equal to `POSTGRES_TEST_PASSWORD`.
+
 See [`AGENTS.md`](AGENTS.md) for the MCP-driven development workflow used in this repository.
 
 ---

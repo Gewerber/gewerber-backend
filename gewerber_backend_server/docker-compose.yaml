@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: gewerber_backend
-      POSTGRES_PASSWORD: "QssopZPIRV4EXk6QFAARoezDsmcyjM7Z"
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
     volumes:
       - gewerber_backend_data:/var/lib/postgresql/data
 
@@ -20,7 +20,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: gewerber_backend_test
-      POSTGRES_PASSWORD: "-090vJlpK146u7T0YCGz9xnT6JOxJg4x"
+      POSTGRES_PASSWORD: ${POSTGRES_TEST_PASSWORD:?POSTGRES_TEST_PASSWORD must be set in .env}
     volumes:
       - gewerber_backend_test_data:/var/lib/postgresql/data
 

@@ -19,3 +19,6 @@ config/firebase_service_account_key.json
 
 # Embedded PostgreSQL runtime artifacts (data dir, sockets, pidfiles)
 .serverpod/
+
+# Local secrets for docker-compose.yaml (dev/test PostgreSQL passwords)
+.env
