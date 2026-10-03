@@ -1,25 +1,54 @@
 # Continuous integration for the open-source backend.
 #
-#   - `dart analyze` over the whole Dart workspace
-#   - `dart test` (integration tests) against a disposable PostgreSQL
-#   - an open-core privacy guard (see the `privacy-guard` job)
+# Four independent jobs, so that one unavailable input cannot take down the
+# whole pipeline:
 #
-# Triggers on every PR and on pushes to main/develop. Make this check
-# required in branch protection so merges always pass analyze + tests.
+#   - `analyze`              -- `dart analyze`, a format check and the DB-free
+#                               unit tests. No service containers, no secrets, so
+#                               it runs on every event including Dependabot and
+#                               pull requests from forks.
+#   - `integration-tests`    -- the 34 `withServerpod` suites against a disposable
+#                               PostgreSQL. Job-level `if` gate, see below.
+#   - `privacy-guard`        -- the open-core boundary check (see its own comment).
+#   - `xrechnung-validation` -- the official KoSIT validator over committed fixtures.
 #
-# Repository secrets: `TEST_DATABASE_PASSWORD` is required. It is the
-# password of the disposable PostgreSQL service container below and no
-# longer mirrors the local dev/test passwords from
-# gewerber_backend_server/docker-compose.yaml (those live in the gitignored
-# .env now). Any strong value works; the database is discarded after each
-# run. The commercial module dependency still resolves against the public
-# gewerber-backend-stubs repository. Developers with access to the private
-# module resolve it locally via a gitignored pubspec_overrides.yaml.
+# Why the split (issue #96): GitHub does not pass repository secrets to
+# workflows triggered by Dependabot events, nor to pull requests from forks.
+# While the PostgreSQL service container's password came from
+# `secrets.TEST_DATABASE_PASSWORD`, such runs rendered the secret as an empty
+# string, `docker create` received a bare `-e "POSTGRES_PASSWORD"`, and the job
+# died in `Initialize containers` before a single step ran -- taking `dart
+# analyze` down with it, so Dependabot PRs could never go green.
+#
+# The gate. Service containers are job-scoped, so a secret-backed database can
+# only be made optional by gating the *job*. `secrets` is not available in a
+# job-level `if:`, so the gate is expressed through the `github` context: any
+# non-`pull_request` event runs, and a `pull_request` runs only when its head
+# repository is this repository and the actor is not `dependabot[bot]`. The
+# `analyze` job carries the exact logical negation of that predicate as the
+# condition of a notice step, so a skipped run explains itself in the log
+# instead of silently rendering a grey check. Keep the two expressions in sync.
+#
+# The gate is a heuristic: it cannot detect a secret that exists but is EMPTY,
+# which still fails in `Initialize containers` with a confusing message. A
+# probe-and-pass-output gate would close that gap but serialises
+# `integration-tests` behind `analyze`; tracked as a follow-up in #96.
+#
+# Repository secret: `TEST_DATABASE_PASSWORD` is the password of the disposable
+# PostgreSQL service container. It is not, and must not become, the local
+# dev/test passwords from gewerber_backend_server/docker-compose.yaml -- those
+# live in the gitignored .env (issue #90). Any strong value works; the database
+# is discarded after each run. It is never echoed: only the generated
+# config/passwords.yaml receives it, and that file is gitignored.
 #
 # The test database mirrors gewerber_backend_server/docker-compose.yaml
-# (`postgres_test`) and config/test.yaml: port 9090, user postgres,
-# database gewerber_backend_test. TEST_DATABASE_PASSWORD must match the
-# `test.database` entry written into config/passwords.yaml below.
+# (`postgres_test`) and config/test.yaml: port 9090, user postgres, database
+# gewerber_backend_test. TEST_DATABASE_PASSWORD must match the `test.database`
+# entry written into config/passwords.yaml by the `integration-tests` job.
+#
+# The commercial module dependency still resolves against the public
+# gewerber-backend-stubs repository. Developers with access to the private
+# module resolve it locally via a gitignored pubspec_overrides.yaml.
 
 name: CI
 
@@ -33,10 +62,93 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test:
-    name: Analyze & test
+  # Secret-free by construction: no `services:`, no `secrets.*`. That is what
+  # makes it safe and always-runnable for Dependabot events and fork PRs.
+  analyze:
+    name: Analyze, format & unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          # The declared SDK floor (pubspec.yaml: ^3.13.3 in all three
+          # packages), pinned deliberately: analyzing on the oldest supported
+          # SDK is a smoke test, not a duplicate of whatever the Docker image
+          # happens to use.
+          sdk: '3.13.3'
+
+      # Select the public stub ref explicitly for the CI target branch. The
+      # retarget script fails closed when that ref is incompatible with this
+      # repository's pinned Serverpod/tooling, rather than silently using an
+      # unrelated ref (release-train sync, see stubs#26).
+      - name: Inter-repo deps follow the target branch
+        if: github.ref_name == 'develop' || github.base_ref == 'develop'
+        run: sh gewerber_backend_server/tool/retarget_gewerber_refs.sh develop
+
+      - name: Inter-repo deps follow the main target branch
+        if: github.ref_name == 'main' || github.base_ref == 'main'
+        run: sh gewerber_backend_server/tool/retarget_gewerber_refs.sh main
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Analyze
+        run: dart analyze
+
+      # Hand-written Dart only. `dart format` does not read the
+      # `analyzer.exclude` list in analysis_options.yaml and has no exclude
+      # flag, so `dart format .` would rewrite the Serverpod-generated trees
+      # that `privacy-guard` pins byte-for-byte (issue #71). Enumerate the
+      # tracked files and subtract exactly the three generated trees that
+      # `privacy-guard` also diffs, so a new hand-written file is covered
+      # automatically. `--output=none` makes this read-only.
+      - name: Check formatting
+        run: |
+          git ls-files -z -- '*.dart' \
+            ':(exclude)gewerber_backend_server/lib/src/generated/**' \
+            ':(exclude)gewerber_backend_client/lib/src/protocol/**' \
+            ':(exclude)gewerber_backend_server/test/integration/test_tools/**' \
+            | xargs -0 -r dart format --output=none --set-exit-if-changed
+
+      # The 16 suites under test/unit import neither serverpod_test nor the
+      # generated integration harness, so they need no database and no
+      # config/passwords.yaml. The 34 withServerpod suites under
+      # test/integration do -- they live in `integration-tests`.
+      - name: Run unit tests
+        run: dart test test/unit
+        working-directory: gewerber_backend_server
+
+      # A skipped job cannot print anything, so the explanation lives here.
+      # This condition is the exact logical negation of the
+      # `integration-tests` job-level `if` below -- keep the two in sync.
+      - name: Explain the skipped DB-backed job
+        if: >-
+          !cancelled() &&
+          github.event_name == 'pull_request' &&
+          (github.event.pull_request.head.repo.full_name != github.repository ||
+           github.actor == 'dependabot[bot]')
+        run: |
+          echo "::notice title=Integration tests skipped::GitHub does not pass repository secrets to Dependabot events or to pull requests from forks, so the DB-backed \`integration-tests\` job was skipped for this run. Analyze, the format check and the 168 unit tests above still ran; the 34 withServerpod integration suites did not. Tracked in #96."
+
+  integration-tests:
+    name: Integration tests (Postgres)
     runs-on: ubuntu-latest
     timeout-minutes: 30
+
+    # `secrets` is not available in a job-level `if:`, so secret availability
+    # is approximated through the `github` context: only a push, or a
+    # pull_request from a branch of this repository opened by someone other
+    # than Dependabot, is guaranteed to have the password. Keep this in sync
+    # with the negation in the `analyze` job's notice step above.
+    if: >-
+      github.event_name != 'pull_request' ||
+      (github.event.pull_request.head.repo.full_name == github.repository
+      && github.actor != 'dependabot[bot]')
 
     services:
       postgres_test:
@@ -65,10 +177,6 @@ jobs:
         with:
           sdk: '3.13.3'
 
-      # Select the public stub ref explicitly for the CI target branch. The
-      # retarget script fails closed when that ref is incompatible with this
-      # repository's pinned Serverpod/tooling, rather than silently using an
-      # unrelated ref (release-train sync, see stubs#26).
       - name: Inter-repo deps follow the target branch
         if: github.ref_name == 'develop' || github.base_ref == 'develop'
         run: sh gewerber_backend_server/tool/retarget_gewerber_refs.sh develop
@@ -103,9 +211,9 @@ jobs:
             smtpSsl: 'false'
           EOF
 
-      - name: Analyze
-        run: dart analyze
-
+      # Unchanged from the old `test` job: still the whole suite, so the DB
+      # path stays byte-identical to what runs today (the 168 unit tests repeat
+      # here for ~5 s; that is the price of not changing the proven command).
       - name: Run tests
         run: dart test
         working-directory: gewerber_backend_server
@@ -295,7 +403,7 @@ jobs:
   # It is deliberately independent of the Dart/Postgres jobs: it needs neither
   # the Dart toolchain nor a database, because it validates the *committed*
   # fixtures. The fixtures themselves are pinned byte-for-byte by the golden
-  # test in the `test` job, so the two together mean "the committed output is
+  # test in the `analyze` job, so the two together mean "the committed output is
   # unchanged AND unchanged output passes the official validator".
   #
   # No repository secrets are required: both artifacts are public downloads
