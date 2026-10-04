@@ -70,14 +70,35 @@
 
 name: CI
 
+# Also callable as a reusable workflow: `.github/workflows/deploy.yml` invokes
+# it as its first job so a red build can never reach the VPS (same pattern as
+# gewerber-app).
 on:
   push:
     branches: [main, develop]
   pull_request:
+  workflow_call:
+    inputs:
+      deploy_gate:
+        description: >-
+          Set by the Deploy workflow. Moves the run into its own concurrency
+          group and disables cancellation, so a newer push can never cancel the
+          CI gate that a deployment is waiting on.
+        type: boolean
+        default: false
 
+# `github.ref` alone is not a unique key for this workflow: the push-triggered
+# run and the Deploy workflow's `workflow_call` instance of this same file
+# resolve to the SAME ref, so under `cancel-in-progress: true` one cancels the
+# other — a cancelled gate blocks a legitimate deployment, and a cancelled
+# required check leaves branch protection reporting a check that never
+# finished. The gate therefore gets its own group and is never cancelled.
+#
+# `inputs` is empty for push/pull_request runs, so those keep cancelling as
+# before (`!null` is true) and keep their historical group suffix `run`.
 concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  group: ci-${{ github.ref }}-${{ github.event_name }}-${{ inputs.deploy_gate && 'gate' || 'run' }}
+  cancel-in-progress: ${{ !inputs.deploy_gate }}
 
 jobs:
   # Secret-free by construction: no `services:`, no `secrets.*`. That is what
@@ -235,6 +256,29 @@ jobs:
 
       - name: Install dependencies
         run: dart pub get
+
+      # Fail with an actionable message instead of letting the postgres_test
+      # service container die on an empty password. This is the one failure mode
+      # the Deploy gate introduces: a job that calls a reusable workflow cannot
+      # declare `environment:`, so only REPOSITORY-level secrets reach ci.yml.
+      # If TEST_DATABASE_PASSWORD is configured per environment instead, the
+      # gate is red on every deploy while ordinary runs stay green.
+      - name: Verify test database secret is available
+        env:
+          TEST_DATABASE_PASSWORD: ${{ env.TEST_DATABASE_PASSWORD }}
+        run: |
+          if [ -z "$TEST_DATABASE_PASSWORD" ]; then
+            echo '::error::TEST_DATABASE_PASSWORD is empty. Configure it as a REPOSITORY secret (Settings -> Secrets and variables -> Actions), not per environment: a job calling a reusable workflow cannot declare `environment:`, so environment-level secrets are out of scope.'
+            exit 1
+          fi
+
+      # Report (do not enforce) which commercial module package the resolution
+      # picked up. This repository resolves the PUBLIC STUBS by design — that is
+      # what keeps it buildable without private access — so this step only makes
+      # the choice visible in the log. The release image build enforces the
+      # opposite (see gewerber_backend_server/Dockerfile).
+      - name: Report commercial module resolution
+        run: dart run gewerber_backend_server/tool/check_commercial_resolution.dart
 
       # config/passwords.yaml is gitignored; recreate it for the test run mode
       # so it matches the credentials of the postgres_test service container.

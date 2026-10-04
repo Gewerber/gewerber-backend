@@ -3,6 +3,10 @@
 #   push to main    -> environment "production" -> https://api.gewerber.de
 #   push to develop -> environment "staging"    -> https://api.test.gewerber.de
 #
+# CI (ci.yml) always runs first — the deploy job `needs` it. Note the gate
+# passes only `TEST_DATABASE_PASSWORD`; it runs without the environment that
+# holds the VPS/GHCR credentials, so it never has them in scope.
+#
 # Required repository/environment secrets:
 #   VPS_HOST    – VPS address
 #   VPS_USER    – SSH user on the VPS
@@ -13,6 +17,7 @@
 #                 private gewerber-backend-commercial repository. The image
 #                 build rewrites the public stub dependency to the real
 #                 module via a git insteadOf rule using this token.
+#   TEST_DATABASE_PASSWORD – REPOSITORY-level secret for the CI gate (see ci.yml).
 #   SMTP_*         – optional SMTP settings for transactional emails; when
 #                 SMTP_HOST is set, verification codes are sent by email
 #                 (see deploy/.env.example)
@@ -35,8 +40,25 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Runs analyze + tests + the open-core privacy guard from ci.yml; deployment
+  # is blocked when it fails. Without this gate a merge that landed with a red
+  # CI still built and shipped to staging/production.
+  ci:
+    name: CI gate
+    uses: ./.github/workflows/ci.yml
+    with:
+      deploy_gate: true
+    # A job that calls a reusable workflow cannot declare `environment:`, so
+    # only repository-level secrets are in scope here — hence the explicit
+    # mapping (and `secrets: inherit` would hand the gate the VPS/GHCR
+    # credentials too). `TEST_DATABASE_PASSWORD` must therefore be configured at
+    # repository level; ci.yml fails with that exact instruction if it is not.
+    secrets:
+      TEST_DATABASE_PASSWORD: ${{ secrets.TEST_DATABASE_PASSWORD }}
+
   deploy:
     name: Build & deploy (${{ github.ref_name }})
+    needs: ci
     runs-on: ubuntu-latest
     environment: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
     permissions:
