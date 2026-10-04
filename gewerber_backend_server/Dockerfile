@@ -26,6 +26,11 @@ RUN printf '%s\n' \
 # the git config is removed afterwards:
 #   docker build --secret id=git_token,env=GIT_TOKEN ...
 #
+# The rewrite is verified, not assumed: check_commercial_resolution.dart reads
+# the resolution pub just performed and fails the build when it points at the
+# public stubs, so a missing BuildKit secret can no longer produce a
+# silently stubbed image.
+#
 # GEWERBER_DEP_REF: default develop is the compatible OSS/staging train;
 # deploy main explicitly retargets main. Incompatible targets must fail rather
 # than fall back. Branch deploys pass the branch they build (develop →
@@ -33,13 +38,39 @@ RUN printf '%s\n' \
 # of gewerber-backend-commercial (via the stubs URL), end-to-end testable on
 # staging before release.
 ARG GEWERBER_DEP_REF=develop
+# REQUIRE_COMMERCIAL: a release image must contain the real closed-source
+# module, so the default is true and a build that cannot reach the private
+# repository FAILS instead of silently compiling the public stubs.
+# Open-source builds that deliberately ship the stubs — the self-hosted example
+# in gewerber-examples, which has no private access by definition — opt out
+# explicitly with `--build-arg REQUIRE_COMMERCIAL=false`; the resolution guard
+# then reports the stubs instead of failing, so the choice stays visible in the
+# build log either way.
+ARG REQUIRE_COMMERCIAL=true
 RUN --mount=type=secret,id=git_token \
   sh gewerber_backend_server/tool/retarget_gewerber_refs.sh "$GEWERBER_DEP_REF" \
+  # Fail closed: without this the `if` below would skip the rewrite silently
+  # and `dart pub get` would resolve the public stubs.
+  && if [ "$REQUIRE_COMMERCIAL" = "true" ] && [ ! -f /run/secrets/git_token ]; then \
+    echo 'ERROR: REQUIRE_COMMERCIAL=true but no git_token BuildKit secret was mounted.' >&2; \
+    echo '       Release build: pass --secret id=git_token (a token with read access to the private commercial repository).' >&2; \
+    echo '       Open-source build: pass --build-arg REQUIRE_COMMERCIAL=false.' >&2; \
+    exit 1; \
+  fi \
   && if [ -f /run/secrets/git_token ]; then \
     git config --global url."https://x-access-token:$(cat /run/secrets/git_token)@github.com/Gewerber/gewerber-backend-commercial".insteadOf "https://github.com/Gewerber/gewerber-backend-stubs"; \
     git config --global url."https://x-access-token:$(cat /run/secrets/git_token)@github.com/".insteadOf "https://github.com/"; \
   fi \
   && dart pub get \
+  # Assert the module actually resolved to the private repository. Same layer
+  # as `dart pub get` so it inspects that resolution rather than a later one;
+  # this guard is the only thing between a dropped `secrets:` block and a
+  # published image with the stub module compiled in.
+  && if [ "$REQUIRE_COMMERCIAL" = "true" ]; then \
+    dart gewerber_backend_server/tool/check_commercial_resolution.dart --require; \
+  else \
+    dart gewerber_backend_server/tool/check_commercial_resolution.dart; \
+  fi \
   && rm -f ~/.gitconfig
 
 # Compile the server executable.

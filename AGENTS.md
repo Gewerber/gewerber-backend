@@ -150,7 +150,14 @@ CI resolve without any private access. Developers with a local checkout of the
 private repo override it via `pubspec_overrides.yaml` (gitignored,
 `../gewerber-backend-commercial`). Release image builds rewrite the stubs URL
 to the real module with a git `insteadOf` rule using the
-`COMMERCIAL_REPO_TOKEN` BuildKit secret (see `Dockerfile`). Its tables are
+`COMMERCIAL_REPO_TOKEN` BuildKit secret (see `Dockerfile`), then **verify** the
+result: `tool/check_commercial_resolution.dart` reads the resolution pub just
+performed and fails the build unless it points at the private repository. The
+Dockerfile therefore takes `REQUIRE_COMMERCIAL` (default `true`) — a release
+build without the BuildKit secret fails instead of silently compiling the
+stubs, while OSS builds that deliberately ship the stubs (self-hosting) pass
+`--build-arg REQUIRE_COMMERCIAL=false` and get a reported warning. OSS CI runs
+the same guard in report-only mode. Its tables are
 prefixed `commercial_*` and migrate together with the server
 (`SERVERPOD_APPLY_MIGRATIONS=true`).
 
