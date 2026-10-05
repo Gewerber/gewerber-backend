@@ -7,6 +7,10 @@
 # passes only `TEST_DATABASE_PASSWORD`; it runs without the environment that
 # holds the VPS/GHCR credentials, so it never has them in scope.
 #
+# ⚠️ Every secret passed to the `ci` job below MUST also be declared under
+# `on.workflow_call.secrets` in ci.yml. An undeclared one makes this file fail
+# to parse: the whole run reports `startup_failure` with no logs at all (#101).
+#
 # Required repository/environment secrets:
 #   VPS_HOST    – VPS address
 #   VPS_USER    – SSH user on the VPS

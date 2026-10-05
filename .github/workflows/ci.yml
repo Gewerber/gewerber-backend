@@ -86,6 +86,22 @@ on:
           CI gate that a deployment is waiting on.
         type: boolean
         default: false
+    # A reusable workflow must DECLARE every secret its caller passes. An
+    # undeclared one is not a runtime warning but a PARSE error in the caller:
+    # the entire Deploy run dies with `startup_failure` before a single job is
+    # created — no steps, no logs, no annotations (#101).
+    #
+    # `required: false`, not true: push and pull_request runs have no caller
+    # and no secret, and the empty-password guard in `integration-tests` already
+    # reports that case with actionable instructions.
+    secrets:
+      TEST_DATABASE_PASSWORD:
+        description: >-
+          Password for the disposable postgres_test service container. The
+          Deploy gate passes it from a repository-level secret, because a job
+          calling a reusable workflow cannot declare `environment:` and so
+          cannot read environment-level secrets.
+        required: false
 
 # `github.ref` alone is not a unique key for this workflow: the push-triggered
 # run and the Deploy workflow's `workflow_call` instance of this same file
