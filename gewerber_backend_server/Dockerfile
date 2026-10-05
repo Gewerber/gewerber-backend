@@ -27,9 +27,14 @@ RUN printf '%s\n' \
 #   docker build --secret id=git_token,env=GIT_TOKEN ...
 #
 # The rewrite is verified, not assumed: check_commercial_resolution.dart reads
-# the resolution pub just performed and fails the build when it points at the
-# public stubs, so a missing BuildKit secret can no longer produce a
-# silently stubbed image.
+# the resolution pub just performed and fails the build when the module did not
+# come from the private repository, so a missing BuildKit secret can no longer
+# produce a silently stubbed image. It judges the fetched package's own
+# `repository:` field, because an insteadOf rewrite happens inside git — pub
+# names the checkout after the stubs URL it was given, so the path cannot
+# distinguish the two. It checks the module packages THIS workspace declares,
+# which is the server module only: the module client belongs to
+# gewerber_backend_client, which this image does not build.
 #
 # GEWERBER_DEP_REF: default develop is the compatible OSS/staging train;
 # deploy main explicitly retargets main. Incompatible targets must fail rather
