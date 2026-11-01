@@ -78,10 +78,10 @@ abstract class UserGuidanceProgress
   @_isc.useResult
   UserGuidanceProgress copyWith({
     int? id,
-    _isc.UuidValue? userId,
+    _isc.UuidValue? userId = const _isc.$UndefinedUuidValue(),
     String? itemKey,
-    DateTime? completedAt,
-    DateTime? dismissedAt,
+    DateTime? completedAt = const _isc.$UndefinedDateTime(),
+    DateTime? dismissedAt = const _isc.$UndefinedDateTime(),
     DateTime? updatedAt,
   });
   @override
@@ -141,18 +141,22 @@ class _UserGuidanceProgressImpl extends UserGuidanceProgress {
   @override
   UserGuidanceProgress copyWith({
     Object? id = _Undefined,
-    Object? userId = _Undefined,
+    _isc.UuidValue? userId = const _isc.$UndefinedUuidValue(),
     String? itemKey,
-    Object? completedAt = _Undefined,
-    Object? dismissedAt = _Undefined,
+    DateTime? completedAt = const _isc.$UndefinedDateTime(),
+    DateTime? dismissedAt = const _isc.$UndefinedDateTime(),
     DateTime? updatedAt,
   }) {
     return UserGuidanceProgress(
       id: id is int? ? id : this.id,
-      userId: userId is _isc.UuidValue? ? userId : this.userId,
+      userId: userId is _isc.UndefinedSentinel ? this.userId : userId,
       itemKey: itemKey ?? this.itemKey,
-      completedAt: completedAt is DateTime? ? completedAt : this.completedAt,
-      dismissedAt: dismissedAt is DateTime? ? dismissedAt : this.dismissedAt,
+      completedAt: completedAt is _isc.UndefinedSentinel
+          ? this.completedAt
+          : completedAt,
+      dismissedAt: dismissedAt is _isc.UndefinedSentinel
+          ? this.dismissedAt
+          : dismissedAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }

@@ -49,7 +49,7 @@ abstract class CreateCreditNoteRequest
   @_is.useResult
   CreateCreditNoteRequest copyWith({
     int? originalInvoiceId,
-    DateTime? issueDate,
+    DateTime? issueDate = const _is.$UndefinedDateTime(),
     String? reason,
   });
   @override
@@ -97,12 +97,14 @@ class _CreateCreditNoteRequestImpl extends CreateCreditNoteRequest {
   @override
   CreateCreditNoteRequest copyWith({
     int? originalInvoiceId,
-    Object? issueDate = _Undefined,
+    DateTime? issueDate = const _is.$UndefinedDateTime(),
     Object? reason = _Undefined,
   }) {
     return CreateCreditNoteRequest(
       originalInvoiceId: originalInvoiceId ?? this.originalInvoiceId,
-      issueDate: issueDate is DateTime? ? issueDate : this.issueDate,
+      issueDate: issueDate is _is.UndefinedSentinel
+          ? this.issueDate
+          : issueDate,
       reason: reason is String? ? reason : this.reason,
     );
   }

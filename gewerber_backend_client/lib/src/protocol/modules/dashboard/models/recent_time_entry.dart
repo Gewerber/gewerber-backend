@@ -80,7 +80,7 @@ abstract class RecentTimeEntry
   RecentTimeEntry copyWith({
     int? id,
     DateTime? startedAt,
-    DateTime? stoppedAt,
+    DateTime? stoppedAt = const _isc.$UndefinedDateTime(),
     int? durationMinutes,
     bool? billable,
     int? projectId,
@@ -158,7 +158,7 @@ class _RecentTimeEntryImpl extends RecentTimeEntry {
   RecentTimeEntry copyWith({
     int? id,
     DateTime? startedAt,
-    Object? stoppedAt = _Undefined,
+    DateTime? stoppedAt = const _isc.$UndefinedDateTime(),
     Object? durationMinutes = _Undefined,
     bool? billable,
     Object? projectId = _Undefined,
@@ -169,7 +169,9 @@ class _RecentTimeEntryImpl extends RecentTimeEntry {
     return RecentTimeEntry(
       id: id ?? this.id,
       startedAt: startedAt ?? this.startedAt,
-      stoppedAt: stoppedAt is DateTime? ? stoppedAt : this.stoppedAt,
+      stoppedAt: stoppedAt is _isc.UndefinedSentinel
+          ? this.stoppedAt
+          : stoppedAt,
       durationMinutes: durationMinutes is int?
           ? durationMinutes
           : this.durationMinutes,

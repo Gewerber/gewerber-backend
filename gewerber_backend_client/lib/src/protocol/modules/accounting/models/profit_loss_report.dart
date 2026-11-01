@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_client/src/protocol/protocol.dart'
     as _iipbhyvd;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/accounting/models/profit_loss_line.dart' as _iy1ovtjt;
 
 abstract class ProfitLossReport

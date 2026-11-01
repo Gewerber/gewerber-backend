@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_server/src/generated/protocol.dart'
     as _itzp2rm6;
 import 'package:serverpod/serverpod.dart' as _is;
+
 import '../../../modules/admin/models/invoice_status_count.dart' as _itsthq7z;
 
 abstract class AdminStatsOverview

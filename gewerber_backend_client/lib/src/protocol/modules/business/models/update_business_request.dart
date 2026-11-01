@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_client/src/protocol/protocol.dart'
     as _iipbhyvd;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/business/models/address.dart' as _iz28txwx;
 import '../../../modules/business/models/currency.dart' as _i80byysb;
 import '../../../modules/business/models/legal_form.dart' as _ibbkzk4j;
@@ -112,7 +113,8 @@ abstract class UpdateBusinessRequest
     String? taxNumber,
     String? email,
     String? phone,
-    _iz28txwx.Address? address,
+    _iz28txwx.Address? address =
+        const _UndefinedUpdateBusinessRequest$address(),
     _ie5v8zdc.Locale? locale,
     _i80byysb.Currency? currency,
   });
@@ -160,6 +162,11 @@ abstract class UpdateBusinessRequest
 
 class _Undefined {}
 
+class _UndefinedUpdateBusinessRequest$address extends _isc.UndefinedSentinel
+    implements _iz28txwx.Address {
+  const _UndefinedUpdateBusinessRequest$address();
+}
+
 class _UpdateBusinessRequestImpl extends UpdateBusinessRequest {
   _UpdateBusinessRequestImpl({
     required int businessId,
@@ -200,7 +207,8 @@ class _UpdateBusinessRequestImpl extends UpdateBusinessRequest {
     Object? taxNumber = _Undefined,
     Object? email = _Undefined,
     Object? phone = _Undefined,
-    Object? address = _Undefined,
+    _iz28txwx.Address? address =
+        const _UndefinedUpdateBusinessRequest$address(),
     _ie5v8zdc.Locale? locale,
     _i80byysb.Currency? currency,
   }) {
@@ -213,9 +221,9 @@ class _UpdateBusinessRequestImpl extends UpdateBusinessRequest {
       taxNumber: taxNumber is String? ? taxNumber : this.taxNumber,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
-      address: address is _iz28txwx.Address?
-          ? address
-          : this.address?.copyWith(),
+      address: address is _isc.UndefinedSentinel
+          ? this.address?.copyWith()
+          : address,
       locale: locale ?? this.locale,
       currency: currency ?? this.currency,
     );

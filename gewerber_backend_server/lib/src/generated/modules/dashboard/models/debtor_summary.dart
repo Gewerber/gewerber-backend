@@ -68,7 +68,7 @@ abstract class DebtorSummary
     int? openCount,
     int? openTotalCents,
     int? overdueTotalCents,
-    DateTime? oldestDueDate,
+    DateTime? oldestDueDate = const _is.$UndefinedDateTime(),
   });
   @override
   Map<String, dynamic> toJson() {
@@ -131,7 +131,7 @@ class _DebtorSummaryImpl extends DebtorSummary {
     int? openCount,
     int? openTotalCents,
     int? overdueTotalCents,
-    Object? oldestDueDate = _Undefined,
+    DateTime? oldestDueDate = const _is.$UndefinedDateTime(),
   }) {
     return DebtorSummary(
       customerId: customerId is int? ? customerId : this.customerId,
@@ -139,9 +139,9 @@ class _DebtorSummaryImpl extends DebtorSummary {
       openCount: openCount ?? this.openCount,
       openTotalCents: openTotalCents ?? this.openTotalCents,
       overdueTotalCents: overdueTotalCents ?? this.overdueTotalCents,
-      oldestDueDate: oldestDueDate is DateTime?
-          ? oldestDueDate
-          : this.oldestDueDate,
+      oldestDueDate: oldestDueDate is _is.UndefinedSentinel
+          ? this.oldestDueDate
+          : oldestDueDate,
     );
   }
 }

@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_server/src/generated/protocol.dart'
     as _itzp2rm6;
 import 'package:serverpod/serverpod.dart' as _is;
+
 import '../../../core/admin/admin_role.dart' as _isyiaiss;
 import '../../../modules/admin/models/admin_auth_status.dart' as _ipkga77r;
 import '../../../modules/admin/models/admin_membership_info.dart' as _ir926tki;
@@ -75,7 +76,7 @@ abstract class AdminUserDossier
   /// with some or all fields replaced by the given arguments.
   @_is.useResult
   AdminUserDossier copyWith({
-    _igw681aa.UserProfile? profile,
+    _igw681aa.UserProfile? profile = const _UndefinedAdminUserDossier$profile(),
     String? email,
     _ipkga77r.AdminAuthStatus? authStatus,
     List<_ir926tki.AdminMembershipInfo>? memberships,
@@ -115,6 +116,11 @@ abstract class AdminUserDossier
 
 class _Undefined {}
 
+class _UndefinedAdminUserDossier$profile extends _is.UndefinedSentinel
+    implements _igw681aa.UserProfile {
+  const _UndefinedAdminUserDossier$profile();
+}
+
 class _AdminUserDossierImpl extends AdminUserDossier {
   _AdminUserDossierImpl({
     _igw681aa.UserProfile? profile,
@@ -135,16 +141,16 @@ class _AdminUserDossierImpl extends AdminUserDossier {
   @_is.useResult
   @override
   AdminUserDossier copyWith({
-    Object? profile = _Undefined,
+    _igw681aa.UserProfile? profile = const _UndefinedAdminUserDossier$profile(),
     Object? email = _Undefined,
     _ipkga77r.AdminAuthStatus? authStatus,
     List<_ir926tki.AdminMembershipInfo>? memberships,
     Object? globalRole = _Undefined,
   }) {
     return AdminUserDossier(
-      profile: profile is _igw681aa.UserProfile?
-          ? profile
-          : this.profile?.copyWith(),
+      profile: profile is _is.UndefinedSentinel
+          ? this.profile?.copyWith()
+          : profile,
       email: email is String? ? email : this.email,
       authStatus: authStatus ?? this.authStatus.copyWith(),
       memberships:

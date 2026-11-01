@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_server/src/generated/protocol.dart'
     as _itzp2rm6;
 import 'package:serverpod/serverpod.dart' as _is;
+
 import '../../../modules/business/models/address.dart' as _iz28txwx;
 import '../../../modules/invoicing/models/customer_status.dart' as _iq2eew5f;
 
@@ -99,7 +100,8 @@ abstract class UpdateCustomerRequest
     String? buyerReference,
     String? email,
     String? phone,
-    _iz28txwx.Address? address,
+    _iz28txwx.Address? address =
+        const _UndefinedUpdateCustomerRequest$address(),
     String? notes,
   });
   @override
@@ -144,6 +146,11 @@ abstract class UpdateCustomerRequest
 
 class _Undefined {}
 
+class _UndefinedUpdateCustomerRequest$address extends _is.UndefinedSentinel
+    implements _iz28txwx.Address {
+  const _UndefinedUpdateCustomerRequest$address();
+}
+
 class _UpdateCustomerRequestImpl extends UpdateCustomerRequest {
   _UpdateCustomerRequestImpl({
     required int customerId,
@@ -182,7 +189,8 @@ class _UpdateCustomerRequestImpl extends UpdateCustomerRequest {
     Object? buyerReference = _Undefined,
     Object? email = _Undefined,
     Object? phone = _Undefined,
-    Object? address = _Undefined,
+    _iz28txwx.Address? address =
+        const _UndefinedUpdateCustomerRequest$address(),
     Object? notes = _Undefined,
   }) {
     return UpdateCustomerRequest(
@@ -196,9 +204,9 @@ class _UpdateCustomerRequestImpl extends UpdateCustomerRequest {
           : this.buyerReference,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
-      address: address is _iz28txwx.Address?
-          ? address
-          : this.address?.copyWith(),
+      address: address is _is.UndefinedSentinel
+          ? this.address?.copyWith()
+          : address,
       notes: notes is String? ? notes : this.notes,
     );
   }

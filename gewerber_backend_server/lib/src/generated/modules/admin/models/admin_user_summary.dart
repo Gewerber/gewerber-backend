@@ -11,6 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _is;
+
 import '../../../core/admin/admin_role.dart' as _isyiaiss;
 
 abstract class AdminUserSummary
@@ -89,8 +90,8 @@ abstract class AdminUserSummary
     bool? blocked,
     bool? emailConfirmed,
     _isyiaiss.AdminRole? globalRole,
-    DateTime? profileCreatedAt,
-    DateTime? deletedAt,
+    DateTime? profileCreatedAt = const _is.$UndefinedDateTime(),
+    DateTime? deletedAt = const _is.$UndefinedDateTime(),
   });
   @override
   Map<String, dynamic> toJson() {
@@ -164,8 +165,8 @@ class _AdminUserSummaryImpl extends AdminUserSummary {
     bool? blocked,
     bool? emailConfirmed,
     Object? globalRole = _Undefined,
-    Object? profileCreatedAt = _Undefined,
-    Object? deletedAt = _Undefined,
+    DateTime? profileCreatedAt = const _is.$UndefinedDateTime(),
+    DateTime? deletedAt = const _is.$UndefinedDateTime(),
   }) {
     return AdminUserSummary(
       userId: userId ?? this.userId,
@@ -176,10 +177,12 @@ class _AdminUserSummaryImpl extends AdminUserSummary {
       globalRole: globalRole is _isyiaiss.AdminRole?
           ? globalRole
           : this.globalRole,
-      profileCreatedAt: profileCreatedAt is DateTime?
-          ? profileCreatedAt
-          : this.profileCreatedAt,
-      deletedAt: deletedAt is DateTime? ? deletedAt : this.deletedAt,
+      profileCreatedAt: profileCreatedAt is _is.UndefinedSentinel
+          ? this.profileCreatedAt
+          : profileCreatedAt,
+      deletedAt: deletedAt is _is.UndefinedSentinel
+          ? this.deletedAt
+          : deletedAt,
     );
   }
 }

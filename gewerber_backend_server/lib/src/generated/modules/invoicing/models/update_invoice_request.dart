@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_server/src/generated/protocol.dart'
     as _itzp2rm6;
 import 'package:serverpod/serverpod.dart' as _is;
+
 import '../../../modules/invoicing/models/invoice_item_request.dart'
     as _ife8od1f;
 import '../../../modules/invoicing/models/recurrence_interval.dart'
@@ -138,15 +139,15 @@ abstract class UpdateInvoiceRequest
     int? invoiceId,
     int? customerId,
     DateTime? issueDate,
-    DateTime? dueDate,
-    DateTime? serviceDateFrom,
-    DateTime? serviceDateTo,
+    DateTime? dueDate = const _is.$UndefinedDateTime(),
+    DateTime? serviceDateFrom = const _is.$UndefinedDateTime(),
+    DateTime? serviceDateTo = const _is.$UndefinedDateTime(),
     int? paymentTermsDays,
     int? templateId,
     String? notes,
     _i2jlpxj3.RecurrenceInterval? recurrenceInterval,
-    DateTime? nextRecurrenceDate,
-    DateTime? recurrenceEndDate,
+    DateTime? nextRecurrenceDate = const _is.$UndefinedDateTime(),
+    DateTime? recurrenceEndDate = const _is.$UndefinedDateTime(),
     int? recurrenceMaxOccurrences,
     List<_ife8od1f.InvoiceItemRequest>? items,
   });
@@ -249,15 +250,15 @@ class _UpdateInvoiceRequestImpl extends UpdateInvoiceRequest {
     int? invoiceId,
     Object? customerId = _Undefined,
     DateTime? issueDate,
-    Object? dueDate = _Undefined,
-    Object? serviceDateFrom = _Undefined,
-    Object? serviceDateTo = _Undefined,
+    DateTime? dueDate = const _is.$UndefinedDateTime(),
+    DateTime? serviceDateFrom = const _is.$UndefinedDateTime(),
+    DateTime? serviceDateTo = const _is.$UndefinedDateTime(),
     int? paymentTermsDays,
     Object? templateId = _Undefined,
     Object? notes = _Undefined,
     Object? recurrenceInterval = _Undefined,
-    Object? nextRecurrenceDate = _Undefined,
-    Object? recurrenceEndDate = _Undefined,
+    DateTime? nextRecurrenceDate = const _is.$UndefinedDateTime(),
+    DateTime? recurrenceEndDate = const _is.$UndefinedDateTime(),
     Object? recurrenceMaxOccurrences = _Undefined,
     List<_ife8od1f.InvoiceItemRequest>? items,
   }) {
@@ -265,25 +266,25 @@ class _UpdateInvoiceRequestImpl extends UpdateInvoiceRequest {
       invoiceId: invoiceId ?? this.invoiceId,
       customerId: customerId is int? ? customerId : this.customerId,
       issueDate: issueDate ?? this.issueDate,
-      dueDate: dueDate is DateTime? ? dueDate : this.dueDate,
-      serviceDateFrom: serviceDateFrom is DateTime?
-          ? serviceDateFrom
-          : this.serviceDateFrom,
-      serviceDateTo: serviceDateTo is DateTime?
-          ? serviceDateTo
-          : this.serviceDateTo,
+      dueDate: dueDate is _is.UndefinedSentinel ? this.dueDate : dueDate,
+      serviceDateFrom: serviceDateFrom is _is.UndefinedSentinel
+          ? this.serviceDateFrom
+          : serviceDateFrom,
+      serviceDateTo: serviceDateTo is _is.UndefinedSentinel
+          ? this.serviceDateTo
+          : serviceDateTo,
       paymentTermsDays: paymentTermsDays ?? this.paymentTermsDays,
       templateId: templateId is int? ? templateId : this.templateId,
       notes: notes is String? ? notes : this.notes,
       recurrenceInterval: recurrenceInterval is _i2jlpxj3.RecurrenceInterval?
           ? recurrenceInterval
           : this.recurrenceInterval,
-      nextRecurrenceDate: nextRecurrenceDate is DateTime?
-          ? nextRecurrenceDate
-          : this.nextRecurrenceDate,
-      recurrenceEndDate: recurrenceEndDate is DateTime?
-          ? recurrenceEndDate
-          : this.recurrenceEndDate,
+      nextRecurrenceDate: nextRecurrenceDate is _is.UndefinedSentinel
+          ? this.nextRecurrenceDate
+          : nextRecurrenceDate,
+      recurrenceEndDate: recurrenceEndDate is _is.UndefinedSentinel
+          ? this.recurrenceEndDate
+          : recurrenceEndDate,
       recurrenceMaxOccurrences: recurrenceMaxOccurrences is int?
           ? recurrenceMaxOccurrences
           : this.recurrenceMaxOccurrences,

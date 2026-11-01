@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_server/src/generated/protocol.dart'
     as _itzp2rm6;
 import 'package:serverpod/serverpod.dart' as _is;
+
 import '../../../modules/invoicing/models/payment_record.dart' as _in9an6e0;
 
 abstract class InvoicePaymentStatus

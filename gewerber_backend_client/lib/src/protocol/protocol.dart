@@ -48,6 +48,7 @@ import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
 import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
     as _iaic;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import 'core/admin/admin_role.dart' as _i409qkgd;
 import 'core/entitlement/feature.dart' as _i0s5j3nj;
 import 'core/errors/conflict_exception.dart' as _i5epujyq;
@@ -264,18 +265,376 @@ export 'modules/user/models/update_user_profile_request.dart';
 export 'modules/user/models/user_profile.dart';
 export 'client.dart';
 
-class Protocol extends _isc.SerializationManager {
+class Protocol extends _isc.SerializationManager
+    implements _isc.ProtocolDeserializationProvider {
   Protocol._();
 
   factory Protocol() => _instance;
 
   static final Protocol _instance = Protocol._().._registerHostProtocols();
 
-  static String? getClassNameFromObjectJson(dynamic data) {
-    if (data is! Map) return null;
-    final className = data['__className__'] as String?;
-    return className;
-  }
+  @override
+  _isc.ProtocolDeserialization get deserializationMetadata =>
+      _isc.ProtocolDeserialization.cached(
+        this,
+        types: const [
+          _isc.getType<_i409qkgd.AdminRole>,
+          _isc.getType<_i0s5j3nj.Feature>,
+          _isc.getType<_i5epujyq.ConflictException>,
+          _isc.getType<_io9vwtrc.ForbiddenException>,
+          _isc.getType<_ixeh2c1z.NotFoundException>,
+          _isc.getType<_io4t73gt.ValidationException>,
+          _isc.getType<_i6q7c9y6.RateLimitException>,
+          _isc.getType<_imcpe7lh.AccountingTransaction>,
+          _isc.getType<_ipamnsx8.CreateTransactionRequest>,
+          _isc.getType<_iixw78u5.ProfitLossLine>,
+          _isc.getType<_isurdgsv.ProfitLossReport>,
+          _isc.getType<_imo6tjrw.TransactionCategory>,
+          _isc.getType<_ik9vnz0w.TransactionType>,
+          _isc.getType<_iyj5tb39.UpdateTransactionRequest>,
+          _isc.getType<_io6p5gfm.AdminAuditEntry>,
+          _isc.getType<_iaab9k46.AdminAuditPage>,
+          _isc.getType<_ipsgq99z.AdminAuthStatus>,
+          _isc.getType<_i32iaxq2.AdminBusinessDetail>,
+          _isc.getType<_iytjl6p4.AdminBusinessPage>,
+          _isc.getType<_ia380t04.AdminInvoicePage>,
+          _isc.getType<_igm2ntgz.AdminMembershipInfo>,
+          _isc.getType<_ihc64acz.AdminStatsOverview>,
+          _isc.getType<_ibyotlfs.AdminUserDossier>,
+          _isc.getType<_iwdjv467.AdminUserSummary>,
+          _isc.getType<_i2f075pm.AdminUserSummaryPage>,
+          _isc.getType<_ikvugyyu.InvoiceStatusCount>,
+          _isc.getType<_izfx9e18.Address>,
+          _isc.getType<_im9zvu8o.Business>,
+          _isc.getType<_ixvagzl5.BusinessSettings>,
+          _isc.getType<_i8xf36x2.Country>,
+          _isc.getType<_i1txccp7.CreateBusinessRequest>,
+          _isc.getType<_i1srbh9z.Currency>,
+          _isc.getType<_i5egs7uv.LegalForm>,
+          _isc.getType<_ii0188h0.Locale>,
+          _isc.getType<_iu72qgm4.Membership>,
+          _isc.getType<_iv0iprnk.MembershipRole>,
+          _isc.getType<_iku7b3rb.RoundingMode>,
+          _isc.getType<_inkd6ewo.UpdateBusinessRequest>,
+          _isc.getType<_ii46p08a.UpdateBusinessSettingsRequest>,
+          _isc.getType<_i1j0w1sv.DashboardKpis>,
+          _isc.getType<_iw3j14uv.DashboardSummary>,
+          _isc.getType<_ix33w5u6.DebtorSummary>,
+          _isc.getType<_ixg6nsli.MonthlyTrendPoint>,
+          _isc.getType<_ie3ro5gq.ReceivablesSummary>,
+          _isc.getType<_impe7ay9.RecentTimeEntry>,
+          _isc.getType<_i9jvbk51.Document>,
+          _isc.getType<_imaz1zqg.DocumentKind>,
+          _isc.getType<_i9qnixrl.StorageLocation>,
+          _isc.getType<_iz60udpo.UploadDocumentRequest>,
+          _isc.getType<_i04z5hwj.ChecklistDefinition>,
+          _isc.getType<_i5jbvijx.ChecklistItemDefinition>,
+          _isc.getType<_irvclg1d.GuidanceTip>,
+          _isc.getType<_ik05lx5a.UserGuidanceProgress>,
+          _isc.getType<_is55cdqf.CreateCreditNoteRequest>,
+          _isc.getType<_i90hzmg5.CreateCustomerRequest>,
+          _isc.getType<_ia6btdit.CreateInvoiceRequest>,
+          _isc.getType<_iyi9fugk.CreateInvoiceTemplateRequest>,
+          _isc.getType<_i4j5ra9q.CreateRecurringScheduleRequest>,
+          _isc.getType<_ic8wp775.Customer>,
+          _isc.getType<_if0yalhk.CustomerCursorPage>,
+          _isc.getType<_iakrzq1i.CustomerListPage>,
+          _isc.getType<_ibddqx0x.CustomerStatus>,
+          _isc.getType<_imguyn55.Invoice>,
+          _isc.getType<_i2f30jh4.InvoiceCursorPage>,
+          _isc.getType<_iu86qxr6.InvoiceItem>,
+          _isc.getType<_it1pcy1x.InvoiceItemRequest>,
+          _isc.getType<_ik22qf7o.InvoiceItemUnit>,
+          _isc.getType<_ixkgbq8y.InvoiceLimitReachedException>,
+          _isc.getType<_i6mqpqud.InvoiceListPage>,
+          _isc.getType<_i6e3kqsf.InvoicePaymentStatus>,
+          _isc.getType<_i80dthru.InvoiceStatus>,
+          _isc.getType<_isaqeos4.InvoiceTemplate>,
+          _isc.getType<_io5qrdfp.InvoiceType>,
+          _isc.getType<_i31hy3jj.PaymentMethod>,
+          _isc.getType<_id8w36x8.PaymentRecord>,
+          _isc.getType<_i2drsvke.RecordPaymentRequest>,
+          _isc.getType<_it8iedui.RecurrenceInterval>,
+          _isc.getType<_i0xuine3.Reminder>,
+          _isc.getType<_icatwcwa.UpdateCustomerRequest>,
+          _isc.getType<_iteadt76.UpdateInvoiceRequest>,
+          _isc.getType<_ilpliwg4.UpdateInvoiceTemplateRequest>,
+          _isc.getType<_i037hdza.UpdateRecurringScheduleRequest>,
+          _isc.getType<_id7e2pr5.VatRate>,
+          _isc.getType<_i8rbvyvx.CreateProjectRequest>,
+          _isc.getType<_iagq7u79.CreateTaskRequest>,
+          _isc.getType<_i3b86gp3.CreateTimeEntriesInvoiceRequest>,
+          _isc.getType<_i85810i7.CreateTimeEntryRequest>,
+          _isc.getType<_i2wiwzxn.Project>,
+          _isc.getType<_i8h0tbjs.ProjectStatus>,
+          _isc.getType<_i2ishkic.StartTimerRequest>,
+          _isc.getType<_ihpxqi7u.Task>,
+          _isc.getType<_iieqkj38.TaskStatus>,
+          _isc.getType<_ii8lft1t.TimeEntry>,
+          _isc.getType<_ilk96oxt.TimeReport>,
+          _isc.getType<_iify20ly.TimeReportLine>,
+          _isc.getType<_ilqqks6d.UpdateProjectRequest>,
+          _isc.getType<_i3iu7ffh.UpdateTaskRequest>,
+          _isc.getType<_iferwyg8.UpdateTimeEntryRequest>,
+          _isc.getType<_iy79t9m6.AppTheme>,
+          _isc.getType<_i1sqdvz3.MyIdentity>,
+          _isc.getType<_in8pujw9.MyMembershipInfo>,
+          _isc.getType<_i5r0ss6k.UpdateUserProfileRequest>,
+          _isc.getType<_iung9xmp.UserProfile>,
+          _isc.getType<_i409qkgd.AdminRole?>,
+          _isc.getType<_i0s5j3nj.Feature?>,
+          _isc.getType<_i5epujyq.ConflictException?>,
+          _isc.getType<_io9vwtrc.ForbiddenException?>,
+          _isc.getType<_ixeh2c1z.NotFoundException?>,
+          _isc.getType<_io4t73gt.ValidationException?>,
+          _isc.getType<_i6q7c9y6.RateLimitException?>,
+          _isc.getType<_imcpe7lh.AccountingTransaction?>,
+          _isc.getType<_ipamnsx8.CreateTransactionRequest?>,
+          _isc.getType<_iixw78u5.ProfitLossLine?>,
+          _isc.getType<_isurdgsv.ProfitLossReport?>,
+          _isc.getType<_imo6tjrw.TransactionCategory?>,
+          _isc.getType<_ik9vnz0w.TransactionType?>,
+          _isc.getType<_iyj5tb39.UpdateTransactionRequest?>,
+          _isc.getType<_io6p5gfm.AdminAuditEntry?>,
+          _isc.getType<_iaab9k46.AdminAuditPage?>,
+          _isc.getType<_ipsgq99z.AdminAuthStatus?>,
+          _isc.getType<_i32iaxq2.AdminBusinessDetail?>,
+          _isc.getType<_iytjl6p4.AdminBusinessPage?>,
+          _isc.getType<_ia380t04.AdminInvoicePage?>,
+          _isc.getType<_igm2ntgz.AdminMembershipInfo?>,
+          _isc.getType<_ihc64acz.AdminStatsOverview?>,
+          _isc.getType<_ibyotlfs.AdminUserDossier?>,
+          _isc.getType<_iwdjv467.AdminUserSummary?>,
+          _isc.getType<_i2f075pm.AdminUserSummaryPage?>,
+          _isc.getType<_ikvugyyu.InvoiceStatusCount?>,
+          _isc.getType<_izfx9e18.Address?>,
+          _isc.getType<_im9zvu8o.Business?>,
+          _isc.getType<_ixvagzl5.BusinessSettings?>,
+          _isc.getType<_i8xf36x2.Country?>,
+          _isc.getType<_i1txccp7.CreateBusinessRequest?>,
+          _isc.getType<_i1srbh9z.Currency?>,
+          _isc.getType<_i5egs7uv.LegalForm?>,
+          _isc.getType<_ii0188h0.Locale?>,
+          _isc.getType<_iu72qgm4.Membership?>,
+          _isc.getType<_iv0iprnk.MembershipRole?>,
+          _isc.getType<_iku7b3rb.RoundingMode?>,
+          _isc.getType<_inkd6ewo.UpdateBusinessRequest?>,
+          _isc.getType<_ii46p08a.UpdateBusinessSettingsRequest?>,
+          _isc.getType<_i1j0w1sv.DashboardKpis?>,
+          _isc.getType<_iw3j14uv.DashboardSummary?>,
+          _isc.getType<_ix33w5u6.DebtorSummary?>,
+          _isc.getType<_ixg6nsli.MonthlyTrendPoint?>,
+          _isc.getType<_ie3ro5gq.ReceivablesSummary?>,
+          _isc.getType<_impe7ay9.RecentTimeEntry?>,
+          _isc.getType<_i9jvbk51.Document?>,
+          _isc.getType<_imaz1zqg.DocumentKind?>,
+          _isc.getType<_i9qnixrl.StorageLocation?>,
+          _isc.getType<_iz60udpo.UploadDocumentRequest?>,
+          _isc.getType<_i04z5hwj.ChecklistDefinition?>,
+          _isc.getType<_i5jbvijx.ChecklistItemDefinition?>,
+          _isc.getType<_irvclg1d.GuidanceTip?>,
+          _isc.getType<_ik05lx5a.UserGuidanceProgress?>,
+          _isc.getType<_is55cdqf.CreateCreditNoteRequest?>,
+          _isc.getType<_i90hzmg5.CreateCustomerRequest?>,
+          _isc.getType<_ia6btdit.CreateInvoiceRequest?>,
+          _isc.getType<_iyi9fugk.CreateInvoiceTemplateRequest?>,
+          _isc.getType<_i4j5ra9q.CreateRecurringScheduleRequest?>,
+          _isc.getType<_ic8wp775.Customer?>,
+          _isc.getType<_if0yalhk.CustomerCursorPage?>,
+          _isc.getType<_iakrzq1i.CustomerListPage?>,
+          _isc.getType<_ibddqx0x.CustomerStatus?>,
+          _isc.getType<_imguyn55.Invoice?>,
+          _isc.getType<_i2f30jh4.InvoiceCursorPage?>,
+          _isc.getType<_iu86qxr6.InvoiceItem?>,
+          _isc.getType<_it1pcy1x.InvoiceItemRequest?>,
+          _isc.getType<_ik22qf7o.InvoiceItemUnit?>,
+          _isc.getType<_ixkgbq8y.InvoiceLimitReachedException?>,
+          _isc.getType<_i6mqpqud.InvoiceListPage?>,
+          _isc.getType<_i6e3kqsf.InvoicePaymentStatus?>,
+          _isc.getType<_i80dthru.InvoiceStatus?>,
+          _isc.getType<_isaqeos4.InvoiceTemplate?>,
+          _isc.getType<_io5qrdfp.InvoiceType?>,
+          _isc.getType<_i31hy3jj.PaymentMethod?>,
+          _isc.getType<_id8w36x8.PaymentRecord?>,
+          _isc.getType<_i2drsvke.RecordPaymentRequest?>,
+          _isc.getType<_it8iedui.RecurrenceInterval?>,
+          _isc.getType<_i0xuine3.Reminder?>,
+          _isc.getType<_icatwcwa.UpdateCustomerRequest?>,
+          _isc.getType<_iteadt76.UpdateInvoiceRequest?>,
+          _isc.getType<_ilpliwg4.UpdateInvoiceTemplateRequest?>,
+          _isc.getType<_i037hdza.UpdateRecurringScheduleRequest?>,
+          _isc.getType<_id7e2pr5.VatRate?>,
+          _isc.getType<_i8rbvyvx.CreateProjectRequest?>,
+          _isc.getType<_iagq7u79.CreateTaskRequest?>,
+          _isc.getType<_i3b86gp3.CreateTimeEntriesInvoiceRequest?>,
+          _isc.getType<_i85810i7.CreateTimeEntryRequest?>,
+          _isc.getType<_i2wiwzxn.Project?>,
+          _isc.getType<_i8h0tbjs.ProjectStatus?>,
+          _isc.getType<_i2ishkic.StartTimerRequest?>,
+          _isc.getType<_ihpxqi7u.Task?>,
+          _isc.getType<_iieqkj38.TaskStatus?>,
+          _isc.getType<_ii8lft1t.TimeEntry?>,
+          _isc.getType<_ilk96oxt.TimeReport?>,
+          _isc.getType<_iify20ly.TimeReportLine?>,
+          _isc.getType<_ilqqks6d.UpdateProjectRequest?>,
+          _isc.getType<_i3iu7ffh.UpdateTaskRequest?>,
+          _isc.getType<_iferwyg8.UpdateTimeEntryRequest?>,
+          _isc.getType<_iy79t9m6.AppTheme?>,
+          _isc.getType<_i1sqdvz3.MyIdentity?>,
+          _isc.getType<_in8pujw9.MyMembershipInfo?>,
+          _isc.getType<_i5r0ss6k.UpdateUserProfileRequest?>,
+          _isc.getType<_iung9xmp.UserProfile?>,
+          _isc.getType<List<_iixw78u5.ProfitLossLine>>,
+          _isc.getType<Map<String, String>>,
+          _isc.getType<Map<String, String>?>,
+          _isc.getType<List<_io6p5gfm.AdminAuditEntry>>,
+          _isc.getType<List<_igm2ntgz.AdminMembershipInfo>>,
+          _isc.getType<List<_im9zvu8o.Business>>,
+          _isc.getType<List<_imguyn55.Invoice>>,
+          _isc.getType<List<_ikvugyyu.InvoiceStatusCount>>,
+          _isc.getType<List<_iwdjv467.AdminUserSummary>>,
+          _isc.getType<List<_ixg6nsli.MonthlyTrendPoint>>,
+          _isc.getType<List<_imcpe7lh.AccountingTransaction>>,
+          _isc.getType<List<_impe7ay9.RecentTimeEntry>>,
+          _isc.getType<List<_ix33w5u6.DebtorSummary>>,
+          _isc.getType<List<_i5jbvijx.ChecklistItemDefinition>>,
+          _isc.getType<List<_it1pcy1x.InvoiceItemRequest>>,
+          _isc.getType<List<_ic8wp775.Customer>>,
+          _isc.getType<List<_id8w36x8.PaymentRecord>>,
+          _isc.getType<List<int>>,
+          _isc.getType<List<int>?>,
+          _isc.getType<List<_iify20ly.TimeReportLine>>,
+          _isc.getType<List<_in8pujw9.MyMembershipInfo>>,
+          _isc.getType<List<_i6zpily8.Feature>>,
+          _isc.getType<List<_in4p196h.AccountingTransaction>>,
+          _isc.getType<List<_in4e0h8b.GuidanceTip>>,
+          _isc.getType<List<_i0hkv0p3.Business>>,
+          _isc.getType<List<_i6dacf8x.Document>>,
+          _isc.getType<List<_iijoyams.ChecklistDefinition>>,
+          _isc.getType<List<_i965vnjh.UserGuidanceProgress>>,
+          _isc.getType<List<_inumhip7.Customer>>,
+          _isc.getType<List<_idltrgge.InvoiceItem>>,
+          _isc.getType<List<_ijh06pcp.Invoice>>,
+          _isc.getType<List<_ir2z9rpn.InvoiceTemplate>>,
+          _isc.getType<List<_i89d689a.Reminder>>,
+          _isc.getType<List<_ib31j0is.Task>>,
+          _isc.getType<List<_i8k415ln.Project>>,
+          _isc.getType<List<_iaj8oc9k.TimeEntry>>,
+        ],
+        modules: const [
+          _ix6v1tim.Protocol.new,
+          _iacc.Protocol.new,
+          _iaic.Protocol.new,
+        ],
+        classNames: const [
+          'AdminRole',
+          'Feature',
+          'ConflictException',
+          'ForbiddenException',
+          'NotFoundException',
+          'ValidationException',
+          'RateLimitException',
+          'AccountingTransaction',
+          'CreateTransactionRequest',
+          'ProfitLossLine',
+          'ProfitLossReport',
+          'TransactionCategory',
+          'TransactionType',
+          'UpdateTransactionRequest',
+          'AdminAuditEntry',
+          'AdminAuditPage',
+          'AdminAuthStatus',
+          'AdminBusinessDetail',
+          'AdminBusinessPage',
+          'AdminInvoicePage',
+          'AdminMembershipInfo',
+          'AdminStatsOverview',
+          'AdminUserDossier',
+          'AdminUserSummary',
+          'AdminUserSummaryPage',
+          'InvoiceStatusCount',
+          'Address',
+          'Business',
+          'BusinessSettings',
+          'Country',
+          'CreateBusinessRequest',
+          'Currency',
+          'LegalForm',
+          'Locale',
+          'Membership',
+          'MembershipRole',
+          'RoundingMode',
+          'UpdateBusinessRequest',
+          'UpdateBusinessSettingsRequest',
+          'DashboardKpis',
+          'DashboardSummary',
+          'DebtorSummary',
+          'MonthlyTrendPoint',
+          'ReceivablesSummary',
+          'RecentTimeEntry',
+          'Document',
+          'DocumentKind',
+          'StorageLocation',
+          'UploadDocumentRequest',
+          'ChecklistDefinition',
+          'ChecklistItemDefinition',
+          'GuidanceTip',
+          'UserGuidanceProgress',
+          'CreateCreditNoteRequest',
+          'CreateCustomerRequest',
+          'CreateInvoiceRequest',
+          'CreateInvoiceTemplateRequest',
+          'CreateRecurringScheduleRequest',
+          'Customer',
+          'CustomerCursorPage',
+          'CustomerListPage',
+          'CustomerStatus',
+          'Invoice',
+          'InvoiceCursorPage',
+          'InvoiceItem',
+          'InvoiceItemRequest',
+          'InvoiceItemUnit',
+          'InvoiceLimitReachedException',
+          'InvoiceListPage',
+          'InvoicePaymentStatus',
+          'InvoiceStatus',
+          'InvoiceTemplate',
+          'InvoiceType',
+          'PaymentMethod',
+          'PaymentRecord',
+          'RecordPaymentRequest',
+          'RecurrenceInterval',
+          'Reminder',
+          'UpdateCustomerRequest',
+          'UpdateInvoiceRequest',
+          'UpdateInvoiceTemplateRequest',
+          'UpdateRecurringScheduleRequest',
+          'VatRate',
+          'CreateProjectRequest',
+          'CreateTaskRequest',
+          'CreateTimeEntriesInvoiceRequest',
+          'CreateTimeEntryRequest',
+          'Project',
+          'ProjectStatus',
+          'StartTimerRequest',
+          'Task',
+          'TaskStatus',
+          'TimeEntry',
+          'TimeReport',
+          'TimeReportLine',
+          'UpdateProjectRequest',
+          'UpdateTaskRequest',
+          'UpdateTimeEntryRequest',
+          'AppTheme',
+          'MyIdentity',
+          'MyMembershipInfo',
+          'UpdateUserProfileRequest',
+          'UserProfile',
+        ],
+      );
+
+  static String? getClassNameFromObjectJson(dynamic data) =>
+      _isc.ProtocolDeserialization.readClassName(data);
 
   @override
   T deserialize<T>(
@@ -283,8 +642,8 @@ class Protocol extends _isc.SerializationManager {
     Type? t,
   ]) {
     t ??= T;
-
-    final dataClassName = getClassNameFromObjectJson(data);
+    final rawDataClassName = _isc.ProtocolDeserialization.readClassName(data);
+    final dataClassName = rawDataClassName;
     if (dataClassName != null && dataClassName != getClassNameForType(t)) {
       try {
         return deserializeByClassName({
@@ -1066,9 +1425,8 @@ class Protocol extends _isc.SerializationManager {
     }
     if (t == Map<String, String>) {
       return (data as Map).map(
-            (k, v) => MapEntry(deserialize<String>(k), deserialize<String>(v)),
-          )
-          as T;
+        (k, v) => MapEntry(deserialize<String>(k), deserialize<String>(v)),
+      ) as T;
     }
     if (t == _isc.getType<Map<String, String>?>()) {
       return (data != null
@@ -1272,15 +1630,16 @@ class Protocol extends _isc.SerializationManager {
               .toList()
           as T;
     }
-    try {
-      return _ix6v1tim.Protocol().deserialize<T>(data, t);
-    } on _isc.DeserializationTypeNotFoundException catch (_) {}
-    try {
-      return _iacc.Protocol().deserialize<T>(data, t);
-    } on _isc.DeserializationTypeNotFoundException catch (_) {}
-    try {
-      return _iaic.Protocol().deserialize<T>(data, t);
-    } on _isc.DeserializationTypeNotFoundException catch (_) {}
+    final modules = deserializationMetadata.modulesForDeserialization(
+      t,
+      className: rawDataClassName,
+    );
+    for (final module in modules) {
+      try {
+        return module.deserialize<T>(data, t);
+      } on _isc.DeserializationTypeNotFoundException catch (_) {}
+    }
+
     return super.deserialize<T>(data, t);
   }
 
@@ -1960,16 +2319,22 @@ class Protocol extends _isc.SerializationManager {
       return deserialize<_iung9xmp.UserProfile>(data['data']);
     }
     if (dataClassName.startsWith('gewerber_backend_commercial.')) {
-      data['className'] = dataClassName.substring(28);
-      return _ix6v1tim.Protocol().deserializeByClassName(data);
+      return _ix6v1tim.Protocol().deserializeByClassName({
+        ...data,
+        'className': dataClassName.substring(28),
+      });
     }
     if (dataClassName.startsWith('serverpod_auth_core.')) {
-      data['className'] = dataClassName.substring(20);
-      return _iacc.Protocol().deserializeByClassName(data);
+      return _iacc.Protocol().deserializeByClassName({
+        ...data,
+        'className': dataClassName.substring(20),
+      });
     }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
-      data['className'] = dataClassName.substring(19);
-      return _iaic.Protocol().deserializeByClassName(data);
+      return _iaic.Protocol().deserializeByClassName({
+        ...data,
+        'className': dataClassName.substring(19),
+      });
     }
     return super.deserializeByClassName(data);
   }

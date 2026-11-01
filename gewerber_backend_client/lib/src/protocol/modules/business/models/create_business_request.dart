@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_client/src/protocol/protocol.dart'
     as _iipbhyvd;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/business/models/address.dart' as _iz28txwx;
 import '../../../modules/business/models/currency.dart' as _i80byysb;
 import '../../../modules/business/models/legal_form.dart' as _ibbkzk4j;
@@ -115,7 +116,8 @@ abstract class CreateBusinessRequest
     String? taxNumber,
     String? email,
     String? phone,
-    _iz28txwx.Address? address,
+    _iz28txwx.Address? address =
+        const _UndefinedCreateBusinessRequest$address(),
     _ie5v8zdc.Locale? locale,
     _i80byysb.Currency? currency,
   });
@@ -161,6 +163,11 @@ abstract class CreateBusinessRequest
 
 class _Undefined {}
 
+class _UndefinedCreateBusinessRequest$address extends _isc.UndefinedSentinel
+    implements _iz28txwx.Address {
+  const _UndefinedCreateBusinessRequest$address();
+}
+
 class _CreateBusinessRequestImpl extends CreateBusinessRequest {
   _CreateBusinessRequestImpl({
     required String name,
@@ -198,7 +205,8 @@ class _CreateBusinessRequestImpl extends CreateBusinessRequest {
     Object? taxNumber = _Undefined,
     Object? email = _Undefined,
     Object? phone = _Undefined,
-    Object? address = _Undefined,
+    _iz28txwx.Address? address =
+        const _UndefinedCreateBusinessRequest$address(),
     _ie5v8zdc.Locale? locale,
     _i80byysb.Currency? currency,
   }) {
@@ -210,9 +218,9 @@ class _CreateBusinessRequestImpl extends CreateBusinessRequest {
       taxNumber: taxNumber is String? ? taxNumber : this.taxNumber,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
-      address: address is _iz28txwx.Address?
-          ? address
-          : this.address?.copyWith(),
+      address: address is _isc.UndefinedSentinel
+          ? this.address?.copyWith()
+          : address,
       locale: locale ?? this.locale,
       currency: currency ?? this.currency,
     );
