@@ -114,10 +114,10 @@ abstract class TimeEntry
     int? taskId,
     String? description,
     DateTime? startedAt,
-    DateTime? stoppedAt,
+    DateTime? stoppedAt = const _isc.$UndefinedDateTime(),
     int? durationMinutes,
     bool? billable,
-    DateTime? invoicedAt,
+    DateTime? invoicedAt = const _isc.$UndefinedDateTime(),
     DateTime? createdAt,
     DateTime? updatedAt,
   });
@@ -207,10 +207,10 @@ class _TimeEntryImpl extends TimeEntry {
     Object? taskId = _Undefined,
     Object? description = _Undefined,
     DateTime? startedAt,
-    Object? stoppedAt = _Undefined,
+    DateTime? stoppedAt = const _isc.$UndefinedDateTime(),
     Object? durationMinutes = _Undefined,
     bool? billable,
-    Object? invoicedAt = _Undefined,
+    DateTime? invoicedAt = const _isc.$UndefinedDateTime(),
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -221,12 +221,16 @@ class _TimeEntryImpl extends TimeEntry {
       taskId: taskId is int? ? taskId : this.taskId,
       description: description is String? ? description : this.description,
       startedAt: startedAt ?? this.startedAt,
-      stoppedAt: stoppedAt is DateTime? ? stoppedAt : this.stoppedAt,
+      stoppedAt: stoppedAt is _isc.UndefinedSentinel
+          ? this.stoppedAt
+          : stoppedAt,
       durationMinutes: durationMinutes is int?
           ? durationMinutes
           : this.durationMinutes,
       billable: billable ?? this.billable,
-      invoicedAt: invoicedAt is DateTime? ? invoicedAt : this.invoicedAt,
+      invoicedAt: invoicedAt is _isc.UndefinedSentinel
+          ? this.invoicedAt
+          : invoicedAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

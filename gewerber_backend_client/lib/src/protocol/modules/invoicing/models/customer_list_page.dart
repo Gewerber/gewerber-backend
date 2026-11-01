@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_client/src/protocol/protocol.dart'
     as _iipbhyvd;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/invoicing/models/customer.dart' as _ix5o1eh3;
 
 abstract class CustomerListPage

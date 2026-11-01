@@ -12,6 +12,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _ida;
 import 'dart:typed_data' as _idt;
+
 import 'package:gewerber_backend_client/src/protocol/core/entitlement/feature.dart'
     as _i6zpily8;
 import 'package:gewerber_backend_client/src/protocol/modules/accounting/models/accounting_transaction.dart'
@@ -158,6 +159,7 @@ import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
 import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
     as _iaic;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import 'protocol.dart' as _il2as5qe;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints

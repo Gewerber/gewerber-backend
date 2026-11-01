@@ -11,6 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _is;
+
 import '../../../modules/business/models/locale.dart' as _ie5v8zdc;
 import '../../../modules/user/models/app_theme.dart' as _ipe4su3u;
 

@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_client/src/protocol/protocol.dart'
     as _iipbhyvd;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/admin/models/admin_membership_info.dart' as _ir926tki;
 import '../../../modules/business/models/business.dart' as _i2ifapy5;
 

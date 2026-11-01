@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_client/src/protocol/protocol.dart'
     as _iipbhyvd;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/business/models/address.dart' as _iz28txwx;
 
 abstract class CreateCustomerRequest
@@ -78,7 +79,8 @@ abstract class CreateCustomerRequest
     String? vatId,
     String? email,
     String? phone,
-    _iz28txwx.Address? address,
+    _iz28txwx.Address? address =
+        const _UndefinedCreateCustomerRequest$address(),
     String? notes,
   });
   @override
@@ -117,6 +119,11 @@ abstract class CreateCustomerRequest
 
 class _Undefined {}
 
+class _UndefinedCreateCustomerRequest$address extends _isc.UndefinedSentinel
+    implements _iz28txwx.Address {
+  const _UndefinedCreateCustomerRequest$address();
+}
+
 class _CreateCustomerRequestImpl extends CreateCustomerRequest {
   _CreateCustomerRequestImpl({
     required String name,
@@ -146,7 +153,8 @@ class _CreateCustomerRequestImpl extends CreateCustomerRequest {
     Object? vatId = _Undefined,
     Object? email = _Undefined,
     Object? phone = _Undefined,
-    Object? address = _Undefined,
+    _iz28txwx.Address? address =
+        const _UndefinedCreateCustomerRequest$address(),
     Object? notes = _Undefined,
   }) {
     return CreateCustomerRequest(
@@ -155,9 +163,9 @@ class _CreateCustomerRequestImpl extends CreateCustomerRequest {
       vatId: vatId is String? ? vatId : this.vatId,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
-      address: address is _iz28txwx.Address?
-          ? address
-          : this.address?.copyWith(),
+      address: address is _isc.UndefinedSentinel
+          ? this.address?.copyWith()
+          : address,
       notes: notes is String? ? notes : this.notes,
     );
   }

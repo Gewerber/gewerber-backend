@@ -10,6 +10,8 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _ida;
+
 import 'package:gewerber_backend_server/src/generated/protocol.dart'
     as _itzp2rm6;
 import 'package:serverpod/serverpod.dart' as _is;
@@ -89,11 +91,11 @@ abstract class AuditEntry
   AuditEntry copyWith({
     int? id,
     int? businessId,
-    _is.UuidValue? userId,
+    _is.UuidValue? userId = const _is.$UndefinedUuidValue(),
     String? action,
     String? entityType,
     String? entityId,
-    Map<String, String>? changes,
+    Map<String, String>? changes = const _is.$UndefinedMap<String, String>(),
     DateTime? createdAt,
   });
   @override
@@ -174,23 +176,22 @@ class _AuditEntryImpl extends AuditEntry {
   AuditEntry copyWith({
     Object? id = _Undefined,
     Object? businessId = _Undefined,
-    Object? userId = _Undefined,
+    _is.UuidValue? userId = const _is.$UndefinedUuidValue(),
     String? action,
     String? entityType,
     Object? entityId = _Undefined,
-    Object? changes = _Undefined,
+    Map<String, String>? changes = const _is.$UndefinedMap<String, String>(),
     DateTime? createdAt,
   }) {
     return AuditEntry(
       id: id is int? ? id : this.id,
       businessId: businessId is int? ? businessId : this.businessId,
-      userId: userId is _is.UuidValue? ? userId : this.userId,
+      userId: userId is _is.UndefinedSentinel ? this.userId : userId,
       action: action ?? this.action,
       entityType: entityType ?? this.entityType,
       entityId: entityId is String? ? entityId : this.entityId,
-      changes: changes is Map<String, String>?
-          ? changes
-          : this.changes?.map(
+      changes: changes is _is.UndefinedSentinel
+          ? this.changes?.map(
               (
                 key0,
                 value0,
@@ -198,7 +199,8 @@ class _AuditEntryImpl extends AuditEntry {
                 key0,
                 value0,
               ),
-            ),
+            )
+          : changes,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -384,6 +386,69 @@ class AuditEntryRepository {
       transaction: transaction,
       lockMode: lockMode,
       lockBehavior: lockBehavior,
+    );
+  }
+
+  /// Emits [AuditEntry]s matching the given query parameters every time the
+  /// source tables are modified.
+  ///
+  /// Use [where] to specify which items to include in the return value.
+  /// If none is specified, all items will be returned.
+  ///
+  /// To specify the order of the items use [orderBy] or [orderByList]
+  /// when sorting by multiple columns.
+  ///
+  /// The maximum number of items can be set by [limit]. If no limit is set,
+  /// all items matching the query will be returned.
+  ///
+  /// [offset] defines how many items to skip, after which [limit] (or all)
+  /// items are read from the database.
+  ///
+  /// Use [throttle] to specify the minimum interval between queries. It can
+  /// also be set to `null`, in which case the stream will only be throttled
+  /// when its subscription is paused.
+  ///
+  /// Source tables are collected from the queried table, [where], [orderBy],
+  /// [orderByList], and the [include] graph. [alsoTriggerOnTables] is added
+  /// to that set. Pass [Table] instances such as `AuditEntry.t`.
+  ///
+  /// Raw [Expression] SQL is not inspected. Tables referenced only in raw
+  /// SQL must be passed via [alsoTriggerOnTables].
+  ///
+  /// The stream always reads committed state and never joins an ambient
+  /// [Transaction]. Emissions for a write fire after that write commits.
+  ///
+  /// Currently only supported on SQLite. Calling this method on PostgreSQL
+  /// throws an [UnsupportedError].
+  ///
+  /// ```dart
+  /// var subscription = Persons.db.watch(
+  ///   session,
+  ///   where: (t) => t.lastName.equals('Jones'),
+  ///   orderBy: (t) => t.firstName,
+  ///   limit: 100,
+  /// ).listen((persons) {
+  ///   // Handle the latest matching rows.
+  /// });
+  /// ```
+  _ida.Stream<List<AuditEntry>> watch(
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<AuditEntryTable>? where,
+    int? limit,
+    int? offset,
+    _is.OrderByBuilder<AuditEntryTable>? orderBy,
+    _is.OrderByListBuilder<AuditEntryTable>? orderByList,
+    Duration? throttle = const Duration(milliseconds: 30),
+    Iterable<_is.Table>? alsoTriggerOnTables,
+  }) {
+    return session.db.watch<AuditEntry>(
+      where: where?.call(AuditEntry.t),
+      orderBy: orderBy?.call(AuditEntry.t),
+      orderByList: orderByList?.call(AuditEntry.t),
+      limit: limit,
+      offset: offset,
+      throttle: throttle,
+      alsoTriggerOnTables: alsoTriggerOnTables,
     );
   }
 

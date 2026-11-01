@@ -11,6 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/business/models/locale.dart' as _ie5v8zdc;
 import '../../../modules/user/models/app_theme.dart' as _ipe4su3u;
 
@@ -105,7 +106,7 @@ abstract class UserProfile
     _ipe4su3u.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
-    DateTime? deletedAt,
+    DateTime? deletedAt = const _isc.$UndefinedDateTime(),
   });
   @override
   Map<String, dynamic> toJson() {
@@ -183,7 +184,7 @@ class _UserProfileImpl extends UserProfile {
     _ipe4su3u.AppTheme? themeMode,
     DateTime? createdAt,
     DateTime? updatedAt,
-    Object? deletedAt = _Undefined,
+    DateTime? deletedAt = const _isc.$UndefinedDateTime(),
   }) {
     return UserProfile(
       id: id is int? ? id : this.id,
@@ -194,7 +195,9 @@ class _UserProfileImpl extends UserProfile {
       themeMode: themeMode ?? this.themeMode,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      deletedAt: deletedAt is DateTime? ? deletedAt : this.deletedAt,
+      deletedAt: deletedAt is _isc.UndefinedSentinel
+          ? this.deletedAt
+          : deletedAt,
     );
   }
 }

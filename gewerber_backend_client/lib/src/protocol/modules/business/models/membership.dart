@@ -11,6 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/business/models/membership_role.dart' as _i0s3lyvs;
 
 abstract class Membership
@@ -69,7 +70,7 @@ abstract class Membership
   @_isc.useResult
   Membership copyWith({
     int? id,
-    _isc.UuidValue? userId,
+    _isc.UuidValue? userId = const _isc.$UndefinedUuidValue(),
     int? businessId,
     _i0s3lyvs.MembershipRole? role,
     DateTime? createdAt,
@@ -127,14 +128,14 @@ class _MembershipImpl extends Membership {
   @override
   Membership copyWith({
     Object? id = _Undefined,
-    Object? userId = _Undefined,
+    _isc.UuidValue? userId = const _isc.$UndefinedUuidValue(),
     int? businessId,
     _i0s3lyvs.MembershipRole? role,
     DateTime? createdAt,
   }) {
     return Membership(
       id: id is int? ? id : this.id,
-      userId: userId is _isc.UuidValue? ? userId : this.userId,
+      userId: userId is _isc.UndefinedSentinel ? this.userId : userId,
       businessId: businessId ?? this.businessId,
       role: role ?? this.role,
       createdAt: createdAt ?? this.createdAt,

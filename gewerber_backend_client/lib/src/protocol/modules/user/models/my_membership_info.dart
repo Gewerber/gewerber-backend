@@ -11,6 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/business/models/membership_role.dart' as _i0s3lyvs;
 
 abstract class MyMembershipInfo

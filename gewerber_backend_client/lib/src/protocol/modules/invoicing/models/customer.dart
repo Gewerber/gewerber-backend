@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_client/src/protocol/protocol.dart'
     as _iipbhyvd;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/business/models/address.dart' as _iz28txwx;
 import '../../../modules/invoicing/models/customer_status.dart' as _iq2eew5f;
 
@@ -125,7 +126,7 @@ abstract class Customer
     String? buyerReference,
     String? email,
     String? phone,
-    _iz28txwx.Address? address,
+    _iz28txwx.Address? address = const _UndefinedCustomer$address(),
     String? notes,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -178,6 +179,11 @@ abstract class Customer
 
 class _Undefined {}
 
+class _UndefinedCustomer$address extends _isc.UndefinedSentinel
+    implements _iz28txwx.Address {
+  const _UndefinedCustomer$address();
+}
+
 class _CustomerImpl extends Customer {
   _CustomerImpl({
     int? id,
@@ -223,7 +229,7 @@ class _CustomerImpl extends Customer {
     Object? buyerReference = _Undefined,
     Object? email = _Undefined,
     Object? phone = _Undefined,
-    Object? address = _Undefined,
+    _iz28txwx.Address? address = const _UndefinedCustomer$address(),
     Object? notes = _Undefined,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -240,9 +246,9 @@ class _CustomerImpl extends Customer {
           : this.buyerReference,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
-      address: address is _iz28txwx.Address?
-          ? address
-          : this.address?.copyWith(),
+      address: address is _isc.UndefinedSentinel
+          ? this.address?.copyWith()
+          : address,
       notes: notes is String? ? notes : this.notes,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
