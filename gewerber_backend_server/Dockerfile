@@ -3,6 +3,7 @@
 
 # Build stage
 FROM dart:3.13.4 AS build
+ENV PATH="/root/.pub-cache/bin:$PATH"
 
 # git is needed to fetch the commercial module packages during `dart pub get`.
 RUN apt-get update \
@@ -78,8 +79,12 @@ RUN --mount=type=secret,id=git_token \
   fi \
   && rm -f ~/.gitconfig
 
-# Compile the server executable.
+# Generate server code from models (.spy.yaml) before compiling the executable.
+RUN dart pub global activate serverpod
 WORKDIR /app/gewerber_backend_server
+RUN serverpod generate --force
+
+# Compile the server executable.
 RUN dart build cli --target bin/main.dart --output build
 RUN mv build/bundle/bin/main build/bundle/bin/server
 
