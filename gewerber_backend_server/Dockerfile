@@ -13,6 +13,15 @@ RUN apt-get update \
 # Create a minimal workspace for the server package.
 WORKDIR /app
 COPY gewerber_backend_server gewerber_backend_server
+# The client package is needed only so `serverpod generate` can load its
+# pubspec (`client_package_path: ../gewerber_backend_client` in
+# config/generator.yaml — without the directory the generator aborts with
+# "Failed to load client pubspec.yaml"). It is deliberately NOT a member of
+# the workspace below: nothing in this image resolves or builds it, and the
+# resolution guard therefore still judges only the server module. It is
+# copied before the retarget/generate layers so `retarget_gewerber_refs.sh`
+# sees its pubspec like every other manifest.
+COPY gewerber_backend_client gewerber_backend_client
 RUN printf '%s\n' \
   'name: _' \
   'environment:' \
@@ -80,9 +89,31 @@ RUN --mount=type=secret,id=git_token \
   && rm -f ~/.gitconfig
 
 # Generate server code from models (.spy.yaml) before compiling the executable.
-RUN dart pub global activate serverpod
+#
+# The CLI is the `serverpod` executable published by the `serverpod_cli`
+# package; the `serverpod` package itself ships no executables, so activating
+# it installs nothing runnable and `serverpod` is then "not found".
+#
+# The CLI version is read from pubspec.lock -- the version pub actually
+# resolved -- rather than from a literal or from the caret constraint in
+# pubspec.yaml: a range would install whatever newest 4.x exists at build
+# time, and a CLI newer than the resolved runtime emits artifacts that
+# reference APIs the runtime does not have. The lock read here cannot be
+# stale: the workspace lock lives at the workspace root (neither COPYed
+# package directory contains one — pubspec.lock is gitignored) and is
+# written fresh by the `dart pub get` above. Same logic as
+# `.github/workflows/ci.yml` ("Install Serverpod CLI"); the awk program is
+# kept on one line because every physical line of a Dockerfile instruction
+# needs a trailing backslash for continuation.
 WORKDIR /app/gewerber_backend_server
-RUN serverpod generate --force
+RUN version="$(awk '/^  serverpod:$/ { hit = 1; next } hit && /^    version:/ { gsub(/"/, "", $2); print $2; exit } hit && /^  [a-zA-Z_]/ { exit }' /app/pubspec.lock)" \
+  && if [ -z "$version" ]; then \
+    echo 'ERROR: could not read the resolved serverpod version from pubspec.lock' >&2; \
+    exit 1; \
+  fi \
+  && echo "Activating serverpod_cli $version (resolved from pubspec.lock)" \
+  && dart pub global activate serverpod_cli "$version" \
+  && serverpod generate --force
 
 # Compile the server executable.
 RUN dart build cli --target bin/main.dart --output build
