@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_client/src/protocol/protocol.dart'
     as _iipbhyvd;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/admin/models/admin_audit_entry.dart' as _ih554ctd;
 
 abstract class AdminAuditPage

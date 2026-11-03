@@ -11,6 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/invoicing/models/payment_method.dart' as _idng401x;
 
 abstract class RecordPaymentRequest
@@ -64,7 +65,7 @@ abstract class RecordPaymentRequest
   @_isc.useResult
   RecordPaymentRequest copyWith({
     int? invoiceId,
-    DateTime? paidAt,
+    DateTime? paidAt = const _isc.$UndefinedDateTime(),
     int? amountCents,
     _idng401x.PaymentMethod? method,
     String? reference,
@@ -122,14 +123,14 @@ class _RecordPaymentRequestImpl extends RecordPaymentRequest {
   @override
   RecordPaymentRequest copyWith({
     int? invoiceId,
-    Object? paidAt = _Undefined,
+    DateTime? paidAt = const _isc.$UndefinedDateTime(),
     int? amountCents,
     _idng401x.PaymentMethod? method,
     Object? reference = _Undefined,
   }) {
     return RecordPaymentRequest(
       invoiceId: invoiceId ?? this.invoiceId,
-      paidAt: paidAt is DateTime? ? paidAt : this.paidAt,
+      paidAt: paidAt is _isc.UndefinedSentinel ? this.paidAt : paidAt,
       amountCents: amountCents ?? this.amountCents,
       method: method ?? this.method,
       reference: reference is String? ? reference : this.reference,

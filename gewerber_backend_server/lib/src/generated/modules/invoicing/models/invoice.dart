@@ -10,7 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _ida;
+
 import 'package:serverpod/serverpod.dart' as _is;
+
 import '../../../modules/business/models/currency.dart' as _i80byysb;
 import '../../../modules/business/models/locale.dart' as _ie5v8zdc;
 import '../../../modules/invoicing/models/invoice_status.dart' as _ib459vd4;
@@ -246,9 +249,9 @@ abstract class Invoice
     int? customerId,
     int? originalInvoiceId,
     DateTime? issueDate,
-    DateTime? dueDate,
-    DateTime? serviceDateFrom,
-    DateTime? serviceDateTo,
+    DateTime? dueDate = const _is.$UndefinedDateTime(),
+    DateTime? serviceDateFrom = const _is.$UndefinedDateTime(),
+    DateTime? serviceDateTo = const _is.$UndefinedDateTime(),
     _ie5v8zdc.Locale? locale,
     _i80byysb.Currency? currency,
     int? subtotalCents,
@@ -260,8 +263,8 @@ abstract class Invoice
     int? templateId,
     int? pdfDocumentId,
     _i2jlpxj3.RecurrenceInterval? recurrenceInterval,
-    DateTime? nextRecurrenceDate,
-    DateTime? recurrenceEndDate,
+    DateTime? nextRecurrenceDate = const _is.$UndefinedDateTime(),
+    DateTime? recurrenceEndDate = const _is.$UndefinedDateTime(),
     int? recurrenceMaxOccurrences,
     int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
@@ -449,9 +452,9 @@ class _InvoiceImpl extends Invoice {
     Object? customerId = _Undefined,
     Object? originalInvoiceId = _Undefined,
     DateTime? issueDate,
-    Object? dueDate = _Undefined,
-    Object? serviceDateFrom = _Undefined,
-    Object? serviceDateTo = _Undefined,
+    DateTime? dueDate = const _is.$UndefinedDateTime(),
+    DateTime? serviceDateFrom = const _is.$UndefinedDateTime(),
+    DateTime? serviceDateTo = const _is.$UndefinedDateTime(),
     _ie5v8zdc.Locale? locale,
     _i80byysb.Currency? currency,
     int? subtotalCents,
@@ -463,8 +466,8 @@ class _InvoiceImpl extends Invoice {
     Object? templateId = _Undefined,
     Object? pdfDocumentId = _Undefined,
     Object? recurrenceInterval = _Undefined,
-    Object? nextRecurrenceDate = _Undefined,
-    Object? recurrenceEndDate = _Undefined,
+    DateTime? nextRecurrenceDate = const _is.$UndefinedDateTime(),
+    DateTime? recurrenceEndDate = const _is.$UndefinedDateTime(),
     Object? recurrenceMaxOccurrences = _Undefined,
     int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
@@ -481,13 +484,13 @@ class _InvoiceImpl extends Invoice {
           ? originalInvoiceId
           : this.originalInvoiceId,
       issueDate: issueDate ?? this.issueDate,
-      dueDate: dueDate is DateTime? ? dueDate : this.dueDate,
-      serviceDateFrom: serviceDateFrom is DateTime?
-          ? serviceDateFrom
-          : this.serviceDateFrom,
-      serviceDateTo: serviceDateTo is DateTime?
-          ? serviceDateTo
-          : this.serviceDateTo,
+      dueDate: dueDate is _is.UndefinedSentinel ? this.dueDate : dueDate,
+      serviceDateFrom: serviceDateFrom is _is.UndefinedSentinel
+          ? this.serviceDateFrom
+          : serviceDateFrom,
+      serviceDateTo: serviceDateTo is _is.UndefinedSentinel
+          ? this.serviceDateTo
+          : serviceDateTo,
       locale: locale ?? this.locale,
       currency: currency ?? this.currency,
       subtotalCents: subtotalCents ?? this.subtotalCents,
@@ -501,12 +504,12 @@ class _InvoiceImpl extends Invoice {
       recurrenceInterval: recurrenceInterval is _i2jlpxj3.RecurrenceInterval?
           ? recurrenceInterval
           : this.recurrenceInterval,
-      nextRecurrenceDate: nextRecurrenceDate is DateTime?
-          ? nextRecurrenceDate
-          : this.nextRecurrenceDate,
-      recurrenceEndDate: recurrenceEndDate is DateTime?
-          ? recurrenceEndDate
-          : this.recurrenceEndDate,
+      nextRecurrenceDate: nextRecurrenceDate is _is.UndefinedSentinel
+          ? this.nextRecurrenceDate
+          : nextRecurrenceDate,
+      recurrenceEndDate: recurrenceEndDate is _is.UndefinedSentinel
+          ? this.recurrenceEndDate
+          : recurrenceEndDate,
       recurrenceMaxOccurrences: recurrenceMaxOccurrences is int?
           ? recurrenceMaxOccurrences
           : this.recurrenceMaxOccurrences,
@@ -969,6 +972,69 @@ class InvoiceRepository {
       transaction: transaction,
       lockMode: lockMode,
       lockBehavior: lockBehavior,
+    );
+  }
+
+  /// Emits [Invoice]s matching the given query parameters every time the
+  /// source tables are modified.
+  ///
+  /// Use [where] to specify which items to include in the return value.
+  /// If none is specified, all items will be returned.
+  ///
+  /// To specify the order of the items use [orderBy] or [orderByList]
+  /// when sorting by multiple columns.
+  ///
+  /// The maximum number of items can be set by [limit]. If no limit is set,
+  /// all items matching the query will be returned.
+  ///
+  /// [offset] defines how many items to skip, after which [limit] (or all)
+  /// items are read from the database.
+  ///
+  /// Use [throttle] to specify the minimum interval between queries. It can
+  /// also be set to `null`, in which case the stream will only be throttled
+  /// when its subscription is paused.
+  ///
+  /// Source tables are collected from the queried table, [where], [orderBy],
+  /// [orderByList], and the [include] graph. [alsoTriggerOnTables] is added
+  /// to that set. Pass [Table] instances such as `Invoice.t`.
+  ///
+  /// Raw [Expression] SQL is not inspected. Tables referenced only in raw
+  /// SQL must be passed via [alsoTriggerOnTables].
+  ///
+  /// The stream always reads committed state and never joins an ambient
+  /// [Transaction]. Emissions for a write fire after that write commits.
+  ///
+  /// Currently only supported on SQLite. Calling this method on PostgreSQL
+  /// throws an [UnsupportedError].
+  ///
+  /// ```dart
+  /// var subscription = Persons.db.watch(
+  ///   session,
+  ///   where: (t) => t.lastName.equals('Jones'),
+  ///   orderBy: (t) => t.firstName,
+  ///   limit: 100,
+  /// ).listen((persons) {
+  ///   // Handle the latest matching rows.
+  /// });
+  /// ```
+  _ida.Stream<List<Invoice>> watch(
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<InvoiceTable>? where,
+    int? limit,
+    int? offset,
+    _is.OrderByBuilder<InvoiceTable>? orderBy,
+    _is.OrderByListBuilder<InvoiceTable>? orderByList,
+    Duration? throttle = const Duration(milliseconds: 30),
+    Iterable<_is.Table>? alsoTriggerOnTables,
+  }) {
+    return session.db.watch<Invoice>(
+      where: where?.call(Invoice.t),
+      orderBy: orderBy?.call(Invoice.t),
+      orderByList: orderByList?.call(Invoice.t),
+      limit: limit,
+      offset: offset,
+      throttle: throttle,
+      alsoTriggerOnTables: alsoTriggerOnTables,
     );
   }
 

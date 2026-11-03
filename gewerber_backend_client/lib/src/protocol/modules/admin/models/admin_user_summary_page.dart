@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_client/src/protocol/protocol.dart'
     as _iipbhyvd;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/admin/models/admin_user_summary.dart' as _icq7l3ts;
 
 abstract class AdminUserSummaryPage

@@ -11,6 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _is;
+
 import '../../../modules/time_tracking/models/project_status.dart' as _i1ujg7mu;
 
 abstract class UpdateProjectRequest

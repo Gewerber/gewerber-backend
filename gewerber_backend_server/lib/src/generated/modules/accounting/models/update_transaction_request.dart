@@ -11,6 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _is;
+
 import '../../../modules/accounting/models/transaction_category.dart'
     as _i1xoyxnt;
 import '../../../modules/accounting/models/transaction_type.dart' as _i74jrgmd;

@@ -10,9 +10,12 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _ida;
+
 import 'package:gewerber_backend_server/src/generated/protocol.dart'
     as _itzp2rm6;
 import 'package:serverpod/serverpod.dart' as _is;
+
 import '../../../modules/business/models/address.dart' as _iz28txwx;
 import '../../../modules/invoicing/models/customer_status.dart' as _iq2eew5f;
 
@@ -130,7 +133,7 @@ abstract class Customer
     String? buyerReference,
     String? email,
     String? phone,
-    _iz28txwx.Address? address,
+    _iz28txwx.Address? address = const _UndefinedCustomer$address(),
     String? notes,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -205,6 +208,11 @@ abstract class Customer
 
 class _Undefined {}
 
+class _UndefinedCustomer$address extends _is.UndefinedSentinel
+    implements _iz28txwx.Address {
+  const _UndefinedCustomer$address();
+}
+
 class _CustomerImpl extends Customer {
   _CustomerImpl({
     int? id,
@@ -250,7 +258,7 @@ class _CustomerImpl extends Customer {
     Object? buyerReference = _Undefined,
     Object? email = _Undefined,
     Object? phone = _Undefined,
-    Object? address = _Undefined,
+    _iz28txwx.Address? address = const _UndefinedCustomer$address(),
     Object? notes = _Undefined,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -267,9 +275,9 @@ class _CustomerImpl extends Customer {
           : this.buyerReference,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
-      address: address is _iz28txwx.Address?
-          ? address
-          : this.address?.copyWith(),
+      address: address is _is.UndefinedSentinel
+          ? this.address?.copyWith()
+          : address,
       notes: notes is String? ? notes : this.notes,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -524,6 +532,69 @@ class CustomerRepository {
       transaction: transaction,
       lockMode: lockMode,
       lockBehavior: lockBehavior,
+    );
+  }
+
+  /// Emits [Customer]s matching the given query parameters every time the
+  /// source tables are modified.
+  ///
+  /// Use [where] to specify which items to include in the return value.
+  /// If none is specified, all items will be returned.
+  ///
+  /// To specify the order of the items use [orderBy] or [orderByList]
+  /// when sorting by multiple columns.
+  ///
+  /// The maximum number of items can be set by [limit]. If no limit is set,
+  /// all items matching the query will be returned.
+  ///
+  /// [offset] defines how many items to skip, after which [limit] (or all)
+  /// items are read from the database.
+  ///
+  /// Use [throttle] to specify the minimum interval between queries. It can
+  /// also be set to `null`, in which case the stream will only be throttled
+  /// when its subscription is paused.
+  ///
+  /// Source tables are collected from the queried table, [where], [orderBy],
+  /// [orderByList], and the [include] graph. [alsoTriggerOnTables] is added
+  /// to that set. Pass [Table] instances such as `Customer.t`.
+  ///
+  /// Raw [Expression] SQL is not inspected. Tables referenced only in raw
+  /// SQL must be passed via [alsoTriggerOnTables].
+  ///
+  /// The stream always reads committed state and never joins an ambient
+  /// [Transaction]. Emissions for a write fire after that write commits.
+  ///
+  /// Currently only supported on SQLite. Calling this method on PostgreSQL
+  /// throws an [UnsupportedError].
+  ///
+  /// ```dart
+  /// var subscription = Persons.db.watch(
+  ///   session,
+  ///   where: (t) => t.lastName.equals('Jones'),
+  ///   orderBy: (t) => t.firstName,
+  ///   limit: 100,
+  /// ).listen((persons) {
+  ///   // Handle the latest matching rows.
+  /// });
+  /// ```
+  _ida.Stream<List<Customer>> watch(
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<CustomerTable>? where,
+    int? limit,
+    int? offset,
+    _is.OrderByBuilder<CustomerTable>? orderBy,
+    _is.OrderByListBuilder<CustomerTable>? orderByList,
+    Duration? throttle = const Duration(milliseconds: 30),
+    Iterable<_is.Table>? alsoTriggerOnTables,
+  }) {
+    return session.db.watch<Customer>(
+      where: where?.call(Customer.t),
+      orderBy: orderBy?.call(Customer.t),
+      orderByList: orderByList?.call(Customer.t),
+      limit: limit,
+      offset: offset,
+      throttle: throttle,
+      alsoTriggerOnTables: alsoTriggerOnTables,
     );
   }
 

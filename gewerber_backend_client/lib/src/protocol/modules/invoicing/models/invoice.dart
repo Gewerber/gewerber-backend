@@ -11,6 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/business/models/currency.dart' as _i80byysb;
 import '../../../modules/business/models/locale.dart' as _ie5v8zdc;
 import '../../../modules/invoicing/models/invoice_status.dart' as _ib459vd4;
@@ -241,9 +242,9 @@ abstract class Invoice
     int? customerId,
     int? originalInvoiceId,
     DateTime? issueDate,
-    DateTime? dueDate,
-    DateTime? serviceDateFrom,
-    DateTime? serviceDateTo,
+    DateTime? dueDate = const _isc.$UndefinedDateTime(),
+    DateTime? serviceDateFrom = const _isc.$UndefinedDateTime(),
+    DateTime? serviceDateTo = const _isc.$UndefinedDateTime(),
     _ie5v8zdc.Locale? locale,
     _i80byysb.Currency? currency,
     int? subtotalCents,
@@ -255,8 +256,8 @@ abstract class Invoice
     int? templateId,
     int? pdfDocumentId,
     _i2jlpxj3.RecurrenceInterval? recurrenceInterval,
-    DateTime? nextRecurrenceDate,
-    DateTime? recurrenceEndDate,
+    DateTime? nextRecurrenceDate = const _isc.$UndefinedDateTime(),
+    DateTime? recurrenceEndDate = const _isc.$UndefinedDateTime(),
     int? recurrenceMaxOccurrences,
     int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
@@ -422,9 +423,9 @@ class _InvoiceImpl extends Invoice {
     Object? customerId = _Undefined,
     Object? originalInvoiceId = _Undefined,
     DateTime? issueDate,
-    Object? dueDate = _Undefined,
-    Object? serviceDateFrom = _Undefined,
-    Object? serviceDateTo = _Undefined,
+    DateTime? dueDate = const _isc.$UndefinedDateTime(),
+    DateTime? serviceDateFrom = const _isc.$UndefinedDateTime(),
+    DateTime? serviceDateTo = const _isc.$UndefinedDateTime(),
     _ie5v8zdc.Locale? locale,
     _i80byysb.Currency? currency,
     int? subtotalCents,
@@ -436,8 +437,8 @@ class _InvoiceImpl extends Invoice {
     Object? templateId = _Undefined,
     Object? pdfDocumentId = _Undefined,
     Object? recurrenceInterval = _Undefined,
-    Object? nextRecurrenceDate = _Undefined,
-    Object? recurrenceEndDate = _Undefined,
+    DateTime? nextRecurrenceDate = const _isc.$UndefinedDateTime(),
+    DateTime? recurrenceEndDate = const _isc.$UndefinedDateTime(),
     Object? recurrenceMaxOccurrences = _Undefined,
     int? recurrenceOccurrencesCreated,
     DateTime? createdAt,
@@ -454,13 +455,13 @@ class _InvoiceImpl extends Invoice {
           ? originalInvoiceId
           : this.originalInvoiceId,
       issueDate: issueDate ?? this.issueDate,
-      dueDate: dueDate is DateTime? ? dueDate : this.dueDate,
-      serviceDateFrom: serviceDateFrom is DateTime?
-          ? serviceDateFrom
-          : this.serviceDateFrom,
-      serviceDateTo: serviceDateTo is DateTime?
-          ? serviceDateTo
-          : this.serviceDateTo,
+      dueDate: dueDate is _isc.UndefinedSentinel ? this.dueDate : dueDate,
+      serviceDateFrom: serviceDateFrom is _isc.UndefinedSentinel
+          ? this.serviceDateFrom
+          : serviceDateFrom,
+      serviceDateTo: serviceDateTo is _isc.UndefinedSentinel
+          ? this.serviceDateTo
+          : serviceDateTo,
       locale: locale ?? this.locale,
       currency: currency ?? this.currency,
       subtotalCents: subtotalCents ?? this.subtotalCents,
@@ -474,12 +475,12 @@ class _InvoiceImpl extends Invoice {
       recurrenceInterval: recurrenceInterval is _i2jlpxj3.RecurrenceInterval?
           ? recurrenceInterval
           : this.recurrenceInterval,
-      nextRecurrenceDate: nextRecurrenceDate is DateTime?
-          ? nextRecurrenceDate
-          : this.nextRecurrenceDate,
-      recurrenceEndDate: recurrenceEndDate is DateTime?
-          ? recurrenceEndDate
-          : this.recurrenceEndDate,
+      nextRecurrenceDate: nextRecurrenceDate is _isc.UndefinedSentinel
+          ? this.nextRecurrenceDate
+          : nextRecurrenceDate,
+      recurrenceEndDate: recurrenceEndDate is _isc.UndefinedSentinel
+          ? this.recurrenceEndDate
+          : recurrenceEndDate,
       recurrenceMaxOccurrences: recurrenceMaxOccurrences is int?
           ? recurrenceMaxOccurrences
           : this.recurrenceMaxOccurrences,

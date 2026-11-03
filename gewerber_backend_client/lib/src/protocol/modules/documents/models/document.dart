@@ -11,6 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/documents/models/document_kind.dart' as _iez1e0gu;
 import '../../../modules/documents/models/storage_location.dart' as _i189k6zv;
 
@@ -120,7 +121,7 @@ abstract class Document
     String? storagePath,
     String? relatedEntityType,
     String? relatedEntityId,
-    _isc.UuidValue? uploadedById,
+    _isc.UuidValue? uploadedById = const _isc.$UndefinedUuidValue(),
     DateTime? createdAt,
   });
   @override
@@ -213,7 +214,7 @@ class _DocumentImpl extends Document {
     String? storagePath,
     Object? relatedEntityType = _Undefined,
     Object? relatedEntityId = _Undefined,
-    Object? uploadedById = _Undefined,
+    _isc.UuidValue? uploadedById = const _isc.$UndefinedUuidValue(),
     DateTime? createdAt,
   }) {
     return Document(
@@ -231,9 +232,9 @@ class _DocumentImpl extends Document {
       relatedEntityId: relatedEntityId is String?
           ? relatedEntityId
           : this.relatedEntityId,
-      uploadedById: uploadedById is _isc.UuidValue?
-          ? uploadedById
-          : this.uploadedById,
+      uploadedById: uploadedById is _isc.UndefinedSentinel
+          ? this.uploadedById
+          : uploadedById,
       createdAt: createdAt ?? this.createdAt,
     );
   }

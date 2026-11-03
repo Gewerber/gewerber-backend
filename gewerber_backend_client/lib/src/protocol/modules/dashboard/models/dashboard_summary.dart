@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_client/src/protocol/protocol.dart'
     as _iipbhyvd;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/accounting/models/accounting_transaction.dart'
     as _ildl58f5;
 import '../../../modules/dashboard/models/dashboard_kpis.dart' as _i2lowue0;

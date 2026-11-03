@@ -61,7 +61,7 @@ abstract class StartTimerRequest
     int? projectId,
     int? taskId,
     String? description,
-    DateTime? startedAt,
+    DateTime? startedAt = const _is.$UndefinedDateTime(),
     bool? billable,
   });
   @override
@@ -119,14 +119,16 @@ class _StartTimerRequestImpl extends StartTimerRequest {
     Object? projectId = _Undefined,
     Object? taskId = _Undefined,
     Object? description = _Undefined,
-    Object? startedAt = _Undefined,
+    DateTime? startedAt = const _is.$UndefinedDateTime(),
     bool? billable,
   }) {
     return StartTimerRequest(
       projectId: projectId is int? ? projectId : this.projectId,
       taskId: taskId is int? ? taskId : this.taskId,
       description: description is String? ? description : this.description,
-      startedAt: startedAt is DateTime? ? startedAt : this.startedAt,
+      startedAt: startedAt is _is.UndefinedSentinel
+          ? this.startedAt
+          : startedAt,
       billable: billable ?? this.billable,
     );
   }

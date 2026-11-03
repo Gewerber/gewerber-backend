@@ -82,11 +82,11 @@ abstract class AdminAuditEntry
   AdminAuditEntry copyWith({
     int? id,
     int? businessId,
-    _isc.UuidValue? userId,
+    _isc.UuidValue? userId = const _isc.$UndefinedUuidValue(),
     String? action,
     String? entityType,
     String? entityId,
-    Map<String, String>? changes,
+    Map<String, String>? changes = const _isc.$UndefinedMap<String, String>(),
     DateTime? createdAt,
   });
   @override
@@ -155,23 +155,22 @@ class _AdminAuditEntryImpl extends AdminAuditEntry {
   AdminAuditEntry copyWith({
     Object? id = _Undefined,
     Object? businessId = _Undefined,
-    Object? userId = _Undefined,
+    _isc.UuidValue? userId = const _isc.$UndefinedUuidValue(),
     String? action,
     String? entityType,
     Object? entityId = _Undefined,
-    Object? changes = _Undefined,
+    Map<String, String>? changes = const _isc.$UndefinedMap<String, String>(),
     DateTime? createdAt,
   }) {
     return AdminAuditEntry(
       id: id is int? ? id : this.id,
       businessId: businessId is int? ? businessId : this.businessId,
-      userId: userId is _isc.UuidValue? ? userId : this.userId,
+      userId: userId is _isc.UndefinedSentinel ? this.userId : userId,
       action: action ?? this.action,
       entityType: entityType ?? this.entityType,
       entityId: entityId is String? ? entityId : this.entityId,
-      changes: changes is Map<String, String>?
-          ? changes
-          : this.changes?.map(
+      changes: changes is _isc.UndefinedSentinel
+          ? this.changes?.map(
               (
                 key0,
                 value0,
@@ -179,7 +178,8 @@ class _AdminAuditEntryImpl extends AdminAuditEntry {
                 key0,
                 value0,
               ),
-            ),
+            )
+          : changes,
       createdAt: createdAt ?? this.createdAt,
     );
   }

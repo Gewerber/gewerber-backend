@@ -11,6 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/invoicing/models/recurrence_interval.dart'
     as _i2jlpxj3;
 
@@ -71,8 +72,8 @@ abstract class CreateRecurringScheduleRequest
   CreateRecurringScheduleRequest copyWith({
     int? invoiceId,
     _i2jlpxj3.RecurrenceInterval? interval,
-    DateTime? nextRecurrenceDate,
-    DateTime? recurrenceEndDate,
+    DateTime? nextRecurrenceDate = const _isc.$UndefinedDateTime(),
+    DateTime? recurrenceEndDate = const _isc.$UndefinedDateTime(),
     int? recurrenceMaxOccurrences,
   });
   @override
@@ -136,19 +137,19 @@ class _CreateRecurringScheduleRequestImpl
   CreateRecurringScheduleRequest copyWith({
     int? invoiceId,
     _i2jlpxj3.RecurrenceInterval? interval,
-    Object? nextRecurrenceDate = _Undefined,
-    Object? recurrenceEndDate = _Undefined,
+    DateTime? nextRecurrenceDate = const _isc.$UndefinedDateTime(),
+    DateTime? recurrenceEndDate = const _isc.$UndefinedDateTime(),
     Object? recurrenceMaxOccurrences = _Undefined,
   }) {
     return CreateRecurringScheduleRequest(
       invoiceId: invoiceId ?? this.invoiceId,
       interval: interval ?? this.interval,
-      nextRecurrenceDate: nextRecurrenceDate is DateTime?
-          ? nextRecurrenceDate
-          : this.nextRecurrenceDate,
-      recurrenceEndDate: recurrenceEndDate is DateTime?
-          ? recurrenceEndDate
-          : this.recurrenceEndDate,
+      nextRecurrenceDate: nextRecurrenceDate is _isc.UndefinedSentinel
+          ? this.nextRecurrenceDate
+          : nextRecurrenceDate,
+      recurrenceEndDate: recurrenceEndDate is _isc.UndefinedSentinel
+          ? this.recurrenceEndDate
+          : recurrenceEndDate,
       recurrenceMaxOccurrences: recurrenceMaxOccurrences is int?
           ? recurrenceMaxOccurrences
           : this.recurrenceMaxOccurrences,

@@ -74,11 +74,11 @@ abstract class CreateTimeEntriesInvoiceRequest
   @_is.useResult
   CreateTimeEntriesInvoiceRequest copyWith({
     int? projectId,
-    DateTime? from,
-    DateTime? to,
+    DateTime? from = const _is.$UndefinedDateTime(),
+    DateTime? to = const _is.$UndefinedDateTime(),
     int? customerId,
-    DateTime? issueDate,
-    List<int>? timeEntryIds,
+    DateTime? issueDate = const _is.$UndefinedDateTime(),
+    List<int>? timeEntryIds = const _is.$UndefinedList<int>(),
   });
   @override
   Map<String, dynamic> toJson() {
@@ -138,21 +138,23 @@ class _CreateTimeEntriesInvoiceRequestImpl
   @override
   CreateTimeEntriesInvoiceRequest copyWith({
     int? projectId,
-    Object? from = _Undefined,
-    Object? to = _Undefined,
+    DateTime? from = const _is.$UndefinedDateTime(),
+    DateTime? to = const _is.$UndefinedDateTime(),
     Object? customerId = _Undefined,
-    Object? issueDate = _Undefined,
-    Object? timeEntryIds = _Undefined,
+    DateTime? issueDate = const _is.$UndefinedDateTime(),
+    List<int>? timeEntryIds = const _is.$UndefinedList<int>(),
   }) {
     return CreateTimeEntriesInvoiceRequest(
       projectId: projectId ?? this.projectId,
-      from: from is DateTime? ? from : this.from,
-      to: to is DateTime? ? to : this.to,
+      from: from is _is.UndefinedSentinel ? this.from : from,
+      to: to is _is.UndefinedSentinel ? this.to : to,
       customerId: customerId is int? ? customerId : this.customerId,
-      issueDate: issueDate is DateTime? ? issueDate : this.issueDate,
-      timeEntryIds: timeEntryIds is List<int>?
-          ? timeEntryIds
-          : this.timeEntryIds?.map((e0) => e0).toList(),
+      issueDate: issueDate is _is.UndefinedSentinel
+          ? this.issueDate
+          : issueDate,
+      timeEntryIds: timeEntryIds is _is.UndefinedSentinel
+          ? this.timeEntryIds?.map((e0) => e0).toList()
+          : timeEntryIds,
     );
   }
 }

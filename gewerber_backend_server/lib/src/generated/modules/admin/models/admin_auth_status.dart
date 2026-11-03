@@ -62,7 +62,7 @@ abstract class AdminAuthStatus
     bool? blocked,
     bool? emailConfirmed,
     String? email,
-    DateTime? authUserCreatedAt,
+    DateTime? authUserCreatedAt = const _is.$UndefinedDateTime(),
   });
   @override
   Map<String, dynamic> toJson() {
@@ -117,15 +117,15 @@ class _AdminAuthStatusImpl extends AdminAuthStatus {
     bool? blocked,
     bool? emailConfirmed,
     Object? email = _Undefined,
-    Object? authUserCreatedAt = _Undefined,
+    DateTime? authUserCreatedAt = const _is.$UndefinedDateTime(),
   }) {
     return AdminAuthStatus(
       blocked: blocked ?? this.blocked,
       emailConfirmed: emailConfirmed ?? this.emailConfirmed,
       email: email is String? ? email : this.email,
-      authUserCreatedAt: authUserCreatedAt is DateTime?
-          ? authUserCreatedAt
-          : this.authUserCreatedAt,
+      authUserCreatedAt: authUserCreatedAt is _is.UndefinedSentinel
+          ? this.authUserCreatedAt
+          : authUserCreatedAt,
     );
   }
 }

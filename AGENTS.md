@@ -150,7 +150,22 @@ CI resolve without any private access. Developers with a local checkout of the
 private repo override it via `pubspec_overrides.yaml` (gitignored,
 `../gewerber-backend-commercial`). Release image builds rewrite the stubs URL
 to the real module with a git `insteadOf` rule using the
-`COMMERCIAL_REPO_TOKEN` BuildKit secret (see `Dockerfile`). Its tables are
+`COMMERCIAL_REPO_TOKEN` BuildKit secret (see `Dockerfile`), then **verify** the
+result: `tool/check_commercial_resolution.dart` reads the resolution pub just
+performed and fails the build unless the module came from the private
+repository. Two details that are not obvious and cost one broken deploy already:
+the guard judges the **fetched package's own `repository:` field**, because
+`insteadOf` is applied inside git and pub names the checkout after the stubs URL
+it was given, so the resolved path cannot tell a rewritten fetch from a genuine
+stub resolution; and it checks only the module packages **the current workspace
+declares**, which for the image build is the server module alone (the module
+client is a dependency of `gewerber_backend_client`, which that image does not
+build). `test/unit/commercial_resolution_guard_test.dart` pins both. The
+Dockerfile therefore takes `REQUIRE_COMMERCIAL` (default `true`) — a release
+build without the BuildKit secret fails instead of silently compiling the
+stubs, while OSS builds that deliberately ship the stubs (self-hosting) pass
+`--build-arg REQUIRE_COMMERCIAL=false` and get a reported warning. OSS CI runs
+the same guard in report-only mode. Its tables are
 prefixed `commercial_*` and migrate together with the server
 (`SERVERPOD_APPLY_MIGRATIONS=true`).
 
