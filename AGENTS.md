@@ -199,7 +199,7 @@ serverpod_auth_idp) a module model change therefore requires a new project
 migration committed here, or the committed SQL stays a stale copy of the module
 schema and inserts fail on the missing columns (the startup integrity check
 makes that fatal in `development` run mode, warning-only in
-staging/production). `tool/check_module_schema_versions.py` compares *every*
+staging/production). `tool/check_module_schema_versions.dart` compares *every*
 recorded module version against the resolved package and is part of CI, so a
 forgotten regeneration fails the build instead of production.
 
