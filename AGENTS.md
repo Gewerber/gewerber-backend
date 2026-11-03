@@ -194,11 +194,14 @@ this section) together with any deliberate change to the contract.
 create-migration` folds each module's latest migration into the *project's*
 migration and stamps the module's version into `serverpod_migrations`; at
 runtime only the project chain is applied, so a module's own migration files
-are never run by this server. That means a module model change requires a new
-project migration here, or the committed SQL stays a stale copy of the module
+are never run by this server. For an OSS module (serverpod, serverpod_auth_core,
+serverpod_auth_idp) a module model change therefore requires a new project
+migration committed here, or the committed SQL stays a stale copy of the module
 schema and inserts fail on the missing columns (the startup integrity check
 makes that fatal in `development` run mode, warning-only in
-staging/production).
+staging/production). `tool/check_module_schema_versions.py` compares *every*
+recorded module version against the resolved package and is part of CI, so a
+forgotten regeneration fails the build instead of production.
 
 Commercial billing wiring (PayPal webhook route, hourly reconciliation sweep)
 lives inside the module behind its public entrypoint

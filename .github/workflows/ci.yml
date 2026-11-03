@@ -445,13 +445,16 @@ jobs:
           # into `serverpod_migrations` at apply time. If the recorded version
           # is not one the resolved module ships, the project chain holds a
           # *stale copy* of the module schema: the generated model declares
-          # columns the committed SQL never creates, and inserts fail at
-          # runtime with an undefined_column error. Regenerate the migration
+          # tables or columns the committed SQL never creates, and the server
+          # fails at runtime. Regenerate the migration
           # (`serverpod create-migration`) after any module update.
+          #
+          # Every recorded module is checked, not just the commercial one:
+          # PR #114 bumped serverpod_auth_idp to 4.1.0, whose new OTP-login
+          # migration was missing from the chain while this step passed.
           python3 tool/check_module_schema_versions.py \
             gewerber_backend_server/migrations \
-            .dart_tool/package_config.json \
-            gewerber_backend_commercial_server
+            .dart_tool/package_config.json
 
       # Regenerating with the pinned CLI must reproduce the committed artifacts
       # byte for byte. This catches hand-edited generated files and drift
