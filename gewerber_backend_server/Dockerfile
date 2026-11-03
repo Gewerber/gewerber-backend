@@ -113,7 +113,15 @@ RUN version="$(awk '/^  serverpod:$/ { hit = 1; next } hit && /^    version:/ { 
   fi \
   && echo "Activating serverpod_cli $version (resolved from pubspec.lock)" \
   && dart pub global activate serverpod_cli "$version" \
-  && serverpod generate --force
+  # serverpod_cli runs a pre-command environment check
+  # (serverpod_command_runner.dart): when it does not detect CI it aborts
+  # with "You need to have flutter installed and in your $PATH". GitHub
+  # runners set CI=true, so the privacy-guard job has always passed this
+  # check without Flutter; this dart-only image sets CI explicitly for the
+  # same effect. Generate output does not depend on the flag — the check
+  # only gates the Flutter requirement (plus welcome popups/TUI), and this
+  # pure-Dart server never invokes Flutter.
+  && CI=true serverpod generate --force
 
 # Compile the server executable.
 RUN dart build cli --target bin/main.dart --output build
