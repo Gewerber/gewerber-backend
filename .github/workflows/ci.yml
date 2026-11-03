@@ -452,7 +452,7 @@ jobs:
           # Every recorded module is checked, not just the commercial one:
           # PR #114 bumped serverpod_auth_idp to 4.1.0, whose new OTP-login
           # migration was missing from the chain while this step passed.
-          python3 tool/check_module_schema_versions.py \
+          dart tool/check_module_schema_versions.dart \
             gewerber_backend_server/migrations \
             .dart_tool/package_config.json
 
