@@ -194,11 +194,31 @@ this section) together with any deliberate change to the contract.
 create-migration` folds each module's latest migration into the *project's*
 migration and stamps the module's version into `serverpod_migrations`; at
 runtime only the project chain is applied, so a module's own migration files
-are never run by this server. That means a module model change requires a new
-project migration here, or the committed SQL stays a stale copy of the module
+are never run by this server. For an OSS module (serverpod, serverpod_auth_core,
+serverpod_auth_idp) a module model change therefore requires a new project
+migration committed here, or the committed SQL stays a stale copy of the module
 schema and inserts fail on the missing columns (the startup integrity check
 makes that fatal in `development` run mode, warning-only in
-staging/production).
+staging/production). `tool/check_module_schema_versions.dart` compares *every*
+recorded module version against the resolved package and is part of CI, so a
+forgotten regeneration fails the build instead of production.
+
+**The commercial module's tables are added by an image-only migration.** The
+committed chain is generated against the public stubs and the privacy guard
+forbids private table names in this repository, so it cannot carry the six
+`commercial_*` tables the real module declares. A release image therefore runs
+`serverpod create-migration` again after resolving the private module, inside
+the Docker build, and ships that extra project migration only in the image (see
+`Dockerfile`). Its version is the build timestamp, so the delta is re-applied on
+every rebuild; `tool/commercial_migration_overlay.dart` rewrites it into
+`IF [NOT] EXISTS` form to keep that a no-op and fails the build on a
+non-`commercial_*` table (stale public chain) or a statement that cannot be made
+idempotent by hand. Fresh databases apply the overlay's full `definition.sql`,
+so they get the tables too. Open-source builds (`REQUIRE_COMMERCIAL=false`)
+resolve the stubs and skip the overlay. Rollback caveat: a database that has
+applied a newer overlay version logs "not found in the project files" and skips
+migrations when run against an older image; the server still starts, and
+rolling forward re-applies normally.
 
 Commercial billing wiring (PayPal webhook route, hourly reconciliation sweep)
 lives inside the module behind its public entrypoint
