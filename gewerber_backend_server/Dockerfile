@@ -123,6 +123,36 @@ RUN version="$(awk '/^  serverpod:$/ { hit = 1; next } hit && /^    version:/ { 
   # pure-Dart server never invokes Flutter.
   && CI=true serverpod generate --force
 
+# Release images compile the real closed-source module, so the generated model
+# declares six `commercial_*` tables that the committed migration chain cannot
+# contain: the chain is generated against the public stubs and `ci.yml`'s
+# privacy guard forbids private table names in this repository. Serverpod only
+# ever applies the project chain and, on a fresh database, only the *latest*
+# migration's full definition — so without an image migration a new database
+# would start without those tables (the "Table commercial_* is missing"
+# warning on deploy).
+#
+# `create-migration` therefore folds the resolved module into an extra project
+# migration that exists only in this image. Its version is the build timestamp,
+# so every rebuild produces a new delta; the overlay tool rewrites that delta
+# into its `IF [NOT] EXISTS` form so re-applying it to a database that already
+# has the tables is a no-op. It also fails the build if the delta touches a
+# non-commercial table (the committed chain drifted — regenerate it against the
+# stubs) or contains a statement that cannot be made idempotent automatically.
+#
+# Open-source builds (REQUIRE_COMMERCIAL=false) resolve the stubs, whose schema
+# *is* the committed chain, so they skip this step entirely.
+RUN if [ "$REQUIRE_COMMERCIAL" = "true" ]; then \
+    previous="$(ls -1 migrations | grep -E '^[0-9]{17}' | sort | tail -1)" \
+    && CI=true serverpod create-migration --force \
+    && dart tool/commercial_migration_overlay.dart \
+      --migrations-dir migrations \
+      --previous-version "$previous" \
+      --require-table-prefix commercial_; \
+  else \
+    echo 'REQUIRE_COMMERCIAL=false: shipping the committed OSS migration chain.'; \
+  fi
+
 # Compile the server executable.
 RUN dart build cli --target bin/main.dart --output build
 RUN mv build/bundle/bin/main build/bundle/bin/server
