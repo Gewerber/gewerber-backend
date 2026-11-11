@@ -14,7 +14,7 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../../modules/accounting/application/create_transaction_use_case.dart'
-    as _i198;
+    as _i199;
 import '../../modules/accounting/application/delete_transaction_use_case.dart'
     as _i108;
 import '../../modules/accounting/application/export_transactions_use_case.dart'
@@ -243,8 +243,10 @@ import '../../modules/user/application/update_user_profile_use_case.dart'
     as _i282;
 import '../../modules/user/data/serverpod_account_anonymization_gateway.dart'
     as _i1024;
+import '../../modules/user/data/serverpod_auth_identity_gateway.dart' as _i198;
 import '../../modules/user/data/serverpod_user_profile_gateway.dart' as _i693;
 import '../../modules/user/domain/account_anonymization_gateway.dart' as _i655;
+import '../../modules/user/domain/auth_identity_gateway.dart' as _i1026;
 import '../../modules/user/domain/user_profile_gateway.dart' as _i467;
 import '../admin/admin_role_resolver.dart' as _i62;
 import '../audit/audit_service.dart' as _i473;
@@ -344,6 +346,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i448.AdminBusinessGateway>(),
         gh<_i473.AuditService>(),
       ),
+    );
+    gh.singleton<_i1026.AuthIdentityGateway>(
+      () => _i198.ServerpodAuthIdentityGateway(),
     );
     gh.singleton<_i690.AdminStatsGateway>(
       () => const _i744.ServerpodAdminStatsGateway(),
@@ -453,6 +458,14 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
+    gh.singleton<_i311.GetMyIdentityUseCase>(
+      () => _i311.GetMyIdentityUseCase(
+        gh<_i62.AdminRoleResolver>(),
+        gh<_i688.MembershipGateway>(),
+        gh<_i647.BusinessGateway>(),
+        gh<_i1026.AuthIdentityGateway>(),
+      ),
+    );
     gh.singleton<_i6.CancelInvoiceUseCase>(
       () => _i6.CancelInvoiceUseCase(
         gh<_i343.TenantResolver>(),
@@ -534,13 +547,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i974.ProjectGateway>(),
         gh<_i18.TaskGateway>(),
         gh<_i141.BusinessSettingsGateway>(),
-      ),
-    );
-    gh.singleton<_i311.GetMyIdentityUseCase>(
-      () => _i311.GetMyIdentityUseCase(
-        gh<_i62.AdminRoleResolver>(),
-        gh<_i688.MembershipGateway>(),
-        gh<_i647.BusinessGateway>(),
       ),
     );
     gh.singleton<_i661.ExportTransactionsUseCase>(
@@ -955,8 +961,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
-    gh.singleton<_i198.CreateTransactionUseCase>(
-      () => _i198.CreateTransactionUseCase(
+    gh.singleton<_i199.CreateTransactionUseCase>(
+      () => _i199.CreateTransactionUseCase(
         gh<_i343.TenantResolver>(),
         gh<_i1065.TransactionGateway>(),
         gh<_i394.TransactionReferenceValidator>(),

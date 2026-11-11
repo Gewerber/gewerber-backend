@@ -509,6 +509,7 @@ class Protocol extends _isc.SerializationManager
           _isc.getType<List<int>?>,
           _isc.getType<List<_iify20ly.TimeReportLine>>,
           _isc.getType<List<_in8pujw9.MyMembershipInfo>>,
+          _isc.getType<List<_iihfehg5.AuthProvider>>,
           _isc.getType<List<_i6zpily8.Feature>>,
           _isc.getType<List<_in4p196h.AccountingTransaction>>,
           _isc.getType<List<_in4e0h8b.GuidanceTip>>,
@@ -1550,6 +1551,12 @@ class Protocol extends _isc.SerializationManager
     if (t == List<_in8pujw9.MyMembershipInfo>) {
       return (data as List)
               .map((e) => deserialize<_in8pujw9.MyMembershipInfo>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_iihfehg5.AuthProvider>) {
+      return (data as List)
+              .map((e) => deserialize<_iihfehg5.AuthProvider>(e))
               .toList()
           as T;
     }

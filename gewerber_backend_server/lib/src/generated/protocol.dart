@@ -525,6 +525,7 @@ class Protocol extends _is.DatabaseSerializationManager
           _is.getType<List<int>?>,
           _is.getType<List<_iify20ly.TimeReportLine>>,
           _is.getType<List<_in8pujw9.MyMembershipInfo>>,
+          _is.getType<List<_iihfehg5.AuthProvider>>,
           _is.getType<List<_ipb0z0gh.Feature>>,
           _is.getType<List<_ipjpfe96.AccountingTransaction>>,
           _is.getType<List<_imqtlho5.GuidanceTip>>,
@@ -3807,6 +3808,12 @@ class Protocol extends _is.DatabaseSerializationManager
     if (t == List<_in8pujw9.MyMembershipInfo>) {
       return (data as List)
               .map((e) => deserialize<_in8pujw9.MyMembershipInfo>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_iihfehg5.AuthProvider>) {
+      return (data as List)
+              .map((e) => deserialize<_iihfehg5.AuthProvider>(e))
               .toList()
           as T;
     }
