@@ -15,6 +15,46 @@ environment by `deploy.sh` into `~/gewerber/backend/<env>/.secrets`.
 
 ---
 
+## Ports
+
+| Port | Listener | Exposure |
+|---|---|---|
+| 8080 | Serverpod API server | Public via Traefik: every path on the environment's host (`gwb` / `gwb-test` routers). |
+| 8081 | Serverpod Insights | Internal Docker network only (protected by the service secret); never routed. |
+| 8082 | Serverpod web server (social sign-in OAuth callbacks under `/auth/`) | Internal only, **never published to the host**: Traefik routes `Host(<env host>) && PathPrefix('/auth/')` to it (`<prefix>-oauth` router/service); everything else stays on 8080. |
+
+Port 8082 is the OAuth callback listener. It is only started when at least one
+social identity provider is configured in `config/passwords.yaml` — registering
+the routes is what creates the listener, so a deployment with no provider
+configured binds nothing and `/auth/` requests simply get no backend from
+Traefik (the API port 8080 is unaffected).
+
+The port is not optional when a provider is enabled: if 8082 is already taken
+inside the container's network namespace, the web server cannot bind, Serverpod
+aborts startup with `Failed to start the Serverpod servers`, and the container
+crash-loops (`restart: unless-stopped`). Check with
+`docker compose exec server ss -ltnp` before adding another listener to the
+stack.
+
+## Secrets
+
+`deploy.sh` writes `config/passwords.yaml` for the active run mode. Three groups:
+
+| Group | Keys | Source |
+|---|---|---|
+| Generated once per environment | `database`, `redis`, `serviceSecret`, `emailSecretHashPepper`, `jwtHmacSha512PrivateKey`, `jwtRefreshTokenHashPepper` | `deploy.sh` (`openssl rand`), persisted in `~/gewerber/backend/<env>/.secrets` |
+| Optional, operator-supplied | `smtpHost`, `smtpPort`, `smtpUsername`, `smtpPassword`, `smtpFromAddress`, `smtpFromName`, `smtpSsl` | Env vars `SMTP_*` at deploy time (written only when `SMTP_HOST` is non-empty) |
+| Optional, server-only social sign-in credentials | `googleClientSecret`, `appleServiceIdentifier`, `appleBundleIdentifier`, `appleRedirectUri`, `appleTeamId`, `appleKeyId`, `appleKey` (`appleAndroidPackageIdentifier`, `appleWebRedirectUri` optional), `facebookAppId`, `facebookAppSecret`, `microsoftClientId`, `microsoftClientSecret` (`microsoftTenant` optional) | Env vars `GOOGLE_CLIENT_SECRET_JSON`, `APPLE_*`, `FACEBOOK_*`, `MICROSOFT_*` at deploy time; each key is written only when its env var is non-empty |
+
+The social provider keys never leave the server: they are only read by the
+server to build the IdPs and are not part of any client-visible model. A
+provider whose required keys are incomplete stays **disabled** (logged at
+startup as `[auth] <provider>: disabled (missing …)`) — the server still starts.
+See the repository README, section “Social sign-in (optional)”, for the exact
+per-provider keys and the callback paths.
+
+---
+
 ## Backups (`backup.sh`)
 
 Dumps the database inside the running postgres container (`pg_dump -Fc`,

@@ -74,7 +74,10 @@ GHCR, then copies [`deploy/`](deploy/) to the VPS and runs `deploy/deploy.sh`,
 which starts the per-environment stack via Docker Compose behind the existing
 Traefik reverse proxy:
 
-- **server** — the Serverpod API (port 8080 only; the Insights server stays internal)
+- **server** — the Serverpod API (port 8080) plus, only when social sign-in is
+  configured, the web server that serves the OAuth callbacks (port 8082, routed
+  by Traefik under `/auth/`, never published to the host); the Insights server
+  stays internal
 - **postgres** — PostgreSQL (migrations are applied automatically on startup)
 - **redis** — cache + cross-server messaging
 
@@ -110,6 +113,43 @@ over `/app`, or the font is hidden and invoices silently fall back to Helvetica
 (no `€` or `–`); set `GEWERBER_INVOICE_FONT_PATH` to point somewhere else. The
 resolved path is logged when the font is first loaded (once per process, on the
 first generated invoice).
+
+### Social sign-in (optional)
+
+Google, Apple, Facebook and Microsoft sign-in are opt-in. Each provider is
+enabled by adding its keys to the `config/passwords.yaml` section that matches
+the run mode (`<mode>:` → provider keys); no code change is required.
+
+| Provider | Keys |
+|---|---|
+| Google | `googleClientSecret` — the **entire** downloaded `google_client_secret.json` (one YAML string). The document must carry a `web` object with `client_id`, `client_secret` and a non-empty `redirect_uris` list; a missing `web` object or `redirect_uris` fails startup, so keep the file as downloaded. |
+| Apple | `appleServiceIdentifier`, `appleBundleIdentifier`, `appleRedirectUri`, `appleTeamId`, `appleKeyId`, `appleKey` (the `.p8` private key). Optional: `appleAndroidPackageIdentifier`, `appleWebRedirectUri`. |
+| Facebook | `facebookAppId`, `facebookAppSecret`. Facebook logs in with an access token obtained by the app, so it has no server-side callback path. |
+| Microsoft | `microsoftClientId`, `microsoftClientSecret`. Optional: `microsoftTenant` (default `common`). |
+
+The server-side OAuth callback paths are fixed by the code and must be
+registered with each provider that redirects through the browser:
+
+| Provider | Path | Registered by |
+|---|---|---|
+| Google, Microsoft | `/auth/callback` | `flutter_web_auth_2` callback route (`lib/src/auth/social_auth_routes.dart`) |
+| Apple | `/auth/apple/callback` | Apple web authentication callback |
+| Apple | `/auth/apple/revoked` | Apple server-to-server consent-revoked / account-deleted notifications |
+
+They are served by the Serverpod **web server**, not the API server, so the
+deployment needs the `webServer` section in `config/<mode>.yaml` and the extra
+port routed to it (see [`deploy/README.md`](deploy/README.md), section
+“Ports”): the public origin is the same host as the API.
+
+**Disabled vs. broken.** A provider whose required keys are missing is simply
+**disabled** — the server still starts and logs one line per provider at boot,
+e.g. `[auth] google: disabled (missing googleClientSecret)`. Keys that are
+present but malformed (for example a `googleClientSecret` that is not the
+Google JSON document) fail fast at startup on purpose: a silently ignored
+misconfiguration would surface as an unusable login button instead of a
+deployment error. Never commit credentials — `config/passwords.yaml` is
+gitignored; the deployment writes it from environment variables (see
+`deploy/deploy.sh`).
 
 ---
 

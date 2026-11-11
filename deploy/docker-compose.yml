@@ -4,9 +4,12 @@
 #   production : api.gewerber.de      gwb       gewerber-backend       (RUNMODE=production)
 #   staging    : api.test.gewerber.de gwb-test  gewerber-backend-test  (RUNMODE=staging)
 #
-# Stack per environment: Serverpod API server + PostgreSQL + Redis. Only the
-# API server (port 8080) is exposed through Traefik; the Insights server
-# (8081) stays on the internal network, protected by the service secret.
+# Stack per environment: Serverpod API server + PostgreSQL + Redis. Two HTTP
+# listeners of the server container are routed through Traefik: the API
+# (port 8080, all paths) and the web server that serves the social sign-in
+# OAuth callbacks (port 8082, `/auth/` only). The Insights server (8081) and
+# the raw web port 8082 stay on the internal network; 8082 is never published
+# to the host.
 #
 # Locally you can `docker compose build && docker compose up -d` (image built
 # from `gewerber_backend_server/Dockerfile`, context = repo root). In CI the
@@ -68,12 +71,30 @@ services:
       - "traefik.http.routers.${ROUTER_PREFIX:-gwb}-web.rule=${HOST_RULE:-Host(`api.gewerber.de`)}"
       - "traefik.http.routers.${ROUTER_PREFIX:-gwb}-web.entrypoints=${WEB_ENTRYPOINT:-web}"
       - "traefik.http.routers.${ROUTER_PREFIX:-gwb}-web.middlewares=${ROUTER_PREFIX:-gwb}-https-redirect"
+      # Bound explicitly: the container now defines two services, so a router
+      # must name the one it uses (it no longer falls back to the only service).
+      - "traefik.http.routers.${ROUTER_PREFIX:-gwb}-web.service=${ROUTER_PREFIX:-gwb}-backend"
 
       # HTTPS router (TLS terminated by Traefik).
       - "traefik.http.routers.${ROUTER_PREFIX:-gwb}-secure.rule=${HOST_RULE:-Host(`api.gewerber.de`)}"
       - "traefik.http.routers.${ROUTER_PREFIX:-gwb}-secure.entrypoints=${WEBSECURE_ENTRYPOINT:-websecure}"
       - "traefik.http.routers.${ROUTER_PREFIX:-gwb}-secure.tls=true"
       - "traefik.http.routers.${ROUTER_PREFIX:-gwb}-secure.tls.certresolver=${CERT_RESOLVER:-letsencrypt}"
+      - "traefik.http.routers.${ROUTER_PREFIX:-gwb}-secure.service=${ROUTER_PREFIX:-gwb}-backend"
+
+      # OAuth callback routes served by the Serverpod web server (port 8082):
+      # `/auth/callback` (flutter_web_auth_2) plus Apple's `/auth/apple/*`
+      # hooks. The API keeps every other path. Both routers sit on the same
+      # host and entrypoint; the longer Host+PathPrefix rule outranks the
+      # Host-only `-secure` router, and the explicit priority keeps that true
+      # also if the rules are edited later (an explicit value replaces the
+      # length-based default, so it must stay above those rule lengths).
+      - "traefik.http.routers.${ROUTER_PREFIX:-gwb}-oauth.rule=${HOST_RULE:-Host(`api.gewerber.de`)} && PathPrefix(`/auth/`)"
+      - "traefik.http.routers.${ROUTER_PREFIX:-gwb}-oauth.entrypoints=${WEBSECURE_ENTRYPOINT:-websecure}"
+      - "traefik.http.routers.${ROUTER_PREFIX:-gwb}-oauth.priority=100"
+      - "traefik.http.routers.${ROUTER_PREFIX:-gwb}-oauth.service=${ROUTER_PREFIX:-gwb}-oauth"
+      - "traefik.http.routers.${ROUTER_PREFIX:-gwb}-oauth.tls=true"
+      - "traefik.http.routers.${ROUTER_PREFIX:-gwb}-oauth.tls.certresolver=${CERT_RESOLVER:-letsencrypt}"
 
       # Redirect middleware.
       - "traefik.http.middlewares.${ROUTER_PREFIX:-gwb}-https-redirect.redirectscheme.scheme=https"
@@ -86,6 +107,12 @@ services:
       - "traefik.http.services.${ROUTER_PREFIX:-gwb}-backend.loadbalancer.healthcheck.path=/readyz"
       - "traefik.http.services.${ROUTER_PREFIX:-gwb}-backend.loadbalancer.healthcheck.interval=30s"
       - "traefik.http.services.${ROUTER_PREFIX:-gwb}-backend.loadbalancer.healthcheck.timeout=5s"
+
+      # OAuth service -> web server port. Same container, second listener; it
+      # only exists when a social provider is enabled (no routes = no listener),
+      # in which case Traefik logs the router without a responding backend
+      # while the API stays unaffected.
+      - "traefik.http.services.${ROUTER_PREFIX:-gwb}-oauth.loadbalancer.server.port=8082"
 
   postgres:
     image: pgvector/pgvector:pg16

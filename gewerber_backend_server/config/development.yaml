@@ -20,6 +20,17 @@ insightsServer:
   publicPort: 8081
   publicScheme: http
 
+# Configuration for the web server (OAuth callback routes for social sign-in).
+# Registering routes is what creates the listener: with no social provider
+# enabled no route is mounted and no port is bound. Port 8082 must be reachable
+# by the browser that starts the OAuth flow (directly here; in the deployed
+# stacks via Traefik, see deploy/docker-compose.yml).
+webServer:
+  port: 8082
+  publicHost: localhost
+  publicPort: 8082
+  publicScheme: http
+
 
 # This is the database setup for your server.
 database:

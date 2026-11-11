@@ -16,6 +16,10 @@
 #   GHCR_TOKEN / GHCR_USER  – credentials to pull the (private) image from GHCR
 #   TRAEFIK_NETWORK, WEB_ENTRYPOINT, WEBSECURE_ENTRYPOINT, CERT_RESOLVER
 #   DEPLOY_DIR              – base directory (default: $HOME/gewerber/backend/<env>)
+#   SMTP_*                  – transactional email settings (see below)
+#   GOOGLE_CLIENT_SECRET_JSON, APPLE_*, FACEBOOK_*, MICROSOFT_* – optional
+#                             social sign-in credentials; omitted = provider
+#                             disabled (see README.md, "Social sign-in")
 set -euo pipefail
 
 ENV="${1:?usage: deploy.sh <prod|test> <image>}"
@@ -99,6 +103,42 @@ if [ -n "${SMTP_HOST:-}" ]; then
   smtpFromName: $(yaml_q "${SMTP_FROM_NAME:-Gewerber}")
   smtpSsl: $(yaml_q "${SMTP_SSL:-true}")"
 fi
+
+# Optional social sign-in credentials. Each block is appended only when its
+# driving environment variable is non-empty: absent keys keep the provider
+# disabled at startup (logged as `[auth] <provider>: disabled (missing ...)`).
+# No defaults and no placeholder values are written. GOOGLE_CLIENT_SECRET_JSON
+# is the whole downloaded `google_client_secret.json` as a single line (e.g.
+# `jq -c . google_client_secret.json`), quoted so the YAML stays valid.
+SOCIAL_SETTINGS=""
+if [ -n "${GOOGLE_CLIENT_SECRET_JSON:-}" ]; then
+  SOCIAL_SETTINGS="$SOCIAL_SETTINGS
+  googleClientSecret: $(yaml_q "$GOOGLE_CLIENT_SECRET_JSON")"
+fi
+if [ -n "${APPLE_SERVICE_IDENTIFIER:-}" ]; then
+  SOCIAL_SETTINGS="$SOCIAL_SETTINGS
+  appleServiceIdentifier: $(yaml_q "$APPLE_SERVICE_IDENTIFIER")
+  appleBundleIdentifier: $(yaml_q "${APPLE_BUNDLE_IDENTIFIER:-}")
+  appleRedirectUri: $(yaml_q "${APPLE_REDIRECT_URI:-}")
+  appleTeamId: $(yaml_q "${APPLE_TEAM_ID:-}")
+  appleKeyId: $(yaml_q "${APPLE_KEY_ID:-}")
+  appleKey: $(yaml_q "${APPLE_KEY:-}")"
+fi
+if [ -n "${FACEBOOK_APP_ID:-}" ]; then
+  SOCIAL_SETTINGS="$SOCIAL_SETTINGS
+  facebookAppId: $(yaml_q "$FACEBOOK_APP_ID")
+  facebookAppSecret: $(yaml_q "${FACEBOOK_APP_SECRET:-}")"
+fi
+if [ -n "${MICROSOFT_CLIENT_ID:-}" ]; then
+  SOCIAL_SETTINGS="$SOCIAL_SETTINGS
+  microsoftClientId: $(yaml_q "$MICROSOFT_CLIENT_ID")
+  microsoftClientSecret: $(yaml_q "${MICROSOFT_CLIENT_SECRET:-}")"
+fi
+if [ -n "${MICROSOFT_TENANT:-}" ]; then
+  SOCIAL_SETTINGS="$SOCIAL_SETTINGS
+  microsoftTenant: $(yaml_q "$MICROSOFT_TENANT")"
+fi
+
 {
   printf '%s:\n' "$RUNMODE"
   printf '  database: %s\n' "$(yaml_q "$DB_PASSWORD")"
@@ -108,6 +148,7 @@ fi
   printf '  jwtHmacSha512PrivateKey: %s\n' "$(yaml_q "$JWT_HMAC_SHA512_PRIVATE_KEY")"
   printf '  jwtRefreshTokenHashPepper: %s\n' "$(yaml_q "$JWT_REFRESH_TOKEN_HASH_PEPPER")"
   printf '%s\n' "$SMTP_SETTINGS"
+  printf '%s\n' "$SOCIAL_SETTINGS"
 } > "$PASSWORDS"
 chmod 600 "$PASSWORDS"
 
