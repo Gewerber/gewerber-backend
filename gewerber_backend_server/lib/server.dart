@@ -20,6 +20,7 @@ import 'package:serverpod_auth_idp_server/providers/facebook.dart';
 import 'package:serverpod_auth_idp_server/providers/google.dart';
 import 'package:serverpod_auth_idp_server/providers/microsoft.dart';
 
+import 'src/auth/social_auth_routes.dart';
 import 'src/auth/social_provider_config.dart';
 import 'src/core/di/injection.dart';
 import 'src/core/di/service_locator.dart';
@@ -115,6 +116,13 @@ void run(List<String> args) async {
         MicrosoftIdpConfigFromPasswords(),
     ],
   );
+
+  // OAuth callback routes for the social providers enabled above. Apple gets
+  // its own callback and revocation-notification hooks; Google/Microsoft share
+  // the provider-agnostic `flutter_web_auth_2` callback. Must run after
+  // `initializeAuthServices` (Apple's route factory resolves the configured
+  // `AppleIdp`) and before `pod.start()`, which binds the Relic routes.
+  registerSocialAuthRoutes(pod, enabledSocialProviders);
 
   // Commercial billing wiring (PayPal webhook route + hourly reconciliation
   // sweep), provided by the closed-source module's public entrypoint. A
