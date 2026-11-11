@@ -161,6 +161,7 @@ import 'modules/time_tracking/models/update_task_request.dart' as _i3iu7ffh;
 import 'modules/time_tracking/models/update_time_entry_request.dart'
     as _iferwyg8;
 import 'modules/user/models/app_theme.dart' as _iy79t9m6;
+import 'modules/user/models/auth_provider.dart' as _iihfehg5;
 import 'modules/user/models/my_identity.dart' as _i1sqdvz3;
 import 'modules/user/models/my_membership_info.dart' as _in8pujw9;
 import 'modules/user/models/update_user_profile_request.dart' as _i5r0ss6k;
@@ -268,6 +269,7 @@ export 'modules/time_tracking/models/update_project_request.dart';
 export 'modules/time_tracking/models/update_task_request.dart';
 export 'modules/time_tracking/models/update_time_entry_request.dart';
 export 'modules/user/models/app_theme.dart';
+export 'modules/user/models/auth_provider.dart';
 export 'modules/user/models/my_identity.dart';
 export 'modules/user/models/my_membership_info.dart';
 export 'modules/user/models/update_user_profile_request.dart';
@@ -389,6 +391,7 @@ class Protocol extends _is.DatabaseSerializationManager
           _is.getType<_i3iu7ffh.UpdateTaskRequest>,
           _is.getType<_iferwyg8.UpdateTimeEntryRequest>,
           _is.getType<_iy79t9m6.AppTheme>,
+          _is.getType<_iihfehg5.AuthProvider>,
           _is.getType<_i1sqdvz3.MyIdentity>,
           _is.getType<_in8pujw9.MyMembershipInfo>,
           _is.getType<_i5r0ss6k.UpdateUserProfileRequest>,
@@ -496,6 +499,7 @@ class Protocol extends _is.DatabaseSerializationManager
           _is.getType<_i3iu7ffh.UpdateTaskRequest?>,
           _is.getType<_iferwyg8.UpdateTimeEntryRequest?>,
           _is.getType<_iy79t9m6.AppTheme?>,
+          _is.getType<_iihfehg5.AuthProvider?>,
           _is.getType<_i1sqdvz3.MyIdentity?>,
           _is.getType<_in8pujw9.MyMembershipInfo?>,
           _is.getType<_i5r0ss6k.UpdateUserProfileRequest?>,
@@ -647,6 +651,7 @@ class Protocol extends _is.DatabaseSerializationManager
           'UpdateTaskRequest',
           'UpdateTimeEntryRequest',
           'AppTheme',
+          'AuthProvider',
           'MyIdentity',
           'MyMembershipInfo',
           'UpdateUserProfileRequest',
@@ -3196,6 +3201,9 @@ class Protocol extends _is.DatabaseSerializationManager
     if (t == _iy79t9m6.AppTheme) {
       return _iy79t9m6.AppTheme.fromJson(data) as T;
     }
+    if (t == _iihfehg5.AuthProvider) {
+      return _iihfehg5.AuthProvider.fromJson(data) as T;
+    }
     if (t == _i1sqdvz3.MyIdentity) {
       return _i1sqdvz3.MyIdentity.fromJson(data) as T;
     }
@@ -3658,6 +3666,9 @@ class Protocol extends _is.DatabaseSerializationManager
     if (t == _is.getType<_iy79t9m6.AppTheme?>()) {
       return (data != null ? _iy79t9m6.AppTheme.fromJson(data) : null) as T;
     }
+    if (t == _is.getType<_iihfehg5.AuthProvider?>()) {
+      return (data != null ? _iihfehg5.AuthProvider.fromJson(data) : null) as T;
+    }
     if (t == _is.getType<_i1sqdvz3.MyIdentity?>()) {
       return (data != null ? _i1sqdvz3.MyIdentity.fromJson(data) : null) as T;
     }
@@ -4009,6 +4020,7 @@ class Protocol extends _is.DatabaseSerializationManager
       _i3iu7ffh.UpdateTaskRequest => 'UpdateTaskRequest',
       _iferwyg8.UpdateTimeEntryRequest => 'UpdateTimeEntryRequest',
       _iy79t9m6.AppTheme => 'AppTheme',
+      _iihfehg5.AuthProvider => 'AuthProvider',
       _i1sqdvz3.MyIdentity => 'MyIdentity',
       _in8pujw9.MyMembershipInfo => 'MyMembershipInfo',
       _i5r0ss6k.UpdateUserProfileRequest => 'UpdateUserProfileRequest',
@@ -4236,6 +4248,8 @@ class Protocol extends _is.DatabaseSerializationManager
         return 'UpdateTimeEntryRequest';
       case _iy79t9m6.AppTheme():
         return 'AppTheme';
+      case _iihfehg5.AuthProvider():
+        return 'AuthProvider';
       case _i1sqdvz3.MyIdentity():
         return 'MyIdentity';
       case _in8pujw9.MyMembershipInfo():
@@ -4590,6 +4604,9 @@ class Protocol extends _is.DatabaseSerializationManager
     }
     if (dataClassName == 'AppTheme') {
       return deserialize<_iy79t9m6.AppTheme>(data['data']);
+    }
+    if (dataClassName == 'AuthProvider') {
+      return deserialize<_iihfehg5.AuthProvider>(data['data']);
     }
     if (dataClassName == 'MyIdentity') {
       return deserialize<_i1sqdvz3.MyIdentity>(data['data']);

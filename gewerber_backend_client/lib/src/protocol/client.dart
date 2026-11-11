@@ -162,6 +162,51 @@ import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
 import 'protocol.dart' as _il2as5qe;
 
+/// By extending [AppleIdpBaseEndpoint], the Apple identity provider endpoints
+/// are made available on the server and enable the corresponding sign-in
+/// widget on the client.
+/// {@category Endpoint}
+class EndpointAppleIdp extends _iaic.EndpointAppleIdpBase {
+  EndpointAppleIdp(_isc.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'appleIdp';
+
+  /// Signs in a user with their Apple account.
+  ///
+  /// If no user exists yet linked to the Apple-provided identifier, a new one
+  /// will be created (without any `Scope`s). Further their provided name and
+  /// email (if any) will be used for the `UserProfile` which will be linked to
+  /// their `AuthUser`.
+  ///
+  /// Returns a session for the user upon successful login.
+  @override
+  _ida.Future<_iacc.AuthSuccess> login({
+    required String identityToken,
+    required String authorizationCode,
+    required bool isNativeApplePlatformSignIn,
+    String? firstName,
+    String? lastName,
+  }) => caller.callServerEndpoint<_iacc.AuthSuccess>(
+    'appleIdp',
+    'login',
+    {
+      'identityToken': identityToken,
+      'authorizationCode': authorizationCode,
+      'isNativeApplePlatformSignIn': isNativeApplePlatformSignIn,
+      'firstName': firstName,
+      'lastName': lastName,
+    },
+  );
+
+  @override
+  _ida.Future<bool> hasAccount() => caller.callServerEndpoint<bool>(
+    'appleIdp',
+    'hasAccount',
+    {},
+  );
+}
+
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
 /// are made available on the server and enable the corresponding sign-in widget
 /// on the client.
@@ -345,6 +390,94 @@ class EndpointEmailIdp extends _iaic.EndpointEmailIdpBase {
   );
 }
 
+/// By extending [FacebookIdpBaseEndpoint], the Facebook identity provider
+/// endpoints are made available on the server and enable the corresponding
+/// sign-in widget on the client.
+/// {@category Endpoint}
+class EndpointFacebookIdp extends _iaic.EndpointFacebookIdpBase {
+  EndpointFacebookIdp(_isc.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'facebookIdp';
+
+  /// Validates a Facebook access token and either logs in the associated user or
+  /// creates a new user account if the Facebook account ID is not yet known.
+  ///
+  /// If the access token is invalid or expired, the
+  /// [FacebookAccessTokenVerificationException] will be thrown.
+  @override
+  _ida.Future<_iacc.AuthSuccess> login({required String accessToken}) =>
+      caller.callServerEndpoint<_iacc.AuthSuccess>(
+        'facebookIdp',
+        'login',
+        {'accessToken': accessToken},
+      );
+
+  @override
+  _ida.Future<bool> hasAccount() => caller.callServerEndpoint<bool>(
+    'facebookIdp',
+    'hasAccount',
+    {},
+  );
+}
+
+/// By extending [GoogleIdpBaseEndpoint], the Google identity provider endpoints
+/// are made available on the server and enable the corresponding sign-in
+/// widget on the client.
+/// {@category Endpoint}
+class EndpointGoogleIdp extends _iaic.EndpointGoogleIdpBase {
+  EndpointGoogleIdp(_isc.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'googleIdp';
+
+  /// Validates a Google ID token and either logs in the associated user or
+  /// creates a new user account if the Google account ID is not yet known.
+  ///
+  /// If a new user is created an associated [UserProfile] is also created.
+  @override
+  _ida.Future<_iacc.AuthSuccess> login({
+    required String idToken,
+    required String? accessToken,
+  }) => caller.callServerEndpoint<_iacc.AuthSuccess>(
+    'googleIdp',
+    'login',
+    {
+      'idToken': idToken,
+      'accessToken': accessToken,
+    },
+  );
+
+  /// Validates a Google authorization code from the web OAuth2 PKCE flow and
+  /// either logs in the associated user or creates a new account.
+  ///
+  /// This is the web counterpart of [login], which accepts an ID token directly
+  /// (used on native platforms via the `google_sign_in` package).
+  ///
+  /// If a new user is created an associated [UserProfile] is also created.
+  @override
+  _ida.Future<_iacc.AuthSuccess> loginWithCode({
+    required String code,
+    required String codeVerifier,
+    required String redirectUri,
+  }) => caller.callServerEndpoint<_iacc.AuthSuccess>(
+    'googleIdp',
+    'loginWithCode',
+    {
+      'code': code,
+      'codeVerifier': codeVerifier,
+      'redirectUri': redirectUri,
+    },
+  );
+
+  @override
+  _ida.Future<bool> hasAccount() => caller.callServerEndpoint<bool>(
+    'googleIdp',
+    'hasAccount',
+    {},
+  );
+}
+
 /// By extending [RefreshJwtTokensEndpoint], the JWT token refresh endpoint
 /// is made available on the server and enables automatic token refresh on the client.
 /// {@category Endpoint}
@@ -385,6 +518,54 @@ class EndpointJwtRefresh extends _iacc.EndpointRefreshJwtTokens {
         {'refreshToken': refreshToken},
         authenticated: false,
       );
+}
+
+/// By extending [MicrosoftIdpBaseEndpoint], the Microsoft identity provider
+/// endpoints are made available on the server and enable the corresponding
+/// sign-in widget on the client.
+/// {@category Endpoint}
+class EndpointMicrosoftIdp extends _iaic.EndpointMicrosoftIdpBase {
+  EndpointMicrosoftIdp(_isc.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'microsoftIdp';
+
+  /// Validates a Microsoft authorization code and either logs in the associated
+  /// user or creates a new user account if the Microsoft account ID is not yet
+  /// known.
+  ///
+  /// This method exchanges the `authorization code` for an `access token` using
+  /// `PKCE`, then authenticates the user.
+  ///
+  /// The [isWebPlatform] flag indicates whether the client is a web application.
+  /// Microsoft requires the client secret only for confidential clients (web
+  /// apps). Public clients (mobile, desktop) using PKCE must not include it.
+  /// Pass `true` for web clients and `false` for native platforms.
+  ///
+  /// If a new user is created an associated [UserProfile] is also created.
+  @override
+  _ida.Future<_iacc.AuthSuccess> login({
+    required String code,
+    required String codeVerifier,
+    required String redirectUri,
+    required bool isWebPlatform,
+  }) => caller.callServerEndpoint<_iacc.AuthSuccess>(
+    'microsoftIdp',
+    'login',
+    {
+      'code': code,
+      'codeVerifier': codeVerifier,
+      'redirectUri': redirectUri,
+      'isWebPlatform': isWebPlatform,
+    },
+  );
+
+  @override
+  _ida.Future<bool> hasAccount() => caller.callServerEndpoint<bool>(
+    'microsoftIdp',
+    'hasAccount',
+    {},
+  );
 }
 
 /// Base class for global-administration endpoints (`modules/admin`).
@@ -1895,8 +2076,12 @@ class Client extends _isc.ServerpodClientShared {
              disconnectStreamsOnLostInternetConnection,
          httpClientOverride: httpClientOverride,
        ) {
+    appleIdp = EndpointAppleIdp(this);
     emailIdp = EndpointEmailIdp(this);
+    facebookIdp = EndpointFacebookIdp(this);
+    googleIdp = EndpointGoogleIdp(this);
     jwtRefresh = EndpointJwtRefresh(this);
+    microsoftIdp = EndpointMicrosoftIdp(this);
     entitlement = EndpointEntitlement(this);
     accounting = EndpointAccounting(this);
     adminAudit = EndpointAdminAudit(this);
@@ -1923,9 +2108,17 @@ class Client extends _isc.ServerpodClientShared {
     modules = Modules(this);
   }
 
+  late final EndpointAppleIdp appleIdp;
+
   late final EndpointEmailIdp emailIdp;
 
+  late final EndpointFacebookIdp facebookIdp;
+
+  late final EndpointGoogleIdp googleIdp;
+
   late final EndpointJwtRefresh jwtRefresh;
+
+  late final EndpointMicrosoftIdp microsoftIdp;
 
   late final EndpointEntitlement entitlement;
 
@@ -1977,8 +2170,12 @@ class Client extends _isc.ServerpodClientShared {
 
   @override
   Map<String, _isc.EndpointRef> get endpointRefLookup => {
+    'appleIdp': appleIdp,
     'emailIdp': emailIdp,
+    'facebookIdp': facebookIdp,
+    'googleIdp': googleIdp,
     'jwtRefresh': jwtRefresh,
+    'microsoftIdp': microsoftIdp,
     'entitlement': entitlement,
     'accounting': accounting,
     'adminAudit': adminAudit,

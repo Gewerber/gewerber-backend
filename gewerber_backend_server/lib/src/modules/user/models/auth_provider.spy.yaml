@@ -1,0 +1,7 @@
+enum: AuthProvider
+serialized: byName
+values:
+  - google
+  - apple
+  - facebook
+  - microsoft
