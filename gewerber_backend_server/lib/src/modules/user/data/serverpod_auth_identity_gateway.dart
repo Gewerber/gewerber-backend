@@ -104,8 +104,12 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
 
     final rows = <IdentityEmailRow>[];
 
-    // One query per identity table, each clamped to `limit`. Merging, dedupe
-    // and ordering happen in Dart below — see the contract on the interface.
+    // One query per identity table, each clamped to `limit` **and** filtered by
+    // the same `(email, authUserId)` keyset boundary (`_directoryFilter`). The
+    // boundary is what makes the clamp safe: the top `limit` rows of the union
+    // are contained in the union of the per-table top `limit`, so no row that
+    // belongs on this page can be trimmed away. Merging, dedupe and ordering
+    // happen in Dart below — see the contract on the interface.
     final emailAccounts = await EmailAccount.db.find(
       session,
       where: (t) => _directoryFilter(
@@ -222,8 +226,21 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
 
   /// Keyset predicate shared by all five identity tables.
   ///
-  /// A missing [afterUserId] is the legacy email-only boundary: strictly
-  /// greater address, exactly like the old email-account-only listing.
+  /// Every per-table query in [findEmails] applies this same boundary, so the
+  /// per-table `limit` clamp trims a *suffix* of each provider's ordering
+  /// rather than re-reading its leading rows on every page. The predicate is
+  /// the exact `(email, authUserId)` keyset of the Dart merge:
+  ///
+  /// - no cursor: no boundary at all,
+  /// - cursor without [afterUserId] (legacy): `email > afterEmail`,
+  /// - cursor with both keys: `email > afterEmail` OR
+  ///   (`email = afterEmail` AND `authUserId > afterUserId`).
+  ///
+  /// `Expression`'s `&` / `|` combinators express that disjunction inline, so
+  /// no extra per-table equality query is needed. Each comparison uses the
+  /// column's own collation, which is also what the per-table `ORDER BY`
+  /// uses, so boundary and ordering can never disagree within a table. The
+  /// Dart merge re-sorts case-insensitively for display.
   static Expression _directoryFilter({
     required ColumnString email,
     required ColumnUuid authUserId,

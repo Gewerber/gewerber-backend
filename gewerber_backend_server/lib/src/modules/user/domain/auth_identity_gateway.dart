@@ -73,6 +73,11 @@ abstract interface class AuthIdentityGateway {
   /// [afterUserId]. A missing [afterUserId] keeps the legacy email-only
   /// boundary (strictly greater address).
   ///
+  /// The keyset contract is applied **per identity table**: every provider
+  /// query uses the same boundary as the Dart merge, so a row that sorts after
+  /// the cursor inside its own provider table can never be trimmed away by the
+  /// per-table `limit` clamp.
+  ///
   /// At most [limit] rows are read per identity table and the merge, dedupe and
   /// ordering happen in Dart. This is admin-scale by design: no index is added
   /// for the cross-provider listing and the per-table clamp assumes a user has
