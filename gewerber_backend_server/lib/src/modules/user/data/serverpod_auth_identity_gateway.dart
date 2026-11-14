@@ -1,5 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:serverpod/serverpod.dart';
+import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
+    as core;
 import 'package:serverpod_auth_idp_server/providers/apple.dart'
     show AppleAccount;
 import 'package:serverpod_auth_idp_server/providers/email.dart'
@@ -222,6 +224,54 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
 
     rows.sort(_compareRows);
     return rows;
+  }
+
+  @override
+  Future<void> deleteAll(
+    Session session,
+    UuidValue userId, {
+    Transaction? transaction,
+  }) async {
+    // One bulk `DELETE ... WHERE authUserId = ?` per table. The `AuthUser` row
+    // stays (see the interface contract): identity rows and refresh tokens are
+    // independent children of it, so deleting them without the parent is what
+    // purges every login path while the tombstone stays enforceable.
+    await EmailAccount.db.deleteWhere(
+      session,
+      where: (t) => t.authUserId.equals(userId),
+      transaction: transaction,
+      noReturn: true,
+    );
+    await GoogleAccount.db.deleteWhere(
+      session,
+      where: (t) => t.authUserId.equals(userId),
+      transaction: transaction,
+      noReturn: true,
+    );
+    await AppleAccount.db.deleteWhere(
+      session,
+      where: (t) => t.authUserId.equals(userId),
+      transaction: transaction,
+      noReturn: true,
+    );
+    await FacebookAccount.db.deleteWhere(
+      session,
+      where: (t) => t.authUserId.equals(userId),
+      transaction: transaction,
+      noReturn: true,
+    );
+    await MicrosoftAccount.db.deleteWhere(
+      session,
+      where: (t) => t.authUserId.equals(userId),
+      transaction: transaction,
+      noReturn: true,
+    );
+    await core.RefreshToken.db.deleteWhere(
+      session,
+      where: (t) => t.authUserId.equals(userId),
+      transaction: transaction,
+      noReturn: true,
+    );
   }
 
   /// Keyset predicate shared by all five identity tables.

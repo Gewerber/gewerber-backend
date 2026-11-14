@@ -91,4 +91,36 @@ abstract interface class AuthIdentityGateway {
     String? afterUserId,
     required int limit,
   });
+
+  /// Purges every authentication identity and refresh token of [userId].
+  ///
+  /// Deleted in the passed [transaction] (created by the caller when given, so
+  /// a failure rolls the whole account deletion back):
+  /// - the email IdP row (`EmailAccount`) and the four social provider rows
+  ///   (`GoogleAccount`, `AppleAccount`, `FacebookAccount`,
+  ///   `MicrosoftAccount`),
+  /// - the `AuthUser`'s refresh tokens (`RefreshToken`).
+  ///
+  /// Deliberately **not** touched:
+  /// - the `AuthUser` row itself: the `UserProfile` tombstone, the admin
+  ///   directory and the audit trail depend on it, and the `deletedAt` marker
+  ///   must stay enforceable (a deleted account keeps rejecting logins and
+  ///   writes; see `throwAccountDeleted`).
+  /// - live opaque `Session` rows (`ServerSideSession`): they hold no personal
+  ///   data beyond the user id and are not a login path — access tokens are
+  ///   short-lived JWTs that expire on their own, and revocation broadcast to
+  ///   clients is the auth module's own concern (`AuthSessions`), not a
+  ///   deletion requirement.
+  ///
+  /// Deleting the identities is safe with `AuthUser` kept: every identity table
+  /// and `RefreshToken` has an `ON DELETE CASCADE` foreign key to
+  /// `serverpod_auth_core_user`, so the row deletes succeed regardless of the
+  /// parent. `AuthUserProfile` (an `serverpod_auth_core` table with the same
+  /// cascade) is not written by this gateway; nothing in the OSS server creates
+  /// it, and any row it holds would outlive the identities harmlessly.
+  Future<void> deleteAll(
+    Session session,
+    UuidValue userId, {
+    Transaction? transaction,
+  });
 }

@@ -368,6 +368,14 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i1012.ServerpodInvoiceItemGateway(),
     );
     gh.singleton<_i788.ReminderGateway>(() => _i754.ServerpodReminderGateway());
+    gh.singleton<_i710.DeleteMyAccountUseCase>(
+      () => _i710.DeleteMyAccountUseCase(
+        gh<_i467.UserProfileGateway>(),
+        gh<_i655.AccountAnonymizationGateway>(),
+        gh<_i1026.AuthIdentityGateway>(),
+        gh<_i473.AuditService>(),
+      ),
+    );
     gh.singleton<_i343.TenantResolver>(
       () => _i707.ServerpodTenantResolver(
         gh<_i688.MembershipGateway>(),
@@ -848,13 +856,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i28.ListMyBusinessesUseCase(
         gh<_i647.BusinessGateway>(),
         gh<_i688.MembershipGateway>(),
-      ),
-    );
-    gh.singleton<_i710.DeleteMyAccountUseCase>(
-      () => _i710.DeleteMyAccountUseCase(
-        gh<_i467.UserProfileGateway>(),
-        gh<_i655.AccountAnonymizationGateway>(),
-        gh<_i473.AuditService>(),
       ),
     );
     gh.singleton<_i912.GuidanceSessionService>(
