@@ -58,17 +58,20 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
     // - Facebook: returns the profile address without confirming ownership.
     String? primaryEmail;
     var emailVerified = false;
-    for (final (candidate, verified) in <(String?, bool)>[
-      (emailAccount?.email, true),
-      (google?.email, true),
-      (apple?.email, apple?.isEmailVerified ?? false),
-      (microsoft?.email, true),
-      (facebook?.email, false),
-    ]) {
+    AuthProvider? primaryEmailProvider;
+    for (final (candidate, verified, provider)
+        in <(String?, bool, AuthProvider?)>[
+          (emailAccount?.email, true, null),
+          (google?.email, true, AuthProvider.google),
+          (apple?.email, apple?.isEmailVerified ?? false, AuthProvider.apple),
+          (microsoft?.email, true, AuthProvider.microsoft),
+          (facebook?.email, false, AuthProvider.facebook),
+        ]) {
       final email = _present(candidate);
       if (email != null) {
         primaryEmail = email;
         emailVerified = verified;
+        primaryEmailProvider = provider;
         break;
       }
     }
@@ -76,6 +79,7 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
     return AuthIdentity(
       primaryEmail: primaryEmail,
       emailVerified: emailVerified,
+      primaryEmailProvider: primaryEmailProvider,
       // Declaration order of `AuthProvider`, independent of the lookups above.
       providers: [
         if (google != null) AuthProvider.google,
@@ -84,6 +88,205 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
         if (microsoft != null) AuthProvider.microsoft,
       ],
     );
+  }
+
+  @override
+  Future<List<IdentityEmailRow>> findEmails(
+    Session session, {
+    String? query,
+    String? afterEmail,
+    String? afterUserId,
+    required int limit,
+  }) async {
+    if (limit <= 0) return const [];
+    final normalized = query?.trim() ?? '';
+    final afterUuid = afterUserId == null ? null : _parseUuid(afterUserId);
+
+    final rows = <IdentityEmailRow>[];
+
+    // One query per identity table, each clamped to `limit`. Merging, dedupe
+    // and ordering happen in Dart below — see the contract on the interface.
+    final emailAccounts = await EmailAccount.db.find(
+      session,
+      where: (t) => _directoryFilter(
+        email: t.email,
+        authUserId: t.authUserId,
+        query: normalized,
+        afterEmail: afterEmail,
+        afterUserId: afterUuid,
+      ),
+      orderByList: (t) => [t.email, t.authUserId],
+      limit: limit,
+    );
+    for (final account in emailAccounts) {
+      _addRow(
+        rows,
+        authUserId: account.authUserId,
+        email: account.email,
+        provider: null,
+        emailVerified: true,
+      );
+    }
+
+    final googleAccounts = await GoogleAccount.db.find(
+      session,
+      where: (t) => _directoryFilter(
+        email: t.email,
+        authUserId: t.authUserId,
+        query: normalized,
+        afterEmail: afterEmail,
+        afterUserId: afterUuid,
+      ),
+      orderByList: (t) => [t.email, t.authUserId],
+      limit: limit,
+    );
+    for (final account in googleAccounts) {
+      _addRow(
+        rows,
+        authUserId: account.authUserId,
+        email: account.email,
+        provider: AuthProvider.google,
+        emailVerified: true,
+      );
+    }
+
+    final appleAccounts = await AppleAccount.db.find(
+      session,
+      where: (t) => _directoryFilter(
+        email: t.email,
+        authUserId: t.authUserId,
+        query: normalized,
+        afterEmail: afterEmail,
+        afterUserId: afterUuid,
+      ),
+      orderByList: (t) => [t.email, t.authUserId],
+      limit: limit,
+    );
+    for (final account in appleAccounts) {
+      _addRow(
+        rows,
+        authUserId: account.authUserId,
+        email: account.email,
+        provider: AuthProvider.apple,
+        emailVerified: account.isEmailVerified ?? false,
+      );
+    }
+
+    final microsoftAccounts = await MicrosoftAccount.db.find(
+      session,
+      where: (t) => _directoryFilter(
+        email: t.email,
+        authUserId: t.authUserId,
+        query: normalized,
+        afterEmail: afterEmail,
+        afterUserId: afterUuid,
+      ),
+      orderByList: (t) => [t.email, t.authUserId],
+      limit: limit,
+    );
+    for (final account in microsoftAccounts) {
+      _addRow(
+        rows,
+        authUserId: account.authUserId,
+        email: account.email,
+        provider: AuthProvider.microsoft,
+        emailVerified: true,
+      );
+    }
+
+    final facebookAccounts = await FacebookAccount.db.find(
+      session,
+      where: (t) => _directoryFilter(
+        email: t.email,
+        authUserId: t.authUserId,
+        query: normalized,
+        afterEmail: afterEmail,
+        afterUserId: afterUuid,
+      ),
+      orderByList: (t) => [t.email, t.authUserId],
+      limit: limit,
+    );
+    for (final account in facebookAccounts) {
+      _addRow(
+        rows,
+        authUserId: account.authUserId,
+        email: account.email,
+        provider: AuthProvider.facebook,
+        emailVerified: false,
+      );
+    }
+
+    rows.sort(_compareRows);
+    return rows;
+  }
+
+  /// Keyset predicate shared by all five identity tables.
+  ///
+  /// A missing [afterUserId] is the legacy email-only boundary: strictly
+  /// greater address, exactly like the old email-account-only listing.
+  static Expression _directoryFilter({
+    required ColumnString email,
+    required ColumnUuid authUserId,
+    required String query,
+    required String? afterEmail,
+    required UuidValue? afterUserId,
+  }) {
+    var expression = Constant.bool(true) as Expression;
+    if (query.isNotEmpty) {
+      expression &= email.ilike('%$query%');
+    }
+    if (afterEmail != null) {
+      final strictlyAfter = email > afterEmail;
+      expression &= afterUserId == null
+          ? strictlyAfter
+          : strictlyAfter |
+                (email.equals(afterEmail) & (authUserId > afterUserId));
+    }
+    return expression;
+  }
+
+  /// Keeps at most one row per `(authUserId, provider)` and drops rows without
+  /// a usable address.
+  static void _addRow(
+    List<IdentityEmailRow> rows, {
+    required UuidValue authUserId,
+    required String? email,
+    required AuthProvider? provider,
+    required bool emailVerified,
+  }) {
+    final present = _present(email);
+    if (present == null) return;
+    final duplicate = rows.any(
+      (row) => row.authUserId == authUserId && row.provider == provider,
+    );
+    if (duplicate) return;
+    rows.add(
+      IdentityEmailRow(
+        authUserId: authUserId,
+        email: present,
+        provider: provider,
+        emailVerified: emailVerified,
+      ),
+    );
+  }
+
+  /// Deterministic `(email, userId)` order; addresses are compared
+  /// case-insensitively because search is case-insensitive too.
+  static int _compareRows(IdentityEmailRow a, IdentityEmailRow b) {
+    final byEmail = a.email.toLowerCase().compareTo(b.email.toLowerCase());
+    if (byEmail != 0) return byEmail;
+    return a.authUserId.toString().compareTo(b.authUserId.toString());
+  }
+
+  static UuidValue _parseUuid(String value) {
+    try {
+      return UuidValue.withFormatValidation(value);
+    } on FormatException {
+      throw ValidationException(
+        message: 'Malformed pagination cursor.',
+        field: 'cursor',
+      );
+    }
   }
 
   /// Treats blank and whitespace-only addresses as absent.

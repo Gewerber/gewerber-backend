@@ -10,9 +10,12 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:gewerber_backend_client/src/protocol/protocol.dart'
+    as _iipbhyvd;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
 import '../../../core/admin/admin_role.dart' as _isyiaiss;
+import '../../../modules/user/models/auth_provider.dart' as _imjnn7ac;
 
 abstract class AdminUserSummary
     implements _isc.SerializableModel, _isc.ProtocolSerialization {
@@ -25,6 +28,7 @@ abstract class AdminUserSummary
     this.globalRole,
     this.profileCreatedAt,
     this.deletedAt,
+    required this.connectedProviders,
   });
 
   factory AdminUserSummary({
@@ -36,6 +40,7 @@ abstract class AdminUserSummary
     _isyiaiss.AdminRole? globalRole,
     DateTime? profileCreatedAt,
     DateTime? deletedAt,
+    required List<_imjnn7ac.AuthProvider> connectedProviders,
   }) = _AdminUserSummaryImpl;
 
   factory AdminUserSummary.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -60,17 +65,27 @@ abstract class AdminUserSummary
       deletedAt: jsonSerialization['deletedAt'] == null
           ? null
           : _isc.DateTimeJsonExtension.fromJson(jsonSerialization['deletedAt']),
+      connectedProviders: _iipbhyvd.Protocol()
+          .deserialize<List<_imjnn7ac.AuthProvider>>(
+            jsonSerialization['connectedProviders'],
+          ),
     );
   }
 
   _isc.UuidValue userId;
 
+  /// Display address resolved from the user's strongest identity (email IdP,
+  /// then Google, Apple, Microsoft, Facebook). `null` when no identity carried
+  /// an address; such users are not listed by the directory search.
   String? email;
 
   String? displayName;
 
   bool blocked;
 
+  /// Whether ownership of `email` is confirmed: always true for the email IdP,
+  /// Google and Microsoft, Apple's `isEmailVerified` claim, and false for
+  /// Facebook (profile address, not verified).
   bool emailConfirmed;
 
   /// Global role from the `admin_user` allowlist (`null` = regular user).
@@ -79,6 +94,11 @@ abstract class AdminUserSummary
   DateTime? profileCreatedAt;
 
   DateTime? deletedAt;
+
+  /// Social providers holding an account row for this user, in enum
+  /// declaration order. The email IdP is not a social provider and is never
+  /// listed here.
+  List<_imjnn7ac.AuthProvider> connectedProviders;
 
   /// Returns a shallow copy of this [AdminUserSummary]
   /// with some or all fields replaced by the given arguments.
@@ -92,6 +112,7 @@ abstract class AdminUserSummary
     _isyiaiss.AdminRole? globalRole,
     DateTime? profileCreatedAt = const _isc.$UndefinedDateTime(),
     DateTime? deletedAt = const _isc.$UndefinedDateTime(),
+    List<_imjnn7ac.AuthProvider>? connectedProviders,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -106,6 +127,9 @@ abstract class AdminUserSummary
       if (profileCreatedAt != null)
         'profileCreatedAt': profileCreatedAt?.toJson(),
       if (deletedAt != null) 'deletedAt': deletedAt?.toJson(),
+      'connectedProviders': connectedProviders.toJson(
+        valueToJson: (v) => v.toJson(),
+      ),
     };
   }
 
@@ -122,6 +146,9 @@ abstract class AdminUserSummary
       if (profileCreatedAt != null)
         'profileCreatedAt': profileCreatedAt?.toJson(),
       if (deletedAt != null) 'deletedAt': deletedAt?.toJson(),
+      'connectedProviders': connectedProviders.toJson(
+        valueToJson: (v) => v.toJson(),
+      ),
     };
   }
 
@@ -143,6 +170,7 @@ class _AdminUserSummaryImpl extends AdminUserSummary {
     _isyiaiss.AdminRole? globalRole,
     DateTime? profileCreatedAt,
     DateTime? deletedAt,
+    required List<_imjnn7ac.AuthProvider> connectedProviders,
   }) : super._(
          userId: userId,
          email: email,
@@ -152,6 +180,7 @@ class _AdminUserSummaryImpl extends AdminUserSummary {
          globalRole: globalRole,
          profileCreatedAt: profileCreatedAt,
          deletedAt: deletedAt,
+         connectedProviders: connectedProviders,
        );
 
   /// Returns a shallow copy of this [AdminUserSummary]
@@ -167,6 +196,7 @@ class _AdminUserSummaryImpl extends AdminUserSummary {
     Object? globalRole = _Undefined,
     DateTime? profileCreatedAt = const _isc.$UndefinedDateTime(),
     DateTime? deletedAt = const _isc.$UndefinedDateTime(),
+    List<_imjnn7ac.AuthProvider>? connectedProviders,
   }) {
     return AdminUserSummary(
       userId: userId ?? this.userId,
@@ -183,6 +213,9 @@ class _AdminUserSummaryImpl extends AdminUserSummary {
       deletedAt: deletedAt is _isc.UndefinedSentinel
           ? this.deletedAt
           : deletedAt,
+      connectedProviders:
+          connectedProviders ??
+          this.connectedProviders.map((e0) => e0).toList(),
     );
   }
 }

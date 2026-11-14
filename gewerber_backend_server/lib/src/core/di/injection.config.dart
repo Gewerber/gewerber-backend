@@ -292,9 +292,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i62.AdminRoleResolver>(
       () => const _i341.ServerpodAdminRoleResolver(),
     );
-    gh.singleton<_i711.AdminAuthGateway>(
-      () => _i446.ServerpodAdminAuthGateway(),
-    );
     gh.singleton<_i647.BusinessGateway>(() => _i8.ServerpodBusinessGateway());
     gh.singleton<_i655.AccountAnonymizationGateway>(
       () => _i1024.ServerpodAccountAnonymizationGateway(),
@@ -349,6 +346,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i1026.AuthIdentityGateway>(
       () => _i198.ServerpodAuthIdentityGateway(),
+    );
+    gh.singleton<_i711.AdminAuthGateway>(
+      () => _i446.ServerpodAdminAuthGateway(gh<_i1026.AuthIdentityGateway>()),
     );
     gh.singleton<_i690.AdminStatsGateway>(
       () => const _i744.ServerpodAdminStatsGateway(),
@@ -592,6 +592,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i473.AuditService>(),
       ),
     );
+    gh.singleton<_i260.AdminDirectoryGateway>(
+      () => _i581.ServerpodAdminDirectoryGateway(
+        gh<_i467.UserProfileGateway>(),
+        gh<_i62.AdminRoleResolver>(),
+        gh<_i1026.AuthIdentityGateway>(),
+      ),
+    );
     gh.singleton<_i747.GetTimeEntryUseCase>(
       () => _i747.GetTimeEntryUseCase(
         gh<_i343.TenantResolver>(),
@@ -618,12 +625,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i417.TimeEntryGateway>(),
         gh<_i141.BusinessSettingsGateway>(),
         gh<_i473.AuditService>(),
-      ),
-    );
-    gh.singleton<_i260.AdminDirectoryGateway>(
-      () => _i581.ServerpodAdminDirectoryGateway(
-        gh<_i467.UserProfileGateway>(),
-        gh<_i62.AdminRoleResolver>(),
       ),
     );
     gh.singleton<_i640.CreateTaskUseCase>(

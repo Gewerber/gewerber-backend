@@ -8,6 +8,10 @@ import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
     as core;
 import 'package:serverpod_auth_idp_server/providers/email.dart' as idp;
+import 'package:serverpod_auth_idp_server/providers/facebook.dart'
+    show FacebookAccount;
+import 'package:serverpod_auth_idp_server/providers/google.dart'
+    show GoogleAccount;
 import 'package:test/test.dart';
 
 import 'test_tools/serverpod_test_tools.dart';
@@ -34,8 +38,22 @@ void main() {
     await configureDependencies();
   });
 
+  /// Inserts a user profile row without any auth identity, for tests that
+  /// seed social accounts explicitly.
+  Future<void> seedProfile(
+    Session session,
+    UuidValue userId,
+    String email,
+  ) async {
+    await UserProfile.db.insertRow(
+      session,
+      UserProfile(userId: userId, displayName: email.split('@').first),
+    );
+  }
+
   /// Inserts the auth/profile rows backing a user id used in session
-  /// overrides. Email accounts are required by the directory search.
+  /// overrides. The directory search lists users through their identity rows,
+  /// so callers that need the user to be searchable pass [email].
   /// Returns the parsed user id.
   Future<UuidValue> seedUser(
     Session session,
@@ -57,10 +75,7 @@ void main() {
           passwordHash: '',
         ),
       );
-      await UserProfile.db.insertRow(
-        session,
-        UserProfile(userId: id, displayName: email.split('@').first),
-      );
+      await seedProfile(session, id, email);
     }
     return id;
   }
@@ -229,9 +244,10 @@ void main() {
       );
 
       test(
-        'when the user has no email account then NotFound is thrown',
+        'when the user has no identity at all then NotFound is thrown',
         () async {
-          // Auth user exists but never completed an email registration.
+          // Auth user exists but never completed an email registration and
+          // holds no social account either.
           final target = await seedUser(rawSession, targetUserId);
 
           await expectLater(
@@ -241,6 +257,66 @@ void main() {
             ),
             throwsA(isA<NotFoundException>()),
           );
+        },
+      );
+
+      test(
+        'when the user only signed in with Google then the check succeeds and '
+        'records the source provider',
+        () async {
+          final target = await seedUser(rawSession, targetUserId);
+          await GoogleAccount.db.insertRow(
+            rawSession,
+            GoogleAccount(
+              authUserId: target,
+              email: 'google-only@example.com',
+              userIdentifier: 'google-sub-admin-check',
+            ),
+          );
+          await seedProfile(rawSession, target, 'google-only@example.com');
+
+          final status = await endpoints.adminUsers.usersVerifyEmail(
+            adminSession,
+            userId: target,
+          );
+
+          expect(status.email, 'google-only@example.com');
+          expect(status.emailConfirmed, true);
+          expect(status.providers, [AuthProvider.google]);
+
+          final logged = await AuditEntry.db.find(
+            rawSession,
+            where: (t) => t.action.equals('admin.verifyEmailCheck'),
+          );
+          expect(logged, hasLength(1));
+          expect(logged.single.changes?['provider'], 'google');
+          expect(logged.single.changes?['emailConfirmed'], 'true');
+        },
+      );
+
+      test(
+        'when the user only signed in with Facebook then the unverified '
+        'address is reported instead of NotFound',
+        () async {
+          final target = await seedUser(rawSession, targetUserId);
+          await FacebookAccount.db.insertRow(
+            rawSession,
+            FacebookAccount(
+              authUserId: target,
+              email: 'facebook-only@example.com',
+              userIdentifier: 'facebook-sub-admin-check',
+            ),
+          );
+          await seedProfile(rawSession, target, 'facebook-only@example.com');
+
+          final status = await endpoints.adminUsers.usersVerifyEmail(
+            adminSession,
+            userId: target,
+          );
+
+          expect(status.email, 'facebook-only@example.com');
+          expect(status.emailConfirmed, false);
+          expect(status.providers, [AuthProvider.facebook]);
         },
       );
 
@@ -337,6 +413,112 @@ void main() {
           expect(page.items, hasLength(1));
           expect(page.items.single.email, 'findme@example.com');
           expect(page.nextCursor, isNull);
+        },
+      );
+    });
+
+    group('provider-agnostic directory', () {
+      test(
+        'when a Google-only user is searched then the summary carries the '
+        'Google address and provider',
+        () async {
+          final target = await seedUser(rawSession, targetUserId);
+          await GoogleAccount.db.insertRow(
+            rawSession,
+            GoogleAccount(
+              authUserId: target,
+              email: 'google-only@example.com',
+              userIdentifier: 'google-sub-search',
+            ),
+          );
+          await seedProfile(rawSession, target, 'google-only@example.com');
+
+          final page = await endpoints.adminUsers.usersSearch(
+            adminSession,
+            query: 'google-only',
+          );
+
+          expect(page.items, hasLength(1));
+          final summary = page.items.single;
+          expect(summary.userId, target);
+          expect(summary.email, 'google-only@example.com');
+          expect(summary.emailConfirmed, true);
+          expect(summary.connectedProviders, [AuthProvider.google]);
+        },
+      );
+
+      test(
+        'when a Facebook-only user is searched then the unverified address is '
+        'returned with its provider',
+        () async {
+          final target = await seedUser(rawSession, targetUserId);
+          await FacebookAccount.db.insertRow(
+            rawSession,
+            FacebookAccount(
+              authUserId: target,
+              email: 'facebook-only@example.com',
+              userIdentifier: 'facebook-sub-search',
+            ),
+          );
+          await seedProfile(rawSession, target, 'facebook-only@example.com');
+
+          final page = await endpoints.adminUsers.usersSearch(
+            adminSession,
+            query: 'facebook-only',
+          );
+
+          expect(page.items, hasLength(1));
+          final summary = page.items.single;
+          expect(summary.email, 'facebook-only@example.com');
+          expect(summary.emailConfirmed, false);
+          expect(summary.connectedProviders, [AuthProvider.facebook]);
+        },
+      );
+
+      test(
+        'when two users share an address then the cursor roundtrips without '
+        'skipping or looping',
+        () async {
+          final first = await seedUser(
+            rawSession,
+            targetUserId,
+            email: 'shared-address@example.com',
+          );
+          // The email IdP enforces a unique address, so the second user holds
+          // the same address through Google. Both rows must paginate as
+          // separate users ordered by `(email, userId)`.
+          final second = await seedUser(rawSession, plainUserId);
+          await GoogleAccount.db.insertRow(
+            rawSession,
+            GoogleAccount(
+              authUserId: second,
+              email: 'shared-address@example.com',
+              userIdentifier: 'google-sub-shared-address',
+            ),
+          );
+          await seedProfile(rawSession, second, 'shared-address@example.com');
+
+          final page1 = await endpoints.adminUsers.usersSearch(
+            adminSession,
+            query: 'shared-address',
+            limit: 1,
+          );
+          expect(page1.items, hasLength(1));
+          expect(page1.nextCursor, isNotNull);
+
+          final page2 = await endpoints.adminUsers.usersSearch(
+            adminSession,
+            query: 'shared-address',
+            limit: 1,
+            cursor: page1.nextCursor,
+          );
+          expect(page2.items, hasLength(1));
+          expect(page2.nextCursor, isNull);
+
+          expect(
+            {page1.items.single.userId, page2.items.single.userId},
+            {first, second},
+          );
         },
       );
     });

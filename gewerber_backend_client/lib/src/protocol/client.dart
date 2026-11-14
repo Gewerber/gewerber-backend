@@ -913,7 +913,10 @@ class EndpointAdminUsers extends EndpointAdmin {
   @override
   String get name => 'adminUsers';
 
-  /// Keyset-paginated search over all users by email substring.
+  /// Keyset-paginated search over all users by email substring. Searches every
+  /// sign-in identity (email IdP, Google, Apple, Facebook, Microsoft), so
+  /// social-only users appear too; each user is listed once with their merged
+  /// `connectedProviders`.
   _ida.Future<_ix76f7cm.AdminUserSummaryPage> usersSearch({
     String? query,
     int? limit,
@@ -969,10 +972,13 @@ class EndpointAdminUsers extends EndpointAdmin {
   );
 
   /// Reports the email verification state of a user. Read-only check
-  /// (audited as `admin.verifyEmailCheck`): with the Serverpod email IdP an
-  /// account only exists once its verification code was confirmed, so there
-  /// is no unverified state to flip. Throws [NotFoundException] for users
-  /// without any email account.
+  /// (audited as `admin.verifyEmailCheck`) that resolves the identity
+  /// provider-agnostically: the email IdP, then Google, Apple, Microsoft and
+  /// Facebook. There is nothing to mutate (the email IdP has no persistent
+  /// unverified state). Throws [NotFoundException] only when the auth user does
+  /// not exist or no identity carries an email address; a social user whose
+  /// provider does not confirm ownership is reported with
+  /// `emailConfirmed: false`, not rejected.
   _ida.Future<_iq6he93g.AdminAuthStatus> usersVerifyEmail({
     required _isc.UuidValue userId,
   }) => caller.callServerEndpoint<_iq6he93g.AdminAuthStatus>(

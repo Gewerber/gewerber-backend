@@ -12,8 +12,12 @@ class SearchAdminUsersUseCase {
 
   final AdminDirectoryGateway _directory;
 
-  /// Keyset-paginated by email; the cursor carries the last email of the
-  /// previous page (`{'e': ...}`).
+  /// Keyset-paginated by `(email, userId)`; the cursor carries both keys of the
+  /// last row of the previous page (`{'e': email, 'u': userId}`) so several
+  /// users sharing one address paginate without skipping or looping.
+  ///
+  /// A legacy cursor with only `e` is still accepted and keeps the old
+  /// email-only behavior.
   Future<AdminUserSummaryPage> call(
     Session session, {
     String? query,
@@ -23,23 +27,32 @@ class SearchAdminUsersUseCase {
     final effectiveLimit = clampAdminListLimit(limit);
     final position = decodeAdminCursor(cursor);
     final afterEmail = cursorString(position, 'e');
+    final afterUserId = cursorString(position, 'u');
 
     // One extra row detects a following page without a count query.
     final rows = await _directory.searchUsers(
       session,
       query: query,
       afterEmail: afterEmail,
+      afterUserId: afterUserId,
       limit: effectiveLimit + 1,
     );
 
     final hasMore = rows.length > effectiveLimit;
     final items = hasMore ? rows.sublist(0, effectiveLimit) : rows;
 
+    String? nextCursor;
+    if (hasMore && items.isNotEmpty && items.last.email != null) {
+      final last = items.last;
+      nextCursor = encodeAdminCursor({
+        'e': last.email,
+        'u': last.userId.toString(),
+      });
+    }
+
     return AdminUserSummaryPage(
       items: items,
-      nextCursor: hasMore && items.isNotEmpty
-          ? encodeAdminCursor({'e': items.last.email!})
-          : null,
+      nextCursor: nextCursor,
       limit: effectiveLimit,
     );
   }

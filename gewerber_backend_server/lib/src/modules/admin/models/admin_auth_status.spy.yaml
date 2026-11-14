@@ -1,10 +1,19 @@
 ### Authentication-level state of a user as seen by the admin API.
-### `emailConfirmed` reflects the email IdP contract of Serverpod 4 beta:
-### an `EmailAccount` row only exists after the registration verification
-### code was confirmed, so an existing account is always confirmed.
+### Provider-agnostic: the address and its verification state come from the
+### user's strongest identity (email IdP, then Google, Apple, Microsoft,
+### Facebook), so users who only sign in through a social provider are reported
+### too. `providers` lists the social providers holding an account row.
 class: AdminAuthStatus
 fields:
   blocked: bool
+  ### Whether ownership of `email` is confirmed. The email IdP is confirmed by
+  ### construction (the row only exists after the registration challenge), as
+  ### are Google and Microsoft; Apple mirrors `isEmailVerified`; Facebook does
+  ### not confirm ownership.
   emailConfirmed: bool
+  ### Address of the strongest identity, or `null` when none supplied one.
   email: String?
   authUserCreatedAt: DateTime?
+  ### Social providers holding an account row for this user, in enum
+  ### declaration order. The email IdP is never listed.
+  providers: List<AuthProvider>
