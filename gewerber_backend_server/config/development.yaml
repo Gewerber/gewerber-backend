@@ -20,6 +20,21 @@ insightsServer:
   publicPort: 8081
   publicScheme: http
 
+# Configuration for the web server (OAuth callback routes for social sign-in
+# and, when GEWERBER_COMMERCIAL_ENTITLEMENTS=true, commercial billing).
+# Registering web routes is what creates the listener: with no web routes
+# registered no port is bound. Note: FlutterWebAuth2CallbackRoute (/auth/callback)
+# hands the OAuth result to the Flutter web app via window.postMessage(...,
+# targetOrigin), which browsers only deliver across the same origin (scheme +
+# host + port). Under `flutter run -d chrome` the app runs on a random port, so
+# serve flutter_web_auth_2's `auth.html` from the Flutter app or proxy `/auth/`
+# in the Flutter dev server for local OAuth testing.
+webServer:
+  port: 8082
+  publicHost: localhost
+  publicPort: 8082
+  publicScheme: http
+
 
 # This is the database setup for your server.
 database:

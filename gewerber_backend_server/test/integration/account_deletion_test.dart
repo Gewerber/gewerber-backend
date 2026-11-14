@@ -7,6 +7,17 @@ import 'dart:typed_data';
 import 'package:gewerber_backend_server/src/core/di/injection.dart';
 import 'package:gewerber_backend_server/src/generated/protocol.dart';
 import 'package:serverpod/serverpod.dart';
+import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
+    as core;
+import 'package:serverpod_auth_idp_server/providers/apple.dart'
+    show AppleAccount;
+import 'package:serverpod_auth_idp_server/providers/email.dart' as idp;
+import 'package:serverpod_auth_idp_server/providers/facebook.dart'
+    show FacebookAccount;
+import 'package:serverpod_auth_idp_server/providers/google.dart'
+    show GoogleAccount;
+import 'package:serverpod_auth_idp_server/providers/microsoft.dart'
+    show MicrosoftAccount;
 import 'package:test/test.dart';
 
 import 'test_tools/serverpod_test_tools.dart';
@@ -16,6 +27,9 @@ void main() {
   const userBId = 'b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e';
   // A user that never created a profile, business or any other data.
   const userCId = 'c3d4e5f6-a7b8-4c9d-8e1f-2a3b4c5d6e7f';
+  // A user with an email identity, a Google identity and a refresh token, used
+  // to prove the auth identities are purged with the account.
+  const identitiesUserId = 'd5e6f7a8-b9c0-4d1e-8f2a-3b4c5d6e7f80';
 
   setUpAll(() async {
     await configureDependencies();
@@ -379,5 +393,133 @@ void main() {
         throwsA(isA<ServerpodUnauthenticatedException>()),
       );
     });
+  });
+
+  withServerpod('Given an account with auth identities', (
+    sessionBuilder,
+    endpoints,
+  ) {
+    test(
+      'when deleting the account then every identity row and the refresh token '
+      'are purged while the auth user and its tombstone stay',
+      () async {
+        final userId = UuidValue.fromString(identitiesUserId);
+        final session = sessionBuilder.copyWith(
+          authentication: AuthenticationOverride.authenticationInfo(
+            identitiesUserId,
+            {},
+          ),
+        );
+
+        final rawSession = sessionBuilder.build();
+        try {
+          // The auth user, one email IdP row, a Google row and a refresh
+          // token. The remaining provider tables must simply be empty.
+          await core.AuthUser.db.insertRow(
+            rawSession,
+            core.AuthUser(id: userId, scopeNames: {}),
+          );
+          await idp.EmailAccount.db.insertRow(
+            rawSession,
+            idp.EmailAccount(
+              authUserId: userId,
+              email: 'purge-me@example.com',
+              passwordHash: '',
+            ),
+          );
+          await GoogleAccount.db.insertRow(
+            rawSession,
+            GoogleAccount(
+              authUserId: userId,
+              email: 'purge-me@gmail.example',
+              userIdentifier: 'google-sub-purge-me',
+            ),
+          );
+          await core.RefreshToken.db.insertRow(
+            rawSession,
+            core.RefreshToken(
+              authUserId: userId,
+              scopeNames: {},
+              method: 'email',
+              fixedSecret: ByteData(16),
+              rotatingSecretHash:
+                  '\$argon2id\$v=19\$m=1,t=1,p=1\$c2FsdA==\$aGFzaA==',
+            ),
+          );
+        } finally {
+          await rawSession.close();
+        }
+
+        await endpoints.userProfile.deleteMyAccount(session);
+
+        final db = sessionBuilder.build();
+        try {
+          // Every identity row for this auth user is gone.
+          final emailAccounts = await idp.EmailAccount.db.find(
+            db,
+            where: (t) => t.authUserId.equals(userId),
+          );
+          expect(emailAccounts, isEmpty);
+          final googleAccounts = await GoogleAccount.db.find(
+            db,
+            where: (t) => t.authUserId.equals(userId),
+          );
+          expect(googleAccounts, isEmpty);
+          final appleAccounts = await AppleAccount.db.find(
+            db,
+            where: (t) => t.authUserId.equals(userId),
+          );
+          expect(appleAccounts, isEmpty);
+          final facebookAccounts = await FacebookAccount.db.find(
+            db,
+            where: (t) => t.authUserId.equals(userId),
+          );
+          expect(facebookAccounts, isEmpty);
+          final microsoftAccounts = await MicrosoftAccount.db.find(
+            db,
+            where: (t) => t.authUserId.equals(userId),
+          );
+          expect(microsoftAccounts, isEmpty);
+
+          // No refresh token survives, so no new access token can be minted.
+          final refreshTokens = await core.RefreshToken.db.find(
+            db,
+            where: (t) => t.authUserId.equals(userId),
+          );
+          expect(refreshTokens, isEmpty);
+
+          // The auth user row stays: the tombstone and the audit trail depend
+          // on it, and `deletedAt` remains enforceable.
+          final authUser = await core.AuthUser.db.findById(db, userId);
+          expect(authUser, isNotNull);
+
+          final profile = await UserProfile.db.findFirstRow(
+            db,
+            where: (t) => t.userId.equals(userId),
+          );
+          expect(profile, isNotNull);
+          expect(profile!.deletedAt, isNotNull);
+        } finally {
+          await db.close();
+        }
+
+        // The profile endpoint keeps reporting the account as deleted; `me()`
+        // is not tombstone-guarded (pre-existing behavior) but reports no
+        // identity and no provider any more, because the rows are gone.
+        await expectLater(
+          () => endpoints.userProfile.getMyProfile(session),
+          throwsA(
+            isA<NotFoundException>().having(
+              (e) => e.entityType,
+              'entityType',
+              'UserProfile',
+            ),
+          ),
+        );
+        final identity = await endpoints.userProfile.me(session);
+        expect(identity.primaryEmail, isNull);
+        expect(identity.connectedProviders, isEmpty);
+      },
+    );
   });
 }

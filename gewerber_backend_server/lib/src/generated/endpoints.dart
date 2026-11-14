@@ -86,8 +86,12 @@ import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
 import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
     as _iais;
 
+import '../auth/apple_idp_endpoint.dart' as _ilq63su8;
 import '../auth/email_idp_endpoint.dart' as _iuc1hd5t;
+import '../auth/facebook_idp_endpoint.dart' as _iw86tkoc;
+import '../auth/google_idp_endpoint.dart' as _i71axiz0;
 import '../auth/jwt_refresh_endpoint.dart' as _inwq3ztq;
+import '../auth/microsoft_idp_endpoint.dart' as _ioi2odu0;
 import '../core/entitlement/endpoints/entitlement_endpoint.dart' as _i09fae2w;
 import '../modules/accounting/endpoints/accounting_endpoint.dart' as _iikez0ve;
 import '../modules/admin/endpoints/admin_audit_endpoint.dart' as _i457hz4y;
@@ -121,16 +125,40 @@ class Endpoints extends _is.EndpointDispatch {
   @override
   void initializeEndpoints(_is.Server server) {
     var endpoints = <String, _is.Endpoint>{
+      'appleIdp': _ilq63su8.AppleIdpEndpoint()
+        ..initialize(
+          server,
+          'appleIdp',
+          null,
+        ),
       'emailIdp': _iuc1hd5t.EmailIdpEndpoint()
         ..initialize(
           server,
           'emailIdp',
           null,
         ),
+      'facebookIdp': _iw86tkoc.FacebookIdpEndpoint()
+        ..initialize(
+          server,
+          'facebookIdp',
+          null,
+        ),
+      'googleIdp': _i71axiz0.GoogleIdpEndpoint()
+        ..initialize(
+          server,
+          'googleIdp',
+          null,
+        ),
       'jwtRefresh': _inwq3ztq.JwtRefreshEndpoint()
         ..initialize(
           server,
           'jwtRefresh',
+          null,
+        ),
+      'microsoftIdp': _ioi2odu0.MicrosoftIdpEndpoint()
+        ..initialize(
+          server,
+          'microsoftIdp',
           null,
         ),
       'entitlement': _i09fae2w.EntitlementEndpoint()
@@ -272,6 +300,66 @@ class Endpoints extends _is.EndpointDispatch {
           null,
         ),
     };
+    connectors['appleIdp'] = _is.EndpointConnector(
+      name: 'appleIdp',
+      endpoint: endpoints['appleIdp']!,
+      methodConnectors: {
+        'login': _is.MethodConnector(
+          name: 'login',
+          params: {
+            'identityToken': _is.ParameterDescription(
+              name: 'identityToken',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'authorizationCode': _is.ParameterDescription(
+              name: 'authorizationCode',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'isNativeApplePlatformSignIn': _is.ParameterDescription(
+              name: 'isNativeApplePlatformSignIn',
+              type: _is.getType<bool>(),
+              nullable: false,
+            ),
+            'firstName': _is.ParameterDescription(
+              name: 'firstName',
+              type: _is.getType<String?>(),
+              nullable: true,
+            ),
+            'lastName': _is.ParameterDescription(
+              name: 'lastName',
+              type: _is.getType<String?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['appleIdp'] as _ilq63su8.AppleIdpEndpoint).login(
+                    session,
+                    identityToken: params['identityToken'],
+                    authorizationCode: params['authorizationCode'],
+                    isNativeApplePlatformSignIn:
+                        params['isNativeApplePlatformSignIn'],
+                    firstName: params['firstName'],
+                    lastName: params['lastName'],
+                  ),
+        ),
+        'hasAccount': _is.MethodConnector(
+          name: 'hasAccount',
+          params: {},
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['appleIdp'] as _ilq63su8.AppleIdpEndpoint)
+                  .hasAccount(session),
+        ),
+      },
+    );
     connectors['emailIdp'] = _is.EndpointConnector(
       name: 'emailIdp',
       endpoint: endpoints['emailIdp']!,
@@ -452,6 +540,115 @@ class Endpoints extends _is.EndpointDispatch {
         ),
       },
     );
+    connectors['facebookIdp'] = _is.EndpointConnector(
+      name: 'facebookIdp',
+      endpoint: endpoints['facebookIdp']!,
+      methodConnectors: {
+        'login': _is.MethodConnector(
+          name: 'login',
+          params: {
+            'accessToken': _is.ParameterDescription(
+              name: 'accessToken',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['facebookIdp'] as _iw86tkoc.FacebookIdpEndpoint)
+                      .login(
+                        session,
+                        accessToken: params['accessToken'],
+                      ),
+        ),
+        'hasAccount': _is.MethodConnector(
+          name: 'hasAccount',
+          params: {},
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['facebookIdp'] as _iw86tkoc.FacebookIdpEndpoint)
+                      .hasAccount(session),
+        ),
+      },
+    );
+    connectors['googleIdp'] = _is.EndpointConnector(
+      name: 'googleIdp',
+      endpoint: endpoints['googleIdp']!,
+      methodConnectors: {
+        'login': _is.MethodConnector(
+          name: 'login',
+          params: {
+            'idToken': _is.ParameterDescription(
+              name: 'idToken',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'accessToken': _is.ParameterDescription(
+              name: 'accessToken',
+              type: _is.getType<String?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['googleIdp'] as _i71axiz0.GoogleIdpEndpoint).login(
+                    session,
+                    idToken: params['idToken'],
+                    accessToken: params['accessToken'],
+                  ),
+        ),
+        'loginWithCode': _is.MethodConnector(
+          name: 'loginWithCode',
+          params: {
+            'code': _is.ParameterDescription(
+              name: 'code',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'codeVerifier': _is.ParameterDescription(
+              name: 'codeVerifier',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'redirectUri': _is.ParameterDescription(
+              name: 'redirectUri',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['googleIdp'] as _i71axiz0.GoogleIdpEndpoint)
+                  .loginWithCode(
+                    session,
+                    code: params['code'],
+                    codeVerifier: params['codeVerifier'],
+                    redirectUri: params['redirectUri'],
+                  ),
+        ),
+        'hasAccount': _is.MethodConnector(
+          name: 'hasAccount',
+          params: {},
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['googleIdp'] as _i71axiz0.GoogleIdpEndpoint)
+                  .hasAccount(session),
+        ),
+      },
+    );
     connectors['jwtRefresh'] = _is.EndpointConnector(
       name: 'jwtRefresh',
       endpoint: endpoints['jwtRefresh']!,
@@ -475,6 +672,61 @@ class Endpoints extends _is.EndpointDispatch {
                         session,
                         refreshToken: params['refreshToken'],
                       ),
+        ),
+      },
+    );
+    connectors['microsoftIdp'] = _is.EndpointConnector(
+      name: 'microsoftIdp',
+      endpoint: endpoints['microsoftIdp']!,
+      methodConnectors: {
+        'login': _is.MethodConnector(
+          name: 'login',
+          params: {
+            'code': _is.ParameterDescription(
+              name: 'code',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'codeVerifier': _is.ParameterDescription(
+              name: 'codeVerifier',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'redirectUri': _is.ParameterDescription(
+              name: 'redirectUri',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'isWebPlatform': _is.ParameterDescription(
+              name: 'isWebPlatform',
+              type: _is.getType<bool>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['microsoftIdp'] as _ioi2odu0.MicrosoftIdpEndpoint)
+                      .login(
+                        session,
+                        code: params['code'],
+                        codeVerifier: params['codeVerifier'],
+                        redirectUri: params['redirectUri'],
+                        isWebPlatform: params['isWebPlatform'],
+                      ),
+        ),
+        'hasAccount': _is.MethodConnector(
+          name: 'hasAccount',
+          params: {},
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['microsoftIdp'] as _ioi2odu0.MicrosoftIdpEndpoint)
+                      .hasAccount(session),
         ),
       },
     );

@@ -13,7 +13,10 @@ import '../application/user_admin_use_cases.dart';
 /// Reads are available to moderators; mutations require the `admin` role and
 /// an explicit `confirm: true`.
 class AdminUsersEndpoint extends AdminEndpoint {
-  /// Keyset-paginated search over all users by email substring.
+  /// Keyset-paginated search over all users by email substring. Searches every
+  /// sign-in identity (email IdP, Google, Apple, Facebook, Microsoft), so
+  /// social-only users appear too; each user is listed once with their merged
+  /// `connectedProviders`.
   Future<AdminUserSummaryPage> usersSearch(
     Session session, {
     String? query,
@@ -75,10 +78,13 @@ class AdminUsersEndpoint extends AdminEndpoint {
   }
 
   /// Reports the email verification state of a user. Read-only check
-  /// (audited as `admin.verifyEmailCheck`): with the Serverpod email IdP an
-  /// account only exists once its verification code was confirmed, so there
-  /// is no unverified state to flip. Throws [NotFoundException] for users
-  /// without any email account.
+  /// (audited as `admin.verifyEmailCheck`) that resolves the identity
+  /// provider-agnostically: the email IdP, then Google, Apple, Microsoft and
+  /// Facebook. There is nothing to mutate (the email IdP has no persistent
+  /// unverified state). Throws [NotFoundException] only when the auth user does
+  /// not exist or no identity carries an email address; a social user whose
+  /// provider does not confirm ownership is reported with
+  /// `emailConfirmed: false`, not rejected.
   Future<AdminAuthStatus> usersVerifyEmail(
     Session session, {
     required UuidValue userId,

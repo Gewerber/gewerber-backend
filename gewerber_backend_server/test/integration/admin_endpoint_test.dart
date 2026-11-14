@@ -4,10 +4,19 @@ library;
 
 import 'package:gewerber_backend_server/src/core/di/injection.dart';
 import 'package:gewerber_backend_server/src/generated/protocol.dart';
+import 'package:gewerber_backend_server/src/modules/admin/domain/admin_cursor.dart';
 import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
     as core;
+import 'package:serverpod_auth_idp_server/providers/apple.dart'
+    show AppleAccount;
 import 'package:serverpod_auth_idp_server/providers/email.dart' as idp;
+import 'package:serverpod_auth_idp_server/providers/facebook.dart'
+    show FacebookAccount;
+import 'package:serverpod_auth_idp_server/providers/google.dart'
+    show GoogleAccount;
+import 'package:serverpod_auth_idp_server/providers/microsoft.dart'
+    show MicrosoftAccount;
 import 'package:test/test.dart';
 
 import 'test_tools/serverpod_test_tools.dart';
@@ -34,8 +43,22 @@ void main() {
     await configureDependencies();
   });
 
+  /// Inserts a user profile row without any auth identity, for tests that
+  /// seed social accounts explicitly.
+  Future<void> seedProfile(
+    Session session,
+    UuidValue userId,
+    String email,
+  ) async {
+    await UserProfile.db.insertRow(
+      session,
+      UserProfile(userId: userId, displayName: email.split('@').first),
+    );
+  }
+
   /// Inserts the auth/profile rows backing a user id used in session
-  /// overrides. Email accounts are required by the directory search.
+  /// overrides. The directory search lists users through their identity rows,
+  /// so callers that need the user to be searchable pass [email].
   /// Returns the parsed user id.
   Future<UuidValue> seedUser(
     Session session,
@@ -57,11 +80,68 @@ void main() {
           passwordHash: '',
         ),
       );
-      await UserProfile.db.insertRow(
-        session,
-        UserProfile(userId: id, displayName: email.split('@').first),
-      );
+      await seedProfile(session, id, email);
     }
+    return id;
+  }
+
+  /// Inserts a Google-only identity (no email IdP row) plus its profile.
+  Future<UuidValue> seedGoogleUser(
+    Session session,
+    String userId,
+    String email,
+  ) async {
+    final id = await seedUser(session, userId);
+    await GoogleAccount.db.insertRow(
+      session,
+      GoogleAccount(
+        authUserId: id,
+        email: email,
+        userIdentifier: 'google-sub-$userId',
+      ),
+    );
+    await seedProfile(session, id, email);
+    return id;
+  }
+
+  /// Inserts an Apple-only identity (no email IdP row) plus its profile.
+  Future<UuidValue> seedAppleUser(
+    Session session,
+    String userId,
+    String email,
+  ) async {
+    final id = await seedUser(session, userId);
+    await AppleAccount.db.insertRow(
+      session,
+      AppleAccount(
+        authUserId: id,
+        email: email,
+        userIdentifier: 'apple-sub-$userId',
+        refreshToken: 'apple-refresh-$userId',
+        refreshTokenRequestedWithBundleIdentifier: false,
+        isEmailVerified: true,
+      ),
+    );
+    await seedProfile(session, id, email);
+    return id;
+  }
+
+  /// Inserts a Microsoft-only identity (no email IdP row) plus its profile.
+  Future<UuidValue> seedMicrosoftUser(
+    Session session,
+    String userId,
+    String email,
+  ) async {
+    final id = await seedUser(session, userId);
+    await MicrosoftAccount.db.insertRow(
+      session,
+      MicrosoftAccount(
+        authUserId: id,
+        email: email,
+        userIdentifier: 'microsoft-sub-$userId',
+      ),
+    );
+    await seedProfile(session, id, email);
     return id;
   }
 
@@ -229,9 +309,10 @@ void main() {
       );
 
       test(
-        'when the user has no email account then NotFound is thrown',
+        'when the user has no identity at all then NotFound is thrown',
         () async {
-          // Auth user exists but never completed an email registration.
+          // Auth user exists but never completed an email registration and
+          // holds no social account either.
           final target = await seedUser(rawSession, targetUserId);
 
           await expectLater(
@@ -241,6 +322,66 @@ void main() {
             ),
             throwsA(isA<NotFoundException>()),
           );
+        },
+      );
+
+      test(
+        'when the user only signed in with Google then the check succeeds and '
+        'records the source provider',
+        () async {
+          final target = await seedUser(rawSession, targetUserId);
+          await GoogleAccount.db.insertRow(
+            rawSession,
+            GoogleAccount(
+              authUserId: target,
+              email: 'google-only@example.com',
+              userIdentifier: 'google-sub-admin-check',
+            ),
+          );
+          await seedProfile(rawSession, target, 'google-only@example.com');
+
+          final status = await endpoints.adminUsers.usersVerifyEmail(
+            adminSession,
+            userId: target,
+          );
+
+          expect(status.email, 'google-only@example.com');
+          expect(status.emailConfirmed, true);
+          expect(status.providers, [AuthProvider.google]);
+
+          final logged = await AuditEntry.db.find(
+            rawSession,
+            where: (t) => t.action.equals('admin.verifyEmailCheck'),
+          );
+          expect(logged, hasLength(1));
+          expect(logged.single.changes?['provider'], 'google');
+          expect(logged.single.changes?['emailConfirmed'], 'true');
+        },
+      );
+
+      test(
+        'when the user only signed in with Facebook then the unverified '
+        'address is reported instead of NotFound',
+        () async {
+          final target = await seedUser(rawSession, targetUserId);
+          await FacebookAccount.db.insertRow(
+            rawSession,
+            FacebookAccount(
+              authUserId: target,
+              email: 'facebook-only@example.com',
+              userIdentifier: 'facebook-sub-admin-check',
+            ),
+          );
+          await seedProfile(rawSession, target, 'facebook-only@example.com');
+
+          final status = await endpoints.adminUsers.usersVerifyEmail(
+            adminSession,
+            userId: target,
+          );
+
+          expect(status.email, 'facebook-only@example.com');
+          expect(status.emailConfirmed, false);
+          expect(status.providers, [AuthProvider.facebook]);
         },
       );
 
@@ -337,6 +478,300 @@ void main() {
           expect(page.items, hasLength(1));
           expect(page.items.single.email, 'findme@example.com');
           expect(page.nextCursor, isNull);
+        },
+      );
+    });
+
+    group('provider-agnostic directory', () {
+      test(
+        'when a Google-only user is searched then the summary carries the '
+        'Google address and provider',
+        () async {
+          final target = await seedUser(rawSession, targetUserId);
+          await GoogleAccount.db.insertRow(
+            rawSession,
+            GoogleAccount(
+              authUserId: target,
+              email: 'google-only@example.com',
+              userIdentifier: 'google-sub-search',
+            ),
+          );
+          await seedProfile(rawSession, target, 'google-only@example.com');
+
+          final page = await endpoints.adminUsers.usersSearch(
+            adminSession,
+            query: 'google-only',
+          );
+
+          expect(page.items, hasLength(1));
+          final summary = page.items.single;
+          expect(summary.userId, target);
+          expect(summary.email, 'google-only@example.com');
+          expect(summary.emailConfirmed, true);
+          expect(summary.connectedProviders, [AuthProvider.google]);
+        },
+      );
+
+      test(
+        'when a Facebook-only user is searched then the unverified address is '
+        'returned with its provider',
+        () async {
+          final target = await seedUser(rawSession, targetUserId);
+          await FacebookAccount.db.insertRow(
+            rawSession,
+            FacebookAccount(
+              authUserId: target,
+              email: 'facebook-only@example.com',
+              userIdentifier: 'facebook-sub-search',
+            ),
+          );
+          await seedProfile(rawSession, target, 'facebook-only@example.com');
+
+          final page = await endpoints.adminUsers.usersSearch(
+            adminSession,
+            query: 'facebook-only',
+          );
+
+          expect(page.items, hasLength(1));
+          final summary = page.items.single;
+          expect(summary.email, 'facebook-only@example.com');
+          expect(summary.emailConfirmed, false);
+          expect(summary.connectedProviders, [AuthProvider.facebook]);
+        },
+      );
+
+      test(
+        'when two users share an address then the cursor roundtrips without '
+        'skipping or looping',
+        () async {
+          final first = await seedUser(
+            rawSession,
+            targetUserId,
+            email: 'shared-address@example.com',
+          );
+          // The email IdP enforces a unique address, so the second user holds
+          // the same address through Google. Both rows must paginate as
+          // separate users ordered by `(email, userId)`.
+          final second = await seedUser(rawSession, plainUserId);
+          await GoogleAccount.db.insertRow(
+            rawSession,
+            GoogleAccount(
+              authUserId: second,
+              email: 'shared-address@example.com',
+              userIdentifier: 'google-sub-shared-address',
+            ),
+          );
+          await seedProfile(rawSession, second, 'shared-address@example.com');
+
+          final page1 = await endpoints.adminUsers.usersSearch(
+            adminSession,
+            query: 'shared-address',
+            limit: 1,
+          );
+          expect(page1.items, hasLength(1));
+          expect(page1.nextCursor, isNotNull);
+
+          final page2 = await endpoints.adminUsers.usersSearch(
+            adminSession,
+            query: 'shared-address',
+            limit: 1,
+            cursor: page1.nextCursor,
+          );
+          expect(page2.items, hasLength(1));
+          expect(page2.nextCursor, isNull);
+
+          expect(
+            {page1.items.single.userId, page2.items.single.userId},
+            {first, second},
+          );
+        },
+      );
+
+      test(
+        'when a shared address is held through two providers then the cursor '
+        'page still returns the second user at that address exactly once',
+        () async {
+          // `first` holds the shared address through the email IdP; `second`
+          // holds the same address through Google and additionally owns an
+          // Apple row that sorts before it. Four further Google rows sort
+          // between the two addresses: with a per-table `limit` clamp, the
+          // Google row for `second` would be trimmed on page 1 (emitting
+          // `second` at its Apple address first and again at the shared address
+          // on a later page), whereas reading all rows across the five identity
+          // tables lets the merge emit `second` once at the shared address.
+          final fillers = <(String, String)>[
+            ('f1111111-1111-4111-8111-111111111111', 'dup-aab@example.com'),
+            ('f2222222-2222-4222-8222-222222222222', 'dup-aac@example.com'),
+            ('f3333333-3333-4333-8333-333333333333', 'dup-aad@example.com'),
+            ('f4444444-4444-4444-8444-444444444444', 'dup-aae@example.com'),
+          ];
+
+          final first = await seedUser(
+            rawSession,
+            targetUserId,
+            email: 'dup-shared@example.com',
+          );
+          final second = await seedUser(rawSession, plainUserId);
+          await GoogleAccount.db.insertRow(
+            rawSession,
+            GoogleAccount(
+              authUserId: second,
+              email: 'dup-shared@example.com',
+              userIdentifier: 'google-sub-dup-shared',
+            ),
+          );
+          await AppleAccount.db.insertRow(
+            rawSession,
+            AppleAccount(
+              authUserId: second,
+              email: 'dup-aaa@example.com',
+              userIdentifier: 'apple-sub-dup-shared',
+              refreshToken: 'apple-refresh-dup-shared',
+              refreshTokenRequestedWithBundleIdentifier: false,
+            ),
+          );
+          await seedProfile(rawSession, second, 'dup-shared@example.com');
+
+          final fillerEmails = <UuidValue, String>{};
+          for (final (filler, email) in fillers) {
+            final id = await seedGoogleUser(rawSession, filler, email);
+            fillerEmails[id] = email;
+          }
+
+          final seen = <String>[];
+          String? cursor;
+          do {
+            final page = await endpoints.adminUsers.usersSearch(
+              adminSession,
+              query: 'dup-',
+              limit: 1,
+              cursor: cursor,
+            );
+            expect(page.items.length, lessThanOrEqualTo(1));
+            for (final item in page.items) {
+              seen.add('${item.userId}:${item.email}');
+            }
+            cursor = page.nextCursor;
+          } while (cursor != null);
+
+          // Every user is emitted exactly once across the full walk; the second
+          // user appears only at the shared Google address, not at its lower-
+          // precedence Apple address.
+          expect(seen, hasLength(6));
+          expect(seen.toSet(), hasLength(6));
+          expect(seen, contains('$first:dup-shared@example.com'));
+          expect(seen, contains('$second:dup-shared@example.com'));
+          expect(seen, isNot(contains('$second:dup-aaa@example.com')));
+          fillerEmails.forEach((id, email) {
+            expect(seen, contains('$id:$email'));
+          });
+        },
+      );
+
+      test(
+        'when several providers share one address prefix then walking every '
+        'cursor page returns each user exactly once',
+        () async {
+          // Multiple addresses across the email IdP, Google, Apple and Microsoft
+          // tables exceed a single page limit, exercising the keyset cursor
+          // across all five identity tables.
+          final expected = <UuidValue>{};
+
+          for (var i = 1; i <= 5; i++) {
+            final id = await seedUser(
+              rawSession,
+              'ca000000-0000-4000-8000-00000000000$i',
+              email: 'chain-0$i@example.com',
+            );
+            expected.add(id);
+          }
+          for (var i = 6; i <= 9; i++) {
+            expected.add(
+              await seedGoogleUser(
+                rawSession,
+                'cb000000-0000-4000-8000-00000000000$i',
+                'chain-0$i@example.com',
+              ),
+            );
+          }
+          for (var i = 10; i <= 13; i++) {
+            expected.add(
+              await seedAppleUser(
+                rawSession,
+                'cc000000-0000-4000-8000-0000000000$i',
+                'chain-$i@example.com',
+              ),
+            );
+          }
+          for (var i = 14; i <= 15; i++) {
+            expected.add(
+              await seedMicrosoftUser(
+                rawSession,
+                'cd000000-0000-4000-8000-0000000000$i',
+                'chain-$i@example.com',
+              ),
+            );
+          }
+
+          final seen = <UuidValue>[];
+          String? cursor;
+          do {
+            final page = await endpoints.adminUsers.usersSearch(
+              adminSession,
+              query: 'chain-',
+              limit: 2,
+              cursor: cursor,
+            );
+            expect(page.items.length, lessThanOrEqualTo(2));
+            seen.addAll(page.items.map((u) => u.userId));
+            cursor = page.nextCursor;
+          } while (cursor != null);
+
+          expect(seen, hasLength(expected.length));
+          expect(seen.toSet(), expected);
+        },
+      );
+
+      test(
+        'when the cursor has no user id then only strictly greater addresses '
+        'are returned',
+        () async {
+          final first = await seedUser(
+            rawSession,
+            targetUserId,
+            email: 'legacy-b@example.com',
+          );
+          // A second user holds the cursor address through Google, so the
+          // strict `>` boundary has to skip both rows at that address.
+          final second = await seedUser(rawSession, plainUserId);
+          await GoogleAccount.db.insertRow(
+            rawSession,
+            GoogleAccount(
+              authUserId: second,
+              email: 'legacy-b@example.com',
+              userIdentifier: 'google-sub-legacy-b',
+            ),
+          );
+          await seedProfile(rawSession, second, 'legacy-b@example.com');
+          final later = await seedUser(
+            rawSession,
+            extraUserId,
+            email: 'legacy-c@example.com',
+          );
+
+          final legacyCursor = encodeAdminCursor({'e': 'legacy-b@example.com'});
+          final page = await endpoints.adminUsers.usersSearch(
+            adminSession,
+            query: 'legacy-',
+            limit: 10,
+            cursor: legacyCursor,
+          );
+
+          // Both users at the cursor address are skipped and only the strictly
+          // greater address is returned - the pre-cursor behaviour.
+          expect(page.items.map((u) => u.userId).toList(), [later]);
+          expect(page.nextCursor, isNull);
+          expect(page.items.map((u) => u.userId), isNot(contains(first)));
         },
       );
     });

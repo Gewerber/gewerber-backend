@@ -90,13 +90,16 @@ class UnbanUserUseCase {
 
 /// Reports the email verification state of a user.
 ///
-/// With `serverpod_auth_idp` 4.x an `EmailAccount` row only exists after the
-/// registration verification code was confirmed — there is no persistent
-/// "unverified" flag to flip, so there is nothing to mutate. This use case is
-/// therefore a read-only compliance check (audited as such): it verifies that
-/// an email account exists and reports its status; it fails with
-/// [NotFoundException] for users without any email account. It stays part of
-/// the admin surface so the MCP workflow does not depend on IdP internals.
+/// The identity is resolved provider-agnostically: the email IdP first, then
+/// Google, Apple, Microsoft and Facebook. With `serverpod_auth_idp` 4.x an
+/// `EmailAccount` row only exists after the registration verification code was
+/// confirmed — there is no persistent "unverified" flag to flip — so this use
+/// case remains a read-only compliance check (audited as such).
+///
+/// It throws [NotFoundException] only when the auth user does not exist or no
+/// identity row carries an email address at all. A social user whose provider
+/// does not confirm ownership (for example Facebook) is reported with
+/// `emailConfirmed: false` and the address populated, not as "not found".
 @singleton
 class VerifyUserEmailUseCase {
   VerifyUserEmailUseCase(this._auth, this._audit);
@@ -110,18 +113,26 @@ class VerifyUserEmailUseCase {
     required UuidValue userId,
   }) async {
     final state = await _auth.authState(session, userId);
-    if (!state.emailConfirmed) {
-      throw NotFoundException(entityType: 'EmailAccount', entityId: '$userId');
+    if (state.email == null) {
+      throw NotFoundException(
+        entityType: 'AuthIdentity',
+        entityId: '$userId',
+      );
     }
 
     // Read-only check — the entry records that the state was inspected, it
-    // does not claim a change.
+    // does not claim a change. `provider` names the identity that supplied the
+    // address (`email` for the email IdP).
     await _audit.log(
       session,
       action: 'admin.verifyEmailCheck',
-      entityType: 'EmailAccount',
+      entityType: 'AuthUser',
       entityId: '$userId',
-      changes: {'email': state.email ?? ''},
+      changes: {
+        'email': state.email ?? '',
+        'emailConfirmed': '${state.emailConfirmed}',
+        'provider': state.emailProvider?.name ?? 'email',
+      },
       userId: actor.userId,
     );
 
@@ -130,6 +141,7 @@ class VerifyUserEmailUseCase {
       emailConfirmed: state.emailConfirmed,
       email: state.email,
       authUserCreatedAt: state.authUserCreatedAt,
+      providers: state.providers,
     );
   }
 }

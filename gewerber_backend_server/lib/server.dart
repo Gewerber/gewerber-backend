@@ -1,3 +1,4 @@
+import 'dart:io' show stdout;
 import 'dart:math';
 
 // The commercial module's public barrel. Prefixed because the barrel
@@ -13,8 +14,14 @@ import 'package:gewerber_backend_commercial_server/gewerber_backend_commercial_s
     as commercial;
 import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_idp_server/core.dart';
+import 'package:serverpod_auth_idp_server/providers/apple.dart';
 import 'package:serverpod_auth_idp_server/providers/email.dart';
+import 'package:serverpod_auth_idp_server/providers/facebook.dart';
+import 'package:serverpod_auth_idp_server/providers/google.dart';
+import 'package:serverpod_auth_idp_server/providers/microsoft.dart';
 
+import 'src/auth/social_auth_routes.dart';
+import 'src/auth/social_provider_config.dart';
 import 'src/core/di/injection.dart';
 import 'src/core/di/service_locator.dart';
 import 'src/core/mail/email_template.dart';
@@ -35,6 +42,20 @@ void run(List<String> args) async {
   final pod = Serverpod(args, Protocol(), Endpoints());
 
   await configureDependencies();
+
+  // Social identity providers are optional: each one is only registered when
+  // all of its `config/passwords.yaml` keys are present. The providers'
+  // `*FromPasswords` constructors throw on a missing key, so the check runs
+  // first and keeps the server bootable with any subset configured.
+  final enabledSocialProviders = configuredProviders(pod.getPassword);
+  for (final provider in AuthProvider.values) {
+    if (enabledSocialProviders.contains(provider)) {
+      stdout.writeln('[auth] ${provider.name}: enabled');
+    } else {
+      final missing = missingKeys(provider, pod.getPassword).join(', ');
+      stdout.writeln('[auth] ${provider.name}: disabled (missing $missing)');
+    }
+  }
 
   // Initialize authentication services for the server.
   // Token managers will be used to validate and issue authentication keys,
@@ -83,8 +104,25 @@ void run(List<String> args) async {
               );
             },
       ),
+      // Social identity providers, each registered only when its credentials
+      // are present. See `src/auth/social_provider_config.dart`.
+      if (enabledSocialProviders.contains(AuthProvider.google))
+        GoogleIdpConfigFromPasswords(),
+      if (enabledSocialProviders.contains(AuthProvider.apple))
+        AppleIdpConfigFromPasswords(),
+      if (enabledSocialProviders.contains(AuthProvider.facebook))
+        FacebookIdpConfigFromPasswords(),
+      if (enabledSocialProviders.contains(AuthProvider.microsoft))
+        MicrosoftIdpConfigFromPasswords(),
     ],
   );
+
+  // OAuth callback routes for the social providers enabled above. Apple gets
+  // its own callback and revocation-notification hooks; Google/Microsoft share
+  // the provider-agnostic `flutter_web_auth_2` callback. Must run after
+  // `initializeAuthServices` (Apple's route factory resolves the configured
+  // `AppleIdp`) and before `pod.start()`, which binds the Relic routes.
+  registerSocialAuthRoutes(pod, enabledSocialProviders);
 
   // Commercial billing wiring (PayPal webhook route + hourly reconciliation
   // sweep), provided by the closed-source module's public entrypoint. A
