@@ -14,9 +14,12 @@ import '../domain/admin_directory_gateway.dart';
 ///
 /// A user may sign in through the email IdP or any social provider (and may
 /// hold several account rows at once), so no single provider table is the
-/// canonical directory. [AuthIdentityGateway.findEmails] unions all five and
-/// this gateway merges its rows into one summary per auth user, attaching
-/// profiles, roles and blocked flags per page in batched queries.
+/// canonical directory. [AuthIdentityGateway.findEmails] unions all five
+/// identity tables without a per-table row clamp (5 queries per page, admin
+/// scale) and this gateway merges all matching rows into one summary per auth
+/// user at its highest-precedence address (`identityPrecedence`), guaranteeing
+/// exactly-once per `authUserId` across the keyset-paginated walk, while
+/// attaching profiles, roles and blocked flags per page in batched queries.
 @Singleton(as: AdminDirectoryGateway)
 class ServerpodAdminDirectoryGateway implements AdminDirectoryGateway {
   const ServerpodAdminDirectoryGateway(
@@ -131,9 +134,9 @@ class ServerpodAdminDirectoryGateway implements AdminDirectoryGateway {
 
   /// Collapses the per-provider rows of one auth user into a single entry.
   ///
-  /// The displayed address follows the same precedence as
-  /// `AuthIdentityGateway.resolve` (email IdP, Google, Apple, Microsoft,
-  /// Facebook); providers keep the enum declaration order.
+  /// The displayed address follows [identityPrecedence] / [identityProviderRank]
+  /// (email IdP first, then Google, Apple, Microsoft, Facebook); providers keep
+  /// the enum declaration order.
   static List<_DirectoryEntry> _mergeIdentities(
     List<IdentityEmailRow> rows,
   ) {
@@ -148,7 +151,8 @@ class ServerpodAdminDirectoryGateway implements AdminDirectoryGateway {
           emailProvider: row.provider,
         ),
       );
-      if (_providerRank(row.provider) < _providerRank(entry.emailProvider)) {
+      if (identityProviderRank(row.provider) <
+          identityProviderRank(entry.emailProvider)) {
         entry
           ..email = row.email
           ..emailVerified = row.emailVerified
@@ -180,17 +184,6 @@ class ServerpodAdminDirectoryGateway implements AdminDirectoryGateway {
     if (byEmail != 0) return byEmail > 0;
     if (afterUserId == null) return false;
     return entry.userId.toString().compareTo(afterUserId) > 0;
-  }
-
-  /// Lower rank wins the displayed address. `null` is the email IdP.
-  static int _providerRank(AuthProvider? provider) {
-    return switch (provider) {
-      null => 0,
-      AuthProvider.google => 1,
-      AuthProvider.apple => 2,
-      AuthProvider.microsoft => 3,
-      AuthProvider.facebook => 4,
-    };
   }
 
   Future<Map<UuidValue, core.AuthUser>> _authUsersById(

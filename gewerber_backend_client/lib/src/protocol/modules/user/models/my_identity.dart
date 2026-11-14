@@ -62,8 +62,17 @@ abstract class MyIdentity
 
   List<_if7d4sy6.MyMembershipInfo> memberships;
 
+  /// Address the caller should display, taken from a connected identity
+  /// provider (email account first, then Google, Apple, Microsoft, Facebook).
+  /// Null when no provider supplied one. It is not necessarily unique to one
+  /// human: account linking is not implemented yet, so the same person may own
+  /// several `AuthUser`s with different addresses.
   String? primaryEmail;
 
+  /// Social providers that hold an account row for this auth user, in the enum
+  /// declaration order (google, apple, facebook, microsoft). Empty for email
+  /// accounts. Account linking is not implemented yet, so providers that the
+  /// same human connected under a different `AuthUser` are not listed.
   List<_imjnn7ac.AuthProvider> connectedProviders;
 
   /// Returns a shallow copy of this [MyIdentity]

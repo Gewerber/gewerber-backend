@@ -93,7 +93,10 @@ bool _isUsableGoogleClientSecret(String raw) {
   final clientSecret = web['client_secret'];
   if (clientSecret is! String || clientSecret.trim().isEmpty) return false;
 
-  // Not a credential, but `GoogleClientSecret.fromJson` requires it, so a
-  // document without a `redirect_uris` list cannot be used to build the IdP.
-  return web['redirect_uris'] is List;
+  // Not a credential, but `GoogleClientSecret.fromJson` requires a
+  // `redirect_uris` list and casts its elements lazily (`.cast<String>()`), so
+  // every element must be a `String` here or the provider would throw at login
+  // instead of being reported as disabled at boot.
+  final redirectUris = web['redirect_uris'];
+  return redirectUris is List && redirectUris.every((uri) => uri is String);
 }

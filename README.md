@@ -74,10 +74,7 @@ GHCR, then copies [`deploy/`](deploy/) to the VPS and runs `deploy/deploy.sh`,
 which starts the per-environment stack via Docker Compose behind the existing
 Traefik reverse proxy:
 
-- **server** — the Serverpod API (port 8080) plus, only when social sign-in is
-  configured, the web server that serves the OAuth callbacks (port 8082, routed
-  by Traefik under `/auth/`, never published to the host); the Insights server
-  stays internal
+- **server** — the Serverpod API (port 8080) plus the web server when any web route is registered (a configured social identity provider or commercial billing with `GEWERBER_COMMERCIAL_ENTITLEMENTS=true`; port 8082, routed by Traefik under `/auth/`, never published to the host); the Insights server stays internal
 - **postgres** — PostgreSQL (migrations are applied automatically on startup)
 - **redis** — cache + cross-server messaging
 
@@ -140,6 +137,18 @@ They are served by the Serverpod **web server**, not the API server, so the
 deployment needs the `webServer` section in `config/<mode>.yaml` and the extra
 port routed to it (see [`deploy/README.md`](deploy/README.md), section
 “Ports”): the public origin is the same host as the API.
+
+**Same-origin requirement for `FlutterWebAuth2CallbackRoute` (`/auth/callback`).**
+Google and Microsoft redirect through `FlutterWebAuth2CallbackRoute`, which hands
+the OAuth result back to the Flutter web app via `window.postMessage(...,
+targetOrigin)`. Browsers only deliver that `postMessage` when the callback page
+and the Flutter web app are served from the **same origin** (matching scheme +
+host + port). In local development with `flutter run -d chrome`, the Flutter dev
+server picks a random port that differs from the backend web server port
+(`8082`), so the browser silently drops the `postMessage` from `/auth/callback`.
+To exercise Google/Microsoft browser redirects locally, either serve
+`flutter_web_auth_2`'s `auth.html` from the Flutter web app itself or proxy
+`/auth/` from the Flutter app's dev server to the backend web server.
 
 **Disabled vs. broken.** A provider whose required keys are missing or blank is
 simply **disabled** — the server still starts and logs one line per provider at

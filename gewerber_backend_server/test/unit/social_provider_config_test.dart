@@ -121,6 +121,24 @@ void main() {
       expect(_configured(passwords), isNot(contains(AuthProvider.google)));
     });
 
+    test('excludes google when redirect_uris contains non-string values', () {
+      for (final json in [
+        '{"web": {"client_id": "id", "client_secret": "secret", "redirect_uris": [1, 2]}}',
+        '{"web": {"client_id": "id", "client_secret": "secret", "redirect_uris": ["ok", 3]}}',
+        '{"web": {"client_id": "id", "client_secret": "secret", "redirect_uris": [null]}}',
+      ]) {
+        final passwords = Map<String, String>.from(_allKeys)
+          ..['googleClientSecret'] = json;
+
+        expect(() => _configured(passwords), returnsNormally);
+        expect(_configured(passwords), isNot(contains(AuthProvider.google)));
+        expect(
+          _missing(AuthProvider.google, passwords),
+          equals(['googleClientSecret']),
+        );
+      }
+    });
+
     test('excludes google when the secret is not a JSON object', () {
       final passwords = Map<String, String>.from(_allKeys)
         ..['googleClientSecret'] = '"just a string"';

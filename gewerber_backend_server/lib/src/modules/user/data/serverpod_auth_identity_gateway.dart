@@ -45,7 +45,8 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
       where: (t) => t.authUserId.equals(userId),
     );
 
-    // Displayed address precedence: email, Google, Apple, Microsoft, Facebook.
+    // Displayed address precedence: email, then `identityPrecedence` (Google,
+    // Apple, Microsoft, Facebook).
     //
     // Verification semantics per source:
     // - email: an `EmailAccount` row only exists after the registration
@@ -106,12 +107,12 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
 
     final rows = <IdentityEmailRow>[];
 
-    // One query per identity table, each clamped to `limit` **and** filtered by
-    // the same `(email, authUserId)` keyset boundary (`_directoryFilter`). The
-    // boundary is what makes the clamp safe: the top `limit` rows of the union
-    // are contained in the union of the per-table top `limit`, so no row that
-    // belongs on this page can be trimmed away. Merging, dedupe and ordering
-    // happen in Dart below — see the contract on the interface.
+    // One query per identity table (5 queries per page, admin scale), each
+    // filtered by the same `(email, authUserId)` keyset boundary
+    // (`_directoryFilter`) without a per-table `limit` clamp so every identity
+    // row of the candidate users on this page reaches the Dart merge. Merging,
+    // dedupe and ordering happen in Dart below — see the contract on the
+    // interface.
     final emailAccounts = await EmailAccount.db.find(
       session,
       where: (t) => _directoryFilter(
@@ -122,7 +123,6 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
         afterUserId: afterUuid,
       ),
       orderByList: (t) => [t.email, t.authUserId],
-      limit: limit,
     );
     for (final account in emailAccounts) {
       _addRow(
@@ -144,7 +144,6 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
         afterUserId: afterUuid,
       ),
       orderByList: (t) => [t.email, t.authUserId],
-      limit: limit,
     );
     for (final account in googleAccounts) {
       _addRow(
@@ -166,7 +165,6 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
         afterUserId: afterUuid,
       ),
       orderByList: (t) => [t.email, t.authUserId],
-      limit: limit,
     );
     for (final account in appleAccounts) {
       _addRow(
@@ -188,7 +186,6 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
         afterUserId: afterUuid,
       ),
       orderByList: (t) => [t.email, t.authUserId],
-      limit: limit,
     );
     for (final account in microsoftAccounts) {
       _addRow(
@@ -210,7 +207,6 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
         afterUserId: afterUuid,
       ),
       orderByList: (t) => [t.email, t.authUserId],
-      limit: limit,
     );
     for (final account in facebookAccounts) {
       _addRow(
@@ -276,10 +272,10 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
 
   /// Keyset predicate shared by all five identity tables.
   ///
-  /// Every per-table query in [findEmails] applies this same boundary, so the
-  /// per-table `limit` clamp trims a *suffix* of each provider's ordering
-  /// rather than re-reading its leading rows on every page. The predicate is
-  /// the exact `(email, authUserId)` keyset of the Dart merge:
+  /// Every per-table query in [findEmails] applies this same boundary without a
+  /// per-table `limit` clamp, so each page sees all rows after the cursor across
+  /// all five identity tables. The predicate is the exact `(email, authUserId)`
+  /// keyset of the Dart merge:
   ///
   /// - no cursor: no boundary at all,
   /// - cursor without [afterUserId] (legacy): `email > afterEmail`,
@@ -287,10 +283,10 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
   ///   (`email = afterEmail` AND `authUserId > afterUserId`).
   ///
   /// `Expression`'s `&` / `|` combinators express that disjunction inline, so
-  /// no extra per-table equality query is needed. Each comparison uses the
-  /// column's own collation, which is also what the per-table `ORDER BY`
-  /// uses, so boundary and ordering can never disagree within a table. The
-  /// Dart merge re-sorts case-insensitively for display.
+  /// no extra per-table equality query is needed. Each SQL comparison and
+  /// `ORDER BY` uses the column's own collation; this assumes lower-case
+  /// address storage plus a case-insensitive database collation because the
+  /// Dart merge (`_compareRows`) compares lower-cased addresses.
   static Expression _directoryFilter({
     required ColumnString email,
     required ColumnUuid authUserId,
@@ -303,6 +299,8 @@ class ServerpodAuthIdentityGateway implements AuthIdentityGateway {
       expression &= email.ilike('%$query%');
     }
     if (afterEmail != null) {
+      // Assumes lower-case storage + a case-insensitive collation: SQL compares
+      // via the column collation, whereas the Dart merge compares `.toLowerCase()`.
       final strictlyAfter = email > afterEmail;
       expression &= afterUserId == null
           ? strictlyAfter

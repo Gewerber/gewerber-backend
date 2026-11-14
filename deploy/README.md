@@ -23,18 +23,22 @@ environment by `deploy.sh` into `~/gewerber/backend/<env>/.secrets`.
 | 8081 | Serverpod Insights | Internal Docker network only (protected by the service secret); never routed. |
 | 8082 | Serverpod web server (social sign-in OAuth callbacks under `/auth/`) | Internal only, **never published to the host**: Traefik routes `Host(<env host>) && PathPrefix('/auth/')` to it (`<prefix>-oauth` router/service); everything else stays on 8080. |
 
-Port 8082 is the OAuth callback listener. It is only started when at least one
-social identity provider is configured in `config/passwords.yaml` — registering
-the routes is what creates the listener, so a deployment with no provider
-configured binds nothing and `/auth/` requests simply get no backend from
-Traefik (the API port 8080 is unaffected).
+Port 8082 is the Serverpod web server listener. Registering web routes is what
+creates the listener (`WebServer.hasApp`): the port binds whenever **any** web
+route is registered — either a redirect-based social identity provider is
+configured in `config/passwords.yaml` (Google, Apple or Microsoft) or the
+commercial module registers `/commercial/paypal/webhook` when
+`GEWERBER_COMMERCIAL_ENTITLEMENTS=true` (via `wireCommercialBilling`). In a
+deployment with neither configured, no web route is mounted, nothing is bound
+on 8082, and `/auth/` requests simply get no backend from Traefik (the API port
+8080 is unaffected).
 
-The port is not optional when a provider is enabled: if 8082 is already taken
-inside the container's network namespace, the web server cannot bind, Serverpod
-aborts startup with `Failed to start the Serverpod servers`, and the container
-crash-loops (`restart: unless-stopped`). Check with
-`docker compose exec server ss -ltnp` before adding another listener to the
-stack.
+Whenever at least one web route is registered (social sign-in or commercial
+billing): if 8082 is already taken inside the container's network namespace, the
+web server cannot bind, Serverpod aborts startup with `Failed to start the
+Serverpod servers`, and the container crash-loops (`restart: unless-stopped`).
+Check with `docker compose exec server ss -ltnp` before adding another listener
+to the stack.
 
 ## Secrets
 

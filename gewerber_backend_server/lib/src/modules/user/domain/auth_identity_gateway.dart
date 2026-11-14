@@ -2,6 +2,29 @@ import 'package:serverpod/serverpod.dart';
 
 import '../../../generated/protocol.dart';
 
+/// Displayed-address precedence of the social identity providers, highest
+/// precedence first.
+///
+/// The email IdP is not a social provider (`AuthProvider` has no `email`
+/// value) and always ranks before every social provider; it is represented by
+/// `null` in [AuthIdentity.primaryEmailProvider] and [IdentityEmailRow.provider]
+/// and resolved by [identityProviderRank].
+const List<AuthProvider> identityPrecedence = [
+  AuthProvider.google,
+  AuthProvider.apple,
+  AuthProvider.microsoft,
+  AuthProvider.facebook,
+];
+
+/// Returns the precedence rank of [provider] for choosing a user's displayed
+/// email address: `0` for the email IdP (`null`), and the 1-based index in
+/// [identityPrecedence] (`1..4`) for a social provider. Lower rank wins.
+int identityProviderRank(AuthProvider? provider) {
+  if (provider == null) return 0;
+  final index = identityPrecedence.indexOf(provider);
+  return index == -1 ? identityPrecedence.length + 1 : index + 1;
+}
+
 /// The sign-in identities backing one auth user.
 ///
 /// Account linking is not implemented yet: a human who signed up with an email
@@ -73,17 +96,15 @@ abstract interface class AuthIdentityGateway {
   /// [afterUserId]. A missing [afterUserId] keeps the legacy email-only
   /// boundary (strictly greater address).
   ///
-  /// The keyset contract is applied **per identity table**: every provider
-  /// query uses the same boundary as the Dart merge, so a row that sorts after
-  /// the cursor inside its own provider table can never be trimmed away by the
-  /// per-table `limit` clamp.
-  ///
-  /// At most [limit] rows are read per identity table and the merge, dedupe and
-  /// ordering happen in Dart. This is admin-scale by design: no index is added
-  /// for the cross-provider listing and the per-table clamp assumes a user has
-  /// at most one row per provider (account linking is not implemented). Rows
-  /// with a blank or absent address are skipped — they cannot be searched for
-  /// or shown in a directory that sorts by address.
+  /// Every provider query applies the same `(email, authUserId)` keyset
+  /// boundary and is **not** clamped per identity table (5 queries per page,
+  /// admin scale): reading all rows after the cursor across all five tables lets
+  /// the Dart merge see every identity row of the candidate users on a page and
+  /// collapse each `authUserId` into a single entry at its highest-precedence
+  /// address ([identityPrecedence]), guaranteeing exactly-once per `authUserId`
+  /// across the paginated walk. Rows with a blank or absent address are skipped
+  /// — they cannot be searched for or shown in a directory that sorts by
+  /// address.
   Future<List<IdentityEmailRow>> findEmails(
     Session session, {
     String? query,

@@ -589,15 +589,16 @@ void main() {
 
       test(
         'when a shared address is held through two providers then the cursor '
-        'page still returns the second user at that address',
+        'page still returns the second user at that address exactly once',
         () async {
           // `first` holds the shared address through the email IdP; `second`
           // holds the same address through Google and additionally owns an
           // Apple row that sorts before it. Four further Google rows sort
-          // between the two addresses, so without the cursor in the Google
-          // query that row is trimmed off every page: `second` never reaches
-          // the merge at the shared address and is silently missing from the
-          // listing at that address.
+          // between the two addresses: with a per-table `limit` clamp, the
+          // Google row for `second` would be trimmed on page 1 (emitting
+          // `second` at its Apple address first and again at the shared address
+          // on a later page), whereas reading all rows across the five identity
+          // tables lets the merge emit `second` once at the shared address.
           final fillers = <(String, String)>[
             ('f1111111-1111-4111-8111-111111111111', 'dup-aab@example.com'),
             ('f2222222-2222-4222-8222-222222222222', 'dup-aac@example.com'),
@@ -637,7 +638,7 @@ void main() {
             fillerEmails[id] = email;
           }
 
-          final seen = <String>{};
+          final seen = <String>[];
           String? cursor;
           do {
             final page = await endpoints.adminUsers.usersSearch(
@@ -653,10 +654,14 @@ void main() {
             cursor = page.nextCursor;
           } while (cursor != null);
 
-          // The second user is listed at the shared address, not only at its
-          // earlier Apple address, and the first user is listed at all.
+          // Every user is emitted exactly once across the full walk; the second
+          // user appears only at the shared Google address, not at its lower-
+          // precedence Apple address.
+          expect(seen, hasLength(6));
+          expect(seen.toSet(), hasLength(6));
           expect(seen, contains('$first:dup-shared@example.com'));
           expect(seen, contains('$second:dup-shared@example.com'));
+          expect(seen, isNot(contains('$second:dup-aaa@example.com')));
           fillerEmails.forEach((id, email) {
             expect(seen, contains('$id:$email'));
           });
@@ -667,9 +672,9 @@ void main() {
         'when several providers share one address prefix then walking every '
         'cursor page returns each user exactly once',
         () async {
-          // Five addresses in the email IdP alone exceed the per-table clamp
-          // (`limit + 1`), so a query without the cursor would keep cutting
-          // the same leading rows off later pages.
+          // Multiple addresses across the email IdP, Google, Apple and Microsoft
+          // tables exceed a single page limit, exercising the keyset cursor
+          // across all five identity tables.
           final expected = <UuidValue>{};
 
           for (var i = 1; i <= 5; i++) {
