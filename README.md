@@ -122,8 +122,8 @@ the run mode (`<mode>:` → provider keys); no code change is required.
 
 | Provider | Keys |
 |---|---|
-| Google | `googleClientSecret` — the **entire** downloaded `google_client_secret.json` (one YAML string). The document must carry a `web` object with `client_id`, `client_secret` and a non-empty `redirect_uris` list; a missing `web` object or `redirect_uris` fails startup, so keep the file as downloaded. |
-| Apple | `appleServiceIdentifier`, `appleBundleIdentifier`, `appleRedirectUri`, `appleTeamId`, `appleKeyId`, `appleKey` (the `.p8` private key). Optional: `appleAndroidPackageIdentifier`, `appleWebRedirectUri`. |
+| Google | `googleClientSecret` — the **entire** downloaded `google_client_secret.json` (one YAML string). The document must carry a `web` object with non-empty `client_id`, `client_secret` and a `redirect_uris` list; if any of these are missing or the JSON is malformed, Google is reported as **disabled** and the server still starts. |
+| Apple | `appleServiceIdentifier`, `appleBundleIdentifier`, `appleRedirectUri`, `appleTeamId`, `appleKeyId`, `appleKey` (the multi-line `.p8` private key; when deploying via `deploy/deploy.sh`, pass `APPLE_KEY="$(cat AuthKey_XXX.p8)"` so newlines are preserved as a YAML block scalar). Optional: `appleAndroidPackageIdentifier`, `appleWebRedirectUri`. |
 | Facebook | `facebookAppId`, `facebookAppSecret`. Facebook logs in with an access token obtained by the app, so it has no server-side callback path. |
 | Microsoft | `microsoftClientId`, `microsoftClientSecret`. Optional: `microsoftTenant` (default `common`). |
 
@@ -141,15 +141,17 @@ deployment needs the `webServer` section in `config/<mode>.yaml` and the extra
 port routed to it (see [`deploy/README.md`](deploy/README.md), section
 “Ports”): the public origin is the same host as the API.
 
-**Disabled vs. broken.** A provider whose required keys are missing is simply
-**disabled** — the server still starts and logs one line per provider at boot,
-e.g. `[auth] google: disabled (missing googleClientSecret)`. Keys that are
-present but malformed (for example a `googleClientSecret` that is not the
-Google JSON document) fail fast at startup on purpose: a silently ignored
-misconfiguration would surface as an unusable login button instead of a
-deployment error. Never commit credentials — `config/passwords.yaml` is
-gitignored; the deployment writes it from environment variables (see
-`deploy/deploy.sh`).
+**Disabled vs. broken.** A provider whose required keys are missing or blank is
+simply **disabled** — the server still starts and logs one line per provider at
+boot, e.g. `[auth] google: disabled (missing googleClientSecret)`. Present but
+malformed Google credentials (for example a `googleClientSecret` that is not a
+valid JSON object carrying `web.client_id`, `web.client_secret` and
+`web.redirect_uris`) are also reported as **not configured** without throwing,
+so the Google provider is disabled and the server boots normally; for Apple,
+Facebook and Microsoft, any non-blank required string values enable the
+provider without throwing at config load. Never commit credentials —
+`config/passwords.yaml` is gitignored; the deployment writes it from environment
+variables (see `deploy/deploy.sh`).
 
 ---
 
