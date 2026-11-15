@@ -124,6 +124,17 @@ export 'future_calls.dart' show ServerpodFutureCallsGetter;
 class Endpoints extends _is.EndpointDispatch {
   @override
   void initializeEndpoints(_is.Server server) {
+    initializeOwnEndpoints(server);
+    modules['gewerber_backend_commercial'] = _if53ofrw.Endpoints()
+      ..initializeOwnEndpoints(server);
+    modules['serverpod_auth_core'] = _iacs.Endpoints()
+      ..initializeOwnEndpoints(server);
+    modules['serverpod_auth_idp'] = _iais.Endpoints()
+      ..initializeOwnEndpoints(server);
+  }
+
+  @override
+  void initializeOwnEndpoints(_is.Server server) {
     var endpoints = <String, _is.Endpoint>{
       'appleIdp': _ilq63su8.AppleIdpEndpoint()
         ..initialize(
@@ -3425,12 +3436,6 @@ class Endpoints extends _is.EndpointDispatch {
         ),
       },
     );
-    modules['gewerber_backend_commercial'] = _if53ofrw.Endpoints()
-      ..initializeEndpoints(server);
-    modules['serverpod_auth_core'] = _iacs.Endpoints()
-      ..initializeEndpoints(server);
-    modules['serverpod_auth_idp'] = _iais.Endpoints()
-      ..initializeEndpoints(server);
   }
 
   @override
