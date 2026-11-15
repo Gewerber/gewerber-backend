@@ -149,11 +149,11 @@ jobs:
       - name: Set up Dart
         uses: dart-lang/setup-dart@v1
         with:
-          # The declared SDK floor (pubspec.yaml: ^3.13.3 in all three
+          # The declared SDK floor (pubspec.yaml: ^3.14.0 in all three
           # packages), pinned deliberately: analyzing on the oldest supported
           # SDK is a smoke test, not a duplicate of whatever the Docker image
           # happens to use.
-          sdk: '3.13.7'
+          sdk: '3.14.0'
 
       # Select the public stub ref explicitly for the CI target branch. The
       # retarget script fails closed when that ref is incompatible with this
@@ -249,7 +249,7 @@ jobs:
       - name: Set up Dart
         uses: dart-lang/setup-dart@v1
         with:
-          sdk: '3.13.7'
+          sdk: '3.14.0'
 
       # Select the public stub ref explicitly for the CI target branch. The
       # retarget script fails closed when that ref is incompatible with this
@@ -377,7 +377,7 @@ jobs:
       - name: Set up Dart
         uses: dart-lang/setup-dart@v1
         with:
-          sdk: '3.13.7'
+          sdk: '3.14.0'
 
       # Select the public stub ref explicitly for the CI target branch. The
       # retarget script fails closed when that ref is incompatible with this

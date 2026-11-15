@@ -2,7 +2,7 @@
 # docker build -f gewerber_backend_server/Dockerfile .
 
 # Build stage
-FROM dart:3.13.4 AS build
+FROM dart:3.14.0 AS build
 ENV PATH="/root/.pub-cache/bin:$PATH"
 
 # git is needed to fetch the commercial module packages during `dart pub get`.
@@ -25,7 +25,7 @@ COPY gewerber_backend_client gewerber_backend_client
 RUN printf '%s\n' \
   'name: _' \
   'environment:' \
-  '  sdk: ^3.13.3' \
+  '  sdk: ^3.14.0' \
   'workspace:' \
   '  - gewerber_backend_server' \
   > pubspec.yaml
