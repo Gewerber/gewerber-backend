@@ -298,6 +298,12 @@ jobs:
 
       # config/passwords.yaml is gitignored; recreate it for the test run mode
       # so it matches the credentials of the postgres_test service container.
+      #
+      # Social sign-in credentials are intentionally absent: no
+      # `googleClientSecret`, `apple*`, `facebook*` or `microsoft*` key is
+      # written here, so every social provider stays disabled in CI and the
+      # server logs `[auth] <provider>: disabled (missing ...)` at boot. Never
+      # put real or placeholder provider values into this generated file.
       - name: Write test passwords
         env:
           TEST_DATABASE_PASSWORD: ${{ env.TEST_DATABASE_PASSWORD }}

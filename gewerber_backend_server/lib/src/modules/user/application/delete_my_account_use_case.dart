@@ -6,6 +6,7 @@ import '../../../core/tenant/session_auth.dart';
 import '../../../generated/protocol.dart';
 import '../domain/account_anonymization_gateway.dart';
 import '../domain/account_deletion.dart';
+import '../domain/auth_identity_gateway.dart';
 import '../domain/user_profile_gateway.dart';
 
 /// Soft-deletes the account of the currently authenticated user.
@@ -17,6 +18,11 @@ import '../domain/user_profile_gateway.dart';
 /// - All personal links in retained business data are severed in the same
 ///   transaction (`membership.userId`, `document.uploadedById`,
 ///   `audit_entry.userId`, `user_guidance_progress.userId` are nulled).
+/// - Every authentication identity and refresh token is purged in the same
+///   transaction, so no login path survives: the email IdP row and the four
+///   social provider rows are deleted together with the refresh tokens. The
+///   `AuthUser` row itself is kept — the tombstone and the audit trail depend
+///   on it, and `deletedAt` stays enforceable.
 /// - Business records (businesses, invoices, customers, documents, audit
 ///   trail) are NOT deleted — German tax law (GoBD) requires their retention.
 ///
@@ -24,10 +30,16 @@ import '../domain/user_profile_gateway.dart';
 /// longer exists.
 @singleton
 class DeleteMyAccountUseCase {
-  DeleteMyAccountUseCase(this._profiles, this._anonymization, this._audit);
+  DeleteMyAccountUseCase(
+    this._profiles,
+    this._anonymization,
+    this._identities,
+    this._audit,
+  );
 
   final UserProfileGateway _profiles;
   final AccountAnonymizationGateway _anonymization;
+  final AuthIdentityGateway _identities;
   final AuditService _audit;
 
   Future<void> call(Session session) async {
@@ -73,6 +85,10 @@ class DeleteMyAccountUseCase {
         userId,
         transaction: transaction,
       );
+
+      // Purge every login path (identities + refresh tokens) in the same
+      // transaction: a failure here rolls the deletion back as a whole.
+      await _identities.deleteAll(session, userId, transaction: transaction);
     });
 
     // Written after commit and without tenant context: the entry itself must

@@ -21,6 +21,10 @@ insightsServer:
   publicPort: 0
   publicScheme: http
 
+# No `webServer` section on purpose: integration tests never register the
+# social sign-in routes, so the web server is not configured and no socket is
+# bound by the test server.
+
 
 # This is the database setup for your test server.
 database:

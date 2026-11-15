@@ -15,6 +15,7 @@ import 'package:gewerber_backend_server/src/generated/protocol.dart'
 import 'package:serverpod/serverpod.dart' as _is;
 
 import '../../../core/admin/admin_role.dart' as _isyiaiss;
+import '../../../modules/user/models/auth_provider.dart' as _imjnn7ac;
 import '../../../modules/user/models/my_membership_info.dart' as _if7d4sy6;
 
 abstract class MyIdentity
@@ -23,12 +24,16 @@ abstract class MyIdentity
     required this.userId,
     this.globalRole,
     required this.memberships,
+    this.primaryEmail,
+    required this.connectedProviders,
   });
 
   factory MyIdentity({
     required _is.UuidValue userId,
     _isyiaiss.AdminRole? globalRole,
     required List<_if7d4sy6.MyMembershipInfo> memberships,
+    String? primaryEmail,
+    required List<_imjnn7ac.AuthProvider> connectedProviders,
   }) = _MyIdentityImpl;
 
   factory MyIdentity.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -43,6 +48,11 @@ abstract class MyIdentity
           .deserialize<List<_if7d4sy6.MyMembershipInfo>>(
             jsonSerialization['memberships'],
           ),
+      primaryEmail: jsonSerialization['primaryEmail'] as String?,
+      connectedProviders: _itzp2rm6.Protocol()
+          .deserialize<List<_imjnn7ac.AuthProvider>>(
+            jsonSerialization['connectedProviders'],
+          ),
     );
   }
 
@@ -52,6 +62,19 @@ abstract class MyIdentity
 
   List<_if7d4sy6.MyMembershipInfo> memberships;
 
+  /// Address the caller should display, taken from a connected identity
+  /// provider (email account first, then Google, Apple, Microsoft, Facebook).
+  /// Null when no provider supplied one. It is not necessarily unique to one
+  /// human: account linking is not implemented yet, so the same person may own
+  /// several `AuthUser`s with different addresses.
+  String? primaryEmail;
+
+  /// Social providers that hold an account row for this auth user, in the enum
+  /// declaration order (google, apple, facebook, microsoft). Empty for email
+  /// accounts. Account linking is not implemented yet, so providers that the
+  /// same human connected under a different `AuthUser` are not listed.
+  List<_imjnn7ac.AuthProvider> connectedProviders;
+
   /// Returns a shallow copy of this [MyIdentity]
   /// with some or all fields replaced by the given arguments.
   @_is.useResult
@@ -59,6 +82,8 @@ abstract class MyIdentity
     _is.UuidValue? userId,
     _isyiaiss.AdminRole? globalRole,
     List<_if7d4sy6.MyMembershipInfo>? memberships,
+    String? primaryEmail,
+    List<_imjnn7ac.AuthProvider>? connectedProviders,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -67,6 +92,10 @@ abstract class MyIdentity
       'userId': userId.toJson(),
       if (globalRole != null) 'globalRole': globalRole?.toJson(),
       'memberships': memberships.toJson(valueToJson: (v) => v.toJson()),
+      if (primaryEmail != null) 'primaryEmail': primaryEmail,
+      'connectedProviders': connectedProviders.toJson(
+        valueToJson: (v) => v.toJson(),
+      ),
     };
   }
 
@@ -78,6 +107,10 @@ abstract class MyIdentity
       if (globalRole != null) 'globalRole': globalRole?.toJson(),
       'memberships': memberships.toJson(
         valueToJson: (v) => v.toJsonForProtocol(),
+      ),
+      if (primaryEmail != null) 'primaryEmail': primaryEmail,
+      'connectedProviders': connectedProviders.toJson(
+        valueToJson: (v) => v.toJson(),
       ),
     };
   }
@@ -95,10 +128,14 @@ class _MyIdentityImpl extends MyIdentity {
     required _is.UuidValue userId,
     _isyiaiss.AdminRole? globalRole,
     required List<_if7d4sy6.MyMembershipInfo> memberships,
+    String? primaryEmail,
+    required List<_imjnn7ac.AuthProvider> connectedProviders,
   }) : super._(
          userId: userId,
          globalRole: globalRole,
          memberships: memberships,
+         primaryEmail: primaryEmail,
+         connectedProviders: connectedProviders,
        );
 
   /// Returns a shallow copy of this [MyIdentity]
@@ -109,6 +146,8 @@ class _MyIdentityImpl extends MyIdentity {
     _is.UuidValue? userId,
     Object? globalRole = _Undefined,
     List<_if7d4sy6.MyMembershipInfo>? memberships,
+    Object? primaryEmail = _Undefined,
+    List<_imjnn7ac.AuthProvider>? connectedProviders,
   }) {
     return MyIdentity(
       userId: userId ?? this.userId,
@@ -117,6 +156,10 @@ class _MyIdentityImpl extends MyIdentity {
           : this.globalRole,
       memberships:
           memberships ?? this.memberships.map((e0) => e0.copyWith()).toList(),
+      primaryEmail: primaryEmail is String? ? primaryEmail : this.primaryEmail,
+      connectedProviders:
+          connectedProviders ??
+          this.connectedProviders.map((e0) => e0).toList(),
     );
   }
 }

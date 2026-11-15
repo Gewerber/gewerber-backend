@@ -6,21 +6,29 @@ import '../../../core/tenant/session_auth.dart';
 import '../../../generated/protocol.dart';
 import '../../business/domain/business_gateway.dart';
 import '../../business/domain/membership_gateway.dart';
+import '../domain/auth_identity_gateway.dart';
 
 /// Resolves the authenticated caller's own identity: their auth user id, the
-/// global admin role from the `admin_user` allowlist (if any) and every
-/// business membership with the business display name.
+/// global admin role from the `admin_user` allowlist (if any), every business
+/// membership with the business display name, plus the email address and
+/// social providers behind the account.
 ///
 /// Used by clients that need to discover what they are allowed to see —
 /// notably the MCP integration tooling opened up to regular users. Data
 /// isolation is unaffected: only the caller's own rows are read.
 @singleton
 class GetMyIdentityUseCase {
-  GetMyIdentityUseCase(this._roles, this._memberships, this._businesses);
+  GetMyIdentityUseCase(
+    this._roles,
+    this._memberships,
+    this._businesses,
+    this._identities,
+  );
 
   final AdminRoleResolver _roles;
   final MembershipGateway _memberships;
   final BusinessGateway _businesses;
+  final AuthIdentityGateway _identities;
 
   Future<MyIdentity> call(Session session) async {
     final userId = session.authUserId;
@@ -29,6 +37,7 @@ class GetMyIdentityUseCase {
     }
 
     final globalRole = (await _roles.findByUser(session, userId))?.role;
+    final authIdentity = await _identities.resolve(session, userId);
 
     final membershipRows = await _memberships.findByUser(session, userId);
     final businessNames = <int, String>{};
@@ -45,6 +54,8 @@ class GetMyIdentityUseCase {
     return MyIdentity(
       userId: userId,
       globalRole: globalRole,
+      primaryEmail: authIdentity.primaryEmail,
+      connectedProviders: authIdentity.providers,
       // Deterministic order so consumers can diff responses reliably.
       memberships: [
         for (final membership

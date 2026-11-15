@@ -2,50 +2,36 @@ import 'package:injectable/injectable.dart';
 import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
     as core;
-import 'package:serverpod_auth_idp_server/providers/email.dart' as idp;
 
 import '../../../generated/protocol.dart';
+import '../../user/domain/auth_identity_gateway.dart';
 import '../domain/admin_auth_gateway.dart';
 import '../domain/admin_auth_state.dart';
 
 /// Auth mutations built on the public admin APIs of `serverpod_auth_core`
-/// ([core.AuthUsers]) and the email IdP tables.
+/// ([core.AuthUsers]) and the provider-agnostic identity snapshot.
 @Singleton(as: AdminAuthGateway)
 class ServerpodAdminAuthGateway implements AdminAuthGateway {
+  ServerpodAdminAuthGateway(this._identities);
+
   static final _authUsers = core.AuthUsers();
+
+  final AuthIdentityGateway _identities;
 
   @override
   Future<AdminAuthState> authState(Session session, UuidValue userId) async {
-    final account = await idp.EmailAccount.db.findFirstRow(
-      session,
-      where: (t) => t.authUserId.equals(userId),
-      include: idp.EmailAccount.include(
-        authUser: core.AuthUser.include(),
-      ),
-    );
-    final authUser = account?.authUser;
-
-    if (authUser == null) {
-      // No email account: load the auth user directly so the blocked flag is
-      // still reported for users registered via other identity providers.
-      try {
-        final model = await _authUsers.get(session, authUserId: userId);
-        return AdminAuthState(
-          userId: userId,
-          blocked: model.blocked,
-          emailConfirmed: false,
-          authUserCreatedAt: model.createdAt,
-        );
-      } on core.AuthUserNotFoundException {
-        throw NotFoundException(entityType: 'AuthUser', entityId: '$userId');
-      }
-    }
+    final authUser = await _getAuthUser(session, userId);
+    final identity = await _identities.resolve(session, userId);
 
     return AdminAuthState(
       userId: userId,
       blocked: authUser.blocked,
-      emailConfirmed: true,
-      email: account!.email,
+      // Provider-agnostic: social-only users report their provider address and
+      // its verification state instead of "no email / unconfirmed".
+      emailConfirmed: identity.emailVerified,
+      email: identity.primaryEmail,
+      emailProvider: identity.primaryEmailProvider,
+      providers: identity.providers,
       authUserCreatedAt: authUser.createdAt,
     );
   }
@@ -77,6 +63,17 @@ class ServerpodAdminAuthGateway implements AdminAuthGateway {
     // Previously deleted refresh tokens do not come back — the user signs in
     // again and gets a fresh token pair.
     await _updateBlocked(session, userId, blocked: false);
+  }
+
+  Future<core.AuthUserModel> _getAuthUser(
+    Session session,
+    UuidValue userId,
+  ) async {
+    try {
+      return await _authUsers.get(session, authUserId: userId);
+    } on core.AuthUserNotFoundException {
+      throw NotFoundException(entityType: 'AuthUser', entityId: '$userId');
+    }
   }
 
   /// Residual risk (accepted): the three steps of [ban] are separate commits,

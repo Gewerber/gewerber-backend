@@ -1,11 +1,21 @@
 class: AdminUserSummary
 fields:
   userId: UuidValue
+  ### Display address resolved from the user's strongest identity (email IdP,
+  ### then Google, Apple, Microsoft, Facebook). `null` when no identity carried
+  ### an address; such users are not listed by the directory search.
   email: String?
   displayName: String?
   blocked: bool
+  ### Whether ownership of `email` is confirmed: always true for the email IdP,
+  ### Google and Microsoft, Apple's `isEmailVerified` claim, and false for
+  ### Facebook (profile address, not verified).
   emailConfirmed: bool
   ### Global role from the `admin_user` allowlist (`null` = regular user).
   globalRole: AdminRole?
   profileCreatedAt: DateTime?
   deletedAt: DateTime?
+  ### Social providers holding an account row for this user, in enum
+  ### declaration order. The email IdP is not a social provider and is never
+  ### listed here.
+  connectedProviders: List<AuthProvider>
