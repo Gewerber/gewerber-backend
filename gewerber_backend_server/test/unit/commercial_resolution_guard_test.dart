@@ -234,7 +234,7 @@ class _Workspace {
     _write(root, 'pubspec.yaml', [
       'name: _',
       'environment:',
-      "  sdk: ^3.13.3",
+      "  sdk: ^3.14.0",
       'workspace:',
       for (final member in members) '  - $member',
       '',
@@ -321,7 +321,7 @@ class _Workspace {
               'name': entry.key,
               'rootUri': entry.value.rootUri,
               'packageUri': 'lib/',
-              'languageVersion': '3.13',
+              'languageVersion': '3.14',
             },
         ],
       }),
